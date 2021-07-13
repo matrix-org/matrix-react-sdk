@@ -835,7 +835,7 @@ export const Commands = [
         command: 'devtools',
         description: _td('Opens the Developer Tools dialog'),
         runFn: function(roomId) {
-            Modal.createDialog(DevtoolsDialog, { roomId });
+            Modal.createDialog(DevtoolsDialog, { roomId, matrixClient: MatrixClientPeg.get() });
             return success();
         },
         category: CommandCategories.advanced,

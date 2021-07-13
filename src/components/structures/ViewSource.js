@@ -22,10 +22,10 @@ import SyntaxHighlight from "../views/elements/SyntaxHighlight";
 import { _t } from "../../languageHandler";
 import * as sdk from "../../index";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { SendCustomEvent } from "../views/dialogs/DevtoolsDialog";
 import { canEditContent } from "../../utils/EventUtils";
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import { replaceableComponent } from "../../utils/replaceableComponent";
+import { SendTimelineEventTool, SendCustomStateEventTool } from "../views/dialogs/devtools/RoomCategory";
 
 @replaceableComponent("structures.ViewSource")
 export default class ViewSource extends React.Component {
@@ -42,10 +42,10 @@ export default class ViewSource extends React.Component {
         };
     }
 
-    onBack() {
+    onBack = () => {
         // TODO: refresh the "Event ID:" modal header
         this.setState({ isEditing: false });
-    }
+    };
 
     onEdit() {
         this.setState({ isEditing: true });
@@ -111,15 +111,12 @@ export default class ViewSource extends React.Component {
             return (
                 <MatrixClientContext.Consumer>
                     {(cli) => (
-                        <SendCustomEvent
+                        <SendCustomStateEventTool.Component
                             room={cli.getRoom(roomId)}
-                            forceStateEvent={true}
-                            onBack={() => this.onBack()}
-                            inputs={{
-                                eventType: mxEvent.getType(),
-                                evContent: JSON.stringify(originalContent, null, "\t"),
-                                stateKey: mxEvent.getStateKey(),
-                            }}
+                            onBack={this.onBack}
+                            defaultContent={JSON.stringify(originalContent, null, "\t")}
+                            defaultEventType={mxEvent.getType()}
+                            defaultStateKey={mxEvent.getStateKey()}
                         />
                     )}
                 </MatrixClientContext.Consumer>
@@ -143,15 +140,11 @@ export default class ViewSource extends React.Component {
             return (
                 <MatrixClientContext.Consumer>
                     {(cli) => (
-                        <SendCustomEvent
+                        <SendTimelineEventTool.Component
                             room={cli.getRoom(roomId)}
-                            forceStateEvent={false}
-                            forceGeneralEvent={true}
-                            onBack={() => this.onBack()}
-                            inputs={{
-                                eventType: mxEvent.getType(),
-                                evContent: JSON.stringify(newContent, null, "\t"),
-                            }}
+                            onBack={this.onBack}
+                            defaultContent={JSON.stringify(newContent, null, "\t")}
+                            defaultEventType={mxEvent.getType()}
                         />
                     )}
                 </MatrixClientContext.Consumer>
