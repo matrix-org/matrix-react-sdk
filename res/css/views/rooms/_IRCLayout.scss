@@ -170,9 +170,10 @@ $irc-line-height: $font-18px;
         justify-content: flex-start;
         align-items: center;
         text-align: end;
+        overflow: visible;
 
         .mx_SenderProfile_content {
-            width: 100%;
+            background-color: $primary-bg-color;
             overflow: hidden;
             text-overflow: ellipsis;
 
@@ -183,14 +184,10 @@ $irc-line-height: $font-18px;
     }
 
     .mx_SenderProfile:hover {
-        overflow: visible;
         z-index: 10;
 
         .mx_SenderProfile_content {
             overflow: visible;
-            z-index: 10;
-            width: auto;
-            background-color: $primary-bg-color;
         }
     }
 
