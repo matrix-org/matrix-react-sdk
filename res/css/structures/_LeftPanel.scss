@@ -18,7 +18,6 @@ $groupFilterPanelWidth: 56px; // only applies in this file, used for calculation
 $roomListCollapsedWidth: 68px;
 
 .mx_LeftPanel {
-    background-color: $roomlist-bg-color;
     // TODO decrease this once Spaces launches as it'll no longer need to include the 56px Community Panel
     min-width: 206px;
     max-width: 50%;
@@ -26,6 +25,7 @@ $roomListCollapsedWidth: 68px;
     // Create a row-based flexbox for the GroupFilterPanel and the room list
     display: flex;
     contain: content;
+    position: relative;
 
     .mx_LeftPanel_GroupFilterPanelContainer {
         flex-grow: 0;
@@ -43,7 +43,6 @@ $roomListCollapsedWidth: 68px;
     // Note: The 'room list' in this context is actually everything that isn't the tag
     // panel, such as the menu options, breadcrumbs, filtering, etc
     .mx_LeftPanel_roomListContainer {
-        background-color: $roomlist-bg-color;
         flex: 1 0 0;
         min-width: 0;
         // Create another flexbox (this time a column) for the room list components

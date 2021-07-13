@@ -58,11 +58,14 @@ import { replaceableComponent } from "../../utils/replaceableComponent";
 import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
+import { OwnProfileStore } from '../../stores/OwnProfileStore';
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RoomView from './RoomView';
 import ToastContainer from './ToastContainer';
 import MyGroups from "./MyGroups";
 import UserView from "./UserView";
 import GroupView from "./GroupView";
+import BackdropPanel from "./BackdropPanel";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -124,6 +127,7 @@ interface IState {
     usageLimitEventTs?: number;
     useCompactLayout: boolean;
     activeCalls: Array<MatrixCall>;
+    backgroundImage?: CanvasImageSource;
 }
 
 /**
@@ -202,6 +206,8 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.resizer = this._createResizer();
         this.resizer.attach();
         this._loadResizerPreferences();
+
+        OwnProfileStore.instance.on(UPDATE_EVENT, this.refreshBackgroundImage);
     }
 
     componentWillUnmount() {
@@ -210,9 +216,16 @@ class LoggedInView extends React.Component<IProps, IState> {
         this._matrixClient.removeListener("accountData", this.onAccountData);
         this._matrixClient.removeListener("sync", this.onSync);
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
+        OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
         this.resizer.detach();
     }
+
+    private refreshBackgroundImage = async (): Promise<void> => {
+        this.setState({
+            backgroundImage: await OwnProfileStore.instance.getAvatarBitmap(),
+        });
+    };
 
     private onCallsChanged = () => {
         this.setState({
@@ -631,7 +644,12 @@ class LoggedInView extends React.Component<IProps, IState> {
                 >
                     <ToastContainer />
                     <div ref={this._resizeContainer} className={bodyClasses}>
-                        { SettingsStore.getValue("feature_spaces") ? <SpacePanel /> : null }
+                        <BackdropPanel
+                            backgroundImage={this.state.backgroundImage}
+                        />
+                        { SettingsStore.getValue("feature_spaces")
+                            ? <SpacePanel />
+                            : null }
                         <LeftPanel
                             isMinimized={this.props.collapseLhs || false}
                             resizeNotifier={this.props.resizeNotifier}

@@ -61,6 +61,7 @@
     "cheerio": "^1.0.0-rc.9",
     "classnames": "^2.2.6",
     "commonmark": "^0.29.3",
+    "context-filter-polyfill": "^0.2.4",
     "counterpart": "^0.18.6",
     "diff-dom": "^4.2.2",
     "diff-match-patch": "^1.0.5",
@@ -187,7 +188,8 @@
       "\\$webapp/i18n/languages.json": "<rootDir>/__mocks__/languages.json",
       "decoderWorker\\.min\\.js": "<rootDir>/__mocks__/empty.js",
       "decoderWorker\\.min\\.wasm": "<rootDir>/__mocks__/empty.js",
-      "waveWorker\\.min\\.js": "<rootDir>/__mocks__/empty.js"
+      "waveWorker\\.min\\.js": "<rootDir>/__mocks__/empty.js",
+      "context-filter-polyfill": "<rootDir>/__mocks__/empty.js"
     },
     "transformIgnorePatterns": [
       "/node_modules/(?!matrix-js-sdk).+$"

@@ -30,6 +30,7 @@ import AutoHideScrollbar from "./AutoHideScrollbar";
 import SettingsStore from "../../settings/SettingsStore";
 import UserTagTile from "../views/elements/UserTagTile";
 import { replaceableComponent } from "../../utils/replaceableComponent";
+import UIStore from "../../stores/UIStore";
 
 @replaceableComponent("structures.GroupFilterPanel")
 class GroupFilterPanel extends React.Component {
@@ -39,6 +40,8 @@ class GroupFilterPanel extends React.Component {
         orderedTags: [],
         selectedTags: [],
     };
+
+    ref = React.createRef()
 
     componentDidMount() {
         this.unmounted = false;
@@ -56,6 +59,7 @@ class GroupFilterPanel extends React.Component {
         });
         // This could be done by anything with a matrix client
         dis.dispatch(GroupActions.fetchJoinedGroups(this.context));
+        UIStore.instance.trackElementDimensions("GroupPanel", this.ref.current);
     }
 
     componentWillUnmount() {
@@ -65,6 +69,7 @@ class GroupFilterPanel extends React.Component {
         if (this._groupFilterOrderStoreToken) {
             this._groupFilterOrderStoreToken.remove();
         }
+        UIStore.instance.stopTrackingElementDimensions("GroupPanel");
     }
 
     _onGroupMyMembership = () => {
@@ -147,7 +152,7 @@ class GroupFilterPanel extends React.Component {
             );
         }
 
-        return <div className={classes} onClick={this.onClearFilterClick}>
+        return <div className={classes} onClick={this.onClearFilterClick} ref={this.ref}>
             <AutoHideScrollbar
                 className="mx_GroupFilterPanel_scroller"
                 onClick={this.onClick}

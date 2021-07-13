@@ -24,9 +24,9 @@ $activeBorderColor: $secondary-fg-color;
 
 .mx_SpacePanel {
     flex: 0 0 auto;
-    background-color: $groupFilterPanel-bg-color;
     padding: 0;
     margin: 0;
+    position: relative;
 
     // Create another flexbox so the Panel fills the container
     display: flex;
