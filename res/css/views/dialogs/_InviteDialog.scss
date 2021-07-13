@@ -352,7 +352,7 @@ limitations under the License.
     border-right: 0;
     border-radius: 0;
     margin-top: 0;
-    border-color: #6F7882;
+    border-color: $quaternary-fg-color;
 
     input {
         font-size: 18px;
@@ -362,7 +362,7 @@ limitations under the License.
 }
 
 .mx_InviteDialog_dialPad .mx_InviteDialog_dialPadField:focus-within {
-    border-color: #0DBD8B;
+    border-color: $accent-color;
 }
 
 .mx_InviteDialog_dialPadField .mx_Field_postfix {

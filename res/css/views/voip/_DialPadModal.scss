@@ -30,12 +30,12 @@ limitations under the License.
     margin-right: 40px;
 
     /* a separator between the input line and the dial buttons */
-    border-bottom: 1px solid #6F7882;
+    border-bottom: 1px solid $quaternary-fg-color;
     transition: border-bottom 0.25s;
 }
 
 .mx_DialPadModal_header:focus-within {
-    border-bottom: 1px solid #0DBD8B;
+    border-bottom: 1px solid $accent-color;
 }
 
 .mx_DialPadModal_title {
