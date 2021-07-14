@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626283828882,
+  "lastUpdate": 1626289504466,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6632,6 +6632,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4334.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2c5c2e82bfeaf337b8307a0fa886f90417f3936e",
+          "message": "Merge pull request #6378 from matrix-org/travis/widgets/fix-state-read\n\nExclude state events from widgets reading room events",
+          "timestamp": "2021-07-14T12:59:58-06:00",
+          "tree_id": "02f0f510774e04fa26b8b0a99d6d1b4606dcf8fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c5c2e82bfeaf337b8307a0fa886f90417f3936e"
+        },
+        "date": 1626289502480,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4562.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1034.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1809.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4321,
             "unit": "ms",
             "extra": "type: measure"
           }
