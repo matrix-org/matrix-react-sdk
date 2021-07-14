@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626290355412,
+  "lastUpdate": 1626300712027,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6728,6 +6728,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4279.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f990a595d19c5100163a6d48db623739192f56a8",
+          "message": "Merge pull request #6379 from matrix-org/dbkr/contributing_md\n\nConvert CONTRIBUTING to markdown",
+          "timestamp": "2021-07-14T23:06:18+01:00",
+          "tree_id": "edbb08898bf41bef2367a849212ec825f58630ae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f990a595d19c5100163a6d48db623739192f56a8"
+        },
+        "date": 1626300711077,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5022.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1202.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1848.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4467.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
