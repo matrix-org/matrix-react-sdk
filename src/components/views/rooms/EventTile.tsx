@@ -37,6 +37,8 @@ import { E2E_STATE } from "./E2EIcon";
 import { toRem } from "../../../utils/units";
 import { WidgetType } from "../../../widgets/WidgetType";
 import RoomAvatar from "../avatars/RoomAvatar";
+import MessageContextMenu from "../context_menus/MessageContextMenu";
+import { aboveLeftOf } from '../../structures/ContextMenu';
 import { WIDGET_LAYOUT_EVENT_TYPE } from "../../../stores/widgets/WidgetLayoutStore";
 import { objectHasDiff } from "../../../utils/objects";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -47,6 +49,7 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import NotificationBadge from "./NotificationBadge";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
+import PlatformPeg from '../../../PlatformPeg';
 import MemberAvatar from '../avatars/MemberAvatar';
 import SenderProfile from '../messages/SenderProfile';
 import MessageTimestamp from '../messages/MessageTimestamp';
@@ -314,6 +317,12 @@ interface IState {
     reactions: Relations;
 
     hover: boolean;
+
+    // Position of the context menu
+    contextMenu: {
+        position: Partial<DOMRect>;
+        showPermalink?: boolean;
+    };
 }
 
 @replaceableComponent("views.rooms.EventTile")
@@ -321,7 +330,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     private tile = React.createRef();
-    private replyThread = React.createRef();
+    private replyThread = React.createRef<ReplyThread>();
 
     public readonly ref = createRef<HTMLElement>();
 
@@ -348,6 +357,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             previouslyRequestedKeys: false,
             // The Relations model from the JS SDK for reactions to `mxEvent`
             reactions: this.getReactions(),
+            // Context menu position
+            contextMenu: null,
 
             hover: false,
         };
@@ -821,7 +832,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
-    getTile = () => this.tile.current;
+    getTile = (): any => this.tile.current;
 
     getReplyThread = () => this.replyThread.current;
 
@@ -843,6 +854,73 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
         this.setState({
             reactions: this.getReactions(),
+        });
+    };
+
+    private renderContextMenu(): React.ReactFragment {
+        let contextMenu = null;
+        if (this.state.contextMenu) {
+            const tile = this.getTile();
+            const replyThread = this.getReplyThread();
+            const eventTileOps = tile?.getEventTileOps ? tile.getEventTileOps() : undefined;
+            const collapseReplyThread = replyThread?.canCollapse() ? replyThread.collapse : undefined;
+
+            contextMenu = (
+                <MessageContextMenu
+                    {...aboveLeftOf(this.state.contextMenu.position)}
+                    mxEvent={this.props.mxEvent}
+                    permalinkCreator={this.props.permalinkCreator}
+                    eventTileOps={eventTileOps}
+                    collapseReplyThread={collapseReplyThread}
+                    onFinished={this.onCloseMenu}
+                    rightClick={true}
+                    reactions={this.state.reactions}
+                    showPermalink={this.state.contextMenu.showPermalink}
+                />
+            );
+        }
+
+        return (
+            <React.Fragment>
+                { contextMenu }
+            </React.Fragment>
+        );
+    }
+
+    private onContextMenu = (ev: React.MouseEvent): void => {
+        this.showContextMenu(ev);
+    };
+
+    private onTimestampContextMenu = (ev: React.MouseEvent): void => {
+        this.showContextMenu(ev, true);
+    };
+
+    private showContextMenu(ev: React.MouseEvent, showPermalink?: boolean): void {
+        // There is no way to copy non-PNG images into clipboard, so we can't
+        // have our own handling for copying images, so we leave it to the
+        // Electron layer (webcontents-handler.ts)
+        if (ev.target instanceof HTMLImageElement) return;
+        if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
+        if (this.props.editState) return;
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.setState({
+            contextMenu: {
+                position: {
+                    right: ev.clientX,
+                    top: ev.clientY,
+                    bottom: ev.clientY,
+                },
+                showPermalink: showPermalink,
+            },
+            actionBarFocused: true,
+        });
+    }
+
+    private onCloseMenu = (): void => {
+        this.setState({
+            contextMenu: null,
+            actionBarFocused: false,
         });
     };
 
@@ -903,7 +981,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
             mx_EventTile_highlight: this.props.tileShape === 'notif' ? false : this.shouldHighlight(),
-            mx_EventTile_selected: this.props.isSelectedEvent,
+            mx_EventTile_selected: this.props.isSelectedEvent || this.state.contextMenu,
             mx_EventTile_continuation: this.props.tileShape ? '' : this.props.continuation,
             mx_EventTile_last: this.props.last,
             mx_EventTile_lastInSection: this.props.lastInSection,
@@ -998,8 +1076,16 @@ export default class EventTile extends React.Component<IProps, IState> {
             onFocusChange={this.onActionBarFocusChange}
         /> : undefined;
 
-        const showTimestamp = this.props.mxEvent.getTs() &&
-            (this.props.alwaysShowTimestamps || this.props.last || this.state.hover || this.state.actionBarFocused);
+        const showTimestamp = (
+            this.props.mxEvent.getTs() &&
+            (
+                this.props.alwaysShowTimestamps ||
+                this.props.last ||
+                this.state.hover ||
+                this.state.actionBarFocused ||
+                this.state.contextMenu
+            )
+        );
         const timestamp = showTimestamp ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
 
@@ -1048,6 +1134,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             href={permalink}
             onClick={this.onPermalinkClicked}
             aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
+            onContextMenu={this.onTimestampContextMenu}
         >
             { timestamp }
         </a>;
@@ -1081,12 +1168,17 @@ export default class EventTile extends React.Component<IProps, IState> {
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
+                        <a
+                            href={permalink}
+                            onClick={this.onPermalinkClicked}
+                            onContextMenu={this.onTimestampContextMenu}
+                        >
                             { sender }
                             { timestamp }
                         </a>
                     </div>,
-                    <div className="mx_EventTile_line" key="mx_EventTile_line">
+                    <div className="mx_EventTile_line" key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
+                        { this.renderContextMenu() }
                         <EventTileType ref={this.tile}
                             mxEvent={this.props.mxEvent}
                             highlights={this.props.highlights}
@@ -1104,7 +1196,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                 }, [
-                    <div className="mx_EventTile_line" key="mx_EventTile_line">
+                    <div className="mx_EventTile_line" key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
+                        { this.renderContextMenu() }
                         <EventTileType ref={this.tile}
                             mxEvent={this.props.mxEvent}
                             highlights={this.props.highlights}
@@ -1120,7 +1213,10 @@ export default class EventTile extends React.Component<IProps, IState> {
                         href={permalink}
                         onClick={this.onPermalinkClicked}
                     >
-                        <div className="mx_EventTile_senderDetails">
+                        <div
+                            className="mx_EventTile_senderDetails"
+                            onContextMenu={this.onTimestampContextMenu}
+                        >
                             { sender }
                             { timestamp }
                         </div>
@@ -1151,7 +1247,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                     avatar,
                     sender,
                     ircPadlock,
-                    <div className="mx_EventTile_reply" key="mx_EventTile_reply">
+                    <div className="mx_EventTile_reply" key="mx_EventTile_reply" onContextMenu={this.onContextMenu}>
+                        { this.renderContextMenu() }
                         { groupTimestamp }
                         { groupPadlock }
                         { thread }
@@ -1191,7 +1288,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                         ircTimestamp,
                         sender,
                         ircPadlock,
-                        <div className="mx_EventTile_line" key="mx_EventTile_line">
+                        <div className="mx_EventTile_line" key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
+                            { this.renderContextMenu() }
                             { groupTimestamp }
                             { groupPadlock }
                             { thread }

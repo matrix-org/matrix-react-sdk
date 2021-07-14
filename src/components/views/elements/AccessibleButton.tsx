@@ -27,7 +27,7 @@ export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Elemen
  * onClick:  (required) Event handler for button activation. Should be
  *           implemented exactly like a normal onClick handler.
  */
-interface IProps extends React.InputHTMLAttributes<Element> {
+interface IProps extends React.AllHTMLAttributes<Element> {
     inputRef?: React.Ref<Element>;
     element?: keyof ReactHTML;
     // The kind of button, similar to how Bootstrap works.
@@ -39,10 +39,11 @@ interface IProps extends React.InputHTMLAttributes<Element> {
     tabIndex?: number;
     disabled?: boolean;
     className?: string;
-    onClick(e?: ButtonEvent): void;
+    // Optional in case we need to use onMouseDown
+    onClick?(e?: ButtonEvent): void;
 }
 
-interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+interface IAccessibleButtonProps extends React.AllHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
