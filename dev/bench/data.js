@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626260302433,
+  "lastUpdate": 1626274366980,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6308,6 +6308,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4995.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2b8e7091257c7187a065c0983c546f6795267d67",
+          "message": "Merge pull request #6369 from matrix-org/travis/tileshape\n\nUse TileShape enum more universally",
+          "timestamp": "2021-07-14T08:46:27-06:00",
+          "tree_id": "22a4668ee2f6e4824ed76ac75e0e3a6731ccd6ab",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2b8e7091257c7187a065c0983c546f6795267d67"
+        },
+        "date": 1626274365399,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4003.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1189.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2153.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4409.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
