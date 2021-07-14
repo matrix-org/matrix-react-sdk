@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626279863374,
+  "lastUpdate": 1626280119491,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6500,6 +6500,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4183.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "603889dbb8be86aab2dcdae9fb8cac27e715c2cd",
+          "message": "Merge pull request #6377 from matrix-org/dbkr/comment_only_develop\n\nComment why end to end tests are only on the develop branch",
+          "timestamp": "2021-07-14T17:23:17+01:00",
+          "tree_id": "eacfc3ffabefaf83da919947841faaa2d22f0004",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/603889dbb8be86aab2dcdae9fb8cac27e715c2cd"
+        },
+        "date": 1626280118656,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4496.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 961.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
