@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626274366980,
+  "lastUpdate": 1626274472811,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6356,6 +6356,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4409.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe2eb5ebf0f9adbc2e5537182a87565500a74753",
+          "message": "Merge pull request #6370 from matrix-org/travis/voice_messages/right-panel\n\nFix voice messages in right panels",
+          "timestamp": "2021-07-14T08:46:55-06:00",
+          "tree_id": "4fd245790ef6bcaac5267dd592117100fcece300",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe2eb5ebf0f9adbc2e5537182a87565500a74753"
+        },
+        "date": 1626274471534,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4518.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1061.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1794.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4517.5,
             "unit": "ms",
             "extra": "type: measure"
           }
