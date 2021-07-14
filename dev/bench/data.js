@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626249613294,
+  "lastUpdate": 1626253588078,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6212,6 +6212,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4456.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f3970e201a85b973605f1eee38e4bec8139c83e2",
+          "message": "Merge pull request #5947 from robintown/e2ee-history-visibility\n\nHide world readable history option in encrypted rooms",
+          "timestamp": "2021-07-14T10:00:30+01:00",
+          "tree_id": "68efd56ee032c96b05d8414db5ca873dc7739a4c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f3970e201a85b973605f1eee38e4bec8139c83e2"
+        },
+        "date": 1626253587303,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4579.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 978.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1797.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4417.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
