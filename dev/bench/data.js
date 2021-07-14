@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626202612079,
+  "lastUpdate": 1626249613294,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6164,6 +6164,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 995.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2a662693834ad0628e6242aacba9c78efebe98b2",
+          "message": "Merge pull request #6372 from SimonBrandner/feature/bigger-image-view-buttons\n\nMake the Image View buttons easier to hit",
+          "timestamp": "2021-07-14T08:55:08+01:00",
+          "tree_id": "414da7fad5d5345cb4a8e49ef7db757550719456",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2a662693834ad0628e6242aacba9c78efebe98b2"
+        },
+        "date": 1626249611593,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4484.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1070.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1723,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4456.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
