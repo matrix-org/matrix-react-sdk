@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626280119491,
+  "lastUpdate": 1626280799703,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6536,6 +6536,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 961.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5a51b7139cef08b718314929e9481a07f4e31ffc",
+          "message": "Merge pull request #6371 from matrix-org/travis/widgets/fix-enc\n\nSend clear events to widgets when permitted",
+          "timestamp": "2021-07-14T10:34:08-06:00",
+          "tree_id": "61521949e2d03986d637ef992922391c7789262a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5a51b7139cef08b718314929e9481a07f4e31ffc"
+        },
+        "date": 1626280798217,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4770.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1366.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1842.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4821.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
