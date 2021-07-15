@@ -49,7 +49,7 @@ interface IState {
 export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private dispatcherRef: string;
     private inputRef: React.RefObject<HTMLInputElement> = createRef();
-    private searchFilter: NameFilterCondition = new NameFilterCondition();
+    private searchFilter: NameFilterCondition = new NameFilterCondition({ fuzzy: true });
 
     constructor(props: IProps) {
         super(props);
