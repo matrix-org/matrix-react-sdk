@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626333199015,
+  "lastUpdate": 1626339726945,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6812,6 +6812,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1289.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f4788a642784cd918265a8879486f72c59f7ef45",
+          "message": "Add dialpad to transfer dialog + various dialpad UI improvements (#6363)\n\nCo-authored-by: Germain <germain@souquet.com>\r\nCo-authored-by: Andrew Morgan <andrew@amorgan.xyz>\r\nCo-authored-by: David Baker <dbkr@users.noreply.github.com>",
+          "timestamp": "2021-07-15T09:55:58+01:00",
+          "tree_id": "71d486eb5c6db6bf70976f23c58e65e83f16271f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f4788a642784cd918265a8879486f72c59f7ef45"
+        },
+        "date": 1626339725993,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4472.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1199.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1809.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4878,
             "unit": "ms",
             "extra": "type: measure"
           }
