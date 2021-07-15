@@ -1334,7 +1334,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             const shouldIgnore = !!ev.status || // local echo
                 (ignoreOwn && ev.sender && ev.sender.userId == myUserId);   // own message
-            const isWithoutTile = !haveTileForEvent(ev) || shouldHideEvent(ev, this.context);
+            const isWithoutTile = !haveTileForEvent(ev, this.context?.showHiddenEventsInTimeline) ||
+                shouldHideEvent(ev, this.context);
 
             if (isWithoutTile || !node) {
                 // don't start counting if the event should be ignored,
