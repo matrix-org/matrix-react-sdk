@@ -344,6 +344,12 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
                 <form className="mx_AccessSecretStorageDialog_primaryContainer" onSubmit={this.onPassPhraseNext}>
                     <input
+                            className="mx_AccessSecretStorageDialog_hiddenEncryptionUsernameForAutoFillPassword"
+                            name="username" // make it a little easier for browser's remember-password
+                            type="text"
+                            value="Passphrase"
+                        />
+                    <input
                         type="password"
                         id="mx_passPhraseInput"
                         className="mx_AccessSecretStorageDialog_passPhraseInput"
