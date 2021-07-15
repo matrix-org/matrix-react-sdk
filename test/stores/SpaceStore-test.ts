@@ -114,14 +114,14 @@ describe("SpaceStore", () => {
     const viewRoom = roomId => defaultDispatcher.dispatch({ action: "view_room", room_id: roomId }, true);
 
     const run = async () => {
-        client.getRoom.mockImplementation(roomId => rooms.find(room => room.roomId === roomId));
+        client.getRoom = (roomId) => rooms.find(room => room.roomId === roomId);
         await setupAsyncStoreWithClient(store, client);
         jest.runAllTimers();
     };
 
     beforeEach(() => {
         jest.runAllTimers();
-        client.getVisibleRooms.mockReturnValue(rooms = []);
+        (client.getVisibleRooms as jest.Mock).mockReturnValue(rooms = []);
         getValue.mockImplementation(settingName => {
             switch (settingName) {
                 case "feature_spaces":
@@ -331,7 +331,7 @@ describe("SpaceStore", () => {
                 });
 
                 [invite1, invite2].forEach(roomId => {
-                    client.getRoom(roomId).getMyMembership.mockReturnValue("invite");
+                    client.getRoom(roomId).getMyMembership = () => "invite";
                 });
 
                 getUserIdForRoomId.mockImplementation(roomId => {
@@ -398,12 +398,12 @@ describe("SpaceStore", () => {
         let emitter: EventEmitter;
         beforeEach(async () => {
             emitter = new EventEmitter();
-            client.on.mockImplementation(emitter.on.bind(emitter));
-            client.removeListener.mockImplementation(emitter.removeListener.bind(emitter));
+            (client.on as jest.Mock).mockImplementation(emitter.on.bind(emitter));
+            (client.removeListener as jest.Mock).mockImplementation(emitter.removeListener.bind(emitter));
         });
         afterEach(() => {
-            client.on.mockReset();
-            client.removeListener.mockReset();
+            (client.on as jest.Mock).mockReset();
+            (client.removeListener as jest.Mock).mockReset();
         });
 
         it("updates state when spaces are joined", async () => {
@@ -626,7 +626,7 @@ describe("SpaceStore", () => {
             mkSpace(space1, [room1, room2, room3]);
             mkSpace(space2, [room1, room2]);
 
-            client.getRoom(room2).currentState.getStateEvents.mockImplementation(mockStateEventImplementation([
+            client.getRoom(room2).currentState.getStateEvents = mockStateEventImplementation([
                 mkEvent({
                     event: true,
                     type: EventType.SpaceParent,
@@ -636,7 +636,7 @@ describe("SpaceStore", () => {
                     content: { via: [], canonical: true },
                     ts: Date.now(),
                 }),
-            ]));
+            ]);
             await run();
         });
 

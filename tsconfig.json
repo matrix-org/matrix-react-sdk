@@ -16,7 +16,8 @@
       "node",
       "react",
       "flux",
-      "react-transition-group"
+      "react-transition-group",
+      "jest"
     ],
     "lib": [
       "es2019",
@@ -26,6 +27,8 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "./src/**/*.tsx",
+    "./test/**/*.ts",
+    "./test/**/*.tsx"
   ]
 }
