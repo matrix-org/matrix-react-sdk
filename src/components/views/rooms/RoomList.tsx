@@ -27,7 +27,6 @@ import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/Roo
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { ITagMap } from "../../../stores/room-list/algorithms/models";
 import { DefaultTagID, isCustomTag, TagID } from "../../../stores/room-list/models";
-import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import RoomSublist from "./RoomSublist";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -117,9 +116,15 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
         sectionLabel: _td("People"),
         isInvite: false,
         defaultHidden: false,
-        addRoomLabel: _td("Start chat"),
+        addRoomLabel: _td("Add people"),
         onAddRoom: (dispatcher?: Dispatcher<ActionPayload>) => {
-            (dispatcher || defaultDispatcher).dispatch({ action: 'view_create_chat' });
+            const activeSpace = SpaceStore.instance.activeSpace;
+
+            if (activeSpace) {
+                showSpaceInvite(activeSpace);
+            } else {
+                (dispatcher || defaultDispatcher).dispatch({ action: 'view_create_chat' });
+            }
         },
     },
     [DefaultTagID.Untagged]: {
@@ -280,7 +285,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             const currentRoomId = RoomViewStore.getRoomId();
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
-                dis.dispatch({
+                defaultDispatcher.dispatch({
                     action: 'view_room',
                     room_id: room.roomId,
                     show_room_tile: true, // to make sure the room gets scrolled into view
@@ -364,12 +369,12 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     private onStartChat = () => {
         const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
-        dis.dispatch({ action: "view_create_chat", initialText });
+        defaultDispatcher.dispatch({ action: "view_create_chat", initialText });
     };
 
     private onExplore = () => {
         const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
-        dis.dispatch({ action: Action.ViewRoomDirectory, initialText });
+        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
     };
 
     private onSpaceInviteClick = () => {
