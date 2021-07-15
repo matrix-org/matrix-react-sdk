@@ -136,6 +136,11 @@ $hover-select-border: 4px;
     margin-right: 10px;
 }
 
+.mx_EventTile_Emoji {
+    font-size: 2rem;
+    vertical-align: bottom;
+}
+
 /* HACK to override line-height which is already marked important elsewhere */
 .mx_EventTile_bigEmoji.mx_EventTile_bigEmoji {
     font-size: 48px !important;
