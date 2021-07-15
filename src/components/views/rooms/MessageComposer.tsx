@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React from 'react';
+import React, {useCallback} from 'react';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -72,12 +72,16 @@ function SendButton(props: ISendButtonProps) {
 
 const EmojiButton = ({ addEmoji }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const onEmojiChosen = useCallback((emoji) => {
+        addEmoji(emoji);
+        closeMenu();
+    }, [addEmoji, closeMenu]);
 
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
         contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
-            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
+            <EmojiPicker onChoose={onEmojiChosen} showQuickReactions={true} />
         </ContextMenu>;
     }
 
