@@ -1918,9 +1918,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         this.subTitleStatus = '';
-        if (state === "ERROR") {
-            this.subTitleStatus += `[${_t("Offline")}] `;
-        }
         if (numUnreadRooms > 0) {
             this.subTitleStatus += `[${numUnreadRooms}]`;
         }
