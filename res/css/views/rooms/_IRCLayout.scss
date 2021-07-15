@@ -169,29 +169,25 @@ $irc-line-height: $font-18px;
         flex-shrink: 0;
         justify-content: flex-start;
         align-items: center;
+        text-align: end;
+        overflow: visible;
 
-        > .mx_SenderProfile_displayName {
-            width: 100%;
-            text-align: end;
+        .mx_SenderProfile_content {
+            background-color: $primary-bg-color;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
 
-        > .mx_SenderProfile_mxid {
-            visibility: collapse;
+            > .mx_SenderProfile_displayName {
+                text-align: end;
+            }
         }
     }
 
     .mx_SenderProfile:hover {
-        overflow: visible;
         z-index: 10;
 
-        > .mx_SenderProfile_displayName {
+        .mx_SenderProfile_content {
             overflow: visible;
-        }
-
-        > .mx_SenderProfile_mxid {
-            visibility: visible;
         }
     }
 
