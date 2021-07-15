@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626300712027,
+  "lastUpdate": 1626333199015,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6776,6 +6776,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4467.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c7c29f2119806516a2c757dca8bdbebf184d372f",
+          "message": "Merge pull request #6365 from psrpinto/fix/naming",
+          "timestamp": "2021-07-15T08:07:03+01:00",
+          "tree_id": "be9e3ecb17324e84426b2d0462782fc8f47d2754",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c7c29f2119806516a2c757dca8bdbebf184d372f"
+        },
+        "date": 1626333197499,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4695.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1289.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
