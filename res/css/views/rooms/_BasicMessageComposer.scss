@@ -43,6 +43,8 @@ limitations under the License.
         word-wrap: break-word;
         outline: none;
         overflow-x: hidden;
+        // same as timeline
+        line-height: $font-22px;
 
         &.mx_BasicMessageComposer_input_shouldShowPillAvatar {
             span.mx_UserPill, span.mx_RoomPill {
