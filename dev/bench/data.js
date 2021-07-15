@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626355050861,
+  "lastUpdate": 1626361113300,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6992,6 +6992,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 810.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "376533e709d0b973b3e3585b2d910f895e933219",
+          "message": "Merge pull request #3553 from maunium/compact-reply-rendering",
+          "timestamp": "2021-07-15T15:52:10+01:00",
+          "tree_id": "4360d2fb5afcb0ae77244d733f734bf03c87bd20",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/376533e709d0b973b3e3585b2d910f895e933219"
+        },
+        "date": 1626361112241,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5392.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1426.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1896.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4993.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
