@@ -453,6 +453,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
             startExpanded={this.props.startExpanded}
             children={this.props.children}
             summaryMembers={[...latestUserAvatarMember.values()]}
+            isTwelveHour={this.props.isTwelveHour}
             summaryText={this.generateSummary(aggregate.names, orderedTransitionSequences)} />;
     }
 }

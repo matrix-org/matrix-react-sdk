@@ -34,6 +34,8 @@ interface IProps {
     summaryMembers?: RoomMember[];
     // The text to show as the summary of this event list
     summaryText?: string;
+    // show twelve hour timestamps
+    isTwelveHour?: boolean;
     // An array of EventTiles to render when expanded
     children: ReactNode[];
     // Called when the event list expansion is toggled
@@ -48,6 +50,7 @@ const EventListSummary: React.FC<IProps> = ({
     startExpanded,
     summaryMembers = [],
     summaryText,
+    isTwelveHour,
 }) => {
     const [expanded, toggleExpanded] = useStateToggle(startExpanded);
 
@@ -59,11 +62,12 @@ const EventListSummary: React.FC<IProps> = ({
     }, [expanded]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const eventIds = events.map((e) => e.getId()).join(',');
+    const className = isTwelveHour ? "mx_EventListSummary mx_Event_12hr" : "mx_EventListSummary mx_Event_24hr";
 
     // If we are only given few events then just pass them through
     if (events.length < threshold) {
         return (
-            <li className="mx_EventListSummary" data-scroll-tokens={eventIds}>
+            <li className={className} data-scroll-tokens={eventIds}>
                 { children }
             </li>
         );
@@ -92,7 +96,7 @@ const EventListSummary: React.FC<IProps> = ({
     }
 
     return (
-        <li className="mx_EventListSummary" data-scroll-tokens={eventIds}>
+        <li className={className} data-scroll-tokens={eventIds}>
             <AccessibleButton className="mx_EventListSummary_toggle" onClick={toggleExpanded} aria-expanded={expanded}>
                 { expanded ? _t('collapse') : _t('expand') }
             </AccessibleButton>
