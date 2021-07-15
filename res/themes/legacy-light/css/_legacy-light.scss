@@ -8,9 +8,9 @@
 /* Noto Color Emoji contains digits, in fixed-width, therefore causing
    digits in flowed text to stand out.
    TODO: Consider putting all emoji fonts to the end rather than the front. */
-$font-family: Nunito, Twemoji, 'Apple Color Emoji', 'Segoe UI Emoji', Arial, Helvetica, Sans-Serif, 'Noto Color Emoji';
+$font-family: nunito, twemoji, 'Apple Color Emoji', 'Segoe UI Emoji', arial, helvetica, sans-serif, 'Noto Color Emoji';
 
-$monospace-font-family: Inconsolata, Twemoji, 'Apple Color Emoji', 'Segoe UI Emoji', Courier, monospace, 'Noto Color Emoji';
+$monospace-font-family: inconsolata, twemoji, 'Apple Color Emoji', 'Segoe UI Emoji', courier, monospace, 'Noto Color Emoji';
 
 // unified palette
 // try to use these colors when possible
@@ -347,6 +347,8 @@ $appearance-tab-border-color: $input-darker-bg-color;
 
 $composer-shadow-color: tranparent;
 
+$codeblock-background-color: $header-panel-bg-color;
+
 // ***** Mixins! *****
 
 @define-mixin mx_DialogButton {
@@ -383,7 +385,7 @@ $composer-shadow-color: tranparent;
 @define-mixin mx_DialogButton_secondary {
     // flip colours for the secondary ones
     font-weight: 600;
-    border: 1px solid $accent-color ! important;
+    border: 1px solid $accent-color !important;
     color: $accent-color;
     background-color: $button-secondary-bg-color;
 }
