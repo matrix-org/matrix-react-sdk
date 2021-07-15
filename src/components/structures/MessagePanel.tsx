@@ -34,6 +34,7 @@ import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
 import NewRoomIntro from "../views/rooms/NewRoomIntro";
+import RoomHistoryIntro from "../views/rooms/RoomHistoryIntro";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import WhoIsTypingTile from '../views/rooms/WhoIsTypingTile';
@@ -114,8 +115,8 @@ interface IProps {
     // for pending messages.
     ourUserId?: string;
 
-    // true to suppress the date at the start of the timeline
-    suppressFirstDateSeparator?: boolean;
+    // whether the timeline can visually go back any further
+    canBackPaginate?: boolean;
 
     // whether to show read receipts
     showReadReceipts?: boolean;
@@ -721,7 +722,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         if (prevEvent == null) {
             // first event in the panel: depends if we could back-paginate from
             // here.
-            return !this.props.suppressFirstDateSeparator;
+            return !this.props.canBackPaginate;
         }
         return wantsDateSeparator(prevEvent.getDate(), nextEventDate);
     }
@@ -1256,6 +1257,11 @@ class MemberGrouper extends BaseGrouper {
 
         if (eventTiles.length === 0) {
             eventTiles = null;
+        }
+
+        // If a membership event is the start of visible history, show a room intro
+        if (!this.panel.props.canBackPaginate && !this.prevEvent) {
+            ret.push(<RoomHistoryIntro key="roomhistoryintro" />);
         }
 
         ret.push(
