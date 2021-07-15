@@ -48,6 +48,7 @@ import EncryptionPanel from "./EncryptionPanel";
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import { legacyVerifyUser, verifyDevice, verifyUser } from '../../../verification';
 import { Action } from "../../../dispatcher/actions";
+import UserInfoSharedRooms from "./UserInfoSharedRooms";
 import { UserTab } from "../dialogs/UserSettingsDialog";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
 import BaseCard from "./BaseCard";
@@ -1342,6 +1343,8 @@ const BasicUserInfo: React.FC<{
     const canVerify = cryptoEnabled && homeserverSupportsCrossSigning && !userVerified && !isMe &&
         devices && devices.length > 0;
 
+    const isSharedRoomsFeatureEnabled = SettingsStore.getValue("feature_show_shared_rooms");
+
     const setUpdating = (updating) => {
         setPendingUpdateCount(count => count + (updating ? 1 : -1));
     };
@@ -1397,10 +1400,19 @@ const BasicUserInfo: React.FC<{
         </div>
     );
 
+    let sharedRooms = null;
+    if (isSharedRoomsFeatureEnabled && !isMe) {
+        sharedRooms = <div className="mx_UserInfo_container">
+            <h3>{ _t("Shared Rooms") }</h3>
+            <UserInfoSharedRooms userId={member.userId} />
+        </div>;
+    }
+
     return <React.Fragment>
         { memberDetails }
 
         { securitySection }
+        { sharedRooms }
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
             isIgnored={isIgnored}

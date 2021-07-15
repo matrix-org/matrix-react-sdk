@@ -37,6 +37,9 @@ export enum RightPanelPhases {
     SpaceMemberList = "SpaceMemberList",
     SpaceMemberInfo = "SpaceMemberInfo",
     Space3pidMemberInfo = "Space3pidMemberInfo",
+
+    // Shared rooms
+    SharedRoomsList = 'SharedRoomsList'
 }
 
 // These are the phases that are safe to persist (the ones that don't require additional
