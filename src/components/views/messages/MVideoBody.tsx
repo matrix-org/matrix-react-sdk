@@ -32,6 +32,8 @@ interface IProps {
     mxEvent: any;
     /* called when the video has loaded */
     onHeightChanged: () => void;
+    /* used to refer to the local file while exporting */
+    forExport?: boolean;
 }
 
 interface IState {
@@ -83,7 +85,9 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
     }
 
     private getContentUrl(): string|null {
-        const media = mediaFromContent(this.props.mxEvent.getContent());
+        const content = this.props.mxEvent.getContent();
+        if (this.props.forExport) return content.file?.url || content.url;
+        const media = mediaFromContent(content);
         if (media.isEncrypted) {
             return this.state.decryptedUrl;
         } else {
@@ -97,6 +101,9 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
     }
 
     private getThumbUrl(): string|null {
+        // there's no need of thumbnail when the content is local
+        if (this.props.forExport) return null;
+
         const content = this.props.mxEvent.getContent();
         const media = mediaFromContent(content);
 
@@ -233,6 +240,11 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
         this.props.onHeightChanged();
     };
 
+    private getFileBody = () => {
+        if (this.props.forExport) return null;
+        return <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} showGenericPlaceholder={false} />;
+    };
+
     render() {
         const content = this.props.mxEvent.getContent();
         const autoplay = SettingsStore.getValue("autoplayGifsAndVideos");
@@ -246,8 +258,8 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
             );
         }
 
-        // Important: If we aren't autoplaying and we haven't decrypred it yet, show a video with a poster.
-        if (content.file !== undefined && this.state.decryptedUrl === null && autoplay) {
+        // Important: If we aren't autoplaying and we haven't decrypted it yet, show a video with a poster.
+        if (!this.props.forExport && content.file !== undefined && this.state.decryptedUrl === null && autoplay) {
             // Need to decrypt the attachment
             // The attachment is decrypted in componentDidMount.
             // For now add an img tag with a spinner.
@@ -278,6 +290,8 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
                 preload = "none";
             }
         }
+
+        const fileBody = this.getFileBody();
         return (
             <span className="mx_MVideoBody">
                 <video
@@ -295,7 +309,7 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
                     onPlay={this.videoOnPlay}
                 >
                 </video>
-                <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} showGenericPlaceholder={false} />
+                { fileBody }
             </span>
         );
     }

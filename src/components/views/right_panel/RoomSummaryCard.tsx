@@ -233,6 +233,14 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
         });
     };
 
+    const onRoomExportClick = async () => {
+        const { default: ExportDialog } = await import("../dialogs/ExportDialog");
+
+        Modal.createTrackedDialog('export room dialog', '', ExportDialog, {
+            room,
+        });
+    };
+
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
@@ -278,6 +286,9 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
             </Button>
             <Button className="mx_RoomSummaryCard_icon_settings" onClick={onRoomSettingsClick}>
                 {_t("Room settings")}
+            </Button>
+            <Button className="mx_RoomSummaryCard_icon_export" onClick = {onRoomExportClick}>
+                {_t("Export chat")}
             </Button>
         </Group>
 

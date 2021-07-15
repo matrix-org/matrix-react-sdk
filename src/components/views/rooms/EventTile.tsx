@@ -265,6 +265,8 @@ interface IProps {
     // for now.
     tileShape?: TileShape;
 
+    forExport?: boolean;
+
     // show twelve hour timestamps
     isTwelveHour?: boolean;
 
@@ -329,6 +331,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     static defaultProps = {
         // no-op function because onHeightChanged is optional yet some sub-components assume its existence
         onHeightChanged: function() {},
+        forExport: false,
         layout: Layout.Group,
     };
 
@@ -369,7 +372,7 @@ export default class EventTile extends React.Component<IProps, IState> {
      * or 'sent' receipt, for example.
      * @returns {boolean}
      */
-    private get isEligibleForSpecialReceipt() {
+    private get isEligibleForSpecialReceipt(): boolean {
         // First, if there are other read receipts then just short-circuit this.
         if (this.props.readReceipts && this.props.readReceipts.length > 0) return false;
         if (!this.props.mxEvent) return false;
@@ -636,6 +639,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     shouldHighlight() {
+        if (this.props.forExport) return false;
         const actions = this.context.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
@@ -971,8 +975,11 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
             avatar = (
                 <div className="mx_EventTile_avatar">
-                    <MemberAvatar member={member}
-                        width={avatarSize} height={avatarSize}
+                    <MemberAvatar
+                        forExport={this.props.forExport}
+                        member={member}
+                        width={avatarSize}
+                        height={avatarSize}
                         viewUserOnClick={true}
                     />
                 </div>
@@ -994,7 +1001,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
         }
 
-        const actionBar = !isEditing ? <MessageActionBar
+        const showMessageActionBar = !isEditing && !this.props.forExport;
+        const actionBar = showMessageActionBar ? <MessageActionBar
             mxEvent={this.props.mxEvent}
             reactions={this.state.reactions}
             permalinkCreator={this.props.permalinkCreator}
@@ -1179,6 +1187,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     this.props.permalinkCreator,
                     this.replyThread,
                     this.props.layout,
+                    this.props.forExport,
                     this.props.alwaysShowTimestamps || this.state.hover,
                 );
 
@@ -1203,6 +1212,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { thread }
                             <EventTileType ref={this.tile}
                                 mxEvent={this.props.mxEvent}
+                                forExport={this.props.forExport}
                                 replacingEventId={this.props.replacingEventId}
                                 editState={this.props.editState}
                                 highlights={this.props.highlights}
@@ -1227,11 +1237,11 @@ export default class EventTile extends React.Component<IProps, IState> {
 
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = ['m.room.message', 'm.sticker'];
-function isMessageEvent(ev) {
+function isMessageEvent(ev: MatrixEvent): boolean {
     return (messageTypes.includes(ev.getType()));
 }
 
-export function haveTileForEvent(e) {
+export function haveTileForEvent(e: MatrixEvent): boolean {
     // Only messages have a tile (black-rectangle) if redacted
     if (e.isRedacted() && !isMessageEvent(e)) return false;
 

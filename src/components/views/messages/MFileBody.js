@@ -103,6 +103,8 @@ export default class MFileBody extends React.Component {
         tileShape: PropTypes.string,
         /* whether or not to show the default placeholder for the file. Defaults to true. */
         showGenericPlaceholder: PropTypes.bool,
+
+        forExport: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -150,6 +152,7 @@ export default class MFileBody extends React.Component {
     }
 
     _getContentUrl() {
+        if (this.props.forExport) return null;
         const media = mediaFromContent(this.props.mxEvent.getContent());
         return media.srcHttp;
     }
@@ -173,13 +176,24 @@ export default class MFileBody extends React.Component {
         if (this.props.showGenericPlaceholder) {
             placeholder = (
                 <div className="mx_MFileBody_info">
-                    <span className="mx_MFileBody_info_icon" />
+                    <span className="mx_MFileBody_info_icon">
+                        {this.props.forExport ?
+                            <img alt="Attachment" className="mx_export_attach_icon" src="icons/attach.svg" />
+                            : null}
+                    </span>
                     <span className="mx_MFileBody_info_filename">{this.presentableTextForFile(content, false)}</span>
                 </div>
             );
         }
 
-        if (isEncrypted) {
+        if (this.props.forExport) {
+            const content = this.props.mxEvent.getContent();
+            return <span className="mx_MFileBody">
+                <a href={content.file?.url || content.url}>
+                    { placeholder }
+                </a>
+            </span>;
+        } else if (isEncrypted) {
             if (this.state.decryptedBlob === null) {
                 // Need to decrypt the attachment
                 // Wait for the user to click on the link before downloading
@@ -310,7 +324,7 @@ export default class MFileBody extends React.Component {
             if (this.props.tileShape === TileShape.FileGrid) {
                 return (
                     <span className="mx_MFileBody">
-                        {placeholder}
+                        { placeholder }
                         <div className="mx_MFileBody_download">
                             <a className="mx_MFileBody_downloadLink" {...downloadProps}>
                                 { fileName }
@@ -324,7 +338,7 @@ export default class MFileBody extends React.Component {
             } else {
                 return (
                     <span className="mx_MFileBody">
-                        {placeholder}
+                        { placeholder }
                         <div className="mx_MFileBody_download">
                             <a {...downloadProps}>
                                 <span className="mx_MFileBody_download_icon" />
@@ -337,7 +351,7 @@ export default class MFileBody extends React.Component {
         } else {
             const extra = text ? (': ' + text) : '';
             return <span className="mx_MFileBody">
-                {placeholder}
+                { placeholder }
                 { _t("Invalid file%(extra)s", { extra: extra }) }
             </span>;
         }

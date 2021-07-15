@@ -28,6 +28,7 @@ import AudioPlayer from "../audio_messages/AudioPlayer";
 
 interface IProps {
     mxEvent: MatrixEvent;
+    forExport?: boolean;
 }
 
 interface IState {
@@ -86,6 +87,16 @@ export default class MAudioBody extends React.PureComponent<IProps, IState> {
                 <span className="mx_MAudioBody">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
                     { _t("Error processing audio message") }
+                </span>
+            );
+        }
+
+        if (this.props.forExport) {
+            const content = this.props.mxEvent.getContent();
+            const contentUrl = content.file?.url || content.url;
+            return (
+                <span className="mx_MAudioBody">
+                    <audio src={contentUrl} controls />
                 </span>
             );
         }

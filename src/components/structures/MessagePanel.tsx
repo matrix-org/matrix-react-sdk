@@ -54,7 +54,7 @@ const membershipTypes = [EventType.RoomMember, EventType.RoomThirdPartyInvite, E
 
 // check if there is a previous event and it has the same sender as this event
 // and the types are the same/is in continuedTypes and the time between them is <= CONTINUATION_MAX_INTERVAL
-function shouldFormContinuation(prevEvent: MatrixEvent, mxEvent: MatrixEvent): boolean {
+export function shouldFormContinuation(prevEvent: MatrixEvent, mxEvent: MatrixEvent): boolean {
     // sanity check inputs
     if (!prevEvent || !prevEvent.sender || !mxEvent.sender) return false;
     // check if within the max continuation period

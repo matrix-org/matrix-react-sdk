@@ -44,6 +44,9 @@ export default class MessageEvent extends React.Component {
         /* the shape of the tile, used */
         tileShape: PropTypes.string, // TODO: Use TileShape enum
 
+        /* to set source to local file path during export */
+        forExport: PropTypes.bool,
+
         /* the maximum image height to use, if the event is an image */
         maxImageHeight: PropTypes.number,
 
@@ -120,6 +123,7 @@ export default class MessageEvent extends React.Component {
             highlightLink={this.props.highlightLink}
             showUrlPreview={this.props.showUrlPreview}
             tileShape={this.props.tileShape}
+            forExport={this.props.forExport}
             maxImageHeight={this.props.maxImageHeight}
             replacingEventId={this.props.replacingEventId}
             editState={this.props.editState}

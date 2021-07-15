@@ -174,7 +174,9 @@ export default class MImageBody extends React.Component {
     }
 
     _getContentUrl() {
-        const media = mediaFromContent(this.props.mxEvent.getContent());
+        const content = this.props.mxEvent.getContent();
+        if (this.props.forExport) return content.url || content.file.url;
+        const media = mediaFromContent(content);
         if (media.isEncrypted) {
             return this.state.decryptedUrl;
         } else {
@@ -371,7 +373,7 @@ export default class MImageBody extends React.Component {
         let placeholder = null;
         let gifLabel = null;
 
-        if (!this.state.imgLoaded) {
+        if (!this.props.forExport && !this.state.imgLoaded) {
             placeholder = this.getPlaceholder(maxWidth, maxHeight);
         }
 
@@ -405,7 +407,7 @@ export default class MImageBody extends React.Component {
             <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight: maxHeight + "px" }} >
                 { /* Calculate aspect ratio, using %padding will size _container correctly */ }
                 <div style={{ paddingBottom: (100 * infoHeight / infoWidth) + '%' }} />
-                { showPlaceholder &&
+                {showPlaceholder &&
                     <div className="mx_MImageBody_thumbnail" style={{
                         // Constrain width here so that spinner appears central to the loaded thumbnail
                         maxWidth: infoWidth + "px",
@@ -428,7 +430,7 @@ export default class MImageBody extends React.Component {
 
     // Overidden by MStickerBody
     wrapImage(contentUrl, children) {
-        return <a href={contentUrl} onClick={this.onClick}>
+        return <a href={contentUrl} target={this.props.forExport ? "__blank" : undefined} onClick={this.onClick}>
             {children}
         </a>;
     }
@@ -449,6 +451,7 @@ export default class MImageBody extends React.Component {
 
     // Overidden by MStickerBody
     getFileBody() {
+        if (this.props.forExport) return null;
         return <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} showGenericPlaceholder={false} />;
     }
 
@@ -466,7 +469,7 @@ export default class MImageBody extends React.Component {
 
         const contentUrl = this._getContentUrl();
         let thumbUrl;
-        if (this._isGif() && SettingsStore.getValue("autoplayGifsAndVideos")) {
+        if (this.props.forExport || (this._isGif() && SettingsStore.getValue("autoplayGifsAndVideos"))) {
             thumbUrl = contentUrl;
         } else {
             thumbUrl = this._getThumbUrl();

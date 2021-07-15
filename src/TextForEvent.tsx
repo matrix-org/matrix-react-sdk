@@ -135,6 +135,11 @@ function textForTopicEvent(ev): () => string | null {
     });
 }
 
+function textForRoomAvatarEvent(ev: MatrixEvent): () => string | null {
+    const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
+    return () => _t('%(senderDisplayName)s changed the room avatar.', { senderDisplayName });
+}
+
 function textForRoomNameEvent(ev): () => string | null {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
 
@@ -255,15 +260,27 @@ function textForServerACLEvent(ev): () => string | null {
     return getText;
 }
 
-function textForMessageEvent(ev): () => string | null {
+function textForMessageEvent(ev: MatrixEvent): () => string | null {
     return () => {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-        let message = senderDisplayName + ': ' + ev.getContent().body;
+        let message = ev.getContent().body;
+        if (ev.isRedacted()) {
+            message = _t("Message deleted");
+            const unsigned = ev.getUnsigned();
+            const redactedBecauseUserId = unsigned && unsigned.redacted_because && unsigned.redacted_because.sender;
+            if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
+                const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+                const sender = room && room.getMember(redactedBecauseUserId);
+                message = _t("Message deleted by %(name)s", { name: sender ? sender.name : redactedBecauseUserId });
+            }
+        }
         if (ev.getContent().msgtype === "m.emote") {
             message = "* " + senderDisplayName + " " + message;
         } else if (ev.getContent().msgtype === "m.image") {
             message = _t('%(senderDisplayName)s sent an image.', { senderDisplayName });
-        }
+        } else if (ev.getType() == "m.sticker") {
+            message = _t('%(senderDisplayName)s sent a sticker.', { senderDisplayName });
+        } else message = senderDisplayName + ': ' + message;
         return message;
     };
 }
@@ -652,6 +669,7 @@ interface IHandlers {
 const handlers: IHandlers = {
     'm.room.message': textForMessageEvent,
     'm.call.invite': textForCallInviteEvent,
+    'm.sticker': textForMessageEvent,
     'm.call.answer': textForCallAnswerEvent,
     'm.call.hangup': textForCallHangupEvent,
     'm.call.reject': textForCallRejectEvent,
@@ -662,6 +680,7 @@ const stateHandlers: IHandlers = {
     'm.room.name': textForRoomNameEvent,
     'm.room.topic': textForTopicEvent,
     'm.room.member': textForMemberEvent,
+    "m.room.avatar": textForRoomAvatarEvent,
     'm.room.third_party_invite': textForThreePidInviteEvent,
     'm.room.history_visibility': textForHistoryVisibilityEvent,
     'm.room.power_levels': textForPowerEvent,

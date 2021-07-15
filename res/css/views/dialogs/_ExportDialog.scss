@@ -1,0 +1,24 @@
+.mx_ExportDialog {
+    .mx_ExportDialog_subheading {
+        font-size: $font-16px;
+        display: block;
+        font-family: $font-family;
+        font-weight: $font-semi-bold;
+        color: $primary-fg-color;
+        margin-top: 18px;
+        margin-bottom: 12px;
+    }
+
+    .mx_RadioButton > .mx_RadioButton_content {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .mx_Field {
+        width: 256px;
+    }
+
+    .mx_Field_postfix {
+        padding: 9px 10px;
+    }
+}

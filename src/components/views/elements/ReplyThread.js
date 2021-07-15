@@ -46,8 +46,11 @@ export default class ReplyThread extends React.Component {
         permalinkCreator: PropTypes.instanceOf(RoomPermalinkCreator).isRequired,
         // Specifies which layout to use.
         layout: LayoutPropType,
+        forExport: PropTypes.bool,
+
         // Whether to always show a timestamp
         alwaysShowTimestamps: PropTypes.bool,
+
     };
 
     static contextType = MatrixClientContext;
@@ -69,14 +72,17 @@ export default class ReplyThread extends React.Component {
         };
 
         this.unmounted = false;
-        this.context.on("Event.replaced", this.onEventReplaced);
-        this.room = this.context.getRoom(this.props.parentEv.getRoomId());
-        this.room.on("Room.redaction", this.onRoomRedaction);
-        this.room.on("Room.redactionCancelled", this.onRoomRedaction);
 
-        this.onQuoteClick = this.onQuoteClick.bind(this);
-        this.canCollapse = this.canCollapse.bind(this);
-        this.collapse = this.collapse.bind(this);
+        if (!this.props.forExport) {
+            this.context.on("Event.replaced", this.onEventReplaced);
+            this.room = this.context.getRoom(this.props.parentEv.getRoomId());
+            this.room.on("Room.redaction", this.onRoomRedaction);
+            this.room.on("Room.redactionCancelled", this.onRoomRedaction);
+
+            this.onQuoteClick = this.onQuoteClick.bind(this);
+            this.canCollapse = this.canCollapse.bind(this);
+            this.collapse = this.collapse.bind(this);
+        }
     }
 
     static getParentEventId(ev) {
@@ -214,12 +220,13 @@ export default class ReplyThread extends React.Component {
         };
     }
 
-    static makeThread(parentEv, onHeightChanged, permalinkCreator, ref, layout, alwaysShowTimestamps) {
+    static makeThread(parentEv, onHeightChanged, permalinkCreator, ref, layout, forExport, alwaysShowTimestamps) {
         if (!ReplyThread.getParentEventId(parentEv)) {
             return null;
         }
         return <ReplyThread
             parentEv={parentEv}
+            forExport={forExport}
             onHeightChanged={onHeightChanged}
             ref={ref}
             permalinkCreator={permalinkCreator}
@@ -366,6 +373,11 @@ export default class ReplyThread extends React.Component {
                     })
                 }
             </blockquote>;
+        } else if (this.props.forExport) {
+            const eventId = ReplyThread.getParentEventId(this.props.parentEv);
+            header = <p style={{ marginTop: -5, marginBottom: 5 }}>
+                In reply to <a className="mx_reply_anchor" href={`#${eventId}`} scroll-to={eventId}>this message</a>
+            </p>;
         } else if (this.state.loading) {
             const Spinner = sdk.getComponent("elements.Spinner");
             header = <Spinner w={16} h={16} />;
