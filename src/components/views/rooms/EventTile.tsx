@@ -45,6 +45,7 @@ import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import NotificationBadge from "./NotificationBadge";
+import CallEventGrouper from "../../structures/CallEventGrouper";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
 import MemberAvatar from '../avatars/MemberAvatar';
@@ -60,10 +61,7 @@ const eventTileTypes = {
     [EventType.Sticker]: 'messages.MessageEvent',
     [EventType.KeyVerificationCancel]: 'messages.MKeyVerificationConclusion',
     [EventType.KeyVerificationDone]: 'messages.MKeyVerificationConclusion',
-    [EventType.CallInvite]: 'messages.TextualEvent',
-    [EventType.CallAnswer]: 'messages.TextualEvent',
-    [EventType.CallHangup]: 'messages.TextualEvent',
-    [EventType.CallReject]: 'messages.TextualEvent',
+    [EventType.CallInvite]: 'messages.CallEvent',
 };
 
 const stateEventTileTypes = {
@@ -293,6 +291,9 @@ interface IProps {
 
     // Helper to build permalinks for the room
     permalinkCreator?: RoomPermalinkCreator;
+
+    // CallEventGrouper for this event
+    callEventGrouper?: CallEventGrouper;
 
     // Symbol of the root node
     as?: string;
@@ -861,6 +862,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
             (eventType === EventType.RoomCreate) ||
             (eventType === EventType.RoomEncryption) ||
+            (eventType === EventType.CallInvite) ||
             (tileHandler === "messages.MJitsiWidgetEvent");
         let isInfoMessage = (
             !isBubbleMessage && eventType !== EventType.RoomMessage &&
@@ -1210,6 +1212,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 showUrlPreview={this.props.showUrlPreview}
                                 permalinkCreator={this.props.permalinkCreator}
                                 onHeightChanged={this.props.onHeightChanged}
+                                callEventGrouper={this.props.callEventGrouper}
                             />
                             { keyRequestInfo }
                             { reactionsRow }
