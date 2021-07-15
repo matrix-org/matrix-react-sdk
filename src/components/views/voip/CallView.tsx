@@ -25,8 +25,14 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import { CallState, CallType, MatrixCall, CallEvent } from 'matrix-js-sdk/src/webrtc/call';
 import classNames from 'classnames';
 import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../../Keyboard';
-import { alwaysAboveLeftOf, alwaysAboveRightOf, ChevronFace, ContextMenuButton } from '../../structures/ContextMenu';
+import {
+    alwaysAboveLeftOf,
+    alwaysAboveRightOf,
+    ChevronFace,
+    ContextMenuTooltipButton,
+} from '../../structures/ContextMenu';
 import CallContextMenu from '../context_menus/CallContextMenu';
 import { avatarUrlForMember } from '../../../Avatar';
 import DialpadContextMenu from '../context_menus/DialpadContextMenu';
@@ -441,36 +447,40 @@ export default class CallView extends React.Component<IProps, IState> {
             mx_CallView_callControls_hidden: !this.state.controlsVisible,
         });
 
-        const vidMuteButton = this.props.call.type === CallType.Video ? <AccessibleButton
+        const vidMuteButton = this.props.call.type === CallType.Video ? <AccessibleTooltipButton
             className={vidClasses}
             onClick={this.onVidMuteClick}
+            title={this.state.vidMuted ? _t("Start the camera") : _t("Stop the camera")}
         /> : null;
 
         // The dial pad & 'more' button actions are only relevant in a connected call
         // When not connected, we have to put something there to make the flexbox alignment correct
-        const dialpadButton = this.state.callState === CallState.Connected ? <ContextMenuButton
+        const dialpadButton = this.state.callState === CallState.Connected ? <ContextMenuTooltipButton
             className="mx_CallView_callControls_button mx_CallView_callControls_dialpad"
             inputRef={this.dialpadButton}
             onClick={this.onDialpadClick}
             isExpanded={this.state.showDialpad}
+            title={_t("Dialpad")}
         /> : <div className="mx_CallView_callControls_button mx_CallView_callControls_button_dialpad_hidden" />;
 
-        const contextMenuButton = this.state.callState === CallState.Connected ? <ContextMenuButton
+        const contextMenuButton = this.state.callState === CallState.Connected ? <ContextMenuTooltipButton
             className="mx_CallView_callControls_button mx_CallView_callControls_button_more"
             onClick={this.onMoreClick}
             inputRef={this.contextMenuButton}
             isExpanded={this.state.showMoreMenu}
+            title={_t("More")}
         /> : <div className="mx_CallView_callControls_button mx_CallView_callControls_button_more_hidden" />;
 
         // in the near future, the dial pad button will go on the left. For now, it's the nothing button
         // because something needs to have margin-right: auto to make the alignment correct.
         const callControls = <div className={callControlsClasses}>
             {dialpadButton}
-            <AccessibleButton
+            <AccessibleTooltipButton
                 className={micClasses}
                 onClick={this.onMicMuteClick}
+                title={this.state.micMuted ? _t("Unmute the microphone") : _t("Mute the microphone")}
             />
-            <AccessibleButton
+            <AccessibleTooltipButton
                 className="mx_CallView_callControls_button mx_CallView_callControls_button_hangup"
                 onClick={() => {
                     dis.dispatch({
@@ -478,6 +488,7 @@ export default class CallView extends React.Component<IProps, IState> {
                         room_id: callRoomId,
                     });
                 }}
+                title={_t("Hangup")}
             />
             {vidMuteButton}
             <div className={micCacheClasses} />
