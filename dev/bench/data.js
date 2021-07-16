@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626462226993,
+  "lastUpdate": 1626477216687,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7268,6 +7268,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4289.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0f15cee583d6e757c743ef326e1a2db07b672e82",
+          "message": "Merge pull request #6205 from robintown/text-for-event-perf",
+          "timestamp": "2021-07-17T00:08:34+01:00",
+          "tree_id": "622345db71843d815233c332feef8bd461ede2e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0f15cee583d6e757c743ef326e1a2db07b672e82"
+        },
+        "date": 1626477215817,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4383,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1184,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1792,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4367.5,
             "unit": "ms",
             "extra": "type: measure"
           }
