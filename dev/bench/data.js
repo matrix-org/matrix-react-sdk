@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626361113300,
+  "lastUpdate": 1626416233451,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7040,6 +7040,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4993.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6809817c770682fa785c9842ea035d7ee620ce86",
+          "message": "Merge pull request #6387 from SimonBrandner/fix/irc-replies/18010\n\nFix IRC layout replies",
+          "timestamp": "2021-07-16T07:11:53+01:00",
+          "tree_id": "a6c644c79a8e99866343cbd3592e0695bd3146fe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6809817c770682fa785c9842ea035d7ee620ce86"
+        },
+        "date": 1626416232078,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4176.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 962,
             "unit": "ms",
             "extra": "type: measure"
           }
