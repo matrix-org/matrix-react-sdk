@@ -19,7 +19,6 @@ import { ReactElement } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
 import CommandProvider from './CommandProvider';
-import CommunityProvider from './CommunityProvider';
 import DuckDuckGoProvider from './DuckDuckGoProvider';
 import RoomProvider from './RoomProvider';
 import UserProvider from './UserProvider';
@@ -60,8 +59,6 @@ const PROVIDERS = [
 
 if (SpaceStore.spacesEnabled) {
     PROVIDERS.push(SpaceProvider);
-} else {
-    PROVIDERS.push(CommunityProvider);
 }
 
 // Providers will get rejected if they take longer than this.

@@ -43,17 +43,11 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
         return `${this.elementUrl}/#/user/${userId}`;
     }
 
-    forGroup(groupId: string): string {
-        return `${this.elementUrl}/#/group/${groupId}`;
-    }
-
     forEntity(entityId: string): string {
         if (entityId[0] === '!' || entityId[0] === '#') {
             return this.forRoom(entityId);
         } else if (entityId[0] === '@') {
             return this.forUser(entityId);
-        } else if (entityId[0] === '+') {
-            return this.forGroup(entityId);
         } else throw new Error("Unrecognized entity");
     }
 
@@ -102,9 +96,6 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
         if (entityType === 'user') {
             // Probably a user, no further parsing needed.
             return PermalinkParts.forUser(entity);
-        } else if (entityType === 'group') {
-            // Probably a group, no further parsing needed.
-            return PermalinkParts.forGroup(entity);
         } else if (entityType === 'room') {
             // Rejoin the rest because v3 events can have slashes (annoyingly)
             const eventId = parts.length > 2 ? parts.slice(2).join('/') : "";

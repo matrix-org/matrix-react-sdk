@@ -18,19 +18,14 @@ import React from 'react';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { _t } from '../../../languageHandler';
-import { GroupMemberType } from '../../../groups';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { mediaFromMxc } from "../../../customisations/Media";
 import MemberAvatar from '../avatars/MemberAvatar';
-import BaseAvatar from '../avatars/BaseAvatar';
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
 interface IProps {
-    // matrix-js-sdk (room) member object. Supply either this or 'groupMember'
+    // matrix-js-sdk (room) member object
     member: RoomMember;
-    // group member object. Supply either this or 'member'
-    groupMember: GroupMemberType;
     // needed if a group member is specified
     matrixClient?: MatrixClient;
     action: string; // eg. 'Ban'
@@ -87,21 +82,8 @@ export default class ConfirmUserActionDialog extends React.Component<IProps> {
             );
         }
 
-        let avatar;
-        let name;
-        let userId;
-        if (this.props.member) {
-            avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
-            name = this.props.member.name;
-            userId = this.props.member.userId;
-        } else {
-            const httpAvatarUrl = this.props.groupMember.avatarUrl
-                ? mediaFromMxc(this.props.groupMember.avatarUrl).getSquareThumbnailHttp(48)
-                : null;
-            name = this.props.groupMember.displayname || this.props.groupMember.userId;
-            userId = this.props.groupMember.userId;
-            avatar = <BaseAvatar name={name} url={httpAvatarUrl} width={48} height={48} />;
-        }
+        const avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
+        const name = this.props.member.name;
 
         return (
             <BaseDialog className="mx_ConfirmUserActionDialog" onFinished={this.props.onFinished}
@@ -113,7 +95,7 @@ export default class ConfirmUserActionDialog extends React.Component<IProps> {
                         { avatar }
                     </div>
                     <div className="mx_ConfirmUserActionDialog_name">{ name }</div>
-                    <div className="mx_ConfirmUserActionDialog_userId">{ userId }</div>
+                    <div className="mx_ConfirmUserActionDialog_userId">{ this.props.member.userId }</div>
                 </div>
                 { reasonBox }
                 <DialogButtons primaryButton={this.props.action}

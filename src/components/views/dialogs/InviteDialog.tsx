@@ -39,13 +39,11 @@ import {
     IInviteResult,
     inviteMultipleToRoom,
     showAnyInviteErrors,
-    showCommunityInviteDialog,
 } from "../../../RoomInvite";
 import { Key } from "../../../Keyboard";
 import { Action } from "../../../dispatcher/actions";
 import { DefaultTagID } from "../../../stores/room-list/models";
 import RoomListStore from "../../../stores/room-list/RoomListStore";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import CountlyAnalytics from "../../../CountlyAnalytics";
@@ -1098,23 +1096,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.props.onFinished();
     };
 
-    private onCommunityInviteClick = (e) => {
-        this.props.onFinished();
-        showCommunityInviteDialog(CommunityPrototypeStore.instance.getSelectedCommunityId());
-    };
-
     private renderSection(kind: "recents"|"suggestions") {
         let sourceMembers = kind === 'recents' ? this.state.recents : this.state.suggestions;
         let showNum = kind === 'recents' ? this.state.numRecentsShown : this.state.numSuggestionsShown;
         const showMoreFn = kind === 'recents' ? this.showMoreRecents.bind(this) : this.showMoreSuggestions.bind(this);
         const lastActive = (m) => kind === 'recents' ? m.lastActive : null;
         let sectionName = kind === 'recents' ? _t("Recent Conversations") : _t("Suggestions");
-        let sectionSubname = null;
-
-        if (kind === 'suggestions' && CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            const communityName = CommunityPrototypeStore.instance.getSelectedCommunityName();
-            sectionSubname = _t("May include members not in %(communityName)s", { communityName });
-        }
 
         if (this.props.kind === KIND_INVITE) {
             sectionName = kind === 'recents' ? _t("Recently Direct Messaged") : _t("Suggestions");
@@ -1193,7 +1180,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         return (
             <div className='mx_InviteDialog_section'>
                 <h3>{sectionName}</h3>
-                {sectionSubname ? <p className="mx_InviteDialog_subname">{sectionSubname}</p> : null}
                 {tiles}
                 {showMore}
             </div>
@@ -1355,35 +1341,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 );
             }
 
-            if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-                const communityName = CommunityPrototypeStore.instance.getSelectedCommunityName();
-                const inviteText = _t(
-                    "This won't invite them to %(communityName)s. " +
-                    "To invite someone to %(communityName)s, click <a>here</a>",
-                    { communityName }, {
-                        userId: () => {
-                            return (
-                                <a
-                                    href={makeUserPermalink(userId)}
-                                    rel="noreferrer noopener"
-                                    target="_blank"
-                                >{userId}</a>
-                            );
-                        },
-                        a: (sub) => {
-                            return (
-                                <AccessibleButton
-                                    kind="link"
-                                    onClick={this.onCommunityInviteClick}
-                                >{sub}</AccessibleButton>
-                            );
-                        },
-                    },
-                );
-                helpText = <React.Fragment>
-                    { helpText } {inviteText}
-                </React.Fragment>;
-            }
             buttonText = _t("Go");
             goButtonFn = this.startDm;
             extraSection = <div className="mx_InviteDialog_section_hidden_suggestions_disclaimer">

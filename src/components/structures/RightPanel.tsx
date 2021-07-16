@@ -23,9 +23,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
 import dis from '../../dispatcher/dispatcher';
-import GroupStore from '../../stores/GroupStore';
 import {
-    RIGHT_PANEL_PHASES_NO_ARGS,
     RIGHT_PANEL_SPACE_PHASES,
     RightPanelPhases,
 } from "../../stores/RightPanelStorePhases";
@@ -38,9 +36,6 @@ import { replaceableComponent } from "../../utils/replaceableComponent";
 import SettingsStore from "../../settings/SettingsStore";
 import { ActionPayload } from "../../dispatcher/payloads";
 import MemberList from "../views/rooms/MemberList";
-import GroupMemberList from "../views/groups/GroupMemberList";
-import GroupRoomList from "../views/groups/GroupRoomList";
-import GroupRoomInfo from "../views/groups/GroupRoomInfo";
 import UserInfo from "../views/right_panel/UserInfo";
 import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 import FilePanel from "./FilePanel";
@@ -52,7 +47,6 @@ import SpaceStore from "../../stores/SpaceStore";
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
-    groupId?: string; // if showing panels for a given group, this is set
     user?: User; // used if we know the user ahead of opening the panel
     resizeNotifier: ResizeNotifier;
 }
@@ -65,8 +59,6 @@ interface IState {
     verificationRequestPromise?: Promise<VerificationRequest>;
     space?: Room;
     widgetId?: string;
-    groupRoomId?: string;
-    groupId?: string;
     event: MatrixEvent;
 }
 
@@ -102,13 +94,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     private getPhaseFromProps() {
         const rps = RightPanelStore.getSharedInstance();
         const userForPanel = this.getUserForPanel();
-        if (this.props.groupId) {
-            if (!RIGHT_PANEL_PHASES_NO_ARGS.includes(rps.groupPanelPhase)) {
-                dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.GroupMemberList });
-                return RightPanelPhases.GroupMemberList;
-            }
-            return rps.groupPanelPhase;
-        } else if (SpaceStore.spacesEnabled && this.props.room?.isSpaceRoom()
+        if (SpaceStore.spacesEnabled && this.props.room?.isSpaceRoom()
             && !RIGHT_PANEL_SPACE_PHASES.includes(rps.roomPanelPhase)
         ) {
             return RightPanelPhases.SpaceMemberList;
@@ -140,7 +126,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
         this.dispatcherRef = dis.register(this.onAction);
         const cli = this.context;
         cli.on("RoomState.members", this.onRoomStateMember);
-        this.initGroupStore(this.props.groupId);
     }
 
     componentWillUnmount() {
@@ -148,31 +133,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
         if (this.context) {
             this.context.removeListener("RoomState.members", this.onRoomStateMember);
         }
-        this.unregisterGroupStore();
     }
-
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    UNSAFE_componentWillReceiveProps(newProps) { // eslint-disable-line camelcase
-        if (newProps.groupId !== this.props.groupId) {
-            this.unregisterGroupStore();
-            this.initGroupStore(newProps.groupId);
-        }
-    }
-
-    private initGroupStore(groupId: string) {
-        if (!groupId) return;
-        GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
-    }
-
-    private unregisterGroupStore() {
-        GroupStore.unregisterListener(this.onGroupStoreUpdated);
-    }
-
-    private onGroupStoreUpdated = () => {
-        this.setState({
-            isUserPrivilegedInGroup: GroupStore.isUserPrivileged(this.props.groupId),
-        });
-    };
 
     private onRoomStateMember = (ev: MatrixEvent, _, member: RoomMember) => {
         if (!this.props.room || member.roomId !== this.props.room.roomId) {
@@ -192,8 +153,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
         if (payload.action === Action.AfterRightPanelPhaseChange) {
             this.setState({
                 phase: payload.phase,
-                groupRoomId: payload.groupRoomId,
-                groupId: payload.groupId,
                 member: payload.member,
                 event: payload.event,
                 verificationRequest: payload.verificationRequest,
@@ -226,7 +185,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             // the RightPanelStore has no way of knowing which mode room/group it is in, so we handle closing here
             dis.dispatch({
                 action: Action.ToggleRightPanel,
-                type: this.props.groupId ? "group" : "room",
+                type: "room",
             });
         }
     };
@@ -249,16 +208,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 />;
                 break;
 
-            case RightPanelPhases.GroupMemberList:
-                if (this.props.groupId) {
-                    panel = <GroupMemberList groupId={this.props.groupId} key={this.props.groupId} />;
-                }
-                break;
-
-            case RightPanelPhases.GroupRoomList:
-                panel = <GroupRoomList groupId={this.props.groupId} key={this.props.groupId} />;
-                break;
-
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel:
@@ -276,22 +225,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
                 panel = <ThirdPartyMemberInfo event={this.state.event} key={roomId} />;
-                break;
-
-            case RightPanelPhases.GroupMemberInfo:
-                panel = <UserInfo
-                    user={this.state.member}
-                    groupId={this.props.groupId}
-                    key={this.state.member.userId}
-                    phase={this.state.phase}
-                    onClose={this.onClose} />;
-                break;
-
-            case RightPanelPhases.GroupRoomInfo:
-                panel = <GroupRoomInfo
-                    groupRoomId={this.state.groupRoomId}
-                    groupId={this.props.groupId}
-                    key={this.state.groupRoomId} />;
                 break;
 
             case RightPanelPhases.NotificationPanel:

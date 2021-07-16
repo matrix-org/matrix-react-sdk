@@ -86,7 +86,6 @@ export default class PreferencesUserSettingsTab extends React.Component<{}, ISta
         'scrollToBottomOnMessageSent',
     ];
     static GENERAL_SETTINGS = [
-        'TagPanel.enableTagPanel',
         'promptBeforeInviteUnknownUsers',
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)

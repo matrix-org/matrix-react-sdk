@@ -24,15 +24,11 @@ import { Action } from '../dispatcher/actions';
 import { SettingLevel } from "../settings/SettingLevel";
 
 interface RightPanelStoreState {
-    // Whether or not to show the right panel at all. We split out rooms and groups
-    // because they're different flows for the user to follow.
+    // Whether or not to show the right panel at all.
     showRoomPanel: boolean;
-    showGroupPanel: boolean;
 
     // The last phase (screen) the right panel was showing
     lastRoomPhase: RightPanelPhases;
-    lastGroupPhase: RightPanelPhases;
-
     previousPhase?: RightPanelPhases;
 
     // Extra information about the last phase
@@ -41,18 +37,9 @@ interface RightPanelStoreState {
 
 const INITIAL_STATE: RightPanelStoreState = {
     showRoomPanel: SettingsStore.getValue("showRightPanelInRoom"),
-    showGroupPanel: SettingsStore.getValue("showRightPanelInGroup"),
     lastRoomPhase: SettingsStore.getValue("lastRightPanelPhaseForRoom"),
-    lastGroupPhase: SettingsStore.getValue("lastRightPanelPhaseForGroup"),
     lastRoomPhaseParams: {},
 };
-
-const GROUP_PHASES = [
-    RightPanelPhases.GroupMemberList,
-    RightPanelPhases.GroupRoomList,
-    RightPanelPhases.GroupRoomInfo,
-    RightPanelPhases.GroupMemberInfo,
-];
 
 const MEMBER_INFO_PHASES = [
     RightPanelPhases.RoomMemberInfo,
@@ -80,16 +67,8 @@ export default class RightPanelStore extends Store<ActionPayload> {
         return this.state.showRoomPanel;
     }
 
-    get isOpenForGroup(): boolean {
-        return this.state.showGroupPanel;
-    }
-
     get roomPanelPhase(): RightPanelPhases {
         return this.state.lastRoomPhase;
-    }
-
-    get groupPanelPhase(): RightPanelPhases {
-        return this.state.lastGroupPhase;
     }
 
     get previousPhase(): RightPanelPhases | null {
@@ -98,10 +77,6 @@ export default class RightPanelStore extends Store<ActionPayload> {
 
     get visibleRoomPanelPhase(): RightPanelPhases {
         return this.isOpenForRoom ? this.roomPanelPhase : null;
-    }
-
-    get visibleGroupPanelPhase(): RightPanelPhases {
-        return this.isOpenForGroup ? this.groupPanelPhase : null;
     }
 
     get roomPanelPhaseParams(): any {
@@ -117,12 +92,6 @@ export default class RightPanelStore extends Store<ActionPayload> {
             SettingLevel.DEVICE,
             this.state.showRoomPanel,
         );
-        SettingsStore.setValue(
-            "showRightPanelInGroup",
-            null,
-            SettingLevel.DEVICE,
-            this.state.showGroupPanel,
-        );
 
         if (RIGHT_PANEL_PHASES_NO_ARGS.includes(this.state.lastRoomPhase)) {
             SettingsStore.setValue(
@@ -130,14 +99,6 @@ export default class RightPanelStore extends Store<ActionPayload> {
                 null,
                 SettingLevel.DEVICE,
                 this.state.lastRoomPhase,
-            );
-        }
-        if (RIGHT_PANEL_PHASES_NO_ARGS.includes(this.state.lastGroupPhase)) {
-            SettingsStore.setValue(
-                "lastRightPanelPhaseForGroup",
-                null,
-                SettingLevel.DEVICE,
-                this.state.lastGroupPhase,
             );
         }
 
@@ -148,18 +109,11 @@ export default class RightPanelStore extends Store<ActionPayload> {
         switch (payload.action) {
             case 'view_room':
                 if (payload.room_id === this.lastRoomId) break; // skip this transition, probably a permalink
-                // fallthrough
-            case 'view_group':
                 this.lastRoomId = payload.room_id;
 
                 // Reset to the member list if we're viewing member info
                 if (MEMBER_INFO_PHASES.includes(this.state.lastRoomPhase)) {
                     this.setState({ lastRoomPhase: RightPanelPhases.RoomMemberList, lastRoomPhaseParams: {} });
-                }
-
-                // Do the same for groups
-                if (this.state.lastGroupPhase === RightPanelPhases.GroupMemberInfo) {
-                    this.setState({ lastGroupPhase: RightPanelPhases.GroupMemberList });
                 }
                 break;
 
@@ -184,33 +138,18 @@ export default class RightPanelStore extends Store<ActionPayload> {
                     return;
                 }
 
-                if (GROUP_PHASES.includes(targetPhase)) {
-                    if (targetPhase === this.state.lastGroupPhase) {
-                        this.setState({
-                            showGroupPanel: !this.state.showGroupPanel,
-                            previousPhase: null,
-                        });
-                    } else {
-                        this.setState({
-                            lastGroupPhase: targetPhase,
-                            showGroupPanel: true,
-                            previousPhase: this.state.lastGroupPhase,
-                        });
-                    }
+                if (targetPhase === this.state.lastRoomPhase && !refireParams && allowClose) {
+                    this.setState({
+                        showRoomPanel: !this.state.showRoomPanel,
+                        previousPhase: null,
+                    });
                 } else {
-                    if (targetPhase === this.state.lastRoomPhase && !refireParams && allowClose) {
-                        this.setState({
-                            showRoomPanel: !this.state.showRoomPanel,
-                            previousPhase: null,
-                        });
-                    } else {
-                        this.setState({
-                            lastRoomPhase: targetPhase,
-                            showRoomPanel: true,
-                            lastRoomPhaseParams: refireParams || {},
-                            previousPhase: this.state.lastRoomPhase,
-                        });
-                    }
+                    this.setState({
+                        lastRoomPhase: targetPhase,
+                        showRoomPanel: true,
+                        lastRoomPhaseParams: refireParams || {},
+                        previousPhase: this.state.lastRoomPhase,
+                    });
                 }
 
                 // Let things like the member info panel actually open to the right member.
@@ -223,11 +162,7 @@ export default class RightPanelStore extends Store<ActionPayload> {
             }
 
             case Action.ToggleRightPanel:
-                if (payload.type === "room") {
-                    this.setState({ showRoomPanel: !this.state.showRoomPanel });
-                } else { // group
-                    this.setState({ showGroupPanel: !this.state.showGroupPanel });
-                }
+                this.setState({ showRoomPanel: !this.state.showRoomPanel });
                 break;
         }
     }

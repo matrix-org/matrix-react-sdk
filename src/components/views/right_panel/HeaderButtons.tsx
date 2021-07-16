@@ -32,7 +32,6 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 export enum HeaderKind {
   Room = "room",
-  Group = "group",
 }
 
 interface IState {
@@ -53,7 +52,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.getSharedInstance();
         this.state = {
             headerKind: kind,
-            phase: kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
+            phase: kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : undefined,
         };
     }
 
@@ -89,8 +88,6 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.getSharedInstance();
         if (this.state.headerKind === HeaderKind.Room) {
             this.setState({ phase: rps.visibleRoomPanelPhase });
-        } else if (this.state.headerKind === HeaderKind.Group) {
-            this.setState({ phase: rps.visibleGroupPanelPhase });
         }
     }
 

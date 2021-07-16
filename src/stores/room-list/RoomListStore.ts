@@ -23,7 +23,6 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./filters/IFilterCondition";
-import { TagWatcher } from "./TagWatcher";
 import RoomViewStore from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
@@ -58,7 +57,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private algorithm = new Algorithm();
     private filterConditions: IFilterCondition[] = [];
     private prefilterConditions: IFilterCondition[] = [];
-    private tagWatcher: TagWatcher;
     private spaceWatcher: SpaceWatcher;
     private updateFn = new MarkedExecution(() => {
         for (const tagId of Object.keys(this.orderedLists)) {
@@ -80,8 +78,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private setupWatchers() {
         if (SpaceStore.spacesEnabled) {
             this.spaceWatcher = new SpaceWatcher(this);
-        } else {
-            this.tagWatcher = new TagWatcher(this);
         }
     }
 

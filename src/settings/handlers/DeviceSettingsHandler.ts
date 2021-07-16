@@ -60,9 +60,7 @@ export default class DeviceSettingsHandler extends SettingsHandler {
         // Special case the right panel - see `setValue` for rationale.
         if ([
             "showRightPanelInRoom",
-            "showRightPanelInGroup",
             "lastRightPanelPhaseForRoom",
-            "lastRightPanelPhaseForGroup",
         ].includes(settingName)) {
             const val = JSON.parse(localStorage.getItem(`mx_${settingName}`) || "{}");
             return val['value'];
@@ -105,9 +103,7 @@ export default class DeviceSettingsHandler extends SettingsHandler {
         // that introduces just enough latency to be annoying.
         if ([
             "showRightPanelInRoom",
-            "showRightPanelInGroup",
             "lastRightPanelPhaseForRoom",
-            "lastRightPanelPhaseForGroup",
         ].includes(settingName)) {
             localStorage.setItem(`mx_${settingName}`, JSON.stringify({ value: newValue }));
             this.watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);

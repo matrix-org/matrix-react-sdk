@@ -27,7 +27,6 @@ import * as Rooms from "./Rooms";
 import DMRoomMap from "./utils/DMRoomMap";
 import { getAddressType } from "./UserAddress";
 import { getE2EEWellKnown } from "./utils/WellKnownUtils";
-import GroupStore from "./stores/GroupStore";
 import CountlyAnalytics from "./CountlyAnalytics";
 import { isJoinedOrNearlyJoined } from "./utils/membership";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./CallHandler";
@@ -50,7 +49,6 @@ export interface IOpts {
     encryption?: boolean;
     inlineErrors?: boolean;
     andView?: boolean;
-    associatedWithCommunity?: string;
     parentSpace?: Room;
 }
 
@@ -166,9 +164,6 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     }).then(() => {
         if (opts.parentSpace) {
             return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], true);
-        }
-        if (opts.associatedWithCommunity) {
-            return GroupStore.addRoomToGroup(opts.associatedWithCommunity, roomId, false);
         }
     }).then(function() {
         // NB createRoom doesn't block on the client seeing the echo that the

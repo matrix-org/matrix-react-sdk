@@ -125,57 +125,11 @@ function matrixLinkify(linkify) {
     S_USERID.on(TT.DOT, S_AT_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
     S_USERID.on(TT.COLON, S_USERID_COLON); // do not accept trailing `:`
     S_USERID_COLON.on(TT.NUM, S_USERID_COLON_NUM); // but do accept :NUM (port specifier)
-
-    const GROUPID = function(value) {
-        MultiToken.call(this, value);
-        this.type = 'groupid';
-        this.isLink = true;
-    };
-    GROUPID.prototype = new MultiToken();
-
-    const S_PLUS = S_START.jump(TT.PLUS);
-    const S_PLUS_NAME = new linkify.parser.State();
-    const S_PLUS_NAME_COLON = new linkify.parser.State();
-    const S_PLUS_NAME_COLON_DOMAIN = new linkify.parser.State(GROUPID);
-    const S_PLUS_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_GROUPID = new linkify.parser.State(GROUPID);
-    const S_GROUPID_COLON = new linkify.parser.State();
-    const S_GROUPID_COLON_NUM = new linkify.parser.State(GROUPID);
-
-    const groupIdTokens = [
-        TT.DOT,
-        TT.UNDERSCORE,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-
-        // as in roomnameTokens
-        TT.LOCALHOST,
-    ];
-
-    S_PLUS.on(groupIdTokens, S_PLUS_NAME);
-    S_PLUS_NAME.on(groupIdTokens, S_PLUS_NAME);
-    S_PLUS_NAME.on(TT.DOMAIN, S_PLUS_NAME);
-
-    S_PLUS_NAME.on(TT.COLON, S_PLUS_NAME_COLON);
-
-    S_PLUS_NAME_COLON.on(TT.DOMAIN, S_PLUS_NAME_COLON_DOMAIN);
-    S_PLUS_NAME_COLON.on(TT.LOCALHOST, S_GROUPID); // accept +foo:localhost
-    S_PLUS_NAME_COLON.on(TT.TLD, S_GROUPID); // accept +foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_PLUS_NAME_COLON_DOMAIN.on(TT.DOT, S_PLUS_NAME_COLON_DOMAIN_DOT);
-    S_PLUS_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_PLUS_NAME_COLON_DOMAIN);
-    S_PLUS_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_GROUPID);
-
-    S_GROUPID.on(TT.DOT, S_PLUS_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_GROUPID.on(TT.COLON, S_GROUPID_COLON); // do not accept trailing `:`
-    S_GROUPID_COLON.on(TT.NUM, S_GROUPID_COLON_NUM); // but do accept :NUM (port specifier)
 }
 
 // stubs, overwritten in MatrixChat's componentDidMount
 matrixLinkify.onUserClick = function(e, userId) { e.preventDefault(); };
 matrixLinkify.onAliasClick = function(e, roomAlias) { e.preventDefault(); };
-matrixLinkify.onGroupClick = function(e, groupId) { e.preventDefault(); };
 
 const escapeRegExp = function(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -226,12 +180,6 @@ matrixLinkify.options = {
                         matrixLinkify.onAliasClick(e, href);
                     },
                 };
-            case "groupid":
-                return {
-                    click: function(e) {
-                        matrixLinkify.onGroupClick(e, href);
-                    },
-                };
         }
     },
 
@@ -239,7 +187,6 @@ matrixLinkify.options = {
         switch (type) {
             case 'roomalias':
             case 'userid':
-            case 'groupid':
             default: {
                 return tryTransformEntityToPermalink(href);
             }

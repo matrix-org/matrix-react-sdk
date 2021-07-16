@@ -223,16 +223,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_communities_v2_prototypes": {
-        isFeature: true,
-        displayName: _td(
-            "Communities v2 prototypes. Requires compatible homeserver. " +
-            "Highly experimental - use with caution.",
-        ),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new IncompatibleController("feature_spaces"),
-    },
     "feature_pinning": {
         isFeature: true,
         displayName: _td("Message Pinning"),
@@ -473,14 +463,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Mirror local video feed'),
         default: false,
     },
-    "TagPanel.enableTagPanel": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Community Filter Panel'),
-        default: true,
-        invertedSettingName: 'TagPanel.disableTagPanel',
-        // We force the value to true because the invertedSettingName causes it to flip
-        controller: new UIFeatureController(UIFeature.Communities, true),
-    },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: "light",
@@ -692,17 +674,9 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },
-    "showRightPanelInGroup": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
-    },
     "lastRightPanelPhaseForRoom": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: RightPanelPhases.RoomSummary,
-    },
-    "lastRightPanelPhaseForGroup": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: RightPanelPhases.GroupMemberList,
     },
     "enableEventIndexing": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -819,17 +793,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
-    [UIFeature.Flair]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        // Disable Flair when Communities are disabled
-        controller: new UIFeatureController(UIFeature.Communities),
-    },
-    [UIFeature.Communities]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        controller: new IncompatibleController("feature_spaces"),
-    },
+    // TODO add UIF for Spaces
     [UIFeature.AdvancedSettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,

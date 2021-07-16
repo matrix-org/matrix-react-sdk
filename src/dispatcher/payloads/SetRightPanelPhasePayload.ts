@@ -37,8 +37,6 @@ export interface SetRightPanelPhasePayload extends ActionPayload {
 export interface SetRightPanelPhaseRefireParams {
     member?: RoomMember | User;
     verificationRequest?: VerificationRequest;
-    groupId?: string;
-    groupRoomId?: string;
     // XXX: The type for event should 'view_3pid_invite' action's payload
     event?: any;
     widgetId?: string;

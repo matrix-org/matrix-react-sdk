@@ -52,7 +52,6 @@ export function createTestClient() {
         getRoom: jest.fn().mockImplementation(mkStubRoom),
         getRooms: jest.fn().mockReturnValue([]),
         getVisibleRooms: jest.fn().mockReturnValue([]),
-        getGroups: jest.fn().mockReturnValue([]),
         loginFlows: jest.fn(),
         on: jest.fn(),
         removeListener: jest.fn(),

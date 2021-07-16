@@ -118,7 +118,6 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         if (needsSenderProfile) {
             sender = <SenderProfile
                 mxEvent={this.props.mxEvent}
-                enableFlair={false}
             />;
         }
 

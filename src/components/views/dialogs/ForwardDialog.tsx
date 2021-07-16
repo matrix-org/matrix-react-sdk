@@ -23,8 +23,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
-import { useSettingValue, useFeatureEnabled } from "../../../hooks/useSettings";
-import { UIFeature } from "../../../settings/UIFeature";
+import { useSettingValue } from "../../../hooks/useSettings";
 import { Layout } from "../../../settings/Layout";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
@@ -182,7 +181,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const lcQuery = query.toLowerCase();
 
     const spacesEnabled = SpaceStore.spacesEnabled;
-    const flairEnabled = useFeatureEnabled(UIFeature.Flair);
     const previewLayout = useSettingValue<Layout>("layout");
 
     let rooms = useMemo(() => sortRooms(
@@ -226,7 +224,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
             <EventTile
                 mxEvent={mockEvent}
                 layout={previewLayout}
-                enableFlair={flairEnabled}
                 permalinkCreator={permalinkCreator}
                 as="div"
             />

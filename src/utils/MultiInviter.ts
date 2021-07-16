@@ -19,7 +19,6 @@ import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import { AddressType, getAddressType } from '../UserAddress';
-import GroupStore from '../stores/GroupStore';
 import { _t } from "../languageHandler";
 import Modal from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
@@ -47,7 +46,6 @@ const USER_ALREADY_INVITED = "IO.ELEMENT.ALREADY_INVITED";
  */
 export default class MultiInviter {
     private readonly roomId?: string;
-    private readonly groupId?: string;
 
     private canceled = false;
     private addresses: string[] = [];
@@ -59,16 +57,10 @@ export default class MultiInviter {
     private reason: string = null;
 
     /**
-     * @param {string} targetId The ID of the room or group to invite to
+     * @param {string} targetId The ID of the room to invite to
      */
     constructor(targetId: string) {
-        if (targetId[0] === '+') {
-            this.roomId = null;
-            this.groupId = targetId;
-        } else {
-            this.roomId = targetId;
-            this.groupId = null;
-        }
+        this.roomId = targetId;
     }
 
     public get fatal() {
@@ -163,14 +155,7 @@ export default class MultiInviter {
         return new Promise<void>((resolve, reject) => {
             console.log(`Inviting ${address}`);
 
-            let doInvite;
-            if (this.groupId !== null) {
-                doInvite = GroupStore.inviteUserToGroup(this.groupId, address);
-            } else {
-                doInvite = this.inviteToRoom(this.roomId, address, ignoreProfile);
-            }
-
-            doInvite.then(() => {
+            this.inviteToRoom(this.roomId, address, ignoreProfile).then(() => {
                 if (this.canceled) {
                     return;
                 }
@@ -254,7 +239,7 @@ export default class MultiInviter {
 
         if (nextIndex === this.addresses.length) {
             this.busy = false;
-            if (Object.keys(this.errors).length > 0 && !this.groupId) {
+            if (Object.keys(this.errors).length > 0) {
                 // There were problems inviting some people - see if we can invite them
                 // without caring if they exist or not.
                 const unknownProfileUsers = Object.keys(this.errors)

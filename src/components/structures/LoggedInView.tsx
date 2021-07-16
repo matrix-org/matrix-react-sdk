@@ -60,9 +60,7 @@ import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
 import RoomView from './RoomView';
 import ToastContainer from './ToastContainer';
-import MyGroups from "./MyGroups";
 import UserView from "./UserView";
-import GroupView from "./GroupView";
 import SpaceStore from "../../stores/SpaceStore";
 
 // We need to fetch each pinned message individually (if we don't already have it)
@@ -96,8 +94,6 @@ interface IProps {
         [key: string]: any;
     };
     currentUserId?: string;
-    currentGroupId?: string;
-    currentGroupIsNew?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
 }
@@ -490,10 +486,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
             case NavigationAction.ToggleRoomSidePanel:
-                if (this.props.page_type === "room_view" || this.props.page_type === "group_view") {
+                if (this.props.page_type === "room_view") {
                     dis.dispatch<ToggleRightPanelPayload>({
                         action: Action.ToggleRightPanel,
-                        type: this.props.page_type === "room_view" ? "room" : "group",
+                        type: "room",
                     });
                     handled = true;
                 }
@@ -587,10 +583,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                 />;
                 break;
 
-            case PageTypes.MyGroups:
-                pageElement = <MyGroups />;
-                break;
-
             case PageTypes.RoomDirectory:
                 // handled by MatrixChat for now
                 break;
@@ -601,13 +593,6 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             case PageTypes.UserView:
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
-                break;
-            case PageTypes.GroupView:
-                pageElement = <GroupView
-                    groupId={this.props.currentGroupId}
-                    isNew={this.props.currentGroupIsNew}
-                    resizeNotifier={this.props.resizeNotifier}
-                />;
                 break;
         }
 

@@ -19,8 +19,6 @@ import { createRef } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import GroupFilterPanel from "./GroupFilterPanel";
-import CustomRoomTagPanel from "./CustomRoomTagPanel";
 import dis from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
 import RoomList from "../views/rooms/RoomList";
@@ -53,7 +51,6 @@ interface IProps {
 
 interface IState {
     showBreadcrumbs: boolean;
-    showGroupFilterPanel: boolean;
     activeSpace?: Room;
 }
 
@@ -70,7 +67,6 @@ const cssClasses = [
 export default class LeftPanel extends React.Component<IProps, IState> {
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private listContainerRef: React.RefObject<HTMLDivElement> = createRef();
-    private groupFilterPanelWatcherRef: string;
     private bgImageWatcherRef: string;
     private focusedElement = null;
     private isDoingStickyHeaders = false;
@@ -80,7 +76,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
         this.state = {
             showBreadcrumbs: BreadcrumbsStore.instance.visible,
-            showGroupFilterPanel: SettingsStore.getValue('TagPanel.enableTagPanel'),
             activeSpace: SpaceStore.instance.activeSpace,
         };
 
@@ -90,9 +85,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
         this.bgImageWatcherRef = SettingsStore.watchSetting(
             "RoomList.backgroundImage", null, this.onBackgroundImageUpdate);
-        this.groupFilterPanelWatcherRef = SettingsStore.watchSetting("TagPanel.enableTagPanel", null, () => {
-            this.setState({ showGroupFilterPanel: SettingsStore.getValue("TagPanel.enableTagPanel") });
-        });
     }
 
     public componentDidMount() {
@@ -104,7 +96,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount() {
-        SettingsStore.unwatchSetting(this.groupFilterPanelWatcherRef);
         SettingsStore.unwatchSetting(this.bgImageWatcherRef);
         BreadcrumbsStore.instance.off(UPDATE_EVENT, this.onBreadcrumbsUpdate);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
@@ -444,15 +435,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         let leftLeftPanel;
-        if (this.state.showGroupFilterPanel) {
-            leftLeftPanel = (
-                <div className="mx_LeftPanel_GroupFilterPanelContainer">
-                    <GroupFilterPanel />
-                    {SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null}
-                </div>
-            );
-        }
-
         const roomList = <RoomList
             onKeyDown={this.onKeyDown}
             resizeNotifier={this.props.resizeNotifier}

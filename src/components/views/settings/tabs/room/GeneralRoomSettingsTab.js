@@ -51,7 +51,6 @@ export default class GeneralRoomSettingsTab extends React.Component {
 
     render() {
         const AliasSettings = sdk.getComponent("room_settings.AliasSettings");
-        const RelatedGroupSettings = sdk.getComponent("room_settings.RelatedGroupSettings");
         const UrlPreviewSettings = sdk.getComponent("room_settings.UrlPreviewSettings");
 
         const client = this.context;
@@ -61,9 +60,6 @@ export default class GeneralRoomSettingsTab extends React.Component {
         const canSetCanonical = room.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
         const canonicalAliasEv = room.currentState.getStateEvents("m.room.canonical_alias", '');
 
-        const canChangeGroups = room.currentState.mayClientSendStateEvent("m.room.related_groups", client);
-        const groupsEvent = room.currentState.getStateEvents("m.room.related_groups", "");
-
         let urlPreviewSettings = <>
             <span className='mx_SettingsTab_subheading'>{_t("URL Previews")}</span>
             <div className='mx_SettingsTab_section'>
@@ -72,20 +68,6 @@ export default class GeneralRoomSettingsTab extends React.Component {
         </>;
         if (!SettingsStore.getValue(UIFeature.URLPreviews)) {
             urlPreviewSettings = null;
-        }
-
-        let flairSection;
-        if (SettingsStore.getValue(UIFeature.Flair)) {
-            flairSection = <>
-                <span className='mx_SettingsTab_subheading'>{_t("Flair")}</span>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <RelatedGroupSettings
-                        roomId={room.roomId}
-                        canSetRelatedGroups={canChangeGroups}
-                        relatedGroupsEvent={groupsEvent}
-                    />
-                </div>
-            </>;
         }
 
         return (
@@ -102,7 +84,6 @@ export default class GeneralRoomSettingsTab extends React.Component {
                         canonicalAliasEvent={canonicalAliasEv} />
                 </div>
                 <div className="mx_SettingsTab_heading">{_t("Other")}</div>
-                { flairSection }
                 { urlPreviewSettings }
 
                 <span className='mx_SettingsTab_subheading'>{_t("Leave room")}</span>

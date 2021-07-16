@@ -27,11 +27,6 @@ export enum RightPanelPhases {
     PinnedMessages = "PinnedMessages",
 
     Room3pidMemberInfo = 'Room3pidMemberInfo',
-    // Group stuff
-    GroupMemberList = 'GroupMemberList',
-    GroupRoomList = 'GroupRoomList',
-    GroupRoomInfo = 'GroupRoomInfo',
-    GroupMemberInfo = 'GroupMemberInfo',
 
     // Space stuff
     SpaceMemberList = "SpaceMemberList",
@@ -47,8 +42,6 @@ export const RIGHT_PANEL_PHASES_NO_ARGS = [
     RightPanelPhases.PinnedMessages,
     RightPanelPhases.FilePanel,
     RightPanelPhases.RoomMemberList,
-    RightPanelPhases.GroupMemberList,
-    RightPanelPhases.GroupRoomList,
 ];
 
 // Subset of phases visible in the Space View

@@ -49,7 +49,6 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
-import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { getUnsentMessages } from "../../structures/RoomStatusBar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
@@ -151,14 +150,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(prevProps.room?.roomId),
-                this.onCommunityUpdate,
-            );
-            CommunityPrototypeStore.instance.on(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room?.roomId),
-                this.onCommunityUpdate,
-            );
             prevProps.room?.off("Room.name", this.onRoomNameUpdate);
             this.props.room?.on("Room.name", this.onRoomNameUpdate);
         }
@@ -179,10 +170,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         this.roomProps.on("Room.name", this.onRoomNameUpdate);
-        CommunityPrototypeStore.instance.on(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
         MatrixClientPeg.get().on("Room.localEchoUpdated", this.onLocalEchoUpdated);
     }
 
@@ -193,10 +180,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-                this.onCommunityUpdate,
-            );
             this.props.room.off("Room.name", this.onRoomNameUpdate);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
@@ -204,10 +187,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         this.roomProps.off("Room.name", this.onRoomNameUpdate);
-        CommunityPrototypeStore.instance.off(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
         MatrixClientPeg.get()?.removeListener("Room.localEchoUpdated", this.onLocalEchoUpdated);
     }
 
@@ -217,11 +196,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 this.scrollIntoView();
             });
         }
-    };
-
-    private onCommunityUpdate = (roomId: string) => {
-        if (roomId !== this.props.room.roomId) return;
-        this.forceUpdate(); // we don't have anything to actually update
     };
 
     private onRoomPreviewChanged = (room: Room) => {
@@ -570,20 +544,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             'mx_RoomTile_minimized': this.props.isMinimized,
         });
 
-        let roomProfile: IRoomProfile = { displayName: null, avatarMxc: null };
-        if (this.props.tag === DefaultTagID.Invite) {
-            roomProfile = CommunityPrototypeStore.instance.getInviteProfile(this.props.room.roomId);
-        }
-
-        let name = roomProfile.displayName || this.props.room.name;
-        if (typeof name !== 'string') name = '';
-        name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
+        // add a zero-width space to allow linewrapping after the colon
+        const name = this.props.room.name.replace(":", ":\u200b");
 
         const roomAvatar = <DecoratedRoomAvatar
             room={this.props.room}
             avatarSize={32}
             displayBadge={this.props.isMinimized}
-            oobData={({ avatarUrl: roomProfile.avatarMxc })}
         />;
 
         let badge: React.ReactNode;

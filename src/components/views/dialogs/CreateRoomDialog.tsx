@@ -24,7 +24,6 @@ import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { Key } from "../../../Keyboard";
 import { IOpts, privateShouldBeEncrypted } from "../../../createRoom";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
@@ -103,10 +102,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                 // we'll demand it too.
                 opts.encryption = true;
             }
-        }
-
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            opts.associatedWithCommunity = CommunityPrototypeStore.instance.getSelectedCommunityId();
         }
 
         if (this.props.parentSpace) {
@@ -224,16 +219,10 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let publicPrivateLabel = <p>{_t(
+        const publicPrivateLabel = <p>{_t(
             "Private rooms can be found and joined by invitation only. Public rooms can be " +
             "found and joined by anyone.",
         )}</p>;
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            publicPrivateLabel = <p>{_t(
-                "Private rooms can be found and joined by invitation only. Public rooms can be " +
-                "found and joined by anyone in this community.",
-            )}</p>;
-        }
 
         let e2eeSection;
         if (!this.state.isPublic) {
@@ -273,11 +262,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let title = this.state.isPublic ? _t('Create a public room') : _t('Create a private room');
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            const name = CommunityPrototypeStore.instance.getSelectedCommunityName();
-            title = _t("Create a room in %(communityName)s", { communityName: name });
-        }
+        const title = this.state.isPublic ? _t('Create a public room') : _t('Create a private room');
         return (
             <BaseDialog className="mx_CreateRoomDialog" onFinished={this.props.onFinished}
                 title={title}

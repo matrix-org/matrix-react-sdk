@@ -66,7 +66,6 @@ export default class SearchResultTile extends React.Component<IProps> {
                         onHeightChanged={this.props.onHeightChanged}
                         isTwelveHour={SettingsStore.getValue("showTwelveHourTimestamps")}
                         alwaysShowTimestamps={alwaysShowTimestamps}
-                        enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                     />
                 ));
             }

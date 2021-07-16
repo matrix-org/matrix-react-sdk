@@ -23,8 +23,6 @@ import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import SdkConfig from "../../../SdkConfig";
 import IdentityAuthClient from '../../../IdentityAuthClient';
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
-import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import InviteReason from "../elements/InviteReason";
 
@@ -96,17 +94,12 @@ export default class RoomPreviewBar extends React.Component {
 
     componentDidMount() {
         this._checkInvitedEmail();
-        CommunityPrototypeStore.instance.on(UPDATE_EVENT, this._onCommunityUpdate);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.invitedEmail !== prevProps.invitedEmail || this.props.inviterName !== prevProps.inviterName) {
             this._checkInvitedEmail();
         }
-    }
-
-    componentWillUnmount() {
-        CommunityPrototypeStore.instance.off(UPDATE_EVENT, this._onCommunityUpdate);
     }
 
     async _checkInvitedEmail() {
@@ -143,13 +136,6 @@ export default class RoomPreviewBar extends React.Component {
             this.setState({ busy: false });
         }
     }
-
-    _onCommunityUpdate = (roomId) => {
-        if (this.props.room && this.props.room.roomId !== roomId) {
-            return;
-        }
-        this.forceUpdate(); // we have nothing to update
-    };
 
     _getMessageCase() {
         const isGuest = MatrixClientPeg.get().isGuest();
@@ -227,15 +213,8 @@ export default class RoomPreviewBar extends React.Component {
         }
     }
 
-    _communityProfile() {
-        if (this.props.room) return CommunityPrototypeStore.instance.getInviteProfile(this.props.room.roomId);
-        return { displayName: null, avatarMxc: null };
-    }
-
     _roomName(atStart = false) {
-        let name = this.props.room ? this.props.room.name : this.props.roomAlias;
-        const profile = this._communityProfile();
-        if (profile.displayName) name = profile.displayName;
+        const name = this.props.room ? this.props.room.name : this.props.roomAlias;
         if (name) {
             return name;
         } else if (atStart) {
@@ -455,10 +434,7 @@ export default class RoomPreviewBar extends React.Component {
             }
             case MessageCase.Invite: {
                 const RoomAvatar = sdk.getComponent("views.avatars.RoomAvatar");
-                const oobData = Object.assign({}, this.props.oobData, {
-                    avatarUrl: this._communityProfile().avatarMxc,
-                });
-                const avatar = <RoomAvatar room={this.props.room} oobData={oobData} />;
+                const avatar = <RoomAvatar room={this.props.room} oobData={this.props.oobData} />;
 
                 const inviteMember = this._getInviteMember();
                 let inviterElement;

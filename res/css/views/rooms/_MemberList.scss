@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 .mx_MemberList,
-.mx_GroupMemberList,
-.mx_GroupRoomList {
+.mx_GroupMemberList {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -52,8 +51,7 @@ limitations under the License.
     }
 }
 
-.mx_GroupMemberList_query,
-.mx_GroupRoomList_query {
+.mx_GroupMemberList_query {
     flex: 0 0 auto;
 }
 
