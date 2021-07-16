@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626430315388,
+  "lastUpdate": 1626430742189,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7124,6 +7124,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4414.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b55f69a74cbc24ba22a5fa7ccccac77bff470069",
+          "message": "Merge pull request #6374 from matrix-org/copy-room\n\nAdd \"Copy Link\" to room context menu",
+          "timestamp": "2021-07-16T11:14:00+01:00",
+          "tree_id": "5a491c50bdd8fafe23ddf86a2bdd716c661246be",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b55f69a74cbc24ba22a5fa7ccccac77bff470069"
+        },
+        "date": 1626430740770,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4557.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1070.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1634.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4310.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
