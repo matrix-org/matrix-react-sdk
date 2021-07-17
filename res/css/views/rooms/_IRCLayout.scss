@@ -21,10 +21,10 @@ $irc-line-height: $font-18px;
 .mx_IRCLayout {
     --name-width: 70px;
     .mx_Event_12hr {
-        --timestamp-width: 45px;
+        --timestamp-width: 3.185em;
     }
     .mx_Event_24hr {
-        --timestamp-width: 30px;
+        --timestamp-width: 2.185em;
     }
 
     line-height: $irc-line-height !important;
@@ -86,14 +86,14 @@ $irc-line-height: $font-18px;
 
         .mx_MessageTimestamp {
             font-size: $font-10px;
-            width: var(--timestamp-width);
+			width: 100%;
             text-align: right;
         }
 
         > .mx_EventTile_e2eIcon {
             position: absolute;
             right: unset;
-            left: unset;
+            left: -12px;
             top: 0;
 
             padding: 0;
