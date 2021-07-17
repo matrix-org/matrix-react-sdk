@@ -103,17 +103,22 @@ limitations under the License.
         padding-top: 0;
     }
 
-    .mx_SenderProfile {
-        font-size: $font-14px;
-        line-height: $font-17px;
+    .mx_ReplyTile_sender {
+        display: flex;
+        gap: 4px;
 
-        display: inline-block; // anti-zalgo, with overflow hidden
-        padding: 0;
-        margin: 0;
+        .mx_SenderProfile {
+            font-size: $font-14px;
+            line-height: $font-17px;
 
-        // truncate long display names
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+            display: inline-block; // anti-zalgo, with overflow hidden
+            padding: 0;
+            margin: 0;
+
+            // truncate long display names
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     }
 }

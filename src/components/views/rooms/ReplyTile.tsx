@@ -27,6 +27,7 @@ import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
 import { replaceableComponent } from '../../../utils/replaceableComponent';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
 import MFileBody from "../messages/MFileBody";
+import MemberAvatar from '../avatars/MemberAvatar';
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -116,10 +117,20 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         );
 
         if (needsSenderProfile) {
-            sender = <SenderProfile
-                mxEvent={this.props.mxEvent}
-                enableFlair={false}
-            />;
+            sender = (
+                <div className="mx_ReplyTile_sender">
+                    <MemberAvatar
+                        member={this.props.mxEvent.sender}
+                        fallbackUserId={this.props.mxEvent.getSender()}
+                        width={14}
+                        height={14}
+                    />
+                    <SenderProfile
+                        mxEvent={this.props.mxEvent}
+                        enableFlair={false}
+                    />
+                </div>
+            );
         }
 
         const msgtypeOverrides = {
