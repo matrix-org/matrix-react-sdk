@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626527796369,
+  "lastUpdate": 1626527858193,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7412,6 +7412,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4508.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f7767bf09cab41243ee2444abb8e49c8b501ab24",
+          "message": "Merge pull request #6393 from robintown/match-avatar-colors",
+          "timestamp": "2021-07-17T14:12:29+01:00",
+          "tree_id": "f884b55020bb0476cffd7e98e779637a4603488e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f7767bf09cab41243ee2444abb8e49c8b501ab24"
+        },
+        "date": 1626527857285,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4567.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1105.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1938.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4504.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
