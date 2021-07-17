@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626477216687,
+  "lastUpdate": 1626501699441,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7316,6 +7316,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4367.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2089127dad915575d4c7d275ba296c48dc34874a",
+          "message": "Merge pull request #6352 from matrix-org/travis/notifications-2\n\nNotification settings UI refresh",
+          "timestamp": "2021-07-16T23:56:48-06:00",
+          "tree_id": "78424af8afe189583baecd32a837c0c488a9c926",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2089127dad915575d4c7d275ba296c48dc34874a"
+        },
+        "date": 1626501698007,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4344.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 953.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1736.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4201.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
