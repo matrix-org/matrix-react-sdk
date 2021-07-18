@@ -330,21 +330,14 @@ export default class ReplyThread extends React.Component<IProps, IState> {
                 }
             </blockquote>;
         } else if (this.state.loadedEv) {
-            const ev = this.state.loadedEv;
-            const senderName = ev.sender ? ev.sender.name : _t('Someone');
-            const text = this.state.events[0].getSender() === ev.getSender()
-                ? _t(
-                    '<a>In reply to themselves</a>',
-                    { },
-                    { 'a': (sub) => <a onClick={this.onQuoteClick} className="mx_ReplyThread_show">{ sub }</a> },
-                )
-                : _t(
-                    '<a>In reply to %(senderName)s</a>',
-                    { senderName },
-                    { 'a': (sub) => <a onClick={this.onQuoteClick} className="mx_ReplyThread_show">{ sub }</a> },
-                );
-            header = <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(ev)}`}>
-                { text }
+            header = <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(this.state.loadedEv)}`}>
+                {
+                    _t(
+                        '<a>Expand thread</a>',
+                        {},
+                        { 'a': (sub) => <a onClick={this.onQuoteClick} className="mx_ReplyThread_show">{ sub }</a> },
+                    )
+                }
             </blockquote>;
         } else if (this.state.loading) {
             header = <Spinner w={16} h={16} />;
