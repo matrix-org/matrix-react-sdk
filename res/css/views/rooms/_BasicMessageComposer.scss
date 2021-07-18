@@ -47,6 +47,7 @@ limitations under the License.
         &.mx_BasicMessageComposer_input_shouldShowPillAvatar {
             span.mx_UserPill, span.mx_RoomPill, span.mx_SpacePill {
                 position: relative;
+                cursor: unset; // We don't want indicate clickability
 
                 &:hover {
                     // We don't want indicate clickability | To override the overriding of .markdown-body

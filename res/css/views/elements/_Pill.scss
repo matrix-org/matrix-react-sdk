@@ -22,6 +22,8 @@ limitations under the License.
     display: inline-flex;
     align-items: center;
 
+    cursor: pointer;
+
     color: $accent-fg-color !important; // To override .markdown-body
     background-color: $pill-bg-color !important; // To override .markdown-body
 
@@ -38,9 +40,10 @@ limitations under the License.
         background-color: #ff6b75 !important; // To override .markdown-body | same on both themes
     }
 
-    // We use the same color as we don't want to indicate clickability
+    // We don't want to indicate clickability
     &.mx_AtRoomPill:hover {
         background-color: $warning-color !important; // To override .markdown-body
+        cursor: unset;
     }
 
     &.mx_SpacePill {
