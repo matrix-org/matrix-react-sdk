@@ -30,6 +30,19 @@ limitations under the License.
         background-color: $warning-color !important; // To override .markdown-body
     }
 
+    &:hover {
+        background-color: $pill-hover-bg-color !important; // To override .markdown-body
+    }
+
+    &.mx_UserPill_me:hover {
+        background-color: #ff6b75 !important; // To override .markdown-body | same on both themes
+    }
+
+    // We use the same color as we don't want to indicate clickability
+    &.mx_AtRoomPill:hover {
+        background-color: $warning-color !important; // To override .markdown-body
+    }
+
     &.mx_SpacePill {
         border-radius: $font-5px;
     }

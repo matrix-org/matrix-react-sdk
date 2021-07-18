@@ -48,6 +48,11 @@ limitations under the License.
             span.mx_UserPill, span.mx_RoomPill, span.mx_SpacePill {
                 position: relative;
 
+                &:hover {
+                    // We don't want indicate clickability | To override the overriding of .markdown-body
+                    background-color: $pill-bg-color !important;
+                }
+
                 // avatar psuedo element
                 &::before {
                     content: var(--avatar-letter);
