@@ -120,5 +120,9 @@ limitations under the License.
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+
+        .mx_BaseAvatar {
+            line-height: 14px; // To match size
+        }
     }
 }
