@@ -105,11 +105,11 @@ limitations under the License.
 
     .mx_ReplyTile_sender {
         display: flex;
+        align-items: center;
         gap: 4px;
 
         .mx_SenderProfile {
             font-size: $font-14px;
-            line-height: $font-17px;
 
             display: inline-block; // anti-zalgo, with overflow hidden
             padding: 0;
