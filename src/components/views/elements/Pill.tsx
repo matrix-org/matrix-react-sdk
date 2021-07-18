@@ -25,7 +25,7 @@ import { getPrimaryPermalinkEntity, parseAppLocalLink } from "../../../utils/per
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { mediaFromMxc } from "../../../customisations/Media";
-import Tooltip from './Tooltip';
+import Tooltip, { Alignment } from './Tooltip';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Group } from "matrix-js-sdk/src/models/group";
 import { MatrixClient } from 'matrix-js-sdk/src';
@@ -44,8 +44,6 @@ interface IProps {
     room?: Room;
     // Whether to include an avatar in the pill
     shouldShowPillAvatar?: boolean;
-
-    yOffset?: number;
 }
 
 interface IState {
@@ -287,11 +285,9 @@ export default class Pill extends React.Component<IProps, IState> {
         });
 
         if (this.state.pillType) {
-            const { yOffset } = this.props;
-
             let tip;
             if (this.state.hover && resource) {
-                tip = <Tooltip label={resource} yOffset={yOffset} />;
+                tip = <Tooltip label={resource} alignment={Alignment.Right} />;
             }
 
             return <MatrixClientContext.Provider value={this.matrixClient}>
