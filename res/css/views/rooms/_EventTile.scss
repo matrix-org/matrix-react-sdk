@@ -581,6 +581,12 @@ $hover-select-border: 4px;
     display: inline !important;
 }
 
+.mx_EventTile_body .mx_UserPill,
+.mx_EventTile_body .mx_RoomPill,
+.mx_EventTile_body .mx_GroupPill {
+    cursor: pointer;
+}
+
 /*
 // actually, removing the Italic TTF provides
 // better results seemingly

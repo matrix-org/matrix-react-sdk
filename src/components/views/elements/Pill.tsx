@@ -44,8 +44,6 @@ interface IProps {
     room?: Room;
     // Whether to include an avatar in the pill
     shouldShowPillAvatar?: boolean;
-    // Whether to render this pill as if it were highlit by a selection
-    isSelected?: boolean;
 
     yOffset?: number;
 }
@@ -286,7 +284,6 @@ export default class Pill extends React.Component<IProps, IState> {
 
         const classes = classNames("mx_Pill", pillClass, {
             "mx_UserPill_me": userId === MatrixClientPeg.get().getUserId(),
-            "mx_UserPill_selected": this.props.isSelected,
         });
 
         if (this.state.pillType) {
