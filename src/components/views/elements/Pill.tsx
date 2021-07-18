@@ -263,7 +263,7 @@ export default class Pill extends React.Component<IProps, IState> {
                         avatar = <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
                     }
                 }
-                pillClass = 'mx_RoomPill';
+                pillClass = room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill";
             }
                 break;
             case Pill.TYPE_GROUP_MENTION: {

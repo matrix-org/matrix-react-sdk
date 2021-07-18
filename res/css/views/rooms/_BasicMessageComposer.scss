@@ -45,7 +45,7 @@ limitations under the License.
         overflow-x: hidden;
 
         &.mx_BasicMessageComposer_input_shouldShowPillAvatar {
-            span.mx_UserPill, span.mx_RoomPill {
+            span.mx_UserPill, span.mx_RoomPill, span.mx_SpacePill {
                 position: relative;
 
                 // avatar psuedo element

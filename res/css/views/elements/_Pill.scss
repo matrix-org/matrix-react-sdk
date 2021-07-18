@@ -30,6 +30,10 @@ limitations under the License.
         background-color: $warning-color !important; // To override .markdown-body
     }
 
+    &.mx_SpacePill {
+        border-radius: $font-5px;
+    }
+
     .mx_BaseAvatar {
         position: relative;
         display: inline-flex;
