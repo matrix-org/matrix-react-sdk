@@ -22,6 +22,14 @@ limitations under the License.
     display: inline-flex;
     align-items: center;
 
+    color: $accent-fg-color !important; // To override .markdown-body
+    background-color: $pill-bg-color !important; // To override .markdown-body
+
+    &.mx_UserPill_me,
+    &.mx_AtRoomPill {
+        background-color: $warning-color !important; // To override .markdown-body
+    }
+
     .mx_BaseAvatar {
         position: relative;
         display: inline-flex;
@@ -37,26 +45,4 @@ limitations under the License.
         max-width: calc(100% - 1ch);
         text-decoration: none !important; // To override .markdown-body
     }
-
-    &.mx_GroupPill {
-        color: $accent-fg-color !important; // To override .markdown-body
-        background-color: $rte-group-pill-color;
-    }
-
-    &.mx_UserPill {
-        color: $primary-fg-color !important; // To override .markdown-body
-        background-color: $other-user-pill-bg-color;
-    }
-
-    &.mx_AtRoomPill {
-        color: $accent-fg-color !important; // To override .markdown-body
-        background-color: $mention-user-pill-bg-color;
-    }
-
-    &.mx_RoomPill,
-    &.mx_GroupPill {
-        color: $accent-fg-color !important; // To override .markdown-body
-        background-color: $rte-room-pill-color;
-    }
 }
-
