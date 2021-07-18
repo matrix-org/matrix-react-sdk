@@ -70,6 +70,10 @@ limitations under the License.
                     font-size: $font-10-4px;
                 }
             }
+
+            span.mx_SpacePill::before {
+                border-radius: $font-5px;
+            }
         }
 
         &.mx_BasicMessageComposer_input_disabled {

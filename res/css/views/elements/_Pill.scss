@@ -45,6 +45,10 @@ limitations under the License.
 
     &.mx_SpacePill {
         border-radius: $font-5px;
+
+        .mx_BaseAvatar {
+            border-radius: $font-5px;
+        }
     }
 
     .mx_BaseAvatar {
