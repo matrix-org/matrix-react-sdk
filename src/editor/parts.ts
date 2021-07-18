@@ -362,7 +362,7 @@ class RoomPillPart extends PillPart {
     }
 
     get className() {
-        return "mx_Pill " + (this.room.isSpaceRoom ? "mx_SpacePill" : "mx_RoomPill");
+        return "mx_Pill " + (this.room.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
     }
 }
 
