@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626705636832,
+  "lastUpdate": 1626707054578,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7700,6 +7700,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4196.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a3e5d76064c92a2664c0c5c25ee0f91d450e7050",
+          "message": "Merge pull request #6397 from matrix-org/t3chguy/fix/18040\n\nRespect compound emojis in default avatar initial generation",
+          "timestamp": "2021-07-19T15:58:40+01:00",
+          "tree_id": "165682ad3152d841528f5f2fe144e3cf5ba9242f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a3e5d76064c92a2664c0c5c25ee0f91d450e7050"
+        },
+        "date": 1626707053772,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4532.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 957.3999999999942,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1602.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4141.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
