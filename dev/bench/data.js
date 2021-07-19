@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626686070112,
+  "lastUpdate": 1626695948631,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7556,6 +7556,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4656.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "48817499e4052ada54e6094f0dbfa2f75d30239e",
+          "message": "Merge pull request #6399 from matrix-org/t3chguy/fix/18032\n\nDon't throw exception from setStickyRoom as it split-brains the RoomListStore",
+          "timestamp": "2021-07-19T12:53:34+01:00",
+          "tree_id": "53cc2a41cc8377670c9f43092e72d8c4be1c8374",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/48817499e4052ada54e6094f0dbfa2f75d30239e"
+        },
+        "date": 1626695947721,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4933.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1152.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1995.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4413.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
