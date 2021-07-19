@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626712152315,
+  "lastUpdate": 1626714095108,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7844,6 +7844,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4389.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b6feaf74bc02b1a35547a7e0a5cea3a4b64f4ccb",
+          "message": "Merge pull request #6407 from robintown/uppercase-avatar-placeholders",
+          "timestamp": "2021-07-19T17:56:25+01:00",
+          "tree_id": "ac4b48e595b0e699f5ef5ad656ecc30fde3286fb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b6feaf74bc02b1a35547a7e0a5cea3a4b64f4ccb"
+        },
+        "date": 1626714094193,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4512.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1295.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1708.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4416.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
