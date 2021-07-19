@@ -330,15 +330,13 @@ export default class ReplyThread extends React.Component<IProps, IState> {
                 }
             </blockquote>;
         } else if (this.state.loadedEv) {
-            header = <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(this.state.loadedEv)}`}>
-                {
-                    _t(
-                        '<a>Expand thread</a>',
-                        {},
-                        { 'a': (sub) => <a onClick={this.onQuoteClick} className="mx_ReplyThread_show">{ sub }</a> },
-                    )
-                }
-            </blockquote>;
+            header = (
+                <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(this.state.loadedEv)}`}>
+                    <a className="mx_ReplyThread_show" onClick={this.onQuoteClick}>
+                        { _t("Expand thread") }
+                    </a>
+                </blockquote>
+            );
         } else if (this.state.loading) {
             header = <Spinner w={16} h={16} />;
         }
