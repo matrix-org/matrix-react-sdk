@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626708138609,
+  "lastUpdate": 1626712152315,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7796,6 +7796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4502.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "485655966115dd13d249b795d31c3bbb620a3020",
+          "message": "Merge pull request #6406 from matrix-org/travis/notifications-ui-order\n\nRevert order of notification setting radios",
+          "timestamp": "2021-07-19T10:24:06-06:00",
+          "tree_id": "f79ae14c0ac5ea405be93d4dae2f5da09c32e5fb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/485655966115dd13d249b795d31c3bbb620a3020"
+        },
+        "date": 1626712150885,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4591.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1028.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1869.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4389.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
