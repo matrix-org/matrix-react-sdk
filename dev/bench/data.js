@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626704382605,
+  "lastUpdate": 1626705636832,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7652,6 +7652,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4478.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "96ddfefc03b0fde7087d73f439a73df20a57bf62",
+          "message": "Merge pull request #6403 from matrix-org/dbkr/upgrade_eslint_plugin_matrix_org\n\nUpdate eslint-plugin-matrix-org",
+          "timestamp": "2021-07-19T15:34:21+01:00",
+          "tree_id": "1c211877670c344da50dd3d50b1061fef9a1ca77",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/96ddfefc03b0fde7087d73f439a73df20a57bf62"
+        },
+        "date": 1626705636004,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4564.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 973.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1895.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4196.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
