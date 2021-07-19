@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626612184467,
+  "lastUpdate": 1626686070112,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7508,6 +7508,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4319.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "863f4d4f9fd9ae33a05f97c6c22dcaee5ab4c64d",
+          "message": "Merge pull request #6394 from matrix-org/dbkr/exorcise_homeserver_checkbox\n\nFix bug where 'other homeserver' would unfocus",
+          "timestamp": "2021-07-19T10:09:03+01:00",
+          "tree_id": "55314990d6f2ee8aabe0ec6713b4483f860a7e68",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/863f4d4f9fd9ae33a05f97c6c22dcaee5ab4c64d"
+        },
+        "date": 1626686069196,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4955.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1191.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1961.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4656.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
