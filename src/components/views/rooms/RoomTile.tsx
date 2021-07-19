@@ -53,6 +53,7 @@ import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/Community
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { getUnsentMessages } from "../../structures/RoomStatusBar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
+import DMRoomMap from "../../../utils/DMRoomMap";
 
 interface IProps {
     room: Room;
@@ -472,6 +473,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
     }
 
+    private shouldShowCopyRoom(): boolean {
+        // Don't show Copy Link for DMs, as its unlikely a user would want to
+        // link to their private DM session.
+        return !DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+    }
+
     private renderGeneralMenu(): React.ReactElement {
         if (!this.showContextMenu) return null; // no menu to show
 
@@ -502,6 +509,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
             const userId = MatrixClientPeg.get().getUserId();
             const canInvite = this.props.room.canInvite(userId);
+            const showCopyRoom = this.shouldShowCopyRoom();
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -528,11 +536,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             iconClassName="mx_RoomTile_iconInvite"
                         />
                     ) : null}
-                    <IconizedContextMenuOption
-                        onClick={this.onCopyRoomClick}
-                        label={_t("Copy Link")}
-                        iconClassName="mx_RoomTile_iconCopyLink"
-                    />
+                    {showCopyRoom ? (
+                        <IconizedContextMenuOption
+                            onClick={this.onCopyRoomClick}
+                            label={_t("Copy Link")}
+                            iconClassName="mx_RoomTile_iconCopyLink"
+                        />
+                    ) : null}
                     <IconizedContextMenuOption
                         onClick={this.onOpenRoomSettings}
                         label={_t("Settings")}
