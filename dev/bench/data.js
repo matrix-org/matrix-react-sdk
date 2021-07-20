@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626768997463,
+  "lastUpdate": 1626773262744,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7940,6 +7940,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4634.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "53ae7817bc10b7ee72f16276087f6e942f059093",
+          "message": "Merge pull request #6291 from matrix-org/gsouquet/message-bubbles-4635",
+          "timestamp": "2021-07-20T10:22:41+01:00",
+          "tree_id": "e654a279790955479c98a7e4c18edde1baacd95a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/53ae7817bc10b7ee72f16276087f6e942f059093"
+        },
+        "date": 1626773261304,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4311.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1230.6999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1703.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4439.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
