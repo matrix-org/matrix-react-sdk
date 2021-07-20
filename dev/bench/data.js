@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626773262744,
+  "lastUpdate": 1626776521850,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7988,6 +7988,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4439.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "364bee9ebd1882cd999f0b27003cecb15539b2d3",
+          "message": "Merge pull request #6414 from matrix-org/gsouquet/fix-jsx-coma\n\nRemove unwanted coma in EventTile",
+          "timestamp": "2021-07-20T11:16:54+01:00",
+          "tree_id": "44742c688e45a87b7532d84302d78c0eeb4c635a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/364bee9ebd1882cd999f0b27003cecb15539b2d3"
+        },
+        "date": 1626776520175,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4270.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 819.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
