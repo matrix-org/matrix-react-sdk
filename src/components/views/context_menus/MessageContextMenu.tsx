@@ -375,7 +375,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 resendReactionsButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconResend"
-                        label={ _t('Resend %(unsentCount)s reaction(s)', { unsentCount: unsentReactionsCount }) }
+                        label={_t('Resend %(unsentCount)s reaction(s)', { unsentCount: unsentReactionsCount })}
                         onClick={this.onResendReactionsClick}
                     />
                 );
@@ -405,7 +405,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 pinButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconPin"
-                        label={ this.isPinned() ? _t('Unpin') : _t('Pin') }
+                        label={this.isPinned() ? _t('Unpin') : _t('Pin')}
                         onClick={this.onPinClick}
                     />
                 );
@@ -438,7 +438,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconCopy"
                         onClick={this.onCopyPermalinkClick}
-                        label= {_t('Copy link')}
+                        label={_t('Copy link')}
                         element="a"
                         href={permalink}
                         target="_blank"
@@ -450,7 +450,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconPermalink"
                         onClick={this.onPermalinkClick}
-                        label= {_t('Share')}
+                        label={_t('Share')}
                         element="a"
                         href={permalink}
                         target="_blank"
@@ -478,7 +478,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconLink"
                     onClick={this.closeMenu}
-                    label={ _t('Source URL') }
+                    label={_t('Source URL')}
                     element="a"
                     {
                         // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`

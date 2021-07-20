@@ -1,6 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,13 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef } from "react";
+import * as React from "react";
+import AccessibleButton from "./AccessibleButton";
 
-export default forwardRef(({ mxEvent }, ref) => {
-    const text = mxEvent.getContent().body;
-    return (
-        <span className="mx_UnknownBody" ref={ref}>
-            { text }
-        </span>
-    );
-});
+interface IProps {
+    // Callback for when the button is pressed
+    onBackspacePress: () => void;
+}
+
+export default class DialPadBackspaceButton extends React.PureComponent<IProps> {
+    render() {
+        return <div className="mx_DialPadBackspaceButtonWrapper">
+            <AccessibleButton className="mx_DialPadBackspaceButton" onClick={this.props.onBackspacePress} />
+        </div>;
+    }
+}
