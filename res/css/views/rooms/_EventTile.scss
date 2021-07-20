@@ -69,6 +69,21 @@ $hover-select-border: 4px;
         max-width: calc(100% - $left-gutter);
     }
 
+    .mx_DisambiguatedProfile .mx_Flair {
+        opacity: 0.7;
+        margin-left: 5px;
+        display: inline-block;
+        vertical-align: top;
+        overflow: hidden;
+        user-select: none;
+
+        img {
+            vertical-align: -2px;
+            margin-right: 2px;
+            border-radius: 8px;
+        }
+    }
+
     .mx_DisambiguatedProfile {
         color: $primary-fg-color;
         font-size: $font-14px;
@@ -99,20 +114,6 @@ $hover-select-border: 4px;
     &.mx_EventTile_continuation .mx_EventTile_line {
         clear: both;
     }
-
-    .mx_DisambiguatedProfile .mx_Flair {
-        opacity: 0.7;
-        margin-left: 5px;
-        display: inline-block;
-        vertical-align: top;
-        overflow: hidden;
-        user-select: none;
-
-        img {
-            vertical-align: -2px;
-            margin-right: 2px;
-            border-radius: 8px;
-        }
 
     .mx_EventTile_line, .mx_EventTile_reply {
         position: relative;
