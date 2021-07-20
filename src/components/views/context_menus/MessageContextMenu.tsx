@@ -88,8 +88,8 @@ interface IState {
 @replaceableComponent("views.context_menus.MessageContextMenu")
 export default class MessageContextMenu extends React.Component<IProps, IState> {
     static contextType = RoomContext;
-    private reactButtonRef = createRef<any>(); // XXX Ref to a functional component
     private decryptedUrl?: string;
+    private reactButtonRef = createRef<any>(); // XXX Ref to a functional component
 
     constructor(props: IProps) {
         super(props);
