@@ -14,33 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {ReactNode, useMemo, useState} from "react";
-import {Room} from "matrix-js-sdk/src/models/room";
-import {MatrixClient} from "matrix-js-sdk/src/client";
-import {EventType, RoomType} from "matrix-js-sdk/src/@types/event";
+import React, { ReactNode, useMemo, useState } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
+import { ISpaceSummaryRoom, ISpaceSummaryEvent } from "matrix-js-sdk/src/@types/spaces";
 import classNames from "classnames";
-import {sortBy} from "lodash";
+import { sortBy } from "lodash";
 
-import {MatrixClientPeg} from "../../MatrixClientPeg";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import dis from "../../dispatcher/dispatcher";
-import {_t} from "../../languageHandler";
-import AccessibleButton, {ButtonEvent} from "../views/elements/AccessibleButton";
+import { _t } from "../../languageHandler";
+import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import BaseDialog from "../views/dialogs/BaseDialog";
 import Spinner from "../views/elements/Spinner";
 import SearchBox from "./SearchBox";
 import RoomAvatar from "../views/avatars/RoomAvatar";
 import RoomName from "../views/elements/RoomName";
-import {useAsyncMemo} from "../../hooks/useAsyncMemo";
-import {EnhancedMap} from "../../utils/maps";
+import { useAsyncMemo } from "../../hooks/useAsyncMemo";
+import { EnhancedMap } from "../../utils/maps";
 import StyledCheckbox from "../views/elements/StyledCheckbox";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import BaseAvatar from "../views/avatars/BaseAvatar";
-import {mediaFromMxc} from "../../customisations/Media";
+import { mediaFromMxc } from "../../customisations/Media";
 import InfoTooltip from "../views/elements/InfoTooltip";
 import TextWithTooltip from "../views/elements/TextWithTooltip";
-import {useStateToggle} from "../../hooks/useStateToggle";
-import {getOrder} from "../../stores/SpaceStore";
+import { useStateToggle } from "../../hooks/useStateToggle";
+import { getChildOrder } from "../../stores/SpaceStore";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
+import { linkifyElement } from "../../HtmlUtils";
+import { getDisplayAliasForAliasSet } from "../../Rooms";
 
 interface IHierarchyProps {
     space: Room;
@@ -49,36 +52,6 @@ interface IHierarchyProps {
     additionalButtons?: ReactNode;
     showRoom(room: ISpaceSummaryRoom, viaServers?: string[], autoJoin?: boolean): void;
 }
-
-/* eslint-disable camelcase */
-export interface ISpaceSummaryRoom {
-    canonical_alias?: string;
-    aliases: string[];
-    avatar_url?: string;
-    guest_can_join: boolean;
-    name?: string;
-    num_joined_members: number
-    room_id: string;
-    topic?: string;
-    world_readable: boolean;
-    num_refs: number;
-    room_type: string;
-}
-
-export interface ISpaceSummaryEvent {
-    room_id: string;
-    event_id: string;
-    origin_server_ts: number;
-    type: string;
-    state_key: string;
-    content: {
-        order?: string;
-        suggested?: boolean;
-        auto_join?: boolean;
-        via?: string;
-    };
-}
-/* eslint-enable camelcase */
 
 interface ITileProps {
     room: ISpaceSummaryRoom;
@@ -100,28 +73,26 @@ const Tile: React.FC<ITileProps> = ({
     numChildRooms,
     children,
 }) => {
-    const name = room.name || room.canonical_alias || room.aliases?.[0]
+    const cli = MatrixClientPeg.get();
+    const joinedRoom = cli.getRoom(room.room_id)?.getMyMembership() === "join" ? cli.getRoom(room.room_id) : null;
+    const name = joinedRoom?.name || room.name || room.canonical_alias || room.aliases?.[0]
         || (room.room_type === RoomType.Space ? _t("Unnamed Space") : _t("Unnamed Room"));
 
     const [showChildren, toggleShowChildren] = useStateToggle(true);
-
-    const cli = MatrixClientPeg.get();
-    const cliRoom = cli.getRoom(room.room_id);
-    const myMembership = cliRoom?.getMyMembership();
 
     const onPreviewClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         onViewRoomClick(false);
-    }
+    };
     const onJoinClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         onViewRoomClick(true);
-    }
+    };
 
     let button;
-    if (myMembership === "join") {
+    if (joinedRoom) {
         button = <AccessibleButton onClick={onPreviewClick} kind="primary_outline">
             { _t("View") }
         </AccessibleButton>;
@@ -138,24 +109,34 @@ const Tile: React.FC<ITileProps> = ({
         } else {
             checkbox = <TextWithTooltip
                 tooltip={_t("You don't have permission")}
-                onClick={ev => { ev.stopPropagation() }}
+                onClick={ev => { ev.stopPropagation(); }}
             >
                 <StyledCheckbox disabled={true} />
             </TextWithTooltip>;
         }
     }
 
-    let url: string;
-    if (room.avatar_url) {
-        url = mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(20);
+    let avatar;
+    if (joinedRoom) {
+        avatar = <RoomAvatar room={joinedRoom} width={20} height={20} />;
+    } else {
+        avatar = <BaseAvatar
+            name={name}
+            idName={room.room_id}
+            url={room.avatar_url ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(20) : null}
+            width={20}
+            height={20}
+        />;
     }
 
     let description = _t("%(count)s members", { count: room.num_joined_members });
-    if (numChildRooms) {
+    if (numChildRooms !== undefined) {
         description += " · " + _t("%(count)s rooms", { count: numChildRooms });
     }
-    if (room.topic) {
-        description += " · " + room.topic;
+
+    const topic = joinedRoom?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || room.topic;
+    if (topic) {
+        description += " · " + topic;
     }
 
     let suggestedSection;
@@ -166,13 +147,22 @@ const Tile: React.FC<ITileProps> = ({
     }
 
     const content = <React.Fragment>
-        <BaseAvatar name={name} idName={room.room_id} url={url} width={20} height={20} />
+        { avatar }
         <div className="mx_SpaceRoomDirectory_roomTile_name">
             { name }
             { suggestedSection }
         </div>
 
-        <div className="mx_SpaceRoomDirectory_roomTile_info">
+        <div
+            className="mx_SpaceRoomDirectory_roomTile_info"
+            ref={e => e && linkifyElement(e)}
+            onClick={ev => {
+                // prevent clicks on links from bubbling up to the room tile
+                if ((ev.target as HTMLElement).tagName === "A") {
+                    ev.stopPropagation();
+                }
+            }}
+        >
             { description }
         </div>
         <div className="mx_SpaceRoomDirectory_actions">
@@ -268,7 +258,7 @@ export const HierarchyLevel = ({
     const children = Array.from(relations.get(spaceId)?.values() || []);
     const sortedChildren = sortBy(children, ev => {
         // XXX: Space Summary API doesn't give the child origin_server_ts but once it does we should use it for sorting
-        return getOrder(ev.content.order, null, ev.state_key);
+        return getChildOrder(ev.content.order, null, ev.state_key);
     });
     const [subspaces, childRooms] = sortedChildren.reduce((result, ev: ISpaceSummaryEvent) => {
         const roomId = ev.state_key;
@@ -301,7 +291,7 @@ export const HierarchyLevel = ({
                     key={roomId}
                     room={rooms.get(roomId)}
                     numChildRooms={Array.from(relations.get(roomId)?.values() || [])
-                        .filter(ev => rooms.get(ev.state_key)?.room_type !== RoomType.Space).length}
+                        .filter(ev => rooms.has(ev.state_key) && !rooms.get(ev.state_key).room_type).length}
                     suggested={relations.get(spaceId)?.get(roomId)?.content.suggested}
                     selected={selectedMap?.get(spaceId)?.has(roomId)}
                     onViewRoomClick={(autoJoin) => {
@@ -322,7 +312,7 @@ export const HierarchyLevel = ({
                 </Tile>
             ))
         }
-    </React.Fragment>
+    </React.Fragment>;
 };
 
 // mutate argument refreshToken to force a reload
@@ -346,9 +336,9 @@ export const useSpaceSummary = (cli: MatrixClient, space: Room, refreshToken?: a
                     parentChildRelations.getOrCreate(ev.room_id, new Map()).set(ev.state_key, ev);
                     childParentRelations.getOrCreate(ev.state_key, new Set()).add(ev.room_id);
                 }
-                if (Array.isArray(ev.content["via"])) {
+                if (Array.isArray(ev.content.via)) {
                     const set = viaMap.getOrCreate(ev.state_key, new Set());
-                    ev.content["via"].forEach(via => set.add(via));
+                    ev.content.via.forEach(via => set.add(via));
                 }
             });
 
@@ -414,12 +404,12 @@ export const SpaceHierarchy: React.FC<IHierarchyProps> = ({
     const [saving, setSaving] = useState(false);
 
     if (summaryError) {
-        return <p>{_t("Your server does not support showing space hierarchies.")}</p>;
+        return <p>{ _t("Your server does not support showing space hierarchies.") }</p>;
     }
 
     let content;
     if (roomsMap) {
-        const numRooms = Array.from(roomsMap.values()).filter(r => r.room_type !== RoomType.Space).length;
+        const numRooms = Array.from(roomsMap.values()).filter(r => !r.room_type).length;
         const numSpaces = roomsMap.size - numRooms - 1; // -1 at the end to exclude the space we are looking at
 
         let countsStr;
@@ -461,8 +451,12 @@ export const SpaceHierarchy: React.FC<IHierarchyProps> = ({
                         try {
                             for (const [parentId, childId] of selectedRelations) {
                                 await cli.sendStateEvent(parentId, EventType.SpaceChild, {}, childId);
-                                parentChildMap.get(parentId).get(childId).content = {};
-                                parentChildMap.set(parentId, new Map(parentChildMap.get(parentId)));
+                                parentChildMap.get(parentId).delete(childId);
+                                if (parentChildMap.get(parentId).size > 0) {
+                                    parentChildMap.set(parentId, new Map(parentChildMap.get(parentId)));
+                                } else {
+                                    parentChildMap.delete(parentId);
+                                }
                             }
                         } catch (e) {
                             setError(_t("Failed to remove some rooms. Try again later"));
@@ -498,6 +492,7 @@ export const SpaceHierarchy: React.FC<IHierarchyProps> = ({
                             setError("Failed to update some suggestions. Try again later");
                         }
                         setSaving(false);
+                        setSelected(new Map());
                     }}
                     kind="primary_outline"
                     disabled={disabled}
@@ -574,7 +569,7 @@ export const SpaceHierarchy: React.FC<IHierarchyProps> = ({
     return <>
         <SearchBox
             className="mx_textinput_icon mx_textinput_search"
-            placeholder={ _t("Search names and description") }
+            placeholder={_t("Search names and descriptions")}
             onSearch={setQuery}
             autoFocus={true}
             initialValue={initialText}
@@ -612,9 +607,9 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, onFinished, initialText }
             <div className="mx_Dialog_content">
                 { _t("If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.",
                     null,
-                    {a: sub => {
-                        return <AccessibleButton kind="link" onClick={onCreateRoomClick}>{sub}</AccessibleButton>;
-                    }},
+                    { a: sub => {
+                        return <AccessibleButton kind="link" onClick={onCreateRoomClick}>{ sub }</AccessibleButton>;
+                    } },
                 ) }
 
                 <SpaceHierarchy
@@ -643,5 +638,5 @@ export default SpaceRoomDirectory;
 // Similar to matrix-react-sdk's MatrixTools.getDisplayAliasForRoom
 // but works with the objects we get from the public room list
 function getDisplayAliasForRoom(room: ISpaceSummaryRoom) {
-    return room.canonical_alias || (room.aliases ? room.aliases[0] : "");
+    return getDisplayAliasForAliasSet(room.canonical_alias, room.aliases);
 }

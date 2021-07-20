@@ -53,14 +53,12 @@ import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/Community
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { getUnsentMessages } from "../../structures/RoomStatusBar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
-import { ResizeNotifier } from "../../../utils/ResizeNotifier";
 
 interface IProps {
     room: Room;
     showMessagePreview: boolean;
     isMinimized: boolean;
     tag: TagID;
-    resizeNotifier: ResizeNotifier;
 }
 
 type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
@@ -80,7 +78,7 @@ const contextMenuBelow = (elementRect: PartialDOMRect) => {
     const left = elementRect.left + window.pageXOffset - 9;
     const top = elementRect.bottom + window.pageYOffset + 17;
     const chevronFace = ChevronFace.None;
-    return {left, top, chevronFace};
+    return { left, top, chevronFace };
 };
 
 @replaceableComponent("views.rooms.RoomTile")
@@ -100,13 +98,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             hasUnsentEvents: this.countUnsentEvents() > 0,
 
             // generatePreview() will return nothing if the user has previews disabled
-            messagePreview: this.generatePreview(),
+            messagePreview: "",
         };
+        this.generatePreview();
+
         this.notificationState = RoomNotificationStateStore.instance.getRoomState(this.props.room);
         this.roomProps = EchoChamber.forRoom(this.props.room);
-        if (this.props.resizeNotifier) {
-            this.props.resizeNotifier.on("middlePanelResized", this.onResize);
-        }
     }
 
     private countUnsentEvents(): number {
@@ -115,21 +112,15 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
     private onRoomNameUpdate = (room) => {
         this.forceUpdate();
-    }
+    };
 
     private onNotificationUpdate = () => {
         this.forceUpdate(); // notification state changed - update
     };
 
-    private onResize = () => {
-        if (this.showMessagePreview && !this.state.messagePreview) {
-            this.setState({messagePreview: this.generatePreview()});
-        }
-    };
-
     private onLocalEchoUpdated = (ev: MatrixEvent, room: Room) => {
-        if (!room?.roomId === this.props.room.roomId) return;
-        this.setState({hasUnsentEvents: this.countUnsentEvents() > 0});
+        if (room?.roomId !== this.props.room.roomId) return;
+        this.setState({ hasUnsentEvents: this.countUnsentEvents() > 0 });
     };
 
     private onRoomPropertyUpdate = (property: CachedRoomKey) => {
@@ -146,8 +137,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     }
 
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
-        if (prevProps.showMessagePreview !== this.props.showMessagePreview && this.showMessagePreview) {
-            this.setState({messagePreview: this.generatePreview()});
+        const showMessageChanged = prevProps.showMessagePreview !== this.props.showMessagePreview;
+        const minimizedChanged = prevProps.isMinimized !== this.props.isMinimized;
+        if (showMessageChanged || minimizedChanged) {
+            this.generatePreview();
         }
         if (prevProps.room?.roomId !== this.props.room?.roomId) {
             MessagePreviewStore.instance.off(
@@ -206,9 +199,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             );
             this.props.room.off("Room.name", this.onRoomNameUpdate);
         }
-        if (this.props.resizeNotifier) {
-            this.props.resizeNotifier.off("middlePanelResized", this.onResize);
-        }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
         this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
@@ -236,17 +226,17 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
     private onRoomPreviewChanged = (room: Room) => {
         if (this.props.room && room.roomId === this.props.room.roomId) {
-            // generatePreview() will return nothing if the user has previews disabled
-            this.setState({messagePreview: this.generatePreview()});
+            this.generatePreview();
         }
     };
 
-    private generatePreview(): string | null {
+    private async generatePreview() {
         if (!this.showMessagePreview) {
             return null;
         }
 
-        return MessagePreviewStore.instance.getPreviewForRoom(this.props.room, this.props.tag);
+        const messagePreview = await MessagePreviewStore.instance.getPreviewForRoom(this.props.room, this.props.tag);
+        this.setState({ messagePreview });
     }
 
     private scrollIntoView = () => {
@@ -269,25 +259,25 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     };
 
     private onActiveRoomUpdate = (isActive: boolean) => {
-        this.setState({selected: isActive});
+        this.setState({ selected: isActive });
     };
 
     private onNotificationsMenuOpenClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
-        this.setState({notificationsMenuPosition: target.getBoundingClientRect()});
+        this.setState({ notificationsMenuPosition: target.getBoundingClientRect() });
     };
 
     private onCloseNotificationsMenu = () => {
-        this.setState({notificationsMenuPosition: null});
+        this.setState({ notificationsMenuPosition: null });
     };
 
     private onGeneralMenuOpenClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
-        this.setState({generalMenuPosition: target.getBoundingClientRect()});
+        this.setState({ generalMenuPosition: target.getBoundingClientRect() });
     };
 
     private onContextMenu = (ev: React.MouseEvent) => {
@@ -305,7 +295,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     };
 
     private onCloseGeneralMenu = () => {
-        this.setState({generalMenuPosition: null});
+        this.setState({ generalMenuPosition: null });
     };
 
     private onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
@@ -326,12 +316,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 0,
             ));
         } else {
-            console.warn(`Unexpected tag ${tagId} applied to ${this.props.room.room_id}`);
+            console.warn(`Unexpected tag ${tagId} applied to ${this.props.room.roomId}`);
         }
 
         if ((ev as React.KeyboardEvent).key === Key.ENTER) {
             // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
-            this.setState({generalMenuPosition: null}); // hide the menu
+            this.setState({ generalMenuPosition: null }); // hide the menu
         }
     };
 
@@ -343,7 +333,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             action: 'leave_room',
             room_id: this.props.room.roomId,
         });
-        this.setState({generalMenuPosition: null}); // hide the menu
+        this.setState({ generalMenuPosition: null }); // hide the menu
     };
 
     private onForgetRoomClick = (ev: ButtonEvent) => {
@@ -354,7 +344,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             action: 'forget_room',
             room_id: this.props.room.roomId,
         });
-        this.setState({generalMenuPosition: null}); // hide the menu
+        this.setState({ generalMenuPosition: null }); // hide the menu
     };
 
     private onOpenRoomSettings = (ev: ButtonEvent) => {
@@ -365,7 +355,18 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             action: 'open_room_settings',
             room_id: this.props.room.roomId,
         });
-        this.setState({generalMenuPosition: null}); // hide the menu
+        this.setState({ generalMenuPosition: null }); // hide the menu
+    };
+
+    private onCopyRoomClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        dis.dispatch({
+            action: 'copy_room',
+            room_id: this.props.room.roomId,
+        });
+        this.setState({ generalMenuPosition: null }); // hide the menu
     };
 
     private onInviteClick = (ev: ButtonEvent) => {
@@ -376,7 +377,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             action: 'view_invite',
             roomId: this.props.room.roomId,
         });
-        this.setState({generalMenuPosition: null}); // hide the menu
+        this.setState({ generalMenuPosition: null }); // hide the menu
     };
 
     private async saveNotifState(ev: ButtonEvent, newState: Volume) {
@@ -389,7 +390,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         const key = (ev as React.KeyboardEvent).key;
         if (key === Key.ENTER) {
             // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
-            this.setState({notificationsMenuPosition: null}); // hide the menu
+            this.setState({ notificationsMenuPosition: null }); // hide the menu
         }
     }
 
@@ -418,7 +419,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             >
                 <IconizedContextMenuOptionList first>
                     <IconizedContextMenuRadio
-                        label={_t("Use default")}
+                        label={_t("Global")}
                         active={state === ALL_MESSAGES}
                         iconClassName="mx_RoomTile_iconBell"
                         onClick={this.onClickAllNotifs}
@@ -466,7 +467,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     isExpanded={!!this.state.notificationsMenuPosition}
                     tabIndex={isActive ? 0 : -1}
                 />
-                {contextMenu}
+                { contextMenu }
             </React.Fragment>
         );
     }
@@ -520,13 +521,18 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                         label={lowPriorityLabel}
                         iconClassName="mx_RoomTile_iconArrowDown"
                     />
-                    {canInvite ? (
+                    { canInvite ? (
                         <IconizedContextMenuOption
                             onClick={this.onInviteClick}
                             label={_t("Invite People")}
                             iconClassName="mx_RoomTile_iconInvite"
                         />
-                    ) : null}
+                    ) : null }
+                    <IconizedContextMenuOption
+                        onClick={this.onCopyRoomClick}
+                        label={_t("Copy Room Link")}
+                        iconClassName="mx_RoomTile_iconCopyLink"
+                    />
                     <IconizedContextMenuOption
                         onClick={this.onOpenRoomSettings}
                         label={_t("Settings")}
@@ -551,7 +557,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     title={_t("Room options")}
                     isExpanded={!!this.state.generalMenuPosition}
                 />
-                {contextMenu}
+                { contextMenu }
             </React.Fragment>
         );
     }
@@ -564,7 +570,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             'mx_RoomTile_minimized': this.props.isMinimized,
         });
 
-        let roomProfile: IRoomProfile = {displayName: null, avatarMxc: null};
+        let roomProfile: IRoomProfile = { displayName: null, avatarMxc: null };
         if (this.props.tag === DefaultTagID.Invite) {
             roomProfile = CommunityPrototypeStore.instance.getInviteProfile(this.props.room.roomId);
         }
@@ -576,9 +582,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         const roomAvatar = <DecoratedRoomAvatar
             room={this.props.room}
             avatarSize={32}
-            tag={this.props.tag}
             displayBadge={this.props.isMinimized}
-            oobData={({avatarUrl: roomProfile.avatarMxc})}
+            oobData={({ avatarUrl: roomProfile.avatarMxc })}
         />;
 
         let badge: React.ReactNode;
@@ -616,7 +621,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     id={messagePreviewId(this.props.room.roomId)}
                     title={this.state.messagePreview}
                 >
-                    {this.state.messagePreview}
+                    { this.state.messagePreview }
                 </div>
             );
         }
@@ -630,9 +635,9 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         let nameContainer = (
             <div className="mx_RoomTile_nameContainer">
                 <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
-                    {name}
+                    { name }
                 </div>
-                {messagePreview}
+                { messagePreview }
             </div>
         );
         if (this.props.isMinimized) nameContainer = null;
@@ -670,7 +675,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         return (
             <React.Fragment>
                 <RovingTabIndexWrapper inputRef={this.roomTileRef}>
-                    {({onFocus, isActive, ref}) =>
+                    { ({ onFocus, isActive, ref }) =>
                         <Button
                             {...props}
                             onFocus={onFocus}
@@ -684,11 +689,11 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             aria-selected={this.state.selected}
                             aria-describedby={ariaDescribedBy}
                         >
-                            {roomAvatar}
-                            {nameContainer}
-                            {badge}
-                            {this.renderGeneralMenu()}
-                            {this.renderNotificationsMenu(isActive)}
+                            { roomAvatar }
+                            { nameContainer }
+                            { badge }
+                            { this.renderGeneralMenu() }
+                            { this.renderNotificationsMenu(isActive) }
                         </Button>
                     }
                 </RovingTabIndexWrapper>
