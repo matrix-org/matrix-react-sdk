@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626714095108,
+  "lastUpdate": 1626768997463,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -7892,6 +7892,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4416.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e11e17eb85aa1892bfda66669367dd31761fc838",
+          "message": "Merge pull request #6411 from SimonBrandner/fix/sticker-placeholder/18014",
+          "timestamp": "2021-07-20T09:11:28+01:00",
+          "tree_id": "dc7b692c4b2eee22b18e2436488f7b21d5be2d87",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e11e17eb85aa1892bfda66669367dd31761fc838"
+        },
+        "date": 1626768996621,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4650.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1255.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1735.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4634.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
