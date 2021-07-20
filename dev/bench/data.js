@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626776920385,
+  "lastUpdate": 1626782676214,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8072,6 +8072,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4400.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d8c4ab53e037baea84305be256b81897a90c3023",
+          "message": "Merge pull request #6347 from robintown/emojibase-updates",
+          "timestamp": "2021-07-20T12:57:00+01:00",
+          "tree_id": "e97f8d61f8c1abad7a7435ae70ac8192eb6c83cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d8c4ab53e037baea84305be256b81897a90c3023"
+        },
+        "date": 1626782675437,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4252.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 959.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1739.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4370.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
