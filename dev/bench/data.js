@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626794038127,
+  "lastUpdate": 1626795801561,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8312,6 +8312,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4192,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "91cf27e252a0aa7024e209535b65649cce8f3c6f",
+          "message": "Merge pull request #6401 from Palid/fix/15142/fix-grecaptcha-race-condition",
+          "timestamp": "2021-07-20T16:38:19+01:00",
+          "tree_id": "945f92d586bc92cbad5000c480ef4a7ab8e7831d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/91cf27e252a0aa7024e209535b65649cce8f3c6f"
+        },
+        "date": 1626795800515,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4625.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1314.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1618.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4454.000000000058,
             "unit": "ms",
             "extra": "type: measure"
           }
