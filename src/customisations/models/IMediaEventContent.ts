@@ -43,7 +43,6 @@ export interface IMediaEventContent {
         h?: number;
         size?: number;
     };
-    body?: string;
 }
 
 export interface IPreparedMedia extends IMediaObject {
