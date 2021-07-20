@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626776521850,
+  "lastUpdate": 1626776920385,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8024,6 +8024,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 819.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "770de8f6b520d250e0ebf8d540ebe6b23ffd3301",
+          "message": "Merge pull request #6408 from matrix-org/t3chguy/eslint",
+          "timestamp": "2021-07-20T11:23:36+01:00",
+          "tree_id": "1eac0f06f344c8c8fff729abe2525cc173c33c81",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/770de8f6b520d250e0ebf8d540ebe6b23ffd3301"
+        },
+        "date": 1626776919070,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4329.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 965.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1657.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4400.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
