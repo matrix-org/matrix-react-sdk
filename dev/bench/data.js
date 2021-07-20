@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626788589045,
+  "lastUpdate": 1626794038127,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8264,6 +8264,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4473.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7ea17aee3cb373a8d90c03e36989380694bc9948",
+          "message": "Merge pull request #6386 from matrix-org/travis/voice-messages/download\n\nMove download button for media to the action bar",
+          "timestamp": "2021-07-20T09:08:50-06:00",
+          "tree_id": "aba75bd84fda16070c83280e664fe6968bba6191",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7ea17aee3cb373a8d90c03e36989380694bc9948"
+        },
+        "date": 1626794037208,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4401.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 940.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1900.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4192,
             "unit": "ms",
             "extra": "type: measure"
           }
