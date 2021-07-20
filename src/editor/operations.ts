@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import Range from "./range";
-import {Part} from "./parts";
+import { Part } from "./parts";
 
 /**
  * Some common queries and transformations on the editor model
  */
 
 export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]) {
-    const {model} = range;
+    const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
         const addedLen = range.replace(newParts);
@@ -33,7 +33,7 @@ export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]) {
 }
 
 export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset?: number) {
-    const {model} = range;
+    const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
         const addedLen = range.replace(newParts);
@@ -44,7 +44,7 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset?
 }
 
 export function rangeStartsAtBeginningOfLine(range: Range) {
-    const {model} = range;
+    const { model } = range;
     const startsWithPartial = range.start.offset !== 0;
     const isFirstPart = range.start.index === 0;
     const previousIsNewline = !isFirstPart && model.parts[range.start.index - 1].type === "newline";
@@ -52,7 +52,7 @@ export function rangeStartsAtBeginningOfLine(range: Range) {
 }
 
 export function rangeEndsAtEndOfLine(range: Range) {
-    const {model} = range;
+    const { model } = range;
     const lastPart = model.parts[range.end.index];
     const endsWithPartial = range.end.offset !== lastPart.text.length;
     const isLastPart = range.end.index === model.parts.length - 1;
@@ -61,8 +61,8 @@ export function rangeEndsAtEndOfLine(range: Range) {
 }
 
 export function formatRangeAsQuote(range: Range) {
-    const {model, parts} = range;
-    const {partCreator} = model;
+    const { model, parts } = range;
+    const { partCreator } = model;
     for (let i = 0; i < parts.length; ++i) {
         const part = parts[i];
         if (part.type === "newline") {
@@ -82,8 +82,8 @@ export function formatRangeAsQuote(range: Range) {
 }
 
 export function formatRangeAsCode(range: Range) {
-    const {model, parts} = range;
-    const {partCreator} = model;
+    const { model, parts } = range;
+    const { partCreator } = model;
     const needsBlock = parts.some(p => p.type === "newline");
     if (needsBlock) {
         parts.unshift(partCreator.plain("```"), partCreator.newline());
@@ -104,8 +104,8 @@ export function formatRangeAsCode(range: Range) {
 }
 
 export function formatRangeAsLink(range: Range) {
-    const {model, parts} = range;
-    const {partCreator} = model;
+    const { model, parts } = range;
+    const { partCreator } = model;
     parts.unshift(partCreator.plain("["));
     parts.push(partCreator.plain("]()"));
     // We set offset to -1 here so that the caret lands between the brackets
@@ -117,8 +117,8 @@ const isBlank = part => !part.text || !/\S/.test(part.text);
 const isNL = part => part.type === "newline";
 
 export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix) {
-    const {model, parts} = range;
-    const {partCreator} = model;
+    const { model, parts } = range;
+    const { partCreator } = model;
 
     // compute paragraph [start, end] indexes
     const paragraphIndexes = [];

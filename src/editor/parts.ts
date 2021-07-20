@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClient} from "matrix-js-sdk/src/client";
-import {RoomMember} from "matrix-js-sdk/src/models/room-member";
-import {Room} from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import AutocompleteWrapperModel, {
     GetAutocompleterComponent,
@@ -34,7 +34,7 @@ interface ISerializedPart {
 interface ISerializedPillPart {
     type: Type.AtRoomPill | Type.RoomPill | Type.UserPill;
     text: string;
-    resourceId: string;
+    resourceId?: string;
 }
 
 export type SerializedPart = ISerializedPart | ISerializedPillPart;
@@ -274,7 +274,7 @@ abstract class PillPart extends BasePart implements IPillPart {
     }
 
     // helper method for subclasses
-    _setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string) {
+    protected setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string) {
         const avatarBackground = `url('${avatarUrl}')`;
         const avatarLetter = `'${initialLetter}'`;
         // check if the value is changing,
@@ -285,6 +285,14 @@ abstract class PillPart extends BasePart implements IPillPart {
         if (node.style.getPropertyValue("--avatar-letter") !== avatarLetter) {
             node.style.setProperty("--avatar-letter", avatarLetter);
         }
+    }
+
+    serialize(): ISerializedPillPart {
+        return {
+            type: this.type,
+            text: this.text,
+            resourceId: this.resourceId,
+        };
     }
 
     get canEdit() {
@@ -341,16 +349,12 @@ class RoomPillPart extends PillPart {
 
     setAvatar(node: HTMLElement) {
         let initialLetter = "";
-        let avatarUrl = Avatar.avatarUrlForRoom(
-            this.room,
-            16 * window.devicePixelRatio,
-            16 * window.devicePixelRatio,
-            "crop");
+        let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
         if (!avatarUrl) {
             initialLetter = Avatar.getInitialLetter(this.room ? this.room.name : this.resourceId);
             avatarUrl = Avatar.defaultAvatarUrlForString(this.room ? this.room.roomId : this.resourceId);
         }
-        this._setAvatarVars(node, avatarUrl, initialLetter);
+        this.setAvatarVars(node, avatarUrl, initialLetter);
     }
 
     get type(): IPillPart["type"] {
@@ -370,6 +374,13 @@ class AtRoomPillPart extends RoomPillPart {
     get type(): IPillPart["type"] {
         return Type.AtRoomPill;
     }
+
+    serialize(): ISerializedPillPart {
+        return {
+            type: this.type,
+            text: this.text,
+        };
+    }
 }
 
 class UserPillPart extends PillPart {
@@ -383,16 +394,12 @@ class UserPillPart extends PillPart {
         }
         const name = this.member.name || this.member.userId;
         const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(this.member.userId);
-        const avatarUrl = Avatar.avatarUrlForMember(
-            this.member,
-            16 * window.devicePixelRatio,
-            16 * window.devicePixelRatio,
-            "crop");
+        const avatarUrl = Avatar.avatarUrlForMember(this.member, 16, 16, "crop");
         let initialLetter = "";
         if (avatarUrl === defaultAvatarUrl) {
             initialLetter = Avatar.getInitialLetter(name);
         }
-        this._setAvatarVars(node, avatarUrl, initialLetter);
+        this.setAvatarVars(node, avatarUrl, initialLetter);
     }
 
     get type(): IPillPart["type"] {
@@ -401,14 +408,6 @@ class UserPillPart extends PillPart {
 
     get className() {
         return "mx_UserPill mx_Pill";
-    }
-
-    serialize(): ISerializedPillPart {
-        return {
-            type: this.type,
-            text: this.text,
-            resourceId: this.resourceId,
-        };
     }
 }
 
@@ -467,7 +466,7 @@ export class PartCreator {
     constructor(private room: Room, private client: MatrixClient, autoCompleteCreator: AutoCompleteCreator = null) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
-        this.autoCompleteCreator = {create: autoCompleteCreator && autoCompleteCreator(this)};
+        this.autoCompleteCreator = { create: autoCompleteCreator && autoCompleteCreator(this) };
     }
 
     setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator) {
@@ -503,7 +502,7 @@ export class PartCreator {
             case Type.PillCandidate:
                 return this.pillCandidate(part.text);
             case Type.RoomPill:
-                return this.roomPill(part.text);
+                return this.roomPill(part.resourceId);
             case Type.UserPill:
                 return this.userPill(part.text, part.resourceId);
         }
@@ -543,9 +542,9 @@ export class PartCreator {
         return new UserPillPart(userId, displayName, member);
     }
 
-    createMentionParts(partIndex: number, displayName: string, userId: string) {
+    createMentionParts(insertTrailingCharacter: boolean, displayName: string, userId: string) {
         const pill = this.userPill(displayName, userId);
-        const postfix = this.plain(partIndex === 0 ? ": " : " ");
+        const postfix = this.plain(insertTrailingCharacter ? ": " : " ");
         return [pill, postfix];
     }
 }
@@ -553,7 +552,7 @@ export class PartCreator {
 // part creator that support auto complete for /commands,
 // used in SendMessageComposer
 export class CommandPartCreator extends PartCreator {
-    createPartForInput(text: string, partIndex: number) {
+    public createPartForInput(text: string, partIndex: number): Part {
         // at beginning and starts with /? create
         if (partIndex === 0 && text[0] === "/") {
             // text will be inserted by model, so pass empty string
@@ -563,11 +562,11 @@ export class CommandPartCreator extends PartCreator {
         }
     }
 
-    command(text: string) {
+    public command(text: string): CommandPart {
         return new CommandPart(text, this.autoCompleteCreator);
     }
 
-    deserializePart(part: Part): Part {
+    public deserializePart(part: SerializedPart): Part {
         if (part.type === "command") {
             return this.command(part.text);
         } else {
@@ -577,7 +576,7 @@ export class CommandPartCreator extends PartCreator {
 }
 
 class CommandPart extends PillCandidatePart {
-    get type(): IPillCandidatePart["type"] {
+    public get type(): IPillCandidatePart["type"] {
         return Type.Command;
     }
 }
