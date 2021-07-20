@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626784691507,
+  "lastUpdate": 1626786471729,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8168,6 +8168,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4589.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "340d09d45762e37f33c8a41bfcd6fa64521c09ef",
+          "message": "Merge pull request #6415 from matrix-org/t3chguy-patch-1\n\nRevert accidental renaming of dispatcherRef",
+          "timestamp": "2021-07-20T14:02:19+01:00",
+          "tree_id": "21e2621e6cdd774621e9a27ff30219f6849b0157",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/340d09d45762e37f33c8a41bfcd6fa64521c09ef"
+        },
+        "date": 1626786470392,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4250.3000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1071.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4320.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
