@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626786471729,
+  "lastUpdate": 1626788589045,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8216,6 +8216,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4320.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4a877300dab76670ee3a0037a998340059e2b65a",
+          "message": "Merge pull request #6405 from matrix-org/travis/files-hover\n\nRemove hover effect from files in the files panel",
+          "timestamp": "2021-07-20T07:38:04-06:00",
+          "tree_id": "06d31651ad0e5034435925e0171895752b15667d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4a877300dab76670ee3a0037a998340059e2b65a"
+        },
+        "date": 1626788588126,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4519.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1057,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4473.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
