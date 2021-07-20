@@ -441,7 +441,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
     }
 
     // TODO: [REACT-WARNING] Move this to constructor
-    UNSAFE_componentWillMount() { // eslint-disable-line camelcase
+    UNSAFE_componentWillMount() { // eslint-disable-line
         const partCreator = new CommandPartCreator(this.props.room, this.context);
         const parts = this.restoreStoredEditorState(partCreator) || [];
         this.model = new EditorModel(parts, partCreator);
@@ -497,7 +497,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
 
         switch (payload.action) {
             case 'reply_to_event':
-            case Action.FocusComposer:
+            case Action.FocusSendMessageComposer:
                 this.editorRef.current?.focus();
                 break;
             case "send_composer_insert":

@@ -45,7 +45,7 @@ import Spoiler from "../elements/Spoiler";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import MessageEditHistoryDialog from "../dialogs/MessageEditHistoryDialog";
 import EditMessageComposer from '../rooms/EditMessageComposer';
-import LinkPreviewWidget from '../rooms/LinkPreviewWidget';
+import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
 
 interface IProps {
     /* the MatrixEvent to show */
@@ -244,7 +244,11 @@ export default class TextualBody extends React.Component<IProps, IState> {
     }
 
     private highlightCode(code: HTMLElement): void {
-        if (SettingsStore.getValue("enableSyntaxHighlightLanguageDetection")) {
+        // Auto-detect language only if enabled and only for codeblocks
+        if (
+            SettingsStore.getValue("enableSyntaxHighlightLanguageDetection") &&
+            code.parentElement instanceof HTMLPreElement
+        ) {
             highlight.highlightBlock(code);
         } else {
             // Only syntax highlight if there's a class starting with language-
@@ -294,14 +298,8 @@ export default class TextualBody extends React.Component<IProps, IState> {
             // pass only the first child which is the event tile otherwise this recurses on edited events
             let links = this.findLinks([this.contentRef.current]);
             if (links.length) {
-                // de-duplicate the links after stripping hashes as they don't affect the preview
-                // using a set here maintains the order
-                links = Array.from(new Set(links.map(link => {
-                    const url = new URL(link);
-                    url.hash = "";
-                    return url.toString();
-                })));
-
+                // de-duplicate the links using a set here maintains the order
+                links = Array.from(new Set(links));
                 this.setState({ links });
 
                 // lazy-load the hidden state of the preview widget from localstorage
@@ -477,10 +475,10 @@ export default class TextualBody extends React.Component<IProps, IState> {
 
         const tooltip = <div>
             <div className="mx_Tooltip_title">
-                {_t("Edited at %(date)s", { date: dateString })}
+                { _t("Edited at %(date)s", { date: dateString }) }
             </div>
             <div className="mx_Tooltip_sub">
-                {_t("Click to view edits")}
+                { _t("Click to view edits") }
             </div>
         </div>;
 
@@ -491,7 +489,7 @@ export default class TextualBody extends React.Component<IProps, IState> {
                 title={_t("Edited at %(date)s. Click to view edits.", { date: dateString })}
                 tooltip={tooltip}
             >
-                <span>{`(${_t("edited")})`}</span>
+                <span>{ `(${_t("edited")})` }</span>
             </AccessibleTooltipButton>
         );
     }
@@ -515,8 +513,8 @@ export default class TextualBody extends React.Component<IProps, IState> {
         });
         if (this.props.replacingEventId) {
             body = <>
-                {body}
-                {this.renderEditedMarker()}
+                { body }
+                { this.renderEditedMarker() }
             </>;
         }
 
@@ -530,15 +528,12 @@ export default class TextualBody extends React.Component<IProps, IState> {
 
         let widgets;
         if (this.state.links.length && !this.state.widgetHidden && this.props.showUrlPreview) {
-            widgets = this.state.links.map((link)=>{
-                return <LinkPreviewWidget
-                    key={link}
-                    link={link}
-                    mxEvent={this.props.mxEvent}
-                    onCancelClick={this.onCancelClick}
-                    onHeightChanged={this.props.onHeightChanged}
-                />;
-            });
+            widgets = <LinkPreviewGroup
+                links={this.state.links}
+                mxEvent={this.props.mxEvent}
+                onCancelClick={this.onCancelClick}
+                onHeightChanged={this.props.onHeightChanged}
+            />;
         }
 
         switch (content.msgtype) {

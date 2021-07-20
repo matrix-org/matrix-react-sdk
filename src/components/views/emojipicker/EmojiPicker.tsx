@@ -33,7 +33,7 @@ export const EMOJI_HEIGHT = 37;
 export const EMOJIS_PER_ROW = 8;
 
 interface IProps {
-    selectedEmojis: Set<string>;
+    selectedEmojis?: Set<string>;
     showQuickReactions?: boolean;
     onChoose(unicode: string): boolean;
 }
@@ -238,7 +238,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                     }}
                     onScroll={this.onScroll}
                 >
-                    {this.categories.map(category => {
+                    { this.categories.map(category => {
                         const emojis = this.memoizedDataByCategory[category.id];
                         const categoryElement = ((
                             <Category
@@ -258,9 +258,9 @@ class EmojiPicker extends React.Component<IProps, IState> {
                         const height = EmojiPicker.categoryHeightForEmojiCount(emojis.length);
                         heightBefore += height;
                         return categoryElement;
-                    })}
+                    }) }
                 </AutoHideScrollbar>
-                {this.state.previewEmoji || !this.props.showQuickReactions
+                { this.state.previewEmoji || !this.props.showQuickReactions
                     ? <Preview emoji={this.state.previewEmoji} />
                     : <QuickReactions onClick={this.onClickEmoji} selectedEmojis={this.props.selectedEmojis} /> }
             </div>
