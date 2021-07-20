@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626782676214,
+  "lastUpdate": 1626784691507,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8120,6 +8120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4370.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c47a05cc483e8a2d7345f021e6042319b049086f",
+          "message": "Merge pull request #6121 from SimonBrandner/feature/call-event-tile\n\nAdd VoIP event tiles",
+          "timestamp": "2021-07-20T13:31:53+01:00",
+          "tree_id": "aac926403861138ce44dbf5bb488bf1b51e4ce95",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c47a05cc483e8a2d7345f021e6042319b049086f"
+        },
+        "date": 1626784690166,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4360.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1153.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1855.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4589.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
