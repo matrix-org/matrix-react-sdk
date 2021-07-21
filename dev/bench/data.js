@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626863763008,
+  "lastUpdate": 1626865188886,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8540,6 +8540,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4351.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e33163c8370872d26c0f8535e177c31697423f01",
+          "message": "Merge pull request #6419 from matrix-org/gsouquet/fix-18125\n\nAdd spoiler support for message bubbles",
+          "timestamp": "2021-07-21T11:54:30+01:00",
+          "tree_id": "1ff472de122c485739d0b15ae71c37a786e1e06e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e33163c8370872d26c0f8535e177c31697423f01"
+        },
+        "date": 1626865187963,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4551.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1084.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1717.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4448.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
