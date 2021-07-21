@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626865188886,
+  "lastUpdate": 1626865303352,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8588,6 +8588,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4448.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a4ca52255ddeb20a322dde65427048b11afe5856",
+          "message": "Merge pull request #6421 from matrix-org/gsouquet/fix-18084\n\nFix font slider preview for message bubbles",
+          "timestamp": "2021-07-21T11:56:33+01:00",
+          "tree_id": "a22051fcbfe37e73895d51b45c13b3bf25c341aa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a4ca52255ddeb20a322dde65427048b11afe5856"
+        },
+        "date": 1626865302364,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4254.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1045.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1872.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4410.5,
             "unit": "ms",
             "extra": "type: measure"
           }
