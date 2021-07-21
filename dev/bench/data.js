@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626884582464,
+  "lastUpdate": 1626894752920,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8972,6 +8972,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4495,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b590b1d263d2d6f13ae2058fe3a5b46a54dc6941",
+          "message": "Merge pull request #6431 from matrix-org/travis/notifs/restore-name\n\nRestore 'use default' naming on room notifications",
+          "timestamp": "2021-07-21T13:07:24-06:00",
+          "tree_id": "e1b7aa273dac8d2882dea1be1dbb2b762cd08009",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b590b1d263d2d6f13ae2058fe3a5b46a54dc6941"
+        },
+        "date": 1626894752079,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4248,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1024.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1707.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4430.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
