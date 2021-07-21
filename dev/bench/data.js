@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626857326429,
+  "lastUpdate": 1626863763008,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8492,6 +8492,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 943.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5a7fe60d0ec6c3bfc961893e74d7c1b212f7dbe4",
+          "message": "Merge pull request #6416 from robintown/non-emoji-reactions",
+          "timestamp": "2021-07-21T11:30:15+01:00",
+          "tree_id": "7efa4297b6b94ce2b4d3353019768762170a262e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5a7fe60d0ec6c3bfc961893e74d7c1b212f7dbe4"
+        },
+        "date": 1626863761491,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4271.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 947.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1774.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4351.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
