@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626865672571,
+  "lastUpdate": 1626875112819,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8732,6 +8732,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4270.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cdac3f9f5dfe13f8be1d75d547f06aaac27b0061",
+          "message": "Merge pull request #6404 from SimonBrandner/fix/file-label-behaviour",
+          "timestamp": "2021-07-21T14:38:47+01:00",
+          "tree_id": "82df836604537ff21c97ff3b5cca44437eba18b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cdac3f9f5dfe13f8be1d75d547f06aaac27b0061"
+        },
+        "date": 1626875111766,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5272.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1333.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1974.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4982.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
