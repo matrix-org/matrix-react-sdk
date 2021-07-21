@@ -32,9 +32,9 @@ const NewRoomIntro = () => {
         const member = room?.getMember(dmPartner);
         const displayName = member?.rawDisplayName || dmPartner;
         return <RoomIntro>
-            <p>{_t("This is the beginning of your direct message history with <displayName/>.", {}, {
+            <p>{ _t("This is the beginning of your direct message history with <displayName/>.", {}, {
                 displayName: () => <b>{ displayName }</b>,
-            })}</p>
+            }) }</p>
         </RoomIntro>;
     } else {
         const creator = room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
@@ -50,9 +50,9 @@ const NewRoomIntro = () => {
         }
 
         return <RoomIntro>
-            <p>{createdText} {_t("This is the start of <roomName/>.", {}, {
+            <p>{ createdText } { _t("This is the start of <roomName/>.", {}, {
                 roomName: () => <b>{ room.name }</b>,
-            })}</p>
+            }) }</p>
         </RoomIntro>;
     }
 };

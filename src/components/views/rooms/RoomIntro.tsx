@@ -109,7 +109,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
                         showSpaceInvite(parentSpace);
                     }}
                 >
-                    {_t("Invite to %(spaceName)s", { spaceName: parentSpace.name })}
+                    { _t("Invite to %(spaceName)s", { spaceName: parentSpace.name }) }
                 </AccessibleButton>
                 { room.canInvite(cli.getUserId()) && <AccessibleButton
                     className="mx_RoomIntro_inviteButton"
@@ -118,7 +118,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
                         dis.dispatch({ action: "view_invite", roomId });
                     }}
                 >
-                    {_t("Invite to just this room")}
+                    { _t("Invite to just this room") }
                 </AccessibleButton> }
             </div>;
         } else if (room.canInvite(cli.getUserId())) {
@@ -130,7 +130,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
                         dis.dispatch({ action: "view_invite", roomId });
                     }}
                 >
-                    {_t("Invite to this room")}
+                    { _t("Invite to this room") }
                 </AccessibleButton>
             </div>;
         }
@@ -159,7 +159,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
         "Your private messages are normally encrypted, but this room isn't. "+
         "Usually this is due to an unsupported device or method being used, " +
         "like email invites. <a>Enable encryption in settings.</a>", {},
-        { a: sub => <a onClick={openRoomSettings} href="#">{sub}</a> },
+        { a: sub => <a onClick={openRoomSettings} href="#">{ sub }</a> },
     );
 
     return <div className="mx_RoomIntro">
@@ -169,7 +169,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
                 title={_t("End-to-end encryption isn't enabled")}
                 subtitle={sub2}
             />
-        )}
+        ) }
         { avatar }
         <h2>{ room.name }</h2>
         { children }
