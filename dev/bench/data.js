@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626876247207,
+  "lastUpdate": 1626877086047,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8828,6 +8828,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4612,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "80e64601a970d972d02df286abb8de3d3f231eba",
+          "message": "Merge pull request #6427 from matrix-org/gsouquet/fix-18120\n\nImprove new layout switcher UI",
+          "timestamp": "2021-07-21T15:11:58+01:00",
+          "tree_id": "0ac1a78c75ad8b9e196b9b41bccd2399d99b03c5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/80e64601a970d972d02df286abb8de3d3f231eba"
+        },
+        "date": 1626877083810,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4771.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1197.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4650,
             "unit": "ms",
             "extra": "type: measure"
           }
