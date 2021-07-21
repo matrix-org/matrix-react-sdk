@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626795801561,
+  "lastUpdate": 1626853311858,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8360,6 +8360,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4454.000000000058,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ae60692e8829093300d051e1ee03b9d3f89637b2",
+          "message": "Merge pull request #6412 from matrix-org/gsouqet/ts-migration-1",
+          "timestamp": "2021-07-21T08:36:08+01:00",
+          "tree_id": "c4fcd376992dc1925cf92c0326712dd6d57974f3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ae60692e8829093300d051e1ee03b9d3f89637b2"
+        },
+        "date": 1626853310988,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4431,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1216.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2007.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4608.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
