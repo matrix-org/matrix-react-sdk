@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626875112819,
+  "lastUpdate": 1626876247207,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8780,6 +8780,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4982.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "34b8870a9583ae52c4679cc1df88949364a65cc7",
+          "message": "Merge pull request #6417 from matrix-org/travis/voice-messages/play-1\n\nPlay only one audio file at a time",
+          "timestamp": "2021-07-21T07:58:46-06:00",
+          "tree_id": "e03a5e5198b4e4a28ad7d5c67aa6d5921f8f75d1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/34b8870a9583ae52c4679cc1df88949364a65cc7"
+        },
+        "date": 1626876245308,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4380.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1661.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4612,
             "unit": "ms",
             "extra": "type: measure"
           }
