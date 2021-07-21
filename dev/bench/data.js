@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626853311858,
+  "lastUpdate": 1626855620842,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8408,6 +8408,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4608.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8e01080711acc7b0586766038214bfadc4334222",
+          "message": "Merge pull request #6420 from matrix-org/gsouquet/fix-18079\n\nReintroduce grouped events padding on modern layout",
+          "timestamp": "2021-07-21T09:14:07+01:00",
+          "tree_id": "ecde969fc51f15743c4cce93b9c24896a089b095",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8e01080711acc7b0586766038214bfadc4334222"
+        },
+        "date": 1626855619891,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4623,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1190.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1877.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4659.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
