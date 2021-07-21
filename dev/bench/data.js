@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626865303352,
+  "lastUpdate": 1626865306296,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -8636,6 +8636,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4410.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "45967c80f383816279f9e4e40fb66cb189e26db4",
+          "message": "Merge pull request #6426 from matrix-org/gsouquet/event-tile-null-guard\n\nAdd null guard for room prop in EventTile",
+          "timestamp": "2021-07-21T11:56:43+01:00",
+          "tree_id": "09dbd5231dd0ee36ed0d99476b6cb810c4770973",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/45967c80f383816279f9e4e40fb66cb189e26db4"
+        },
+        "date": 1626865305302,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4386.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 993.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1645.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4484.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
