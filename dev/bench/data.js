@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626940222246,
+  "lastUpdate": 1626942519449,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9248,6 +9248,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4571.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9219661d7c763b707a5f4361af0961056fdab3c5",
+          "message": "Merge pull request #5389 from matrix-org/t3chguy/fix/15536\n\nFix onPaste handler to work with copying files from Finder",
+          "timestamp": "2021-07-22T09:22:55+01:00",
+          "tree_id": "47d450a630250c87dcd8514fcea2d19f124384a9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9219661d7c763b707a5f4361af0961056fdab3c5"
+        },
+        "date": 1626942517970,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4119.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1185.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1833.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4572.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
