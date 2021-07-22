@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626919642321,
+  "lastUpdate": 1626921828926,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9104,6 +9104,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 964.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "05353d0fe5393247e3016452af507ca33d2eebcf",
+          "message": "Merge pull request #6388 from aaronraimist/matrix-url-permitted\n\nAdd matrix: to the list of permitted URL schemes",
+          "timestamp": "2021-07-21T20:38:45-06:00",
+          "tree_id": "c4ea9eafb957fae73b2286af7bfd506868bd5e49",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/05353d0fe5393247e3016452af507ca33d2eebcf"
+        },
+        "date": 1626921827541,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4704.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1226.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1664.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4479.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
