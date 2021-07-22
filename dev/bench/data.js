@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626967310750,
+  "lastUpdate": 1626991253839,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10052,6 +10052,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4420.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "46646eed061a12def62b75df6ae57ffe5476c2db",
+          "message": "Merge pull request #6456 from matrix-org/dbkr/fix_images_without_thumbnail\n\nFix display of image messages that lack thumbnails",
+          "timestamp": "2021-07-22T22:55:58+01:00",
+          "tree_id": "9ae3479626923d63219736ffb67f8bf4f7c960aa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/46646eed061a12def62b75df6ae57ffe5476c2db"
+        },
+        "date": 1626991252906,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4553.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1020.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4443.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
