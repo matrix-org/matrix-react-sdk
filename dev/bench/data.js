@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626942519449,
+  "lastUpdate": 1626943254344,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9296,6 +9296,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4572.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e665e38b7bc04e6f9514869d6325e560c37e4cbc",
+          "message": "Merge pull request #6413 from SimonBrandner/ts/address-stuff",
+          "timestamp": "2021-07-22T09:35:40+01:00",
+          "tree_id": "ab6e431d039b11a7b64af981c308161856f9fa0a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e665e38b7bc04e6f9514869d6325e560c37e4cbc"
+        },
+        "date": 1626943252849,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4293.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1019.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1707.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4560.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
