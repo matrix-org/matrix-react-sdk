@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626918541772,
+  "lastUpdate": 1626919642321,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9068,6 +9068,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4405.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fd9241a8548487bbc69b2eaaa9131d8999ba25da",
+          "message": "Merge pull request #6355 from SimonBrandner/fix/diff-colors\n\nMake diff colors in codeblocks more pleasant",
+          "timestamp": "2021-07-21T20:02:03-06:00",
+          "tree_id": "34bf31fc61d20644104fc25f9c403bc61f198cde",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fd9241a8548487bbc69b2eaaa9131d8999ba25da"
+        },
+        "date": 1626919641345,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4277,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 964.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
