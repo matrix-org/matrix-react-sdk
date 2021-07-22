@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626953129246,
+  "lastUpdate": 1626960760667,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9716,6 +9716,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4413,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "817482700ce6d2ab5066177092e9c592382a8e65",
+          "message": "Merge pull request #6443 from matrix-org/gsouquet/fix-18178\n\nRemove excessive padding after url previews",
+          "timestamp": "2021-07-22T14:27:38+01:00",
+          "tree_id": "8049555bbc147f9ab526365ff4eea0a9b180807a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/817482700ce6d2ab5066177092e9c592382a8e65"
+        },
+        "date": 1626960759651,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4601.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1069.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1898.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4576.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
