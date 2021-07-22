@@ -177,7 +177,15 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
     private onClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        SpaceStore.instance.setActiveSpace(this.props.space);
+
+        if (this.props.activeSpaces.includes(this.props.space)) {
+            defaultDispatcher.dispatch({
+                action: "view_room",
+                room_id: this.props.space.roomId,
+            });
+        } else {
+            SpaceStore.instance.setActiveSpace(this.props.space);
+        }
     };
 
     private onMenuOpenClick = (ev: React.MouseEvent) => {
