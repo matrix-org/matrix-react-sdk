@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626960760667,
+  "lastUpdate": 1626960820701,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9764,6 +9764,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4576.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78ae4ebc1e208e6eec0b52c8707bcd026d3cb4f6",
+          "message": "Merge pull request #6444 from matrix-org/gsouquet/fix-18121\n\nAdd right padding for event replies",
+          "timestamp": "2021-07-22T14:28:13+01:00",
+          "tree_id": "ffd4201ae3ff62073b401d1484e033a7d64525e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78ae4ebc1e208e6eec0b52c8707bcd026d3cb4f6"
+        },
+        "date": 1626960819644,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4205.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1136.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1812.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4564.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
