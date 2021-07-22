@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626960820701,
+  "lastUpdate": 1626960824539,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9812,6 +9812,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4564.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f9e8e66ac62bcb89a1b8ac3da294f6e5f5355e98",
+          "message": "Merge pull request #6445 from matrix-org/gsouquet/fix-18127\n\nFix event tile cut off in share preview",
+          "timestamp": "2021-07-22T14:28:06+01:00",
+          "tree_id": "15d498bfbe4256cbf56434581a7f61af720099f2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f9e8e66ac62bcb89a1b8ac3da294f6e5f5355e98"
+        },
+        "date": 1626960822775,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4492.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1177.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1795,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4469.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
