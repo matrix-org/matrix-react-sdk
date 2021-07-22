@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626963449202,
+  "lastUpdate": 1626964058830,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9956,6 +9956,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4352.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6765bb8f4c6ff828f77c2957b5cccac038f8ba4c",
+          "message": "Merge pull request #6418 from robintown/zoom-to-cursor",
+          "timestamp": "2021-07-22T15:22:04+01:00",
+          "tree_id": "9341b569d9e647ecab4a176485ca665b84c806db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6765bb8f4c6ff828f77c2957b5cccac038f8ba4c"
+        },
+        "date": 1626964057888,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4607.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1223.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1862.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4722.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
