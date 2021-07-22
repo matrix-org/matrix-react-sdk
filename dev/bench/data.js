@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626947649058,
+  "lastUpdate": 1626949639228,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9572,6 +9572,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4318,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f4a43cd3d3903ee71d01634283d5c4b40dd58174",
+          "message": "Merge pull request #6436 from matrix-org/travis/voice-messages/large\n\nUse a MediaElementSourceAudioNode to process large audio files",
+          "timestamp": "2021-07-22T04:22:23-06:00",
+          "tree_id": "c1c3acfff9333e9fb96ff571d0a8daaacb24ec69",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f4a43cd3d3903ee71d01634283d5c4b40dd58174"
+        },
+        "date": 1626949637522,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4475.3000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 985.6000000000058,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1701.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4211.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
