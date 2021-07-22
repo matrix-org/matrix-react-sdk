@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626943254344,
+  "lastUpdate": 1626947074628,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9344,6 +9344,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4560.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b9b37f59f16c2767d78d0820f4624b7c1178746f",
+          "message": "Merge pull request #6432 from matrix-org/travis/voice-messages/colours\n\nClean up visual style of files and voice messages",
+          "timestamp": "2021-07-22T03:39:29-06:00",
+          "tree_id": "f20f2ea2b1a91c6a7ad220d28ef053f6e4ac5189",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b9b37f59f16c2767d78d0820f4624b7c1178746f"
+        },
+        "date": 1626947073219,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3960.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 917.5,
             "unit": "ms",
             "extra": "type: measure"
           }
