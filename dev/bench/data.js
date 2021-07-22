@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626947139261,
+  "lastUpdate": 1626947649058,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9524,6 +9524,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4474.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c4b08d7eca7e9c080cf0bccc46e0d3cfd2a50908",
+          "message": "Merge pull request #6440 from SimonBrandner/fix/codeblocks\n\nRevert 100% on codeblocks",
+          "timestamp": "2021-07-22T03:49:11-06:00",
+          "tree_id": "d31ddb58c62869dbb50649f09b8031737d7e7b47",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c4b08d7eca7e9c080cf0bccc46e0d3cfd2a50908"
+        },
+        "date": 1626947647782,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4307.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 918.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1851,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4318,
             "unit": "ms",
             "extra": "type: measure"
           }
