@@ -161,6 +161,7 @@
 @import "./views/groups/_GroupUserSettings.scss";
 @import "./views/messages/_CreateEvent.scss";
 @import "./views/messages/_DateSeparator.scss";
+@import "./views/messages/_DisambiguatedProfile.scss";
 @import "./views/messages/_EventTileBubble.scss";
 @import "./views/messages/_MEmoteBody.scss";
 @import "./views/messages/_MFileBody.scss";
@@ -180,7 +181,6 @@
 @import "./views/messages/_ReactionsRowButton.scss";
 @import "./views/messages/_RedactedBody.scss";
 @import "./views/messages/_RoomAvatarEvent.scss";
-@import "./views/messages/_DisambiguatedProfile.scss";
 @import "./views/messages/_TextualEvent.scss";
 @import "./views/messages/_UnknownBody.scss";
 @import "./views/messages/_ViewSourceEvent.scss";
@@ -200,8 +200,8 @@
 @import "./views/rooms/_E2EIcon.scss";
 @import "./views/rooms/_EditMessageComposer.scss";
 @import "./views/rooms/_EntityTile.scss";
-@import "./views/rooms/_EventTile.scss";
 @import "./views/rooms/_EventBubbleTile.scss";
+@import "./views/rooms/_EventTile.scss";
 @import "./views/rooms/_GroupLayout.scss";
 @import "./views/rooms/_IRCLayout.scss";
 @import "./views/rooms/_JumpToBottomButton.scss";
