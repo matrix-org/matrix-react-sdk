@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626947074628,
+  "lastUpdate": 1626947085582,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9380,6 +9380,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 917.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "98472b4fced4a57403e32221c8ac369aa651b355",
+          "message": "Merge pull request #6433 from matrix-org/travis/voice-messages/errors\n\nRender error state for audio components",
+          "timestamp": "2021-07-22T03:39:47-06:00",
+          "tree_id": "1f68c236ee841a947e054e4d413e3ab7bbd950a5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/98472b4fced4a57403e32221c8ac369aa651b355"
+        },
+        "date": 1626947084426,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4111.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 989.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1764.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4377.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
