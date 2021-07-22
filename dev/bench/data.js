@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626964058830,
+  "lastUpdate": 1626967310750,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10004,6 +10004,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4722.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "248a758ad6c75f2d6710efbe4cea550252acd7c2",
+          "message": "Merge pull request #6439 from matrix-org/gsouquet/fix-18142\n\nFix avatar obstructing membership and state changes",
+          "timestamp": "2021-07-22T16:16:33+01:00",
+          "tree_id": "dc4e67cf57ae9a7aed85eccc7add8c401e15476a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/248a758ad6c75f2d6710efbe4cea550252acd7c2"
+        },
+        "date": 1626967308893,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4432.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1245.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1732.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4420.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
