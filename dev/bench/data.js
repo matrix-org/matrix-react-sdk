@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626949639228,
+  "lastUpdate": 1626952805545,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9620,6 +9620,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4211.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "951ceb194ccaae6b5fe61022c3e1cfdf46b79970",
+          "message": "Merge pull request #6438 from matrix-org/gsouquet/fix-18074\n\nPrevent action bar to overlap the event content",
+          "timestamp": "2021-07-22T12:14:29+01:00",
+          "tree_id": "1a3e0745506a21b220659e74b05284a043d56684",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/951ceb194ccaae6b5fe61022c3e1cfdf46b79970"
+        },
+        "date": 1626952803134,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4631.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1111.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1938.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4609.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
