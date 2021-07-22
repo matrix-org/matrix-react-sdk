@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626894752920,
+  "lastUpdate": 1626918541772,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9020,6 +9020,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4430.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c38457537580690ce36a9e388a7117e25d300bd2",
+          "message": "Merge pull request #6261 from robintown/watch-show-timestamps\n\nAdd alwaysShowTimestamps and others to RoomView setting watchers",
+          "timestamp": "2021-07-21T19:44:04-06:00",
+          "tree_id": "a36b35a6fbd608f1774766b41cff0a80fe26604f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c38457537580690ce36a9e388a7117e25d300bd2"
+        },
+        "date": 1626918540293,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4406.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1816.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4405.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
