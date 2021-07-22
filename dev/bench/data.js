@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626921828926,
+  "lastUpdate": 1626927832431,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9152,6 +9152,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4479.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "158d4368e0807b25a25400f85df83d1887fea672",
+          "message": "Merge pull request #5974 from jaiwanth-v/spaces-jump-to-room\n\nNavigate to the first room with notifications when clicked on space notification dot",
+          "timestamp": "2021-07-21T22:18:54-06:00",
+          "tree_id": "bb2685f8dc3619de74c65e75dc9716ed9f745105",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/158d4368e0807b25a25400f85df83d1887fea672"
+        },
+        "date": 1626927831530,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4599.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1025.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1744.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4438.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
