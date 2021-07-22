@@ -20,6 +20,7 @@ import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
 import RoomAvatar from "../avatars/RoomAvatar";
 import { useContextMenu } from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
@@ -140,10 +141,14 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
     const homeNotificationState = SpaceStore.spacesTweakAllRoomsEnabled
         ? RoomNotificationStateStore.instance.globalState : SpaceStore.instance.getNotificationState(HOME_SPACE);
 
+    const onHomeClick = activeSpace ?
+        () => SpaceStore.instance.setActiveSpace(null) :
+        () => dis.dispatch({ action: "view_home_page" });
+
     return <div className="mx_SpaceTreeLevel">
         <SpaceButton
             className="mx_SpaceButton_home"
-            onClick={() => SpaceStore.instance.setActiveSpace(null)}
+            onClick={onHomeClick}
             selected={!activeSpace}
             tooltip={SpaceStore.spacesTweakAllRoomsEnabled ? _t("All rooms") : _t("Home")}
             notificationState={homeNotificationState}
