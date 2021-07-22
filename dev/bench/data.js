@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626952805545,
+  "lastUpdate": 1626953129246,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9668,6 +9668,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4609.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "88884bbaad4f6b460bdc96bf47616e76b499ce66",
+          "message": "Merge pull request #6441 from SimonBrandner/feature/smaller-quotes",
+          "timestamp": "2021-07-22T12:20:27+01:00",
+          "tree_id": "b8dd2598617207cf49bd71e819da64910c6e1810",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/88884bbaad4f6b460bdc96bf47616e76b499ce66"
+        },
+        "date": 1626953128061,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4308.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1075.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1639.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4413,
             "unit": "ms",
             "extra": "type: measure"
           }
