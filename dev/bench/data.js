@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626947123982,
+  "lastUpdate": 1626947139261,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9476,6 +9476,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4234.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b3d14de18132ce88b92d3a15a79c9181e0a3fce2",
+          "message": "Merge pull request #6435 from matrix-org/travis/voice-messages/duration\n\nFix duration placeholder parsing for audio files",
+          "timestamp": "2021-07-22T03:40:43-06:00",
+          "tree_id": "43d1f198b772f2e5dfc1d477928e34a73183b865",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b3d14de18132ce88b92d3a15a79c9181e0a3fce2"
+        },
+        "date": 1626947138320,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4499,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1038.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1661.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4474.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
