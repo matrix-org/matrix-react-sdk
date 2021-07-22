@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626960824539,
+  "lastUpdate": 1626963417850,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -9860,6 +9860,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4469.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "324037298ab236a124c3cd26e3c2310acb028258",
+          "message": "Merge pull request #6447 from matrix-org/gsouquet/fix-18176\n\nUse modern layout in file and notification panel",
+          "timestamp": "2021-07-22T15:11:27+01:00",
+          "tree_id": "3bc783a1b212451d955cb415315997fe40d71c24",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/324037298ab236a124c3cd26e3c2310acb028258"
+        },
+        "date": 1626963416407,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4127.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1352.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1687.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4430.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
