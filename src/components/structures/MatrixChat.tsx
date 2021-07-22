@@ -1751,7 +1751,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         } else if (screen === 'share') {
             if (this.props.startingFragmentQueryParams.url) {
-                this.openSendToDialog(this.props.startingFragmentQueryParams.url);
+                let url = this.props.startingFragmentQueryParams.url;
+                if (Array.isArray(url)) url = url[0];
+                this.openSendToDialog(url);
             } else {
                 dis.dispatch({
                     action: 'view_home_page',
