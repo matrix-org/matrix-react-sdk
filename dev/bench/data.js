@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627028055151,
+  "lastUpdate": 1627037592099,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10292,6 +10292,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4420.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3429f73efc07218fb2db9453c14c9d666b7ab748",
+          "message": "Merge pull request #6460 from matrix-org/gsouquet/fix-18126\n\nMake inline events feel less claustrophobic in bubble layout",
+          "timestamp": "2021-07-23T11:48:21+01:00",
+          "tree_id": "2e4331311f46cdf0ed60043db1f11569e7d424a5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3429f73efc07218fb2db9453c14c9d666b7ab748"
+        },
+        "date": 1627037591162,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4384.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1201.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1725.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4380.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
