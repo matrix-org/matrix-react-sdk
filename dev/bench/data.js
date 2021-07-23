@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627024574675,
+  "lastUpdate": 1627024585881,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10196,6 +10196,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4623.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ffcc9631df518764219238e5dfdac5bd6ada451a",
+          "message": "Merge pull request #6449 from matrix-org/gsouquet/fix-18153\n\nAdd event selected state for message bubbles",
+          "timestamp": "2021-07-23T08:10:50+01:00",
+          "tree_id": "a9eafe50412ca631067ef5b1c6545be6deced98b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ffcc9631df518764219238e5dfdac5bd6ada451a"
+        },
+        "date": 1627024584280,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4895.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1269.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1757.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4668.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
