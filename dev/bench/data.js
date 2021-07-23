@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627048689507,
+  "lastUpdate": 1627053284789,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10436,6 +10436,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4871.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2c4ab507d6415a640fb6cbd5dd602b92f33dd394",
+          "message": "Merge pull request #6453 from matrix-org/travis/voice-messages/code-cleanup-1\n\nClean up voice messages code",
+          "timestamp": "2021-07-23T09:09:12-06:00",
+          "tree_id": "41377712a570572b4854f0604b1e15a3f5077381",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c4ab507d6415a640fb6cbd5dd602b92f33dd394"
+        },
+        "date": 1627053283780,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4831,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1089.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
