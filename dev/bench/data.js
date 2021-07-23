@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627037592099,
+  "lastUpdate": 1627043361544,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10340,6 +10340,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4380.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3556384d8099187896e1b1e0eb0f36cfd90575bc",
+          "message": "Merge pull request #6463 from matrix-org/gsouquet/fix-18100\n\nFix clipped avatar in room list",
+          "timestamp": "2021-07-23T13:23:49+01:00",
+          "tree_id": "97b6b8b87972066e12a8d7ebc598ffa32c7e5118",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3556384d8099187896e1b1e0eb0f36cfd90575bc"
+        },
+        "date": 1627043360611,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4561.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1036.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1775.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4625.5,
             "unit": "ms",
             "extra": "type: measure"
           }
