@@ -128,7 +128,6 @@ export const Notifier = {
         } else {
             notif = plaf.displayNotification(title, msg, avatarUrl, room);
         }
-        
 
         // if displayNotification returns non-null,  the platform supports
         // clearing notifications later, so keep track of this.
