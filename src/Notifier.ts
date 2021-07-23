@@ -123,7 +123,7 @@ export const Notifier = {
 
         const content = ev.getContent();
         let notif: Notification;
-        if (content.body !== undefined) {
+        if (typeof content.body === 'string') {
             let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
             if (content.body.startsWith('>') && formattedBody) {
                 formattedBody = ReplyThread.stripHTMLReply(formattedBody);
