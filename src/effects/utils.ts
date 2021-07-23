@@ -19,6 +19,29 @@
  * @param  {Object} content The message
  * @param  {Array<string>} emojis The list of emojis to check for
  */
-export const containsEmoji = (content: { msgtype: string, body: string }, emojis: Array<string>): boolean => {
+
+import ReplyThread from "../components/views/elements/ReplyThread";
+
+export const containsEmoji = (
+    content: { msgtype: string; body: string },
+    emojis: Array<string>
+): boolean => {
     return emojis.some((emoji) => content.body && content.body.includes(emoji));
+};
+
+export const stripReply = (content) => {
+    let notif;
+    if (typeof content.body === "string") {
+        let formattedBody =
+            typeof content.formatted_body === "string"
+                ? content.formatted_body
+                : null;
+        if (content.body.startsWith(">") && formattedBody) {
+            formattedBody = ReplyThread.stripHTMLReply(formattedBody);
+        }
+        notif = content.body.startsWith(">") ? formattedBody : null;
+    } else {
+        notif = null;
+    }
+    return notif;
 };
