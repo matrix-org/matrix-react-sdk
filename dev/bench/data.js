@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627017425125,
+  "lastUpdate": 1627024574675,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10148,6 +10148,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4385.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aac01171b2216744f3c5503368b799ce586b9120",
+          "message": "Merge pull request #6448 from matrix-org/gsouquet/fix-18162\n\nMake images fit inside message bubble",
+          "timestamp": "2021-07-23T08:10:37+01:00",
+          "tree_id": "52e386c747ff37d9d72f6b41a7d6952464da36ab",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aac01171b2216744f3c5503368b799ce586b9120"
+        },
+        "date": 1627024573707,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4833.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1215,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1903,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4623.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
