@@ -20,6 +20,10 @@ limitations under the License.
     font-size: $font-14px;
     line-height: $font-16px;
 
+    &:hover {
+        filter: brightness(1.5);
+    }
+
     &.mx_ReplyTile_audio .mx_MFileBody_info_icon::before {
         mask-image: url("$(res)/img/element-icons/speaker.svg");
     }
