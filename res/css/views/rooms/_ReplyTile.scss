@@ -42,7 +42,7 @@ limitations under the License.
         display: flex;
         flex-direction: column;
         text-decoration: none;
-        color: $primary-fg-color;
+        color: $blockquote-fg-color;
     }
 
     .mx_RedactedBody {
@@ -119,6 +119,10 @@ limitations under the License.
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+
+            .mx_SenderProfile_displayName {
+                font-weight: 400;
+            }
         }
 
         .mx_BaseAvatar {
