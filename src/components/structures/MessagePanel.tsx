@@ -237,6 +237,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // A map of <callId, CallEventGrouper>
     private callEventGroupers = new Map<string, CallEventGrouper>();
 
+    private membersCount = 0;
+
     constructor(props, context) {
         super(props, context);
 
@@ -257,11 +259,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
+        this.calculateRoomMembersCount();
+        this.props.room?.on("RoomState.members", this.calculateRoomMembersCount);
         this.isMounted = true;
     }
 
     componentWillUnmount() {
         this.isMounted = false;
+        this.props.room?.off("RoomState.members", this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
     }
 
@@ -274,6 +279,10 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             });
         }
     }
+
+    private calculateRoomMembersCount = (): void => {
+        this.membersCount = this.props.room?.getMembers().length || 0;
+    };
 
     private onShowTypingNotificationsChange = (): void => {
         this.setState({
@@ -712,7 +721,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         isLastSuccessful = isLastSuccessful && mxEv.getSender() === MatrixClientPeg.get().getUserId();
 
         const callEventGrouper = this.callEventGroupers.get(mxEv.getContent().call_id);
-
         // use txnId as key if available so that we don't remount during sending
         ret.push(
             <TileErrorBoundary key={mxEv.getTxnId() || eventId} mxEvent={mxEv}>
@@ -744,7 +752,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     enableFlair={this.props.enableFlair}
                     showReadReceipts={this.props.showReadReceipts}
                     callEventGrouper={callEventGrouper}
-                    hideSender={this.props.room?.getMembers().length <= 2 && this.props.layout === Layout.Bubble}
+                    hideSender={this.membersCount <= 2 && this.props.layout === Layout.Bubble}
                 />
             </TileErrorBoundary>,
         );

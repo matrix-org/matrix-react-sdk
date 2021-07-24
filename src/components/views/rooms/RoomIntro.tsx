@@ -57,13 +57,18 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
         }
 
         const member = room?.getMember(dmPartner);
-        avatar = <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} onClick={() => {
-            defaultDispatcher.dispatch<ViewUserPayload>({
-                action: Action.ViewUser,
-                // XXX: We should be using a real member object and not assuming what the receiver wants.
-                member: member || { userId: dmPartner } as User,
-            });
-        }} />;
+        avatar = <RoomAvatar
+            room={room}
+            width={AVATAR_SIZE}
+            height={AVATAR_SIZE}
+            onClick={() => {
+                defaultDispatcher.dispatch<ViewUserPayload>({
+                    action: Action.ViewUser,
+                    // XXX: We should be using a real member object and not assuming what the receiver wants.
+                    member: member || { userId: dmPartner } as User,
+                });
+            }}
+        />;
     } else {
         const inRoom = room && room.getMyMembership() === "join";
         const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
