@@ -47,6 +47,7 @@ limitations under the License.
         flex-direction: column;
         text-decoration: none;
         color: $blockquote-fg-color;
+        gap: 4px;
     }
 
     .mx_RedactedBody {
@@ -70,7 +71,6 @@ limitations under the License.
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: $reply-lines;
-        line-height: $line-height;
 
         .mx_EventTile_body.mx_EventTile_bigEmoji {
             line-height: $line-height !important;
