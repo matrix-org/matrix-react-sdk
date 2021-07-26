@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627061219108,
+  "lastUpdate": 1627281959985,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10556,6 +10556,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4584.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "93ae5c20d671729da5012a0f6e3ff39584b24133",
+          "message": "Merge pull request #6464 from matrix-org/gsouquet/fix-18172\n\nFix reactions row pushing content on IRC layout",
+          "timestamp": "2021-07-26T07:40:49+01:00",
+          "tree_id": "ee5b459f918dd086fbdbe7c0eebf19701521a5ba",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/93ae5c20d671729da5012a0f6e3ff39584b24133"
+        },
+        "date": 1627281958597,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4083.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 956.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
