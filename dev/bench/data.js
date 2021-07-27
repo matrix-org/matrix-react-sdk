@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627388400767,
+  "lastUpdate": 1627388725631,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10856,6 +10856,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 900.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "59e9704ee83347bf60b2e8a927464727fcba9a97",
+          "message": "Merge pull request #6481 from matrix-org/t3chguy/fix/18250\n\nFix broken layout of the space hierarchy view",
+          "timestamp": "2021-07-27T13:19:04+01:00",
+          "tree_id": "3e83f084b26ac7a723ac424d77b733e9e7478671",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/59e9704ee83347bf60b2e8a927464727fcba9a97"
+        },
+        "date": 1627388723898,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4578.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1183.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1807.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4858.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
