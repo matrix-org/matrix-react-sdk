@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627396817620,
+  "lastUpdate": 1627402626018,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11228,6 +11228,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4864,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e7151ebf2d77c6141ac4be7805f8f0496f97d7b8",
+          "message": "Merge pull request #6488 from SimonBrandner/fix/call-crash/18270",
+          "timestamp": "2021-07-27T17:12:01+01:00",
+          "tree_id": "1e97d39397d6516ff09923f2b89516a2ab41a717",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e7151ebf2d77c6141ac4be7805f8f0496f97d7b8"
+        },
+        "date": 1627402624498,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4482.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 993.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1765,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4355.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
