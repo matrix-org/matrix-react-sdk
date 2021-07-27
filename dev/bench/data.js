@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627390808464,
+  "lastUpdate": 1627390977914,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11000,6 +11000,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4457.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "148571828bc64193fa712bef62d6e40597b82fc3",
+          "message": "Merge pull request #6474 from matrix-org/gsouquet/fix-18017\n\nMake new reply UI clickable",
+          "timestamp": "2021-07-27T13:57:41+01:00",
+          "tree_id": "cf90af86f567260860b1d80238b00abdae973b2a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/148571828bc64193fa712bef62d6e40597b82fc3"
+        },
+        "date": 1627390976878,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4668.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1011.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1683.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4537.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
