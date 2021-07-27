@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627375996451,
+  "lastUpdate": 1627388400767,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10820,6 +10820,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4336,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "50aee28bf0a4e5810e60fbc6ee0c285ee9924332",
+          "message": "Merge pull request #6480 from matrix-org/gsouquet/fix-18137\n\nAdd data-layout to MELS for better CSS structure",
+          "timestamp": "2021-07-27T13:15:02+01:00",
+          "tree_id": "1d3a1fef7260511a35824945152b57d79b7912e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/50aee28bf0a4e5810e60fbc6ee0c285ee9924332"
+        },
+        "date": 1627388399205,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3766.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 900.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
