@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627388725631,
+  "lastUpdate": 1627389941091,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10904,6 +10904,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4858.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "72becb73e1f8f6a915a6a1a30b2258161dc9238b",
+          "message": "Merge pull request #6473 from matrix-org/gsouquet/fix-18208\n\nFix deleted message left offset in the timeline",
+          "timestamp": "2021-07-27T13:40:20+01:00",
+          "tree_id": "e4e7ef868b34e6c2aaaeca83ccab1f1f020953ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/72becb73e1f8f6a915a6a1a30b2258161dc9238b"
+        },
+        "date": 1627389939872,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4185.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1277.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1833.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4426.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
