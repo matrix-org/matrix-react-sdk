@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627393628217,
+  "lastUpdate": 1627395087723,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11132,6 +11132,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4235.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "93f42182c0336434accb185ffda08d8a6db89d9b",
+          "message": "Merge pull request #6479 from matrix-org/travis/voice-messages/fix-placeholder-ui\n\nFix timing of voice message recording UI appearing",
+          "timestamp": "2021-07-27T08:05:28-06:00",
+          "tree_id": "1bb4fdccf3f3807f3fec3dbbcda3be3df53011f4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/93f42182c0336434accb185ffda08d8a6db89d9b"
+        },
+        "date": 1627395085864,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4349.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1292.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1905.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4968.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
