@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627370566403,
+  "lastUpdate": 1627374447143,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10736,6 +10736,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4438.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e65c1c2ae6595091a4af23f06b1f8b709cda0ee8",
+          "message": "Merge pull request #6476 from matrix-org/fix/update-eslint-config\n\nUpdate ESLint Config",
+          "timestamp": "2021-07-27T10:21:23+02:00",
+          "tree_id": "1a80aafc6af81aa22c522c195a9e88650e6fb9f4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e65c1c2ae6595091a4af23f06b1f8b709cda0ee8"
+        },
+        "date": 1627374445634,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3721.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 899.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
