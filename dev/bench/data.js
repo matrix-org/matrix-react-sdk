@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627395087723,
+  "lastUpdate": 1627396817620,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11180,6 +11180,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4968.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3e7aee3a879c7fbdbb7090035879b5db2c0a6e7b",
+          "message": "Merge pull request #5992 from SimonBrandner/fix/12652/screen-share\n\nAdd support for screen sharing in 1:1 calls",
+          "timestamp": "2021-07-27T15:34:27+01:00",
+          "tree_id": "a4fc3c348b931c3966bb3373ff4fc2b5c635a789",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3e7aee3a879c7fbdbb7090035879b5db2c0a6e7b"
+        },
+        "date": 1627396815934,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4949.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1137.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1977.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4864,
             "unit": "ms",
             "extra": "type: measure"
           }
