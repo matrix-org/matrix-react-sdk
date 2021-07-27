@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627390977914,
+  "lastUpdate": 1627391750812,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11048,6 +11048,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4537.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f7d0419cee2c12cb905a726d1600f1fbb08370bd",
+          "message": "Merge pull request #6482 from RiotTranslateBot/weblate-element-web-matrix-react-sdk\n\nTranslations update from Weblate",
+          "timestamp": "2021-07-27T14:10:50+01:00",
+          "tree_id": "32b92b206494d00fb2bcb778b4f51303a966f520",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f7d0419cee2c12cb905a726d1600f1fbb08370bd"
+        },
+        "date": 1627391749828,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3987.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 573.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
