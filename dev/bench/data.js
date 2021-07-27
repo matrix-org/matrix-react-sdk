@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627391750812,
+  "lastUpdate": 1627393628217,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11084,6 +11084,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 573.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5ead53b36a8eb0656978fb1eebed026300c2fcf2",
+          "message": "Merge pull request #6483 from SimonBrandner/fix/dont-anim-resize/18261\n\nFix PiP resize issues",
+          "timestamp": "2021-07-27T14:42:04+01:00",
+          "tree_id": "9ac8a7e5bdfeb1bcaa0b60600916bebbb6cf5b01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5ead53b36a8eb0656978fb1eebed026300c2fcf2"
+        },
+        "date": 1627393626706,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3805.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 930.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1787.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4235.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
