@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627403095766,
+  "lastUpdate": 1627405791698,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11324,6 +11324,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4270.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9707797d457679838aa137243496229afcfb1236",
+          "message": "Merge pull request #6272 from SimonBrandner/fix/explicit-font/14163\n\nDon't set `font-family` explicitly",
+          "timestamp": "2021-07-27T11:04:23-06:00",
+          "tree_id": "ebdb3259a9689f56825d47d56fd5a5f309efd5bd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9707797d457679838aa137243496229afcfb1236"
+        },
+        "date": 1627405790200,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4739.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1138.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1748.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4706.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
