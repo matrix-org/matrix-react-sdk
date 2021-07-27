@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627288373322,
+  "lastUpdate": 1627370566403,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10688,6 +10688,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4509.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "788abac74d21f227ce41b4d0f3a780089d8206df",
+          "message": "Merge pull request #6471 from SimonBrandner/fix/voip-event-tiles/18216\n\nFix VoIP event tile issues",
+          "timestamp": "2021-07-27T08:17:31+01:00",
+          "tree_id": "8e35d4b139fce36abdec5c50ec1b1da699921e01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/788abac74d21f227ce41b4d0f3a780089d8206df"
+        },
+        "date": 1627370564907,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4125.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 946.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1823.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4438.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
