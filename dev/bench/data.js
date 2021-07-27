@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627389941091,
+  "lastUpdate": 1627390808464,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -10952,6 +10952,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4426.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7733ee25786de9d5f0810dfc46faacf3f698c2ea",
+          "message": "Merge pull request #6478 from matrix-org/dbkr/scrollpanel_loop_breaker\n\nFix infinite pagination loop when offline",
+          "timestamp": "2021-07-27T13:54:30+01:00",
+          "tree_id": "fc4d0b91400da020fdc31248067e1f320712e0eb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7733ee25786de9d5f0810dfc46faacf3f698c2ea"
+        },
+        "date": 1627390806108,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4137.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1206.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1659.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4457.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
