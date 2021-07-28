@@ -28,7 +28,7 @@ limitations under the License.
         color: var(--username-color);
 
         &:hover {
-            filter: brightness(1.5);
+            opacity: 0.65;
         }
     }
 
