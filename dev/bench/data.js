@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627477054188,
+  "lastUpdate": 1627478445779,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11600,6 +11600,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4698.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8781b75523350c987bd4e8c24535331f2dd3f01",
+          "message": "Merge pull request #6455 from matrix-org/travis/widget-customisation\n\nAdd customisation point for declaring widget variables",
+          "timestamp": "2021-07-28T07:15:45-06:00",
+          "tree_id": "2322820b0461cf6d92662df3517c86ba09a394fe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8781b75523350c987bd4e8c24535331f2dd3f01"
+        },
+        "date": 1627478444842,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4600.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1228.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1810.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4486.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
