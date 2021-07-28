@@ -554,6 +554,7 @@ export default class CallView extends React.Component<IProps, IState> {
                     ChevronFace.None,
                     CONTEXT_MENU_VPADDING,
                 )}
+                mountAsChild={true}
                 onFinished={this.closeDialpad}
                 call={this.props.call}
             />;
@@ -567,6 +568,7 @@ export default class CallView extends React.Component<IProps, IState> {
                     ChevronFace.None,
                     CONTEXT_MENU_VPADDING,
                 )}
+                mountAsChild={true}
                 onFinished={this.closeContextMenu}
                 call={this.props.call}
             />;
