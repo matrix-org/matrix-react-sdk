@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627460159429,
+  "lastUpdate": 1627460547906,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11408,6 +11408,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1129.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "77a3d2ec181971c8665127cf7139d9a3b53e683d",
+          "message": "Merge pull request #6491 from robintown/align-reactions\n\nRealign reactions row with messages in modern layout",
+          "timestamp": "2021-07-28T09:16:04+01:00",
+          "tree_id": "ce38ad9476aed05954f214177b3850e10edb09d2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/77a3d2ec181971c8665127cf7139d9a3b53e683d"
+        },
+        "date": 1627460546421,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4547.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1420.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1971.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5023.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
