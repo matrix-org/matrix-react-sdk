@@ -1905,8 +1905,6 @@
     "Invalid file%(extra)s": "Invalid file%(extra)s",
     "Error decrypting image": "Error decrypting image",
     "Show image": "Show image",
-    "Sticker": "Sticker",
-    "Image": "Image",
     "Join the conference at the top of this room": "Join the conference at the top of this room",
     "Join the conference from the room information card on the right": "Join the conference from the room information card on the right",
     "Video conference ended by %(senderName)s": "Video conference ended by %(senderName)s",
