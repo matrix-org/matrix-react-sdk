@@ -28,10 +28,6 @@ limitations under the License.
         mask-image: url("$(res)/img/element-icons/call/video-call.svg");
     }
 
-    .mx_MFileBody .mx_MFileBody_download {
-        display: none;
-    }
-
     > a {
         display: flex;
         flex-direction: column;

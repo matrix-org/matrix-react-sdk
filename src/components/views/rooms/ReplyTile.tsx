@@ -134,7 +134,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         const msgtypeOverrides = {
             [MsgType.Image]: MImageReplyBody,
-            // Override audio and video body with file body. We also hide the download/decrypt button using CSS
+            // Override audio and video body with file body
             [MsgType.Audio]: MFileBody,
             [MsgType.Video]: MFileBody,
         };
