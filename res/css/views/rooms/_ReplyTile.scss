@@ -66,8 +66,8 @@ limitations under the License.
             font-size: $font-14px !important; // Override the big emoji override
         }
 
-        // Hide line numbers
-        .mx_EventTile_lineNumbers {
+        // Hide line numbers and edited indicator
+        .mx_EventTile_lineNumbers, .mx_EventTile_edited {
             display: none;
         }
 
