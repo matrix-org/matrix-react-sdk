@@ -88,7 +88,6 @@ export default class ReplyTile extends React.PureComponent<IProps> {
     render() {
         const mxEvent = this.props.mxEvent;
         const msgType = mxEvent.getContent().msgtype;
-        const evType = mxEvent.getType() as EventType;
 
         const { tileHandler, isInfoMessage } = getEventDisplayInfo(this.props.mxEvent);
         // This shouldn't happen: the caller should check we support this type
@@ -115,14 +114,8 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         }
 
         let sender;
-        const needsSenderProfile = (
-            !isInfoMessage &&
-            msgType !== MsgType.Image &&
-            tileHandler !== EventType.RoomCreate &&
-            evType !== EventType.Sticker
-        );
-
-        if (needsSenderProfile) {
+        const hasOwnSender = isInfoMessage || tileHandler === EventType.RoomCreate;
+        if (!hasOwnSender) {
             sender = (
                 <div className="mx_ReplyTile_sender">
                     <MemberAvatar
