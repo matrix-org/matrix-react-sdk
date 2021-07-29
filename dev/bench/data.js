@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627571058290,
+  "lastUpdate": 1627577826917,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12068,6 +12068,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5333.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a7c15b2ac05a2ffadd34183ac58b640131f586c9",
+          "message": "Fix DialPad and Call Menu buttons not working when a call is fullscreened. (#6496)\n\nThis PR:\r\n* Moves the dialpad and hold/transfer menu buttons into the part of the DOM that's included when a call is fullscreen'd.\r\n* Tweaks `ContextMenu` to allow menu content to be mount as a child of the current component, rather than at the root of the DOM (which was not included in the full-screen'd content).\r\n\r\n<!-- Please read https://github.com/matrix-org/matrix-js-sdk/blob/develop/CONTRIBUTING.md before submitting your pull request -->\r\n\r\n<!-- Include a Sign-Off as described in https://github.com/matrix-org/matrix-js-sdk/blob/develop/CONTRIBUTING.md#sign-off -->\r\n\r\n`Signed-off-by: Andrew Morgan <andrewm@element.io>`",
+          "timestamp": "2021-07-29T17:51:27+01:00",
+          "tree_id": "5264f66e92d07fe7c9695fdbc5a5c56421e1c433",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a7c15b2ac05a2ffadd34183ac58b640131f586c9"
+        },
+        "date": 1627577825050,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4906.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1114.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1716.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4629,
             "unit": "ms",
             "extra": "type: measure"
           }
