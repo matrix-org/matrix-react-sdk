@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627557945253,
+  "lastUpdate": 1627557996498,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11792,6 +11792,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4286.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3bd393f16b4e8a03e69d7ec0052135e16b480931",
+          "message": "Merge pull request #6501 from matrix-org/gsouquet/fix-18249\n\nRestore pointer cursor for SenderProfile in message bubbles",
+          "timestamp": "2021-07-29T12:20:56+01:00",
+          "tree_id": "cfee853139b60b8edc7cda5903ca7bb60729aab0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3bd393f16b4e8a03e69d7ec0052135e16b480931"
+        },
+        "date": 1627557995430,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4896.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1210.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1809.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4723.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
