@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627565920470,
+  "lastUpdate": 1627569927166,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11924,6 +11924,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4492.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0b9c422d47a4c567d616992aeb394374305cf2d5",
+          "message": "Merge pull request #6508 from SimonBrandner/fix/pill-click/18283\n\nFix clicking pills inside replies",
+          "timestamp": "2021-07-29T15:40:27+01:00",
+          "tree_id": "17f3ea35ebe31fd12de5aad181a1230498850cfe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0b9c422d47a4c567d616992aeb394374305cf2d5"
+        },
+        "date": 1627569925789,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4206.1999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1232.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1646.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4331.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
