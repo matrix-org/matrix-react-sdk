@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627561530738,
+  "lastUpdate": 1627565920470,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11876,6 +11876,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 861.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dac3eda9e3d3392a0d8991a2e2aeb3b8dfcbc878",
+          "message": "Merge pull request #6499 from matrix-org/gsouquet/fix-18195\n\nPrevent timeline flickering on hover",
+          "timestamp": "2021-07-29T14:33:34+01:00",
+          "tree_id": "59c9e2afc06ff2c355aaa9f3e6b5b53121f23bc1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dac3eda9e3d3392a0d8991a2e2aeb3b8dfcbc878"
+        },
+        "date": 1627565919109,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4415.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1109,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1708.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4492.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
