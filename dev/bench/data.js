@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627557083516,
+  "lastUpdate": 1627557945253,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11744,6 +11744,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4852.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "44bab05b47ea5883b441a5a6504613b3d8d8b1a7",
+          "message": "Merge pull request #6500 from matrix-org/gsouquet/fix-18143\n\nAlign event list summary read receipts when using message bubbles",
+          "timestamp": "2021-07-29T12:20:37+01:00",
+          "tree_id": "e845049706ecac1ddb277deb8f541aad7165f19f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/44bab05b47ea5883b441a5a6504613b3d8d8b1a7"
+        },
+        "date": 1627557943185,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4270.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 972.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1646.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4286.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
