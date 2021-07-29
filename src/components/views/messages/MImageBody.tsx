@@ -33,10 +33,9 @@ import { SyncState } from 'matrix-js-sdk/src/sync.api';
 import { IBodyProps } from "./IBodyProps";
 
 interface IState {
-    decryptedUrl?: string;
-    decryptedThumbnailUrl?: string;
-    decryptedBlob?: Blob;
-    error;
+    thumbnail?: HTMLImageElement
+    image?: HTMLImageElement
+    error?: Error;
     imgError: boolean;
     imgLoaded: boolean;
     loadedImageDimensions?: {
@@ -47,26 +46,54 @@ interface IState {
     showImage: boolean;
 }
 
+interface IImageCache {
+    dimensions?: {
+        width: number,
+        height: number,
+    }
+}
+interface IEncryptedImageCache extends IImageCache {
+    thumbnail: HTMLImageElement,
+    image: HTMLImageElement,
+}
+
 @replaceableComponent("views.messages.MImageBody")
 export default class MImageBody extends React.Component<IBodyProps, IState> {
     static contextType = MatrixClientContext;
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
+    private container = createRef<HTMLDivElement>();
+    private mediaId: string;
+
+    static EncryptedImageCache = new Map<string, IEncryptedImageCache>();
 
     constructor(props: IBodyProps) {
         super(props);
 
+        this.mediaId = props.mediaEventHelper.media.srcMxc;
+
         this.state = {
-            decryptedUrl: null,
-            decryptedThumbnailUrl: null,
-            decryptedBlob: null,
-            error: null,
             imgError: false,
             imgLoaded: false,
-            loadedImageDimensions: null,
             hover: false,
             showImage: SettingsStore.getValue("showImages"),
         };
+        if (props.mediaEventHelper.media.isEncrypted && MImageBody.EncryptedImageCache.has(this.mediaId)) {
+            const {
+                dimensions,
+                thumbnail,
+                image,
+            } = MImageBody.EncryptedImageCache.get(this.mediaId) ?? {};
+            this.state = {
+                ...this.state,
+                thumbnail,
+                image,
+                loadedImageDimensions: {
+                    naturalWidth: dimensions.width,
+                    naturalHeight: dimensions.height,
+                },
+            };
+        }
     }
 
     // FIXME: factor this out and apply it to MVideoBody and MAudioBody too!
@@ -148,23 +175,35 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     };
 
     private onImageLoad = (): void => {
-        this.props.onHeightChanged();
+        if (!this.state.imgLoaded) {
+            this.props.onHeightChanged();
 
-        let loadedImageDimensions;
+            let loadedImageDimensions;
 
-        if (this.image.current) {
-            const { naturalWidth, naturalHeight } = this.image.current;
-            // this is only used as a fallback in case content.info.w/h is missing
-            loadedImageDimensions = { naturalWidth, naturalHeight };
+            if (this.image.current) {
+                const { naturalWidth, naturalHeight } = this.image.current;
+                // this is only used as a fallback in case content.info.w/h is missing
+                loadedImageDimensions = { naturalWidth, naturalHeight };
+                if (this.props.mediaEventHelper.media.isEncrypted) {
+                    const cachedImage = MImageBody.EncryptedImageCache.get(this.mediaId);
+                    cachedImage.dimensions = {
+                        width: naturalWidth,
+                        height: naturalHeight,
+                    };
+                }
+            }
+            this.setState({ imgLoaded: true, loadedImageDimensions });
         }
-
-        this.setState({ imgLoaded: true, loadedImageDimensions });
     };
 
     protected getContentUrl(): string {
         const media = mediaFromContent(this.props.mxEvent.getContent());
         if (media.isEncrypted) {
-            return this.state.decryptedUrl;
+            const isCached = MImageBody.EncryptedImageCache.get(this.mediaId);
+            if (isCached?.thumbnail) {
+                return isCached.thumbnail.src;
+            }
+            return null;
         } else {
             return media.srcHttp;
         }
@@ -182,11 +221,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         const media = mediaFromContent(content);
 
         if (media.isEncrypted) {
+            const isCached = MImageBody.EncryptedImageCache.get(this.mediaId);
             // Don't use the thumbnail for clients wishing to autoplay gifs.
-            if (this.state.decryptedThumbnailUrl) {
-                return this.state.decryptedThumbnailUrl;
-            }
-            return this.state.decryptedUrl;
+            return isCached?.thumbnail.src ?? isCached?.image.src ?? null;
         } else if (content.info && content.info.mimetype === "image/svg+xml" && media.hasThumbnail) {
             // special case to return clientside sender-generated thumbnails for SVGs, if any,
             // given we deliberately don't thumbnail them serverside to prevent
@@ -225,7 +262,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     info.w > thumbWidth ||
                     info.h > thumbHeight
                 );
-                const isLargeFileSize = info.size > 1*1024*1024; // 1mb
+                const isLargeFileSize = info.size > 1 * 1024 * 1024; // 1mb
 
                 if (isLargeFileSize && isLargerThanThumbnail) {
                     // image is too large physically and bytewise to clutter our timeline so
@@ -242,14 +279,23 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     private async downloadImage() {
-        if (this.props.mediaEventHelper.media.isEncrypted && this.state.decryptedUrl === null) {
+        if (this.props.mediaEventHelper.media.isEncrypted && !this.state.image) {
             try {
-                const thumbnailUrl = await this.props.mediaEventHelper.thumbnailUrl.value;
-                this.setState({
-                    decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
-                    decryptedThumbnailUrl: thumbnailUrl,
-                    decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
-                });
+                const [decryptedBlob, thumbnailBlob] = await Promise.all([
+                    this.props.mediaEventHelper.sourceBlob.value,
+                    this.props.mediaEventHelper.thumbnailBlob.value,
+                ]);
+                const thumbnail = new Image();
+                const image = new Image();
+                thumbnail.src = URL.createObjectURL(thumbnailBlob);
+                image.src = URL.createObjectURL(decryptedBlob);
+
+                const newState = {
+                    thumbnail,
+                    image,
+                };
+                MImageBody.EncryptedImageCache.set(this.mediaId, newState);
+                this.setState(newState);
             } catch (err) {
                 if (this.unmounted) return;
                 console.warn("Unable to decrypt attachment: ", err);
@@ -286,8 +332,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         content: IMediaEventContent,
         forcedHeight?: number,
     ): JSX.Element {
-        let infoWidth;
-        let infoHeight;
+        let infoWidth: number;
+        let infoHeight: number;
 
         if (content && content.info && content.info.w && content.info.h) {
             infoWidth = content.info.w;
@@ -333,12 +379,29 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         let gifLabel = null;
 
         if (!this.state.imgLoaded) {
-            placeholder = this.getPlaceholder(maxWidth, maxHeight);
+            if (this.state.loadedImageDimensions) {
+                console.log(this.container?.current);
+                // 622w / 466.5h
+                const style = {
+                    maxWidth: `min(100%, ${maxWidth}px)`,
+                    // maxHeight: maxHeight,
+                    width: this.state.loadedImageDimensions.naturalWidth,
+                    height: this.state.loadedImageDimensions.naturalHeight,
+                };
+                placeholder = <div style={style}>{ }</div>;
+            } else {
+                placeholder = this.getPlaceholder(maxWidth, maxHeight);
+            }
         }
 
         let showPlaceholder = Boolean(placeholder);
 
         if (thumbUrl && !this.state.imgError) {
+            const style = {
+                maxHeight: maxHeight,
+                maxWidth: `min(100%, ${maxWidth}px)`,
+            };
+
             // Restrict the width of the thumbnail here, otherwise it will fill the container
             // which has the same width as the timeline
             // mx_MImageBody_thumbnail resizes img to exactly container size
@@ -347,7 +410,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     className="mx_MImageBody_thumbnail"
                     src={thumbUrl}
                     ref={this.image}
-                    style={{ maxWidth: `min(100%, ${maxWidth}px)` }}
+                    style={style}
                     alt={content.body}
                     onError={this.onImageError}
                     onLoad={this.onImageLoad}
@@ -367,7 +430,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         const thumbnail = (
             <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight: maxHeight + "px", maxWidth: maxWidth + "px" }}>
-                { showPlaceholder &&
+                {showPlaceholder &&
                     <div
                         className="mx_MImageBody_thumbnail"
                         style={{
@@ -375,16 +438,16 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                             maxWidth: `min(100%, ${infoWidth}px)`,
                         }}
                     >
-                        { placeholder }
+                        {placeholder}
                     </div>
                 }
 
                 <div style={{ display: !showPlaceholder ? undefined : 'none' }}>
-                    { img }
-                    { gifLabel }
+                    {img}
+                    {gifLabel}
                 </div>
 
-                { this.state.hover && this.getTooltip() }
+                {this.state.hover && this.getTooltip()}
             </div>
         );
 
@@ -394,7 +457,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     // Overidden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
         return <a href={contentUrl} onClick={this.onClick}>
-            { children }
+            {children}
         </a>;
     }
 
@@ -423,11 +486,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     render() {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
 
-        if (this.state.error !== null) {
+        if (this.state.error) {
             return (
                 <div className="mx_MImageBody">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
-                    { _t("Error decrypting image") }
+                    {_t("Error decrypting image")}
                 </div>
             );
         }
@@ -443,9 +506,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         const thumbnail = this.messageContent(contentUrl, thumbUrl, content);
         const fileBody = this.getFileBody();
 
-        return <div className="mx_MImageBody">
-            { thumbnail }
-            { fileBody }
+        return <div className="mx_MImageBody" ref={this.container}>
+            {thumbnail}
+            {fileBody}
         </div>;
     }
 }
@@ -464,7 +527,7 @@ export class HiddenImagePlaceholder extends React.PureComponent<PlaceholderIProp
             <div className={className} style={{ maxWidth: `min(100%, ${maxWidth}px)` }}>
                 <div className='mx_HiddenImagePlaceholder_button'>
                     <span className='mx_HiddenImagePlaceholder_eye' />
-                    <span>{ _t("Show image") }</span>
+                    <span>{_t("Show image")}</span>
                 </div>
             </div>
         );
