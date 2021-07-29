@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627548983925,
+  "lastUpdate": 1627557083516,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -11696,6 +11696,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4443.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f9f9aebef627313ec1f743d07feffba121ec2d4a",
+          "message": "Merge pull request #6503 from matrix-org/fix/grecaptcha-regression\n\nFix grecaptcha regression",
+          "timestamp": "2021-07-29T13:05:38+02:00",
+          "tree_id": "255fc065a10963ab83e285128fae814c088683c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f9f9aebef627313ec1f743d07feffba121ec2d4a"
+        },
+        "date": 1627557082087,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5243,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1179.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1791.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4852.5,
             "unit": "ms",
             "extra": "type: measure"
           }
