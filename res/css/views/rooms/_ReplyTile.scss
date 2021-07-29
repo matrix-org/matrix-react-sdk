@@ -28,14 +28,8 @@ limitations under the License.
         mask-image: url("$(res)/img/element-icons/call/video-call.svg");
     }
 
-    .mx_MFileBody {
-        .mx_MFileBody_info {
-            margin: 5px 0;
-        }
-
-        .mx_MFileBody_download {
-            display: none;
-        }
+    .mx_MFileBody .mx_MFileBody_download {
+        display: none;
     }
 
     > a {
@@ -51,12 +45,12 @@ limitations under the License.
     }
 
     .mx_RedactedBody {
-        padding: 4px 0 2px 20px;
+        line-height: $font-18px;
 
         &::before {
             height: 13px;
             width: 13px;
-            top: 5px;
+            top: 3px;
         }
     }
 
