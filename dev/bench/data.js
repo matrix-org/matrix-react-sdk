@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627644686373,
+  "lastUpdate": 1627647215809,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12248,6 +12248,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4712.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jano@janogarcia.com",
+            "name": "Jano Garcia",
+            "username": "janogarcia"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "27e432df4b2a25113ec0d983613779a22fd2d341",
+          "message": "Merge pull request #6513 from matrix-org/jano/fix-link-decoration\n\nFix inconsistent styling for links on hover",
+          "timestamp": "2021-07-30T14:08:15+02:00",
+          "tree_id": "cf0bfef2caecdbd693f88e71ad4cd403b55c1a87",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/27e432df4b2a25113ec0d983613779a22fd2d341"
+        },
+        "date": 1627647214242,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4861.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1337,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1854.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4654.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
