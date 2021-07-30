@@ -26,6 +26,7 @@ import { BLURHASH_FIELD } from "../../../ContentMessages";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
+import { presentableTextForFile } from "../../../utils/FileUtils";
 
 interface IState {
     decryptedUrl?: string;
@@ -208,7 +209,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     };
 
     render() {
-        const content = this.props.mxEvent.getContent();
+        const content = this.props.mxEvent.getContent<IMediaEventContent>();
         const autoplay = SettingsStore.getValue("autoplayGifsAndVideos");
 
         if (this.state.error !== null) {
@@ -234,6 +235,13 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             );
         }
 
+        const banner = (
+            // XXX: Class abuse (so we can have context on the border radius)
+            <span className='mx_MImageBody_banner'>
+                { presentableTextForFile(content, _t("Video"), true) }
+            </span>
+        );
+
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
         let height = null;
@@ -253,7 +261,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             }
         }
         return (
-            <span className="mx_MVideoBody">
+            <div className="mx_MVideoBody">
                 <video
                     className="mx_MVideoBody"
                     ref={this.videoRef}
@@ -269,7 +277,8 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     onPlay={this.videoOnPlay}
                 />
                 { this.props.tileShape && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
-            </span>
+                { banner }
+            </div>
         );
     }
 }

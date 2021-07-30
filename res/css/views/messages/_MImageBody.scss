@@ -16,6 +16,28 @@ limitations under the License.
 
 $timelineImageBorderRadius: 4px;
 
+.mx_MImageBody_banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 20px;
+    padding: 4px;
+
+    // Trying to match the width of the image is surprisingly difficult, so arbitrarily
+    // break it off early.
+    max-width: min(100%, 350px);
+
+    border-top-left-radius: $timelineImageBorderRadius;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    // Hardcoded colours because it's the same on all themes
+    background-color: #1A1D2399;
+    color: #ffffff;
+}
+
 .mx_MImageBody_thumbnail {
     object-fit: contain;
     border-radius: $timelineImageBorderRadius;

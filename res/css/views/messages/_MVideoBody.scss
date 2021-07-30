@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-span.mx_MVideoBody {
+div.mx_MVideoBody {
+    position: relative;
+
     video.mx_MVideoBody {
         max-width: 100%;
         height: auto;

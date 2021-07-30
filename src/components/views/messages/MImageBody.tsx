@@ -31,6 +31,7 @@ import { IMediaEventContent } from '../../../customisations/models/IMediaEventCo
 import ImageView from '../elements/ImageView';
 import { SyncState } from 'matrix-js-sdk/src/sync.api';
 import { IBodyProps } from "./IBodyProps";
+import { presentableTextForFile } from "../../../utils/FileUtils";
 
 interface IState {
     decryptedUrl?: string;
@@ -365,6 +366,15 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
+        let banner;
+        if (this.state.showImage) {
+            banner = (
+                <span className='mx_MImageBody_banner'>
+                    { presentableTextForFile(content, _t("Image"), true) }
+                </span>
+            );
+        }
+
         const thumbnail = (
             <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight: maxHeight + "px", maxWidth: maxWidth + "px" }}>
                 { showPlaceholder &&
@@ -382,6 +392,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 <div style={{ display: !showPlaceholder ? undefined : 'none' }}>
                     { img }
                     { gifLabel }
+                    { banner }
                 </div>
 
                 { this.state.hover && this.getTooltip() }
@@ -391,14 +402,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return this.wrapImage(contentUrl, thumbnail);
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
         return <a href={contentUrl} onClick={this.onClick}>
             { children }
         </a>;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getPlaceholder(width: number, height: number): JSX.Element {
         const blurhash = this.props.mxEvent.getContent().info[BLURHASH_FIELD];
         if (blurhash) return <Blurhash hash={blurhash} width={width} height={height} />;
@@ -407,12 +418,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         );
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getTooltip(): JSX.Element {
         return null;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getFileBody(): string | JSX.Element {
         // We only ever need the download bar if we're appearing outside of the timeline
         if (this.props.tileShape) {
