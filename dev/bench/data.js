@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627664146488,
+  "lastUpdate": 1627666433533,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12392,6 +12392,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4274.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jano@janogarcia.com",
+            "name": "Jano Garcia",
+            "username": "janogarcia"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "59a86bc0e7ffca6b6567cf5773fc019b2c9a613a",
+          "message": "Merge pull request #6515 from matrix-org/janogarcia/fix-contributing-url\n\nFix wrong URL in README.md",
+          "timestamp": "2021-07-30T19:28:22+02:00",
+          "tree_id": "c4136001c30692ea20a11cbaa3ddcf40651cfe01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/59a86bc0e7ffca6b6567cf5773fc019b2c9a613a"
+        },
+        "date": 1627666431781,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4525.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1088.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1717.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4423.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
