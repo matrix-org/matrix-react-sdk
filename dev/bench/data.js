@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627632810701,
+  "lastUpdate": 1627639734678,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12164,6 +12164,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4533.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7c9df71a575850097e35f70855ed4bf1a774664f",
+          "message": "Merge pull request #6514 from matrix-org/palid/fix/image-placeholders-incorrect-height\n\nFix incorrect height for encoded placeholder images",
+          "timestamp": "2021-07-30T12:03:19+02:00",
+          "tree_id": "a757d1761371398a46fd29f9ce5fd084908a9442",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7c9df71a575850097e35f70855ed4bf1a774664f"
+        },
+        "date": 1627639733288,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3878.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 870.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
