@@ -38,11 +38,16 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
         this.state = {
             value: '',
         };
+
+        this.numberEntryField;
     }
 
     onDigitPress = (digit) => {
         this.props.call.sendDtmfDigit(digit);
         this.setState({ value: this.state.value + digit });
+        console.log("focusing")
+        console.log(this.numberEntryField);
+        this.numberEntryField.focus();
     };
 
     onCancelClick = () => {
@@ -54,18 +59,20 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
     };
 
     render() {
+        this.numberEntryField = <Field
+                className="mx_DialPadContextMenu_dialled"
+                value={this.state.value}
+                autoFocus={true}
+                onChange={this.onChange}
+            />;
+
         return <ContextMenu {...this.props}>
             <div className="mx_DialPadContextMenuWrapper">
                 <div>
                     <AccessibleButton className="mx_DialPadContextMenu_cancel" onClick={this.onCancelClick} />
                 </div>
                 <div className="mx_DialPadContextMenu_header">
-                    <Field
-                        className="mx_DialPadContextMenu_dialled"
-                        value={this.state.value}
-                        autoFocus={true}
-                        onChange={this.onChange}
-                    />
+                    {this.numberEntryField}
                 </div>
                 <div className="mx_DialPadContextMenu_dialPad">
                     <DialPad onDigitPress={this.onDigitPress} hasDial={false} />

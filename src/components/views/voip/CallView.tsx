@@ -535,7 +535,7 @@ export default class CallView extends React.Component<IProps, IState> {
             );
         }
         let dialpadButton;
-        if (this.state.callState === CallState.Connected && this.props.call.opponentSupportsDTMF()) {
+        if (true || this.state.callState === CallState.Connected && this.props.call.opponentSupportsDTMF()) {
             dialpadButton = (
                 <ContextMenuButton
                     className="mx_CallView_callControls_button mx_CallView_callControls_dialpad"
