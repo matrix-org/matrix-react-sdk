@@ -21,6 +21,7 @@ import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
 import { NOTIFICATION_STATE_UPDATE, NotificationState } from "./NotificationState";
 import { FetchRoomFn } from "./ListNotificationState";
+import { DefaultTagID } from "../room-list/models";
 
 export class SpaceNotificationState extends NotificationState {
     public rooms: Room[] = []; // exposed only for tests
@@ -74,7 +75,13 @@ export class SpaceNotificationState extends NotificationState {
 
         this._count = 0;
         this._color = NotificationColor.None;
-        for (const state of Object.values(this.states)) {
+        for (const [roomId, state] of Object.entries(this.states)) {
+            // We ignore unreads in LowPriority rooms, see https://github.com/vector-im/element-web/issues/16836
+            if (
+                Object.keys(this.rooms.find(r => r.roomId === roomId).tags).includes(DefaultTagID.LowPriority) &&
+                state.color === NotificationColor.Bold
+            ) continue;
+
             this._count += state.count;
             this._color = Math.max(this.color, state.color);
         }
