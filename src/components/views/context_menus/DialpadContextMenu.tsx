@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import * as React from "react";
+import { createRef } from "react";
 import AccessibleButton from "../elements/AccessibleButton";
 import { ContextMenu, IProps as IContextMenuProps } from '../../structures/ContextMenu';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
@@ -32,6 +33,8 @@ interface IState {
 
 @replaceableComponent("views.context_menus.DialpadContextMenu")
 export default class DialpadContextMenu extends React.Component<IProps, IState> {
+    private numberEntryFieldRef: React.RefObject<Field> = createRef();
+
     constructor(props) {
         super(props);
 
@@ -43,6 +46,9 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
     onDigitPress = (digit) => {
         this.props.call.sendDtmfDigit(digit);
         this.setState({ value: this.state.value + digit });
+
+        // Keep the number field focused so that keyboard entry is still available
+        this.numberEntryFieldRef.current?.focus();
     };
 
     onCancelClick = () => {
@@ -61,6 +67,7 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
                 </div>
                 <div className="mx_DialPadContextMenu_header">
                     <Field
+                        ref={this.numberEntryFieldRef}
                         className="mx_DialPadContextMenu_dialled"
                         value={this.state.value}
                         autoFocus={true}

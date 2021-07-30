@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import * as React from "react";
+import { createRef } from "react";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import DialPad from './DialPad';
@@ -34,6 +35,8 @@ interface IState {
 
 @replaceableComponent("views.voip.DialPadModal")
 export default class DialpadModal extends React.PureComponent<IProps, IState> {
+    private numberEntryFieldRef: React.RefObject<Field> = createRef();
+
     constructor(props) {
         super(props);
         this.state = {
@@ -56,11 +59,17 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
 
     onDigitPress = (digit) => {
         this.setState({ value: this.state.value + digit });
+
+        // Keep the number field focused so that keyboard entry is still available
+        this.numberEntryFieldRef.current?.focus();
     };
 
     onDeletePress = () => {
         if (this.state.value.length === 0) return;
         this.setState({ value: this.state.value.slice(0, -1) });
+
+        // Keep the number field focused so that keyboard entry is still available
+        this.numberEntryFieldRef.current?.focus();
     };
 
     onDialPress = async () => {
@@ -82,6 +91,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         let dialPadField;
         if (this.state.value.length !== 0) {
             dialPadField = <Field
+                ref={this.numberEntryFieldRef}
                 className="mx_DialPadModal_field"
                 id="dialpad_number"
                 value={this.state.value}
@@ -91,6 +101,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
             />;
         } else {
             dialPadField = <Field
+                ref={this.numberEntryFieldRef}
                 className="mx_DialPadModal_field"
                 id="dialpad_number"
                 value={this.state.value}

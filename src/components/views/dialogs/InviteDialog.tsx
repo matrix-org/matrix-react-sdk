@@ -394,6 +394,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private closeCopiedTooltip: () => void;
     private debounceTimer: number = null; // actually number because we're in the browser
     private editorRef = createRef<HTMLInputElement>();
+    private numberEntryFieldRef: React.RefObject<Field> = createRef();
     private unmounted = false;
 
     constructor(props) {
@@ -1285,11 +1286,17 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
     private onDigitPress = digit => {
         this.setState({ dialPadValue: this.state.dialPadValue + digit });
+
+        // Keep the number field focused so that keyboard entry is still available
+        this.numberEntryFieldRef.current?.focus();
     };
 
     private onDeletePress = () => {
         if (this.state.dialPadValue.length === 0) return;
         this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
+
+        // Keep the number field focused so that keyboard entry is still available
+        this.numberEntryFieldRef.current?.focus();
     };
 
     private onTabChange = (tabId: TabId) => {
@@ -1543,6 +1550,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             let dialPadField;
             if (this.state.dialPadValue.length !== 0) {
                 dialPadField = <Field
+                    ref={this.numberEntryFieldRef}
                     className="mx_InviteDialog_dialPadField"
                     id="dialpad_number"
                     value={this.state.dialPadValue}
@@ -1552,6 +1560,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 />;
             } else {
                 dialPadField = <Field
+                    ref={this.numberEntryFieldRef}
                     className="mx_InviteDialog_dialPadField"
                     id="dialpad_number"
                     value={this.state.dialPadValue}
