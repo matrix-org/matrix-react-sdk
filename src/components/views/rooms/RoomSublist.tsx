@@ -590,8 +590,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             >
                                 { _t("Show previews of messages") }
                             </StyledMenuItemCheckbox>
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <ContextMenuButton
                                 kind="primary"
                                 onClick={this.onShowLessClick}
