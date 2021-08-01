@@ -36,7 +36,7 @@ import { E2E_STATE } from "./E2EIcon";
 import { toRem } from "../../../utils/units";
 import { WidgetType } from "../../../widgets/WidgetType";
 import RoomAvatar from "../avatars/RoomAvatar";
-import MessageContextMenu from "../context_menus/MessageContextMenu";
+import MessageContextMenu, { IEventTileOps } from "../context_menus/MessageContextMenu";
 import { aboveLeftOf } from '../../structures/ContextMenu';
 import { WIDGET_LAYOUT_EVENT_TYPE } from "../../../stores/widgets/WidgetLayoutStore";
 import { objectHasDiff } from "../../../utils/objects";
@@ -58,6 +58,7 @@ import ReadReceiptMarker from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
+import TextualBody from "../messages/TextualBody";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -192,6 +193,10 @@ export enum TileShape {
     Notif = "notif",
     FileGrid = "file_grid",
     Pinned = "pinned",
+}
+
+export interface IEventTileType extends React.Component {
+    getEventTileOps?(): IEventTileOps;
 }
 
 interface IProps {
@@ -330,7 +335,7 @@ interface IState {
 export default class EventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
-    private tile = React.createRef();
+    private tile = React.createRef<IEventTileType>();
     private replyThread = React.createRef<ReplyThread>();
 
     public readonly ref = createRef<HTMLElement>();
@@ -840,9 +845,9 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
-    getTile = (): any => this.tile.current;
+    getTile = (): IEventTileType => this.tile.current;
 
-    getReplyThread = () => this.replyThread.current;
+    getReplyThread = (): ReplyThread => this.replyThread.current;
 
     getReactions = () => {
         if (
