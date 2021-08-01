@@ -44,7 +44,7 @@ import ConfirmRedactDialog from '../dialogs/ConfirmRedactDialog';
 import ErrorDialog from '../dialogs/ErrorDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 
-export function canCancel(eventStatus) {
+export function canCancel(eventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
 }
 
