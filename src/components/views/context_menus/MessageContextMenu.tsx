@@ -48,6 +48,15 @@ export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
 }
 
+export interface IEventTileOps {
+    isWidgetHidden(): boolean;
+    unhideWidget(): void;
+}
+
+export interface IOperableEventTile {
+    getEventTileOps(): IEventTileOps;
+}
+
 interface IProps {
     // The MatrixEvent associated with the context menu
     mxEvent: MatrixEvent;
