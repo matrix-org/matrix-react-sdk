@@ -58,7 +58,6 @@ import ReadReceiptMarker from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
-import TextualBody from "../messages/TextualBody";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
