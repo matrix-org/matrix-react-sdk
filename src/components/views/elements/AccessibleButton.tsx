@@ -39,11 +39,11 @@ interface IProps extends React.AllHTMLAttributes<Element> {
     tabIndex?: number;
     disabled?: boolean;
     className?: string;
-    // Optional in case we need to use onMouseDown
-    onClick?(e?: ButtonEvent): void;
+    triggerOnMouseDown?: boolean;
+    onClick(e?: ButtonEvent): void;
 }
 
-interface IAccessibleButtonProps extends React.AllHTMLAttributes<Element> {
+interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
@@ -65,11 +65,16 @@ export default function AccessibleButton({
     className,
     onKeyDown,
     onKeyUp,
+    triggerOnMouseDown,
     ...restProps
 }: IProps) {
     const newProps: IAccessibleButtonProps = restProps;
     if (!disabled) {
-        newProps.onClick = onClick;
+        if (triggerOnMouseDown) {
+            newProps.onMouseDown = onClick;
+        } else {
+            newProps.onClick = onClick;
+        }
         // We need to consume enter onKeyDown and space onKeyUp
         // otherwise we are risking also activating other keyboard focusable elements
         // that might receive focus as a result of the AccessibleButtonClick action

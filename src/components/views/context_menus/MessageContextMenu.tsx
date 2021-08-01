@@ -492,7 +492,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCopy"
                     label={_t("Copy")}
-                    onMouseDown={this.onCopyClick} // We use onMouseDown so that the selection isn't cleared when we click
+                    triggerOnMouseDown={true} // We use onMouseDown so that the selection isn't cleared when we click
+                    onClick={this.onCopyClick}
                 />
             );
         }
