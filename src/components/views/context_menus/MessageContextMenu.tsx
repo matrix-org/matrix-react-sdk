@@ -308,7 +308,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private getPermalink(): string {
         if (!this.props.permalinkCreator) return null;
-        // XXX: if we use room ID, we should also include a server where the event can be found (other than in the domain of the event ID)
         return this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
     }
 
