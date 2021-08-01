@@ -1061,7 +1061,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                 this.props.last ||
                 this.state.hover ||
                 this.state.actionBarFocused ||
-                this.state.contextMenu
+                Boolean(this.state.contextMenu)
             )
         );
         const timestamp = showTimestamp ?
