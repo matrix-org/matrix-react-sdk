@@ -61,7 +61,7 @@ interface IProps {
     // The MatrixEvent associated with the context menu
     mxEvent: MatrixEvent;
     // An optional EventTileOps implementation that can be used to unhide preview widgets
-    eventTileOps?; // TODO: Add type when TextualBody is TSified
+    eventTileOps?: IEventTileOps;
     // An optional function to be called when the user clicks collapse thread, if not provided hide button
     collapseReplyThread?(): void;
     // Callback called when the menu is dismissed
