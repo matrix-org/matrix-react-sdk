@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627891709487,
+  "lastUpdate": 1627896209362,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12476,6 +12476,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1094.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "442992b30e472cea49537c09da68b863818392f2",
+          "message": "Fix symbol entry in the in-call dialpad (#6521)\n\nThe field had RTL direction set on it, which meant symbols, like *,\r\nappeared at the beginning of the field instead of the end.\r\n\r\nRTL was introduced in\r\nhttps://github.com/matrix-org/matrix-react-sdk/pull/5786,\r\nhowever its removal seems to have had no adverse affects\r\nfrom testing.",
+          "timestamp": "2021-08-02T10:18:17+01:00",
+          "tree_id": "c05c547d101b38d292aec1da82e3f35b9bd209b9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/442992b30e472cea49537c09da68b863818392f2"
+        },
+        "date": 1627896207786,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4133.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1105.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1854.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4419.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
