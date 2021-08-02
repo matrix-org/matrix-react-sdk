@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627906405286,
+  "lastUpdate": 1627908447315,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12620,6 +12620,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4341.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9f8eb22c337a308a1894bea69f63de721b27d3fa",
+          "message": "Merge pull request #6526 from SimonBrandner/fix/call-notif-fire\n\nFix broken call notification regression",
+          "timestamp": "2021-08-02T13:42:18+01:00",
+          "tree_id": "4f9463507e19bddd1300de0371f4adb15ff27a0e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9f8eb22c337a308a1894bea69f63de721b27d3fa"
+        },
+        "date": 1627908445444,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4034.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 974.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1795.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4357.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
