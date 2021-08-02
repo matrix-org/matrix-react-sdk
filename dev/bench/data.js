@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627896209362,
+  "lastUpdate": 1627896248545,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12524,6 +12524,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4419.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "645c128e446257df0ea60844751572e6ac9b2d69",
+          "message": "Prevent backspace and delete functionality in the in-call dial pad. (#6522)\n\nJust as one cannot do when there inputting number while\r\non a call on their phone, it doesn't make much sense to\r\nbe able to do so while on a call in Element. The DTMF\r\ntone history should be preserved.",
+          "timestamp": "2021-08-02T10:18:35+01:00",
+          "tree_id": "ddfce83820d9cf9ad892e03dc75f39c30d4d5be7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/645c128e446257df0ea60844751572e6ac9b2d69"
+        },
+        "date": 1627896247176,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4906,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1156,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1716.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4641.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
