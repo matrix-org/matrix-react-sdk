@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627666433533,
+  "lastUpdate": 1627891709487,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12440,6 +12440,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4423.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "711210d16e41a886df6a23bef3a62e4008bf9c2b",
+          "message": "Merge pull request #6437 from matrix-org/travis/voice-messages/delabs\n\nRemove voice messages labs flag",
+          "timestamp": "2021-08-02T02:02:36-06:00",
+          "tree_id": "345fe6d9e8a0cc22103c12794ce5993ca9f10abc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/711210d16e41a886df6a23bef3a62e4008bf9c2b"
+        },
+        "date": 1627891707992,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4722.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1094.8999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
