@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627908447315,
+  "lastUpdate": 1627908832250,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12668,6 +12668,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4357.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "152c7dc865f0beb0f48723f4ad8747e392f722f0",
+          "message": "Merge pull request #6523 from aaronraimist/fix-mjolnir",
+          "timestamp": "2021-08-02T13:48:43+01:00",
+          "tree_id": "f76219df8c78b85f33c1051c46f3d2fb9febed45",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/152c7dc865f0beb0f48723f4ad8747e392f722f0"
+        },
+        "date": 1627908830827,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4309.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1193.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1925.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4219.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
