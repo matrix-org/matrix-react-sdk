@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627908832250,
+  "lastUpdate": 1627912285915,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12716,6 +12716,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4219.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a65b41be63e0d6b4651244dc1ad17807c80831b7",
+          "message": "Merge pull request #6495 from matrix-org/posthog-analytics\n\nAdd support for Posthog Analytics under a labs flag",
+          "timestamp": "2021-08-02T14:46:17+01:00",
+          "tree_id": "6551b001416abe5fe2590f93f046b5ddb0df5a5e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a65b41be63e0d6b4651244dc1ad17807c80831b7"
+        },
+        "date": 1627912284661,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4201.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1043.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1635.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4354.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
