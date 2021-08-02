@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627912285915,
+  "lastUpdate": 1627921590995,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12764,6 +12764,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4354.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3ea0571c5f302523d7ff9e0c9fc4d2eb41a1fef1",
+          "message": "Merge pull request #6486 from SimonBrandner/feature/muting\n\nShow an avatar/a turned off microphone icon for muted users",
+          "timestamp": "2021-08-02T17:20:55+01:00",
+          "tree_id": "fe56c28e93cf635622a565a5daa74b49ec209e8d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3ea0571c5f302523d7ff9e0c9fc4d2eb41a1fef1"
+        },
+        "date": 1627921589631,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4954.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1156.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1742,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4728.5,
             "unit": "ms",
             "extra": "type: measure"
           }
