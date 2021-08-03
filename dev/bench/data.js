@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627992326286,
+  "lastUpdate": 1628007829712,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12956,6 +12956,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4740.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8c5cfe6c2a19fae6e4fd790148f9a72624f5a04a",
+          "message": "Merge pull request #6536 from matrix-org/dbkr/argh_the_linting\n\nUpdate eslint plugin & fix silly indenting",
+          "timestamp": "2021-08-03T17:18:20+01:00",
+          "tree_id": "044c59a178308847241cee53fb5ce4ae3d23d078",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8c5cfe6c2a19fae6e4fd790148f9a72624f5a04a"
+        },
+        "date": 1628007827705,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3952.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1234.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1732.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4629.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
