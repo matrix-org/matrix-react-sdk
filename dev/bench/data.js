@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627972912987,
+  "lastUpdate": 1627981952417,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12860,6 +12860,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4708.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1b87ffb7cbeb4460d7535c70f3b6b495ef99984e",
+          "message": "Merge pull request #6527 from SimonBrandner/fix/font-topic/18339\n\nFix the wrong font being used in the room topic field",
+          "timestamp": "2021-08-03T10:06:58+01:00",
+          "tree_id": "31b25a8820317ed8be48988da58d0893efcd22ad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1b87ffb7cbeb4460d7535c70f3b6b495ef99984e"
+        },
+        "date": 1627981950787,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4885.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1399.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1850.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4664,
             "unit": "ms",
             "extra": "type: measure"
           }
