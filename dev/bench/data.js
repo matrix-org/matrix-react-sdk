@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627921590995,
+  "lastUpdate": 1627972912987,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12812,6 +12812,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4728.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0b369b6ee636c4613bb1c64d9feaf17d8d3e8c2c",
+          "message": "Merge pull request #6531 from matrix-org/revert-6495-posthog-analytics\n\nRevert \"Add support for Posthog Analytics under a labs flag\"",
+          "timestamp": "2021-08-03T07:36:18+01:00",
+          "tree_id": "15b1a893a1a0cd6b8a05ed43695fe2ff29434cd0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0b369b6ee636c4613bb1c64d9feaf17d8d3e8c2c"
+        },
+        "date": 1627972911151,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4727.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1060.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1782.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4708.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
