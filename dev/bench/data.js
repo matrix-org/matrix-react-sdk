@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1627981952417,
+  "lastUpdate": 1627992326286,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -12908,6 +12908,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4664,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b51fb0cb94be939a1b09393e17e12e9434490465",
+          "message": "Merge pull request #6533 from matrix-org/gsouquet/fix-logoutdialog-warning",
+          "timestamp": "2021-08-03T12:59:54+01:00",
+          "tree_id": "3aec95cd143c075300d462332f45771538f4ff83",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b51fb0cb94be939a1b09393e17e12e9434490465"
+        },
+        "date": 1627992324831,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4629.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1092.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1833.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4740.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
