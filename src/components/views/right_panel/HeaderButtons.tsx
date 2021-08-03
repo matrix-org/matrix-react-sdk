@@ -31,8 +31,8 @@ import type { EventSubscription } from "fbemitter";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 export enum HeaderKind {
-  Room = "room",
-  Group = "group",
+    Room = "room",
+    Group = "group",
 }
 
 interface IState {

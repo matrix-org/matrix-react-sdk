@@ -191,18 +191,18 @@ declare global {
 
     // eslint-disable-next-line no-var
     var grecaptcha:
-        | undefined
-        | {
-              reset: (id: string) => void;
-              render: (
-                  divId: string,
-                  options: {
-                      sitekey: string;
-                      callback: (response: string) => void;
-                  },
-              ) => string;
-              isReady: () => boolean;
-          };
+    | undefined
+    | {
+        reset: (id: string) => void;
+        render: (
+            divId: string,
+            options: {
+                sitekey: string;
+                callback: (response: string) => void;
+            },
+        ) => string;
+        isReady: () => boolean;
+    };
 }
 
 /* eslint-enable @typescript-eslint/naming-convention */

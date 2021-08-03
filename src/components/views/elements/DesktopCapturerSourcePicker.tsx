@@ -83,8 +83,8 @@ export interface PickerIProps {
 
 @replaceableComponent("views.elements.DesktopCapturerSourcePicker")
 export default class DesktopCapturerSourcePicker extends React.Component<
-    PickerIProps,
-    PickerIState
+PickerIProps,
+PickerIState
 > {
     interval: number;
 

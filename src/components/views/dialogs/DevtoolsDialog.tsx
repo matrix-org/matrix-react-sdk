@@ -490,9 +490,9 @@ class RoomStateExplorer extends React.PureComponent<IExplorerProps, IRoomStateEx
                     forceStateEvent={true}
                     onBack={this.onBack}
                     inputs={{
-                    eventType: this.state.event.getType(),
-                    evContent: JSON.stringify(this.state.event.getContent(), null, '\t'),
-                    stateKey: this.state.event.getStateKey(),
+                        eventType: this.state.event.getType(),
+                        evContent: JSON.stringify(this.state.event.getContent(), null, '\t'),
+                        stateKey: this.state.event.getStateKey(),
                     }}
                 />;
             }
@@ -922,7 +922,7 @@ interface ISettingsExplorerState {
     viewSetting?: string;
     explicitValues?: string;
     explicitRoomValues?: string;
- }
+}
 
 class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExplorerState> {
     static getLabel() {

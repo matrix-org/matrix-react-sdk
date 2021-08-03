@@ -594,8 +594,8 @@ function textForMjolnirEvent(event: MatrixEvent): () => string | null {
 
 interface IHandlers {
     [type: string]:
-        (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
-            (() => string | JSX.Element | null);
+    (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
+    (() => string | JSX.Element | null);
 }
 
 const handlers: IHandlers = {

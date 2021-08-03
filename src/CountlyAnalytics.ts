@@ -620,7 +620,7 @@ export default class CountlyAnalytics {
 
     private async request(
         args: Omit<IParams, "app_key" | "device_id" | "timestamp" | "hour" | "dow">
-            & Partial<Pick<IParams, "device_id">> = {},
+        & Partial<Pick<IParams, "device_id">> = {},
     ) {
         const request: IParams = {
             app_key: this.appKey,

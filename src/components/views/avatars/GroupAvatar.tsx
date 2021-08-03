@@ -22,13 +22,13 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 
 export interface IProps {
-        groupId?: string;
-        groupName?: string;
-        groupAvatarUrl?: string;
-        width?: number;
-        height?: number;
-        resizeMethod?: ResizeMethod;
-        onClick?: React.MouseEventHandler;
+    groupId?: string;
+    groupName?: string;
+    groupAvatarUrl?: string;
+    width?: number;
+    height?: number;
+    resizeMethod?: ResizeMethod;
+    onClick?: React.MouseEventHandler;
 }
 
 @replaceableComponent("views.avatars.GroupAvatar")

@@ -1381,8 +1381,8 @@ const BasicUserInfo: React.FC<{
                 className="mx_UserInfo_field"
                 onClick={() => {
                     dis.dispatch({
-                    action: Action.ViewUserSettings,
-                    initialTabId: UserTab.Security,
+                        action: Action.ViewUserSettings,
+                        initialTabId: UserTab.Security,
                     });
                 }}
             >
@@ -1537,9 +1537,9 @@ interface IProps {
     groupId?: string;
     room?: Room;
     phase: RightPanelPhases.RoomMemberInfo
-        | RightPanelPhases.GroupMemberInfo
-        | RightPanelPhases.SpaceMemberInfo
-        | RightPanelPhases.EncryptionPanel;
+    | RightPanelPhases.GroupMemberInfo
+    | RightPanelPhases.SpaceMemberInfo
+    | RightPanelPhases.EncryptionPanel;
     onClose(): void;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;

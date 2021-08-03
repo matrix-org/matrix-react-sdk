@@ -42,7 +42,7 @@ interface SpellCheckLanguagesDropdownIState {
 
 @replaceableComponent("views.elements.SpellCheckLanguagesDropdown")
 export default class SpellCheckLanguagesDropdown extends React.Component<SpellCheckLanguagesDropdownIProps,
-                                                                         SpellCheckLanguagesDropdownIState> {
+SpellCheckLanguagesDropdownIState> {
     constructor(props) {
         super(props);
         this.onSearchChange = this.onSearchChange.bind(this);

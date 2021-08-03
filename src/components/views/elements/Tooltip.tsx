@@ -34,18 +34,18 @@ export enum Alignment {
 }
 
 interface IProps {
-        // Class applied to the element used to position the tooltip
-        className?: string;
-        // Class applied to the tooltip itself
-        tooltipClassName?: string;
-        // Whether the tooltip is visible or hidden.
-        // The hidden state allows animating the tooltip away via CSS.
-        // Defaults to visible if unset.
-        visible?: boolean;
-        // the react element to put into the tooltip
-        label: React.ReactNode;
-        alignment?: Alignment; // defaults to Natural
-        yOffset?: number;
+    // Class applied to the element used to position the tooltip
+    className?: string;
+    // Class applied to the tooltip itself
+    tooltipClassName?: string;
+    // Whether the tooltip is visible or hidden.
+    // The hidden state allows animating the tooltip away via CSS.
+    // Defaults to visible if unset.
+    visible?: boolean;
+    // the react element to put into the tooltip
+    label: React.ReactNode;
+    alignment?: Alignment; // defaults to Natural
+    yOffset?: number;
 }
 
 @replaceableComponent("views.elements.Tooltip")
