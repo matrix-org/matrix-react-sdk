@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628089531988,
+  "lastUpdate": 1628092030251,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13760,6 +13760,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4502.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7b8a43bd2baf3a0205eadd69a754d2277cbef25d",
+          "message": "Merge pull request #6551 from SimonBrandner/fix/pip-cursor/18383\n\nFix wrong cursor being used in PiP",
+          "timestamp": "2021-08-04T16:41:49+01:00",
+          "tree_id": "c6ebd950c6d0e700dc6bcefebf63e7ef14499ae3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7b8a43bd2baf3a0205eadd69a754d2277cbef25d"
+        },
+        "date": 1628092028957,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4529.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1275.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1952.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4702.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
