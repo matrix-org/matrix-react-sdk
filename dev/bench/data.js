@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628085706124,
+  "lastUpdate": 1628086082509,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13616,6 +13616,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5042.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dc88686f9d863d4f46297f6155e77e7c3722b0c8",
+          "message": "Merge pull request #6539 from SimonBrandner/feature/increase-anim-speed/18371\n\nIncrease PiP snapping speed",
+          "timestamp": "2021-08-04T16:02:47+02:00",
+          "tree_id": "e0b35d722a298c383b34c6036d57c312b9fcadf8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dc88686f9d863d4f46297f6155e77e7c3722b0c8"
+        },
+        "date": 1628086080772,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4298.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1500.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1836.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4590.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
