@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628007829712,
+  "lastUpdate": 1628060483917,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13004,6 +13004,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4629.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "84af29a7f1a5e4d4a8f3408f0f741293f10be010",
+          "message": "Merge pull request #6452 from SimonBrandner/fix/bubble-bg-color/18081",
+          "timestamp": "2021-08-04T07:55:59+01:00",
+          "tree_id": "c982bd88691e0618e4070a9d4e67f75fd3bf5f55",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/84af29a7f1a5e4d4a8f3408f0f741293f10be010"
+        },
+        "date": 1628060482582,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4724.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1429,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1922.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4582,
             "unit": "ms",
             "extra": "type: measure"
           }
