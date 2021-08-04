@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628060483917,
+  "lastUpdate": 1628062653555,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13052,6 +13052,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4582,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d2aa7a3bd6fe74f3aab38837d04df867c3c1cc32",
+          "message": "Merge pull request #6457 from aaronraimist/more-url-schemes\n\nAllow all of the URL schemes that Firefox allows",
+          "timestamp": "2021-08-04T08:32:08+01:00",
+          "tree_id": "7bbc8adc252967eae562c8e81b3150975e89b453",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d2aa7a3bd6fe74f3aab38837d04df867c3c1cc32"
+        },
+        "date": 1628062652370,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4349.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1017.5,
             "unit": "ms",
             "extra": "type: measure"
           }
