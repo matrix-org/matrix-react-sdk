@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628063304214,
+  "lastUpdate": 1628063840025,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13136,6 +13136,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5004.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a07df5e9d8139109958c2985418a67bf3e5ac5e7",
+          "message": "Merge pull request #6512 from SimonBrandner/fix/mirroring/5633",
+          "timestamp": "2021-08-04T08:51:22+01:00",
+          "tree_id": "84525a5540b59b320499618dfbdf361a3c9cb0bf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a07df5e9d8139109958c2985418a67bf3e5ac5e7"
+        },
+        "date": 1628063838044,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4132.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1261.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1884.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4655.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
