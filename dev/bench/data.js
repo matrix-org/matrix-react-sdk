@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628084447417,
+  "lastUpdate": 1628085706124,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13568,6 +13568,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4779,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "139a4028a33da293a930fb5fb9fb74bb86064819",
+          "message": "Merge pull request #6545 from SimonBrandner/feature/update-tile-copy/18376\n\nImprove call event tile wording",
+          "timestamp": "2021-08-04T15:55:26+02:00",
+          "tree_id": "633eb5be877d1b94a02650e0a706111872d1898e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/139a4028a33da293a930fb5fb9fb74bb86064819"
+        },
+        "date": 1628085704508,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5215.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1508.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1962.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5042.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
