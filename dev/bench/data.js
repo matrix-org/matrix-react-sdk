@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628067106371,
+  "lastUpdate": 1628067143016,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13232,6 +13232,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4206.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "57f5c30af8a5437bb32177894b18b813d7da5fce",
+          "message": "Merge pull request #6532 from matrix-org/posthog-analytics\n\nReinstate Posthog analytics PR fixing type definitions via installing dev dependencies",
+          "timestamp": "2021-08-04T09:47:39+01:00",
+          "tree_id": "b904f293d213b70fc4d0ec7f5fbbd693204a1fe8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/57f5c30af8a5437bb32177894b18b813d7da5fce"
+        },
+        "date": 1628067141704,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3609.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 863.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1802.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4322.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
