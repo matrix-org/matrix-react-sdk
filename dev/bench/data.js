@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628075948590,
+  "lastUpdate": 1628082388909,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13424,6 +13424,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4835.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a5b43ca7ca0a4b57bf649652ba8ef5f96ff13fbe",
+          "message": "Merge pull request #6226 from SimonBrandner/feature/re-pin-jitsi/17679\n\nRe-pin Jitsi if the widget already exists",
+          "timestamp": "2021-08-04T14:01:13+01:00",
+          "tree_id": "69714bc752a2d4393e22fe90332b03fb23073869",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a5b43ca7ca0a4b57bf649652ba8ef5f96ff13fbe"
+        },
+        "date": 1628082387152,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4633.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1036.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1672,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4442.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
