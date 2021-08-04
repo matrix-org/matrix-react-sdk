@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628086824626,
+  "lastUpdate": 1628089531988,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13712,6 +13712,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4643.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "724c67bc217ad9dc6c38e55deba6c70679aafa49",
+          "message": "Merge pull request #6548 from robintown/fix-fallback-fonts\n\nFix fallback fonts",
+          "timestamp": "2021-08-04T16:00:22+01:00",
+          "tree_id": "6f54831948f20917b5d9e419856af2c748b1cbb3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/724c67bc217ad9dc6c38e55deba6c70679aafa49"
+        },
+        "date": 1628089530628,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4541.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1244.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4502.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
