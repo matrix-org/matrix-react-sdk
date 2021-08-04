@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628092030251,
+  "lastUpdate": 1628113391040,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13808,6 +13808,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4702.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b4b4fb9702564d56d3626f306d63767a5fd77c67",
+          "message": "Merge pull request #6553 from matrix-org/travis/voice-messages/worklet\n\nFix worklet reference for new webpack pipeline",
+          "timestamp": "2021-08-04T15:38:04-06:00",
+          "tree_id": "1e147431f35a6fdc2ce863b093497a2809714a9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b4b4fb9702564d56d3626f306d63767a5fd77c67"
+        },
+        "date": 1628113389758,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4479.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1200.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1796.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4453.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
