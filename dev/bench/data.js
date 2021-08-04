@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628062653555,
+  "lastUpdate": 1628063304214,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13088,6 +13088,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1017.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "94e77e70c601ea590d74ba92b5bd5a950b1c50ac",
+          "message": "Merge pull request #6470 from SimonBrandner/feature/incoming-call-toast",
+          "timestamp": "2021-08-04T08:42:09+01:00",
+          "tree_id": "e4df89d90195d14b9974dd648832409e883461c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/94e77e70c601ea590d74ba92b5bd5a950b1c50ac"
+        },
+        "date": 1628063303020,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4903.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1306.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1783.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5004.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
