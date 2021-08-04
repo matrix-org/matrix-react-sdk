@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628063840025,
+  "lastUpdate": 1628067106371,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13184,6 +13184,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4655.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c9c8177f58353fc4b71aa39cb6b8d40ee74d4779",
+          "message": "Start a call immediately after creating a room via the dial pad (#6529)",
+          "timestamp": "2021-08-04T09:46:39+01:00",
+          "tree_id": "0f0a649be6af4d4e9f290ef15434a335a8da364e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c9c8177f58353fc4b71aa39cb6b8d40ee74d4779"
+        },
+        "date": 1628067104504,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4449.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1220.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1699,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4206.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
