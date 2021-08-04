@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628086082509,
+  "lastUpdate": 1628086824626,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13664,6 +13664,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4590.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4dda4b241add635961faf5785589a8ba61e55280",
+          "message": "Merge pull request #6542 from matrix-org/gsouquet/fix-18354\n\nFix right margin for events on IRC layout",
+          "timestamp": "2021-08-04T15:15:06+01:00",
+          "tree_id": "99083a433fae65e363558cd65950e04ec96c3d88",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4dda4b241add635961faf5785589a8ba61e55280"
+        },
+        "date": 1628086823357,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4360.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1376.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1678.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4643.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
