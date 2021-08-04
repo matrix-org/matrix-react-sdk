@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628083717471,
+  "lastUpdate": 1628084447417,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13520,6 +13520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4583.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c848b8f4866053d77c31db5ca48f1802dcc19dfb",
+          "message": "Merge pull request #6524 from matrix-org/palid/feature-css/hmr\n\nAdd data-mx-theme to theme css for hot-reload",
+          "timestamp": "2021-08-04T15:35:15+02:00",
+          "tree_id": "b8f3f7437ecb80ac6535b9b6155b2eecfcae817b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c848b8f4866053d77c31db5ca48f1802dcc19dfb"
+        },
+        "date": 1628084446027,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5107.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1265,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1881.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4779,
             "unit": "ms",
             "extra": "type: measure"
           }
