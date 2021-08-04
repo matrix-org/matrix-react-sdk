@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628113391040,
+  "lastUpdate": 1628114879559,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13856,6 +13856,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4453.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7d06507a9c74922ac6e0e152cb8eedb330df5a40",
+          "message": "Merge pull request #6534 from SimonBrandner/fix/ringing-sound/15591\n\nMake the ringing sound mutable/disablable",
+          "timestamp": "2021-08-05T00:02:44+02:00",
+          "tree_id": "9aa52b5959c38727f8bae57c4d7ef2b6b1036a4e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7d06507a9c74922ac6e0e152cb8eedb330df5a40"
+        },
+        "date": 1628114877629,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4170.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
