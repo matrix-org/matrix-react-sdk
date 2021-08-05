@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628152752658,
+  "lastUpdate": 1628164269068,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13988,6 +13988,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4487.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c7560a25e9ebf2755f9dfb935ab36c68d08018b5",
+          "message": "Merge pull request #6558 from matrix-org/t3chguy/null-guard-space-inviter",
+          "timestamp": "2021-08-05T12:45:40+01:00",
+          "tree_id": "42b0f114fcc2178ace639b51694e7e3725019048",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c7560a25e9ebf2755f9dfb935ab36c68d08018b5"
+        },
+        "date": 1628164267659,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4766.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1246,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1896,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4761.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
