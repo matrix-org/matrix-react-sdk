@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628200317808,
+  "lastUpdate": 1628201223517,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14432,6 +14432,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4581.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7c1d9b4edaf42a1c62dc609e6ff810d61e1b932e",
+          "message": "Merge pull request #6490 from robintown/regional-indicators\n\nAdd regional indicators to emoji picker",
+          "timestamp": "2021-08-05T16:02:00-06:00",
+          "tree_id": "a25a5114db139150a442651a66d0c5f67d137ae3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7c1d9b4edaf42a1c62dc609e6ff810d61e1b932e"
+        },
+        "date": 1628201222021,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3939.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1015.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
