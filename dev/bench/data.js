@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628190313990,
+  "lastUpdate": 1628192491270,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14252,6 +14252,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4116.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3b73c174650cde7523613171fcf0a54df15f0a0a",
+          "message": "Merge pull request #6181 from pvagner/voip-a11y\n\nMake call control buttons accessible to screen reader users",
+          "timestamp": "2021-08-05T13:36:17-06:00",
+          "tree_id": "b6ce57793d8eadeab9bc51dcb89645696a6f16f3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3b73c174650cde7523613171fcf0a54df15f0a0a"
+        },
+        "date": 1628192489966,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4211.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1084.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
