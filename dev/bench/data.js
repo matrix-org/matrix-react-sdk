@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628200299623,
+  "lastUpdate": 1628200317808,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14384,6 +14384,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4267.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9ad72d6dafd7e084f66a125349db2b5c06ab3529",
+          "message": "Merge pull request #6549 from SimonBrandner/fix/dont-use-start\n\nUse `flex-start` instead of `start`",
+          "timestamp": "2021-08-05T15:46:12-06:00",
+          "tree_id": "41a3a41a9fe3f6ea1026e8a087f4d06c50bf6099",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9ad72d6dafd7e084f66a125349db2b5c06ab3529"
+        },
+        "date": 1628200316262,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5189.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1149.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4581.79999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
