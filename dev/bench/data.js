@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628174825188,
+  "lastUpdate": 1628178087661,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14120,6 +14120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4477,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "df888a1886aeb9783091caf506d7b4216495a533",
+          "message": "Fix in-call context menus when in PiP mode (#6552)\n\nMounting them as children when in PiP mode doesn't work. Condition mounting\r\nthe context menus as children of the current component based on whether PiP\r\nmode is active.",
+          "timestamp": "2021-08-05T16:33:22+01:00",
+          "tree_id": "671281c45927ea3b536425f0397d51f074c84aad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/df888a1886aeb9783091caf506d7b4216495a533"
+        },
+        "date": 1628178085634,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4566.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1096.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1767.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4406.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
