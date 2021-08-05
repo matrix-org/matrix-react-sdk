@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628164269068,
+  "lastUpdate": 1628174608828,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14036,6 +14036,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4761.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "51bd740936c86badaefaec5327c5ab531f6998a8",
+          "message": "Merge pull request #6538 from matrix-org/travis/voice-messages/ui-polish-aug3-21\n\nPolish up more of the voice messages UI",
+          "timestamp": "2021-08-05T08:34:31-06:00",
+          "tree_id": "47bc6c69d9b7c80c46b1aa9bb12e8455c6590d3f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/51bd740936c86badaefaec5327c5ab531f6998a8"
+        },
+        "date": 1628174607311,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4355.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 983.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
