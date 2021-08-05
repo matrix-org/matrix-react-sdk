@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628114879559,
+  "lastUpdate": 1628152109457,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13892,6 +13892,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1022.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5a708127ab6df65187e712795a50c2181cde0a7",
+          "message": "Merge pull request #6554 from robintown/pin-icon-seams\n\nRemove seams from pin icon",
+          "timestamp": "2021-08-05T09:22:51+01:00",
+          "tree_id": "e2b28666a23a5d8f6dee54c6493f23e561e18c24",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5a708127ab6df65187e712795a50c2181cde0a7"
+        },
+        "date": 1628152107618,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4285.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1220.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4315.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
