@@ -81,7 +81,7 @@ export class SpaceNotificationState extends NotificationState {
 
             // We ignore unreads in LowPriority rooms, see https://github.com/vector-im/element-web/issues/16836
             if (
-                Object.keys(roomTags).includes(DefaultTagID.LowPriority) &&
+                roomTags.includes(DefaultTagID.LowPriority) &&
                 state.color === NotificationColor.Bold
             ) continue;
 
@@ -93,4 +93,3 @@ export class SpaceNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-
