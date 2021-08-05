@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628192491270,
+  "lastUpdate": 1628199937828,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14288,6 +14288,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1084.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4dcf2c7038fbeced4a79a8bb88cc1a2206a0ffb6",
+          "message": "Merge pull request #6498 from SimonBrandner/fix/screen-picker-sizing/18281\n\nFix sizing issues of the screen picker",
+          "timestamp": "2021-08-05T15:39:12-06:00",
+          "tree_id": "2b9f8826c69533ff72fba31f2e953b145308a8de",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4dcf2c7038fbeced4a79a8bb88cc1a2206a0ffb6"
+        },
+        "date": 1628199935417,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5418,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1549.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1887.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5168.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
