@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628174608828,
+  "lastUpdate": 1628174825188,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14072,6 +14072,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 983.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "280c0172389eb411d91d8c39d2a34e41fb995024",
+          "message": "Merge pull request #6530 from matrix-org/travis/voice-messages/uploading\n\nImprove voice messages uploading state",
+          "timestamp": "2021-08-05T08:36:53-06:00",
+          "tree_id": "34091d4f5d0e534e0ccaf0489a0027675a4e1453",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/280c0172389eb411d91d8c39d2a34e41fb995024"
+        },
+        "date": 1628174823564,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4569.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1207.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1819.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4477,
             "unit": "ms",
             "extra": "type: measure"
           }
