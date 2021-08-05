@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628199937828,
+  "lastUpdate": 1628200299623,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14336,6 +14336,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5168.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "27d7daeceb1ae421679a3c0b7d01a9415a8a8e36",
+          "message": "Merge pull request #6550 from SimonBrandner/fix/voice-cutoff\n\nFix voice feed being cut-off",
+          "timestamp": "2021-08-05T15:46:42-06:00",
+          "tree_id": "2fc6fc993e0a5a99d2f45d556dc4e42800448400",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/27d7daeceb1ae421679a3c0b7d01a9415a8a8e36"
+        },
+        "date": 1628200298370,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5116.6999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1059.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1687.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4267.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
