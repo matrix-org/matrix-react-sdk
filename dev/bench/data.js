@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628178087661,
+  "lastUpdate": 1628184820324,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14168,6 +14168,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4406.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "570c2b3292024e69888b9e12aa61031ddf37d322",
+          "message": "Merge pull request #6561 from matrix-org/travis/fix-download-frame\n\nProperly set style attribute on shared usercontent iframe",
+          "timestamp": "2021-08-05T11:27:31-06:00",
+          "tree_id": "8813bf0884b0ce6a3deeeba405f7296ced13ac6e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/570c2b3292024e69888b9e12aa61031ddf37d322"
+        },
+        "date": 1628184818400,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4247.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1113.5,
             "unit": "ms",
             "extra": "type: measure"
           }
