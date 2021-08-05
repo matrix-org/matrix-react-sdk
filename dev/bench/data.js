@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628152109457,
+  "lastUpdate": 1628152752658,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -13940,6 +13940,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4315.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "58575c335d3fe42ba4d5abfebaf07bdd449dc4b7",
+          "message": "Merge pull request #5510 from SimonBrandner/feature-surround-with\n\nAdd surround with feature",
+          "timestamp": "2021-08-05T09:33:52+01:00",
+          "tree_id": "4375cebdf5d34e4b0dea815f3480b8554ef1319d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/58575c335d3fe42ba4d5abfebaf07bdd449dc4b7"
+        },
+        "date": 1628152750767,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5328.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1031,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1752.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4487.5,
             "unit": "ms",
             "extra": "type: measure"
           }
