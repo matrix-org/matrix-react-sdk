@@ -134,7 +134,6 @@ interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
     activeSpaces: Room[];
     isNested?: boolean;
     isPanelCollapsed?: boolean;
-    onExpand?: Function;
     parents?: Set<string>;
     innerRef?: LegacyRef<HTMLLIElement>;
 }
@@ -181,15 +180,8 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
             .filter(s => !this.props.parents?.has(s.roomId));
     }
 
-    private get isCollapsed() {
-        return this.state.collapsed || this.props.isPanelCollapsed;
-    }
-
     private toggleCollapse = evt => {
-        if (this.props.onExpand && this.isCollapsed) {
-            this.props.onExpand();
-        }
-        const newCollapsedState = !this.isCollapsed;
+        const newCollapsedState = !this.state.collapsed;
 
         SpaceTreeLevelLayoutStore.instance.setSpaceCollapsedState(
             this.props.space.roomId,
@@ -208,7 +200,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         const hasChildren = this.state.childSpaces?.length;
         switch (action) {
             case RoomListAction.CollapseSection:
-                if (hasChildren && !this.isCollapsed) {
+                if (hasChildren && !this.state.collapsed) {
                     this.toggleCollapse(ev);
                 } else {
                     const parentItem = this.buttonRef?.current?.parentElement?.parentElement;
@@ -219,7 +211,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
 
             case RoomListAction.ExpandSection:
                 if (hasChildren) {
-                    if (this.isCollapsed) {
+                    if (this.state.collapsed) {
                         this.toggleCollapse(ev);
                     } else {
                         const childLevel = this.buttonRef?.current?.nextElementSibling;
@@ -247,15 +239,13 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
 
     render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { space, activeSpaces, isNested, isPanelCollapsed, onExpand, parents, innerRef,
+        const { space, activeSpaces, isNested, isPanelCollapsed, parents, innerRef,
             ...otherProps } = this.props;
-
-        const collapsed = this.isCollapsed;
 
         const itemClasses = classNames(this.props.className, {
             "mx_SpaceItem": true,
             "mx_SpaceItem_narrow": isPanelCollapsed,
-            "collapsed": collapsed,
+            "collapsed": this.state.collapsed,
             "hasSubSpaces": this.state.childSpaces?.length,
         });
 
@@ -266,11 +256,12 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
             : SpaceStore.instance.getNotificationState(space.roomId);
 
         let childItems;
-        if (this.state.childSpaces?.length && !collapsed) {
+        if (this.state.childSpaces?.length && !this.state.collapsed) {
             childItems = <SpaceTreeLevel
                 spaces={this.state.childSpaces}
                 activeSpaces={activeSpaces}
                 isNested={true}
+                isPanelCollapsed={isPanelCollapsed}
                 parents={new Set(parents).add(space.roomId)}
             />;
         }
@@ -280,7 +271,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                 className="mx_SpaceButton_toggleCollapse"
                 onClick={this.toggleCollapse}
                 tabIndex={-1}
-                aria-label={collapsed ? _t("Expand") : _t("Collapse")}
+                aria-label={this.state.collapsed ? _t("Expand") : _t("Collapse")}
             /> : null;
 
         return (
@@ -296,7 +287,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     avatarSize={isNested ? 24 : 32}
                     onClick={this.onClick}
                     onKeyDown={this.onKeyDown}
-                    aria-expanded={!collapsed}
+                    aria-expanded={!this.state.collapsed}
                     ContextMenuComponent={this.props.space.getMyMembership() === "join"
                         ? SpaceContextMenu : undefined}
                 >
@@ -313,6 +304,7 @@ interface ITreeLevelProps {
     spaces: Room[];
     activeSpaces: Room[];
     isNested?: boolean;
+    isPanelCollapsed?: boolean;
     parents: Set<string>;
 }
 
@@ -320,6 +312,7 @@ const SpaceTreeLevel: React.FC<ITreeLevelProps> = ({
     spaces,
     activeSpaces,
     isNested,
+    isPanelCollapsed,
     parents,
 }) => {
     return <ul className="mx_SpaceTreeLevel">
@@ -329,6 +322,7 @@ const SpaceTreeLevel: React.FC<ITreeLevelProps> = ({
                 activeSpaces={activeSpaces}
                 space={s}
                 isNested={isNested}
+                isPanelCollapsed={isPanelCollapsed}
                 parents={parents}
             />);
         }) }

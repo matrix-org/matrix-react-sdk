@@ -171,7 +171,6 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
                 space={s}
                 activeSpaces={activeSpaces}
                 isPanelCollapsed={isPanelCollapsed}
-                onExpand={() => setPanelCollapsed(false)}
             />
         )) }
         { spaces.map((s, i) => (
@@ -188,7 +187,6 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
                         space={s}
                         activeSpaces={activeSpaces}
                         isPanelCollapsed={isPanelCollapsed}
-                        onExpand={() => setPanelCollapsed(false)}
                     />
                 ) }
             </Draggable>
