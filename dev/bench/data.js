@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628266244623,
+  "lastUpdate": 1628266629548,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15020,6 +15020,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4790.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b6f7c4fe95cdd4e32cea6362f0218f1266ae36a2",
+          "message": "Merge pull request #6475 from matrix-org/jitsi-picture-in-picture\n\nRefactor Calls components into smaller pieces for future Widgets work",
+          "timestamp": "2021-08-06T18:03:30+02:00",
+          "tree_id": "5b8b5acb7676c4f35915e0ab772a85217f37c3f3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b6f7c4fe95cdd4e32cea6362f0218f1266ae36a2"
+        },
+        "date": 1628266628028,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4328.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1331.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1711.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4711,
             "unit": "ms",
             "extra": "type: measure"
           }
