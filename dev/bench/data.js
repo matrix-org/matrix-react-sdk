@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628264289424,
+  "lastUpdate": 1628264293198,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14876,6 +14876,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 894.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f53451df654ac4958264578470965cbe2fa8ed5f",
+          "message": "Merge pull request #6349 from SimonBrandner/feature/collapse-pinned-mels/17938\n\nGroup pinned message events with MELS",
+          "timestamp": "2021-08-06T09:25:08-06:00",
+          "tree_id": "13372e275fe0c1cb34fbda37a44be77482e94eed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f53451df654ac4958264578470965cbe2fa8ed5f"
+        },
+        "date": 1628264291262,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4585.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1151.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1904.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4778.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
