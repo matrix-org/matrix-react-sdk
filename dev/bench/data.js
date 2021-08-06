@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628256394176,
+  "lastUpdate": 1628257206229,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14660,6 +14660,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5007.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "40eb9ae45294b6ef0989a36ee7958d2dfa43cb5f",
+          "message": "Merge pull request #6571 from SimonBrandner/fix/reply-whitespace/18327\n\nFix clicking whitespaces on replies",
+          "timestamp": "2021-08-06T14:34:31+01:00",
+          "tree_id": "5f0db1493b5075dbca0ef8d33b53e9c88633d05a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/40eb9ae45294b6ef0989a36ee7958d2dfa43cb5f"
+        },
+        "date": 1628257203724,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4427.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1054.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
