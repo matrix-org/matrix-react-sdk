@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628257757612,
+  "lastUpdate": 1628257892387,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14792,6 +14792,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4506.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3153e11761e145e8be96d97f4d500c6328584ccb",
+          "message": "Merge pull request #6566 from SimonBrandner/task/export-layout",
+          "timestamp": "2021-08-06T14:45:54+01:00",
+          "tree_id": "bf6b829550f5042d18e2e6ee34a124a50c1917d4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3153e11761e145e8be96d97f4d500c6328584ccb"
+        },
+        "date": 1628257891089,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4502.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1099.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1764.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4437.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
