@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628264856647,
+  "lastUpdate": 1628266244623,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14972,6 +14972,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4564.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f904cccce0721c710e3b366dd6f77a3966ad1f3",
+          "message": "Merge pull request #6573 from matrix-org/gsouquet/tsconfig-types\n\nChange tsconfig to autodiscover all @types packages rather setting them explicitely",
+          "timestamp": "2021-08-06T17:05:01+01:00",
+          "tree_id": "151c1c8d2ab763cddd708f0d9f79f6ff4aa87acc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f904cccce0721c710e3b366dd6f77a3966ad1f3"
+        },
+        "date": 1628266243075,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5369.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1328.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1950.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4790.5,
             "unit": "ms",
             "extra": "type: measure"
           }
