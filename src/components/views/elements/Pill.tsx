@@ -33,7 +33,7 @@ import RoomAvatar from '../avatars/RoomAvatar';
 import MemberAvatar from '../avatars/MemberAvatar';
 import BaseAvatar from '../avatars/BaseAvatar';
 
-enum PillType {
+export enum PillType {
     UserMention = 'TYPE_USER_MENTION',
     RoomMention = 'TYPE_ROOM_MENTION',
     GroupMention = 'TYPE_GROUP_MENTION',

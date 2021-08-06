@@ -31,7 +31,7 @@ import { PERMITTED_URL_SCHEMES } from "../../../HtmlUtils";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
-import Pill from './Pill';
+import Pill, { PillType } from './Pill';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
 interface IProps {
@@ -340,7 +340,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
                         'a': (sub) => <a onClick={this.onQuoteClick} className="mx_ReplyThread_show">{ sub }</a>,
                         'pill': (
                             <Pill
-                                type={Pill.TYPE_USER_MENTION}
+                                type={PillType.UserMention}
                                 room={room}
                                 url={makeUserPermalink(ev.getSender())}
                                 shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
