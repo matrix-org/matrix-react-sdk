@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628257892387,
+  "lastUpdate": 1628264289424,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14840,6 +14840,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4437.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6a9ebc69023f54e1672113523951e6e756334f14",
+          "message": "Merge pull request #6390 from SimonBrandner/feature/hidden-rrs\n\nSupport for MSC2285 (hidden read receipts)",
+          "timestamp": "2021-08-06T09:27:14-06:00",
+          "tree_id": "cda02cdf0649daf98c0cf2676e049afceb94e6c1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6a9ebc69023f54e1672113523951e6e756334f14"
+        },
+        "date": 1628264287616,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4273.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 894.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
