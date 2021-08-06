@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628264293198,
+  "lastUpdate": 1628264856647,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14924,6 +14924,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4778.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b2a2b352433d86f4f351d8524945bfadaf7877c6",
+          "message": "Merge pull request #6565 from SimonBrandner/fix/codeblock-expand/18388\n\nFix missing expand button on codeblocks",
+          "timestamp": "2021-08-06T09:42:13-06:00",
+          "tree_id": "464c702601c07499a340221547007f2be7daf260",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b2a2b352433d86f4f351d8524945bfadaf7877c6"
+        },
+        "date": 1628264854762,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4501.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1086.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1773.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4564.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
