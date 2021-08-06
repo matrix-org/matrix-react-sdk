@@ -95,7 +95,7 @@ export default class Pill extends React.Component<IProps, IState> {
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase
+    // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
     async UNSAFE_componentWillReceiveProps(nextProps: IProps) {
         let resourceId;
         let prefix;
