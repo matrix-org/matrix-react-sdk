@@ -33,9 +33,16 @@ import RoomAvatar from '../avatars/RoomAvatar';
 import MemberAvatar from '../avatars/MemberAvatar';
 import BaseAvatar from '../avatars/BaseAvatar';
 
+enum PillType {
+    UserMention = 'TYPE_USER_MENTION',
+    RoomMention = 'TYPE_ROOM_MENTION',
+    GroupMention = 'TYPE_GROUP_MENTION',
+    AtRoomMention = 'TYPE_AT_ROOM_MENTION', // '@room' mention
+}
+
 interface IProps {
     // The Type of this Pill. If url is given, this is auto-detected.
-    type?: string;
+    type?: PillType;
     // The URL to pillify (no validation is done)
     url?: string;
     // Whether the pill is in a message
@@ -74,11 +81,6 @@ export default class Pill extends React.Component<IProps, IState> {
         return "@room".length;
     }
 
-    public static TYPE_USER_MENTION = 'TYPE_USER_MENTION';
-    public static TYPE_ROOM_MENTION = 'TYPE_ROOM_MENTION';
-    public static TYPE_GROUP_MENTION = 'TYPE_GROUP_MENTION';
-    public static TYPE_AT_ROOM_MENTION = 'TYPE_AT_ROOM_MENTION'; // '@room' mention
-
     constructor(props: IProps) {
         super(props);
 
@@ -110,21 +112,21 @@ export default class Pill extends React.Component<IProps, IState> {
         }
 
         const pillType = this.props.type || {
-            '@': Pill.TYPE_USER_MENTION,
-            '#': Pill.TYPE_ROOM_MENTION,
-            '!': Pill.TYPE_ROOM_MENTION,
-            '+': Pill.TYPE_GROUP_MENTION,
+            '@': PillType.UserMention,
+            '#': PillType.RoomMention,
+            '!': PillType.RoomMention,
+            '+': PillType.GroupMention,
         }[prefix];
 
         let member;
         let group;
         let room;
         switch (pillType) {
-            case Pill.TYPE_AT_ROOM_MENTION: {
+            case PillType.AtRoomMention: {
                 room = nextProps.room;
             }
                 break;
-            case Pill.TYPE_USER_MENTION: {
+            case PillType.UserMention: {
                 const localMember = nextProps.room ? nextProps.room.getMember(resourceId) : undefined;
                 member = localMember;
                 if (!localMember) {
@@ -133,7 +135,7 @@ export default class Pill extends React.Component<IProps, IState> {
                 }
             }
                 break;
-            case Pill.TYPE_ROOM_MENTION: {
+            case PillType.RoomMention: {
                 const localRoom = resourceId[0] === '#' ?
                     MatrixClientPeg.get().getRooms().find((r) => {
                         return r.getCanonicalAlias() === resourceId ||
@@ -147,7 +149,7 @@ export default class Pill extends React.Component<IProps, IState> {
                 }
             }
                 break;
-            case Pill.TYPE_GROUP_MENTION: {
+            case PillType.GroupMention: {
                 const cli = MatrixClientPeg.get();
 
                 try {
@@ -209,7 +211,7 @@ export default class Pill extends React.Component<IProps, IState> {
         });
     }
 
-    private onUserPillClicked = (): void => {
+    private onUserPillClicked = (e): void => {
         e.preventDefault();
         dis.dispatch({
             action: Action.ViewUser,
@@ -227,7 +229,7 @@ export default class Pill extends React.Component<IProps, IState> {
         let href = this.props.url;
         let onClick;
         switch (this.state.pillType) {
-            case Pill.TYPE_AT_ROOM_MENTION: {
+            case PillType.AtRoomMention: {
                 const room = this.props.room;
                 if (room) {
                     linkText = "@room";
@@ -238,7 +240,7 @@ export default class Pill extends React.Component<IProps, IState> {
                 }
             }
                 break;
-            case Pill.TYPE_USER_MENTION: {
+            case PillType.UserMention: {
                 // If this user is not a member of this room, default to the empty member
                 const member = this.state.member;
                 if (member) {
@@ -254,7 +256,7 @@ export default class Pill extends React.Component<IProps, IState> {
                 }
             }
                 break;
-            case Pill.TYPE_ROOM_MENTION: {
+            case PillType.RoomMention: {
                 const room = this.state.room;
                 if (room) {
                     linkText = room.name || resource;
@@ -265,7 +267,7 @@ export default class Pill extends React.Component<IProps, IState> {
                 pillClass = room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill";
             }
                 break;
-            case Pill.TYPE_GROUP_MENTION: {
+            case PillType.GroupMention: {
                 if (this.state.group) {
                     const { avatarUrl, groupId, name } = this.state.group;
 
