@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628257206229,
+  "lastUpdate": 1628257691060,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14696,6 +14696,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1054.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "da795817443257cacbd287ce585f84fb2df5a8b0",
+          "message": "Merge pull request #6567 from SimonBrandner/fix/connecting-states/18404\n\nDon't flash \"Missed call\" when accepting a call",
+          "timestamp": "2021-08-06T14:42:31+01:00",
+          "tree_id": "d4c1aac60641af6403b2b5201437a6a767f7aff3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/da795817443257cacbd287ce585f84fb2df5a8b0"
+        },
+        "date": 1628257689133,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4359.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1160.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1693.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4479.5,
             "unit": "ms",
             "extra": "type: measure"
           }
