@@ -52,11 +52,11 @@ interface IState {
     // Type of pill
     pillType: string;
     // The member related to the user pill
-    member: RoomMember;
+    member?: RoomMember;
     // The group related to the group pill
-    group: Group;
+    group?: Group;
     // The room related to the room pill
-    room: Room;
+    room?: Room;
     // Is the user hovering the pill
     hover: boolean;
 }
