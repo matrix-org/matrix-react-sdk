@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628254192677,
+  "lastUpdate": 1628256394176,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14612,6 +14612,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4540.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2c601e0ff1a8940ba67e2a44caccbf926074e7b1",
+          "message": "Merge pull request #6562 from matrix-org/travis/voice-messages/disable-composer\n\nFix disabled state for voice messages + send button tooltip",
+          "timestamp": "2021-08-06T07:19:58-06:00",
+          "tree_id": "423edde9e40d03784f33e0bbe9cee4396cccda54",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c601e0ff1a8940ba67e2a44caccbf926074e7b1"
+        },
+        "date": 1628256391980,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5166,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1488.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1889.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5007.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
