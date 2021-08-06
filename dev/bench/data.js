@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628257691060,
+  "lastUpdate": 1628257757612,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14744,6 +14744,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4479.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "225ac0ae5a14cadb9af2a55f5a3272d0fb0a5ab6",
+          "message": "Merge pull request #6568 from benneti/develop\n\nallow customizing the bubble layout colors",
+          "timestamp": "2021-08-06T14:43:33+01:00",
+          "tree_id": "0b0785410d69e5a8c7883f7082485972f66df788",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/225ac0ae5a14cadb9af2a55f5a3272d0fb0a5ab6"
+        },
+        "date": 1628257755737,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4313.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1100.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1726.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4506.5,
             "unit": "ms",
             "extra": "type: measure"
           }
