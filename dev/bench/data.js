@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628251340414,
+  "lastUpdate": 1628251513766,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -14516,6 +14516,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4673.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "efc63f1f7709b6021a8a0fbc53c7e1cea27b9ffa",
+          "message": "Merge pull request #6560 from matrix-org/palid/fix/18384\n\nFix [object Object] in Widget Permissions",
+          "timestamp": "2021-08-06T13:59:14+02:00",
+          "tree_id": "385da88cb023eaee68ef2ad5af909b9ea6d2339e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/efc63f1f7709b6021a8a0fbc53c7e1cea27b9ffa"
+        },
+        "date": 1628251512036,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5863.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1241.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1810.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4794.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
