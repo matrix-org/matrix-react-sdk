@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628346116562,
+  "lastUpdate": 1628349274943,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15200,6 +15200,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5207.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "92a60497d2609d02ffc6775c50562c215c57d638",
+          "message": "Merge pull request #6572 from matrix-org/travis/voice-messages/stop-left\n\nMove stop button to the left of the waveform",
+          "timestamp": "2021-08-07T09:09:21-06:00",
+          "tree_id": "18680224223ea08823e1db6c5b7e93f6ac7fab03",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/92a60497d2609d02ffc6775c50562c215c57d638"
+        },
+        "date": 1628349273357,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4506.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1418.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1852.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4466.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
