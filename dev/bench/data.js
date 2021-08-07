@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628266629548,
+  "lastUpdate": 1628328351936,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15068,6 +15068,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4711,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "72d57d63eac3842aa18eaa2585bdd161909d0fa6",
+          "message": "Merge pull request #6577 from SimonBrandner/fix/call-view-regressions\n\nFix Call View regressions",
+          "timestamp": "2021-08-07T11:20:39+02:00",
+          "tree_id": "114214ede1b55559c5fe39d662e29b16f28e3393",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/72d57d63eac3842aa18eaa2585bdd161909d0fa6"
+        },
+        "date": 1628328350050,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4299,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1167.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
