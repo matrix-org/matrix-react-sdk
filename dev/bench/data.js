@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628328351936,
+  "lastUpdate": 1628344533424,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15104,6 +15104,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1167.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "390a3ebcbd6abd0126389ed553f1418810fde8e6",
+          "message": "Merge pull request #6579 from SimonBrandner/family-friendly-branch-name\n\nFix source picker sizing issues (again)",
+          "timestamp": "2021-08-07T15:50:17+02:00",
+          "tree_id": "ecbac61a735d4cf5ab2e37b49e45f7ba84c8d125",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/390a3ebcbd6abd0126389ed553f1418810fde8e6"
+        },
+        "date": 1628344531390,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4578.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1210.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1693.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4507,
             "unit": "ms",
             "extra": "type: measure"
           }
