@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628344533424,
+  "lastUpdate": 1628346116562,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15152,6 +15152,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4507,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7598ce6ca36454a8933f588601cf5c04fbfde7d0",
+          "message": "Merge pull request #6576 from SimonBrandner/fix/export-default\n\nExport components by default",
+          "timestamp": "2021-08-07T15:15:57+01:00",
+          "tree_id": "dfe39ef032838f8e538f12518a9c1e55271f422e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7598ce6ca36454a8933f588601cf5c04fbfde7d0"
+        },
+        "date": 1628346114566,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4777.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1410.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1846.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5207.5,
             "unit": "ms",
             "extra": "type: measure"
           }
