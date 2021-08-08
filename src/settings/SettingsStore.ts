@@ -418,7 +418,7 @@ export default class SettingsStore {
      */
 
     /* eslint-enable valid-jsdoc */
-    public static async setValue(settingName: string, roomId: string, level: SettingLevel, value: any): Promise<void> {
+    public static async setValue(settingName: string, roomId?: string, level?: SettingLevel, value?: any): Promise<void> {
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -438,6 +438,7 @@ export default class SettingsStore {
             settingName = setting.invertedSettingName;
             value = !value;
         }
+        if (!roomId) return;
 
         if (!handler.canSetValue(settingName, roomId)) {
             throw new Error("User cannot set " + settingName + " at " + level + " in " + roomId);
@@ -610,9 +611,9 @@ export default class SettingsStore {
         console.log(`--- END DEBUG`);
     }
 
-    private static getHandler(settingName: string, level: SettingLevel): SettingsHandler {
+    private static getHandler(settingName: string, level?: SettingLevel): SettingsHandler | undefined {
         const handlers = SettingsStore.getHandlers(settingName);
-        if (!handlers[level]) return null;
+        if (!level || !handlers[level]) return undefined;
         return handlers[level];
     }
 

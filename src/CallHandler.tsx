@@ -150,14 +150,10 @@ export default class CallHandler extends EventEmitter {
     // call with a different party to this one.
     private transferees = new Map<string, MatrixCall>(); // callId (target) -> call (transferee)
     private audioPromises = new Map<AudioID, Promise<void>>();
-    private dispatcherRef: string = null;
-    private supportsPstnProtocol = null;
-    private pstnSupportPrefixed = null; // True if the server only support the prefixed pstn protocol
-    private supportsSipNativeVirtual = null; // im.vector.protocol.sip_virtual and im.vector.protocol.sip_native
-    private pstnSupportCheckTimer: number;
-    // For rooms we've been invited to, true if they're from virtual user, false if we've checked and they aren't.
-    private invitedRoomsAreVirtual = new Map<string, boolean>();
-    private invitedRoomCheckInProgress = false;
+    private dispatcherRef: string | null = null;
+    private supportsPstnProtocol = false;
+    private pstnSupportPrefixed = false; // True if the server only support the prefixed pstn protocol
+    private supportsSipNativeVirtual = false; // im.vector.protocol.sip_virtual and im.vector.protocol.sip_native
 
     // Map of the asserted identity users after we've looked them up using the API.
     // We need to be be able to determine the mapped room synchronously, so we
@@ -178,8 +174,8 @@ export default class CallHandler extends EventEmitter {
      * Gets the user-facing room associated with a call (call.roomId may be the call "virtual room"
      * if a voip_mxid_translate_pattern is set in the config)
      */
-    public roomIdForCall(call: MatrixCall): string {
-        if (!call) return null;
+    public roomIdForCall(call: MatrixCall): string | undefined {
+        if (!call) return undefined;
 
         const voipConfig = SdkConfig.get()['voip'];
 
@@ -263,8 +259,6 @@ export default class CallHandler extends EventEmitter {
             } else if (protocols[PROTOCOL_PSTN_PREFIXED] !== undefined) {
                 this.supportsPstnProtocol = Boolean(protocols[PROTOCOL_PSTN_PREFIXED]);
                 if (this.supportsPstnProtocol) this.pstnSupportPrefixed = true;
-            } else {
-                this.supportsPstnProtocol = null;
             }
 
             dis.dispatch({ action: Action.PstnSupportUpdated });
@@ -281,9 +275,6 @@ export default class CallHandler extends EventEmitter {
                 console.log("Failed to check for protocol support and no retries remain: assuming no support", e);
             } else {
                 console.log("Failed to check for protocol support: will retry", e);
-                this.pstnSupportCheckTimer = setTimeout(() => {
-                    this.checkProtocols(maxTries - 1);
-                }, 10000);
             }
         }
     }
@@ -330,15 +321,15 @@ export default class CallHandler extends EventEmitter {
         }, true);
     };
 
-    public getCallById(callId: string): MatrixCall {
+    public getCallById(callId: string): MatrixCall | null {
         for (const call of this.calls.values()) {
             if (call.callId === callId) return call;
         }
         return null;
     }
 
-    getCallForRoom(roomId: string): MatrixCall {
-        return this.calls.get(roomId) || null;
+    getCallForRoom(roomId?: string): MatrixCall | undefined {
+        return roomId ? this.calls.get(roomId) : undefined;
     }
 
     getAnyActiveCall() {
@@ -351,7 +342,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     getAllActiveCalls() {
-        const activeCalls = [];
+        const activeCalls: MatrixCall[] = [];
 
         for (const call of this.calls.values()) {
             if (call.state !== CallState.Ended && call.state !== CallState.Ringing) {
@@ -362,7 +353,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     getAllActiveCallsNotInRoom(notInThisRoomId) {
-        const callsNotInThatRoom = [];
+        const callsNotInThatRoom: MatrixCall[] = [];
 
         for (const [roomId, call] of this.calls.entries()) {
             if (roomId !== notInThisRoomId && call.state !== CallState.Ended) {
@@ -395,7 +386,8 @@ export default class CallHandler extends EventEmitter {
                 }
             };
             if (this.audioPromises.has(audioId)) {
-                this.audioPromises.set(audioId, this.audioPromises.get(audioId).then(() => {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                this.audioPromises.set(audioId, this.audioPromises.get(audioId)!.then(() => {
                     audio.load();
                     return playAudio();
                 }));
@@ -411,7 +403,8 @@ export default class CallHandler extends EventEmitter {
         const audio = document.getElementById(audioId) as HTMLMediaElement;
         if (audio) {
             if (this.audioPromises.has(audioId)) {
-                this.audioPromises.set(audioId, this.audioPromises.get(audioId).then(() => audio.pause()));
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                this.audioPromises.set(audioId, this.audioPromises.get(audioId)!.then(() => audio.pause()));
             } else {
                 // pause doesn't return a promise, so just do it
                 audio.pause();
@@ -430,7 +423,10 @@ export default class CallHandler extends EventEmitter {
     }
 
     private setCallListeners(call: MatrixCall) {
-        let mappedRoomId = this.roomIdForCall(call);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        let mappedRoomId: string = this.roomIdForCall(call)!;
+        // A lot of things here expect proper room id, so if we don't have it it's better to quit early.
+        if (!mappedRoomId) return;
 
         call.on(CallEvent.Error, (err: CallError) => {
             if (!this.matchesCallForThisRoom(call)) return;
@@ -587,7 +583,7 @@ export default class CallHandler extends EventEmitter {
 
                 const newMappedRoomId = this.roomIdForCall(call);
                 console.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
-                if (newMappedRoomId !== mappedRoomId) {
+                if (newMappedRoomId && newMappedRoomId !== mappedRoomId) {
                     this.removeCallForRoom(mappedRoomId);
                     mappedRoomId = newMappedRoomId;
                     console.log("Moving call to room " + mappedRoomId);
@@ -668,10 +664,12 @@ export default class CallHandler extends EventEmitter {
         });
     }
 
-    private removeCallForRoom(roomId: string) {
+    private removeCallForRoom(roomId?: string) {
         console.log("Removing call for room ", roomId);
-        this.calls.delete(roomId);
-        this.emit(CallHandlerEvent.CallsChanged, this.calls);
+        if (roomId) {
+            this.calls.delete(roomId);
+            this.emit(CallHandlerEvent.CallsChanged, this.calls);
+        }
     }
 
     private showICEFallbackPrompt() {
@@ -691,16 +689,16 @@ export default class CallHandler extends EventEmitter {
                     "<code>turn.matrix.org</code>, but this will not be as reliable, and " +
                     "it will share your IP address with that server. You can also manage " +
                     "this in Settings.",
-                    null, { code },
+                    undefined, { code },
                 ) }</p>
             </div>,
             button: _t('Try using turn.matrix.org'),
             cancelButton: _t('OK'),
             onFinished: (allow) => {
-                SettingsStore.setValue("fallbackICEServerAllowed", null, SettingLevel.DEVICE, allow);
+                SettingsStore.setValue("fallbackICEServerAllowed", undefined, SettingLevel.DEVICE, allow);
                 cli.setFallbackICEServerAllowed(allow);
             },
-        }, null, true);
+        }, undefined, true);
     }
 
     private showMediaCaptureError(call: MatrixCall) {
@@ -729,18 +727,25 @@ export default class CallHandler extends EventEmitter {
 
         Modal.createTrackedDialog('Media capture failed', '', ErrorDialog, {
             title, description,
-        }, null, true);
+        }, undefined, true);
     }
 
-    private async placeCall(roomId: string, type: PlaceCallType, transferee: MatrixCall) {
+    private async placeCall(roomId: string, type: PlaceCallType, transferee?: MatrixCall) {
         Analytics.trackEvent('voip', 'placeCall', 'type', type);
         CountlyAnalytics.instance.trackStartCall(roomId, type === PlaceCallType.Video, false);
 
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
 
-        const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
-        console.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
+        const turnServersExpiry = MatrixClientPeg.get().getTurnServersExpiry();
+        if (turnServersExpiry) {
+            const timeUntilTurnCresExpire = turnServersExpiry - Date.now();
+            console.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
+        } else {
+            if (process.env.NODE_ENV === 'development') {
+                throw new Error('Could not get current turn server expiration date.');
+            }
+        }
         const call = MatrixClientPeg.get().createCall(mappedRoomId);
 
         console.log("Adding call for room ", roomId);
@@ -848,6 +853,8 @@ export default class CallHandler extends EventEmitter {
                     const call = payload.call as MatrixCall;
 
                     const mappedRoomId = CallHandler.sharedInstance().roomIdForCall(call);
+                    // Leave early if can't figure out room id.
+                    if (!mappedRoomId) return;
                     if (this.getCallForRoom(mappedRoomId)) {
                         console.log(
                             "Got incoming call for room " + mappedRoomId +
@@ -870,18 +877,20 @@ export default class CallHandler extends EventEmitter {
                 }
                 break;
             case 'hangup':
-            case 'reject':
-                if (!this.calls.get(payload.room_id)) {
+            case 'reject': {
+                const roomId = this.calls.get(payload.room_id);
+                if (!roomId) {
                     return; // no call to hangup
                 }
                 if (payload.action === 'reject') {
-                    this.calls.get(payload.room_id).reject();
+                    roomId.reject();
                 } else {
-                    this.calls.get(payload.room_id).hangup(CallErrorCode.UserHangup, false);
+                    roomId.hangup(CallErrorCode.UserHangup, false);
                 }
                 // don't remove the call yet: let the hangup event handler do it (otherwise it will throw
                 // the hangup event away)
                 break;
+            }
             case 'hangup_all':
                 for (const call of this.calls.values()) {
                     call.hangup(CallErrorCode.UserHangup, false);
@@ -901,6 +910,7 @@ export default class CallHandler extends EventEmitter {
                 }
 
                 const call = this.calls.get(payload.room_id);
+                if (!call) return;
                 call.answer();
                 this.setActiveCallRoomId(payload.room_id);
                 CountlyAnalytics.instance.trackJoinCall(payload.room_id, call.type === CallType.Video, false);
@@ -952,7 +962,7 @@ export default class CallHandler extends EventEmitter {
             room_id: roomId,
         });
 
-        await this.placeCall(roomId, PlaceCallType.Voice, null);
+        await this.placeCall(roomId, PlaceCallType.Voice, undefined);
     }
 
     private async startTransferToPhoneNumber(call: MatrixCall, destination: string, consultFirst: boolean) {
@@ -1102,11 +1112,13 @@ export default class CallHandler extends EventEmitter {
                 // We'll just obliterate them all. There should only ever be one, but might as well
                 // be safe.
                 const roomInfo = WidgetStore.instance.getRoom(roomId);
-                const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
-                jitsiWidgets.forEach(w => {
-                    // setting invalid content removes it
-                    WidgetUtils.setRoomWidget(roomId, w.id);
-                });
+                if (roomInfo) {
+                    const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
+                    jitsiWidgets.forEach(w => {
+                        // setting invalid content removes it
+                        WidgetUtils.setRoomWidget(roomId, w.id);
+                    });
+                }
             },
         });
     }

@@ -57,7 +57,7 @@ export function newTranslatableError(message: string) {
 }
 
 export function getUserLanguage(): string {
-    const language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
+    const language = SettingsStore.getValue("language", undefined, /*excludeDefault:*/true);
     if (language) {
         return language;
     } else {
@@ -135,7 +135,7 @@ export type TranslatedString = string | React.ReactNode;
 // eslint-next-line @typescript-eslint/naming-convention
 // eslint-nexline @typescript-eslint/naming-convention
 export function _t(text: string, variables?: IVariables): string;
-export function _t(text: string, variables: IVariables, tags: Tags): React.ReactNode;
+export function _t(text: string, variables?: IVariables, tags?: Tags): React.ReactNode;
 export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
     // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
     // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
@@ -184,7 +184,7 @@ export function sanitizeForTranslation(text: string): string {
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 export function substitute(text: string, variables?: IVariables): string;
-export function substitute(text: string, variables: IVariables, tags: Tags): string;
+export function substitute(text: string, variables?: IVariables, tags?: Tags): string;
 export function substitute(text: string, variables?: IVariables, tags?: Tags): string | React.ReactNode {
     let result: React.ReactNode | string = text;
 
@@ -221,7 +221,7 @@ export function replaceByRegexes(text: string, mapping: Tags): React.ReactNode;
 export function replaceByRegexes(text: string, mapping: IVariables | Tags): string | React.ReactNode {
     // We initially store our output as an array of strings and objects (e.g. React components).
     // This will then be converted to a string or a <span> at the end
-    const output = [text];
+    const output: Array<string | React.ReactNode> = [text];
 
     // If we insert any components we need to wrap the output in a span. React doesn't like just an array of components.
     let shouldWrapInSpan = false;
@@ -251,7 +251,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
             // The textual part before the first match
             const head = inputText.substr(0, match.index);
 
-            const parts = [];
+            const parts: Array<string | React.ReactNode> = [];
             // keep track of prevMatch
             let prevMatch;
             while (match) {
@@ -259,7 +259,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
                 prevMatch = match;
                 const capturedGroups = match.slice(2);
 
-                let replaced;
+                let replaced: string | React.ReactNode;
                 // If substitution is a function, call it
                 if (mapping[regexpString] instanceof Function) {
                     replaced = ((mapping as Tags)[regexpString] as Function)(...capturedGroups);
@@ -358,7 +358,7 @@ export function setLanguage(preferredLangs: string | string[]) {
     }).then((langData) => {
         counterpart.registerTranslations(langToUse, langData);
         counterpart.setLocale(langToUse);
-        SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
+        SettingsStore.setValue("language", undefined, SettingLevel.DEVICE, langToUse);
         // Adds a lot of noise to test runs, so disable logging there.
         if (process.env.NODE_ENV !== "test") {
             console.log("set language to " + langToUse);
@@ -375,7 +375,10 @@ export function setLanguage(preferredLangs: string | string[]) {
 
 export function getAllLanguagesFromJson() {
     return getLangsJson().then((langsObject) => {
-        const langs = [];
+        const langs: Array<{
+            value: string;
+            label: string;
+        }> = [];
         for (const langKey in langsObject) {
             if (langsObject.hasOwnProperty(langKey)) {
                 langs.push({

@@ -41,21 +41,21 @@ export class Jitsi {
      *
      * See https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
      */
-    public async getJitsiAuth(): Promise<string|null> {
+    public async getJitsiAuth(): Promise<string|undefined> {
         if (!this.preferredDomain) {
-            return null;
+            return undefined;
         }
         let data;
         try {
             const response = await fetch(`https://${this.preferredDomain}/.well-known/element/jitsi`);
             data = await response.json();
         } catch (error) {
-            return null;
+            return undefined;
         }
         if (data.auth) {
             return data.auth;
         }
-        return null;
+        return undefined;
     }
 
     public start() {
@@ -83,12 +83,10 @@ export class Jitsi {
     /**
      * Parses the given URL into the data needed for a Jitsi widget, if the widget
      * URL matches the preferredDomain for the app.
-     * @param {string} url The URL to parse.
-     * @returns {JitsiWidgetData} The widget data if eligible, otherwise null.
      */
-    public parsePreferredConferenceUrl(url: string): JitsiWidgetData {
+    public parsePreferredConferenceUrl(url: string): JitsiWidgetData | undefined {
         const parsed = new URL(url);
-        if (parsed.hostname !== this.preferredDomain) return null; // invalid
+        if (parsed.hostname !== this.preferredDomain) return undefined; // invalid
         return {
             conferenceId: parsed.pathname,
             domain: parsed.hostname,

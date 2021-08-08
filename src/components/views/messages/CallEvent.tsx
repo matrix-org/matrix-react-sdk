@@ -234,8 +234,8 @@ export default class CallEvent extends React.Component<IProps, IState> {
                         height={32}
                     />
                     <div className="mx_CallEvent_info_basic">
-                        <div className="mx_CallEvent_sender">
-                            { sender }
+                        <div style={{backgroundColor: 'red'}}>
+                            this actually works.
                         </div>
                         <div className="mx_CallEvent_type">
                             <div className="mx_CallEvent_type_icon" />
