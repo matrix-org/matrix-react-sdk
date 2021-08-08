@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628445581689,
+  "lastUpdate": 1628445651375,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15296,6 +15296,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4661.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6663f01c6c013a5a27f068b5416fa9f78fb10a42",
+          "message": "Merge pull request #6580 from SimonBrandner/fix/reject-modal\n\nDon't show a modal on call reject/user hangup",
+          "timestamp": "2021-08-08T19:55:27+02:00",
+          "tree_id": "bfb7f077977c3e49b6f1bb08be4823e0e32ff2b3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6663f01c6c013a5a27f068b5416fa9f78fb10a42"
+        },
+        "date": 1628445650206,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4831.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1189.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1908,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4652.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
