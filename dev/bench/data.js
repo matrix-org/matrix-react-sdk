@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628349274943,
+  "lastUpdate": 1628445581689,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15248,6 +15248,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4466.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1e513eeae853238e01101ac650ec8e98543da674",
+          "message": "Merge pull request #6581 from SimonBrandner/fix/stuck-buttons/18439\n\nFade Call View Buttons after `componentDidMount`",
+          "timestamp": "2021-08-08T19:54:31+02:00",
+          "tree_id": "9626231606eb3ca524226cc7505863b0f2d4defb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1e513eeae853238e01101ac650ec8e98543da674"
+        },
+        "date": 1628445580287,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4558.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1412.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1790.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4661.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
