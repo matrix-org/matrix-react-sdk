@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628528926114,
+  "lastUpdate": 1628532902353,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15440,6 +15440,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4469.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "99cc79bec9248a15bec70d03f1f44e20a3956e41",
+          "message": "Merge pull request #6585 from matrix-org/dbkr/fix_netlify_upload\n\nHopefully working Netlify upload",
+          "timestamp": "2021-08-09T19:09:44+01:00",
+          "tree_id": "f727df4ab2da5e0008cca7272465759c0c30cb51",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/99cc79bec9248a15bec70d03f1f44e20a3956e41"
+        },
+        "date": 1628532899938,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4226.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1344.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1778.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4519.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
