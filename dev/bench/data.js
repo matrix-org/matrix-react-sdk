@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628533337504,
+  "lastUpdate": 1628533972905,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15536,6 +15536,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4990.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "distinct": true,
+          "id": "d2e8e13afb3d1902e0f6c0a78699e011146e31cd",
+          "message": "No event.number in the workflow_run action",
+          "timestamp": "2021-08-09T19:27:13+01:00",
+          "tree_id": "13bf79e3964cd85406dd1d78acfc92e3fcdd6fa8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d2e8e13afb3d1902e0f6c0a78699e011146e31cd"
+        },
+        "date": 1628533970373,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4378.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1031.5,
             "unit": "ms",
             "extra": "type: measure"
           }
