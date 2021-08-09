@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628528404510,
+  "lastUpdate": 1628528926114,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15392,6 +15392,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4578.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "distinct": true,
+          "id": "81b72fe70ecd50ba5d9a11e81dd68aa6c8d13890",
+          "message": "disable netlify uplaod while I debug it",
+          "timestamp": "2021-08-09T18:03:15+01:00",
+          "tree_id": "a71e3a5d2594447ca739ae493ff4bf619c249b77",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/81b72fe70ecd50ba5d9a11e81dd68aa6c8d13890"
+        },
+        "date": 1628528924577,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3950.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1004.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1843.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4469.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
