@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628445651375,
+  "lastUpdate": 1628528404510,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15344,6 +15344,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4652.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f775e63aa227370313153b650ed64c744a715e42",
+          "message": "Merge pull request #6575 from matrix-org/dbkr/netlify_action\n\nUse a GitHub action to build the Netlify preview build",
+          "timestamp": "2021-08-09T17:54:50+01:00",
+          "tree_id": "795369064693667944c4b56957017f16380fe626",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f775e63aa227370313153b650ed64c744a715e42"
+        },
+        "date": 1628528401110,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4668.3000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1167,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1747.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4578.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
