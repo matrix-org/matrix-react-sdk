@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628592360309,
+  "lastUpdate": 1628592907425,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15740,6 +15740,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4449.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "distinct": true,
+          "id": "87690f0739d1eeb06430a3aef1cadddc21b6c897",
+          "message": "Fix netflify preview build comment",
+          "timestamp": "2021-08-10T11:49:25+01:00",
+          "tree_id": "cedd6360c757333209459766db897d82c0982bd3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/87690f0739d1eeb06430a3aef1cadddc21b6c897"
+        },
+        "date": 1628592905464,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4478.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1381.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1677.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4457.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
