@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628615977998,
+  "lastUpdate": 1628639325183,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15824,6 +15824,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 981.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hubert@uhoreg.ca",
+            "name": "Hubert Chathi",
+            "username": "uhoreg"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7415aa45d2f30201f5a834cd9fe528e51e129e99",
+          "message": "Merge pull request #6591 from uhoreg/use_mimetype_from_info\n\nUse the mimetype from the info property rather than the EncryptedFile",
+          "timestamp": "2021-08-10T19:43:39-04:00",
+          "tree_id": "395b05093a23c1dc4d2a1368cfe2a646d7e907a4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7415aa45d2f30201f5a834cd9fe528e51e129e99"
+        },
+        "date": 1628639323863,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5081.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1148.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1807.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4519.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
