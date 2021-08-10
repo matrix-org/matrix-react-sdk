@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628537216996,
+  "lastUpdate": 1628588402148,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15608,6 +15608,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 925.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6877c8fe0cc0ecfea7c93fce8617cbee03c9a497",
+          "message": "Merge pull request #6587 from matrix-org/t3chguy/fix/18465\n\nFix create room dialog in spaces no longer adding to the space",
+          "timestamp": "2021-08-10T10:34:26+01:00",
+          "tree_id": "5c7335d126b243361cd441be09cc676eee08ed4e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6877c8fe0cc0ecfea7c93fce8617cbee03c9a497"
+        },
+        "date": 1628588399777,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4747.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1465.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1793.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4575.5,
             "unit": "ms",
             "extra": "type: measure"
           }
