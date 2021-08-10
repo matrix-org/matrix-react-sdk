@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628592907425,
+  "lastUpdate": 1628615977998,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15788,6 +15788,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4457.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d7cb855419503905bbcabff8deed56db6eae4c80",
+          "message": "Merge pull request #6589 from matrix-org/dbkr/upscale_thumbnails\n\nUpscale thumbnails to the container size",
+          "timestamp": "2021-08-10T18:14:26+01:00",
+          "tree_id": "b514d89894d5bea83fae1bfb12d6d034d94f8bd7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d7cb855419503905bbcabff8deed56db6eae4c80"
+        },
+        "date": 1628615976583,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4082.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 981.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
