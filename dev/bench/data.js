@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628711998406,
+  "lastUpdate": 1628714619256,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16148,6 +16148,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4338.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "db67a911d817edb70a9041c395f40b50afefabab",
+          "message": "Merge pull request #6599 from matrix-org/dbkr/netlify_forked_pr_hack\n\nFix Netflify builds from fork PRs",
+          "timestamp": "2021-08-11T21:38:35+01:00",
+          "tree_id": "e30ab68cf3ac3eb8f734616f0633ccbe6baf2580",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/db67a911d817edb70a9041c395f40b50afefabab"
+        },
+        "date": 1628714617701,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4444.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1114.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1814.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4367.5,
             "unit": "ms",
             "extra": "type: measure"
           }
