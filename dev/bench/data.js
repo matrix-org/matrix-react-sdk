@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628702886795,
+  "lastUpdate": 1628711998406,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16100,6 +16100,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4373.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e6da2dc6e5a0ae93ce680a6c5d8c17cc641d6bd",
+          "message": "Merge pull request #6596 from SimonBrandner/fix/scrollbar-dot/18474\n\nRemove tiny scrollbar dot from code blocks",
+          "timestamp": "2021-08-11T13:54:47-06:00",
+          "tree_id": "7bf2f485797b7bc49f3574299e44a085f3f2d462",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e6da2dc6e5a0ae93ce680a6c5d8c17cc641d6bd"
+        },
+        "date": 1628711996689,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4111,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1121.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1840.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4338.5,
             "unit": "ms",
             "extra": "type: measure"
           }
