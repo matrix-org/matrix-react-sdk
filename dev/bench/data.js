@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628715082504,
+  "lastUpdate": 1628720668968,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16244,6 +16244,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4627.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "09ffad96ff1ed4d823a76db2354cd2bd7574127c",
+          "message": "Merge pull request #6569 from matrix-org/t3chguy/fix/spaces-a11y",
+          "timestamp": "2021-08-11T23:18:52+01:00",
+          "tree_id": "aa1511b28140eb0606570fe685039cda0443215d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/09ffad96ff1ed4d823a76db2354cd2bd7574127c"
+        },
+        "date": 1628720667454,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5305.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1227.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1707.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4739,
             "unit": "ms",
             "extra": "type: measure"
           }
