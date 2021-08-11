@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628686276210,
+  "lastUpdate": 1628701240247,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15920,6 +15920,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4908,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a149108a7d237a192203b26ef4e27113bf515541",
+          "message": "Merge pull request #6353 from SimonBrandner/feature/improved-composer\n\nImprove handling of pills in the composer",
+          "timestamp": "2021-08-11T10:55:13-06:00",
+          "tree_id": "511abdf30204736fb00d7c7bcd3a64f8ab8f4f1e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a149108a7d237a192203b26ef4e27113bf515541"
+        },
+        "date": 1628701236447,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4769.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1216.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1838.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4774.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
