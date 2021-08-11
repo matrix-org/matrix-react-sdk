@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628639325183,
+  "lastUpdate": 1628686276210,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15872,6 +15872,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4519.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c758f7de5b9dd3397b65419473088ade2bff344f",
+          "message": "Merge pull request #6592 from SimonBrandner/fix/hidden-rrs-setting\n\nDon't set hidden RRs labs setting at account level",
+          "timestamp": "2021-08-11T13:45:44+01:00",
+          "tree_id": "9a031c3f10356d099d879954634989ffee703f26",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c758f7de5b9dd3397b65419473088ade2bff344f"
+        },
+        "date": 1628686274185,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5544.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1208.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1880.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4908,
             "unit": "ms",
             "extra": "type: measure"
           }
