@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628701253845,
+  "lastUpdate": 1628702105288,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16004,6 +16004,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1103,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "abba7983ce50ee2ad780abdb51b9ec5ee9118594",
+          "message": "Merge pull request #6578 from SimonBrandner/task/export-call-view-buttons\n\nMove Call View Buttons into a separate component",
+          "timestamp": "2021-08-11T18:09:48+01:00",
+          "tree_id": "57e5b3a12563575d5c259cd1d49a9ec04ef8dddd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/abba7983ce50ee2ad780abdb51b9ec5ee9118594"
+        },
+        "date": 1628702102540,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5266.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1162.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1973.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4456.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
