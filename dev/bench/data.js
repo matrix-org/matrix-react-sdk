@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628701240247,
+  "lastUpdate": 1628701253845,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -15968,6 +15968,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4774.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c93cc89cca9b33b1c1087b3a5596e038c54a71f3",
+          "message": "Merge pull request #6540 from SimonBrandner/task/color-cleanup-1\n\nFirst cleanup of the theme files",
+          "timestamp": "2021-08-11T10:55:27-06:00",
+          "tree_id": "129985c6cd6f151e1ca2ddba97242c834982e38a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c93cc89cca9b33b1c1087b3a5596e038c54a71f3"
+        },
+        "date": 1628701252314,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4598.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1103,
             "unit": "ms",
             "extra": "type: measure"
           }
