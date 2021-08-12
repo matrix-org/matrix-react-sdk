@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628781273959,
+  "lastUpdate": 1628791413288,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16568,6 +16568,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4538.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1ad35b15646611dcedcb09f3c8c8f30da39af6e0",
+          "message": "Keep number field in focus when pressing dialpad buttons (#6520)",
+          "timestamp": "2021-08-12T18:58:06+01:00",
+          "tree_id": "82be71d09bc0d6160ccee035c87e3cc8e34d18b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1ad35b15646611dcedcb09f3c8c8f30da39af6e0"
+        },
+        "date": 1628791411617,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4506.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1169.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
