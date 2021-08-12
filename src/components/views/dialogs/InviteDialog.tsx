@@ -1284,19 +1284,27 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.setState({ dialPadValue: ev.currentTarget.value });
     };
 
-    private onDigitPress = digit => {
+    private onDigitPress = (digit, ev) => {
         this.setState({ dialPadValue: this.state.dialPadValue + digit });
 
         // Keep the number field focused so that keyboard entry is still available
-        this.numberEntryFieldRef.current?.focus();
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
-    private onDeletePress = () => {
+    private onDeletePress = (ev) => {
         if (this.state.dialPadValue.length === 0) return;
         this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
 
         // Keep the number field focused so that keyboard entry is still available
-        this.numberEntryFieldRef.current?.focus();
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
     private onTabChange = (tabId: TabId) => {

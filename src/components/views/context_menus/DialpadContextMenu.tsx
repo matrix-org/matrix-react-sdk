@@ -43,12 +43,16 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
         };
     }
 
-    onDigitPress = (digit) => {
+    onDigitPress = (digit, ev) => {
         this.props.call.sendDtmfDigit(digit);
         this.setState({ value: this.state.value + digit });
 
         // Keep the number field focused so that keyboard entry is still available
-        this.numberEntryFieldRef.current?.focus();
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
     onCancelClick = () => {

@@ -30,12 +30,12 @@ interface IButtonProps {
     kind: DialPadButtonKind;
     digit?: string;
     digitSubtext?: string;
-    onButtonPress: (string) => void;
+    onButtonPress: (string, object) => void;
 }
 
 class DialPadButton extends React.PureComponent<IButtonProps> {
-    onClick = () => {
-        this.props.onButtonPress(this.props.digit);
+    onClick = (ev: object) => {
+        this.props.onButtonPress(this.props.digit, ev);
     };
 
     render() {
@@ -54,9 +54,9 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
 }
 
 interface IProps {
-    onDigitPress: (string) => void;
+    onDigitPress: (string, object) => void;
     hasDial: boolean;
-    onDeletePress?: (string) => void;
+    onDeletePress?: (object) => void;
     onDialPress?: (string) => void;
 }
 

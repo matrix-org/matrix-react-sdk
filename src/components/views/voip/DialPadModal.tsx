@@ -57,19 +57,27 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         this.onDialPress();
     };
 
-    onDigitPress = (digit) => {
+    onDigitPress = (digit, ev) => {
         this.setState({ value: this.state.value + digit });
 
-        // Keep the number field focused so that keyboard entry is still available
-        this.numberEntryFieldRef.current?.focus();
+        // Keep the number field focused so that keyboard entry is still available.
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
-    onDeletePress = () => {
+    onDeletePress = (ev) => {
         if (this.state.value.length === 0) return;
         this.setState({ value: this.state.value.slice(0, -1) });
 
         // Keep the number field focused so that keyboard entry is still available
-        this.numberEntryFieldRef.current?.focus();
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
     onDialPress = async () => {
