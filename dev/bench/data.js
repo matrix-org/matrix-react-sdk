@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628791413288,
+  "lastUpdate": 1628792692791,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16604,6 +16604,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1169.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ecb2d9908d4858b8f311aff3d1dad1decacd5cc9",
+          "message": "Merge pull request #6608 from matrix-org/dbkr/kill_persistent_jitsi\n\nFix video call persisting when widget removed",
+          "timestamp": "2021-08-12T19:19:12+01:00",
+          "tree_id": "26b8dc7a9affe3dab8f3c9bbedb84374f5f0029a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ecb2d9908d4858b8f311aff3d1dad1decacd5cc9"
+        },
+        "date": 1628792690747,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4752.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1224.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1829.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4696.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
