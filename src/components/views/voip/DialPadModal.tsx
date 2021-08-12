@@ -16,7 +16,7 @@ limitations under the License.
 
 import * as React from "react";
 import { createRef } from "react";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import DialPad from './DialPad';
 import dis from '../../../dispatcher/dispatcher';
@@ -57,7 +57,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         this.onDialPress();
     };
 
-    onDigitPress = (digit: string, ev: React.SyntheticEvent) => {
+    onDigitPress = (digit: string, ev: ButtonEvent) => {
         this.setState({ value: this.state.value + digit });
 
         // Keep the number field focused so that keyboard entry is still available.
@@ -68,7 +68,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         }
     };
 
-    onDeletePress = (ev: React.SyntheticEvent) => {
+    onDeletePress = (ev: ButtonEvent) => {
         if (this.state.value.length === 0) return;
         this.setState({ value: this.state.value.slice(0, -1) });
 

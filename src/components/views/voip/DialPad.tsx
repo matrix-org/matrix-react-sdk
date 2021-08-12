@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as React from "react";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 const BUTTONS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'];
@@ -30,11 +30,11 @@ interface IButtonProps {
     kind: DialPadButtonKind;
     digit?: string;
     digitSubtext?: string;
-    onButtonPress: (digit: string, ev: React.SyntheticEvent) => void;
+    onButtonPress: (digit: string, ev: ButtonEvent) => void;
 }
 
 class DialPadButton extends React.PureComponent<IButtonProps> {
-    onClick = (ev: React.SyntheticEvent) => {
+    onClick = (ev: ButtonEvent) => {
         this.props.onButtonPress(this.props.digit, ev);
     };
 
@@ -54,9 +54,9 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
 }
 
 interface IProps {
-    onDigitPress: (digit: string, ev: React.SyntheticEvent) => void;
+    onDigitPress: (digit: string, ev: ButtonEvent) => void;
     hasDial: boolean;
-    onDeletePress?: (ev: React.SyntheticEvent) => void;
+    onDeletePress?: (ev: ButtonEvent) => void;
     onDialPress?: () => void;
 }
 

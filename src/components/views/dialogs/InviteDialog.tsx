@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent } from 'react';
+import React, { createRef } from 'react';
 import classNames from 'classnames';
 
 import { _t, _td } from "../../../languageHandler";
@@ -55,7 +55,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { getAddressType } from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { compare } from '../../../utils/strings';
 import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -1284,7 +1284,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.setState({ dialPadValue: ev.currentTarget.value });
     };
 
-    private onDigitPress = (digit: string, ev: SyntheticEvent) => {
+    private onDigitPress = (digit: string, ev: ButtonEvent) => {
         this.setState({ dialPadValue: this.state.dialPadValue + digit });
 
         // Keep the number field focused so that keyboard entry is still available
@@ -1295,7 +1295,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
     };
 
-    private onDeletePress = (ev: SyntheticEvent) => {
+    private onDeletePress = (ev: ButtonEvent) => {
         if (this.state.dialPadValue.length === 0) return;
         this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
 

@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { createRef, SyntheticEvent } from "react";
-import AccessibleButton from "../elements/AccessibleButton";
+import { createRef } from "react";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { ContextMenu, IProps as IContextMenuProps } from '../../structures/ContextMenu';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import Field from "../elements/Field";
@@ -43,7 +43,7 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
         };
     }
 
-    onDigitPress = (digit: string, ev: SyntheticEvent) => {
+    onDigitPress = (digit: string, ev: ButtonEvent) => {
         this.props.call.sendDtmfDigit(digit);
         this.setState({ value: this.state.value + digit });
 

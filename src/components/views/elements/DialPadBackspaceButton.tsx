@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import * as React from "react";
-import AccessibleButton from "./AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
 interface IProps {
     // Callback for when the button is pressed
-    onBackspacePress: (ev: React.SyntheticEvent) => void;
+    onBackspacePress: (ev: ButtonEvent) => void;
 }
 
 export default class DialPadBackspaceButton extends React.PureComponent<IProps> {
