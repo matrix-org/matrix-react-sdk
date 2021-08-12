@@ -30,11 +30,11 @@ interface IButtonProps {
     kind: DialPadButtonKind;
     digit?: string;
     digitSubtext?: string;
-    onButtonPress: (string, object) => void;
+    onButtonPress: (digit: string, ev: React.SyntheticEvent) => void;
 }
 
 class DialPadButton extends React.PureComponent<IButtonProps> {
-    onClick = (ev: object) => {
+    onClick = (ev: React.SyntheticEvent) => {
         this.props.onButtonPress(this.props.digit, ev);
     };
 
@@ -54,10 +54,10 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
 }
 
 interface IProps {
-    onDigitPress: (string, object) => void;
+    onDigitPress: (digit: string, ev: React.SyntheticEvent) => void;
     hasDial: boolean;
-    onDeletePress?: (object) => void;
-    onDialPress?: (string) => void;
+    onDeletePress?: (ev: React.SyntheticEvent) => void;
+    onDialPress?: () => void;
 }
 
 @replaceableComponent("views.voip.DialPad")

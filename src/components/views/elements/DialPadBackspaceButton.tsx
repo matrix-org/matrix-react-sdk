@@ -19,7 +19,7 @@ import AccessibleButton from "./AccessibleButton";
 
 interface IProps {
     // Callback for when the button is pressed
-    onBackspacePress: (object) => void;
+    onBackspacePress: (ev: React.SyntheticEvent) => void;
 }
 
 export default class DialPadBackspaceButton extends React.PureComponent<IProps> {

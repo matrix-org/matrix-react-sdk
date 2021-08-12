@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 
 import { _t, _td } from "../../../languageHandler";
@@ -1284,7 +1284,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.setState({ dialPadValue: ev.currentTarget.value });
     };
 
-    private onDigitPress = (digit, ev) => {
+    private onDigitPress = (digit: string, ev: SyntheticEvent) => {
         this.setState({ dialPadValue: this.state.dialPadValue + digit });
 
         // Keep the number field focused so that keyboard entry is still available
@@ -1295,7 +1295,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
     };
 
-    private onDeletePress = (ev) => {
+    private onDeletePress = (ev: SyntheticEvent) => {
         if (this.state.dialPadValue.length === 0) return;
         this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
 

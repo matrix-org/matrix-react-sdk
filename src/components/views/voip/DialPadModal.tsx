@@ -57,7 +57,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         this.onDialPress();
     };
 
-    onDigitPress = (digit, ev) => {
+    onDigitPress = (digit: string, ev: React.SyntheticEvent) => {
         this.setState({ value: this.state.value + digit });
 
         // Keep the number field focused so that keyboard entry is still available.
@@ -68,7 +68,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         }
     };
 
-    onDeletePress = (ev) => {
+    onDeletePress = (ev: React.SyntheticEvent) => {
         if (this.state.value.length === 0) return;
         this.setState({ value: this.state.value.slice(0, -1) });
 
