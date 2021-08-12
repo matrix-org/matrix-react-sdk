@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628764410201,
+  "lastUpdate": 1628766132343,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16376,6 +16376,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1133.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fbc5729dafb08c5efc3690ba8d2d956e3dc5eb91",
+          "message": "Merge pull request #6590 from matrix-org/palid/fix/images-loading-ux\n\nMake loading encrypted images look snappier",
+          "timestamp": "2021-08-12T12:55:52+02:00",
+          "tree_id": "f20d742b4666297c9180feaddc5392cdc81cb7e4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fbc5729dafb08c5efc3690ba8d2d956e3dc5eb91"
+        },
+        "date": 1628766130582,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5464.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1463.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2000.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5508.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
