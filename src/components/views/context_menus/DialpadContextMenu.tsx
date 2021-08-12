@@ -59,6 +59,13 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
         this.props.onFinished();
     };
 
+    onKeyDown = (ev) => {
+        // Prevent Backspace and Delete keys from functioning in the entry field
+        if (ev.code === "Backspace" || ev.code === "Delete") {
+            ev.preventDefault();
+        }
+    };
+
     onChange = (ev) => {
         this.setState({ value: ev.target.value });
     };
@@ -75,6 +82,7 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
                         className="mx_DialPadContextMenu_dialled"
                         value={this.state.value}
                         autoFocus={true}
+                        onKeyDown={this.onKeyDown}
                         onChange={this.onChange}
                     />
                 </div>
