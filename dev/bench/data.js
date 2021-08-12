@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628780435564,
+  "lastUpdate": 1628781273959,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16520,6 +16520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4760.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1a1a76e2d712a8dbda7d8710e590af065b100cfb",
+          "message": "Merge pull request #6606 from SimonBrandner/fix/toast-colors\n\nFix toast colors",
+          "timestamp": "2021-08-12T16:09:03+01:00",
+          "tree_id": "b965c1fa3955881924b819afbdaf4d8a7cf05e95",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1a1a76e2d712a8dbda7d8710e590af065b100cfb"
+        },
+        "date": 1628781271878,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5786.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1194.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1778.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4538.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
