@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628779190508,
+  "lastUpdate": 1628780435564,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16472,6 +16472,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4440,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "772b8fb3faca3c6088dd85a7a2ffce435038b2cc",
+          "message": "Merge pull request #6593 from SimonBrandner/fix/correct-button\n\nUse the correct button component for the Call View sidebar button",
+          "timestamp": "2021-08-12T08:54:53-06:00",
+          "tree_id": "8de5bef5b0c1a6eb74b3fc81cba6141ad3f1744d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/772b8fb3faca3c6088dd85a7a2ffce435038b2cc"
+        },
+        "date": 1628780433461,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5176.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1253.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1909.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4760.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
