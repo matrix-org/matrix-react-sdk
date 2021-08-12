@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628766132343,
+  "lastUpdate": 1628779190508,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16424,6 +16424,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5508.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "adce43600d89d5dd809acbe38906535586c5456f",
+          "message": "Update link to matrix-js-sdk CONTRIBUTING file (#6557)",
+          "timestamp": "2021-08-12T15:34:33+01:00",
+          "tree_id": "21fdb7605863ff706077b36af4dfb36963a9fc06",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/adce43600d89d5dd809acbe38906535586c5456f"
+        },
+        "date": 1628779189069,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4364.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1148.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1815.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4440,
             "unit": "ms",
             "extra": "type: measure"
           }
