@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628844646871,
+  "lastUpdate": 1628866039508,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16700,6 +16700,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5288.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "20ac54f3e702f6dca4aba3fe21a1c3226d2d7960",
+          "message": "Merge pull request #6609 from SimonBrandner/feature/left-align-call-tiles\n\nLeft align call tiles",
+          "timestamp": "2021-08-13T15:41:28+01:00",
+          "tree_id": "4521a7a5b9df67e271a752062ca0ec3bf0a588b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/20ac54f3e702f6dca4aba3fe21a1c3226d2d7960"
+        },
+        "date": 1628866037448,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5329,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1178.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1836.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4830.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
