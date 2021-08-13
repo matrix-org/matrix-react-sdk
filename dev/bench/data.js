@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628871257767,
+  "lastUpdate": 1628873734921,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16892,6 +16892,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4546.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "65eedd00b08a9fd6f634654d1ac467566deac73a",
+          "message": "Merge pull request #6611 from SimonBrandner/fix/held-call-pip\n\nFix PiP of held calls",
+          "timestamp": "2021-08-13T17:50:26+01:00",
+          "tree_id": "4c4d1de84ee60cadd229a1590344537757ee8d7d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/65eedd00b08a9fd6f634654d1ac467566deac73a"
+        },
+        "date": 1628873733559,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4603.6999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1099.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1846.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4519.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
