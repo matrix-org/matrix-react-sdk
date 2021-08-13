@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628866039508,
+  "lastUpdate": 1628866657664,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16748,6 +16748,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4830.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26d5b937609d12053476020d43abfcfbcf016080",
+          "message": "Merge pull request #6610 from SimonBrandner/feature/add-more-call-states\n\nAdd new call tile states",
+          "timestamp": "2021-08-13T08:51:31-06:00",
+          "tree_id": "5c8ef22004bfb99842d5c2d421b2d3a4a3532b48",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26d5b937609d12053476020d43abfcfbcf016080"
+        },
+        "date": 1628866655520,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4797.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1305.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1964.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4841.399999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
