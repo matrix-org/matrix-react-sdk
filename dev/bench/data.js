@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628866657664,
+  "lastUpdate": 1628870450044,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16796,6 +16796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4841.399999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "df282807b1606189287b8fcfeeb1703812139009",
+          "message": "Merge pull request #5659 from matrix-org/t3chguy/a11y/composer-list-autocomplete",
+          "timestamp": "2021-08-13T16:55:46+01:00",
+          "tree_id": "68b1be4aba02a5dcf5deca9b2a7bbf639d30a0f8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/df282807b1606189287b8fcfeeb1703812139009"
+        },
+        "date": 1628870448467,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4741.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1109.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1942.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4532.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
