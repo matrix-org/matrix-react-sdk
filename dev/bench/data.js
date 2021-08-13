@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628792692791,
+  "lastUpdate": 1628844646871,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16652,6 +16652,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4696.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ebc7d9ee1a7592514070443e0384bf0f9062dc43",
+          "message": "Merge pull request #6556 from SimonBrandner/feature/narrow-voip-tiles/18398\n\nFix call tile behaviour on narrow layouts",
+          "timestamp": "2021-08-13T09:44:29+01:00",
+          "tree_id": "43b973e8e7bbf420fbe45603da7a30f8c80eba05",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ebc7d9ee1a7592514070443e0384bf0f9062dc43"
+        },
+        "date": 1628844644725,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5894.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1434.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1878.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5288.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
