@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628870450044,
+  "lastUpdate": 1628871257767,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16844,6 +16844,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4532.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "da944b2c6bf5d9cb52f7e77a23f5d7f0f83d0bfb",
+          "message": "Merge pull request #6323 from matrix-org/t3chguy/ts/12\n\nConvert SearchResult, InteractiveAuth, PushProcessor and Scheduler to TS",
+          "timestamp": "2021-08-13T10:08:58-06:00",
+          "tree_id": "5c517ef65d7e7b0e7c0985efd1c0e2053dbd3070",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/da944b2c6bf5d9cb52f7e77a23f5d7f0f83d0bfb"
+        },
+        "date": 1628871255721,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4573.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1182.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1889.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4546.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
