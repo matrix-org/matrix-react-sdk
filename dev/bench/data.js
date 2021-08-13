@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628873734921,
+  "lastUpdate": 1628875958897,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16940,6 +16940,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4519.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1842cd1688e82add6d4796e483ce6eac1b3f1b71",
+          "message": "Merge pull request #6613 from matrix-org/dbkr/crosssigningpanel_ts\n\nConvert CrossSigningPanel to TS",
+          "timestamp": "2021-08-13T18:27:34+01:00",
+          "tree_id": "5cce45a798ee8ca08096c581bef482601cdd4f95",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1842cd1688e82add6d4796e483ce6eac1b3f1b71"
+        },
+        "date": 1628875957456,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4487,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1057.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1784.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4442.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
