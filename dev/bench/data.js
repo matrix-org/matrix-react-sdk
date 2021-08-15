@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1628875958897,
+  "lastUpdate": 1629012349643,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -16988,6 +16988,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4442.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7b72931c42b7afa3c36c799ebf7f3c4f3323ab64",
+          "message": "Merge pull request #6422 from libexus/i18n-bracket-fix\n\nRemove misplaced bracket in a translation string",
+          "timestamp": "2021-08-15T09:20:00+02:00",
+          "tree_id": "66ad2b4c8c6b4b224fb4641787fc543914d1a3e7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7b72931c42b7afa3c36c799ebf7f3c4f3323ab64"
+        },
+        "date": 1629012348519,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5402.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1386.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1867.5999999998603,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4811.59999999986,
             "unit": "ms",
             "extra": "type: measure"
           }
