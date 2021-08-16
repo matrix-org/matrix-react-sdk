@@ -280,7 +280,13 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
             /> : null;
 
         return (
-            <li {...otherProps} className={itemClasses} ref={innerRef} aria-expanded={!collapsed} role="treeitem">
+            <li
+                {...otherProps}
+                className={itemClasses}
+                ref={innerRef}
+                aria-expanded={!this.state.collapsed}
+                role="treeitem"
+            >
                 <SpaceButton
                     space={space}
                     className={isInvite ? "mx_SpaceButton_invite" : undefined}
