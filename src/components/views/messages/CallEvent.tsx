@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef } from 'react';
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { _t, _td } from '../../../languageHandler';
@@ -25,7 +25,9 @@ import { CallErrorCode, CallState } from 'matrix-js-sdk/src/webrtc/call';
 import InfoTooltip, { InfoTooltipKind } from '../elements/InfoTooltip';
 import classNames from 'classnames';
 import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { formatCallTime } from "../../../DateUtils";
+
+const MAX_NON_NARROW_WIDTH = 400 / 70 * 100;
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -35,6 +37,7 @@ interface IProps {
 interface IState {
     callState: CallState | CustomCallState;
     silenced: boolean;
+    narrow: boolean;
 }
 
 const TEXTUAL_STATES: Map<CallState | CustomCallState, string> = new Map([
@@ -42,25 +45,41 @@ const TEXTUAL_STATES: Map<CallState | CustomCallState, string> = new Map([
     [CallState.Connecting, _td("Connecting")],
 ]);
 
-export default class CallEvent extends React.Component<IProps, IState> {
+export default class CallEvent extends React.PureComponent<IProps, IState> {
+    private wrapperElement = createRef<HTMLDivElement>();
+    private resizeObserver: ResizeObserver;
+
     constructor(props: IProps) {
         super(props);
 
         this.state = {
             callState: this.props.callEventGrouper.state,
             silenced: false,
+            narrow: false,
         };
     }
 
     componentDidMount() {
         this.props.callEventGrouper.addListener(CallEventGrouperEvent.StateChanged, this.onStateChanged);
         this.props.callEventGrouper.addListener(CallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
+
+        this.resizeObserver = new ResizeObserver(this.resizeObserverCallback);
+        this.resizeObserver.observe(this.wrapperElement.current);
     }
 
     componentWillUnmount() {
         this.props.callEventGrouper.removeListener(CallEventGrouperEvent.StateChanged, this.onStateChanged);
         this.props.callEventGrouper.removeListener(CallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
+
+        this.resizeObserver.disconnect();
     }
+
+    private resizeObserverCallback = (entries: ResizeObserverEntry[]): void => {
+        const wrapperElementEntry = entries.find((entry) => entry.target === this.wrapperElement.current);
+        if (!wrapperElementEntry) return;
+
+        this.setState({ narrow: wrapperElementEntry.contentRect.width < MAX_NON_NARROW_WIDTH });
+    };
 
     private onSilencedChanged = (newState) => {
         this.setState({ silenced: newState });
@@ -82,21 +101,32 @@ export default class CallEvent extends React.Component<IProps, IState> {
         );
     }
 
+    private renderSilenceIcon(): JSX.Element {
+        const silenceClass = classNames({
+            "mx_CallEvent_iconButton": true,
+            "mx_CallEvent_unSilence": this.state.silenced,
+            "mx_CallEvent_silence": !this.state.silenced,
+        });
+
+        return (
+            <AccessibleTooltipButton
+                className={silenceClass}
+                onClick={this.props.callEventGrouper.toggleSilenced}
+                title={this.state.silenced ? _t("Sound on") : _t("Silence call")}
+            />
+        );
+    }
+
     private renderContent(state: CallState | CustomCallState): JSX.Element {
         if (state === CallState.Ringing) {
-            const silenceClass = classNames({
-                "mx_CallEvent_iconButton": true,
-                "mx_CallEvent_unSilence": this.state.silenced,
-                "mx_CallEvent_silence": !this.state.silenced,
-            });
+            let silenceIcon;
+            if (!this.state.narrow) {
+                silenceIcon = this.renderSilenceIcon();
+            }
 
             return (
                 <div className="mx_CallEvent_content">
-                    <AccessibleTooltipButton
-                        className={silenceClass}
-                        onClick={this.props.callEventGrouper.toggleSilenced}
-                        title={this.state.silenced ? _t("Sound on"): _t("Silence call")}
-                    />
+                    { silenceIcon }
                     <AccessibleButton
                         className="mx_CallEvent_content_button mx_CallEvent_content_button_reject"
                         onClick={this.props.callEventGrouper.rejectCall}
@@ -117,14 +147,12 @@ export default class CallEvent extends React.Component<IProps, IState> {
         if (state === CallState.Ended) {
             const hangupReason = this.props.callEventGrouper.hangupReason;
             const gotRejected = this.props.callEventGrouper.gotRejected;
-            const rejectParty = this.props.callEventGrouper.rejectParty;
 
             if (gotRejected) {
-                const weDeclinedCall = MatrixClientPeg.get().getUserId() === rejectParty;
                 return (
                     <div className="mx_CallEvent_content">
-                        { weDeclinedCall ? _t("You declined this call") : _t("They declined this call") }
-                        { this.renderCallBackButton(weDeclinedCall ? _t("Call back") : _t("Call again")) }
+                        { _t("Call declined") }
+                        { this.renderCallBackButton(_t("Call back")) }
                     </div>
                 );
             } else if (([CallErrorCode.UserHangup, "user hangup"].includes(hangupReason) || !hangupReason)) {
@@ -134,16 +162,21 @@ export default class CallEvent extends React.Component<IProps, IState> {
                 // https://github.com/vector-im/riot-android/issues/2623
                 // Also the correct hangup code as of VoIP v1 (with underscore)
                 // Also, if we don't have a reason
+                const duration = this.props.callEventGrouper.duration;
+                let text = _t("Call ended");
+                if (duration) {
+                    text += " • " + formatCallTime(duration);
+                }
                 return (
                     <div className="mx_CallEvent_content">
-                        { _t("This call has ended") }
+                        { text }
                     </div>
                 );
             } else if (hangupReason === CallErrorCode.InviteTimeout) {
                 return (
                     <div className="mx_CallEvent_content">
-                        { _t("They didn't pick up") }
-                        { this.renderCallBackButton(_t("Call again")) }
+                        { _t("No answer") }
+                        { this.renderCallBackButton(_t("Call back")) }
                     </div>
                 );
             }
@@ -166,7 +199,7 @@ export default class CallEvent extends React.Component<IProps, IState> {
             } else if (hangupReason === CallErrorCode.UserBusy) {
                 reason = _t("The user you called is busy.");
             } else {
-                reason = _t('Unknown failure: %(reason)s)', { reason: hangupReason });
+                reason = _t('Unknown failure: %(reason)s', { reason: hangupReason });
             }
 
             return (
@@ -176,7 +209,8 @@ export default class CallEvent extends React.Component<IProps, IState> {
                         className="mx_CallEvent_content_tooltip"
                         kind={InfoTooltipKind.Warning}
                     />
-                    { _t("This call has failed") }
+                    { _t("Connection failed") }
+                    { this.renderCallBackButton(_t("Retry")) }
                 </div>
             );
         }
@@ -190,7 +224,7 @@ export default class CallEvent extends React.Component<IProps, IState> {
         if (state === CustomCallState.Missed) {
             return (
                 <div className="mx_CallEvent_content">
-                    { _t("You missed this call") }
+                    { _t("Missed call") }
                     { this.renderCallBackButton(_t("Call back")) }
                 </div>
             );
@@ -211,35 +245,41 @@ export default class CallEvent extends React.Component<IProps, IState> {
         const callState = this.state.callState;
         const hangupReason = this.props.callEventGrouper.hangupReason;
         const content = this.renderContent(callState);
-        const className = classNames({
-            mx_CallEvent: true,
+        const className = classNames("mx_CallEvent", {
             mx_CallEvent_voice: isVoice,
             mx_CallEvent_video: !isVoice,
-            mx_CallEvent_missed: (
-                callState === CustomCallState.Missed ||
-                (callState === CallState.Ended && hangupReason === CallErrorCode.InviteTimeout)
-            ),
+            mx_CallEvent_narrow: this.state.narrow,
+            mx_CallEvent_missed: callState === CustomCallState.Missed,
+            mx_CallEvent_noAnswer: callState === CallState.Ended && hangupReason === CallErrorCode.InviteTimeout,
+            mx_CallEvent_rejected: callState === CallState.Ended && this.props.callEventGrouper.gotRejected,
         });
+        let silenceIcon;
+        if (this.state.narrow && this.state.callState === CallState.Ringing) {
+            silenceIcon = this.renderSilenceIcon();
+        }
 
         return (
-            <div className={className}>
-                <div className="mx_CallEvent_info">
-                    <MemberAvatar
-                        member={event.sender}
-                        width={32}
-                        height={32}
-                    />
-                    <div className="mx_CallEvent_info_basic">
-                        <div className="mx_CallEvent_sender">
-                            { sender }
-                        </div>
-                        <div className="mx_CallEvent_type">
-                            <div className="mx_CallEvent_type_icon" />
-                            { callType }
+            <div className="mx_CallEvent_wrapper" ref={this.wrapperElement}>
+                <div className={className}>
+                    { silenceIcon }
+                    <div className="mx_CallEvent_info">
+                        <MemberAvatar
+                            member={event.sender}
+                            width={32}
+                            height={32}
+                        />
+                        <div className="mx_CallEvent_info_basic">
+                            <div className="mx_CallEvent_sender">
+                                { sender }
+                            </div>
+                            <div className="mx_CallEvent_type">
+                                <div className="mx_CallEvent_type_icon" />
+                                { callType }
+                            </div>
                         </div>
                     </div>
+                    { content }
                 </div>
-                { content }
             </div>
         );
     }
