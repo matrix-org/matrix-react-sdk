@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629012349643,
+  "lastUpdate": 1629104457774,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17036,6 +17036,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4811.59999999986,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b2e9b8916932e099c1bbfc471ec4019bc76bfe20",
+          "message": "Merge pull request #6617 from SimonBrandner/fix/long-names-call-toast\n\nFix long display names in call toasts",
+          "timestamp": "2021-08-16T09:54:29+01:00",
+          "tree_id": "c0efc86e4ba99249feb4728e083cd104bdaa336b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b2e9b8916932e099c1bbfc471ec4019bc76bfe20"
+        },
+        "date": 1629104455482,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1487.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1878.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4900.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
