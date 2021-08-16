@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629104457774,
+  "lastUpdate": 1629113631334,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17084,6 +17084,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4900.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "be18178015e80c94495cdbc74cd795ea116f67a8",
+          "message": "Merge pull request #6614 from SimonBrandner/fix/glare/18538\n\nFix glare related regressions",
+          "timestamp": "2021-08-16T12:28:10+01:00",
+          "tree_id": "07a833536cb7b60db1d9a8e2b5c663c88fbbd77a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/be18178015e80c94495cdbc74cd795ea116f67a8"
+        },
+        "date": 1629113629970,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3764.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1150,
             "unit": "ms",
             "extra": "type: measure"
           }
