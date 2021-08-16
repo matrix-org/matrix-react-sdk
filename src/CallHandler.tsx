@@ -86,7 +86,7 @@ import { randomUppercaseString, randomLowercaseString } from "matrix-js-sdk/src/
 import EventEmitter from 'events';
 import SdkConfig from './SdkConfig';
 import { ensureDMExists, findDMForUser } from './createRoom';
-import { IPushRule, RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
+import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore';
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
@@ -484,7 +484,7 @@ export default class CallHandler extends EventEmitter {
             switch (newState) {
                 case CallState.Ringing: {
                     const incomingCallPushRule = (
-                        new PushProcessor(MatrixClientPeg.get()).getPushRuleById(RuleId.IncomingCall) as IPushRule
+                        new PushProcessor(MatrixClientPeg.get()).getPushRuleById(RuleId.IncomingCall)
                     );
                     const pushRuleEnabled = incomingCallPushRule?.enabled;
                     const tweakSetToRing = incomingCallPushRule?.actions.some((action: Tweaks) => (
@@ -509,13 +509,17 @@ export default class CallHandler extends EventEmitter {
                     this.removeCallForRoom(mappedRoomId);
                     if (oldState === CallState.InviteSent && call.hangupParty === CallParty.Remote) {
                         this.play(AudioID.Busy);
+
+                        // Don't show a modal when we got rejected/the call was hung up
+                        if (!hangupReason || [CallErrorCode.UserHangup, "user hangup"].includes(hangupReason)) break;
+
                         let title;
                         let description;
                         // TODO: We should either do away with these or figure out a copy for each code (expect user_hangup...)
                         if (call.hangupReason === CallErrorCode.UserBusy) {
                             title = _t("User Busy");
                             description = _t("The user you called is busy.");
-                        } else if (hangupReason && ![CallErrorCode.UserHangup, "user hangup"].includes(hangupReason)) {
+                        } else {
                             title = _t("Call Failed");
                             description = _t("The call could not be established");
                         }

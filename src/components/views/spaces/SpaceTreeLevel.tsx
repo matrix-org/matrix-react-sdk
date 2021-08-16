@@ -77,11 +77,17 @@ export const SpaceButton: React.FC<IButtonProps> = ({
 
     let notifBadge;
     if (notificationState) {
+        let ariaLabel = _t("Jump to first unread room.");
+        if (space?.getMyMembership() === "invite") {
+            ariaLabel = _t("Jump to first invite.");
+        }
+
         notifBadge = <div className="mx_SpacePanel_badgeContainer">
             <NotificationBadge
                 onClick={() => SpaceStore.instance.setActiveRoomInSpace(space || null)}
                 forceCount={false}
                 notification={notificationState}
+                aria-label={ariaLabel}
             />
         </div>;
     }
@@ -107,7 +113,6 @@ export const SpaceButton: React.FC<IButtonProps> = ({
             onClick={onClick}
             onContextMenu={openMenu}
             forceHide={!isNarrow || menuDisplayed}
-            role="treeitem"
             inputRef={handle}
         >
             { children }
@@ -275,7 +280,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
             /> : null;
 
         return (
-            <li {...otherProps} className={itemClasses} ref={innerRef}>
+            <li {...otherProps} className={itemClasses} ref={innerRef} aria-expanded={!collapsed} role="treeitem">
                 <SpaceButton
                     space={space}
                     className={isInvite ? "mx_SpaceButton_invite" : undefined}
@@ -287,9 +292,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     avatarSize={isNested ? 24 : 32}
                     onClick={this.onClick}
                     onKeyDown={this.onKeyDown}
-                    aria-expanded={!this.state.collapsed}
-                    ContextMenuComponent={this.props.space.getMyMembership() === "join"
-                        ? SpaceContextMenu : undefined}
+                    ContextMenuComponent={this.props.space.getMyMembership() === "join" ? SpaceContextMenu : undefined}
                 >
                     { toggleCollapseButton }
                 </SpaceButton>
@@ -315,7 +318,7 @@ const SpaceTreeLevel: React.FC<ITreeLevelProps> = ({
     isPanelCollapsed,
     parents,
 }) => {
-    return <ul className="mx_SpaceTreeLevel">
+    return <ul className="mx_SpaceTreeLevel" role="group">
         { spaces.map(s => {
             return (<SpaceItem
                 key={s.roomId}
