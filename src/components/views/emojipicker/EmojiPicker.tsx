@@ -280,7 +280,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                             kind="link"
                             onClick={() => this.reactWith(this.state.filter)}
                         >
-                            React with "{ this.state.filter }"
+                            { _t('React with "%(reaction)s"', { reaction: this.state.filter }) }
                         </AccessibleButton>
                 }
                 { this.state.previewEmoji || !this.props.showQuickReactions

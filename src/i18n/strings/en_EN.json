@@ -2054,6 +2054,7 @@
     "Objects": "Objects",
     "Symbols": "Symbols",
     "Flags": "Flags",
+    "React with \"%(reaction)s\"": "React with \"%(reaction)s\"",
     "Categories": "Categories",
     "Quick Reactions": "Quick Reactions",
     "Cancel search": "Cancel search",
