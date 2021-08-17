@@ -133,7 +133,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
         }];
     }
 
-    private onScroll = () => {
+    private onScroll = (): void => {
         const body = this.bodyRef.current;
         this.setState({
             scrollTop: body.scrollTop,
@@ -142,7 +142,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.updateVisibility();
     };
 
-    private updateVisibility = () => {
+    private updateVisibility = (): void => {
         const body = this.bodyRef.current;
         const rect = body.getBoundingClientRect();
         for (const cat of this.categories) {
@@ -169,14 +169,14 @@ class EmojiPicker extends React.Component<IProps, IState> {
         }
     };
 
-    private scrollToCategory = (category: string) => {
+    private scrollToCategory = (category: string): void => {
         this.bodyRef.current.querySelector(`[data-category-id="${category}"]`).scrollIntoView();
     };
 
-    private onChangeFilter = (filter: string) => {
+    private onChangeFilter = (filter: string): void => {
         const lcFilter = filter.toLowerCase().trim(); // filter is case insensitive
         for (const cat of this.categories) {
-            let emojis;
+            let emojis: IEmoji[];
             // If the new filter string includes the old filter string, we don't have to re-filter the whole dataset.
             if (lcFilter.includes(this.state.filter)) {
                 emojis = this.memoizedDataByCategory[cat.id];
@@ -202,36 +202,36 @@ class EmojiPicker extends React.Component<IProps, IState> {
             emoji.unicode.split(ZERO_WIDTH_JOINER).includes(filter);
     };
 
-    private onEnterFilter = () => {
+    private onEnterFilter = (): void => {
         const btn = this.bodyRef.current.querySelector<HTMLButtonElement>(".mx_EmojiPicker_item");
         if (btn) {
             btn.click();
         }
     };
 
-    private onHoverEmoji = (emoji: IEmoji) => {
+    private onHoverEmoji = (emoji: IEmoji): void => {
         this.setState({
             previewEmoji: emoji,
         });
     };
 
-    private onHoverEmojiEnd = (emoji: IEmoji) => {
+    private onHoverEmojiEnd = (_emoji: IEmoji): void => {
         this.setState({
             previewEmoji: null,
         });
     };
 
-    private onClickEmoji = (emoji: IEmoji) => {
+    private onClickEmoji = (emoji: IEmoji): void => {
         if (this.props.onChoose(emoji.unicode) !== false) {
             recent.add(emoji.unicode);
         }
     };
 
-    private reactWith = (reaction: string) => {
+    private reactWith = (reaction: string): void => {
         this.props.onChoose(reaction);
     };
 
-    private static categoryHeightForEmojiCount(count: number) {
+    private static categoryHeightForEmojiCount(count: number): number {
         if (count === 0) {
             return 0;
         }
