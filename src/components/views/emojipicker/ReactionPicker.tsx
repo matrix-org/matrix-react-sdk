@@ -113,6 +113,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
 
     render() {
         return <EmojiPicker
+            allowUnlisted={true}
             onChoose={this.onChoose}
             selectedEmojis={this.state.selectedEmojis}
             showQuickReactions={true}

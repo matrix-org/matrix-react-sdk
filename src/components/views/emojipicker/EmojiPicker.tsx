@@ -36,6 +36,7 @@ export const EMOJIS_PER_ROW = 8;
 const ZERO_WIDTH_JOINER = "\u200D";
 
 interface IProps {
+    allowUnlisted?: boolean;
     selectedEmojis?: Set<string>;
     showQuickReactions?: boolean;
     onChoose(unicode: string): boolean;
@@ -275,7 +276,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                     }) }
                 </AutoHideScrollbar>
                 {
-                    (this.state.filter) &&
+                    (this.props.allowUnlisted && this.state.filter) &&
                         <AccessibleButton
                             kind="link"
                             onClick={() => this.reactWith(this.state.filter)}
