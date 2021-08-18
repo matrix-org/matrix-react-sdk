@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629284927328,
+  "lastUpdate": 1629293026566,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17480,6 +17480,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4597.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1066bef1b0f71220847b90c40460e912b42d6787",
+          "message": "Merge pull request #6625 from matrix-org/palid/fix/media-isEncrypted-undefined\n\nFix error on accessing encrypted media without keys",
+          "timestamp": "2021-08-18T15:17:55+02:00",
+          "tree_id": "50200972fc4412fde2271916243e42d7cadba262",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1066bef1b0f71220847b90c40460e912b42d6787"
+        },
+        "date": 1629293024290,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5337.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1264.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1851.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4816.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
