@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629284517080,
+  "lastUpdate": 1629284925485,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17396,6 +17396,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4848.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7616f3ae567cf148c5251f862a511a6ea092e3f5",
+          "message": "Merge pull request #6621 from SimonBrandner/fix/call-tile-spacing/18558\n\nFix vertical call tile spacing issues",
+          "timestamp": "2021-08-18T12:02:53+01:00",
+          "tree_id": "0419a06be6244068dffa6e17223d6d9b4e3c173a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7616f3ae567cf148c5251f862a511a6ea092e3f5"
+        },
+        "date": 1629284923870,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4985.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 983.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
