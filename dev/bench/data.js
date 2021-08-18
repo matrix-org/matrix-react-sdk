@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629284410101,
+  "lastUpdate": 1629284517080,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17348,6 +17348,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4674.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "24e3a91f6ff42409d8d342df23ecbee032b54b9f",
+          "message": "Merge pull request #6618 from SimonBrandner/fix/long-names-call-tiles\n\nFix long display names in call tiles",
+          "timestamp": "2021-08-18T11:56:09+01:00",
+          "tree_id": "03dbe4ffcd566f2774c9f04a78d92bdea78e32d3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/24e3a91f6ff42409d8d342df23ecbee032b54b9f"
+        },
+        "date": 1629284515558,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5958.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1308.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1922.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4848.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
