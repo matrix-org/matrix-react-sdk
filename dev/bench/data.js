@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629284394971,
+  "lastUpdate": 1629284410101,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17300,6 +17300,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4725.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a733d1604f410f4c7e98cf7dfa61c4862aa837c",
+          "message": "Merge pull request #6616 from SimonBrandner/fix/access-token-overflow\n\nAvoid access token overflow",
+          "timestamp": "2021-08-18T11:54:40+01:00",
+          "tree_id": "7b79c4622bc6e2bb07b21b45156bf5097e3d0029",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a733d1604f410f4c7e98cf7dfa61c4862aa837c"
+        },
+        "date": 1629284406907,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4649.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1257.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1968.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4674.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
