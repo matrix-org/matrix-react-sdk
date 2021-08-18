@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629293652023,
+  "lastUpdate": 1629304615176,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17624,6 +17624,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5156.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dbe463dc3354a2be9a8d79c2b21850177e36e9e8",
+          "message": "Merge pull request #6597 from matrix-org/sentry-rageshakes\n\nSentry rageshakes",
+          "timestamp": "2021-08-18T17:30:09+01:00",
+          "tree_id": "13f98d26e98a80ff9eac1ead016d58fbade8379d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dbe463dc3354a2be9a8d79c2b21850177e36e9e8"
+        },
+        "date": 1629304613039,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4895.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1424.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1919.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5060.100000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
