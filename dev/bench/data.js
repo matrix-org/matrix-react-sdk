@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629190093746,
+  "lastUpdate": 1629284394971,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17252,6 +17252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1202.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "946ae73e1d9b3824d1db280f313299433e0af071",
+          "message": "Merge pull request #6615 from SimonBrandner/fix/media-error\n\nProperly handle media errors",
+          "timestamp": "2021-08-18T11:54:08+01:00",
+          "tree_id": "fe427dc331ccb5a8d06727c12329c1e4d7b6f9d6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/946ae73e1d9b3824d1db280f313299433e0af071"
+        },
+        "date": 1629284393469,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5080.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1330.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1915.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4725.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
