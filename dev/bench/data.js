@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629293588386,
+  "lastUpdate": 1629293652023,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17576,6 +17576,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4840,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f68309f9966d6335fe5bf96c63898e194bf21ada",
+          "message": "Merge pull request #6630 from SimonBrandner/fix/filepanel-e2e-pagination/18415\n\nFix FilePanel pagination in E2EE rooms",
+          "timestamp": "2021-08-18T14:28:02+01:00",
+          "tree_id": "c86f08ce8e72584b731469db89dc0dcc6718e04a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f68309f9966d6335fe5bf96c63898e194bf21ada"
+        },
+        "date": 1629293649743,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5542,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1371.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1877.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5156.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
