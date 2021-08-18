@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629284925485,
+  "lastUpdate": 1629284927328,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17432,6 +17432,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 983.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5fa0908752ad5872c17436b4383ac34417acc83a",
+          "message": "Merge pull request #6624 from SimonBrandner/fix/call-tile-button/18565\n\nFix call tile buttons",
+          "timestamp": "2021-08-18T12:03:18+01:00",
+          "tree_id": "6116a81a6acf19a680b9b488551d2a39943dc7e8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5fa0908752ad5872c17436b4383ac34417acc83a"
+        },
+        "date": 1629284925143,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5754.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1161.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1882.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4597.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
