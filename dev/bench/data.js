@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629304615176,
+  "lastUpdate": 1629307199724,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17672,6 +17672,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5060.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "90a6f251c7bbd2d4a5e07a80ba58a00142435190",
+          "message": "Merge pull request #6627 from SimonBrandner/fix/voip\n\nProperly fix VoIP issues",
+          "timestamp": "2021-08-18T18:14:16+01:00",
+          "tree_id": "ba28b5d8d29258745d233fb4936cb5efd0a8e366",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/90a6f251c7bbd2d4a5e07a80ba58a00142435190"
+        },
+        "date": 1629307197408,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4959,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1324.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1707.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4673.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
