@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629293026566,
+  "lastUpdate": 1629293588386,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17528,6 +17528,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4816.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fabeb28444e424550903c9aff5273cb01b91aaa3",
+          "message": "Merge pull request #6631 from matrix-org/jryans/rename-netlify\n\nFix name of Netlify workflow",
+          "timestamp": "2021-08-18T14:27:16+01:00",
+          "tree_id": "fe63a370b8a2aef2caf49bc317b7e2601740aed3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fabeb28444e424550903c9aff5273cb01b91aaa3"
+        },
+        "date": 1629293586722,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5958.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1277.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1935.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4840,
             "unit": "ms",
             "extra": "type: measure"
           }
