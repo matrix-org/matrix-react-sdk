@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629307199724,
+  "lastUpdate": 1629359991871,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17720,6 +17720,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4673.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "36540a99b9e81c1465d55845950a2a88f9ea189e",
+          "message": "Merge pull request #6635 from matrix-org/palid/dx/typescriptify-password-reset\n\nMigrate PasswordReset.js to typescript",
+          "timestamp": "2021-08-19T09:54:31+02:00",
+          "tree_id": "cf3be4a0e21c4e6ee4b4e9de6264de7d45f6e34c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/36540a99b9e81c1465d55845950a2a88f9ea189e"
+        },
+        "date": 1629359990370,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4395.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1199.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1951.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4510.5,
             "unit": "ms",
             "extra": "type: measure"
           }
