@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629395585929,
+  "lastUpdate": 1629404262925,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18008,6 +18008,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4858.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3bcb57d0708d915863ce658a28834954b78ad998",
+          "message": "Merge pull request #6640 from SimonBrandner/feature/persist-search-member-list/18613\n\nRemember last `MemberList` search query per-room",
+          "timestamp": "2021-08-19T14:11:37-06:00",
+          "tree_id": "e083bb32642161d23351a2e7a265969d67d5a23f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3bcb57d0708d915863ce658a28834954b78ad998"
+        },
+        "date": 1629404261389,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4640.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1131.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1846.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4521,
             "unit": "ms",
             "extra": "type: measure"
           }
