@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629359991871,
+  "lastUpdate": 1629363328565,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17768,6 +17768,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4510.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "74ff93080d189be9f799c67ac536ee9116826033",
+          "message": "Merge pull request #6634 from matrix-org/palid/fix/less-blurhash-on-image-load\n\nMake encrypted images loading even more pleasant",
+          "timestamp": "2021-08-19T10:49:20+02:00",
+          "tree_id": "87ed25e42a98fac7fc3b360bb4deef7adb4d10e4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/74ff93080d189be9f799c67ac536ee9116826033"
+        },
+        "date": 1629363326262,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4791.399999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1303.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2001.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5072.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
