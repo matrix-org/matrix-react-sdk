@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629363939883,
+  "lastUpdate": 1629365764831,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17912,6 +17912,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4555.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5a1633d53cac49c9f5db226edb2996eb14544cb9",
+          "message": "Merge pull request #6638 from matrix-org/palid/dx/typescriptify-password-reset\n\nAdd missing types",
+          "timestamp": "2021-08-19T11:30:11+02:00",
+          "tree_id": "22399aa4539bb81736bce4775ce362a14e7a17eb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5a1633d53cac49c9f5db226edb2996eb14544cb9"
+        },
+        "date": 1629365762757,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5376.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1119.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1699.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4820.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
