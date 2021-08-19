@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629365764831,
+  "lastUpdate": 1629395585929,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17960,6 +17960,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4820.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "573a68a7655b3c8427208514b27307a42721e63a",
+          "message": "Merge pull request #6645 from matrix-org/palid/fix/backdrop-panel-empty-img\n\nFix backdrop panel empty image",
+          "timestamp": "2021-08-19T19:46:47+02:00",
+          "tree_id": "4b11d6607ee2960b6214870f2ba2cc93fe3e606c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/573a68a7655b3c8427208514b27307a42721e63a"
+        },
+        "date": 1629395583888,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4838.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1188.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1866.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4858.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
