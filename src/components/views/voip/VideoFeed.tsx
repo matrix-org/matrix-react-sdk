@@ -23,6 +23,7 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import MemberAvatar from "../avatars/MemberAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+import FeedContextMenu from "../context_menus/FeedContextMenu";
 
 interface IProps {
     call: MatrixCall;
@@ -45,6 +46,8 @@ interface IProps {
 interface IState {
     audioMuted: boolean;
     videoMuted: boolean;
+    audioLocallyMuted: boolean;
+    contextMenuPosition: boolean;
 }
 
 @replaceableComponent("views.voip.VideoFeed")
@@ -57,6 +60,8 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         this.state = {
             audioMuted: this.props.feed.isAudioMuted(),
             videoMuted: this.props.feed.isVideoMuted(),
+            audioLocallyMuted: this.props.feed.isAudioLocallyMuted(),
+            contextMenuPosition: null,
         };
     }
 
@@ -168,6 +173,26 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         }
     };
 
+    private onContextMenuClosed = (): void => {
+        this.setState({ contextMenuPosition: false });
+    };
+
+    private onLocalMuteClicked = (): void => {
+        const audioLocallyMuted = !this.state.audioLocallyMuted;
+        this.setState({ audioLocallyMuted });
+        this.props.feed.setLocallyMuted(audioLocallyMuted);
+    };
+
+    private renderContextMenu(): JSX.Element {
+        return (
+            <FeedContextMenu
+                onFinished={this.onContextMenuClosed}
+                onMuteClicked={this.onLocalMuteClicked}
+                muted={this.state.audioLocallyMuted}
+            />
+        );
+    }
+
     render() {
         const { pipMode, primary, feed } = this.props;
 
@@ -221,6 +246,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             <div className={wrapperClasses}>
                 { micIcon }
                 { content }
+                { this.renderContextMenu() }
             </div>
         );
     }
