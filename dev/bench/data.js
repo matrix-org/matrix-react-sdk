@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629363328565,
+  "lastUpdate": 1629363341715,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17816,6 +17816,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5072.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "603f9921001874803a68fe3b4652214d17b2fcab",
+          "message": "Merge pull request #6632 from matrix-org/palid/feature/fix-stuck-jitsi-pip\n\nFix jitsi widget sometimes being permanently stuck in the bottom-right corner",
+          "timestamp": "2021-08-19T10:49:57+02:00",
+          "tree_id": "24c9ffea152ab3baa236e9d872f19ba8e008c7fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/603f9921001874803a68fe3b4652214d17b2fcab"
+        },
+        "date": 1629363340543,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5179.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1258.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1810.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4675.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
