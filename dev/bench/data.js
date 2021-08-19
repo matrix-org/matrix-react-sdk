@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629363341715,
+  "lastUpdate": 1629363939883,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -17864,6 +17864,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4675.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "939874167ad0a3f7816935ef21c790dd481c04c2",
+          "message": "Merge pull request #6262 from matrix-org/gsouquet/fix-backdrop-filter\n\nMove backdrop filter to a canvas based solution",
+          "timestamp": "2021-08-19T10:59:49+02:00",
+          "tree_id": "e4d6b994143bd333e84a2a8e42ad88258ed923cd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/939874167ad0a3f7816935ef21c790dd481c04c2"
+        },
+        "date": 1629363937788,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4419.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1042.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1660.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4555.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
