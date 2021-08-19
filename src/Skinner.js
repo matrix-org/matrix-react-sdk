@@ -23,10 +23,10 @@ class Skinner {
         if (!name) throw new Error(`Invalid component name: ${name}`);
         if (this.components === null) {
             throw new Error(
-                `Attempted to get a component (${name}) before a skin has been loaded.`+
-                " This is probably because either:"+
-                " a) Your app has not called sdk.loadSkin(), or"+
-                " b) A component has called getComponent at the root level",
+                `Attempted to get a component (${name}) before a skin has been loaded.` +
+                    " This is probably because either:" +
+                    " a) Your app has not called sdk.loadSkin(), or" +
+                    " b) A component has called getComponent at the root level",
             );
         }
 
@@ -36,7 +36,7 @@ class Skinner {
             // XXX: Temporarily also try 'views.' as we're currently
             // leaving the 'views.' off views.
             if (!comp) {
-                comp = components['views.' + name];
+                comp = components["views." + name];
             }
             return comp;
         };
@@ -51,9 +51,11 @@ class Skinner {
         }
 
         // components have to be functions or forwardRef objects with a render function.
-        const validType = typeof comp === 'function' || comp.render;
+        const validType = typeof comp === "function" || comp.render;
         if (!validType) {
-            throw new Error(`Not a valid component: ${name} (type = ${typeof(comp)}).`);
+            throw new Error(
+                `Not a valid component: ${name} (type = ${typeof comp}).`,
+            );
         }
         return comp;
     }
@@ -61,8 +63,9 @@ class Skinner {
     load(skinObject) {
         if (this.components !== null) {
             throw new Error(
-                "Attempted to load a skin while a skin is already loaded"+
-                "If you want to change the active skin, call resetSkin first");
+                "Attempted to load a skin while a skin is already loaded" +
+                    "If you want to change the active skin, call resetSkin first",
+            );
         }
         this.components = {};
         const compKeys = Object.keys(skinObject.components);
@@ -73,7 +76,8 @@ class Skinner {
 
         // Now that we have a skin, load our components too
         const idx = require("./component-index");
-        if (!idx || !idx.components) throw new Error("Invalid react-sdk component index");
+        if (!idx || !idx.components)
+            throw new Error("Invalid react-sdk component index");
         for (const c in idx.components) {
             if (!this.components[c]) this.components[c] = idx.components[c];
         }
@@ -82,10 +86,12 @@ class Skinner {
     addComponent(name, comp) {
         let slot = name;
         if (comp.replaces !== undefined) {
-            if (comp.replaces.indexOf('.') > -1) {
+            if (comp.replaces.indexOf(".") > -1) {
                 slot = comp.replaces;
             } else {
-                slot = name.substr(0, name.lastIndexOf('.') + 1) + comp.replaces.split('.').pop();
+                slot =
+                    name.substr(0, name.lastIndexOf(".") + 1) +
+                    comp.replaces.split(".").pop();
             }
         }
         this.components[slot] = comp;
@@ -109,4 +115,3 @@ if (global.mxSkinner === undefined) {
     global.mxSkinner = new Skinner();
 }
 export default global.mxSkinner;
-

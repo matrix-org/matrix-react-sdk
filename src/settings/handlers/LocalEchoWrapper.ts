@@ -47,14 +47,22 @@ export default class LocalEchoWrapper extends SettingsHandler {
         return this.handler.getValue(settingName, roomId);
     }
 
-    public setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public setValue(
+        settingName: string,
+        roomId: string,
+        newValue: any,
+    ): Promise<void> {
         if (!this.cache[settingName]) this.cache[settingName] = {};
         const bySetting = this.cache[settingName];
 
         const cacheRoomId = roomId ? roomId : "UNDEFINED"; // avoid weird keys
         bySetting[cacheRoomId] = newValue;
 
-        const handlerPromise = this.handler.setValue(settingName, roomId, newValue);
+        const handlerPromise = this.handler.setValue(
+            settingName,
+            roomId,
+            newValue,
+        );
         return Promise.resolve(handlerPromise).finally(() => {
             delete bySetting[cacheRoomId];
         });

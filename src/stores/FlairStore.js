@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventEmitter from 'events';
+import EventEmitter from "events";
 
 const BULK_REQUEST_DEBOUNCE_MS = 200;
 
@@ -87,25 +87,30 @@ class FlairStore extends EventEmitter {
         this._usersPending[userId].prom = new Promise((resolve, reject) => {
             this._usersPending[userId].resolve = resolve;
             this._usersPending[userId].reject = reject;
-        }).then((groups) => {
-            this._userGroups[userId] = groups;
-            setTimeout(() => {
-                delete this._userGroups[userId];
-            }, USER_GROUPS_CACHE_BUST_MS);
-            return this._userGroups[userId];
-        }).catch((err) => {
-            // Indicate whether the homeserver supports groups
-            if (err.errcode === 'M_UNRECOGNIZED') {
-                console.warn('Cannot display flair, server does not support groups');
-                groupSupport = false;
-                // Return silently to avoid spamming for non-supporting servers
-                return;
-            }
-            console.error('Could not get groups for user', userId, err);
-            throw err;
-        }).finally(() => {
-            delete this._usersInFlight[userId];
-        });
+        })
+            .then((groups) => {
+                this._userGroups[userId] = groups;
+                setTimeout(() => {
+                    delete this._userGroups[userId];
+                }, USER_GROUPS_CACHE_BUST_MS);
+                return this._userGroups[userId];
+            })
+            .catch((err) => {
+                // Indicate whether the homeserver supports groups
+                if (err.errcode === "M_UNRECOGNIZED") {
+                    console.warn(
+                        "Cannot display flair, server does not support groups",
+                    );
+                    groupSupport = false;
+                    // Return silently to avoid spamming for non-supporting servers
+                    return;
+                }
+                console.error("Could not get groups for user", userId, err);
+                throw err;
+            })
+            .finally(() => {
+                delete this._usersInFlight[userId];
+            });
 
         // This debounce will allow consecutive requests for the public groups of users that
         // are sent in intervals of < BULK_REQUEST_DEBOUNCE_MS to be batched and only requested
@@ -134,7 +139,9 @@ class FlairStore extends EventEmitter {
             users: [],
         };
         try {
-            resp = await matrixClient.getPublicisedGroups(Object.keys(this._usersInFlight));
+            resp = await matrixClient.getPublicisedGroups(
+                Object.keys(this._usersInFlight),
+            );
         } catch (err) {
             // Propagate the same error to all usersInFlight
             Object.keys(this._usersInFlight).forEach((userId) => {
@@ -148,7 +155,9 @@ class FlairStore extends EventEmitter {
         Object.keys(this._usersInFlight).forEach((userId) => {
             // The promise should always exist for userId, but do a null-check anyway
             if (!this._usersInFlight[userId]) return;
-            this._usersInFlight[userId].resolve(updatedUserGroups[userId] || []);
+            this._usersInFlight[userId].resolve(
+                updatedUserGroups[userId] || [],
+            );
         });
     }
 
@@ -186,14 +195,18 @@ class FlairStore extends EventEmitter {
         }
 
         // No request yet, start one
-        console.log('FlairStore: Request group profile of ' + groupId);
-        this._groupProfilesPromise[groupId] = matrixClient.getGroupProfile(groupId);
+        console.log("FlairStore: Request group profile of " + groupId);
+        this._groupProfilesPromise[groupId] =
+            matrixClient.getGroupProfile(groupId);
 
         let profile;
         try {
             profile = await this._groupProfilesPromise[groupId];
         } catch (e) {
-            console.log('FlairStore: Failed to get group profile for ' + groupId, e);
+            console.log(
+                "FlairStore: Failed to get group profile for " + groupId,
+                e,
+            );
             // Don't retry, but allow a retry when the profile is next requested
             delete this._groupProfilesPromise[groupId];
             return null;
@@ -209,8 +222,8 @@ class FlairStore extends EventEmitter {
 
         /// XXX: This is verging on recreating a third "Flux"-looking Store. We really
         /// should replace FlairStore with a Flux store and some async actions.
-        console.log('FlairStore: Emit updateGroupProfile for ' + groupId);
-        this.emit('updateGroupProfile');
+        console.log("FlairStore: Emit updateGroupProfile for " + groupId);
+        this.emit("updateGroupProfile");
 
         setTimeout(() => {
             this.refreshGroupProfile(matrixClient, groupId);

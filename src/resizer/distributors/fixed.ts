@@ -28,12 +28,23 @@ they have two methods:
         within the container bounding box. For internal use.
         This method usually ends up calling `resize` once the start offset is subtracted.
 */
-export default class FixedDistributor<C extends IConfig, I extends ResizeItem<any> = ResizeItem<C>> {
-    static createItem(resizeHandle: HTMLDivElement, resizer: Resizer, sizer: Sizer): ResizeItem {
+export default class FixedDistributor<
+    C extends IConfig,
+    I extends ResizeItem<any> = ResizeItem<C>,
+> {
+    static createItem(
+        resizeHandle: HTMLDivElement,
+        resizer: Resizer,
+        sizer: Sizer,
+    ): ResizeItem {
         return new ResizeItem(resizeHandle, resizer, sizer);
     }
 
-    static createSizer(containerElement: HTMLElement, vertical: boolean, reverse: boolean): Sizer {
+    static createSizer(
+        containerElement: HTMLElement,
+        vertical: boolean,
+        reverse: boolean,
+    ): Sizer {
         return new Sizer(containerElement, vertical, reverse);
     }
 

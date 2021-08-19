@@ -27,8 +27,10 @@ type Callback = (part: Part, startIdx: number, endIdx: number) => void;
 export type Predicate = (index: number, offset: number, part: Part) => boolean;
 
 export default class DocumentPosition implements IPosition {
-    constructor(public readonly index: number, public readonly offset: number) {
-    }
+    constructor(
+        public readonly index: number,
+        public readonly offset: number,
+    ) {}
 
     public compare(otherPos: DocumentPosition): number {
         if (this.index === otherPos.index) {
@@ -38,11 +40,16 @@ export default class DocumentPosition implements IPosition {
         }
     }
 
-    public iteratePartsBetween(other: DocumentPosition, model: EditorModel, callback: Callback): void {
+    public iteratePartsBetween(
+        other: DocumentPosition,
+        model: EditorModel,
+        callback: Callback,
+    ): void {
         if (this.index === -1 || other.index === -1) {
             return;
         }
-        const [startPos, endPos] = this.compare(other) < 0 ? [this, other] : [other, this];
+        const [startPos, endPos] =
+            this.compare(other) < 0 ? [this, other] : [other, this];
         if (startPos.index === endPos.index) {
             callback(model.parts[this.index], startPos.offset, endPos.offset);
         } else {
@@ -57,7 +64,10 @@ export default class DocumentPosition implements IPosition {
         }
     }
 
-    public forwardsWhile(model: EditorModel, predicate: Predicate): DocumentPosition {
+    public forwardsWhile(
+        model: EditorModel,
+        predicate: Predicate,
+    ): DocumentPosition {
         if (this.index === -1) {
             return this;
         }
@@ -73,7 +83,7 @@ export default class DocumentPosition implements IPosition {
                 offset += 1;
             }
             // end reached
-            if (index === (parts.length - 1)) {
+            if (index === parts.length - 1) {
                 return new DocumentPosition(index, offset);
             } else {
                 index += 1;
@@ -82,7 +92,10 @@ export default class DocumentPosition implements IPosition {
         }
     }
 
-    public backwardsWhile(model: EditorModel, predicate: Predicate): DocumentPosition {
+    public backwardsWhile(
+        model: EditorModel,
+        predicate: Predicate,
+    ): DocumentPosition {
         if (this.index === -1) {
             return this;
         }
@@ -127,7 +140,9 @@ export default class DocumentPosition implements IPosition {
         }
         const lastPartIdx = model.parts.length - 1;
         const lastPart = model.parts[lastPartIdx];
-        return this.index === lastPartIdx && this.offset === lastPart.text.length;
+        return (
+            this.index === lastPartIdx && this.offset === lastPart.text.length
+        );
     }
 
     public isAtStart(): boolean {

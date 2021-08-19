@@ -21,7 +21,10 @@ import { Dispatcher } from "flux";
 import { IDestroyable } from "../utils/IDestroyable";
 import { EventEmitter } from "events";
 
-export abstract class ReadyWatchingStore extends EventEmitter implements IDestroyable {
+export abstract class ReadyWatchingStore
+    extends EventEmitter
+    implements IDestroyable
+{
     protected matrixClient: MatrixClient;
     private readonly dispatcherRef: string;
 
@@ -59,12 +62,17 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
     }
 
     private onAction = async (payload: ActionPayload) => {
-        if (payload.action === 'MatrixActions.sync') {
+        if (payload.action === "MatrixActions.sync") {
             // Only set the client on the transition into the PREPARED state.
             // Everything after this is unnecessary (we only need to know once we have a client)
             // and we intentionally don't set the client before this point to avoid stores
             // updating for every event emitted during the cached sync.
-            if (!(payload.prevState === 'PREPARED' && payload.state !== 'PREPARED')) {
+            if (
+                !(
+                    payload.prevState === "PREPARED" &&
+                    payload.state !== "PREPARED"
+                )
+            ) {
                 return;
             }
 
@@ -75,7 +83,10 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
                 this.matrixClient = payload.matrixClient;
                 await this.onReady();
             }
-        } else if (payload.action === 'on_client_not_viable' || payload.action === 'on_logged_out') {
+        } else if (
+            payload.action === "on_client_not_viable" ||
+            payload.action === "on_logged_out"
+        ) {
             if (this.matrixClient) {
                 await this.onNotReady();
                 this.matrixClient = null;

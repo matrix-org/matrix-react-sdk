@@ -17,8 +17,11 @@ limitations under the License.
 
 import SettingsStore from "./settings/SettingsStore";
 import { SettingLevel } from "./settings/SettingLevel";
-import { setMatrixCallAudioInput, setMatrixCallVideoInput } from "matrix-js-sdk/src/matrix";
-import EventEmitter from 'events';
+import {
+    setMatrixCallAudioInput,
+    setMatrixCallVideoInput,
+} from "matrix-js-sdk/src/matrix";
+import EventEmitter from "events";
 
 // XXX: MediaDeviceKind is a union type, so we make our own enum
 export enum MediaDeviceKindEnum {
@@ -45,7 +48,7 @@ export default class MediaDeviceHandler extends EventEmitter {
 
     public static async hasAnyLabeledDevices(): Promise<boolean> {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        return devices.some(d => Boolean(d.label));
+        return devices.some((d) => Boolean(d.label));
     }
 
     public static async getDevices(): Promise<IMediaDevices> {
@@ -63,7 +66,7 @@ export default class MediaDeviceHandler extends EventEmitter {
             devices.forEach((device) => output[device.kind].push(device));
             return output;
         } catch (error) {
-            console.warn('Unable to refresh WebRTC Devices: ', error);
+            console.warn("Unable to refresh WebRTC Devices: ", error);
         }
     }
 
@@ -79,7 +82,12 @@ export default class MediaDeviceHandler extends EventEmitter {
     }
 
     public setAudioOutput(deviceId: string): void {
-        SettingsStore.setValue("webrtc_audiooutput", null, SettingLevel.DEVICE, deviceId);
+        SettingsStore.setValue(
+            "webrtc_audiooutput",
+            null,
+            SettingLevel.DEVICE,
+            deviceId,
+        );
         this.emit(MediaDeviceHandlerEvent.AudioOutputChanged, deviceId);
     }
 
@@ -89,7 +97,12 @@ export default class MediaDeviceHandler extends EventEmitter {
      * @param {string} deviceId
      */
     public setAudioInput(deviceId: string): void {
-        SettingsStore.setValue("webrtc_audioinput", null, SettingLevel.DEVICE, deviceId);
+        SettingsStore.setValue(
+            "webrtc_audioinput",
+            null,
+            SettingLevel.DEVICE,
+            deviceId,
+        );
         setMatrixCallAudioInput(deviceId);
     }
 
@@ -99,27 +112,47 @@ export default class MediaDeviceHandler extends EventEmitter {
      * @param {string} deviceId
      */
     public setVideoInput(deviceId: string): void {
-        SettingsStore.setValue("webrtc_videoinput", null, SettingLevel.DEVICE, deviceId);
+        SettingsStore.setValue(
+            "webrtc_videoinput",
+            null,
+            SettingLevel.DEVICE,
+            deviceId,
+        );
         setMatrixCallVideoInput(deviceId);
     }
 
     public setDevice(deviceId: string, kind: MediaDeviceKindEnum): void {
         switch (kind) {
-            case MediaDeviceKindEnum.AudioOutput: this.setAudioOutput(deviceId); break;
-            case MediaDeviceKindEnum.AudioInput: this.setAudioInput(deviceId); break;
-            case MediaDeviceKindEnum.VideoInput: this.setVideoInput(deviceId); break;
+            case MediaDeviceKindEnum.AudioOutput:
+                this.setAudioOutput(deviceId);
+                break;
+            case MediaDeviceKindEnum.AudioInput:
+                this.setAudioInput(deviceId);
+                break;
+            case MediaDeviceKindEnum.VideoInput:
+                this.setVideoInput(deviceId);
+                break;
         }
     }
 
     public static getAudioOutput(): string {
-        return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_audiooutput");
+        return SettingsStore.getValueAt(
+            SettingLevel.DEVICE,
+            "webrtc_audiooutput",
+        );
     }
 
     public static getAudioInput(): string {
-        return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_audioinput");
+        return SettingsStore.getValueAt(
+            SettingLevel.DEVICE,
+            "webrtc_audioinput",
+        );
     }
 
     public static getVideoInput(): string {
-        return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_videoinput");
+        return SettingsStore.getValueAt(
+            SettingLevel.DEVICE,
+            "webrtc_videoinput",
+        );
     }
 }

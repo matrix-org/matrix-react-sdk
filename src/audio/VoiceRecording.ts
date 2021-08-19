@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as Recorder from 'opus-recorder';
-import encoderPath from 'opus-recorder/dist/encoderWorker.min.js';
+import * as Recorder from "opus-recorder";
+import encoderPath from "opus-recorder/dist/encoderWorker.min.js";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import MediaDeviceHandler from "../MediaDeviceHandler";
 import { SimpleObservable } from "matrix-widget-api";
@@ -86,7 +86,8 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
     }
 
     public get durationSeconds(): number {
-        if (!this.recorder) throw new Error("Duration not available without a recording");
+        if (!this.recorder)
+            throw new Error("Duration not available without a recording");
         return this.recorderContext.currentTime;
     }
 
@@ -112,28 +113,39 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             this.recorderContext = createAudioContext({
                 // latencyHint: "interactive", // we don't want a latency hint (this causes data smoothing)
             });
-            this.recorderSource = this.recorderContext.createMediaStreamSource(this.recorderStream);
+            this.recorderSource = this.recorderContext.createMediaStreamSource(
+                this.recorderStream,
+            );
 
             // Connect our inputs and outputs
             if (this.recorderContext.audioWorklet) {
                 // Set up our worklet. We use this for timing information and waveform analysis: the
                 // web audio API prefers this be done async to avoid holding the main thread with math.
-                await this.recorderContext.audioWorklet.addModule(mxRecorderWorkletPath);
-                this.recorderWorklet = new AudioWorkletNode(this.recorderContext, WORKLET_NAME);
+                await this.recorderContext.audioWorklet.addModule(
+                    mxRecorderWorkletPath,
+                );
+                this.recorderWorklet = new AudioWorkletNode(
+                    this.recorderContext,
+                    WORKLET_NAME,
+                );
                 this.recorderSource.connect(this.recorderWorklet);
                 this.recorderWorklet.connect(this.recorderContext.destination);
 
                 // Dev note: we can't use `addEventListener` for some reason. It just doesn't work.
                 this.recorderWorklet.port.onmessage = (ev) => {
-                    switch (ev.data['ev']) {
+                    switch (ev.data["ev"]) {
                         case PayloadEvent.Timekeep:
-                            this.processAudioUpdate(ev.data['timeSeconds']);
+                            this.processAudioUpdate(ev.data["timeSeconds"]);
                             break;
                         case PayloadEvent.AmplitudeMark:
                             // Sanity check to make sure we're adding about one sample per second
-                            if (ev.data['forIndex'] === this.amplitudes.length) {
-                                this.amplitudes.push(ev.data['amplitude']);
-                                this.liveWaveform.pushValue(ev.data['amplitude']);
+                            if (
+                                ev.data["forIndex"] === this.amplitudes.length
+                            ) {
+                                this.amplitudes.push(ev.data["amplitude"]);
+                                this.liveWaveform.pushValue(
+                                    ev.data["amplitude"],
+                                );
                             }
                             break;
                     }
@@ -141,10 +153,20 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             } else {
                 // Safari fallback: use a processor node instead, buffered to 1024 bytes of data
                 // like the worklet is.
-                this.recorderProcessor = this.recorderContext.createScriptProcessor(1024, CHANNELS, CHANNELS);
+                this.recorderProcessor =
+                    this.recorderContext.createScriptProcessor(
+                        1024,
+                        CHANNELS,
+                        CHANNELS,
+                    );
                 this.recorderSource.connect(this.recorderProcessor);
-                this.recorderProcessor.connect(this.recorderContext.destination);
-                this.recorderProcessor.addEventListener("audioprocess", this.onAudioProcess);
+                this.recorderProcessor.connect(
+                    this.recorderContext.destination,
+                );
+                this.recorderProcessor.addEventListener(
+                    "audioprocess",
+                    this.onAudioProcess,
+                );
             }
 
             this.recorder = new Recorder({
@@ -172,12 +194,14 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             };
         } catch (e) {
             console.error("Error starting recording: ", e);
-            if (e instanceof DOMException) { // Unhelpful DOMExceptions are common - parse them sanely
+            if (e instanceof DOMException) {
+                // Unhelpful DOMExceptions are common - parse them sanely
                 console.error(`${e.name} (${e.code}): ${e.message}`);
             }
 
             // Clean up as best as possible
-            if (this.recorderStream) this.recorderStream.getTracks().forEach(t => t.stop());
+            if (this.recorderStream)
+                this.recorderStream.getTracks().forEach((t) => t.stop());
             if (this.recorderSource) this.recorderSource.disconnect();
             if (this.recorder) this.recorder.close();
             if (this.recorderContext) {
@@ -196,7 +220,8 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
     }
 
     public get liveData(): SimpleObservable<IRecordingUpdate> {
-        if (!this.recording) throw new Error("No observable when not recording");
+        if (!this.recording)
+            throw new Error("No observable when not recording");
         return this.observable;
     }
 
@@ -219,7 +244,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         if (!this.recording) return;
 
         this.observable.update({
-            waveform: this.liveWaveform.value.map(v => clamp(v, 0, 1)),
+            waveform: this.liveWaveform.value.map((v) => clamp(v, 0, 1)),
             timeSeconds: timeSeconds,
         });
 
@@ -237,7 +262,8 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         // Ref for recorderSeconds: https://github.com/chris-rudmin/opus-recorder#instance-fields
         const recorderSeconds = this.recorder.encodedSamplePosition / 48000;
         const secondsLeft = TARGET_MAX_LENGTH - recorderSeconds;
-        if (secondsLeft < 0) { // go over to make sure we definitely capture that last frame
+        if (secondsLeft < 0) {
+            // go over to make sure we definitely capture that last frame
             // noinspection JSIgnoredPromiseFromCall - we aren't concerned with it overlapping
             this.stop();
         } else if (secondsLeft <= TARGET_WARN_TIME_LEFT) {
@@ -277,7 +303,10 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             if (this.recorderWorklet) this.recorderWorklet.disconnect();
             if (this.recorderProcessor) {
                 this.recorderProcessor.disconnect();
-                this.recorderProcessor.removeEventListener("audioprocess", this.onAudioProcess);
+                this.recorderProcessor.removeEventListener(
+                    "audioprocess",
+                    this.onAudioProcess,
+                );
             }
 
             // close the context after the recorder so the recorder doesn't try to
@@ -285,7 +314,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             await this.recorderContext.close();
 
             // Now stop all the media tracks so we can release them back to the user/OS
-            this.recorderStream.getTracks().forEach(t => t.stop());
+            this.recorderStream.getTracks().forEach((t) => t.stop());
 
             // Finally do our post-processing and clean up
             this.recording = false;
@@ -330,9 +359,13 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
 
         try {
             this.emit(RecordingState.Uploading);
-            const { url: mxc, file: encrypted } = await uploadFile(this.client, inRoomId, new Blob([this.audioBuffer], {
-                type: this.contentType,
-            }));
+            const { url: mxc, file: encrypted } = await uploadFile(
+                this.client,
+                inRoomId,
+                new Blob([this.audioBuffer], {
+                    type: this.contentType,
+                }),
+            );
             this.lastUpload = { mxc, encrypted };
             this.emit(RecordingState.Uploaded);
         } catch (e) {

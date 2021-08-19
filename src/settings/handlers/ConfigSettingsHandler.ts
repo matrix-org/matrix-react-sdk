@@ -48,11 +48,16 @@ export default class ConfigSettingsHandler extends SettingsHandler {
         }
 
         const settingsConfig = config["settingDefaults"];
-        if (!settingsConfig || isNullOrUndefined(settingsConfig[settingName])) return null;
+        if (!settingsConfig || isNullOrUndefined(settingsConfig[settingName]))
+            return null;
         return settingsConfig[settingName];
     }
 
-    public async setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public async setValue(
+        settingName: string,
+        roomId: string,
+        newValue: any,
+    ): Promise<void> {
         throw new Error("Cannot change settings at the config level");
     }
 

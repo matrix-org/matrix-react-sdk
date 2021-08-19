@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
-import { _t } from '../../../languageHandler';
-import { formatDate } from '../../../DateUtils';
+import React, { createRef } from "react";
+import PropTypes from "prop-types";
+import { _t } from "../../../languageHandler";
+import { formatDate } from "../../../DateUtils";
 import NodeAnimator from "../../../NodeAnimator";
 import * as sdk from "../../../index";
 import { toPx } from "../../../utils/units";
@@ -110,7 +110,8 @@ export default class ReadReceiptMarker extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        const differentLeftOffset = prevProps.leftOffset !== this.props.leftOffset;
+        const differentLeftOffset =
+            prevProps.leftOffset !== this.props.leftOffset;
         const visibilityChanged = prevProps.hidden !== this.props.hidden;
         if (differentLeftOffset || visibilityChanged) {
             this._animateMarker();
@@ -137,18 +138,21 @@ export default class ReadReceiptMarker extends React.PureComponent {
             );
             startTopOffset = 0;
         } else {
-            startTopOffset = oldTop - newElement.offsetParent.getBoundingClientRect().top;
+            startTopOffset =
+                oldTop - newElement.offsetParent.getBoundingClientRect().top;
         }
 
         const startStyles = [];
 
         if (oldInfo && oldInfo.left) {
             // start at the old height and in the old h pos
-            startStyles.push({ top: startTopOffset+"px",
-                left: toPx(oldInfo.left) });
+            startStyles.push({
+                top: startTopOffset + "px",
+                left: toPx(oldInfo.left),
+            });
         }
 
-        startStyles.push({ top: startTopOffset+'px', left: '0' });
+        startStyles.push({ top: startTopOffset + "px", left: "0" });
 
         this.setState({
             suppressDisplay: false,
@@ -157,31 +161,38 @@ export default class ReadReceiptMarker extends React.PureComponent {
     }
 
     render() {
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
+        const MemberAvatar = sdk.getComponent("avatars.MemberAvatar");
         if (this.state.suppressDisplay) {
             return <div ref={this._avatar} />;
         }
 
         const style = {
             left: toPx(this.props.leftOffset),
-            top: '0px',
+            top: "0px",
         };
 
         let title;
         if (this.props.timestamp) {
-            const dateString = formatDate(new Date(this.props.timestamp), this.props.showTwelveHour);
-            if (!this.props.member || this.props.fallbackUserId === this.props.member.rawDisplayName) {
-                title = _t(
-                    "Seen by %(userName)s at %(dateTime)s",
-                    { userName: this.props.fallbackUserId,
-                        dateTime: dateString },
-                );
+            const dateString = formatDate(
+                new Date(this.props.timestamp),
+                this.props.showTwelveHour,
+            );
+            if (
+                !this.props.member ||
+                this.props.fallbackUserId === this.props.member.rawDisplayName
+            ) {
+                title = _t("Seen by %(userName)s at %(dateTime)s", {
+                    userName: this.props.fallbackUserId,
+                    dateTime: dateString,
+                });
             } else {
                 title = _t(
                     "Seen by %(displayName)s (%(userName)s) at %(dateTime)s",
-                    { displayName: this.props.member.rawDisplayName,
+                    {
+                        displayName: this.props.member.rawDisplayName,
                         userName: this.props.fallbackUserId,
-                        dateTime: dateString },
+                        dateTime: dateString,
+                    },
                 );
             }
         }

@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import { getNameForEventRoom, userLabelForEventRoom }
-    from '../../../utils/KeyVerificationStateObserver';
+import React from "react";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import {
+    getNameForEventRoom,
+    userLabelForEventRoom,
+} from "../../../utils/KeyVerificationStateObserver";
 import EventTileBubble from "./EventTileBubble";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -35,7 +37,10 @@ export default class MKeyVerificationConclusion extends React.Component {
         if (request) {
             request.on("change", this._onRequestChanged);
         }
-        MatrixClientPeg.get().on("userTrustStatusChanged", this._onTrustChanged);
+        MatrixClientPeg.get().on(
+            "userTrustStatusChanged",
+            this._onTrustChanged,
+        );
     }
 
     componentWillUnmount() {
@@ -68,7 +73,10 @@ export default class MKeyVerificationConclusion extends React.Component {
             return false;
         }
         // .cancel event that was sent after the verification finished, ignore
-        if (mxEvent.getType() === "m.key.verification.cancel" && !request.cancelled) {
+        if (
+            mxEvent.getType() === "m.key.verification.cancel" &&
+            !request.cancelled
+        ) {
             return false;
         }
         // .done event that was sent after the verification cancelled, ignore
@@ -82,7 +90,11 @@ export default class MKeyVerificationConclusion extends React.Component {
         }
 
         // User isn't actually verified
-        if (!MatrixClientPeg.get().checkUserTrust(request.otherUserId).isCrossSigningVerified()) {
+        if (
+            !MatrixClientPeg.get()
+                .checkUserTrust(request.otherUserId)
+                .isCrossSigningVerified()
+        ) {
             return false;
         }
 
@@ -103,15 +115,19 @@ export default class MKeyVerificationConclusion extends React.Component {
         let title;
 
         if (request.done) {
-            title = _t("You verified %(name)s", { name: getNameForEventRoom(request.otherUserId, mxEvent) });
+            title = _t("You verified %(name)s", {
+                name: getNameForEventRoom(request.otherUserId, mxEvent),
+            });
         } else if (request.cancelled) {
             const userId = request.cancellingUserId;
             if (userId === myUserId) {
-                title = _t("You cancelled verifying %(name)s",
-                    { name: getNameForEventRoom(request.otherUserId, mxEvent) });
+                title = _t("You cancelled verifying %(name)s", {
+                    name: getNameForEventRoom(request.otherUserId, mxEvent),
+                });
             } else {
-                title = _t("%(name)s cancelled verifying",
-                    { name: getNameForEventRoom(userId, mxEvent) });
+                title = _t("%(name)s cancelled verifying", {
+                    name: getNameForEventRoom(userId, mxEvent),
+                });
             }
         }
 
@@ -119,11 +135,16 @@ export default class MKeyVerificationConclusion extends React.Component {
             const classes = classNames("mx_cryptoEvent mx_cryptoEvent_icon", {
                 mx_cryptoEvent_icon_verified: request.done,
             });
-            return <EventTileBubble
-                className={classes}
-                title={title}
-                subtitle={userLabelForEventRoom(request.otherUserId, mxEvent.getRoomId())}
-            />;
+            return (
+                <EventTileBubble
+                    className={classes}
+                    title={title}
+                    subtitle={userLabelForEventRoom(
+                        request.otherUserId,
+                        mxEvent.getRoomId(),
+                    )}
+                />
+            );
         }
 
         return null;

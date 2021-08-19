@@ -23,7 +23,10 @@ export function needsCaretNodeBefore(part: Part, prevPart: Part): boolean {
     return !part.canEdit && (isFirst || !prevPart.canEdit);
 }
 
-export function needsCaretNodeAfter(part: Part, isLastOfLine: boolean): boolean {
+export function needsCaretNodeAfter(
+    part: Part,
+    isLastOfLine: boolean,
+): boolean {
     return !part.canEdit && isLastOfLine;
 }
 
@@ -89,7 +92,9 @@ function reconcileLine(lineContainer: ChildNode, parts: Part[]): void {
 
     for (const part of parts) {
         const isFirst = !prevPart;
-        currentNode = isFirst ? lineContainer.firstChild : currentNode.nextSibling;
+        currentNode = isFirst
+            ? lineContainer.firstChild
+            : currentNode.nextSibling;
 
         if (needsCaretNodeBefore(part, prevPart)) {
             if (isCaretNode(currentNode)) {
@@ -150,20 +155,27 @@ function reconcileEmptyLine(lineContainer: HTMLElement): void {
 }
 
 export function renderModel(editor: HTMLDivElement, model: EditorModel): void {
-    const lines = model.parts.reduce((linesArr, part) => {
-        if (part.type === Type.Newline) {
-            linesArr.push([]);
-        } else {
-            const lastLine = linesArr[linesArr.length - 1];
-            lastLine.push(part);
-        }
-        return linesArr;
-    }, [[]]);
+    const lines = model.parts.reduce(
+        (linesArr, part) => {
+            if (part.type === Type.Newline) {
+                linesArr.push([]);
+            } else {
+                const lastLine = linesArr[linesArr.length - 1];
+                lastLine.push(part);
+            }
+            return linesArr;
+        },
+        [[]],
+    );
     lines.forEach((parts, i) => {
         // find first (and remove anything else) div without className
         // (as browsers insert these in contenteditable) line container
         let lineContainer = editor.childNodes[i];
-        while (lineContainer && ((<Element>lineContainer).tagName !== "DIV" || !!(<Element>lineContainer).className)) {
+        while (
+            lineContainer &&
+            ((<Element>lineContainer).tagName !== "DIV" ||
+                !!(<Element>lineContainer).className)
+        ) {
             editor.removeChild(lineContainer);
             lineContainer = editor.childNodes[i];
         }

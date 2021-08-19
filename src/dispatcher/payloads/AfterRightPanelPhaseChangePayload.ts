@@ -26,5 +26,5 @@ interface AfterRightPanelPhaseChangeAction extends ActionPayload {
     verificationRequestPromise?: Promise<VerificationRequest>;
 }
 
-export type AfterRightPanelPhaseChangePayload
-    = AfterRightPanelPhaseChangeAction & SetRightPanelPhaseRefireParams;
+export type AfterRightPanelPhaseChangePayload =
+    AfterRightPanelPhaseChangeAction & SetRightPanelPhaseRefireParams;

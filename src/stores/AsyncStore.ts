@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventEmitter } from 'events';
-import AwaitLock from 'await-lock';
+import { EventEmitter } from "events";
+import AwaitLock from "await-lock";
 import { Dispatcher } from "flux";
 import { ActionPayload } from "../dispatcher/payloads";
 
@@ -51,7 +51,10 @@ export abstract class AsyncStore<T extends Object> extends EventEmitter {
      * @param {Dispatcher<ActionPayload>} dispatcher The dispatcher to rely upon.
      * @param {T} initialState The initial state for the store.
      */
-    protected constructor(private dispatcher: Dispatcher<ActionPayload>, initialState: T = <T>{}) {
+    protected constructor(
+        private dispatcher: Dispatcher<ActionPayload>,
+        initialState: T = <T>{},
+    ) {
         super();
 
         this.dispatcherRef = dispatcher.register(this.onDispatch.bind(this));
@@ -79,7 +82,9 @@ export abstract class AsyncStore<T extends Object> extends EventEmitter {
     protected async updateState(newState: T | Object) {
         await this.lock.acquireAsync();
         try {
-            this.storeState = Object.freeze(Object.assign(<T>{}, this.storeState, newState));
+            this.storeState = Object.freeze(
+                Object.assign(<T>{}, this.storeState, newState),
+            );
             this.emit(UPDATE_EVENT, this);
         } finally {
             await this.lock.release();

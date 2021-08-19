@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as sdk from '../../../index';
-import React, { createRef } from 'react';
-import { _t } from '../../../languageHandler';
-import { linkifyElement } from '../../../HtmlUtils';
-import PropTypes from 'prop-types';
+import * as sdk from "../../../index";
+import React, { createRef } from "react";
+import { _t } from "../../../languageHandler";
+import { linkifyElement } from "../../../HtmlUtils";
+import PropTypes from "prop-types";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { getDisplayAliasForAliasSet } from '../../../Rooms';
+import { getDisplayAliasForAliasSet } from "../../../Rooms";
 
 export function getDisplayAliasForRoom(room) {
     return getDisplayAliasForAliasSet(room.canonicalAlias, room.aliases);
@@ -83,47 +83,71 @@ export default class RoomDetailRow extends React.Component {
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
+        const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
         const room = this.props.room;
-        const name = room.name || getDisplayAliasForRoom(room) || _t('Unnamed room');
+        const name =
+            room.name || getDisplayAliasForRoom(room) || _t("Unnamed room");
 
         const guestRead = room.worldReadable ? (
-            <div className="mx_RoomDirectory_perm">{ _t('World readable') }</div>
-        ) : <div />;
+            <div className="mx_RoomDirectory_perm">{_t("World readable")}</div>
+        ) : (
+            <div />
+        );
         const guestJoin = room.guestCanJoin ? (
-            <div className="mx_RoomDirectory_perm">{ _t('Guests can join') }</div>
-        ) : <div />;
+            <div className="mx_RoomDirectory_perm">{_t("Guests can join")}</div>
+        ) : (
+            <div />
+        );
 
-        const perms = (guestRead || guestJoin) ? (<div className="mx_RoomDirectory_perms">
-            { guestRead }&nbsp;
-            { guestJoin }
-        </div>) : <div />;
+        const perms =
+            guestRead || guestJoin ? (
+                <div className="mx_RoomDirectory_perms">
+                    {guestRead}&nbsp;
+                    {guestJoin}
+                </div>
+            ) : (
+                <div />
+            );
 
         let avatarUrl = null;
-        if (room.avatarUrl) avatarUrl = mediaFromMxc(room.avatarUrl).getSquareThumbnailHttp(24);
+        if (room.avatarUrl)
+            avatarUrl = mediaFromMxc(room.avatarUrl).getSquareThumbnailHttp(24);
 
-        return <tr key={room.roomId} onClick={this.onClick} onMouseDown={this.props.onMouseDown}>
-            <td className="mx_RoomDirectory_roomAvatar">
-                <BaseAvatar
-                    width={24}
-                    height={24}
-                    resizeMethod='crop'
-                    name={name}
-                    idName={name}
-                    url={avatarUrl} />
-            </td>
-            <td className="mx_RoomDirectory_roomDescription">
-                <div className="mx_RoomDirectory_name">{ name }</div>&nbsp;
-                { perms }
-                <div className="mx_RoomDirectory_topic" ref={this._topic} onClick={this.onTopicClick}>
-                    { room.topic }
-                </div>
-                <div className="mx_RoomDirectory_alias">{ getDisplayAliasForRoom(room) }</div>
-            </td>
-            <td className="mx_RoomDirectory_roomMemberCount">
-                { room.numJoinedMembers }
-            </td>
-        </tr>;
+        return (
+            <tr
+                key={room.roomId}
+                onClick={this.onClick}
+                onMouseDown={this.props.onMouseDown}
+            >
+                <td className="mx_RoomDirectory_roomAvatar">
+                    <BaseAvatar
+                        width={24}
+                        height={24}
+                        resizeMethod="crop"
+                        name={name}
+                        idName={name}
+                        url={avatarUrl}
+                    />
+                </td>
+                <td className="mx_RoomDirectory_roomDescription">
+                    <div className="mx_RoomDirectory_name">{name}</div>&nbsp;
+                    {perms}
+                    <div
+                        className="mx_RoomDirectory_topic"
+                        ref={this._topic}
+                        onClick={this.onTopicClick}
+                    >
+                        {room.topic}
+                    </div>
+                    <div className="mx_RoomDirectory_alias">
+                        {getDisplayAliasForRoom(room)}
+                    </div>
+                </td>
+                <td className="mx_RoomDirectory_roomMemberCount">
+                    {room.numJoinedMembers}
+                </td>
+            </tr>
+        );
     }
 }

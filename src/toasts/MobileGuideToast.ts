@@ -23,14 +23,16 @@ const onAccept = () => {
 };
 
 const onReject = () => {
-    document.cookie = "element_mobile_redirect_to_guide=false;path=/;max-age=14400";
+    document.cookie =
+        "element_mobile_redirect_to_guide=false;path=/;max-age=14400";
     hideToast();
 };
 
 const TOAST_KEY = "mobileguide";
 
 export const showToast = () => {
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isIos =
+        /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     const isAndroid = /Android/.test(navigator.userAgent);
     if (!isIos && !isAndroid) {
         return;
@@ -44,7 +46,7 @@ export const showToast = () => {
         props: {
             description: _t(
                 "Element Web is experimental on mobile. " +
-                "For a better experience and the latest features, use our free native app.",
+                    "For a better experience and the latest features, use our free native app.",
             ),
             acceptLabel: _t("Use app"),
             onAccept,

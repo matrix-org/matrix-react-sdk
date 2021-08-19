@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IMatrixProfile, IEventWithRoomId as IMatrixEvent, IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
+import {
+    IMatrixProfile,
+    IEventWithRoomId as IMatrixEvent,
+    IResultRoomEvents,
+} from "matrix-js-sdk/src/@types/search";
 import { Direction } from "matrix-js-sdk/src";
 
 // The following interfaces take their names and member names from seshat and the spec
@@ -96,7 +100,10 @@ export default abstract class BaseEventIndexManager {
      * @return {Promise} A promise that will resolve when the was queued up for
      * addition.
      */
-    async addEventToIndex(ev: IMatrixEvent, profile: IMatrixProfile): Promise<void> {
+    async addEventToIndex(
+        ev: IMatrixEvent,
+        profile: IMatrixProfile,
+    ): Promise<void> {
         throw new Error("Unimplemented");
     }
 
@@ -179,7 +186,9 @@ export default abstract class BaseEventIndexManager {
      * @return {Promise<IResultRoomEvents[]>} A promise that will resolve to an array
      * of search results once the search is done.
      */
-    async searchEventIndex(searchArgs: ISearchArgs): Promise<IResultRoomEvents> {
+    async searchEventIndex(
+        searchArgs: ISearchArgs,
+    ): Promise<IResultRoomEvents> {
         throw new Error("Unimplemented");
     }
 
@@ -230,7 +239,9 @@ export default abstract class BaseEventIndexManager {
      * @return {Promise} A promise that will resolve once the checkpoint has
      * been removed.
      */
-    async removeCrawlerCheckpoint(checkpoint: ICrawlerCheckpoint): Promise<void> {
+    async removeCrawlerCheckpoint(
+        checkpoint: ICrawlerCheckpoint,
+    ): Promise<void> {
         throw new Error("Unimplemented");
     }
 

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 /* TODO: This should be later reworked into something more generic */
 export enum Layout {

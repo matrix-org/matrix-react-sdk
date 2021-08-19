@@ -25,11 +25,18 @@ export async function implicitlyReverted() {
 
 export const PROPERTY_UPDATED = "property_updated";
 
-export abstract class GenericEchoChamber<C extends EchoContext, K, V> extends EventEmitter {
-    private cache = new Map<K, {txn: EchoTransaction, val: V}>();
+export abstract class GenericEchoChamber<
+    C extends EchoContext,
+    K,
+    V,
+> extends EventEmitter {
+    private cache = new Map<K, { txn: EchoTransaction; val: V }>();
     protected matrixClient: MatrixClient;
 
-    protected constructor(public readonly context: C, private lookupFn: (key: K) => V) {
+    protected constructor(
+        public readonly context: C,
+        private lookupFn: (key: K) => V,
+    ) {
         super();
     }
 
@@ -39,7 +46,10 @@ export abstract class GenericEchoChamber<C extends EchoContext, K, V> extends Ev
         this.onClientChanged(oldClient, client);
     }
 
-    protected abstract onClientChanged(oldClient: MatrixClient, newClient: MatrixClient);
+    protected abstract onClientChanged(
+        oldClient: MatrixClient,
+        newClient: MatrixClient,
+    );
 
     /**
      * Gets a value. If the key is in flight, the cached value will be returned. If
@@ -49,7 +59,9 @@ export abstract class GenericEchoChamber<C extends EchoContext, K, V> extends Ev
      * @returns The value for the key.
      */
     public getValue(key: K): V {
-        return this.cache.has(key) ? this.cache.get(key).val : this.lookupFn(key);
+        return this.cache.has(key)
+            ? this.cache.get(key).val
+            : this.lookupFn(key);
     }
 
     private cacheVal(key: K, val: V, txn: EchoTransaction) {
@@ -74,7 +86,13 @@ export abstract class GenericEchoChamber<C extends EchoContext, K, V> extends Ev
         this.decacheKey(key);
     }
 
-    public setValue(auditName: string, key: K, targetVal: V, runFn: RunFn, revertFn: RunFn) {
+    public setValue(
+        auditName: string,
+        key: K,
+        targetVal: V,
+        runFn: RunFn,
+        revertFn: RunFn,
+    ) {
         // Cancel any pending transactions for the same key
         if (this.cache.has(key)) {
             this.cache.get(key).txn.cancel();
@@ -83,8 +101,9 @@ export abstract class GenericEchoChamber<C extends EchoContext, K, V> extends Ev
         const ctxn = this.context.beginTransaction(auditName, runFn);
         this.cacheVal(key, targetVal, ctxn); // set the cache now as it won't be updated by the .when() ladder below.
 
-        ctxn.when(TransactionStatus.Pending, () => this.cacheVal(key, targetVal, ctxn))
-            .when(TransactionStatus.Error, () => revertFn());
+        ctxn.when(TransactionStatus.Pending, () =>
+            this.cacheVal(key, targetVal, ctxn),
+        ).when(TransactionStatus.Error, () => revertFn());
 
         ctxn.run();
     }

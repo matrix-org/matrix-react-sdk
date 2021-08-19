@@ -19,11 +19,19 @@ import { MatrixGlob } from "../utils/MatrixGlob";
 // Inspiration largely taken from Mjolnir itself
 
 export const RECOMMENDATION_BAN = "m.ban";
-export const RECOMMENDATION_BAN_TYPES = [RECOMMENDATION_BAN, "org.matrix.mjolnir.ban"];
+export const RECOMMENDATION_BAN_TYPES = [
+    RECOMMENDATION_BAN,
+    "org.matrix.mjolnir.ban",
+];
 
-export function recommendationToStable(recommendation: string, unstable = true): string {
+export function recommendationToStable(
+    recommendation: string,
+    unstable = true,
+): string {
     if (RECOMMENDATION_BAN_TYPES.includes(recommendation)) {
-        return unstable ? RECOMMENDATION_BAN_TYPES[RECOMMENDATION_BAN_TYPES.length - 1] : RECOMMENDATION_BAN;
+        return unstable
+            ? RECOMMENDATION_BAN_TYPES[RECOMMENDATION_BAN_TYPES.length - 1]
+            : RECOMMENDATION_BAN;
     }
     return null;
 }

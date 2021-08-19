@@ -27,7 +27,10 @@ export default class DefaultSettingsHandler extends SettingsHandler {
      * @param {object} defaults The default setting values, keyed by setting name.
      * @param {object} invertedDefaults The default inverted setting values, keyed by setting name.
      */
-    constructor(private defaults: Record<string, any>, private invertedDefaults: Record<string, any>) {
+    constructor(
+        private defaults: Record<string, any>,
+        private invertedDefaults: Record<string, any>,
+    ) {
         super();
     }
 
@@ -39,7 +42,11 @@ export default class DefaultSettingsHandler extends SettingsHandler {
         return value;
     }
 
-    public async setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public async setValue(
+        settingName: string,
+        roomId: string,
+        newValue: any,
+    ): Promise<void> {
         throw new Error("Cannot set values on the default level handler");
     }
 

@@ -16,14 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import classNames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import classNames from "classnames";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { ContextMenu, ContextMenuButton, toRightOf } from "../../structures/ContextMenu";
+import {
+    ContextMenu,
+    ContextMenuButton,
+    toRightOf,
+} from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -49,9 +53,9 @@ export default class GroupInviteTile extends React.Component {
         };
     }
 
-    onClick = e => {
+    onClick = (e) => {
         dis.dispatch({
-            action: 'view_group',
+            action: "view_group",
             group_id: this.props.group.groupId,
         });
     };
@@ -88,7 +92,7 @@ export default class GroupInviteTile extends React.Component {
         this.setState(state);
     }
 
-    onContextMenuButtonClick = e => {
+    onContextMenuButtonClick = (e) => {
         // Prevent the RoomTile onClick event firing as well
         e.stopPropagation();
         e.preventDefault();
@@ -96,7 +100,7 @@ export default class GroupInviteTile extends React.Component {
         this._showContextMenu(e.target.getBoundingClientRect());
     };
 
-    onContextMenu = e => {
+    onContextMenu = (e) => {
         // Prevent the native context menu
         e.preventDefault();
 
@@ -114,89 +118,126 @@ export default class GroupInviteTile extends React.Component {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
+        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
+        const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
         const groupName = this.props.group.name || this.props.group.groupId;
         const httpAvatarUrl = this.props.group.avatarUrl
-            ? mediaFromMxc(this.props.group.avatarUrl).getSquareThumbnailHttp(24)
+            ? mediaFromMxc(this.props.group.avatarUrl).getSquareThumbnailHttp(
+                  24,
+              )
             : null;
 
-        const av = <BaseAvatar name={groupName} width={24} height={24} url={httpAvatarUrl} />;
+        const av = (
+            <BaseAvatar
+                name={groupName}
+                width={24}
+                height={24}
+                url={httpAvatarUrl}
+            />
+        );
 
         const isMenuDisplayed = Boolean(this.state.contextMenuPosition);
-        const nameClasses = classNames('mx_RoomTile_name mx_RoomTile_invite mx_RoomTile_badgeShown', {
-            'mx_RoomTile_badgeShown': this.state.badgeHover || isMenuDisplayed,
-        });
+        const nameClasses = classNames(
+            "mx_RoomTile_name mx_RoomTile_invite mx_RoomTile_badgeShown",
+            {
+                mx_RoomTile_badgeShown:
+                    this.state.badgeHover || isMenuDisplayed,
+            },
+        );
 
         // XXX: this is a workaround for Firefox giving this div a tabstop :( [tabIndex]
-        const label = <div title={this.props.group.groupId} className={nameClasses} tabIndex={-1} dir="auto">
-            { groupName }
-        </div>;
+        const label = (
+            <div
+                title={this.props.group.groupId}
+                className={nameClasses}
+                tabIndex={-1}
+                dir="auto"
+            >
+                {groupName}
+            </div>
+        );
 
         const badgeEllipsis = this.state.badgeHover || isMenuDisplayed;
-        const badgeClasses = classNames('mx_RoomTile_badge mx_RoomTile_highlight', {
-            'mx_RoomTile_badgeButton': badgeEllipsis,
-        });
+        const badgeClasses = classNames(
+            "mx_RoomTile_badge mx_RoomTile_highlight",
+            {
+                mx_RoomTile_badgeButton: badgeEllipsis,
+            },
+        );
 
-        const badgeContent = badgeEllipsis ? '\u00B7\u00B7\u00B7' : '!';
+        const badgeContent = badgeEllipsis ? "\u00B7\u00B7\u00B7" : "!";
 
         let tooltip;
         if (this.props.collapsed && this.state.hover) {
             const Tooltip = sdk.getComponent("elements.Tooltip");
-            tooltip = <Tooltip className="mx_RoomTile_tooltip" label={groupName} dir="auto" />;
+            tooltip = (
+                <Tooltip
+                    className="mx_RoomTile_tooltip"
+                    label={groupName}
+                    dir="auto"
+                />
+            );
         }
 
-        const classes = classNames('mx_RoomTile mx_RoomTile_highlight', {
-            'mx_RoomTile_menuDisplayed': isMenuDisplayed,
-            'mx_RoomTile_selected': this.state.selected,
-            'mx_GroupInviteTile': true,
+        const classes = classNames("mx_RoomTile mx_RoomTile_highlight", {
+            mx_RoomTile_menuDisplayed: isMenuDisplayed,
+            mx_RoomTile_selected: this.state.selected,
+            mx_GroupInviteTile: true,
         });
 
         let contextMenu;
         if (isMenuDisplayed) {
-            const GroupInviteTileContextMenu = sdk.getComponent('context_menus.GroupInviteTileContextMenu');
+            const GroupInviteTileContextMenu = sdk.getComponent(
+                "context_menus.GroupInviteTileContextMenu",
+            );
             contextMenu = (
-                <ContextMenu {...toRightOf(this.state.contextMenuPosition)} onFinished={this.closeMenu}>
-                    <GroupInviteTileContextMenu group={this.props.group} onFinished={this.closeMenu} />
+                <ContextMenu
+                    {...toRightOf(this.state.contextMenuPosition)}
+                    onFinished={this.closeMenu}
+                >
+                    <GroupInviteTileContextMenu
+                        group={this.props.group}
+                        onFinished={this.closeMenu}
+                    />
                 </ContextMenu>
             );
         }
 
-        return <React.Fragment>
-            <RovingTabIndexWrapper>
-                { ({ onFocus, isActive, ref }) =>
-                    <AccessibleButton
-                        onFocus={onFocus}
-                        tabIndex={isActive ? 0 : -1}
-                        inputRef={ref}
-                        className={classes}
-                        onClick={this.onClick}
-                        onMouseEnter={this.onMouseEnter}
-                        onMouseLeave={this.onMouseLeave}
-                        onContextMenu={this.onContextMenu}
-                    >
-                        <div className="mx_RoomTile_avatar">
-                            { av }
-                        </div>
-                        <div className="mx_RoomTile_nameContainer">
-                            { label }
-                            <ContextMenuButton
-                                className={badgeClasses}
-                                onClick={this.onContextMenuButtonClick}
-                                label={_t("Options")}
-                                isExpanded={isMenuDisplayed}
-                                tabIndex={isActive ? 0 : -1}
-                            >
-                                { badgeContent }
-                            </ContextMenuButton>
-                        </div>
-                        { tooltip }
-                    </AccessibleButton>
-                }
-            </RovingTabIndexWrapper>
+        return (
+            <React.Fragment>
+                <RovingTabIndexWrapper>
+                    {({ onFocus, isActive, ref }) => (
+                        <AccessibleButton
+                            onFocus={onFocus}
+                            tabIndex={isActive ? 0 : -1}
+                            inputRef={ref}
+                            className={classes}
+                            onClick={this.onClick}
+                            onMouseEnter={this.onMouseEnter}
+                            onMouseLeave={this.onMouseLeave}
+                            onContextMenu={this.onContextMenu}
+                        >
+                            <div className="mx_RoomTile_avatar">{av}</div>
+                            <div className="mx_RoomTile_nameContainer">
+                                {label}
+                                <ContextMenuButton
+                                    className={badgeClasses}
+                                    onClick={this.onContextMenuButtonClick}
+                                    label={_t("Options")}
+                                    isExpanded={isMenuDisplayed}
+                                    tabIndex={isActive ? 0 : -1}
+                                >
+                                    {badgeContent}
+                                </ContextMenuButton>
+                            </div>
+                            {tooltip}
+                        </AccessibleButton>
+                    )}
+                </RovingTabIndexWrapper>
 
-            { contextMenu }
-        </React.Fragment>;
+                {contextMenu}
+            </React.Fragment>
+        );
     }
 }

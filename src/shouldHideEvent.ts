@@ -29,7 +29,7 @@ interface IDiff {
 
 function memberEventDiff(ev: MatrixEvent): IDiff {
     const diff: IDiff = {
-        isMemberEvent: ev.getType() === 'm.room.member',
+        isMemberEvent: ev.getType() === "m.room.member",
     };
 
     // If is not a Member Event then the other checks do not apply, so bail early.
@@ -39,12 +39,17 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
     const prevContent = ev.getPrevContent();
 
     const isMembershipChanged = content.membership !== prevContent.membership;
-    diff.isJoin = isMembershipChanged && content.membership === 'join';
-    diff.isPart = isMembershipChanged && content.membership === 'leave' && ev.getStateKey() === ev.getSender();
+    diff.isJoin = isMembershipChanged && content.membership === "join";
+    diff.isPart =
+        isMembershipChanged &&
+        content.membership === "leave" &&
+        ev.getStateKey() === ev.getSender();
 
-    const isJoinToJoin = !isMembershipChanged && content.membership === 'join';
-    diff.isDisplaynameChange = isJoinToJoin && content.displayname !== prevContent.displayname;
-    diff.isAvatarChange = isJoinToJoin && content.avatar_url !== prevContent.avatar_url;
+    const isJoinToJoin = !isMembershipChanged && content.membership === "join";
+    diff.isDisplaynameChange =
+        isJoinToJoin && content.displayname !== prevContent.displayname;
+    diff.isAvatarChange =
+        isJoinToJoin && content.avatar_url !== prevContent.avatar_url;
     return diff;
 }
 
@@ -54,15 +59,18 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
  * @param ctx An optional RoomContext to pull cached settings values from to avoid
  *     hitting the settings store
  */
-export default function shouldHideEvent(ev: MatrixEvent, ctx?: IState): boolean {
+export default function shouldHideEvent(
+    ev: MatrixEvent,
+    ctx?: IState,
+): boolean {
     // Accessing the settings store directly can be expensive if done frequently,
     // so we should prefer using cached values if a RoomContext is available
-    const isEnabled = ctx ?
-        name => ctx[name] :
-        name => SettingsStore.getValue(name, ev.getRoomId());
+    const isEnabled = ctx
+        ? (name) => ctx[name]
+        : (name) => SettingsStore.getValue(name, ev.getRoomId());
 
     // Hide redacted events
-    if (ev.isRedacted() && !isEnabled('showRedactions')) return true;
+    if (ev.isRedacted() && !isEnabled("showRedactions")) return true;
 
     // Hide replacement events since they update the original tile (if enabled)
     if (ev.isRelation("m.replace")) return true;
@@ -70,9 +78,18 @@ export default function shouldHideEvent(ev: MatrixEvent, ctx?: IState): boolean 
     const eventDiff = memberEventDiff(ev);
 
     if (eventDiff.isMemberEvent) {
-        if ((eventDiff.isJoin || eventDiff.isPart) && !isEnabled('showJoinLeaves')) return true;
-        if (eventDiff.isAvatarChange && !isEnabled('showAvatarChanges')) return true;
-        if (eventDiff.isDisplaynameChange && !isEnabled('showDisplaynameChanges')) return true;
+        if (
+            (eventDiff.isJoin || eventDiff.isPart) &&
+            !isEnabled("showJoinLeaves")
+        )
+            return true;
+        if (eventDiff.isAvatarChange && !isEnabled("showAvatarChanges"))
+            return true;
+        if (
+            eventDiff.isDisplaynameChange &&
+            !isEnabled("showDisplaynameChanges")
+        )
+            return true;
     }
 
     return false;

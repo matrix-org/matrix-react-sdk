@@ -27,12 +27,20 @@ export default class SpecPermalinkConstructor extends PermalinkConstructor {
         super();
     }
 
-    forEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
-        return `${baseUrl}/#/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
+    forEvent(
+        roomId: string,
+        eventId: string,
+        serverCandidates: string[],
+    ): string {
+        return `${baseUrl}/#/${roomId}/${eventId}${this.encodeServerCandidates(
+            serverCandidates,
+        )}`;
     }
 
     forRoom(roomIdOrAlias: string, serverCandidates: string[]): string {
-        return `${baseUrl}/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
+        return `${baseUrl}/#/${roomIdOrAlias}${this.encodeServerCandidates(
+            serverCandidates,
+        )}`;
     }
 
     forUser(userId: string): string {
@@ -52,8 +60,10 @@ export default class SpecPermalinkConstructor extends PermalinkConstructor {
     }
 
     encodeServerCandidates(candidates: string[]) {
-        if (!candidates || candidates.length === 0) return '';
-        return `?via=${candidates.map(c => encodeURIComponent(c)).join("&via=")}`;
+        if (!candidates || candidates.length === 0) return "";
+        return `?via=${candidates
+            .map((c) => encodeURIComponent(c))
+            .join("&via=")}`;
     }
 
     // Heavily inspired by/borrowed from the matrix-bot-sdk (with permission):
@@ -66,23 +76,25 @@ export default class SpecPermalinkConstructor extends PermalinkConstructor {
         const parts = fullUrl.substring(`${baseUrl}/#/`.length).split("/");
 
         const entity = parts[0];
-        if (entity[0] === '@') {
+        if (entity[0] === "@") {
             // Probably a user, no further parsing needed.
             return PermalinkParts.forUser(entity);
-        } else if (entity[0] === '+') {
+        } else if (entity[0] === "+") {
             // Probably a group, no further parsing needed.
             return PermalinkParts.forGroup(entity);
-        } else if (entity[0] === '#' || entity[0] === '!') {
-            if (parts.length === 1) { // room without event permalink
-                const [roomId, query=""] = entity.split("?");
-                const via = query.split(/&?via=/g).filter(p => !!p);
+        } else if (entity[0] === "#" || entity[0] === "!") {
+            if (parts.length === 1) {
+                // room without event permalink
+                const [roomId, query = ""] = entity.split("?");
+                const via = query.split(/&?via=/g).filter((p) => !!p);
                 return PermalinkParts.forRoom(roomId, via);
             }
 
             // rejoin the rest because v3 events can have slashes (annoyingly)
-            const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join('/') : "";
-            const [eventId, query=""] = eventIdAndQuery.split("?");
-            const via = query.split(/&?via=/g).filter(p => !!p);
+            const eventIdAndQuery =
+                parts.length > 1 ? parts.slice(1).join("/") : "";
+            const [eventId, query = ""] = eventIdAndQuery.split("?");
+            const via = query.split(/&?via=/g).filter((p) => !!p);
 
             return PermalinkParts.forEvent(entity, eventId, via);
         } else {

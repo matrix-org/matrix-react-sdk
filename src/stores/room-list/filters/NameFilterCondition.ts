@@ -15,7 +15,11 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
-import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./IFilterCondition";
+import {
+    FILTER_CHANGED,
+    FilterKind,
+    IFilterCondition,
+} from "./IFilterCondition";
 import { EventEmitter } from "events";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { throttle } from "lodash";
@@ -24,7 +28,10 @@ import { throttle } from "lodash";
  * A filter condition for the room list which reveals rooms of a particular
  * name, or associated name (like a room alias).
  */
-export class NameFilterCondition extends EventEmitter implements IFilterCondition {
+export class NameFilterCondition
+    extends EventEmitter
+    implements IFilterCondition
+{
     private _search = "";
 
     constructor() {
@@ -44,18 +51,29 @@ export class NameFilterCondition extends EventEmitter implements IFilterConditio
         this.callUpdate();
     }
 
-    private callUpdate = throttle(() => {
-        this.emit(FILTER_CHANGED);
-    }, 200, { trailing: true, leading: true });
+    private callUpdate = throttle(
+        () => {
+            this.emit(FILTER_CHANGED);
+        },
+        200,
+        { trailing: true, leading: true },
+    );
 
     public isVisible(room: Room): boolean {
         const lcFilter = this.search.toLowerCase();
-        if (this.search[0] === '#') {
+        if (this.search[0] === "#") {
             // Try and find rooms by alias
-            if (room.getCanonicalAlias() && room.getCanonicalAlias().toLowerCase().startsWith(lcFilter)) {
+            if (
+                room.getCanonicalAlias() &&
+                room.getCanonicalAlias().toLowerCase().startsWith(lcFilter)
+            ) {
                 return true;
             }
-            if (room.getAltAliases().some(a => a.toLowerCase().startsWith(lcFilter))) {
+            if (
+                room
+                    .getAltAliases()
+                    .some((a) => a.toLowerCase().startsWith(lcFilter))
+            ) {
                 return true;
             }
         }

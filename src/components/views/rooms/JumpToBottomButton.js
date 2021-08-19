@@ -14,25 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
-import classNames from 'classnames';
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
+import classNames from "classnames";
 
 export default (props) => {
     const className = classNames({
-        'mx_JumpToBottomButton': true,
-        'mx_JumpToBottomButton_highlight': props.highlight,
+        mx_JumpToBottomButton: true,
+        mx_JumpToBottomButton_highlight: props.highlight,
     });
     let badge;
     if (props.numUnreadMessages) {
-        badge = (<div className="mx_JumpToBottomButton_badge">{ props.numUnreadMessages }</div>);
+        badge = (
+            <div className="mx_JumpToBottomButton_badge">
+                {props.numUnreadMessages}
+            </div>
+        );
     }
-    return (<div className={className}>
-        <AccessibleButton
-            className="mx_JumpToBottomButton_scrollDown"
-            title={_t("Scroll to most recent messages")}
-            onClick={props.onScrollToBottomClick}
-        />
-        { badge }
-    </div>);
+    return (
+        <div className={className}>
+            <AccessibleButton
+                className="mx_JumpToBottomButton_scrollDown"
+                title={_t("Scroll to most recent messages")}
+                onClick={props.onScrollToBottomClick}
+            />
+            {badge}
+        </div>
+    );
 };

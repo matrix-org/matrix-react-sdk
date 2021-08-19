@@ -28,34 +28,44 @@ export enum OIDCState {
 export class WidgetPermissionStore {
     private static internalInstance: WidgetPermissionStore;
 
-    private constructor() {
-    }
+    private constructor() {}
 
     public static get instance(): WidgetPermissionStore {
         if (!WidgetPermissionStore.internalInstance) {
-            WidgetPermissionStore.internalInstance = new WidgetPermissionStore();
+            WidgetPermissionStore.internalInstance =
+                new WidgetPermissionStore();
         }
         return WidgetPermissionStore.internalInstance;
     }
 
     // TODO (all functions here): Merge widgetKind with the widget definition
 
-    private packSettingKey(widget: Widget, kind: WidgetKind, roomId?: string): string {
+    private packSettingKey(
+        widget: Widget,
+        kind: WidgetKind,
+        roomId?: string,
+    ): string {
         let location = roomId;
         if (kind !== WidgetKind.Room) {
             location = MatrixClientPeg.get().getUserId();
         }
         if (kind === WidgetKind.Modal) {
-            location = '*MODAL*-' + location; // to guarantee differentiation from whatever spawned it
+            location = "*MODAL*-" + location; // to guarantee differentiation from whatever spawned it
         }
         if (!location) {
-            throw new Error("Failed to determine a location to check the widget's OIDC state with");
+            throw new Error(
+                "Failed to determine a location to check the widget's OIDC state with",
+            );
         }
 
         return encodeURIComponent(`${location}::${widget.templateUrl}`);
     }
 
-    public getOIDCState(widget: Widget, kind: WidgetKind, roomId?: string): OIDCState {
+    public getOIDCState(
+        widget: Widget,
+        kind: WidgetKind,
+        roomId?: string,
+    ): OIDCState {
         const settingsKey = this.packSettingKey(widget, kind, roomId);
         const settings = SettingsStore.getValue("widgetOpenIDPermissions");
         if (settings?.deny?.includes(settingsKey)) {
@@ -67,7 +77,12 @@ export class WidgetPermissionStore {
         return OIDCState.Unknown;
     }
 
-    public setOIDCState(widget: Widget, kind: WidgetKind, roomId: string, newState: OIDCState) {
+    public setOIDCState(
+        widget: Widget,
+        kind: WidgetKind,
+        roomId: string,
+        newState: OIDCState,
+    ) {
         const settingsKey = this.packSettingKey(widget, kind, roomId);
 
         const currentValues = SettingsStore.getValue("widgetOpenIDPermissions");
@@ -79,10 +94,19 @@ export class WidgetPermissionStore {
         } else if (newState === OIDCState.Denied) {
             currentValues.deny.push(settingsKey);
         } else {
-            currentValues.allow = currentValues.allow.filter(c => c !== settingsKey);
-            currentValues.deny = currentValues.deny.filter(c => c !== settingsKey);
+            currentValues.allow = currentValues.allow.filter(
+                (c) => c !== settingsKey,
+            );
+            currentValues.deny = currentValues.deny.filter(
+                (c) => c !== settingsKey,
+            );
         }
 
-        SettingsStore.setValue("widgetOpenIDPermissions", null, SettingLevel.DEVICE, currentValues);
+        SettingsStore.setValue(
+            "widgetOpenIDPermissions",
+            null,
+            SettingLevel.DEVICE,
+            currentValues,
+        );
     }
 }

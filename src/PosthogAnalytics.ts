@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import posthog, { PostHog } from 'posthog-js';
-import PlatformPeg from './PlatformPeg';
-import SdkConfig from './SdkConfig';
-import SettingsStore from './settings/SettingsStore';
+import posthog, { PostHog } from "posthog-js";
+import PlatformPeg from "./PlatformPeg";
+import SdkConfig from "./SdkConfig";
+import SettingsStore from "./settings/SettingsStore";
 
 /* Posthog analytics tracking.
  *
@@ -46,7 +46,7 @@ interface IEvent {
 export enum Anonymity {
     Disabled,
     Anonymous,
-    Pseudonymous
+    Pseudonymous,
 }
 
 // If an event extends IPseudonymousEvent, the event contains pseudonymous data
@@ -74,12 +74,30 @@ interface IPageView extends IAnonymousEvent {
 const hashHex = async (input: string): Promise<string> => {
     const buf = new TextEncoder().encode(input);
     const digestBuf = await window.crypto.subtle.digest("sha-256", buf);
-    return [...new Uint8Array(digestBuf)].map((b: number) => b.toString(16).padStart(2, "0")).join("");
+    return [...new Uint8Array(digestBuf)]
+        .map((b: number) => b.toString(16).padStart(2, "0"))
+        .join("");
 };
 
 const whitelistedScreens = new Set([
-    "register", "login", "forgot_password", "soft_logout", "new", "settings", "welcome", "home", "start", "directory",
-    "start_sso", "start_cas", "groups", "complete_security", "post_registration", "room", "user", "group",
+    "register",
+    "login",
+    "forgot_password",
+    "soft_logout",
+    "new",
+    "settings",
+    "welcome",
+    "home",
+    "start",
+    "directory",
+    "start_sso",
+    "start_cas",
+    "groups",
+    "complete_security",
+    "post_registration",
+    "room",
+    "user",
+    "group",
 ]);
 
 export async function getRedactedCurrentLocation(
@@ -91,7 +109,7 @@ export async function getRedactedCurrentLocation(
     // Redact PII from the current location.
     // If anonymous is true, redact entirely, if false, substitute it with a hash.
     // For known screens, assumes a URL structure of /<screen name>/might/be/pii
-    if (origin.startsWith('file://')) {
+    if (origin.startsWith("file://")) {
         pathname = "/<redacted_file_scheme_url>/";
     }
 
@@ -106,7 +124,10 @@ export async function getRedactedCurrentLocation(
         }
 
         for (let i = 0; i < parts.length; i++) {
-            parts[i] = anonymity === Anonymity.Anonymous ? `<redacted>` : await hashHex(parts[i]);
+            parts[i] =
+                anonymity === Anonymity.Anonymous
+                    ? `<redacted>`
+                    : await hashHex(parts[i]);
         }
 
         hashStr = `${beforeFirstSlash}/${screen}/${parts.join("/")}`;
@@ -172,7 +193,9 @@ export class PosthogAnalytics {
         }
     }
 
-    private sanitizeProperties = (properties: posthog.Properties): posthog.Properties => {
+    private sanitizeProperties = (
+        properties: posthog.Properties,
+    ): posthog.Properties => {
         // Callback from posthog to sanitize properties before sending them to the server.
         //
         // Here we sanitize posthog's built in properties which leak PII e.g. url reporting.
@@ -181,21 +204,23 @@ export class PosthogAnalytics {
         // Replace the $current_url with a redacted version.
         // $redacted_current_url is injected by this class earlier in capture(), as its generation
         // is async and can't be done in this non-async callback.
-        if (!properties['$redacted_current_url']) {
-            console.log("$redacted_current_url not set in sanitizeProperties, will drop $current_url entirely");
+        if (!properties["$redacted_current_url"]) {
+            console.log(
+                "$redacted_current_url not set in sanitizeProperties, will drop $current_url entirely",
+            );
         }
-        properties['$current_url'] = properties['$redacted_current_url'];
-        delete properties['$redacted_current_url'];
+        properties["$current_url"] = properties["$redacted_current_url"];
+        delete properties["$redacted_current_url"];
 
         if (this.anonymity == Anonymity.Anonymous) {
             // drop referrer information for anonymous users
-            properties['$referrer'] = null;
-            properties['$referring_domain'] = null;
-            properties['$initial_referrer'] = null;
-            properties['$initial_referring_domain'] = null;
+            properties["$referrer"] = null;
+            properties["$referring_domain"] = null;
+            properties["$initial_referrer"] = null;
+            properties["$initial_referring_domain"] = null;
 
             // drop device ID, which is a UUID persisted in local storage
-            properties['$device_id'] = null;
+            properties["$device_id"] = null;
         }
 
         return properties;
@@ -205,12 +230,20 @@ export class PosthogAnalytics {
         // determine the current anonymity level based on current user settings
 
         // "Send anonymous usage data which helps us improve Element. This will use a cookie."
-        const analyticsOptIn = SettingsStore.getValue("analyticsOptIn", null, true);
+        const analyticsOptIn = SettingsStore.getValue(
+            "analyticsOptIn",
+            null,
+            true,
+        );
 
         // (proposed wording) "Send pseudonymous usage data which helps us improve Element. This will use a cookie."
         //
         // TODO: Currently, this is only a labs flag, for testing purposes.
-        const pseudonumousOptIn = SettingsStore.getValue("feature_pseudonymous_analytics_opt_in", null, true);
+        const pseudonumousOptIn = SettingsStore.getValue(
+            "feature_pseudonymous_analytics_opt_in",
+            null,
+            true,
+        );
 
         let anonymity;
         if (pseudonumousOptIn) {
@@ -251,8 +284,12 @@ export class PosthogAnalytics {
             return;
         }
         const { origin, hash, pathname } = window.location;
-        properties['$redacted_current_url'] = await getRedactedCurrentLocation(
-            origin, hash, pathname, this.anonymity);
+        properties["$redacted_current_url"] = await getRedactedCurrentLocation(
+            origin,
+            hash,
+            pathname,
+            this.anonymity,
+        );
         this.posthog.capture(eventName, properties);
     }
 
@@ -264,7 +301,11 @@ export class PosthogAnalytics {
         // Update this.anonymity.
         // This is public for testing purposes, typically you want to call updateAnonymityFromSettings
         // to ensure this value is in step with the user's settings.
-        if (this.enabled && (anonymity == Anonymity.Disabled || anonymity == Anonymity.Anonymous)) {
+        if (
+            this.enabled &&
+            (anonymity == Anonymity.Disabled ||
+                anonymity == Anonymity.Anonymous)
+        ) {
             // when transitioning to Disabled or Anonymous ensure we clear out any prior state
             // set in posthog e.g. distinct ID
             this.posthog.reset();
@@ -295,7 +336,11 @@ export class PosthogAnalytics {
         eventName: E["eventName"],
         properties: E["properties"] = {},
     ) {
-        if (this.anonymity == Anonymity.Anonymous || this.anonymity == Anonymity.Disabled) return;
+        if (
+            this.anonymity == Anonymity.Anonymous ||
+            this.anonymity == Anonymity.Disabled
+        )
+            return;
         await this.capture(eventName, properties);
     }
 
@@ -340,7 +385,8 @@ export class PosthogAnalytics {
         //
         // This only needs to be done once per page lifetime. Note that getPlatformProperties
         // is async and can involve a network request if we are running in a browser.
-        this.platformSuperProperties = await PosthogAnalytics.getPlatformProperties();
+        this.platformSuperProperties =
+            await PosthogAnalytics.getPlatformProperties();
         this.registerSuperProperties(this.platformSuperProperties);
     }
 

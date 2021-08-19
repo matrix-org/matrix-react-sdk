@@ -26,7 +26,11 @@ export default class Range {
     private _start: DocumentPosition;
     private _end: DocumentPosition;
 
-    constructor(public readonly model: EditorModel, positionA: DocumentPosition, positionB = positionA) {
+    constructor(
+        public readonly model: EditorModel,
+        positionA: DocumentPosition,
+        positionB = positionA,
+    ) {
         const bIsLarger = positionA.compare(positionB) < 0;
         this._start = bIsLarger ? positionA : positionB;
         this._end = bIsLarger ? positionB : positionA;
@@ -40,7 +44,10 @@ export default class Range {
     }
 
     public trim(): void {
-        this._start = this._start.forwardsWhile(this.model, whitespacePredicate);
+        this._start = this._start.forwardsWhile(
+            this.model,
+            whitespacePredicate,
+        );
         this._end = this._end.backwardsWhile(this.model, whitespacePredicate);
     }
 
@@ -50,10 +57,14 @@ export default class Range {
 
     public get text(): string {
         let text = "";
-        this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
-            const t = part.text.substring(startIdx, endIdx);
-            text = text + t;
-        });
+        this._start.iteratePartsBetween(
+            this._end,
+            this.model,
+            (part, startIdx, endIdx) => {
+                const t = part.text.substring(startIdx, endIdx);
+                text = text + t;
+            },
+        );
         return text;
     }
 
@@ -64,11 +75,18 @@ export default class Range {
      * @return {Number} the net amount of characters added, can be negative.
      */
     public replace(parts: Part[]): number {
-        const newLength = parts.reduce((sum, part) => sum + part.text.length, 0);
+        const newLength = parts.reduce(
+            (sum, part) => sum + part.text.length,
+            0,
+        );
         let oldLength = 0;
-        this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
-            oldLength += endIdx - startIdx;
-        });
+        this._start.iteratePartsBetween(
+            this._end,
+            this.model,
+            (part, startIdx, endIdx) => {
+                oldLength += endIdx - startIdx;
+            },
+        );
         this.model.replaceRange(this._start, this._end, parts);
         return newLength - oldLength;
     }
@@ -79,20 +97,29 @@ export default class Range {
      */
     public get parts(): Part[] {
         const parts: Part[] = [];
-        this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
-            const serializedPart = part.serialize();
-            serializedPart.text = part.text.substring(startIdx, endIdx);
-            const newPart = this.model.partCreator.deserializePart(serializedPart);
-            parts.push(newPart);
-        });
+        this._start.iteratePartsBetween(
+            this._end,
+            this.model,
+            (part, startIdx, endIdx) => {
+                const serializedPart = part.serialize();
+                serializedPart.text = part.text.substring(startIdx, endIdx);
+                const newPart =
+                    this.model.partCreator.deserializePart(serializedPart);
+                parts.push(newPart);
+            },
+        );
         return parts;
     }
 
     public get length(): number {
         let len = 0;
-        this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
-            len += endIdx - startIdx;
-        });
+        this._start.iteratePartsBetween(
+            this._end,
+            this.model,
+            (part, startIdx, endIdx) => {
+                len += endIdx - startIdx;
+            },
+        );
         return len;
     }
 

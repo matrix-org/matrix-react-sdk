@@ -16,23 +16,23 @@ limitations under the License.
 */
 
 import Field from "../elements/Field";
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AccessibleButton from '../elements/AccessibleButton';
-import Spinner from '../elements/Spinner';
-import withValidation from '../elements/Validation';
-import { _t } from '../../../languageHandler';
+import AccessibleButton from "../elements/AccessibleButton";
+import Spinner from "../elements/Spinner";
+import withValidation from "../elements/Validation";
+import { _t } from "../../../languageHandler";
 import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { PASSWORD_MIN_SCORE } from '../auth/RegistrationForm';
+import { PASSWORD_MIN_SCORE } from "../auth/RegistrationForm";
 
-const FIELD_OLD_PASSWORD = 'field_old_password';
-const FIELD_NEW_PASSWORD = 'field_new_password';
-const FIELD_NEW_PASSWORD_CONFIRM = 'field_new_password_confirm';
+const FIELD_OLD_PASSWORD = "field_old_password";
+const FIELD_NEW_PASSWORD = "field_new_password";
+const FIELD_NEW_PASSWORD_CONFIRM = "field_new_password_confirm";
 
 @replaceableComponent("views.settings.ChangePassword")
 export default class ChangePassword extends React.Component {
@@ -70,7 +70,7 @@ export default class ChangePassword extends React.Component {
             }
         },
         confirm: true,
-    }
+    };
 
     state = {
         fieldValid: {},
@@ -89,21 +89,25 @@ export default class ChangePassword extends React.Component {
         }
 
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
+        Modal.createTrackedDialog("Change Password", "", QuestionDialog, {
             title: _t("Warning!"),
-            description:
+            description: (
                 <div>
-                    { _t(
-                        'Changing password will currently reset any end-to-end encryption keys on all sessions, ' +
-                        'making encrypted chat history unreadable, unless you first export your room keys ' +
-                        'and re-import them afterwards. ' +
-                        'In future this will be improved.',
-                    ) }
-                    { ' ' }
-                    <a href="https://github.com/vector-im/element-web/issues/2671" target="_blank" rel="noreferrer noopener">
+                    {_t(
+                        "Changing password will currently reset any end-to-end encryption keys on all sessions, " +
+                            "making encrypted chat history unreadable, unless you first export your room keys " +
+                            "and re-import them afterwards. " +
+                            "In future this will be improved.",
+                    )}{" "}
+                    <a
+                        href="https://github.com/vector-im/element-web/issues/2671"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                    >
                         https://github.com/vector-im/element-web/issues/2671
                     </a>
-                </div>,
+                </div>
+            ),
             button: _t("Continue"),
             extraButtons: [
                 <button
@@ -111,7 +115,7 @@ export default class ChangePassword extends React.Component {
                     className="mx_Dialog_primary"
                     onClick={this._onExportE2eKeysClicked}
                 >
-                    { _t('Export E2E room keys') }
+                    {_t("Export E2E room keys")}
                 </button>,
             ],
             onFinished: (confirmed) => {
@@ -124,9 +128,9 @@ export default class ChangePassword extends React.Component {
 
     _changePassword(cli, oldPassword, newPassword) {
         const authDict = {
-            type: 'm.login.password',
+            type: "m.login.password",
             identifier: {
-                type: 'm.id.user',
+                type: "m.id.user",
                 user: cli.credentials.userId,
             },
             // TODO: Remove `user` once servers support proper UIA
@@ -139,40 +143,54 @@ export default class ChangePassword extends React.Component {
             phase: ChangePassword.Phases.Uploading,
         });
 
-        cli.setPassword(authDict, newPassword).then(() => {
-            if (this.props.shouldAskForEmail) {
-                return this._optionallySetEmail().then((confirmed) => {
-                    this.props.onFinished({
-                        didSetEmail: confirmed,
-                    });
+        cli.setPassword(authDict, newPassword)
+            .then(
+                () => {
+                    if (this.props.shouldAskForEmail) {
+                        return this._optionallySetEmail().then((confirmed) => {
+                            this.props.onFinished({
+                                didSetEmail: confirmed,
+                            });
+                        });
+                    } else {
+                        this.props.onFinished();
+                    }
+                },
+                (err) => {
+                    this.props.onError(err);
+                },
+            )
+            .finally(() => {
+                this.setState({
+                    phase: ChangePassword.Phases.Edit,
+                    oldPassword: "",
+                    newPassword: "",
+                    newPasswordConfirm: "",
                 });
-            } else {
-                this.props.onFinished();
-            }
-        }, (err) => {
-            this.props.onError(err);
-        }).finally(() => {
-            this.setState({
-                phase: ChangePassword.Phases.Edit,
-                oldPassword: "",
-                newPassword: "",
-                newPasswordConfirm: "",
             });
-        });
     }
 
     _optionallySetEmail() {
         // Ask for an email otherwise the user has no way to reset their password
         const SetEmailDialog = sdk.getComponent("dialogs.SetEmailDialog");
-        const modal = Modal.createTrackedDialog('Do you want to set an email address?', '', SetEmailDialog, {
-            title: _t('Do you want to set an email address?'),
-        });
+        const modal = Modal.createTrackedDialog(
+            "Do you want to set an email address?",
+            "",
+            SetEmailDialog,
+            {
+                title: _t("Do you want to set an email address?"),
+            },
+        );
         return modal.finished.then(([confirmed]) => confirmed);
     }
 
     _onExportE2eKeysClicked = () => {
-        Modal.createTrackedDialogAsync('Export E2E Keys', 'Change Password',
-            import('../../../async-components/views/dialogs/security/ExportE2eKeysDialog'),
+        Modal.createTrackedDialogAsync(
+            "Export E2E Keys",
+            "Change Password",
+            import(
+                "../../../async-components/views/dialogs/security/ExportE2eKeysDialog"
+            ),
             {
                 matrixClient: MatrixClientPeg.get(),
             },
@@ -193,7 +211,7 @@ export default class ChangePassword extends React.Component {
         });
     };
 
-    onOldPasswordValidate = async fieldState => {
+    onOldPasswordValidate = async (fieldState) => {
         const result = await this.validateOldPasswordRules(fieldState);
         this.markFieldValid(FIELD_OLD_PASSWORD, result.valid);
         return result;
@@ -215,7 +233,7 @@ export default class ChangePassword extends React.Component {
         });
     };
 
-    onNewPasswordValidate = result => {
+    onNewPasswordValidate = (result) => {
         this.markFieldValid(FIELD_NEW_PASSWORD, result.valid);
     };
 
@@ -225,7 +243,7 @@ export default class ChangePassword extends React.Component {
         });
     };
 
-    onNewPasswordConfirmValidate = async fieldState => {
+    onNewPasswordConfirmValidate = async (fieldState) => {
         const result = await this.validatePasswordConfirmRules(fieldState);
         this.markFieldValid(FIELD_NEW_PASSWORD_CONFIRM, result.valid);
         return result;
@@ -253,7 +271,9 @@ export default class ChangePassword extends React.Component {
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
         if (!allFieldsValid) {
-            CountlyAnalytics.instance.track("onboarding_registration_submit_failed");
+            CountlyAnalytics.instance.track(
+                "onboarding_registration_submit_failed",
+            );
             return;
         }
 
@@ -261,7 +281,9 @@ export default class ChangePassword extends React.Component {
         const newPassword = this.state.newPassword;
         const confirmPassword = this.state.newPasswordConfirm;
         const err = this.props.onCheckPassword(
-            oldPassword, newPassword, confirmPassword,
+            oldPassword,
+            newPassword,
+            confirmPassword,
         );
         if (err) {
             this.props.onError(err);
@@ -300,7 +322,7 @@ export default class ChangePassword extends React.Component {
 
         // Validation and state updates are async, so we need to wait for them to complete
         // first. Queue a `setState` callback and wait for it to resolve.
-        await new Promise(resolve => this.setState({}, resolve));
+        await new Promise((resolve) => this.setState({}, resolve));
 
         if (this.allFieldsValid()) {
             return true;
@@ -345,12 +367,17 @@ export default class ChangePassword extends React.Component {
         switch (this.state.phase) {
             case ChangePassword.Phases.Edit:
                 return (
-                    <form className={this.props.className} onSubmit={this.onClickChange}>
+                    <form
+                        className={this.props.className}
+                        onSubmit={this.onClickChange}
+                    >
                         <div className={rowClassName}>
                             <Field
-                                ref={field => this[FIELD_OLD_PASSWORD] = field}
+                                ref={(field) =>
+                                    (this[FIELD_OLD_PASSWORD] = field)
+                                }
                                 type="password"
-                                label={_t('Current password')}
+                                label={_t("Current password")}
                                 value={this.state.oldPassword}
                                 onChange={this.onChangeOldPassword}
                                 onValidate={this.onOldPasswordValidate}
@@ -358,9 +385,11 @@ export default class ChangePassword extends React.Component {
                         </div>
                         <div className={rowClassName}>
                             <PassphraseField
-                                fieldRef={field => this[FIELD_NEW_PASSWORD] = field}
+                                fieldRef={(field) =>
+                                    (this[FIELD_NEW_PASSWORD] = field)
+                                }
                                 type="password"
-                                label='New Password'
+                                label="New Password"
                                 minScore={PASSWORD_MIN_SCORE}
                                 value={this.state.newPassword}
                                 autoFocus={this.props.autoFocusNewPasswordInput}
@@ -371,7 +400,9 @@ export default class ChangePassword extends React.Component {
                         </div>
                         <div className={rowClassName}>
                             <Field
-                                ref={field => this[FIELD_NEW_PASSWORD_CONFIRM] = field}
+                                ref={(field) =>
+                                    (this[FIELD_NEW_PASSWORD_CONFIRM] = field)
+                                }
                                 type="password"
                                 label={_t("Confirm password")}
                                 value={this.state.newPasswordConfirm}
@@ -380,8 +411,12 @@ export default class ChangePassword extends React.Component {
                                 autoComplete="new-password"
                             />
                         </div>
-                        <AccessibleButton className={buttonClassName} kind={this.props.buttonKind} onClick={this.onClickChange}>
-                            { this.props.buttonLabel || _t('Change Password') }
+                        <AccessibleButton
+                            className={buttonClassName}
+                            kind={this.props.buttonKind}
+                            onClick={this.onClickChange}
+                        >
+                            {this.props.buttonLabel || _t("Change Password")}
                         </AccessibleButton>
                     </form>
                 );

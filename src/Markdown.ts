@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as commonmark from 'commonmark';
+import * as commonmark from "commonmark";
 import { escape } from "lodash";
 
-const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
+const ALLOWED_HTML_TAGS = ["sub", "sup", "del", "u"];
 
 // These types of node are definitely text
-const TEXT_NODES = ['text', 'softbreak', 'linebreak', 'paragraph', 'document'];
+const TEXT_NODES = ["text", "softbreak", "linebreak", "paragraph", "document"];
 
 // As far as @types/commonmark is concerned, these are not public, so add them
 interface CommonmarkHtmlRendererInternal extends commonmark.HtmlRenderer {
@@ -32,8 +32,12 @@ interface CommonmarkHtmlRendererInternal extends commonmark.HtmlRenderer {
 }
 
 function isAllowedHtmlTag(node: commonmark.Node): boolean {
-    if (node.literal != null &&
-        node.literal.match('^<((div|span) data-mx-maths="[^"]*"|/(div|span))>$') != null) {
+    if (
+        node.literal != null &&
+        node.literal.match(
+            '^<((div|span) data-mx-maths="[^"]*"|/(div|span))>$',
+        ) != null
+    ) {
         return true;
     }
 
@@ -81,12 +85,15 @@ export default class Markdown {
         const walker = this.parsed.walker();
 
         let ev;
-        while ( (ev = walker.next()) ) {
+        while ((ev = walker.next())) {
             const node = ev.node;
             if (TEXT_NODES.indexOf(node.type) > -1) {
                 // definitely text
                 continue;
-            } else if (node.type == 'html_inline' || node.type == 'html_block') {
+            } else if (
+                node.type == "html_inline" ||
+                node.type == "html_block"
+            ) {
                 // if it's an allowed html tag, we need to render it and therefore
                 // we will need to use HTML. If it's not allowed, it's not HTML since
                 // we'll just be treating it as text.
@@ -109,7 +116,7 @@ export default class Markdown {
             // so if these are just newline characters then the
             // block quote ends up all on one line
             // (https://github.com/vector-im/element-web/issues/3154)
-            softbreak: '<br />',
+            softbreak: "<br />",
         }) as CommonmarkHtmlRendererInternal;
 
         // Trying to strip out the wrapping <p/> causes a lot more complication
@@ -123,7 +130,10 @@ export default class Markdown {
 
         const realParagraph = renderer.paragraph;
 
-        renderer.paragraph = function(node: commonmark.Node, entering: boolean) {
+        renderer.paragraph = function (
+            node: commonmark.Node,
+            entering: boolean,
+        ) {
             // If there is only one top level node, just return the
             // bare text: it's a single line of text and so should be
             // 'inline', rather than unnecessarily wrapped in its own
@@ -134,26 +144,26 @@ export default class Markdown {
             }
         };
 
-        renderer.link = function(node, entering) {
+        renderer.link = function (node, entering) {
             const attrs = this.attrs(node);
             if (entering) {
-                attrs.push(['href', this.esc(node.destination)]);
+                attrs.push(["href", this.esc(node.destination)]);
                 if (node.title) {
-                    attrs.push(['title', this.esc(node.title)]);
+                    attrs.push(["title", this.esc(node.title)]);
                 }
                 // Modified link behaviour to treat them all as external and
                 // thus opening in a new tab.
                 if (externalLinks) {
-                    attrs.push(['target', '_blank']);
-                    attrs.push(['rel', 'noreferrer noopener']);
+                    attrs.push(["target", "_blank"]);
+                    attrs.push(["rel", "noreferrer noopener"]);
                 }
-                this.tag('a', attrs);
+                this.tag("a", attrs);
             } else {
-                this.tag('/a');
+                this.tag("/a");
             }
         };
 
-        renderer.html_inline = function(node: commonmark.Node) {
+        renderer.html_inline = function (node: commonmark.Node) {
             if (isAllowedHtmlTag(node)) {
                 this.lit(node.literal);
                 return;
@@ -162,7 +172,7 @@ export default class Markdown {
             }
         };
 
-        renderer.html_block = function(node: commonmark.Node) {
+        renderer.html_block = function (node: commonmark.Node) {
             /*
             // as with `paragraph`, we only insert line breaks
             // if there are multiple lines in the markdown.
@@ -188,21 +198,26 @@ export default class Markdown {
      * which has no formatting.  Otherwise it emits HTML(!).
      */
     toPlaintext(): string {
-        const renderer = new commonmark.HtmlRenderer({ safe: false }) as CommonmarkHtmlRendererInternal;
+        const renderer = new commonmark.HtmlRenderer({
+            safe: false,
+        }) as CommonmarkHtmlRendererInternal;
 
-        renderer.paragraph = function(node: commonmark.Node, entering: boolean) {
+        renderer.paragraph = function (
+            node: commonmark.Node,
+            entering: boolean,
+        ) {
             // as with toHTML, only append lines to paragraphs if there are
             // multiple paragraphs
             if (isMultiLine(node)) {
                 if (!entering && node.next) {
-                    this.lit('\n\n');
+                    this.lit("\n\n");
                 }
             }
         };
 
-        renderer.html_block = function(node: commonmark.Node) {
+        renderer.html_block = function (node: commonmark.Node) {
             this.lit(node.literal);
-            if (isMultiLine(node) && node.next) this.lit('\n\n');
+            if (isMultiLine(node) && node.next) this.lit("\n\n");
         };
 
         return renderer.render(this.parsed);

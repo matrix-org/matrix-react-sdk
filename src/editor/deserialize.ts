@@ -54,7 +54,12 @@ function parseLink(a: HTMLAnchorElement, partCreator: PartCreator) {
             if (href === a.textContent) {
                 return partCreator.plain(a.textContent);
             } else {
-                return partCreator.plain(`[${a.textContent.replace(/[[\\\]]/g, c => "\\" + c)}](${href})`);
+                return partCreator.plain(
+                    `[${a.textContent.replace(
+                        /[[\\\]]/g,
+                        (c) => "\\" + c,
+                    )}](${href})`,
+                );
             }
         }
     }
@@ -62,7 +67,9 @@ function parseLink(a: HTMLAnchorElement, partCreator: PartCreator) {
 
 function parseImage(img: HTMLImageElement, partCreator: PartCreator) {
     const { src } = img;
-    return partCreator.plain(`![${img.alt.replace(/[[\\\]]/g, c => "\\" + c)}](${src})`);
+    return partCreator.plain(
+        `![${img.alt.replace(/[[\\\]]/g, (c) => "\\" + c)}](${src})`,
+    );
 }
 
 function parseCodeBlock(n: HTMLElement, partCreator: PartCreator) {
@@ -70,13 +77,18 @@ function parseCodeBlock(n: HTMLElement, partCreator: PartCreator) {
     let language = "";
     if (n.firstChild && n.firstChild.nodeName === "CODE") {
         for (const className of (<HTMLElement>n.firstChild).classList) {
-            if (className.startsWith("language-") && !className.startsWith("language-_")) {
+            if (
+                className.startsWith("language-") &&
+                !className.startsWith("language-_")
+            ) {
                 language = className.substr("language-".length);
                 break;
             }
         }
     }
-    const preLines = ("```" + language + "\n" + n.textContent + "```").split("\n");
+    const preLines = ("```" + language + "\n" + n.textContent + "```").split(
+        "\n",
+    );
     preLines.forEach((l, i) => {
         parts.push(partCreator.plain(l));
         if (i < preLines.length - 1) {
@@ -96,7 +108,12 @@ interface IState {
     listDepth?: number;
 }
 
-function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLElement | undefined, state: IState) {
+function parseElement(
+    n: HTMLElement,
+    partCreator: PartCreator,
+    lastNode: HTMLElement | undefined,
+    state: IState,
+) {
     switch (n.nodeName) {
         case "H1":
         case "H2":
@@ -148,12 +165,22 @@ function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLEl
         case "SPAN": {
             // math nodes are translated back into delimited latex strings
             if (n.hasAttribute("data-mx-maths")) {
-                const delimLeft = (n.nodeName == "SPAN") ?
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['inline'] || {})['left'] || "\\(" :
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['display'] || {})['left'] || "\\[";
-                const delimRight = (n.nodeName == "SPAN") ?
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['inline'] || {})['right'] || "\\)" :
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['display'] || {})['right'] || "\\]";
+                const delimLeft =
+                    n.nodeName == "SPAN"
+                        ? ((SdkConfig.get()["latex_maths_delims"] || {})[
+                              "inline"
+                          ] || {})["left"] || "\\("
+                        : ((SdkConfig.get()["latex_maths_delims"] || {})[
+                              "display"
+                          ] || {})["left"] || "\\[";
+                const delimRight =
+                    n.nodeName == "SPAN"
+                        ? ((SdkConfig.get()["latex_maths_delims"] || {})[
+                              "inline"
+                          ] || {})["right"] || "\\)"
+                        : ((SdkConfig.get()["latex_maths_delims"] || {})[
+                              "display"
+                          ] || {})["right"] || "\\]";
                 const tex = n.getAttribute("data-mx-maths");
                 return partCreator.plain(delimLeft + tex + delimRight);
             } else if (!checkDescendInto(n)) {
@@ -163,10 +190,10 @@ function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLEl
         }
         case "OL":
             state.listIndex.push((<HTMLOListElement>n).start || 1);
-            /* falls through */
+        /* falls through */
         case "UL":
             state.listDepth = (state.listDepth || 0) + 1;
-            /* falls through */
+        /* falls through */
         default:
             // don't textify block nodes we'll descend into
             if (!checkDescendInto(n)) {
@@ -213,7 +240,11 @@ function prefixQuoteLines(isFirstNode, parts, partCreator) {
     }
 }
 
-function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessage: boolean) {
+function parseHtmlMessage(
+    html: string,
+    partCreator: PartCreator,
+    isQuotedMessage: boolean,
+) {
     // no nodes from parsing here should be inserted in the document,
     // as scripts in event handlers, etc would be executed then.
     // we're only taking text, so that is fine
@@ -275,7 +306,7 @@ function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessag
                 break;
             case "OL":
                 state.listIndex.pop();
-                /* falls through */
+            /* falls through */
             case "UL":
                 state.listDepth -= 1;
                 break;
@@ -288,7 +319,11 @@ function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessag
     return parts;
 }
 
-export function parsePlainTextMessage(body: string, partCreator: PartCreator, isQuotedMessage?: boolean) {
+export function parsePlainTextMessage(
+    body: string,
+    partCreator: PartCreator,
+    isQuotedMessage?: boolean,
+) {
     const lines = body.split(/\r\n|\r|\n/g); // split on any new-line combination not just \n, collapses \r\n
     return lines.reduce((parts, line, i) => {
         if (isQuotedMessage) {
@@ -303,13 +338,25 @@ export function parsePlainTextMessage(body: string, partCreator: PartCreator, is
     }, []);
 }
 
-export function parseEvent(event: MatrixEvent, partCreator: PartCreator, { isQuotedMessage = false } = {}) {
+export function parseEvent(
+    event: MatrixEvent,
+    partCreator: PartCreator,
+    { isQuotedMessage = false } = {},
+) {
     const content = event.getContent();
     let parts;
     if (content.format === "org.matrix.custom.html") {
-        parts = parseHtmlMessage(content.formatted_body || "", partCreator, isQuotedMessage);
+        parts = parseHtmlMessage(
+            content.formatted_body || "",
+            partCreator,
+            isQuotedMessage,
+        );
     } else {
-        parts = parsePlainTextMessage(content.body || "", partCreator, isQuotedMessage);
+        parts = parsePlainTextMessage(
+            content.body || "",
+            partCreator,
+            isQuotedMessage,
+        );
     }
     if (content.msgtype === "m.emote") {
         parts.unshift(partCreator.plain("/me "));

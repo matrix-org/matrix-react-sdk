@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
-import { isOnlyCtrlOrCmdIgnoreShiftKeyEvent } from '../../../Keyboard';
-import * as FormattingUtils from '../../../utils/FormattingUtils';
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import * as sdk from "../../../index";
+import dis from "../../../dispatcher/dispatcher";
+import { isOnlyCtrlOrCmdIgnoreShiftKeyEvent } from "../../../Keyboard";
+import * as FormattingUtils from "../../../utils/FormattingUtils";
 
-import FlairStore from '../../../stores/FlairStore';
-import GroupStore from '../../../stores/GroupStore';
-import GroupFilterOrderStore from '../../../stores/GroupFilterOrderStore';
+import FlairStore from "../../../stores/FlairStore";
+import GroupStore from "../../../stores/GroupStore";
+import GroupFilterOrderStore from "../../../stores/GroupFilterOrderStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -61,8 +61,11 @@ export default class TagTile extends React.Component {
 
     componentDidMount() {
         this.unmounted = false;
-        if (this.props.tag[0] === '+') {
-            FlairStore.addListener('updateGroupProfile', this._onFlairStoreUpdated);
+        if (this.props.tag[0] === "+") {
+            FlairStore.addListener(
+                "updateGroupProfile",
+                this._onFlairStoreUpdated,
+            );
             this._onFlairStoreUpdated();
             // New rooms or members may have been added to the group, fetch async
             this._refreshGroup(this.props.tag);
@@ -71,22 +74,27 @@ export default class TagTile extends React.Component {
 
     componentWillUnmount() {
         this.unmounted = true;
-        if (this.props.tag[0] === '+') {
-            FlairStore.removeListener('updateGroupProfile', this._onFlairStoreUpdated);
+        if (this.props.tag[0] === "+") {
+            FlairStore.removeListener(
+                "updateGroupProfile",
+                this._onFlairStoreUpdated,
+            );
         }
     }
 
     _onFlairStoreUpdated = () => {
         if (this.unmounted) return;
-        FlairStore.getGroupProfileCached(
-            this.context,
-            this.props.tag,
-        ).then((profile) => {
-            if (this.unmounted) return;
-            this.setState({ profile });
-        }).catch((err) => {
-            console.warn('Could not fetch group profile for ' + this.props.tag, err);
-        });
+        FlairStore.getGroupProfileCached(this.context, this.props.tag)
+            .then((profile) => {
+                if (this.unmounted) return;
+                this.setState({ profile });
+            })
+            .catch((err) => {
+                console.warn(
+                    "Could not fetch group profile for " + this.props.tag,
+                    err,
+                );
+            });
     };
 
     _refreshGroup(groupId) {
@@ -94,16 +102,16 @@ export default class TagTile extends React.Component {
         GroupStore.refreshGroupMembers(groupId);
     }
 
-    onClick = e => {
+    onClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         dis.dispatch({
-            action: 'select_tag',
+            action: "select_tag",
             tag: this.props.tag,
             ctrlOrCmdKey: isOnlyCtrlOrCmdIgnoreShiftKeyEvent(e),
             shiftKey: e.shiftKey,
         });
-        if (this.props.tag[0] === '+') {
+        if (this.props.tag[0] === "+") {
             // New rooms or members may have been added to the group, fetch async
             this._refreshGroup(this.props.tag);
         }
@@ -118,7 +126,7 @@ export default class TagTile extends React.Component {
         this.setState({ hover: false });
     };
 
-    openMenu = e => {
+    openMenu = (e) => {
         // Prevent the TagTile onClick event firing as well
         e.stopPropagation();
         e.preventDefault();
@@ -128,7 +136,7 @@ export default class TagTile extends React.Component {
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
+        const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
         const profile = this.state.profile || {};
         const name = profile.name || this.props.tag;
         const avatarSize = 32;
@@ -137,7 +145,9 @@ export default class TagTile extends React.Component {
             ? mediaFromMxc(profile.avatarUrl).getSquareThumbnailHttp(avatarSize)
             : null;
 
-        const isPrototype = SettingsStore.getValue("feature_communities_v2_prototypes");
+        const isPrototype = SettingsStore.getValue(
+            "feature_communities_v2_prototypes",
+        );
         const className = classNames({
             mx_TagTile: true,
             mx_TagTile_prototype: isPrototype,
@@ -149,44 +159,56 @@ export default class TagTile extends React.Component {
         let badgeElement;
         if (badge && !this.state.hover && !this.props.menuDisplayed) {
             const badgeClasses = classNames({
-                "mx_TagTile_badge": true,
-                "mx_TagTile_badgeHighlight": badge.highlight,
+                mx_TagTile_badge: true,
+                mx_TagTile_badgeHighlight: badge.highlight,
             });
-            badgeElement = (<div className={badgeClasses}>{ FormattingUtils.formatCount(badge.count) }</div>);
+            badgeElement = (
+                <div className={badgeClasses}>
+                    {FormattingUtils.formatCount(badge.count)}
+                </div>
+            );
         }
 
-        const contextButton = this.state.hover || this.props.menuDisplayed ?
-            <AccessibleButton
-                className="mx_TagTile_context_button"
-                onClick={this.openMenu}
-                inputRef={this.props.contextMenuButtonRef}
-            >
-                { "\u00B7\u00B7\u00B7" }
-            </AccessibleButton> : <div ref={this.props.contextMenuButtonRef} />;
+        const contextButton =
+            this.state.hover || this.props.menuDisplayed ? (
+                <AccessibleButton
+                    className="mx_TagTile_context_button"
+                    onClick={this.openMenu}
+                    inputRef={this.props.contextMenuButtonRef}
+                >
+                    {"\u00B7\u00B7\u00B7"}
+                </AccessibleButton>
+            ) : (
+                <div ref={this.props.contextMenuButtonRef} />
+            );
 
-        const AccessibleTooltipButton = sdk.getComponent("elements.AccessibleTooltipButton");
+        const AccessibleTooltipButton = sdk.getComponent(
+            "elements.AccessibleTooltipButton",
+        );
 
-        return <AccessibleTooltipButton
-            className={className}
-            onClick={this.onClick}
-            onContextMenu={this.openMenu}
-            title={name}
-        >
-            <div
-                className="mx_TagTile_avatar"
-                onMouseOver={this.onMouseOver}
-                onMouseLeave={this.onMouseLeave}
+        return (
+            <AccessibleTooltipButton
+                className={className}
+                onClick={this.onClick}
+                onContextMenu={this.openMenu}
+                title={name}
             >
-                <BaseAvatar
-                    name={name}
-                    idName={this.props.tag}
-                    url={httpUrl}
-                    width={avatarSize}
-                    height={avatarSize}
-                />
-                { contextButton }
-                { badgeElement }
-            </div>
-        </AccessibleTooltipButton>;
+                <div
+                    className="mx_TagTile_avatar"
+                    onMouseOver={this.onMouseOver}
+                    onMouseLeave={this.onMouseLeave}
+                >
+                    <BaseAvatar
+                        name={name}
+                        idName={this.props.tag}
+                        url={httpUrl}
+                        width={avatarSize}
+                        height={avatarSize}
+                    />
+                    {contextButton}
+                    {badgeElement}
+                </div>
+            </AccessibleTooltipButton>
+        );
     }
 }

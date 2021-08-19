@@ -50,7 +50,7 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
     }
 
     public get contexts(): EchoContext[] {
-        return Array.from(this.caches.values()).map(e => e.context);
+        return Array.from(this.caches.values()).map((e) => e.context);
     }
 
     public getOrCreateChamberForRoom(room: Room): RoomEchoChamber {
@@ -71,12 +71,15 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
     private async checkContexts() {
         let hasOrHadError = false;
         for (const echo of this.caches.values()) {
-            hasOrHadError = echo.context.state === ContextTransactionState.PendingErrors;
+            hasOrHadError =
+                echo.context.state === ContextTransactionState.PendingErrors;
             if (hasOrHadError) break;
         }
 
         if (hasOrHadError && !this.state.toastRef) {
-            const ref = NonUrgentToastStore.instance.addToast(NonUrgentEchoFailureToast);
+            const ref = NonUrgentToastStore.instance.addToast(
+                NonUrgentEchoFailureToast,
+            );
             await this.updateState({ toastRef: ref });
         } else if (!hasOrHadError && this.state.toastRef) {
             NonUrgentToastStore.instance.removeToast(this.state.toastRef);

@@ -14,21 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
+import React, { createRef } from "react";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
 import Field from "../elements/Field";
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.dialogs.TextInputDialog")
 export default class TextInputDialog extends React.Component {
     static propTypes = {
         title: PropTypes.string,
-        description: PropTypes.oneOfType([
-            PropTypes.element,
-            PropTypes.string,
-        ]),
+        description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
         value: PropTypes.string,
         placeholder: PropTypes.string,
         button: PropTypes.string,
@@ -69,7 +66,7 @@ export default class TextInputDialog extends React.Component {
         }
     }
 
-    onOk = async ev => {
+    onOk = async (ev) => {
         ev.preventDefault();
         if (this.props.validator) {
             this.setState({ busy: true });
@@ -77,7 +74,10 @@ export default class TextInputDialog extends React.Component {
 
             if (!this._field.current.state.valid) {
                 this._field.current.focus();
-                this._field.current.validate({ allowEmpty: false, focused: true });
+                this._field.current.validate({
+                    allowEmpty: false,
+                    focused: true,
+                });
                 this.setState({ busy: false });
                 return;
             }
@@ -89,13 +89,13 @@ export default class TextInputDialog extends React.Component {
         this.props.onFinished(false);
     };
 
-    onChange = ev => {
+    onChange = (ev) => {
         this.setState({
             value: ev.target.value,
         });
     };
 
-    onValidate = async fieldState => {
+    onValidate = async (fieldState) => {
         const result = await this.props.validator(fieldState);
         this.setState({
             valid: result.valid,
@@ -104,8 +104,8 @@ export default class TextInputDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
+        const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
+        const DialogButtons = sdk.getComponent("views.elements.DialogButtons");
         return (
             <BaseDialog
                 className="mx_TextInputDialog"
@@ -116,7 +116,10 @@ export default class TextInputDialog extends React.Component {
                 <form onSubmit={this.onOk}>
                     <div className="mx_Dialog_content">
                         <div className="mx_TextInputDialog_label">
-                            <label htmlFor="textinput"> { this.props.description } </label>
+                            <label htmlFor="textinput">
+                                {" "}
+                                {this.props.description}{" "}
+                            </label>
                         </div>
                         <div>
                             <Field
@@ -126,14 +129,22 @@ export default class TextInputDialog extends React.Component {
                                 label={this.props.placeholder}
                                 value={this.state.value}
                                 onChange={this.onChange}
-                                onValidate={this.props.validator ? this.onValidate : undefined}
+                                onValidate={
+                                    this.props.validator
+                                        ? this.onValidate
+                                        : undefined
+                                }
                                 size="64"
                             />
                         </div>
                     </div>
                 </form>
                 <DialogButtons
-                    primaryButton={this.state.busy ? _t(this.props.busyMessage) : this.props.button}
+                    primaryButton={
+                        this.state.busy
+                            ? _t(this.props.busyMessage)
+                            : this.props.button
+                    }
                     disabled={this.state.busy}
                     onPrimaryButtonClick={this.onOk}
                     onCancel={this.onCancel}

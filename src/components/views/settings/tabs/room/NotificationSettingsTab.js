@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { createRef } from "react";
+import PropTypes from "prop-types";
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Notifier from "../../../../../Notifier";
-import SettingsStore from '../../../../../settings/SettingsStore';
+import SettingsStore from "../../../../../settings/SettingsStore";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 
@@ -42,7 +42,8 @@ export default class NotificationsSettingsTab extends React.Component {
     }
 
     // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
-    UNSAFE_componentWillMount() { // eslint-disable-line camelcase
+    UNSAFE_componentWillMount() {
+        // eslint-disable-line camelcase
         const soundData = Notifier.getSoundForRoom(this.props.roomId);
         if (!soundData) {
             return;
@@ -99,7 +100,8 @@ export default class NotificationsSettingsTab extends React.Component {
         }
 
         const url = await MatrixClientPeg.get().uploadContent(
-            this.state.uploadedFile, {
+            this.state.uploadedFile,
+            {
                 type,
             },
         );
@@ -142,36 +144,67 @@ export default class NotificationsSettingsTab extends React.Component {
         if (this.state.uploadedFile) {
             currentUploadedFile = (
                 <div>
-                    <span>{ _t("Uploaded sound") }: <code>{ this.state.uploadedFile.name }</code></span>
+                    <span>
+                        {_t("Uploaded sound")}:{" "}
+                        <code>{this.state.uploadedFile.name}</code>
+                    </span>
                 </div>
             );
         }
 
         return (
             <div className="mx_SettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Notifications") }</div>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <span className='mx_SettingsTab_subheading'>{ _t("Sounds") }</span>
+                <div className="mx_SettingsTab_heading">
+                    {_t("Notifications")}
+                </div>
+                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
+                    <span className="mx_SettingsTab_subheading">
+                        {_t("Sounds")}
+                    </span>
                     <div>
-                        <span>{ _t("Notification sound") }: <code>{ this.state.currentSound }</code></span><br />
-                        <AccessibleButton className="mx_NotificationSound_resetSound" disabled={this.state.currentSound == "default"} onClick={this._clearSound.bind(this)} kind="primary">
-                            { _t("Reset") }
+                        <span>
+                            {_t("Notification sound")}:{" "}
+                            <code>{this.state.currentSound}</code>
+                        </span>
+                        <br />
+                        <AccessibleButton
+                            className="mx_NotificationSound_resetSound"
+                            disabled={this.state.currentSound == "default"}
+                            onClick={this._clearSound.bind(this)}
+                            kind="primary"
+                        >
+                            {_t("Reset")}
                         </AccessibleButton>
                     </div>
                     <div>
-                        <h3>{ _t("Set a new custom sound") }</h3>
+                        <h3>{_t("Set a new custom sound")}</h3>
                         <form autoComplete="off" noValidate={true}>
-                            <input ref={this._soundUpload} className="mx_NotificationSound_soundUpload" type="file" onChange={this._onSoundUploadChanged.bind(this)} accept="audio/*" />
+                            <input
+                                ref={this._soundUpload}
+                                className="mx_NotificationSound_soundUpload"
+                                type="file"
+                                onChange={this._onSoundUploadChanged.bind(this)}
+                                accept="audio/*"
+                            />
                         </form>
 
-                        { currentUploadedFile }
+                        {currentUploadedFile}
 
-                        <AccessibleButton className="mx_NotificationSound_browse" onClick={this._triggerUploader.bind(this)} kind="primary">
-                            { _t("Browse") }
+                        <AccessibleButton
+                            className="mx_NotificationSound_browse"
+                            onClick={this._triggerUploader.bind(this)}
+                            kind="primary"
+                        >
+                            {_t("Browse")}
                         </AccessibleButton>
 
-                        <AccessibleButton className="mx_NotificationSound_save" disabled={this.state.uploadedFile == null} onClick={this._onClickSaveSound.bind(this)} kind="primary">
-                            { _t("Save") }
+                        <AccessibleButton
+                            className="mx_NotificationSound_save"
+                            disabled={this.state.uploadedFile == null}
+                            onClick={this._onClickSaveSound.bind(this)}
+                            kind="primary"
+                        >
+                            {_t("Save")}
                         </AccessibleButton>
                         <br />
                     </div>

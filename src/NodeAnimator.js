@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 /**
  * The NodeAnimator contains components and animates transitions.
@@ -62,7 +62,11 @@ export default class NodeAnimator extends React.Component {
                 }
                 // clone the old element with the props (and children) of the new element
                 // so prop updates are still received by the children.
-                this.children[c.key] = React.cloneElement(old, c.props, c.props.children);
+                this.children[c.key] = React.cloneElement(
+                    old,
+                    c.props,
+                    c.props.children,
+                );
             } else {
                 // new element. If we have a startStyle, use that as the style and go through
                 // the enter animations
@@ -76,9 +80,7 @@ export default class NodeAnimator extends React.Component {
                     // console.log("mounted@startstyle0: "+JSON.stringify(startStyle));
                 }
 
-                newProps.ref = ((n) => this._collectNode(
-                    c.key, n, restingStyle,
-                ));
+                newProps.ref = (n) => this._collectNode(c.key, n, restingStyle);
 
                 this.children[c.key] = React.cloneElement(c, newProps);
             }
@@ -114,8 +116,6 @@ export default class NodeAnimator extends React.Component {
     }
 
     render() {
-        return (
-            <>{ Object.values(this.children) }</>
-        );
+        return <>{Object.values(this.children)}</>;
     }
 }

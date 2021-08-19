@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { createRef } from "react";
+import PropTypes from "prop-types";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
@@ -37,15 +37,28 @@ export default class RoomProfileSettings extends React.Component {
         const room = client.getRoom(props.roomId);
         if (!room) throw new Error("Expected a room for ID: ", props.roomId);
 
-        const avatarEvent = room.currentState.getStateEvents("m.room.avatar", "");
-        let avatarUrl = avatarEvent && avatarEvent.getContent() ? avatarEvent.getContent()["url"] : null;
-        if (avatarUrl) avatarUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(96);
+        const avatarEvent = room.currentState.getStateEvents(
+            "m.room.avatar",
+            "",
+        );
+        let avatarUrl =
+            avatarEvent && avatarEvent.getContent()
+                ? avatarEvent.getContent()["url"]
+                : null;
+        if (avatarUrl)
+            avatarUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(96);
 
         const topicEvent = room.currentState.getStateEvents("m.room.topic", "");
-        const topic = topicEvent && topicEvent.getContent() ? topicEvent.getContent()['topic'] : '';
+        const topic =
+            topicEvent && topicEvent.getContent()
+                ? topicEvent.getContent()["topic"]
+                : "";
 
-        const nameEvent = room.currentState.getStateEvents('m.room.name', '');
-        const name = nameEvent && nameEvent.getContent() ? nameEvent.getContent()['name'] : '';
+        const nameEvent = room.currentState.getStateEvents("m.room.name", "");
+        const name =
+            nameEvent && nameEvent.getContent()
+                ? nameEvent.getContent()["name"]
+                : "";
 
         this.state = {
             originalDisplayName: name,
@@ -56,9 +69,18 @@ export default class RoomProfileSettings extends React.Component {
             originalTopic: topic,
             topic: topic,
             enableProfileSave: false,
-            canSetName: room.currentState.maySendStateEvent('m.room.name', client.getUserId()),
-            canSetTopic: room.currentState.maySendStateEvent('m.room.topic', client.getUserId()),
-            canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
+            canSetName: room.currentState.maySendStateEvent(
+                "m.room.name",
+                client.getUserId(),
+            ),
+            canSetTopic: room.currentState.maySendStateEvent(
+                "m.room.topic",
+                client.getUserId(),
+            ),
+            canSetAvatar: room.currentState.maySendStateEvent(
+                "m.room.avatar",
+                client.getUserId(),
+            ),
         };
 
         this._avatarUpload = createRef();
@@ -112,12 +134,22 @@ export default class RoomProfileSettings extends React.Component {
 
         if (this.state.avatarFile) {
             const uri = await client.uploadContent(this.state.avatarFile);
-            await client.sendStateEvent(this.props.roomId, 'm.room.avatar', { url: uri }, '');
+            await client.sendStateEvent(
+                this.props.roomId,
+                "m.room.avatar",
+                { url: uri },
+                "",
+            );
             newState.avatarUrl = mediaFromMxc(uri).getSquareThumbnailHttp(96);
             newState.originalAvatarUrl = newState.avatarUrl;
             newState.avatarFile = null;
         } else if (this.state.originalAvatarUrl !== this.state.avatarUrl) {
-            await client.sendStateEvent(this.props.roomId, 'm.room.avatar', {}, '');
+            await client.sendStateEvent(
+                this.props.roomId,
+                "m.room.avatar",
+                {},
+                "",
+            );
         }
 
         if (this.state.originalTopic !== this.state.topic) {
@@ -169,8 +201,8 @@ export default class RoomProfileSettings extends React.Component {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const AvatarSetting = sdk.getComponent('settings.AvatarSetting');
+        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
+        const AvatarSetting = sdk.getComponent("settings.AvatarSetting");
 
         let profileSettingsButtons;
         if (
@@ -185,14 +217,14 @@ export default class RoomProfileSettings extends React.Component {
                         kind="link"
                         disabled={!this.state.enableProfileSave}
                     >
-                        { _t("Cancel") }
+                        {_t("Cancel")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this._saveProfile}
                         kind="primary"
                         disabled={!this.state.enableProfileSave}
                     >
-                        { _t("Save") }
+                        {_t("Save")}
                     </AccessibleButton>
                 </div>
             );
@@ -238,10 +270,19 @@ export default class RoomProfileSettings extends React.Component {
                         avatarUrl={this.state.avatarUrl}
                         avatarName={this.state.displayName || this.props.roomId}
                         avatarAltText={_t("Room avatar")}
-                        uploadAvatar={this.state.canSetAvatar ? this._uploadAvatar : undefined}
-                        removeAvatar={this.state.canSetAvatar ? this._removeAvatar : undefined} />
+                        uploadAvatar={
+                            this.state.canSetAvatar
+                                ? this._uploadAvatar
+                                : undefined
+                        }
+                        removeAvatar={
+                            this.state.canSetAvatar
+                                ? this._removeAvatar
+                                : undefined
+                        }
+                    />
                 </div>
-                { profileSettingsButtons }
+                {profileSettingsButtons}
             </form>
         );
     }

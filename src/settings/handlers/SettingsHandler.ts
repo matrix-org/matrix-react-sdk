@@ -41,7 +41,11 @@ export default abstract class SettingsHandler {
      * @param {*} newValue The new value for the setting, may be null.
      * @returns {Promise} Resolves when the setting has been saved.
      */
-    public abstract setValue(settingName: string, roomId: string, newValue: any): Promise<void>;
+    public abstract setValue(
+        settingName: string,
+        roomId: string,
+        newValue: any,
+    ): Promise<void>;
 
     /**
      * Determines if the current user is able to set the value of the given setting

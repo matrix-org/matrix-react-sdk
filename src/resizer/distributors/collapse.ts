@@ -39,8 +39,15 @@ class CollapseItem extends ResizeItem<ICollapseConfig> {
     }
 }
 
-export default class CollapseDistributor extends FixedDistributor<ICollapseConfig, CollapseItem> {
-    static createItem(resizeHandle: HTMLDivElement, resizer: Resizer<ICollapseConfig>, sizer: Sizer) {
+export default class CollapseDistributor extends FixedDistributor<
+    ICollapseConfig,
+    CollapseItem
+> {
+    static createItem(
+        resizeHandle: HTMLDivElement,
+        resizer: Resizer<ICollapseConfig>,
+        sizer: Sizer,
+    ) {
         return new CollapseItem(resizeHandle, resizer, sizer);
     }
 

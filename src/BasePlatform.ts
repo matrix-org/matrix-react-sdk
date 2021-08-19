@@ -19,8 +19,8 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
-import dis from './dispatcher/dispatcher';
-import BaseEventIndexManager from './indexing/BaseEventIndexManager';
+import dis from "./dispatcher/dispatcher";
+import BaseEventIndexManager from "./indexing/BaseEventIndexManager";
 import { ActionPayload } from "./dispatcher/payloads";
 import { CheckUpdatesPayload } from "./dispatcher/payloads/CheckUpdatesPayload";
 import { Action } from "./dispatcher/actions";
@@ -63,8 +63,8 @@ export default abstract class BasePlatform {
 
     protected onAction = (payload: ActionPayload) => {
         switch (payload.action) {
-            case 'on_client_not_viable':
-            case 'on_logged_out':
+            case "on_client_not_viable":
+            case "on_logged_out":
                 this.setNotificationCount(0);
                 break;
         }
@@ -101,8 +101,7 @@ export default abstract class BasePlatform {
      * Update the currently running app to the latest available version
      * and replace this instance of the app with the new version.
      */
-    installUpdate() {
-    }
+    installUpdate() {}
 
     /**
      * Check if the version update has been deferred and that deferment is still in effect
@@ -113,7 +112,9 @@ export default abstract class BasePlatform {
         if (MatrixClientPeg.userRegisteredWithinLastHours(24)) return false;
 
         try {
-            const [version, deferUntil] = JSON.parse(localStorage.getItem(UPDATE_DEFER_KEY));
+            const [version, deferUntil] = JSON.parse(
+                localStorage.getItem(UPDATE_DEFER_KEY),
+            );
             return newVersion !== version || Date.now() > deferUntil;
         } catch (e) {
             return true;
@@ -127,7 +128,10 @@ export default abstract class BasePlatform {
     deferUpdate(newVersion: string) {
         const date = new Date(Date.now() + 24 * 60 * 60 * 1000);
         date.setHours(8, 0, 0, 0); // set to next 8am
-        localStorage.setItem(UPDATE_DEFER_KEY, JSON.stringify([newVersion, date.getTime()]));
+        localStorage.setItem(
+            UPDATE_DEFER_KEY,
+            JSON.stringify([newVersion, date.getTime()]),
+        );
         hideUpdateToast();
     }
 
@@ -166,10 +170,14 @@ export default abstract class BasePlatform {
      */
     abstract requestNotificationPermission(): Promise<string>;
 
-    abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Object);
+    abstract displayNotification(
+        title: string,
+        msg: string,
+        avatarUrl: string,
+        room: Object,
+    );
 
-    loudNotification(ev: Event, room: Object) {
-    }
+    loudNotification(ev: Event, room: Object) {}
 
     clearNotification(notif: Notification) {
         // Some browsers don't support this, e.g Safari on iOS
@@ -283,17 +291,32 @@ export default abstract class BasePlatform {
      * @param {string} fragmentAfterLogin the hash to pass to the app during sso callback.
      * @param {string} idpId The ID of the Identity Provider being targeted, optional.
      */
-    startSingleSignOn(mxClient: MatrixClient, loginType: "sso" | "cas", fragmentAfterLogin: string, idpId?: string) {
+    startSingleSignOn(
+        mxClient: MatrixClient,
+        loginType: "sso" | "cas",
+        fragmentAfterLogin: string,
+        idpId?: string,
+    ) {
         // persist hs url and is url for when the user is returned to the app with the login token
-        localStorage.setItem(SSO_HOMESERVER_URL_KEY, mxClient.getHomeserverUrl());
+        localStorage.setItem(
+            SSO_HOMESERVER_URL_KEY,
+            mxClient.getHomeserverUrl(),
+        );
         if (mxClient.getIdentityServerUrl()) {
-            localStorage.setItem(SSO_ID_SERVER_URL_KEY, mxClient.getIdentityServerUrl());
+            localStorage.setItem(
+                SSO_ID_SERVER_URL_KEY,
+                mxClient.getIdentityServerUrl(),
+            );
         }
         if (idpId) {
             localStorage.setItem(SSO_IDP_ID_KEY, idpId);
         }
         const callbackUrl = this.getSSOCallbackUrl(fragmentAfterLogin);
-        window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId); // redirect to SSO
+        window.location.href = mxClient.getSsoLoginUrl(
+            callbackUrl.toString(),
+            loginType,
+            idpId,
+        ); // redirect to SSO
     }
 
     onKeyDown(ev: KeyboardEvent): boolean {
@@ -308,7 +331,10 @@ export default abstract class BasePlatform {
      * @returns {string|null} the previously stored pickle key, or null if no
      *     pickle key has been stored.
      */
-    async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
+    async getPickleKey(
+        userId: string,
+        deviceId: string,
+    ): Promise<string | null> {
         if (!window.crypto || !window.crypto.subtle) {
             return null;
         }
@@ -324,7 +350,9 @@ export default abstract class BasePlatform {
             return null;
         }
 
-        const additionalData = new Uint8Array(userId.length + deviceId.length + 1);
+        const additionalData = new Uint8Array(
+            userId.length + deviceId.length + 1,
+        );
         for (let i = 0; i < userId.length; i++) {
             additionalData[i] = userId.charCodeAt(i);
         }
@@ -335,7 +363,8 @@ export default abstract class BasePlatform {
 
         try {
             const key = await crypto.subtle.decrypt(
-                { name: "AES-GCM", iv: data.iv, additionalData }, data.cryptoKey,
+                { name: "AES-GCM", iv: data.iv, additionalData },
+                data.cryptoKey,
                 data.encrypted,
             );
             return encodeUnpaddedBase64(key);
@@ -352,7 +381,10 @@ export default abstract class BasePlatform {
      * @returns {string|null} the pickle key, or null if the platform does not
      *     support storing pickle keys.
      */
-    async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
+    async createPickleKey(
+        userId: string,
+        deviceId: string,
+    ): Promise<string | null> {
         if (!window.crypto || !window.crypto.subtle) {
             return null;
         }
@@ -360,12 +392,16 @@ export default abstract class BasePlatform {
         const randomArray = new Uint8Array(32);
         crypto.getRandomValues(randomArray);
         const cryptoKey = await crypto.subtle.generateKey(
-            { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"],
+            { name: "AES-GCM", length: 256 },
+            false,
+            ["encrypt", "decrypt"],
         );
         const iv = new Uint8Array(32);
         crypto.getRandomValues(iv);
 
-        const additionalData = new Uint8Array(userId.length + deviceId.length + 1);
+        const additionalData = new Uint8Array(
+            userId.length + deviceId.length + 1,
+        );
         for (let i = 0; i < userId.length; i++) {
             additionalData[i] = userId.charCodeAt(i);
         }
@@ -375,11 +411,17 @@ export default abstract class BasePlatform {
         }
 
         const encrypted = await crypto.subtle.encrypt(
-            { name: "AES-GCM", iv, additionalData }, cryptoKey, randomArray,
+            { name: "AES-GCM", iv, additionalData },
+            cryptoKey,
+            randomArray,
         );
 
         try {
-            await idbSave("pickleKey", [userId, deviceId], { encrypted, iv, cryptoKey });
+            await idbSave("pickleKey", [userId, deviceId], {
+                encrypted,
+                iv,
+                cryptoKey,
+            });
         } catch (e) {
             return null;
         }

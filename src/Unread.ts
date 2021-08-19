@@ -19,7 +19,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import shouldHideEvent from './shouldHideEvent';
+import shouldHideEvent from "./shouldHideEvent";
 import { haveTileForEvent } from "./components/views/rooms/EventTile";
 
 /**
@@ -63,7 +63,10 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     //             https://github.com/vector-im/element-web/issues/2427
     // ...and possibly some of the others at
     //             https://github.com/vector-im/element-web/issues/3363
-    if (room.timeline.length && room.timeline[room.timeline.length - 1].getSender() === myUserId) {
+    if (
+        room.timeline.length &&
+        room.timeline[room.timeline.length - 1].getSender() === myUserId
+    ) {
         return false;
     }
 

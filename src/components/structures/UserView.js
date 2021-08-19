@@ -19,8 +19,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import * as sdk from "../../index";
-import Modal from '../../Modal';
-import { _t } from '../../languageHandler';
+import Modal from "../../Modal";
+import { _t } from "../../languageHandler";
 import HomePage from "./HomePage";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -61,15 +61,26 @@ export default class UserView extends React.Component {
         try {
             profileInfo = await cli.getProfileInfo(this.props.userId);
         } catch (err) {
-            const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
-            Modal.createTrackedDialog(_t('Could not load user profile'), '', ErrorDialog, {
-                title: _t('Could not load user profile'),
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
-            });
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createTrackedDialog(
+                _t("Could not load user profile"),
+                "",
+                ErrorDialog,
+                {
+                    title: _t("Could not load user profile"),
+                    description:
+                        err && err.message
+                            ? err.message
+                            : _t("Operation failed"),
+                },
+            );
             this.setState({ loading: false });
             return;
         }
-        const fakeEvent = new MatrixEvent({ type: "m.room.member", content: profileInfo });
+        const fakeEvent = new MatrixEvent({
+            type: "m.room.member",
+            content: profileInfo,
+        });
         const member = new RoomMember(null, this.props.userId);
         member.setMembershipEvent(fakeEvent);
         this.setState({ member, loading: false });
@@ -80,14 +91,19 @@ export default class UserView extends React.Component {
             const Spinner = sdk.getComponent("elements.Spinner");
             return <Spinner />;
         } else if (this.state.member) {
-            const RightPanel = sdk.getComponent('structures.RightPanel');
-            const MainSplit = sdk.getComponent('structures.MainSplit');
+            const RightPanel = sdk.getComponent("structures.RightPanel");
+            const MainSplit = sdk.getComponent("structures.MainSplit");
             const panel = <RightPanel user={this.state.member} />;
-            return (<MainSplit panel={panel} resizeNotifier={this.props.resizeNotifier}>
-                <HomePage />
-            </MainSplit>);
+            return (
+                <MainSplit
+                    panel={panel}
+                    resizeNotifier={this.props.resizeNotifier}
+                >
+                    <HomePage />
+                </MainSplit>
+            );
         } else {
-            return (<div />);
+            return <div />;
         }
     }
 }

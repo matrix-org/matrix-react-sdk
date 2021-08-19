@@ -30,7 +30,9 @@ export default class Sizer {
         @return {number} how far the edge of the item is from the edge of the container
     */
     public getItemOffset(item: HTMLElement): number {
-        const offset = (this.vertical ? item.offsetTop : item.offsetLeft) - this.getOffset();
+        const offset =
+            (this.vertical ? item.offsetTop : item.offsetLeft) -
+            this.getOffset();
         if (this.reverse) {
             return this.getTotalSize() - (offset + this.getItemSize(item));
         } else {
@@ -48,12 +50,16 @@ export default class Sizer {
 
     /** @return {number} the width/height of the container */
     public getTotalSize(): number {
-        return this.vertical ? this.container.offsetHeight : this.container.offsetWidth;
+        return this.vertical
+            ? this.container.offsetHeight
+            : this.container.offsetWidth;
     }
 
     /** @return {number} container offset to offsetParent */
     private getOffset(): number {
-        return this.vertical ? this.container.offsetTop : this.container.offsetLeft;
+        return this.vertical
+            ? this.container.offsetTop
+            : this.container.offsetLeft;
     }
 
     /** @return {number} container offset to document */
@@ -104,7 +110,7 @@ export default class Sizer {
     public offsetFromEvent(event: MouseEvent) {
         const pos = this.vertical ? event.pageY : event.pageX;
         if (this.reverse) {
-            return (this.getPageOffset() + this.getTotalSize()) - pos;
+            return this.getPageOffset() + this.getTotalSize() - pos;
         } else {
             return pos - this.getPageOffset();
         }

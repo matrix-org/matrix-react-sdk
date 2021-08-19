@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixEvent, EventStatus } from 'matrix-js-sdk/src/models/event';
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, EventStatus } from "matrix-js-sdk/src/models/event";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 import shouldHideEvent from "../shouldHideEvent";
-import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
+import {
+    getHandlerTile,
+    haveTileForEvent,
+} from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -38,12 +41,16 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
     const isSent = !eventStatus || eventStatus === EventStatus.SENT;
 
     if (isSent && !mxEvent.isRedacted()) {
-        if (mxEvent.getType() === 'm.room.message') {
+        if (mxEvent.getType() === "m.room.message") {
             const content = mxEvent.getContent();
-            if (content.msgtype && content.msgtype !== 'm.bad.encrypted' && content.hasOwnProperty('body')) {
+            if (
+                content.msgtype &&
+                content.msgtype !== "m.bad.encrypted" &&
+                content.hasOwnProperty("body")
+            ) {
                 return true;
             }
-        } else if (mxEvent.getType() === 'm.sticker') {
+        } else if (mxEvent.getType() === "m.sticker") {
             return true;
         }
     }
@@ -52,14 +59,21 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED || mxEvent.getType() !== "m.room.message" || mxEvent.isRedacted()) {
+    if (
+        mxEvent.status === EventStatus.CANCELLED ||
+        mxEvent.getType() !== "m.room.message" ||
+        mxEvent.isRedacted()
+    ) {
         return false;
     }
     const content = mxEvent.getOriginalContent();
     const { msgtype } = content;
-    return (msgtype === "m.text" || msgtype === "m.emote") &&
-        content.body && typeof content.body === 'string' &&
-        mxEvent.getSender() === MatrixClientPeg.get().getUserId();
+    return (
+        (msgtype === "m.text" || msgtype === "m.emote") &&
+        content.body &&
+        typeof content.body === "string" &&
+        mxEvent.getSender() === MatrixClientPeg.get().getUserId()
+    );
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
@@ -73,7 +87,11 @@ export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
 }
 
 const MAX_JUMP_DISTANCE = 100;
-export function findEditableEvent(room: Room, isForward: boolean, fromEventId: string = undefined): MatrixEvent {
+export function findEditableEvent(
+    room: Room,
+    isForward: boolean,
+    fromEventId: string = undefined,
+): MatrixEvent {
     const liveTimeline = room.getLiveTimeline();
     const events = liveTimeline.getEvents().concat(room.getPendingEvents());
     const maxIdx = events.length - 1;
@@ -81,18 +99,25 @@ export function findEditableEvent(room: Room, isForward: boolean, fromEventId: s
     const beginIdx = isForward ? 0 : maxIdx;
     let endIdx = isForward ? maxIdx : 0;
     if (!fromEventId) {
-        endIdx = Math.min(Math.max(0, beginIdx + (inc * MAX_JUMP_DISTANCE)), maxIdx);
+        endIdx = Math.min(
+            Math.max(0, beginIdx + inc * MAX_JUMP_DISTANCE),
+            maxIdx,
+        );
     }
     let foundFromEventId = !fromEventId;
-    for (let i = beginIdx; i !== (endIdx + inc); i += inc) {
+    for (let i = beginIdx; i !== endIdx + inc; i += inc) {
         const e = events[i];
         // find start event first
         if (!foundFromEventId && e.getId() === fromEventId) {
             foundFromEventId = true;
             // don't look further than MAX_JUMP_DISTANCE events from `fromEventId`
             // to not iterate potentially 1000nds of events on key up/down
-            endIdx = Math.min(Math.max(0, i + (inc * MAX_JUMP_DISTANCE)), maxIdx);
-        } else if (foundFromEventId && !shouldHideEvent(e) && canEditOwnEvent(e)) {
+            endIdx = Math.min(Math.max(0, i + inc * MAX_JUMP_DISTANCE), maxIdx);
+        } else if (
+            foundFromEventId &&
+            !shouldHideEvent(e) &&
+            canEditOwnEvent(e)
+        ) {
             // otherwise look for editable event
             return e;
         }
@@ -111,26 +136,29 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
     let tileHandler = getHandlerTile(mxEvent);
 
     // Info messages are basically information about commands processed on a room
-    let isBubbleMessage = (
+    let isBubbleMessage =
         eventType.startsWith("m.key.verification") ||
-        (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
-        (eventType === EventType.RoomCreate) ||
-        (eventType === EventType.RoomEncryption) ||
-        (tileHandler === "messages.MJitsiWidgetEvent")
-    );
-    let isInfoMessage = (
+        (eventType === EventType.RoomMessage &&
+            msgtype &&
+            msgtype.startsWith("m.key.verification")) ||
+        eventType === EventType.RoomCreate ||
+        eventType === EventType.RoomEncryption ||
+        tileHandler === "messages.MJitsiWidgetEvent";
+    let isInfoMessage =
         !isBubbleMessage &&
         eventType !== EventType.RoomMessage &&
         eventType !== EventType.Sticker &&
         eventType !== EventType.RoomCreate &&
-        eventType !== EventType.CallInvite
-    );
+        eventType !== EventType.CallInvite;
 
     // If we're showing hidden events in the timeline, we should use the
     // source tile when there's no regular tile for an event and also for
     // replace relations (which otherwise would display as a confusing
     // duplicate of the thing they are replacing).
-    if (SettingsStore.getValue("showHiddenEventsInTimeline") && !haveTileForEvent(mxEvent)) {
+    if (
+        SettingsStore.getValue("showHiddenEventsInTimeline") &&
+        !haveTileForEvent(mxEvent)
+    ) {
         tileHandler = "messages.ViewSourceEvent";
         isBubbleMessage = false;
         // Reuse info message avatar and sender profile styling

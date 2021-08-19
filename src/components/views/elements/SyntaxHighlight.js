@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { highlightBlock } from 'highlight.js';
+import React from "react";
+import PropTypes from "prop-types";
+import { highlightBlock } from "highlight.js";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.elements.SyntaxHighlight")
@@ -47,8 +47,10 @@ export default class SyntaxHighlight extends React.Component {
     render() {
         const { className, children } = this.props;
 
-        return <pre className={`${className} mx_SyntaxHighlight`} ref={this._ref}>
-            <code>{ children }</code>
-        </pre>;
+        return (
+            <pre className={`${className} mx_SyntaxHighlight`} ref={this._ref}>
+                <code>{children}</code>
+            </pre>
+        );
     }
 }

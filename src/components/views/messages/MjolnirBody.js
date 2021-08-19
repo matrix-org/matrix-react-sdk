@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { _t } from '../../../languageHandler';
+import React from "react";
+import PropTypes from "prop-types";
+import { _t } from "../../../languageHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.messages.MjolnirBody")
@@ -41,10 +41,21 @@ export default class MjolnirBody extends React.Component {
 
     render() {
         return (
-            <div className='mx_MjolnirBody'><i>{ _t(
-                "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
-                {}, { a: (sub) => <a href="#" onClick={this._onAllowClick}>{ sub }</a> },
-            ) }</i></div>
+            <div className="mx_MjolnirBody">
+                <i>
+                    {_t(
+                        "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
+                        {},
+                        {
+                            a: (sub) => (
+                                <a href="#" onClick={this._onAllowClick}>
+                                    {sub}
+                                </a>
+                            ),
+                        },
+                    )}
+                </i>
+            </div>
         );
     }
 }

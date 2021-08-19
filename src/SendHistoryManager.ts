@@ -38,7 +38,9 @@ export default class SendHistoryManager {
         let index = 0;
         let itemJSON;
 
-        while (itemJSON = sessionStorage.getItem(`${this.prefix}[${index}]`)) {
+        while (
+            (itemJSON = sessionStorage.getItem(`${this.prefix}[${index}]`))
+        ) {
             try {
                 this.history.push(JSON.parse(itemJSON));
             } catch (e) {
@@ -52,7 +54,10 @@ export default class SendHistoryManager {
         this.currentIndex = this.lastIndex + 1;
     }
 
-    static createItem(model: EditorModel, replyEvent?: MatrixEvent): IHistoryItem {
+    static createItem(
+        model: EditorModel,
+        replyEvent?: MatrixEvent,
+    ): IHistoryItem {
         return {
             parts: model.serializeParts(),
             replyEventId: replyEvent ? replyEvent.getId() : undefined,
@@ -64,11 +69,18 @@ export default class SendHistoryManager {
         this.history.push(item);
         this.currentIndex = this.history.length;
         this.lastIndex += 1;
-        sessionStorage.setItem(`${this.prefix}[${this.lastIndex}]`, JSON.stringify(item));
+        sessionStorage.setItem(
+            `${this.prefix}[${this.lastIndex}]`,
+            JSON.stringify(item),
+        );
     }
 
     getItem(offset: number): IHistoryItem {
-        this.currentIndex = clamp(this.currentIndex + offset, 0, this.history.length - 1);
+        this.currentIndex = clamp(
+            this.currentIndex + offset,
+            0,
+            this.history.length - 1,
+        );
         return this.history[this.currentIndex];
     }
 }

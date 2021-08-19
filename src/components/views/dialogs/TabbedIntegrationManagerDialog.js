@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { Room } from "matrix-js-sdk/src/models/room";
-import * as sdk from '../../../index';
-import { dialogTermsInteractionCallback, TermsNotSignedError } from "../../../Terms";
-import classNames from 'classnames';
+import * as sdk from "../../../index";
+import {
+    dialogTermsInteractionCallback,
+    TermsNotSignedError,
+} from "../../../Terms";
+import classNames from "classnames";
 import * as ScalarMessaging from "../../../ScalarMessaging";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -87,7 +90,9 @@ export default class TabbedIntegrationManagerDialog extends React.Component {
             // terms dialog sizing when it will appear for the integration manager so that
             // it gets the same basic size as the IM's own modal.
             return dialogTermsInteractionCallback(
-                policyInfo, agreedUrls, 'mx_TermsDialog_forIntegrationManager',
+                policyInfo,
+                agreedUrls,
+                "mx_TermsDialog_forIntegrationManager",
             );
         });
 
@@ -121,11 +126,14 @@ export default class TabbedIntegrationManagerDialog extends React.Component {
     };
 
     _renderTabs() {
-        const AccessibleButton = sdk.getComponent("views.elements.AccessibleButton");
+        const AccessibleButton = sdk.getComponent(
+            "views.elements.AccessibleButton",
+        );
         return this.state.managers.map((m, i) => {
             const classes = classNames({
-                'mx_TabbedIntegrationManagerDialog_tab': true,
-                'mx_TabbedIntegrationManagerDialog_currentTab': this.state.currentIndex === i,
+                mx_TabbedIntegrationManagerDialog_tab: true,
+                mx_TabbedIntegrationManagerDialog_currentTab:
+                    this.state.currentIndex === i,
             });
             return (
                 <AccessibleButton
@@ -134,14 +142,16 @@ export default class TabbedIntegrationManagerDialog extends React.Component {
                     key={`tab_${i}`}
                     disabled={this.state.busy}
                 >
-                    { m.name }
+                    {m.name}
                 </AccessibleButton>
             );
         });
     }
 
     _renderTab() {
-        const IntegrationManager = sdk.getComponent("views.settings.IntegrationManager");
+        const IntegrationManager = sdk.getComponent(
+            "views.settings.IntegrationManager",
+        );
         let uiUrl = null;
         if (this.state.currentScalarClient) {
             uiUrl = this.state.currentScalarClient.getScalarInterfaceUrlForRoom(
@@ -150,23 +160,27 @@ export default class TabbedIntegrationManagerDialog extends React.Component {
                 this.props.integrationId,
             );
         }
-        return <IntegrationManager
-            configured={true}
-            loading={this.state.currentLoading}
-            connected={this.state.currentConnected}
-            url={uiUrl}
-            onFinished={() => {/* no-op */}}
-        />;
+        return (
+            <IntegrationManager
+                configured={true}
+                loading={this.state.currentLoading}
+                connected={this.state.currentConnected}
+                url={uiUrl}
+                onFinished={() => {
+                    /* no-op */
+                }}
+            />
+        );
     }
 
     render() {
         return (
-            <div className='mx_TabbedIntegrationManagerDialog_container'>
-                <div className='mx_TabbedIntegrationManagerDialog_tabs'>
-                    { this._renderTabs() }
+            <div className="mx_TabbedIntegrationManagerDialog_container">
+                <div className="mx_TabbedIntegrationManagerDialog_tabs">
+                    {this._renderTabs()}
                 </div>
-                <div className='mx_TabbedIntegrationManagerDialog_currentManager'>
-                    { this._renderTab() }
+                <div className="mx_TabbedIntegrationManagerDialog_currentManager">
+                    {this._renderTab()}
                 </div>
             </div>
         );

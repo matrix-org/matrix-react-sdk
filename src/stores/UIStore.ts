@@ -19,14 +19,16 @@ import EventEmitter from "events";
 // own DOM types: https://github.com/que-etc/resize-observer-polyfill/issues/80
 // Using require here rather than import is a horrenous workaround. We should
 // be able to remove the polyfill once Safari 14 is released.
-const ResizeObserverPolyfill = require('resize-observer-polyfill'); // eslint-disable-line @typescript-eslint/no-var-requires
-import ResizeObserverEntry from 'resize-observer-polyfill/src/ResizeObserverEntry';
+const ResizeObserverPolyfill = require("resize-observer-polyfill"); // eslint-disable-line @typescript-eslint/no-var-requires
+import ResizeObserverEntry from "resize-observer-polyfill/src/ResizeObserverEntry";
 
 export enum UI_EVENTS {
-    Resize = "resize"
+    Resize = "resize",
 }
 
-export type ResizeObserverCallbackFunction = (entries: ResizeObserverEntry[]) => void;
+export type ResizeObserverCallbackFunction = (
+    entries: ResizeObserverEntry[],
+) => void;
 
 export default class UIStore extends EventEmitter {
     private static _instance: UIStore = null;
@@ -47,7 +49,9 @@ export default class UIStore extends EventEmitter {
         // eslint-disable-next-line no-restricted-properties
         this.windowHeight = window.innerHeight;
 
-        this.resizeObserver = new ResizeObserverPolyfill(this.resizeObserverCallback);
+        this.resizeObserver = new ResizeObserverPolyfill(
+            this.resizeObserverCallback,
+        );
         this.resizeObserver.observe(document.body);
     }
 
@@ -94,17 +98,22 @@ export default class UIStore extends EventEmitter {
     }
 
     private resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
-        const windowEntry = entries.find(entry => entry.target === document.body);
+        const windowEntry = entries.find(
+            (entry) => entry.target === document.body,
+        );
 
         if (windowEntry) {
             this.windowWidth = windowEntry.contentRect.width;
             this.windowHeight = windowEntry.contentRect.height;
         }
 
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
             const trackedElementName = this.trackedUiElements.get(entry.target);
             if (trackedElementName) {
-                this.uiElementDimensions.set(trackedElementName, entry.contentRect);
+                this.uiElementDimensions.set(
+                    trackedElementName,
+                    entry.contentRect,
+                );
                 this.emit(trackedElementName, UI_EVENTS.Resize, entry);
             }
         });

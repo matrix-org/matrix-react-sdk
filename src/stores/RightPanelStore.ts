@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import dis from '../dispatcher/dispatcher';
-import { pendingVerificationRequestForUser } from '../verification';
-import { Store } from 'flux/utils';
+import dis from "../dispatcher/dispatcher";
+import { pendingVerificationRequestForUser } from "../verification";
+import { Store } from "flux/utils";
 import SettingsStore from "../settings/SettingsStore";
-import { RightPanelPhases, RIGHT_PANEL_PHASES_NO_ARGS } from "./RightPanelStorePhases";
+import {
+    RightPanelPhases,
+    RIGHT_PANEL_PHASES_NO_ARGS,
+} from "./RightPanelStorePhases";
 import { ActionPayload } from "../dispatcher/payloads";
-import { Action } from '../dispatcher/actions';
+import { Action } from "../dispatcher/actions";
 import { SettingLevel } from "../settings/SettingLevel";
 
 interface RightPanelStoreState {
@@ -36,7 +39,7 @@ interface RightPanelStoreState {
     previousPhase?: RightPanelPhases;
 
     // Extra information about the last phase
-    lastRoomPhaseParams: {[key: string]: any};
+    lastRoomPhaseParams: { [key: string]: any };
 }
 
 const INITIAL_STATE: RightPanelStoreState = {
@@ -93,7 +96,9 @@ export default class RightPanelStore extends Store<ActionPayload> {
     }
 
     get previousPhase(): RightPanelPhases | null {
-        return RIGHT_PANEL_PHASES_NO_ARGS.includes(this.state.previousPhase) ? this.state.previousPhase : null;
+        return RIGHT_PANEL_PHASES_NO_ARGS.includes(this.state.previousPhase)
+            ? this.state.previousPhase
+            : null;
     }
 
     get visibleRoomPanelPhase(): RightPanelPhases {
@@ -144,22 +149,31 @@ export default class RightPanelStore extends Store<ActionPayload> {
         this.__emitChange();
     }
 
-    __onDispatch(payload: ActionPayload) { // eslint-disable-line @typescript-eslint/naming-convention
+    __onDispatch(payload: ActionPayload) {
+        // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
-            case 'view_room':
+            case "view_room":
                 if (payload.room_id === this.lastRoomId) break; // skip this transition, probably a permalink
-                // fallthrough
-            case 'view_group':
+            // fallthrough
+            case "view_group":
                 this.lastRoomId = payload.room_id;
 
                 // Reset to the member list if we're viewing member info
                 if (MEMBER_INFO_PHASES.includes(this.state.lastRoomPhase)) {
-                    this.setState({ lastRoomPhase: RightPanelPhases.RoomMemberList, lastRoomPhaseParams: {} });
+                    this.setState({
+                        lastRoomPhase: RightPanelPhases.RoomMemberList,
+                        lastRoomPhaseParams: {},
+                    });
                 }
 
                 // Do the same for groups
-                if (this.state.lastGroupPhase === RightPanelPhases.GroupMemberInfo) {
-                    this.setState({ lastGroupPhase: RightPanelPhases.GroupMemberList });
+                if (
+                    this.state.lastGroupPhase ===
+                    RightPanelPhases.GroupMemberInfo
+                ) {
+                    this.setState({
+                        lastGroupPhase: RightPanelPhases.GroupMemberList,
+                    });
                 }
                 break;
 
@@ -168,9 +182,13 @@ export default class RightPanelStore extends Store<ActionPayload> {
                 let refireParams = payload.refireParams;
                 const allowClose = payload.allowClose ?? true;
                 // redirect to EncryptionPanel if there is an ongoing verification request
-                if (targetPhase === RightPanelPhases.RoomMemberInfo && payload.refireParams) {
+                if (
+                    targetPhase === RightPanelPhases.RoomMemberInfo &&
+                    payload.refireParams
+                ) {
                     const { member } = payload.refireParams;
-                    const pendingRequest = pendingVerificationRequestForUser(member);
+                    const pendingRequest =
+                        pendingVerificationRequestForUser(member);
                     if (pendingRequest) {
                         targetPhase = RightPanelPhases.EncryptionPanel;
                         refireParams = {
@@ -180,7 +198,9 @@ export default class RightPanelStore extends Store<ActionPayload> {
                     }
                 }
                 if (!RightPanelPhases[targetPhase]) {
-                    console.warn(`Tried to switch right panel to unknown phase: ${targetPhase}`);
+                    console.warn(
+                        `Tried to switch right panel to unknown phase: ${targetPhase}`,
+                    );
                     return;
                 }
 
@@ -198,7 +218,11 @@ export default class RightPanelStore extends Store<ActionPayload> {
                         });
                     }
                 } else {
-                    if (targetPhase === this.state.lastRoomPhase && !refireParams && allowClose) {
+                    if (
+                        targetPhase === this.state.lastRoomPhase &&
+                        !refireParams &&
+                        allowClose
+                    ) {
                         this.setState({
                             showRoomPanel: !this.state.showRoomPanel,
                             previousPhase: null,
@@ -225,8 +249,11 @@ export default class RightPanelStore extends Store<ActionPayload> {
             case Action.ToggleRightPanel:
                 if (payload.type === "room") {
                     this.setState({ showRoomPanel: !this.state.showRoomPanel });
-                } else { // group
-                    this.setState({ showGroupPanel: !this.state.showGroupPanel });
+                } else {
+                    // group
+                    this.setState({
+                        showGroupPanel: !this.state.showGroupPanel,
+                    });
                 }
                 break;
         }

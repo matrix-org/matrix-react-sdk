@@ -74,10 +74,14 @@ class ConsoleLogger {
         // Convert objects and errors to helpful things
         args = args.map((arg) => {
             if (arg instanceof DOMException) {
-                return arg.message + ` (${arg.name} | ${arg.code}) ` + (arg.stack ? `\n${arg.stack}` : '');
+                return (
+                    arg.message +
+                    ` (${arg.name} | ${arg.code}) ` +
+                    (arg.stack ? `\n${arg.stack}` : "")
+                );
             } else if (arg instanceof Error) {
-                return arg.message + (arg.stack ? `\n${arg.stack}` : '');
-            } else if (typeof (arg) === 'object') {
+                return arg.message + (arg.stack ? `\n${arg.stack}` : "");
+            } else if (typeof arg === "object") {
                 try {
                     return JSON.stringify(arg);
                 } catch (e) {
@@ -103,9 +107,9 @@ class ConsoleLogger {
         // run.
         // Example line:
         // 2017-01-18T11:23:53.214Z W Failed to set badge count
-        let line = `${ts} ${level} ${args.join(' ')}\n`;
+        let line = `${ts} ${level} ${args.join(" ")}\n`;
         // Do some cleanup
-        line = line.replace(/token=[a-zA-Z0-9-]+/gm, 'token=xxxxx');
+        line = line.replace(/token=[a-zA-Z0-9-]+/gm, "token=xxxxx");
         // Using + really is the quickest way in JS
         // http://jsperf.com/concat-vs-plus-vs-join
         this.logs += line;
@@ -157,9 +161,8 @@ class IndexedDBLogStore {
             };
 
             req.onerror = (event) => {
-                const err = (
-                    "Failed to open log database: " + event.target.error.name
-                );
+                const err =
+                    "Failed to open log database: " + event.target.error.name;
                 console.error(err);
                 reject(new Error(err));
             };
@@ -216,11 +219,13 @@ class IndexedDBLogStore {
                 return this.flushAgainPromise;
             }
             // queue up a flush to occur immediately after the pending one completes.
-            this.flushAgainPromise = this.flushPromise.then(() => {
-                return this.flush();
-            }).then(() => {
-                this.flushAgainPromise = null;
-            });
+            this.flushAgainPromise = this.flushPromise
+                .then(() => {
+                    return this.flush();
+                })
+                .then(() => {
+                    this.flushAgainPromise = null;
+                });
             return this.flushAgainPromise;
         }
         // there is no flush promise or there was but it has finished, so do
@@ -236,17 +241,20 @@ class IndexedDBLogStore {
                 resolve();
                 return;
             }
-            const txn = this.db.transaction(["logs", "logslastmod"], "readwrite");
+            const txn = this.db.transaction(
+                ["logs", "logslastmod"],
+                "readwrite",
+            );
             const objStore = txn.objectStore("logs");
             txn.oncomplete = (event) => {
                 resolve();
             };
             txn.onerror = (event) => {
-                console.error(
-                    "Failed to flush logs : ", event,
-                );
+                console.error("Failed to flush logs : ", event);
                 reject(
-                    new Error("Failed to write logs: " + event.target.errorCode),
+                    new Error(
+                        "Failed to write logs: " + event.target.errorCode,
+                    ),
                 );
             };
             objStore.add(this._generateLogEntry(lines));
@@ -274,13 +282,19 @@ class IndexedDBLogStore {
         // Returns: a string representing the concatenated logs for this ID.
         // Stops adding log fragments when the size exceeds maxSize
         function fetchLogs(id, maxSize) {
-            const objectStore = db.transaction("logs", "readonly").objectStore("logs");
+            const objectStore = db
+                .transaction("logs", "readonly")
+                .objectStore("logs");
 
             return new Promise((resolve, reject) => {
-                const query = objectStore.index("id").openCursor(IDBKeyRange.only(id), 'prev');
-                let lines = '';
+                const query = objectStore
+                    .index("id")
+                    .openCursor(IDBKeyRange.only(id), "prev");
+                let lines = "";
                 query.onerror = (event) => {
-                    reject(new Error("Query failed: " + event.target.errorCode));
+                    reject(
+                        new Error("Query failed: " + event.target.errorCode),
+                    );
                 };
                 query.onsuccess = (event) => {
                     const cursor = event.target.result;
@@ -301,9 +315,9 @@ class IndexedDBLogStore {
         // Returns: A sorted array of log IDs. (newest first)
         function fetchLogIds() {
             // To gather all the log IDs, query for all records in logslastmod.
-            const o = db.transaction("logslastmod", "readonly").objectStore(
-                "logslastmod",
-            );
+            const o = db
+                .transaction("logslastmod", "readonly")
+                .objectStore("logslastmod");
             return selectQuery(o, undefined, (cursor) => {
                 return {
                     id: cursor.value.id,
@@ -311,16 +325,19 @@ class IndexedDBLogStore {
                 };
             }).then((res) => {
                 // Sort IDs by timestamp (newest first)
-                return res.sort((a, b) => {
-                    return b.ts - a.ts;
-                }).map((a) => a.id);
+                return res
+                    .sort((a, b) => {
+                        return b.ts - a.ts;
+                    })
+                    .map((a) => a.id);
             });
         }
 
         function deleteLogs(id) {
             return new Promise((resolve, reject) => {
                 const txn = db.transaction(
-                    ["logs", "logslastmod"], "readwrite",
+                    ["logs", "logslastmod"],
+                    "readwrite",
                 );
                 const o = txn.objectStore("logs");
                 // only load the key path, not the data which may be huge
@@ -340,7 +357,7 @@ class IndexedDBLogStore {
                     reject(
                         new Error(
                             "Failed to delete logs for " +
-                            `'${id}' : ${event.target.errorCode}`,
+                                `'${id}' : ${event.target.errorCode}`,
                         ),
                     );
                 };
@@ -378,11 +395,14 @@ class IndexedDBLogStore {
             console.log("Removing logs: ", removeLogIds);
             // Don't await this because it's non-fatal if we can't clean up
             // logs.
-            Promise.all(removeLogIds.map((id) => deleteLogs(id))).then(() => {
-                console.log(`Removed ${removeLogIds.length} old logs.`);
-            }, (err) => {
-                console.error(err);
-            });
+            Promise.all(removeLogIds.map((id) => deleteLogs(id))).then(
+                () => {
+                    console.log(`Removed ${removeLogIds.length} old logs.`);
+                },
+                (err) => {
+                    console.error(err);
+                },
+            );
         }
         return logs;
     }
@@ -475,7 +495,10 @@ export function tryInitStorage() {
     } catch (e) {}
 
     if (indexedDB) {
-        global.mx_rage_store = new IndexedDBLogStore(indexedDB, global.mx_rage_logger);
+        global.mx_rage_store = new IndexedDBLogStore(
+            indexedDB,
+            global.mx_rage_logger,
+        );
         global.mx_rage_initStoragePromise = global.mx_rage_store.connect();
         return global.mx_rage_initStoragePromise;
     }
@@ -508,9 +531,7 @@ export async function cleanup() {
  */
 export async function getLogsForReport() {
     if (!global.mx_rage_logger) {
-        throw new Error(
-            "No console logger, did you forget to call init()?",
-        );
+        throw new Error("No console logger, did you forget to call init()?");
     }
     // If in incognito mode, store is null, but we still want bug report
     // sending to work going off the in-memory console logs.
@@ -519,9 +540,11 @@ export async function getLogsForReport() {
         await global.mx_rage_store.flush();
         return await global.mx_rage_store.consume();
     } else {
-        return [{
-            lines: global.mx_rage_logger.flush(true),
-            id: "-",
-        }];
+        return [
+            {
+                lines: global.mx_rage_logger.flush(true),
+                id: "-",
+            },
+        ];
     }
 }

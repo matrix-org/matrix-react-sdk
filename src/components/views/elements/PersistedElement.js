@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import React from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 import { throttle } from "lodash";
-import ResizeObserver from 'resize-observer-polyfill';
+import ResizeObserver from "resize-observer-polyfill";
 
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
@@ -82,7 +82,7 @@ export default class PersistedElement extends React.Component {
         // dimensions. Doesn't look like there's a ResizeObserver equivalent
         // for this, so we bodge it by listening for document resize and
         // the timeline_resize action.
-        window.addEventListener('resize', this._repositionChild);
+        window.addEventListener("resize", this._repositionChild);
         this._dispatcherRef = dis.register(this._onAction);
     }
 
@@ -94,14 +94,14 @@ export default class PersistedElement extends React.Component {
      * @param {string} persistKey Key used to uniquely identify this PersistedElement
      */
     static destroyElement(persistKey) {
-        const container = getContainer('mx_persistedElement_' + persistKey);
+        const container = getContainer("mx_persistedElement_" + persistKey);
         if (container) {
             container.remove();
         }
     }
 
     static isMounted(persistKey) {
-        return Boolean(getContainer('mx_persistedElement_' + persistKey));
+        return Boolean(getContainer("mx_persistedElement_" + persistKey));
     }
 
     collectChildContainer(ref) {
@@ -132,14 +132,14 @@ export default class PersistedElement extends React.Component {
     componentWillUnmount() {
         this.updateChildVisibility(this.child, false);
         this.resizeObserver.disconnect();
-        window.removeEventListener('resize', this._repositionChild);
+        window.removeEventListener("resize", this._repositionChild);
         dis.unregister(this._dispatcherRef);
     }
 
     _onAction(payload) {
-        if (payload.action === 'timeline_resize') {
+        if (payload.action === "timeline_resize") {
             this._repositionChild();
-        } else if (payload.action === 'logout') {
+        } else if (payload.action === "logout") {
             PersistedElement.destroyElement(this.props.persistKey);
         }
     }
@@ -154,37 +154,50 @@ export default class PersistedElement extends React.Component {
     }
 
     renderApp() {
-        const content = <MatrixClientContext.Provider value={MatrixClientPeg.get()}>
-            <div ref={this.collectChild} style={this.props.style}>
-                { this.props.children }
-            </div>
-        </MatrixClientContext.Provider>;
+        const content = (
+            <MatrixClientContext.Provider value={MatrixClientPeg.get()}>
+                <div ref={this.collectChild} style={this.props.style}>
+                    {this.props.children}
+                </div>
+            </MatrixClientContext.Provider>
+        );
 
-        ReactDOM.render(content, getOrCreateContainer('mx_persistedElement_'+this.props.persistKey));
+        ReactDOM.render(
+            content,
+            getOrCreateContainer(
+                "mx_persistedElement_" + this.props.persistKey,
+            ),
+        );
     }
 
     updateChildVisibility(child, visible) {
         if (!child) return;
-        child.style.display = visible ? 'block' : 'none';
+        child.style.display = visible ? "block" : "none";
     }
 
-    updateChildPosition = throttle((child, parent) => {
-        if (!child || !parent) return;
+    updateChildPosition = throttle(
+        (child, parent) => {
+            if (!child || !parent) return;
 
-        const parentRect = parent.getBoundingClientRect();
-        Object.assign(child.style, {
-            zIndex: isNullOrUndefined(this.props.zIndex) ? 9 : this.props.zIndex,
-            position: 'absolute',
-            top: parentRect.top + 'px',
-            left: parentRect.left + 'px',
-            width: parentRect.width + 'px',
-            height: parentRect.height + 'px',
-        });
-    }, 100, { trailing: true, leading: true });
+            const parentRect = parent.getBoundingClientRect();
+            Object.assign(child.style, {
+                zIndex: isNullOrUndefined(this.props.zIndex)
+                    ? 9
+                    : this.props.zIndex,
+                position: "absolute",
+                top: parentRect.top + "px",
+                left: parentRect.left + "px",
+                width: parentRect.width + "px",
+                height: parentRect.height + "px",
+            });
+        },
+        100,
+        { trailing: true, leading: true },
+    );
 
     render() {
         return <div ref={this.collectChildContainer} />;
     }
 }
 
-export const getPersistKey = (appId) => 'widget_' + appId;
+export const getPersistKey = (appId) => "widget_" + appId;

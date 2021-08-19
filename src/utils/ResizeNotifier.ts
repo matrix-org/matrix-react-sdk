@@ -31,7 +31,10 @@ export default class ResizeNotifier extends EventEmitter {
 
     // with default options, will call fn once at first call, and then every x ms
     // if there was another call in that timespan
-    private throttledMiddlePanel = throttle(() => this.emit("middlePanelResized"), 200);
+    private throttledMiddlePanel = throttle(
+        () => this.emit("middlePanelResized"),
+        200,
+    );
 
     public get isResizing() {
         return this._isResizing;
@@ -76,4 +79,3 @@ export default class ResizeNotifier extends EventEmitter {
         this.updateMiddlePanel();
     }
 }
-

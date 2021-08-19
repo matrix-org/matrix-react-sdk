@@ -17,15 +17,21 @@ limitations under the License.
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
+import {
+    EffectiveMembership,
+    getEffectiveMembership,
+} from "../../utils/membership";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import * as RoomNotifs from '../../RoomNotifs';
-import * as Unread from '../../Unread';
+import * as RoomNotifs from "../../RoomNotifs";
+import * as Unread from "../../Unread";
 import { NotificationState } from "./NotificationState";
 
-export class RoomNotificationState extends NotificationState implements IDestroyable {
+export class RoomNotificationState
+    extends NotificationState
+    implements IDestroyable
+{
     constructor(public readonly room: Room) {
         super();
         this.room.on("Room.receipt", this.handleReadReceipt);
@@ -38,7 +44,10 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     }
 
     private get roomIsInvite(): boolean {
-        return getEffectiveMembership(this.room.getMyMembership()) === EffectiveMembership.Invite;
+        return (
+            getEffectiveMembership(this.room.getMyMembership()) ===
+            EffectiveMembership.Invite
+        );
     }
 
     public destroy(): void {
@@ -46,10 +55,19 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.removeListener("Room.receipt", this.handleReadReceipt);
         this.room.removeListener("Room.timeline", this.handleRoomEventUpdate);
         this.room.removeListener("Room.redaction", this.handleRoomEventUpdate);
-        this.room.removeListener("Room.myMembership", this.handleMembershipUpdate);
+        this.room.removeListener(
+            "Room.myMembership",
+            this.handleMembershipUpdate,
+        );
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("Event.decrypted", this.handleRoomEventUpdate);
-            MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);
+            MatrixClientPeg.get().removeListener(
+                "Event.decrypted",
+                this.handleRoomEventUpdate,
+            );
+            MatrixClientPeg.get().removeListener(
+                "accountData",
+                this.handleAccountDataUpdate,
+            );
         }
     }
 
@@ -79,7 +97,9 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     private updateNotificationState() {
         const snapshot = this.snapshot();
 
-        if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.MUTE) {
+        if (
+            RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.MUTE
+        ) {
             // When muted we suppress all notification states, even if we have context on them.
             this._color = NotificationColor.None;
             this._symbol = null;
@@ -89,14 +109,24 @@ export class RoomNotificationState extends NotificationState implements IDestroy
             this._symbol = "!";
             this._count = 1; // not used, technically
         } else {
-            const redNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'highlight');
-            const greyNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'total');
+            const redNotifs = RoomNotifs.getUnreadNotificationCount(
+                this.room,
+                "highlight",
+            );
+            const greyNotifs = RoomNotifs.getUnreadNotificationCount(
+                this.room,
+                "total",
+            );
 
             // For a 'true count' we pick the grey notifications first because they include the
             // red notifications. If we don't have a grey count for some reason we use the red
             // count. If that count is broken for some reason, assume zero. This avoids us showing
             // a badge for 'NaN' (which formats as 'NaNB' for NaN Billion).
-            const trueCount = greyNotifs ? greyNotifs : (redNotifs ? redNotifs : 0);
+            const trueCount = greyNotifs
+                ? greyNotifs
+                : redNotifs
+                ? redNotifs
+                : 0;
 
             // Note: we only set the symbol if we have an actual count. We don't want to show
             // zero on badges.

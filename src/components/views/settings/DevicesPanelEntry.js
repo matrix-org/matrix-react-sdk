@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import * as sdk from '../../../index';
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { formatDate } from '../../../DateUtils';
-import StyledCheckbox from '../elements/StyledCheckbox';
+import * as sdk from "../../../index";
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { formatDate } from "../../../DateUtils";
+import StyledCheckbox from "../elements/StyledCheckbox";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.settings.DevicesPanelEntry")
@@ -40,12 +40,14 @@ export default class DevicesPanelEntry extends React.Component {
 
     _onDisplayNameChanged(value) {
         const device = this.props.device;
-        return MatrixClientPeg.get().setDeviceDetails(device.device_id, {
-            display_name: value,
-        }).catch((e) => {
-            console.error("Error setting session display name", e);
-            throw new Error(_t("Failed to set display name"));
-        });
+        return MatrixClientPeg.get()
+            .setDeviceDetails(device.device_id, {
+                display_name: value,
+            })
+            .catch((e) => {
+                console.error("Error setting session display name", e);
+                throw new Error(_t("Failed to set display name"));
+            });
     }
 
     onDeviceToggled() {
@@ -53,18 +55,20 @@ export default class DevicesPanelEntry extends React.Component {
     }
 
     render() {
-        const EditableTextContainer = sdk.getComponent('elements.EditableTextContainer');
+        const EditableTextContainer = sdk.getComponent(
+            "elements.EditableTextContainer",
+        );
 
         const device = this.props.device;
 
         let lastSeen = "";
         if (device.last_seen_ts) {
             const lastSeenDate = formatDate(new Date(device.last_seen_ts));
-            lastSeen = device.last_seen_ip + " @ " +
-                lastSeenDate.toLocaleString();
+            lastSeen =
+                device.last_seen_ip + " @ " + lastSeenDate.toLocaleString();
         }
 
-        let myDeviceClass = '';
+        let myDeviceClass = "";
         if (device.device_id === MatrixClientPeg.get().getDeviceId()) {
             myDeviceClass = " mx_DevicesPanel_myDevice";
         }
@@ -72,19 +76,21 @@ export default class DevicesPanelEntry extends React.Component {
         return (
             <div className={"mx_DevicesPanel_device" + myDeviceClass}>
                 <div className="mx_DevicesPanel_deviceId">
-                    { device.device_id }
+                    {device.device_id}
                 </div>
                 <div className="mx_DevicesPanel_deviceName">
-                    <EditableTextContainer initialValue={device.display_name}
+                    <EditableTextContainer
+                        initialValue={device.display_name}
                         onSubmit={this._onDisplayNameChanged}
                         placeholder={device.device_id}
                     />
                 </div>
-                <div className="mx_DevicesPanel_lastSeen">
-                    { lastSeen }
-                </div>
+                <div className="mx_DevicesPanel_lastSeen">{lastSeen}</div>
                 <div className="mx_DevicesPanel_deviceButtons">
-                    <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
+                    <StyledCheckbox
+                        onChange={this.onDeviceToggled}
+                        checked={this.props.selected}
+                    />
                 </div>
             </div>
         );
@@ -97,5 +103,5 @@ DevicesPanelEntry.propTypes = {
 };
 
 DevicesPanelEntry.defaultProps = {
-    onDeviceToggled: function() {},
+    onDeviceToggled: function () {},
 };

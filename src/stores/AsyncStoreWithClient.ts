@@ -20,10 +20,15 @@ import { ActionPayload } from "../dispatcher/payloads";
 import { Dispatcher } from "flux";
 import { ReadyWatchingStore } from "./ReadyWatchingStore";
 
-export abstract class AsyncStoreWithClient<T extends Object> extends AsyncStore<T> {
+export abstract class AsyncStoreWithClient<
+    T extends Object,
+> extends AsyncStore<T> {
     protected readyStore: ReadyWatchingStore;
 
-    protected constructor(dispatcher: Dispatcher<ActionPayload>, initialState: T = <T>{}) {
+    protected constructor(
+        dispatcher: Dispatcher<ActionPayload>,
+        initialState: T = <T>{},
+    ) {
         super(dispatcher, initialState);
 
         // Create an anonymous class to avoid code duplication

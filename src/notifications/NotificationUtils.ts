@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { PushRuleAction, PushRuleActionName, TweakHighlight, TweakSound } from "matrix-js-sdk/src/@types/PushRules";
+import {
+    PushRuleAction,
+    PushRuleActionName,
+    TweakHighlight,
+    TweakSound,
+} from "matrix-js-sdk/src/@types/PushRules";
 
 interface IEncodedActions {
     notify: boolean;
@@ -36,12 +41,18 @@ export class NotificationUtils {
         if (notify) {
             const actions: PushRuleAction[] = [PushRuleActionName.Notify];
             if (sound) {
-                actions.push({ "set_tweak": "sound", "value": sound } as TweakSound);
+                actions.push({
+                    set_tweak: "sound",
+                    value: sound,
+                } as TweakSound);
             }
             if (highlight) {
-                actions.push({ "set_tweak": "highlight" } as TweakHighlight);
+                actions.push({ set_tweak: "highlight" } as TweakHighlight);
             } else {
-                actions.push({ "set_tweak": "highlight", "value": false } as TweakHighlight);
+                actions.push({
+                    set_tweak: "highlight",
+                    value: false,
+                } as TweakHighlight);
             }
             return actions;
         } else {

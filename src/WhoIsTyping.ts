@@ -18,10 +18,15 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import { _t } from './languageHandler';
+import { _t } from "./languageHandler";
 
 export function usersTypingApartFromMeAndIgnored(room: Room): RoomMember[] {
-    return usersTyping(room, [MatrixClientPeg.get().getUserId()].concat(MatrixClientPeg.get().getIgnoredUsers()));
+    return usersTyping(
+        room,
+        [MatrixClientPeg.get().getUserId()].concat(
+            MatrixClientPeg.get().getIgnoredUsers(),
+        ),
+    );
 }
 
 export function usersTypingApartFromMe(room: Room): RoomMember[] {
@@ -52,27 +57,35 @@ export function usersTyping(room: Room, exclude: string[] = []): RoomMember[] {
     return whoIsTyping;
 }
 
-export function whoIsTypingString(whoIsTyping: RoomMember[], limit: number): string {
+export function whoIsTypingString(
+    whoIsTyping: RoomMember[],
+    limit: number,
+): string {
     let othersCount = 0;
     if (whoIsTyping.length > limit) {
         othersCount = whoIsTyping.length - limit + 1;
     }
 
     if (whoIsTyping.length === 0) {
-        return '';
+        return "";
     } else if (whoIsTyping.length === 1) {
-        return _t('%(displayName)s is typing …', { displayName: whoIsTyping[0].name });
+        return _t("%(displayName)s is typing …", {
+            displayName: whoIsTyping[0].name,
+        });
     }
 
-    const names = whoIsTyping.map(m => m.name);
+    const names = whoIsTyping.map((m) => m.name);
 
     if (othersCount >= 1) {
-        return _t('%(names)s and %(count)s others are typing …', {
-            names: names.slice(0, limit - 1).join(', '),
+        return _t("%(names)s and %(count)s others are typing …", {
+            names: names.slice(0, limit - 1).join(", "),
             count: othersCount,
         });
     } else {
         const lastPerson = names.pop();
-        return _t('%(names)s and %(lastPerson)s are typing …', { names: names.join(', '), lastPerson: lastPerson });
+        return _t("%(names)s and %(lastPerson)s are typing …", {
+            names: names.join(", "),
+            lastPerson: lastPerson,
+        });
     }
 }

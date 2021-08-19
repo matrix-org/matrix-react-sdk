@@ -76,7 +76,9 @@ export default class PerformanceMonitor {
             return;
         }
         const key = this.buildKey(name, id);
-        if (performance.getEntriesByName(this.START_PREFIX + key).length === 0) {
+        if (
+            performance.getEntriesByName(this.START_PREFIX + key).length === 0
+        ) {
             console.warn(`No recording started for: ${name}`);
             return;
         }
@@ -97,7 +99,7 @@ export default class PerformanceMonitor {
         // when adding a data callback
         this.entries.push(measurement);
 
-        this.listeners.forEach(listener => {
+        this.listeners.forEach((listener) => {
             if (this.shouldEmit(listener, measurement)) {
                 listener.callback([measurement]);
             }
@@ -116,17 +118,22 @@ export default class PerformanceMonitor {
     }
 
     getEntries({ name, type }: GetEntriesOptions = {}): PerformanceEntry[] {
-        return this.entries.filter(entry => {
+        return this.entries.filter((entry) => {
             const satisfiesName = !name || entry.name === name;
             const satisfiedType = !type || entry.entryType === type;
             return satisfiesName && satisfiedType;
         });
     }
 
-    addPerformanceDataCallback(listener: PerformanceDataListener, buffer = false) {
+    addPerformanceDataCallback(
+        listener: PerformanceDataListener,
+        buffer = false,
+    ) {
         this.listeners.push(listener);
         if (buffer) {
-            const toEmit = this.entries.filter(entry => this.shouldEmit(listener, entry));
+            const toEmit = this.entries.filter((entry) =>
+                this.shouldEmit(listener, entry),
+            );
             if (toEmit.length > 0) {
                 listener.callback(toEmit);
             }
@@ -138,7 +145,9 @@ export default class PerformanceMonitor {
             this.listeners = [];
         } else {
             this.listeners.splice(
-                this.listeners.findIndex(listener => listener.callback === callback),
+                this.listeners.findIndex(
+                    (listener) => listener.callback === callback,
+                ),
                 1,
             );
         }
@@ -152,7 +161,10 @@ export default class PerformanceMonitor {
         return performance !== undefined && performance.mark !== undefined;
     }
 
-    private shouldEmit(listener: PerformanceDataListener, entry: PerformanceEntry): boolean {
+    private shouldEmit(
+        listener: PerformanceDataListener,
+        entry: PerformanceEntry,
+    ): boolean {
         return !listener.entryNames || listener.entryNames.includes(entry.name);
     }
 
@@ -163,14 +175,12 @@ export default class PerformanceMonitor {
      * @returns {string} a compound of the name and identifier if present
      */
     private buildKey(name: string, id?: string): string {
-        return `${name}${id ? `:${id}` : ''}`;
+        return `${name}${id ? `:${id}` : ""}`;
     }
 }
 
 // Convenience exports
-export {
-    PerformanceEntryNames,
-};
+export { PerformanceEntryNames };
 
 // Exposing those to the window object to bridge them from tests
 window.mxPerformanceMonitor = PerformanceMonitor.instance;

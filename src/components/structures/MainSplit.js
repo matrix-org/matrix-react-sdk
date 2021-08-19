@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Resizable } from 're-resizable';
+import React from "react";
+import { Resizable } from "re-resizable";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 
 @replaceableComponent("structures.MainSplit")
@@ -31,7 +31,10 @@ export default class MainSplit extends React.Component {
 
     _onResizeStop = (event, direction, refToElement, delta) => {
         this.props.resizeNotifier.stopResizing();
-        window.localStorage.setItem("mx_rhs_size", this._loadSidePanelSize().width + delta.width);
+        window.localStorage.setItem(
+            "mx_rhs_size",
+            this._loadSidePanelSize().width + delta.width,
+        );
     };
 
     _loadSidePanelSize() {
@@ -55,33 +58,37 @@ export default class MainSplit extends React.Component {
 
         let children;
         if (hasResizer) {
-            children = <Resizable
-                defaultSize={this._loadSidePanelSize()}
-                minWidth={264}
-                maxWidth="50%"
-                enable={{
-                    top: false,
-                    right: false,
-                    bottom: false,
-                    left: true,
-                    topRight: false,
-                    bottomRight: false,
-                    bottomLeft: false,
-                    topLeft: false,
-                }}
-                onResizeStart={this._onResizeStart}
-                onResize={this._onResize}
-                onResizeStop={this._onResizeStop}
-                className="mx_RightPanel_ResizeWrapper"
-                handleClasses={{ left: "mx_RightPanel_ResizeHandle" }}
-            >
-                { panelView }
-            </Resizable>;
+            children = (
+                <Resizable
+                    defaultSize={this._loadSidePanelSize()}
+                    minWidth={264}
+                    maxWidth="50%"
+                    enable={{
+                        top: false,
+                        right: false,
+                        bottom: false,
+                        left: true,
+                        topRight: false,
+                        bottomRight: false,
+                        bottomLeft: false,
+                        topLeft: false,
+                    }}
+                    onResizeStart={this._onResizeStart}
+                    onResize={this._onResize}
+                    onResizeStop={this._onResizeStop}
+                    className="mx_RightPanel_ResizeWrapper"
+                    handleClasses={{ left: "mx_RightPanel_ResizeHandle" }}
+                >
+                    {panelView}
+                </Resizable>
+            );
         }
 
-        return <div className="mx_MainSplit">
-            { bodyView }
-            { children }
-        </div>;
+        return (
+            <div className="mx_MainSplit">
+                {bodyView}
+                {children}
+            </div>
+        );
     }
 }

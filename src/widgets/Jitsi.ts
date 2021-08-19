@@ -31,7 +31,7 @@ export class Jitsi {
     private domain: string;
 
     public get preferredDomain(): string {
-        return this.domain || 'jitsi.riot.im';
+        return this.domain || "jitsi.riot.im";
     }
 
     /**
@@ -41,13 +41,15 @@ export class Jitsi {
      *
      * See https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
      */
-    public async getJitsiAuth(): Promise<string|null> {
+    public async getJitsiAuth(): Promise<string | null> {
         if (!this.preferredDomain) {
             return null;
         }
         let data;
         try {
-            const response = await fetch(`https://${this.preferredDomain}/.well-known/element/jitsi`);
+            const response = await fetch(
+                `https://${this.preferredDomain}/.well-known/element/jitsi`,
+            );
             data = await response.json();
         } catch (error) {
             return null;
@@ -67,11 +69,16 @@ export class Jitsi {
 
     private update = async (discoveryResponse): Promise<any> => {
         // Start with a default of the config's domain
-        let domain = (SdkConfig.get()['jitsi'] || {})['preferredDomain'] || 'jitsi.riot.im';
+        let domain =
+            (SdkConfig.get()["jitsi"] || {})["preferredDomain"] ||
+            "jitsi.riot.im";
 
-        console.log("Attempting to get Jitsi conference information from homeserver");
+        console.log(
+            "Attempting to get Jitsi conference information from homeserver",
+        );
         if (discoveryResponse && discoveryResponse[JITSI_WK_PROPERTY]) {
-            const wkPreferredDomain = discoveryResponse[JITSI_WK_PROPERTY]['preferredDomain'];
+            const wkPreferredDomain =
+                discoveryResponse[JITSI_WK_PROPERTY]["preferredDomain"];
             if (wkPreferredDomain) domain = wkPreferredDomain;
         }
 

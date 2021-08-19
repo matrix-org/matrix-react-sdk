@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { LocalStorageCryptoStore } from 'matrix-js-sdk/src/crypto/store/localStorage-crypto-store';
-import Analytics from '../Analytics';
+import { LocalStorageCryptoStore } from "matrix-js-sdk/src/crypto/store/localStorage-crypto-store";
+import Analytics from "../Analytics";
 import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
 import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
 
@@ -46,10 +46,11 @@ function track(action: string) {
 
 export function tryPersistStorage() {
     if (navigator.storage && navigator.storage.persist) {
-        navigator.storage.persist().then(persistent => {
+        navigator.storage.persist().then((persistent) => {
             console.log("StorageManager: Persistent?", persistent);
         });
-    } else if (document.requestStorageAccess) { // Safari
+    } else if (document.requestStorageAccess) {
+        // Safari
         document.requestStorageAccess().then(
             () => console.log("StorageManager: Persistent?", true),
             () => console.log("StorageManager: Persistent?", false),
@@ -108,8 +109,8 @@ export async function checkConsistency() {
         healthy = false;
         error(
             "Data exists in local storage and crypto is marked as initialised " +
-            " but no data found in crypto store. " +
-            "IndexedDB storage has likely been evicted by the browser!",
+                " but no data found in crypto store. " +
+                "IndexedDB storage has likely been evicted by the browser!",
         );
         track("Crypto store evicted");
     }
@@ -133,9 +134,7 @@ export async function checkConsistency() {
 async function checkSyncStore() {
     let exists = false;
     try {
-        exists = await IndexedDBStore.exists(
-            indexedDB, SYNC_STORE_NAME,
-        );
+        exists = await IndexedDBStore.exists(indexedDB, SYNC_STORE_NAME);
         log(`Sync store using IndexedDB contains data? ${exists}`);
         return { exists, healthy: true };
     } catch (e) {
@@ -150,7 +149,8 @@ async function checkCryptoStore() {
     let exists = false;
     try {
         exists = await IndexedDBCryptoStore.exists(
-            indexedDB, CRYPTO_STORE_NAME,
+            indexedDB,
+            CRYPTO_STORE_NAME,
         );
         log(`Crypto store using IndexedDB contains data? ${exists}`);
         return { exists, healthy: true };
@@ -204,7 +204,9 @@ async function idbInit(): Promise<void> {
     idb = await new Promise((resolve, reject) => {
         const request = indexedDB.open("matrix-react-sdk", 1);
         request.onerror = reject;
-        request.onsuccess = (event) => { resolve(request.result); };
+        request.onsuccess = (event) => {
+            resolve(request.result);
+        };
         request.onupgradeneeded = (event) => {
             const db = request.result;
             db.createObjectStore("pickleKey");
@@ -227,7 +229,9 @@ export async function idbLoad(
         const objectStore = txn.objectStore(table);
         const request = objectStore.get(key);
         request.onerror = reject;
-        request.onsuccess = (event) => { resolve(request.result); };
+        request.onsuccess = (event) => {
+            resolve(request.result);
+        };
     });
 }
 
@@ -246,7 +250,9 @@ export async function idbSave(
         const objectStore = txn.objectStore(table);
         const request = objectStore.put(data, key);
         request.onerror = reject;
-        request.onsuccess = (event) => { resolve(); };
+        request.onsuccess = (event) => {
+            resolve();
+        };
     });
 }
 
@@ -264,6 +270,8 @@ export async function idbDelete(
         const objectStore = txn.objectStore(table);
         const request = objectStore.delete(key);
         request.onerror = reject;
-        request.onsuccess = (event) => { resolve(); };
+        request.onsuccess = (event) => {
+            resolve();
+        };
     });
 }

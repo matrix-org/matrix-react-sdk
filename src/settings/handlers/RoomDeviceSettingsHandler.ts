@@ -32,8 +32,8 @@ export default class RoomDeviceSettingsHandler extends SettingsHandler {
         // Special case blacklist setting to use legacy values
         if (settingName === "blacklistUnverifiedDevices") {
             const value = this.read("mx_local_settings");
-            if (value && value['blacklistUnverifiedDevicesPerRoom']) {
-                return value['blacklistUnverifiedDevicesPerRoom'][roomId];
+            if (value && value["blacklistUnverifiedDevicesPerRoom"]) {
+                return value["blacklistUnverifiedDevicesPerRoom"][roomId];
             }
         }
 
@@ -42,15 +42,25 @@ export default class RoomDeviceSettingsHandler extends SettingsHandler {
         return null;
     }
 
-    public setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public setValue(
+        settingName: string,
+        roomId: string,
+        newValue: any,
+    ): Promise<void> {
         // Special case blacklist setting for legacy structure
         if (settingName === "blacklistUnverifiedDevices") {
             let value = this.read("mx_local_settings");
             if (!value) value = {};
-            if (!value["blacklistUnverifiedDevicesPerRoom"]) value["blacklistUnverifiedDevicesPerRoom"] = {};
+            if (!value["blacklistUnverifiedDevicesPerRoom"])
+                value["blacklistUnverifiedDevicesPerRoom"] = {};
             value["blacklistUnverifiedDevicesPerRoom"][roomId] = newValue;
             localStorage.setItem("mx_local_settings", JSON.stringify(value));
-            this.watchers.notifyUpdate(settingName, roomId, SettingLevel.ROOM_DEVICE, newValue);
+            this.watchers.notifyUpdate(
+                settingName,
+                roomId,
+                SettingLevel.ROOM_DEVICE,
+                newValue,
+            );
             return Promise.resolve();
         }
 
@@ -61,7 +71,12 @@ export default class RoomDeviceSettingsHandler extends SettingsHandler {
             localStorage.setItem(this.getKey(settingName, roomId), newValue);
         }
 
-        this.watchers.notifyUpdate(settingName, roomId, SettingLevel.ROOM_DEVICE, newValue);
+        this.watchers.notifyUpdate(
+            settingName,
+            roomId,
+            SettingLevel.ROOM_DEVICE,
+            newValue,
+        );
         return Promise.resolve();
     }
 

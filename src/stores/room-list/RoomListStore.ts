@@ -16,17 +16,36 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import SettingsStore from "../../settings/SettingsStore";
-import { DefaultTagID, isCustomTag, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
+import {
+    DefaultTagID,
+    isCustomTag,
+    OrderedDefaultTagIDs,
+    RoomUpdateCause,
+    TagID,
+} from "./models";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { IListOrderingMap, ITagMap, ITagSortingMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
+import {
+    IListOrderingMap,
+    ITagMap,
+    ITagSortingMap,
+    ListAlgorithm,
+    SortAlgorithm,
+} from "./algorithms/models";
 import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
-import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./filters/IFilterCondition";
+import {
+    FILTER_CHANGED,
+    FilterKind,
+    IFilterCondition,
+} from "./filters/IFilterCondition";
 import { TagWatcher } from "./TagWatcher";
 import RoomViewStore from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
-import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
+import {
+    EffectiveMembership,
+    getEffectiveMembership,
+} from "../../utils/membership";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
@@ -64,14 +83,16 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private spaceWatcher: SpaceWatcher;
     private updateFn = new MarkedExecution(() => {
         for (const tagId of Object.keys(this.orderedLists)) {
-            RoomNotificationStateStore.instance.getListState(tagId).setRooms(this.orderedLists[tagId]);
+            RoomNotificationStateStore.instance
+                .getListState(tagId)
+                .setRooms(this.orderedLists[tagId]);
         }
         this.emit(LISTS_UPDATE_EVENT);
     });
 
     private readonly watchedSettings = [
-        'feature_custom_tags',
-        'advancedRoomListLogging', // TODO: Remove watch: https://github.com/vector-im/element-web/issues/14602
+        "feature_custom_tags",
+        "advancedRoomListLogging", // TODO: Remove watch: https://github.com/vector-im/element-web/issues/14602
     ];
 
     constructor() {
@@ -124,7 +145,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         this.checkLoggingEnabled();
 
-        for (const settingName of this.watchedSettings) SettingsStore.monitorSetting(settingName, null);
+        for (const settingName of this.watchedSettings)
+            SettingsStore.monitorSetting(settingName, null);
         RoomViewStore.addListener(() => this.handleRVSUpdate({}));
         this.algorithm.on(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.on(FILTER_CHANGED, this.onAlgorithmFilterUpdated);
@@ -169,7 +191,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         } else if (activeRoomId) {
             const activeRoom = this.matrixClient.getRoom(activeRoomId);
             if (!activeRoom) {
-                console.warn(`${activeRoomId} is current in RVS but missing from client - clearing sticky room`);
+                console.warn(
+                    `${activeRoomId} is current in RVS but missing from client - clearing sticky room`,
+                );
                 this.algorithm.setStickyRoom(null);
             } else if (activeRoom !== this.algorithm.stickyRoom) {
                 if (SettingsStore.getValue("advancedRoomListLogging")) {
@@ -217,12 +241,21 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         if (payload.action === Action.SettingUpdated) {
             const settingUpdatedPayload = payload as SettingUpdatedPayload;
-            if (this.watchedSettings.includes(settingUpdatedPayload.settingName)) {
+            if (
+                this.watchedSettings.includes(settingUpdatedPayload.settingName)
+            ) {
                 // TODO: Remove with https://github.com/vector-im/element-web/issues/14602
-                if (settingUpdatedPayload.settingName === "advancedRoomListLogging") {
+                if (
+                    settingUpdatedPayload.settingName ===
+                    "advancedRoomListLogging"
+                ) {
                     // Log when the setting changes so we know when it was turned on in the rageshake
-                    const enabled = SettingsStore.getValue("advancedRoomListLogging");
-                    console.warn("Advanced room list logging is enabled? " + enabled);
+                    const enabled = SettingsStore.getValue(
+                        "advancedRoomListLogging",
+                    );
+                    console.warn(
+                        "Advanced room list logging is enabled? " + enabled,
+                    );
                     return;
                 }
 
@@ -236,66 +269,97 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         if (!this.algorithm) {
             // This shouldn't happen because `initialListsGenerated` implies we have an algorithm.
-            throw new Error("Room list store has no algorithm to process dispatcher update with");
+            throw new Error(
+                "Room list store has no algorithm to process dispatcher update with",
+            );
         }
 
-        if (payload.action === 'MatrixActions.Room.receipt') {
+        if (payload.action === "MatrixActions.Room.receipt") {
             // First see if the receipt event is for our own user. If it was, trigger
             // a room update (we probably read the room on a different device).
             if (readReceiptChangeIsFor(payload.event, this.matrixClient)) {
                 const room = payload.room;
                 if (!room) {
-                    console.warn(`Own read receipt was in unknown room ${room.roomId}`);
+                    console.warn(
+                        `Own read receipt was in unknown room ${room.roomId}`,
+                    );
                     return;
                 }
                 if (SettingsStore.getValue("advancedRoomListLogging")) {
                     // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                    console.log(`[RoomListDebug] Got own read receipt in ${room.roomId}`);
+                    console.log(
+                        `[RoomListDebug] Got own read receipt in ${room.roomId}`,
+                    );
                 }
                 await this.handleRoomUpdate(room, RoomUpdateCause.ReadReceipt);
                 this.updateFn.trigger();
                 return;
             }
-        } else if (payload.action === 'MatrixActions.Room.tags') {
-            const roomPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (payload.action === "MatrixActions.Room.tags") {
+            const roomPayload = <any>payload; // TODO: Type out the dispatcher types
             if (SettingsStore.getValue("advancedRoomListLogging")) {
                 // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                console.log(`[RoomListDebug] Got tag change in ${roomPayload.room.roomId}`);
+                console.log(
+                    `[RoomListDebug] Got tag change in ${roomPayload.room.roomId}`,
+                );
             }
-            await this.handleRoomUpdate(roomPayload.room, RoomUpdateCause.PossibleTagChange);
+            await this.handleRoomUpdate(
+                roomPayload.room,
+                RoomUpdateCause.PossibleTagChange,
+            );
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.Room.timeline') {
-            const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (payload.action === "MatrixActions.Room.timeline") {
+            const eventPayload = <any>payload; // TODO: Type out the dispatcher types
 
             // Ignore non-live events (backfill)
-            if (!eventPayload.isLiveEvent || !payload.isLiveUnfilteredRoomTimelineEvent) return;
+            if (
+                !eventPayload.isLiveEvent ||
+                !payload.isLiveUnfilteredRoomTimelineEvent
+            )
+                return;
 
             const roomId = eventPayload.event.getRoomId();
             const room = this.matrixClient.getRoom(roomId);
             const tryUpdate = async (updatedRoom: Room) => {
                 if (SettingsStore.getValue("advancedRoomListLogging")) {
                     // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                    console.log(`[RoomListDebug] Live timeline event ${eventPayload.event.getId()}` +
-                        ` in ${updatedRoom.roomId}`);
+                    console.log(
+                        `[RoomListDebug] Live timeline event ${eventPayload.event.getId()}` +
+                            ` in ${updatedRoom.roomId}`,
+                    );
                 }
-                if (eventPayload.event.getType() === 'm.room.tombstone' && eventPayload.event.getStateKey() === '') {
+                if (
+                    eventPayload.event.getType() === "m.room.tombstone" &&
+                    eventPayload.event.getStateKey() === ""
+                ) {
                     if (SettingsStore.getValue("advancedRoomListLogging")) {
                         // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                        console.log(`[RoomListDebug] Got tombstone event - trying to remove now-dead room`);
+                        console.log(
+                            `[RoomListDebug] Got tombstone event - trying to remove now-dead room`,
+                        );
                     }
-                    const newRoom = this.matrixClient.getRoom(eventPayload.event.getContent()['replacement_room']);
+                    const newRoom = this.matrixClient.getRoom(
+                        eventPayload.event.getContent()["replacement_room"],
+                    );
                     if (newRoom) {
                         // If we have the new room, then the new room check will have seen the predecessor
                         // and did the required updates, so do nothing here.
                         return;
                     }
                 }
-                await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.Timeline);
+                await this.handleRoomUpdate(
+                    updatedRoom,
+                    RoomUpdateCause.Timeline,
+                );
                 this.updateFn.trigger();
             };
             if (!room) {
-                console.warn(`Live timeline event ${eventPayload.event.getId()} received without associated room`);
-                console.warn(`Queuing failed room update for retry as a result.`);
+                console.warn(
+                    `Live timeline event ${eventPayload.event.getId()} received without associated room`,
+                );
+                console.warn(
+                    `Queuing failed room update for retry as a result.`,
+                );
                 setTimeout(async () => {
                     const updatedRoom = this.matrixClient.getRoom(roomId);
                     await tryUpdate(updatedRoom);
@@ -304,25 +368,32 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             } else {
                 await tryUpdate(room);
             }
-        } else if (payload.action === 'MatrixActions.Event.decrypted') {
-            const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (payload.action === "MatrixActions.Event.decrypted") {
+            const eventPayload = <any>payload; // TODO: Type out the dispatcher types
             const roomId = eventPayload.event.getRoomId();
             if (!roomId) {
                 return;
             }
             const room = this.matrixClient.getRoom(roomId);
             if (!room) {
-                console.warn(`Event ${eventPayload.event.getId()} was decrypted in an unknown room ${roomId}`);
+                console.warn(
+                    `Event ${eventPayload.event.getId()} was decrypted in an unknown room ${roomId}`,
+                );
                 return;
             }
             if (SettingsStore.getValue("advancedRoomListLogging")) {
                 // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                console.log(`[RoomListDebug] Decrypted timeline event ${eventPayload.event.getId()} in ${roomId}`);
+                console.log(
+                    `[RoomListDebug] Decrypted timeline event ${eventPayload.event.getId()} in ${roomId}`,
+                );
             }
             await this.handleRoomUpdate(room, RoomUpdateCause.Timeline);
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.accountData' && payload.event_type === 'm.direct') {
-            const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
+        } else if (
+            payload.action === "MatrixActions.accountData" &&
+            payload.event_type === "m.direct"
+        ) {
+            const eventPayload = <any>payload; // TODO: Type out the dispatcher types
             if (SettingsStore.getValue("advancedRoomListLogging")) {
                 // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
                 console.log(`[RoomListDebug] Received updated DM map`);
@@ -333,7 +404,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
                 for (const roomId of roomIds) {
                     const room = this.matrixClient.getRoom(roomId);
                     if (!room) {
-                        console.warn(`${roomId} was found in DMs but the room is not in the store`);
+                        console.warn(
+                            `${roomId} was found in DMs but the room is not in the store`,
+                        );
                         continue;
                     }
 
@@ -341,35 +414,59 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
                     // the user to have hundreds of rooms to update in one event. As such, we just hammer
                     // away at updates until the problem is solved. If we were expecting more than a couple
                     // of rooms to be updated at once, we would consider batching the rooms up.
-                    await this.handleRoomUpdate(room, RoomUpdateCause.PossibleTagChange);
+                    await this.handleRoomUpdate(
+                        room,
+                        RoomUpdateCause.PossibleTagChange,
+                    );
                 }
             }
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.Room.myMembership') {
-            const membershipPayload = (<any>payload); // TODO: Type out the dispatcher types
-            const oldMembership = getEffectiveMembership(membershipPayload.oldMembership);
-            const newMembership = getEffectiveMembership(membershipPayload.membership);
-            if (oldMembership !== EffectiveMembership.Join && newMembership === EffectiveMembership.Join) {
+        } else if (payload.action === "MatrixActions.Room.myMembership") {
+            const membershipPayload = <any>payload; // TODO: Type out the dispatcher types
+            const oldMembership = getEffectiveMembership(
+                membershipPayload.oldMembership,
+            );
+            const newMembership = getEffectiveMembership(
+                membershipPayload.membership,
+            );
+            if (
+                oldMembership !== EffectiveMembership.Join &&
+                newMembership === EffectiveMembership.Join
+            ) {
                 if (SettingsStore.getValue("advancedRoomListLogging")) {
                     // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                    console.log(`[RoomListDebug] Handling new room ${membershipPayload.room.roomId}`);
+                    console.log(
+                        `[RoomListDebug] Handling new room ${membershipPayload.room.roomId}`,
+                    );
                 }
 
                 // If we're joining an upgraded room, we'll want to make sure we don't proliferate
                 // the dead room in the list.
-                const createEvent = membershipPayload.room.currentState.getStateEvents("m.room.create", "");
-                if (createEvent && createEvent.getContent()['predecessor']) {
+                const createEvent =
+                    membershipPayload.room.currentState.getStateEvents(
+                        "m.room.create",
+                        "",
+                    );
+                if (createEvent && createEvent.getContent()["predecessor"]) {
                     if (SettingsStore.getValue("advancedRoomListLogging")) {
                         // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
                         console.log(`[RoomListDebug] Room has a predecessor`);
                     }
-                    const prevRoom = this.matrixClient.getRoom(createEvent.getContent()['predecessor']['room_id']);
+                    const prevRoom = this.matrixClient.getRoom(
+                        createEvent.getContent()["predecessor"]["room_id"],
+                    );
                     if (prevRoom) {
                         const isSticky = this.algorithm.stickyRoom === prevRoom;
                         if (isSticky) {
-                            if (SettingsStore.getValue("advancedRoomListLogging")) {
+                            if (
+                                SettingsStore.getValue(
+                                    "advancedRoomListLogging",
+                                )
+                            ) {
                                 // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                                console.log(`[RoomListDebug] Clearing sticky room due to room upgrade`);
+                                console.log(
+                                    `[RoomListDebug] Clearing sticky room due to room upgrade`,
+                                );
                             }
                             this.algorithm.setStickyRoom(null);
                         }
@@ -378,9 +475,14 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
                         // avoid redundant updates.
                         if (SettingsStore.getValue("advancedRoomListLogging")) {
                             // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                            console.log(`[RoomListDebug] Removing previous room from room list`);
+                            console.log(
+                                `[RoomListDebug] Removing previous room from room list`,
+                            );
                         }
-                        this.algorithm.handleRoomUpdate(prevRoom, RoomUpdateCause.RoomRemoved);
+                        this.algorithm.handleRoomUpdate(
+                            prevRoom,
+                            RoomUpdateCause.RoomRemoved,
+                        );
                     }
                 }
 
@@ -388,17 +490,28 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
                     // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
                     console.log(`[RoomListDebug] Adding new room to room list`);
                 }
-                await this.handleRoomUpdate(membershipPayload.room, RoomUpdateCause.NewRoom);
+                await this.handleRoomUpdate(
+                    membershipPayload.room,
+                    RoomUpdateCause.NewRoom,
+                );
                 this.updateFn.trigger();
                 return;
             }
 
-            if (oldMembership !== EffectiveMembership.Invite && newMembership === EffectiveMembership.Invite) {
+            if (
+                oldMembership !== EffectiveMembership.Invite &&
+                newMembership === EffectiveMembership.Invite
+            ) {
                 if (SettingsStore.getValue("advancedRoomListLogging")) {
                     // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                    console.log(`[RoomListDebug] Handling invite to ${membershipPayload.room.roomId}`);
+                    console.log(
+                        `[RoomListDebug] Handling invite to ${membershipPayload.room.roomId}`,
+                    );
                 }
-                await this.handleRoomUpdate(membershipPayload.room, RoomUpdateCause.NewRoom);
+                await this.handleRoomUpdate(
+                    membershipPayload.room,
+                    RoomUpdateCause.NewRoom,
+                );
                 this.updateFn.trigger();
                 return;
             }
@@ -407,17 +520,28 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             if (oldMembership !== newMembership) {
                 if (SettingsStore.getValue("advancedRoomListLogging")) {
                     // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                    console.log(`[RoomListDebug] Handling membership change in ${membershipPayload.room.roomId}`);
+                    console.log(
+                        `[RoomListDebug] Handling membership change in ${membershipPayload.room.roomId}`,
+                    );
                 }
-                await this.handleRoomUpdate(membershipPayload.room, RoomUpdateCause.PossibleTagChange);
+                await this.handleRoomUpdate(
+                    membershipPayload.room,
+                    RoomUpdateCause.PossibleTagChange,
+                );
                 this.updateFn.trigger();
                 return;
             }
         }
     }
 
-    private async handleRoomUpdate(room: Room, cause: RoomUpdateCause): Promise<any> {
-        if (cause === RoomUpdateCause.NewRoom && room.getMyMembership() === "invite") {
+    private async handleRoomUpdate(
+        room: Room,
+        cause: RoomUpdateCause,
+    ): Promise<any> {
+        if (
+            cause === RoomUpdateCause.NewRoom &&
+            room.getMyMembership() === "invite"
+        ) {
             // Let the visibility provider know that there is a new invited room. It would be nice
             // if this could just be an event that things listen for but the point of this is that
             // we delay doing anything about this room until the VoipUserMapper had had a chance
@@ -430,8 +554,10 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             return; // don't do anything on rooms that aren't visible
         }
 
-        if ((cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.PossibleTagChange) &&
-            !this.prefilterConditions.every(c => c.isVisible(room))
+        if (
+            (cause === RoomUpdateCause.NewRoom ||
+                cause === RoomUpdateCause.PossibleTagChange) &&
+            !this.prefilterConditions.every((c) => c.isVisible(room))
         ) {
             return; // don't do anything on new/moved rooms which ought not to be shown
         }
@@ -440,7 +566,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         if (shouldUpdate) {
             if (SettingsStore.getValue("advancedRoomListLogging")) {
                 // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-                console.log(`[DEBUG] Room "${room.name}" (${room.roomId}) triggered by ${cause} requires list update`);
+                console.log(
+                    `[DEBUG] Room "${room.name}" (${room.roomId}) triggered by ${cause} requires list update`,
+                );
             }
             this.updateFn.mark();
         }
@@ -461,7 +589,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         // Figure out which rooms are about to be valid, and the state of affairs
         const rooms = this.getPlausibleRooms();
         const currentSticky = this.algorithm.stickyRoom;
-        const stickyIsStillPresent = currentSticky && rooms.includes(currentSticky);
+        const stickyIsStillPresent =
+            currentSticky && rooms.includes(currentSticky);
 
         // Reset the sticky room before resetting the known rooms so the algorithm
         // doesn't freak out.
@@ -502,9 +631,16 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
     // logic must match calculateListOrder
     private calculateTagSorting(tagId: TagID): SortAlgorithm {
-        const isDefaultRecent = tagId === DefaultTagID.Invite || tagId === DefaultTagID.DM;
-        const defaultSort = isDefaultRecent ? SortAlgorithm.Recent : SortAlgorithm.Alphabetic;
-        const settingAlphabetical = SettingsStore.getValue("RoomList.orderAlphabetically", null, true);
+        const isDefaultRecent =
+            tagId === DefaultTagID.Invite || tagId === DefaultTagID.DM;
+        const defaultSort = isDefaultRecent
+            ? SortAlgorithm.Recent
+            : SortAlgorithm.Alphabetic;
+        const settingAlphabetical = SettingsStore.getValue(
+            "RoomList.orderAlphabetically",
+            null,
+            true,
+        );
         const definedSort = this.getTagSorting(tagId);
         const storedSort = this.getStoredTagSorting(tagId);
 
@@ -515,7 +651,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         if (storedSort) {
             tagSort = storedSort;
         } else if (!isNullOrUndefined(settingAlphabetical)) {
-            tagSort = settingAlphabetical ? SortAlgorithm.Alphabetic : SortAlgorithm.Recent;
+            tagSort = settingAlphabetical
+                ? SortAlgorithm.Alphabetic
+                : SortAlgorithm.Recent;
         } else if (definedSort) {
             tagSort = definedSort;
         } // else default (already set)
@@ -547,7 +685,11 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     // logic must match calculateTagSorting
     private calculateListOrder(tagId: TagID): ListAlgorithm {
         const defaultOrder = ListAlgorithm.Natural;
-        const settingImportance = SettingsStore.getValue("RoomList.orderByImportance", null, true);
+        const settingImportance = SettingsStore.getValue(
+            "RoomList.orderByImportance",
+            null,
+            true,
+        );
         const definedOrder = this.getListOrder(tagId);
         const storedOrder = this.getStoredListOrder(tagId);
 
@@ -558,7 +700,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         if (storedOrder) {
             listOrder = storedOrder;
         } else if (!isNullOrUndefined(settingImportance)) {
-            listOrder = settingImportance ? ListAlgorithm.Importance : ListAlgorithm.Natural;
+            listOrder = settingImportance
+                ? ListAlgorithm.Importance
+                : ListAlgorithm.Natural;
         } else if (definedOrder) {
             listOrder = definedOrder;
         } // else default (already set)
@@ -590,7 +734,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private onAlgorithmListUpdated = () => {
         if (SettingsStore.getValue("advancedRoomListLogging")) {
             // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-            console.log("Underlying algorithm has triggered a list update - marking");
+            console.log(
+                "Underlying algorithm has triggered a list update - marking",
+            );
         }
         this.updateFn.mark();
     };
@@ -609,12 +755,17 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private getPlausibleRooms(): Room[] {
         if (!this.matrixClient) return [];
 
-        let rooms = this.matrixClient.getVisibleRooms().filter(r => VisibilityProvider.instance.isRoomVisible(r));
+        let rooms = this.matrixClient
+            .getVisibleRooms()
+            .filter((r) => VisibilityProvider.instance.isRoomVisible(r));
 
         // if spaces are enabled only consider the prefilter conditions when there are no runtime conditions
         // for the search all spaces feature
-        if (this.prefilterConditions.length > 0 && (!SpaceStore.spacesEnabled || !this.filterConditions.length)) {
-            rooms = rooms.filter(r => {
+        if (
+            this.prefilterConditions.length > 0 &&
+            (!SpaceStore.spacesEnabled || !this.filterConditions.length)
+        ) {
+            rooms = rooms.filter((r) => {
                 for (const filter of this.prefilterConditions) {
                     if (!filter.isVisible(r)) {
                         return false;
@@ -644,8 +795,10 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         if (this.state.tagsEnabled) {
             for (const room of rooms) {
                 if (!room.tags) continue;
-                const tags = Object.keys(room.tags).filter(t => isCustomTag(t));
-                tags.forEach(t => customTags.add(t));
+                const tags = Object.keys(room.tags).filter((t) =>
+                    isCustomTag(t),
+                );
+                tags.forEach((t) => customTags.add(t));
             }
         }
 

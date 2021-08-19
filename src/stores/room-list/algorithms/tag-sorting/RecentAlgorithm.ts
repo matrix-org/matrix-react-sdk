@@ -19,7 +19,10 @@ import { TagID } from "../../models";
 import { IAlgorithm } from "./IAlgorithm";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import * as Unread from "../../../../Unread";
-import { EffectiveMembership, getEffectiveMembership } from "../../../../utils/membership";
+import {
+    EffectiveMembership,
+    getEffectiveMembership,
+} from "../../../../utils/membership";
 
 export const sortRooms = (rooms: Room[]): Room[] => {
     // We cache the timestamp lookup to avoid iterating forever on the timeline
@@ -35,7 +38,7 @@ export const sortRooms = (rooms: Room[]): Room[] => {
 
     // TODO: Don't assume we're using the same client as the peg
     // See https://github.com/vector-im/element-web/issues/14458
-    let myUserId = '';
+    let myUserId = "";
     if (MatrixClientPeg.get()) {
         myUserId = MatrixClientPeg.get().getUserId();
     }
@@ -56,9 +59,14 @@ export const sortRooms = (rooms: Room[]): Room[] => {
             // If the room hasn't been joined yet, it probably won't have a timeline to
             // parse. We'll still fall back to the timeline if this fails, but chances
             // are we'll at least have our own membership event to go off of.
-            const effectiveMembership = getEffectiveMembership(r.getMyMembership());
+            const effectiveMembership = getEffectiveMembership(
+                r.getMyMembership(),
+            );
             if (effectiveMembership !== EffectiveMembership.Join) {
-                const membershipEvent = r.currentState.getStateEvents("m.room.member", myUserId);
+                const membershipEvent = r.currentState.getStateEvents(
+                    "m.room.member",
+                    myUserId,
+                );
                 if (membershipEvent && !Array.isArray(membershipEvent)) {
                     return membershipEvent.getTs();
                 }
@@ -68,7 +76,10 @@ export const sortRooms = (rooms: Room[]): Room[] => {
                 const ev = r.timeline[i];
                 if (!ev.getTs()) continue; // skip events that don't have timestamps (tests only?)
 
-                if (ev.getSender() === myUserId || Unread.eventTriggersUnreadCount(ev)) {
+                if (
+                    ev.getSender() === myUserId ||
+                    Unread.eventTriggersUnreadCount(ev)
+                ) {
                     return ev.getTs();
                 }
             }

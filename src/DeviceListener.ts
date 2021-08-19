@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClientPeg } from './MatrixClientPeg';
+import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
 import {
     hideToast as hideBulkUnverifiedSessionsToast,
@@ -29,9 +29,12 @@ import {
     hideToast as hideUnverifiedSessionsToast,
     showToast as showUnverifiedSessionsToast,
 } from "./toasts/UnverifiedSessionToast";
-import { isSecretStorageBeingAccessed, accessSecretStorage } from "./SecurityManager";
-import { isSecureBackupRequired } from './utils/WellKnownUtils';
-import { isLoggedIn } from './components/structures/MatrixChat';
+import {
+    isSecretStorageBeingAccessed,
+    accessSecretStorage,
+} from "./SecurityManager";
+import { isSecureBackupRequired } from "./utils/WellKnownUtils";
+import { isLoggedIn } from "./components/structures/MatrixChat";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ActionPayload } from "./dispatcher/payloads";
 
@@ -54,33 +57,70 @@ export default class DeviceListener {
     private displayingToastsForDeviceIds = new Set<string>();
 
     static sharedInstance() {
-        if (!window.mxDeviceListener) window.mxDeviceListener = new DeviceListener();
+        if (!window.mxDeviceListener)
+            window.mxDeviceListener = new DeviceListener();
         return window.mxDeviceListener;
     }
 
     start() {
-        MatrixClientPeg.get().on('crypto.willUpdateDevices', this.onWillUpdateDevices);
-        MatrixClientPeg.get().on('crypto.devicesUpdated', this.onDevicesUpdated);
-        MatrixClientPeg.get().on('deviceVerificationChanged', this.onDeviceVerificationChanged);
-        MatrixClientPeg.get().on('userTrustStatusChanged', this.onUserTrustStatusChanged);
-        MatrixClientPeg.get().on('crossSigning.keysChanged', this.onCrossSingingKeysChanged);
-        MatrixClientPeg.get().on('accountData', this.onAccountData);
-        MatrixClientPeg.get().on('sync', this.onSync);
-        MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
+        MatrixClientPeg.get().on(
+            "crypto.willUpdateDevices",
+            this.onWillUpdateDevices,
+        );
+        MatrixClientPeg.get().on(
+            "crypto.devicesUpdated",
+            this.onDevicesUpdated,
+        );
+        MatrixClientPeg.get().on(
+            "deviceVerificationChanged",
+            this.onDeviceVerificationChanged,
+        );
+        MatrixClientPeg.get().on(
+            "userTrustStatusChanged",
+            this.onUserTrustStatusChanged,
+        );
+        MatrixClientPeg.get().on(
+            "crossSigning.keysChanged",
+            this.onCrossSingingKeysChanged,
+        );
+        MatrixClientPeg.get().on("accountData", this.onAccountData);
+        MatrixClientPeg.get().on("sync", this.onSync);
+        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
         this.dispatcherRef = dis.register(this.onAction);
         this.recheck();
     }
 
     stop() {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener('crypto.willUpdateDevices', this.onWillUpdateDevices);
-            MatrixClientPeg.get().removeListener('crypto.devicesUpdated', this.onDevicesUpdated);
-            MatrixClientPeg.get().removeListener('deviceVerificationChanged', this.onDeviceVerificationChanged);
-            MatrixClientPeg.get().removeListener('userTrustStatusChanged', this.onUserTrustStatusChanged);
-            MatrixClientPeg.get().removeListener('crossSigning.keysChanged', this.onCrossSingingKeysChanged);
-            MatrixClientPeg.get().removeListener('accountData', this.onAccountData);
-            MatrixClientPeg.get().removeListener('sync', this.onSync);
-            MatrixClientPeg.get().removeListener('RoomState.events', this.onRoomStateEvents);
+            MatrixClientPeg.get().removeListener(
+                "crypto.willUpdateDevices",
+                this.onWillUpdateDevices,
+            );
+            MatrixClientPeg.get().removeListener(
+                "crypto.devicesUpdated",
+                this.onDevicesUpdated,
+            );
+            MatrixClientPeg.get().removeListener(
+                "deviceVerificationChanged",
+                this.onDeviceVerificationChanged,
+            );
+            MatrixClientPeg.get().removeListener(
+                "userTrustStatusChanged",
+                this.onUserTrustStatusChanged,
+            );
+            MatrixClientPeg.get().removeListener(
+                "crossSigning.keysChanged",
+                this.onCrossSingingKeysChanged,
+            );
+            MatrixClientPeg.get().removeListener(
+                "accountData",
+                this.onAccountData,
+            );
+            MatrixClientPeg.get().removeListener("sync", this.onSync);
+            MatrixClientPeg.get().removeListener(
+                "RoomState.events",
+                this.onRoomStateEvents,
+            );
         }
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
@@ -116,12 +156,17 @@ export default class DeviceListener {
         if (this.ourDeviceIdsAtStart === null) {
             const cli = MatrixClientPeg.get();
             this.ourDeviceIdsAtStart = new Set(
-                cli.getStoredDevicesForUser(cli.getUserId()).map(d => d.deviceId),
+                cli
+                    .getStoredDevicesForUser(cli.getUserId())
+                    .map((d) => d.deviceId),
             );
         }
     }
 
-    private onWillUpdateDevices = async (users: string[], initialFetch?: boolean) => {
+    private onWillUpdateDevices = async (
+        users: string[],
+        initialFetch?: boolean,
+    ) => {
         // If we didn't know about *any* devices before (ie. it's fresh login),
         // then they are all pre-existing devices, so ignore this and set the
         // devicesAtStart list to the devices that we see after the fetch.
@@ -160,16 +205,16 @@ export default class DeviceListener {
         // * completed secret storage creation
         // which result in account data changes affecting checks below.
         if (
-            ev.getType().startsWith('m.secret_storage.') ||
-            ev.getType().startsWith('m.cross_signing.') ||
-            ev.getType() === 'm.megolm_backup.v1'
+            ev.getType().startsWith("m.secret_storage.") ||
+            ev.getType().startsWith("m.cross_signing.") ||
+            ev.getType() === "m.megolm_backup.v1"
         ) {
             this.recheck();
         }
     };
 
     private onSync = (state, prevState) => {
-        if (state === 'PREPARED' && prevState === null) this.recheck();
+        if (state === "PREPARED" && prevState === null) this.recheck();
     };
 
     private onRoomStateEvents = (ev: MatrixEvent) => {
@@ -190,9 +235,13 @@ export default class DeviceListener {
     // The server doesn't tell us when key backup is set up, so we poll
     // & cache the result
     private async getKeyBackupInfo() {
-        const now = (new Date()).getTime();
-        if (!this.keyBackupInfo || this.keyBackupFetchedAt < now - KEY_BACKUP_POLL_INTERVAL) {
-            this.keyBackupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
+        const now = new Date().getTime();
+        if (
+            !this.keyBackupInfo ||
+            this.keyBackupFetchedAt < now - KEY_BACKUP_POLL_INTERVAL
+        ) {
+            this.keyBackupInfo =
+                await MatrixClientPeg.get().getKeyBackupVersion();
             this.keyBackupFetchedAt = now;
         }
         return this.keyBackupInfo;
@@ -204,13 +253,18 @@ export default class DeviceListener {
         if (isSecretStorageBeingAccessed()) return false;
         // Show setup toasts once the user is in at least one encrypted room.
         const cli = MatrixClientPeg.get();
-        return cli && cli.getRooms().some(r => cli.isRoomEncrypted(r.roomId));
+        return cli && cli.getRooms().some((r) => cli.isRoomEncrypted(r.roomId));
     }
 
     private async recheck() {
         const cli = MatrixClientPeg.get();
 
-        if (!await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")) return;
+        if (
+            !(await cli.doesServerSupportUnstableFeature(
+                "org.matrix.e2e_cross_signing",
+            ))
+        )
+            return;
 
         if (!cli.isCryptoEnabled()) return;
         // don't recheck until the initial sync is complete: lots of account data events will fire
@@ -274,8 +328,14 @@ export default class DeviceListener {
             for (const device of devices) {
                 if (device.deviceId === cli.deviceId) continue;
 
-                const deviceTrust = await cli.checkDeviceTrust(cli.getUserId(), device.deviceId);
-                if (!deviceTrust.isCrossSigningVerified() && !this.dismissed.has(device.deviceId)) {
+                const deviceTrust = await cli.checkDeviceTrust(
+                    cli.getUserId(),
+                    device.deviceId,
+                );
+                if (
+                    !deviceTrust.isCrossSigningVerified() &&
+                    !this.dismissed.has(device.deviceId)
+                ) {
                     if (this.ourDeviceIdsAtStart.has(device.deviceId)) {
                         oldUnverifiedDeviceIds.add(device.deviceId);
                     } else {

@@ -50,8 +50,10 @@ export class MediaEventHelper implements IDestroyable {
 
     public destroy() {
         if (this.media.isEncrypted) {
-            if (this.sourceUrl.present) URL.revokeObjectURL(this.sourceUrl.cachedValue);
-            if (this.thumbnailUrl.present) URL.revokeObjectURL(this.thumbnailUrl.cachedValue);
+            if (this.sourceUrl.present)
+                URL.revokeObjectURL(this.sourceUrl.cachedValue);
+            if (this.thumbnailUrl.present)
+                URL.revokeObjectURL(this.thumbnailUrl.cachedValue);
         }
     }
 
@@ -79,7 +81,7 @@ export class MediaEventHelper implements IDestroyable {
             const content = this.event.getContent<IMediaEventContent>();
             return decryptFile(content.file, content.info);
         }
-        return this.media.downloadSource().then(r => r.blob());
+        return this.media.downloadSource().then((r) => r.blob());
     };
 
     private fetchThumbnail = () => {
@@ -88,15 +90,20 @@ export class MediaEventHelper implements IDestroyable {
         if (this.media.isEncrypted) {
             const content = this.event.getContent<IMediaEventContent>();
             if (content.info?.thumbnail_file) {
-                return decryptFile(content.info.thumbnail_file, content.info.thumbnail_info);
+                return decryptFile(
+                    content.info.thumbnail_file,
+                    content.info.thumbnail_info,
+                );
             } else {
                 // "Should never happen"
-                console.warn("Media claims to have thumbnail and is encrypted, but no thumbnail_file found");
+                console.warn(
+                    "Media claims to have thumbnail and is encrypted, but no thumbnail_file found",
+                );
                 return Promise.resolve(null);
             }
         }
 
-        return fetch(this.media.thumbnailHttp).then(r => r.blob());
+        return fetch(this.media.thumbnailHttp).then((r) => r.blob());
     };
 
     public static isEligible(event: MatrixEvent): boolean {
@@ -113,7 +120,7 @@ export class MediaEventHelper implements IDestroyable {
             MsgType.File,
         ];
         if (mediaMsgTypes.includes(content.msgtype)) return true;
-        if (typeof(content.url) === 'string') return true;
+        if (typeof content.url === "string") return true;
 
         // Finally, it's probably not media
         return false;

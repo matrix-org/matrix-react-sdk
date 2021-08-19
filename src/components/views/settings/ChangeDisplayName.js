@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import * as sdk from '../../../index';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
+import React from "react";
+import * as sdk from "../../../index";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.settings.ChangeDisplayName")
@@ -36,19 +36,22 @@ export default class ChangeDisplayName extends React.Component {
 
     _changeDisplayName = (newDisplayname) => {
         const cli = MatrixClientPeg.get();
-        return cli.setDisplayName(newDisplayname).catch(function(e) {
+        return cli.setDisplayName(newDisplayname).catch(function (e) {
             throw new Error("Failed to set display name", e);
         });
     };
 
     render() {
-        const EditableTextContainer = sdk.getComponent('elements.EditableTextContainer');
+        const EditableTextContainer = sdk.getComponent(
+            "elements.EditableTextContainer",
+        );
         return (
             <EditableTextContainer
                 getInitialValue={this._getDisplayName}
                 placeholder={_t("No display name")}
                 blurToSubmit={true}
-                onSubmit={this._changeDisplayName} />
+                onSubmit={this._changeDisplayName}
+            />
         );
     }
 }

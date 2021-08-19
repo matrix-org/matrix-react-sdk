@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as Roles from '../../../Roles';
-import { _t } from '../../../languageHandler';
+import React from "react";
+import PropTypes from "prop-types";
+import * as Roles from "../../../Roles";
+import { _t } from "../../../languageHandler";
 import Field from "./Field";
 import { Key } from "../../../Keyboard";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -41,7 +41,7 @@ export default class PowerSelector extends React.Component {
 
         // The name to annotate the selector with
         label: PropTypes.string,
-    }
+    };
 
     static defaultProps = {
         maxValue: Infinity,
@@ -75,7 +75,7 @@ export default class PowerSelector extends React.Component {
     _initStateFromProps(newProps) {
         // This needs to be done now because levelRoleMap has translated strings
         const levelRoleMap = Roles.levelRoleMap(newProps.usersDefault);
-        const options = Object.keys(levelRoleMap).filter(level => {
+        const options = Object.keys(levelRoleMap).filter((level) => {
             return (
                 level === undefined ||
                 level <= newProps.maxValue ||
@@ -94,7 +94,7 @@ export default class PowerSelector extends React.Component {
         });
     }
 
-    onSelectChange = event => {
+    onSelectChange = (event) => {
         const isCustom = event.target.value === "SELECT_VALUE_CUSTOM";
         if (isCustom) {
             this.setState({ custom: true });
@@ -104,18 +104,21 @@ export default class PowerSelector extends React.Component {
         }
     };
 
-    onCustomChange = event => {
+    onCustomChange = (event) => {
         this.setState({ customValue: event.target.value });
     };
 
-    onCustomBlur = event => {
+    onCustomBlur = (event) => {
         event.preventDefault();
         event.stopPropagation();
 
-        this.props.onChange(parseInt(this.state.customValue), this.props.powerLevelKey);
+        this.props.onChange(
+            parseInt(this.state.customValue),
+            this.props.powerLevelKey,
+        );
     };
 
-    onCustomKeyDown = event => {
+    onCustomKeyDown = (event) => {
         if (event.key === Key.ENTER) {
             event.preventDefault();
             event.stopPropagation();
@@ -131,7 +134,10 @@ export default class PowerSelector extends React.Component {
 
     render() {
         let picker;
-        const label = typeof this.props.label === "undefined" ? _t("Power level") : this.props.label;
+        const label =
+            typeof this.props.label === "undefined"
+                ? _t("Power level")
+                : this.props.label;
         if (this.state.custom) {
             picker = (
                 <Field
@@ -150,12 +156,22 @@ export default class PowerSelector extends React.Component {
             let options = this.state.options.map((level) => {
                 return {
                     value: level,
-                    text: Roles.textualPowerLevel(level, this.props.usersDefault),
+                    text: Roles.textualPowerLevel(
+                        level,
+                        this.props.usersDefault,
+                    ),
                 };
             });
-            options.push({ value: "SELECT_VALUE_CUSTOM", text: _t("Custom level") });
+            options.push({
+                value: "SELECT_VALUE_CUSTOM",
+                text: _t("Custom level"),
+            });
             options = options.map((op) => {
-                return <option value={op.value} key={op.value}>{ op.text }</option>;
+                return (
+                    <option value={op.value} key={op.value}>
+                        {op.text}
+                    </option>
+                );
             });
 
             picker = (
@@ -166,15 +182,11 @@ export default class PowerSelector extends React.Component {
                     value={String(this.state.selectValue)}
                     disabled={this.props.disabled}
                 >
-                    { options }
+                    {options}
                 </Field>
             );
         }
 
-        return (
-            <div className="mx_PowerSelector">
-                { picker }
-            </div>
-        );
+        return <div className="mx_PowerSelector">{picker}</div>;
     }
 }

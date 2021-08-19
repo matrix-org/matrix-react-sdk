@@ -34,14 +34,19 @@ export async function upgradeRoom(
 
     let newRoomId: string;
     try {
-        ({ replacement_room: newRoomId } = await cli.upgradeRoom(room.roomId, targetVersion));
+        ({ replacement_room: newRoomId } = await cli.upgradeRoom(
+            room.roomId,
+            targetVersion,
+        ));
     } catch (e) {
         if (!handleError) throw e;
         console.error(e);
 
         Modal.createTrackedDialog("Room Upgrade Error", "", ErrorDialog, {
-            title: _t('Error upgrading room'),
-            description: _t('Double check that your server supports the room version chosen and try again.'),
+            title: _t("Error upgrading room"),
+            description: _t(
+                "Double check that your server supports the room version chosen and try again.",
+            ),
         });
         throw e;
     }
@@ -57,16 +62,18 @@ export async function upgradeRoom(
             const toInvite = [
                 ...room.getMembersWithMembership("join"),
                 ...room.getMembersWithMembership("invite"),
-            ].map(m => m.userId).filter(m => m !== cli.getUserId());
+            ]
+                .map((m) => m.userId)
+                .filter((m) => m !== cli.getUserId());
 
             if (toInvite.length > 0) {
                 // Errors are handled internally to this function
                 await inviteUsersToRoom(newRoomId, toInvite);
             }
 
-            cli.removeListener('Room', checkForUpgradeFn);
+            cli.removeListener("Room", checkForUpgradeFn);
         };
-        cli.on('Room', checkForUpgradeFn);
+        cli.on("Room", checkForUpgradeFn);
     }
 
     if (updateSpaces) {
@@ -74,18 +81,40 @@ export async function upgradeRoom(
         try {
             for (const parentId of parents) {
                 const parent = cli.getRoom(parentId);
-                if (!parent?.currentState.maySendStateEvent(EventType.SpaceChild, cli.getUserId())) continue;
+                if (
+                    !parent?.currentState.maySendStateEvent(
+                        EventType.SpaceChild,
+                        cli.getUserId(),
+                    )
+                )
+                    continue;
 
-                const currentEv = parent.currentState.getStateEvents(EventType.SpaceChild, room.roomId);
-                await cli.sendStateEvent(parentId, EventType.SpaceChild, {
-                    ...(currentEv?.getContent() || {}), // copy existing attributes like suggested
-                    via: [cli.getDomain()],
-                }, newRoomId);
-                await cli.sendStateEvent(parentId, EventType.SpaceChild, {}, room.roomId);
+                const currentEv = parent.currentState.getStateEvents(
+                    EventType.SpaceChild,
+                    room.roomId,
+                );
+                await cli.sendStateEvent(
+                    parentId,
+                    EventType.SpaceChild,
+                    {
+                        ...(currentEv?.getContent() || {}), // copy existing attributes like suggested
+                        via: [cli.getDomain()],
+                    },
+                    newRoomId,
+                );
+                await cli.sendStateEvent(
+                    parentId,
+                    EventType.SpaceChild,
+                    {},
+                    room.roomId,
+                );
             }
         } catch (e) {
             // These errors are not critical to the room upgrade itself
-            console.warn("Failed to update parent spaces during room upgrade", e);
+            console.warn(
+                "Failed to update parent spaces during room upgrade",
+                e,
+            );
         }
     }
 

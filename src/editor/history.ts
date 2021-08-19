@@ -53,9 +53,10 @@ export default class HistoryManager {
         // so we can't push the state before something happened.
         // not ideal but changing this would be harder to fit cleanly into
         // the editor model.
-        const isNonBulkInput = inputType === "insertText" ||
-                               inputType === "deleteContentForward" ||
-                               inputType === "deleteContentBackward";
+        const isNonBulkInput =
+            inputType === "insertText" ||
+            inputType === "deleteContentForward" ||
+            inputType === "deleteContentBackward";
         if (diff && isNonBulkInput) {
             if (diff.added) {
                 this.addedSinceLastPush = true;
@@ -67,7 +68,8 @@ export default class HistoryManager {
             if (this.addedSinceLastPush !== this.removedSinceLastPush) {
                 // add steps by word boundary, up to MAX_STEP_LENGTH characters
                 const str = diff.added ? diff.added : diff.removed;
-                const isWordBoundary = str === " " || str === "\t" || str === "\n";
+                const isWordBoundary =
+                    str === " " || str === "\t" || str === "\n";
                 if (this.nonWordBoundarySinceLastPush && isWordBoundary) {
                     return true;
                 }
@@ -88,7 +90,7 @@ export default class HistoryManager {
 
     private pushState(model: EditorModel, caret: Caret) {
         // remove all steps after current step
-        while (this.currentIndex < (this.stack.length - 1)) {
+        while (this.currentIndex < this.stack.length - 1) {
             this.stack.pop();
         }
         const parts = model.serializeParts();
@@ -103,7 +105,12 @@ export default class HistoryManager {
     }
 
     // needs to persist parts and caret position
-    public tryPush(model: EditorModel, caret: Caret, inputType: string, diff: IDiff): boolean {
+    public tryPush(
+        model: EditorModel,
+        caret: Caret,
+        inputType: string,
+        diff: IDiff,
+    ): boolean {
         // ignore state restoration echos.
         // these respect the inputType values of the input event,
         // but are actually passed in from MessageEditor calling model.reset()
@@ -132,7 +139,7 @@ export default class HistoryManager {
     }
 
     public canRedo(): boolean {
-        return this.currentIndex < (this.stack.length - 1);
+        return this.currentIndex < this.stack.length - 1;
     }
 
     // returns state that should be applied to model

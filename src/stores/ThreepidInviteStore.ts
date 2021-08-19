@@ -67,7 +67,10 @@ export default class ThreepidInviteStore extends EventEmitter {
         return ThreepidInviteStore._instance;
     }
 
-    public storeInvite(roomId: string, wireInvite: IThreepidInviteWireFormat): IThreepidInvite {
+    public storeInvite(
+        roomId: string,
+        wireInvite: IThreepidInviteWireFormat,
+    ): IThreepidInvite {
         const invite = <IPersistedThreepidInvite>{ roomId, ...wireInvite };
         const id = this.generateIdOf(invite);
         localStorage.setItem(`${STORAGE_PREFIX}${id}`, JSON.stringify(invite));
@@ -79,13 +82,17 @@ export default class ThreepidInviteStore extends EventEmitter {
         for (let i = 0; i < localStorage.length; i++) {
             const keyName = localStorage.key(i);
             if (!keyName.startsWith(STORAGE_PREFIX)) continue;
-            results.push(JSON.parse(localStorage.getItem(keyName)) as IPersistedThreepidInvite);
+            results.push(
+                JSON.parse(
+                    localStorage.getItem(keyName),
+                ) as IPersistedThreepidInvite,
+            );
         }
         return results;
     }
 
     public getInvites(): IThreepidInvite[] {
-        return this.getWireInvites().map(i => this.translateInvite(i));
+        return this.getWireInvites().map((i) => this.translateInvite(i));
     }
 
     // Currently Element can only handle one invite at a time, so handle that
@@ -102,7 +109,9 @@ export default class ThreepidInviteStore extends EventEmitter {
         return base32.stringify(Buffer.from(JSON.stringify(persisted)));
     }
 
-    private translateInvite(persisted: IPersistedThreepidInvite): IThreepidInvite {
+    private translateInvite(
+        persisted: IPersistedThreepidInvite,
+    ): IThreepidInvite {
         return {
             id: this.generateIdOf(persisted),
             roomId: persisted.roomId,
@@ -114,7 +123,9 @@ export default class ThreepidInviteStore extends EventEmitter {
         };
     }
 
-    public translateToWireFormat(invite: IThreepidInvite): IThreepidInviteWireFormat {
+    public translateToWireFormat(
+        invite: IThreepidInvite,
+    ): IThreepidInviteWireFormat {
         return {
             email: invite.toEmail,
             signurl: invite.signUrl,

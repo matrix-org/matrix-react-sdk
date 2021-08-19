@@ -47,7 +47,11 @@ export function arrayFastResample(input: number[], points: number): number[] {
     }
 
     // Trim to size & return
-    return arrayTrimFill(samples, points, arraySeed(input[input.length - 1], points));
+    return arrayTrimFill(
+        samples,
+        points,
+        arraySeed(input[input.length - 1], points),
+    );
 }
 
 /**
@@ -57,7 +61,10 @@ export function arrayFastResample(input: number[], points: number): number[] {
  * @param {number} points The number of samples to end up with.
  * @returns {number[]} The resampled array.
  */
-export function arraySmoothingResample(input: number[], points: number): number[] {
+export function arraySmoothingResample(
+    input: number[],
+    points: number,
+): number[] {
     if (input.length === points) return input; // short-circuit a complicated call
 
     let samples: number[] = [];
@@ -70,7 +77,7 @@ export function arraySmoothingResample(input: number[], points: number): number[
         // never end, and we can over-average the data. Instead, we'll get as far as
         // we can and do a followup fast resample (the neighbouring points will be close
         // to the actual waveform, so we can get away with this safely).
-        while (samples.length > (points * 2) || samples.length === 0) {
+        while (samples.length > points * 2 || samples.length === 0) {
             samples = [];
             for (let i = 1; i < input.length - 1; i += 2) {
                 const prevPoint = input[i - 1];
@@ -99,10 +106,16 @@ export function arraySmoothingResample(input: number[], points: number): number[
  * @param {number} newMax The maximum value to scale to.
  * @returns {number[]} The rescaled array.
  */
-export function arrayRescale(input: number[], newMin: number, newMax: number): number[] {
+export function arrayRescale(
+    input: number[],
+    newMin: number,
+    newMax: number,
+): number[] {
     const min: number = Math.min(...input);
     const max: number = Math.max(...input);
-    return input.map(v => percentageWithin(percentageOf(v, min, max), newMin, newMax));
+    return input.map((v) =>
+        percentageWithin(percentageOf(v, min, max), newMin, newMax),
+    );
 }
 
 /**
@@ -174,8 +187,8 @@ export function arrayHasDiff(a: any[], b: any[]): boolean {
     if (a.length === b.length) {
         // When the lengths are equal, check to see if either array is missing
         // an element from the other.
-        if (b.some(i => !a.includes(i))) return true;
-        if (a.some(i => !b.includes(i))) return true;
+        if (b.some((i) => !a.includes(i))) return true;
+        if (a.some((i) => !b.includes(i))) return true;
 
         // if all the keys are common, say so
         return false;
@@ -192,10 +205,10 @@ export function arrayHasDiff(a: any[], b: any[]): boolean {
  * @param b The second array. Must be defined.
  * @returns The diff between the arrays.
  */
-export function arrayDiff<T>(a: T[], b: T[]): { added: T[], removed: T[] } {
+export function arrayDiff<T>(a: T[], b: T[]): { added: T[]; removed: T[] } {
     return {
-        added: b.filter(i => !a.includes(i)),
-        removed: a.filter(i => !b.includes(i)),
+        added: b.filter((i) => !a.includes(i)),
+        removed: a.filter((i) => !b.includes(i)),
     };
 }
 
@@ -206,7 +219,7 @@ export function arrayDiff<T>(a: T[], b: T[]): { added: T[], removed: T[] } {
  * @returns The union of the arrays.
  */
 export function arrayUnion<T>(a: T[], b: T[]): T[] {
-    return a.filter(i => b.includes(i));
+    return a.filter((i) => b.includes(i));
 }
 
 /**
@@ -215,10 +228,12 @@ export function arrayUnion<T>(a: T[], b: T[]): T[] {
  * @returns The merged array.
  */
 export function arrayMerge<T>(...a: T[][]): T[] {
-    return Array.from(a.reduce((c, v) => {
-        v.forEach(i => c.add(i));
-        return c;
-    }, new Set<T>()));
+    return Array.from(
+        a.reduce((c, v) => {
+            v.forEach((i) => c.add(i));
+            return c;
+        }, new Set<T>()),
+    );
 }
 
 /**
@@ -228,7 +243,11 @@ export function arrayMerge<T>(...a: T[][]): T[] {
  * @param {number} toIndex the index of where to put the element.
  * @returns {array} A new array with the requested value moved.
  */
-export function moveElement<T>(list: T[], fromIndex: number, toIndex: number): T[] {
+export function moveElement<T>(
+    list: T[],
+    fromIndex: number,
+    toIndex: number,
+): T[] {
     const result = Array.from(list);
     const [removed] = result.splice(fromIndex, 1);
     result.splice(toIndex, 0, removed);
@@ -244,8 +263,7 @@ export class ArrayUtil<T> {
      * Create a new array helper.
      * @param a The array to help. Can be modified in-place.
      */
-    constructor(private a: T[]) {
-    }
+    constructor(private a: T[]) {}
 
     /**
      * The value of this array, after all appropriate alterations.
@@ -278,8 +296,7 @@ export class GroupedArray<K, T> {
      * Creates a new group helper.
      * @param val The group to help. Can be modified in-place.
      */
-    constructor(private val: Map<K, T[]>) {
-    }
+    constructor(private val: Map<K, T[]>) {}
 
     /**
      * The value of this group, after all applicable alterations.

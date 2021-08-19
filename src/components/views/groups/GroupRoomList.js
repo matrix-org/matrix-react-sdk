@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React from 'react';
-import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
-import GroupStore from '../../../stores/GroupStore';
-import PropTypes from 'prop-types';
-import { showGroupAddRoomDialog } from '../../../GroupAddressPicker';
-import AccessibleButton from '../elements/AccessibleButton';
+import React from "react";
+import { _t } from "../../../languageHandler";
+import * as sdk from "../../../index";
+import GroupStore from "../../../stores/GroupStore";
+import PropTypes from "prop-types";
+import { showGroupAddRoomDialog } from "../../../GroupAddressPicker";
+import AccessibleButton from "../elements/AccessibleButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -55,7 +55,7 @@ export default class GroupRoomList extends React.Component {
         GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
         // XXX: This should be more fluxy - let's get the error from GroupStore .getError or something
         // XXX: This is also leaked - we should remove it when unmounting
-        GroupStore.on('error', (err, errorGroupId) => {
+        GroupStore.on("error", (err, errorGroupId) => {
             if (errorGroupId !== groupId) return;
             this.setState({
                 rooms: null,
@@ -79,7 +79,12 @@ export default class GroupRoomList extends React.Component {
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                    <BaseAvatar
+                        url={require("../../../../res/img/ellipsis.svg")}
+                        name="..."
+                        width={36}
+                        height={36}
+                    />
                 }
                 name={text}
                 presenceState="online"
@@ -95,7 +100,7 @@ export default class GroupRoomList extends React.Component {
         });
     };
 
-    onSearchQueryChanged = ev => {
+    onSearchQueryChanged = (ev) => {
         this.setState({ searchQuery: ev.target.value });
     };
 
@@ -112,8 +117,12 @@ export default class GroupRoomList extends React.Component {
         let roomList = this.state.rooms;
         if (query) {
             roomList = roomList.filter((room) => {
-                const matchesName = (room.name || "").toLowerCase().includes(query);
-                const matchesAlias = (room.canonicalAlias || "").toLowerCase().includes(query);
+                const matchesName = (room.name || "")
+                    .toLowerCase()
+                    .includes(query);
+                const matchesAlias = (room.canonicalAlias || "")
+                    .toLowerCase()
+                    .includes(query);
                 return matchesName || matchesAlias;
             });
         }
@@ -123,7 +132,8 @@ export default class GroupRoomList extends React.Component {
                 <GroupRoomTile
                     key={index}
                     groupId={this.props.groupId}
-                    groupRoom={groupRoom} />
+                    groupRoom={groupRoom}
+                />
             );
         });
 
@@ -142,7 +152,7 @@ export default class GroupRoomList extends React.Component {
                     className="mx_MemberList_invite mx_MemberList_addRoomToCommunity"
                     onClick={this.onAddRoomToGroupButtonClick}
                 >
-                    <span>{ _t('Add rooms to this community') }</span>
+                    <span>{_t("Add rooms to this community")}</span>
                 </AccessibleButton>
             );
         }
@@ -153,7 +163,7 @@ export default class GroupRoomList extends React.Component {
                 type="text"
                 onChange={this.onSearchQueryChanged}
                 value={this.state.searchQuery}
-                placeholder={_t('Filter community rooms')}
+                placeholder={_t("Filter community rooms")}
                 autoComplete="off"
             />
         );
@@ -161,17 +171,17 @@ export default class GroupRoomList extends React.Component {
         const TruncatedList = sdk.getComponent("elements.TruncatedList");
         return (
             <div className="mx_GroupRoomList" role="tabpanel">
-                { inviteButton }
+                {inviteButton}
                 <AutoHideScrollbar className="mx_GroupRoomList_joined mx_GroupRoomList_outerWrapper">
                     <TruncatedList
                         className="mx_GroupRoomList_wrapper"
                         truncateAt={this.state.truncateAt}
                         createOverflowElement={this._createOverflowTile}
                     >
-                        { this.makeGroupRoomTiles(this.state.searchQuery) }
+                        {this.makeGroupRoomTiles(this.state.searchQuery)}
                     </TruncatedList>
                 </AutoHideScrollbar>
-                { inputBox }
+                {inputBox}
             </div>
         );
     }

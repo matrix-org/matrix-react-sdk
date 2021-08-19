@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventSubscription } from 'fbemitter';
-import RoomViewStore from './stores/RoomViewStore';
+import { EventSubscription } from "fbemitter";
+import RoomViewStore from "./stores/RoomViewStore";
 
 type Listener = (isActive: boolean) => void;
 
@@ -29,13 +29,15 @@ type Listener = (isActive: boolean) => void;
  * the adding / removing of listeners & emitting into a common class.
  */
 export class ActiveRoomObserver {
-    private listeners: {[key: string]: Listener[]} = {};
+    private listeners: { [key: string]: Listener[] } = {};
     private _activeRoomId = RoomViewStore.getRoomId();
     private readonly roomStoreToken: EventSubscription;
 
     constructor() {
         // TODO: We could self-destruct when the last listener goes away, or at least stop listening.
-        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        this.roomStoreToken = RoomViewStore.addListener(
+            this.onRoomViewStoreUpdate,
+        );
     }
 
     public get activeRoomId(): string {
@@ -54,7 +56,9 @@ export class ActiveRoomObserver {
                 this.listeners[roomId].splice(i, 1);
             }
         } else {
-            console.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
+            console.warn(
+                "Unregistering unrecognised listener (roomId=" + roomId + ")",
+            );
         }
     }
 

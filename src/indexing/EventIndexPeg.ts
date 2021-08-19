@@ -22,7 +22,7 @@ limitations under the License.
 import PlatformPeg from "../PlatformPeg";
 import EventIndex from "../indexing/EventIndex";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import SettingsStore from '../settings/SettingsStore';
+import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
 
 const INDEX_VERSION = 1;
@@ -43,19 +43,30 @@ export class EventIndexPeg {
     async init() {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         if (!indexManager) {
-            console.log("EventIndex: Platform doesn't support event indexing, not initializing.");
+            console.log(
+                "EventIndex: Platform doesn't support event indexing, not initializing.",
+            );
             return false;
         }
 
         this._supportIsInstalled = await indexManager.supportsEventIndexing();
 
         if (!this.supportIsInstalled()) {
-            console.log("EventIndex: Event indexing isn't installed for the platform, not initializing.");
+            console.log(
+                "EventIndex: Event indexing isn't installed for the platform, not initializing.",
+            );
             return false;
         }
 
-        if (!SettingsStore.getValueAt(SettingLevel.DEVICE, 'enableEventIndexing')) {
-            console.log("EventIndex: Event indexing is disabled, not initializing");
+        if (
+            !SettingsStore.getValueAt(
+                SettingLevel.DEVICE,
+                "enableEventIndexing",
+            )
+        ) {
+            console.log(
+                "EventIndex: Event indexing is disabled, not initializing",
+            );
             return false;
         }
 

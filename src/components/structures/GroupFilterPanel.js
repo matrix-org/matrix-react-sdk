@@ -15,16 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import GroupFilterOrderStore from '../../stores/GroupFilterOrderStore';
+import React from "react";
+import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
 
-import GroupActions from '../../actions/GroupActions';
+import GroupActions from "../../actions/GroupActions";
 
-import * as sdk from '../../index';
-import dis from '../../dispatcher/dispatcher';
-import { _t } from '../../languageHandler';
+import * as sdk from "../../index";
+import dis from "../../dispatcher/dispatcher";
+import { _t } from "../../languageHandler";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import SettingsStore from "../../settings/SettingsStore";
@@ -45,22 +45,27 @@ class GroupFilterPanel extends React.Component {
         this.context.on("Group.myMembership", this._onGroupMyMembership);
         this.context.on("sync", this._onClientSync);
 
-        this._groupFilterOrderStoreToken = GroupFilterOrderStore.addListener(() => {
-            if (this.unmounted) {
-                return;
-            }
-            this.setState({
-                orderedTags: GroupFilterOrderStore.getOrderedTags() || [],
-                selectedTags: GroupFilterOrderStore.getSelectedTags(),
-            });
-        });
+        this._groupFilterOrderStoreToken = GroupFilterOrderStore.addListener(
+            () => {
+                if (this.unmounted) {
+                    return;
+                }
+                this.setState({
+                    orderedTags: GroupFilterOrderStore.getOrderedTags() || [],
+                    selectedTags: GroupFilterOrderStore.getSelectedTags(),
+                });
+            },
+        );
         // This could be done by anything with a matrix client
         dis.dispatch(GroupActions.fetchJoinedGroups(this.context));
     }
 
     componentWillUnmount() {
         this.unmounted = true;
-        this.context.removeListener("Group.myMembership", this._onGroupMyMembership);
+        this.context.removeListener(
+            "Group.myMembership",
+            this._onGroupMyMembership,
+        );
         this.context.removeListener("sync", this._onClientSync);
         if (this._groupFilterOrderStoreToken) {
             this._groupFilterOrderStoreToken.remove();
@@ -82,19 +87,20 @@ class GroupFilterPanel extends React.Component {
         }
     };
 
-    onClick = e => {
+    onClick = (e) => {
         // only dispatch if its not a no-op
         if (this.state.selectedTags.length > 0) {
-            dis.dispatch({ action: 'deselect_tags' });
+            dis.dispatch({ action: "deselect_tags" });
         }
     };
 
-    onClearFilterClick = ev => {
-        dis.dispatch({ action: 'deselect_tags' });
+    onClearFilterClick = (ev) => {
+        dis.dispatch({ action: "deselect_tags" });
     };
 
     renderGlobalIcon() {
-        if (!SettingsStore.getValue("feature_communities_v2_prototypes")) return null;
+        if (!SettingsStore.getValue("feature_communities_v2_prototypes"))
+            return null;
 
         return (
             <div>
@@ -105,25 +111,30 @@ class GroupFilterPanel extends React.Component {
     }
 
     render() {
-        const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
-        const ActionButton = sdk.getComponent('elements.ActionButton');
+        const DNDTagTile = sdk.getComponent("elements.DNDTagTile");
+        const ActionButton = sdk.getComponent("elements.ActionButton");
 
         const tags = this.state.orderedTags.map((tag, index) => {
-            return <DNDTagTile
-                key={tag}
-                tag={tag}
-                index={index}
-                selected={this.state.selectedTags.includes(tag)}
-            />;
+            return (
+                <DNDTagTile
+                    key={tag}
+                    tag={tag}
+                    index={index}
+                    selected={this.state.selectedTags.includes(tag)}
+                />
+            );
         });
 
         const itemsSelected = this.state.selectedTags.length > 0;
-        const classes = classNames('mx_GroupFilterPanel', {
+        const classes = classNames("mx_GroupFilterPanel", {
             mx_GroupFilterPanel_items_selected: itemsSelected,
         });
 
         let betaDot;
-        if (SettingsStore.getBetaInfo("feature_spaces") && !localStorage.getItem("mx_seenSpacesBeta")) {
+        if (
+            SettingsStore.getBetaInfo("feature_spaces") &&
+            !localStorage.getItem("mx_seenSpacesBeta")
+        ) {
             betaDot = <div className="mx_BetaDot" />;
         }
 
@@ -132,8 +143,9 @@ class GroupFilterPanel extends React.Component {
                 tooltip
                 label={_t("Communities")}
                 action="toggle_my_groups"
-                className="mx_TagTile mx_TagTile_plus">
-                { betaDot }
+                className="mx_TagTile mx_TagTile_plus"
+            >
+                {betaDot}
             </ActionButton>
         );
 
@@ -143,24 +155,25 @@ class GroupFilterPanel extends React.Component {
                     tooltip
                     label={_t("Create community")}
                     action="view_create_group"
-                    className="mx_TagTile mx_TagTile_plus" />
+                    className="mx_TagTile mx_TagTile_plus"
+                />
             );
         }
 
-        return <div className={classes} onClick={this.onClearFilterClick}>
-            <AutoHideScrollbar
-                className="mx_GroupFilterPanel_scroller"
-                onClick={this.onClick}
-            >
-                <div className="mx_GroupFilterPanel_tagTileContainer">
-                    { this.renderGlobalIcon() }
-                    { tags }
-                    <div>
-                        { createButton }
+        return (
+            <div className={classes} onClick={this.onClearFilterClick}>
+                <AutoHideScrollbar
+                    className="mx_GroupFilterPanel_scroller"
+                    onClick={this.onClick}
+                >
+                    <div className="mx_GroupFilterPanel_tagTileContainer">
+                        {this.renderGlobalIcon()}
+                        {tags}
+                        <div>{createButton}</div>
                     </div>
-                </div>
-            </AutoHideScrollbar>
-        </div>;
+                </AutoHideScrollbar>
+            </div>
+        );
     }
 }
 export default GroupFilterPanel;

@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { sleep } from "matrix-js-sdk/src/utils";
 
 import { _t } from "../../../../../languageHandler";
@@ -52,11 +52,16 @@ export class IgnoredUser extends React.Component {
     render() {
         const id = `mx_SecurityUserSettingsTab_ignoredUser_${this.props.userId}`;
         return (
-            <div className='mx_SecurityUserSettingsTab_ignoredUser'>
-                <AccessibleButton onClick={this._onUnignoreClicked} kind='primary_sm' aria-describedby={id} disabled={this.props.inProgress}>
-                    { _t('Unignore') }
+            <div className="mx_SecurityUserSettingsTab_ignoredUser">
+                <AccessibleButton
+                    onClick={this._onUnignoreClicked}
+                    kind="primary_sm"
+                    aria-describedby={id}
+                    disabled={this.props.inProgress}
+                >
+                    {_t("Unignore")}
                 </AccessibleButton>
-                <span id={id}>{ this.props.userId }</span>
+                <span id={id}>{this.props.userId}</span>
             </div>
         );
     }
@@ -87,8 +92,13 @@ export default class SecurityUserSettingsTab extends React.Component {
     _onAction({ action }) {
         if (action === "ignore_state_changed") {
             const ignoredUserIds = MatrixClientPeg.get().getIgnoredUsers();
-            const newWaitingUnignored = this.state.waitingUnignored.filter(e=> ignoredUserIds.includes(e));
-            this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
+            const newWaitingUnignored = this.state.waitingUnignored.filter(
+                (e) => ignoredUserIds.includes(e),
+            );
+            this.setState({
+                ignoredUserIds,
+                waitingUnignored: newWaitingUnignored,
+            });
         }
     }
 
@@ -107,47 +117,66 @@ export default class SecurityUserSettingsTab extends React.Component {
     _updateAnalytics = (checked) => {
         checked ? Analytics.enable() : Analytics.disable();
         CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
-        PosthogAnalytics.instance.updateAnonymityFromSettings(MatrixClientPeg.get().getUserId());
+        PosthogAnalytics.instance.updateAnonymityFromSettings(
+            MatrixClientPeg.get().getUserId(),
+        );
     };
 
     _onExportE2eKeysClicked = () => {
-        Modal.createTrackedDialogAsync('Export E2E Keys', '',
-            import('../../../../../async-components/views/dialogs/security/ExportE2eKeysDialog'),
+        Modal.createTrackedDialogAsync(
+            "Export E2E Keys",
+            "",
+            import(
+                "../../../../../async-components/views/dialogs/security/ExportE2eKeysDialog"
+            ),
             { matrixClient: MatrixClientPeg.get() },
         );
     };
 
     _onImportE2eKeysClicked = () => {
-        Modal.createTrackedDialogAsync('Import E2E Keys', '',
-            import('../../../../../async-components/views/dialogs/security/ImportE2eKeysDialog'),
+        Modal.createTrackedDialogAsync(
+            "Import E2E Keys",
+            "",
+            import(
+                "../../../../../async-components/views/dialogs/security/ImportE2eKeysDialog"
+            ),
             { matrixClient: MatrixClientPeg.get() },
         );
     };
 
     _onGoToUserProfileClick = () => {
         dis.dispatch({
-            action: 'view_user_info',
+            action: "view_user_info",
             userId: MatrixClientPeg.get().getUserId(),
         });
         this.props.closeSettingsFn();
-    }
+    };
 
     _onUserUnignored = async (userId) => {
         const { ignoredUserIds, waitingUnignored } = this.state;
-        const currentlyIgnoredUserIds = ignoredUserIds.filter(e => !waitingUnignored.includes(e));
+        const currentlyIgnoredUserIds = ignoredUserIds.filter(
+            (e) => !waitingUnignored.includes(e),
+        );
 
         const index = currentlyIgnoredUserIds.indexOf(userId);
         if (index !== -1) {
             currentlyIgnoredUserIds.splice(index, 1);
-            this.setState(({ waitingUnignored }) => ({ waitingUnignored: [...waitingUnignored, userId] }));
+            this.setState(({ waitingUnignored }) => ({
+                waitingUnignored: [...waitingUnignored, userId],
+            }));
             MatrixClientPeg.get().setIgnoredUsers(currentlyIgnoredUserIds);
         }
     };
 
     _getInvitedRooms = () => {
-        return MatrixClientPeg.get().getRooms().filter((r) => {
-            return r.hasMembershipState(MatrixClientPeg.get().getUserId(), "invite");
-        });
+        return MatrixClientPeg.get()
+            .getRooms()
+            .filter((r) => {
+                return r.hasMembershipState(
+                    MatrixClientPeg.get().getUserId(),
+                    "invite",
+                );
+            });
     };
 
     _manageInvites = async (accept) => {
@@ -168,23 +197,28 @@ export default class SecurityUserSettingsTab extends React.Component {
             const roomId = invitedRoomIds[i];
 
             // Accept/reject invite
-            await action(roomId).then(() => {
-                // No error, update invited rooms button
-                this.setState({ invitedRoomAmt: self.state.invitedRoomAmt - 1 });
-            }, async (e) => {
-                // Action failure
-                if (e.errcode === "M_LIMIT_EXCEEDED") {
-                    // Add a delay between each invite change in order to avoid rate
-                    // limiting by the server.
-                    await sleep(e.retry_after_ms || 2500);
+            await action(roomId).then(
+                () => {
+                    // No error, update invited rooms button
+                    this.setState({
+                        invitedRoomAmt: self.state.invitedRoomAmt - 1,
+                    });
+                },
+                async (e) => {
+                    // Action failure
+                    if (e.errcode === "M_LIMIT_EXCEEDED") {
+                        // Add a delay between each invite change in order to avoid rate
+                        // limiting by the server.
+                        await sleep(e.retry_after_ms || 2500);
 
-                    // Redo last action
-                    i--;
-                } else {
-                    // Print out error with joining/leaving room
-                    console.warn(e);
-                }
-            });
+                        // Redo last action
+                        i--;
+                    } else {
+                        // Print out error with joining/leaving room
+                        console.warn(e);
+                    }
+                },
+            );
         }
 
         this.setState({
@@ -201,7 +235,7 @@ export default class SecurityUserSettingsTab extends React.Component {
     };
 
     _renderCurrentDeviceInfo() {
-        const SettingsFlag = sdk.getComponent('views.elements.SettingsFlag');
+        const SettingsFlag = sdk.getComponent("views.elements.SettingsFlag");
 
         const client = MatrixClientPeg.get();
         const deviceId = client.deviceId;
@@ -215,12 +249,18 @@ export default class SecurityUserSettingsTab extends React.Component {
         let importExportButtons = null;
         if (client.isCryptoEnabled()) {
             importExportButtons = (
-                <div className='mx_SecurityUserSettingsTab_importExportButtons'>
-                    <AccessibleButton kind='primary' onClick={this._onExportE2eKeysClicked}>
-                        { _t("Export E2E room keys") }
+                <div className="mx_SecurityUserSettingsTab_importExportButtons">
+                    <AccessibleButton
+                        kind="primary"
+                        onClick={this._onExportE2eKeysClicked}
+                    >
+                        {_t("Export E2E room keys")}
                     </AccessibleButton>
-                    <AccessibleButton kind='primary' onClick={this._onImportE2eKeysClicked}>
-                        { _t("Import E2E room keys") }
+                    <AccessibleButton
+                        kind="primary"
+                        onClick={this._onImportE2eKeysClicked}
+                    >
+                        {_t("Import E2E room keys")}
                     </AccessibleButton>
                 </div>
             );
@@ -228,28 +268,38 @@ export default class SecurityUserSettingsTab extends React.Component {
 
         let noSendUnverifiedSetting;
         if (SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
-            noSendUnverifiedSetting = <SettingsFlag
-                name='blacklistUnverifiedDevices'
-                level={SettingLevel.DEVICE}
-                onChange={this._updateBlacklistDevicesFlag}
-            />;
+            noSendUnverifiedSetting = (
+                <SettingsFlag
+                    name="blacklistUnverifiedDevices"
+                    level={SettingLevel.DEVICE}
+                    onChange={this._updateBlacklistDevicesFlag}
+                />
+            );
         }
 
         return (
-            <div className='mx_SettingsTab_section'>
-                <span className='mx_SettingsTab_subheading'>{ _t("Cryptography") }</span>
-                <ul className='mx_SettingsTab_subsectionText mx_SecurityUserSettingsTab_deviceInfo'>
+            <div className="mx_SettingsTab_section">
+                <span className="mx_SettingsTab_subheading">
+                    {_t("Cryptography")}
+                </span>
+                <ul className="mx_SettingsTab_subsectionText mx_SecurityUserSettingsTab_deviceInfo">
                     <li>
-                        <label>{ _t("Session ID:") }</label>
-                        <span><code>{ deviceId }</code></span>
+                        <label>{_t("Session ID:")}</label>
+                        <span>
+                            <code>{deviceId}</code>
+                        </span>
                     </li>
                     <li>
-                        <label>{ _t("Session key:") }</label>
-                        <span><code><b>{ identityKey }</b></code></span>
+                        <label>{_t("Session key:")}</label>
+                        <span>
+                            <code>
+                                <b>{identityKey}</b>
+                            </code>
+                        </span>
                     </li>
                 </ul>
-                { importExportButtons }
-                { noSendUnverifiedSetting }
+                {importExportButtons}
+                {noSendUnverifiedSetting}
             </div>
         );
     }
@@ -258,24 +308,24 @@ export default class SecurityUserSettingsTab extends React.Component {
         const { waitingUnignored, ignoredUserIds } = this.state;
 
         const userIds = !ignoredUserIds?.length
-            ? _t('You have no ignored users.')
+            ? _t("You have no ignored users.")
             : ignoredUserIds.map((u) => {
-                return (
-                    <IgnoredUser
-                        userId={u}
-                        onUnignored={this._onUserUnignored}
-                        key={u}
-                        inProgress={waitingUnignored.includes(u)}
-                    />
-                );
-            });
+                  return (
+                      <IgnoredUser
+                          userId={u}
+                          onUnignored={this._onUserUnignored}
+                          key={u}
+                          inProgress={waitingUnignored.includes(u)}
+                      />
+                  );
+              });
 
         return (
-            <div className='mx_SettingsTab_section'>
-                <span className='mx_SettingsTab_subheading'>{ _t('Ignored users') }</span>
-                <div className='mx_SettingsTab_subsectionText'>
-                    { userIds }
-                </div>
+            <div className="mx_SettingsTab_section">
+                <span className="mx_SettingsTab_subheading">
+                    {_t("Ignored users")}
+                </span>
+                <div className="mx_SettingsTab_subsectionText">{userIds}</div>
             </div>
         );
     }
@@ -286,33 +336,57 @@ export default class SecurityUserSettingsTab extends React.Component {
         }
 
         const invitedRooms = this._getInvitedRooms();
-        const InlineSpinner = sdk.getComponent('elements.InlineSpinner');
-        const onClickAccept = this._onAcceptAllInvitesClicked.bind(this, invitedRooms);
-        const onClickReject = this._onRejectAllInvitesClicked.bind(this, invitedRooms);
+        const InlineSpinner = sdk.getComponent("elements.InlineSpinner");
+        const onClickAccept = this._onAcceptAllInvitesClicked.bind(
+            this,
+            invitedRooms,
+        );
+        const onClickReject = this._onRejectAllInvitesClicked.bind(
+            this,
+            invitedRooms,
+        );
         return (
-            <div className='mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions'>
-                <span className='mx_SettingsTab_subheading'>{ _t('Bulk options') }</span>
-                <AccessibleButton onClick={onClickAccept} kind='primary' disabled={this.state.managingInvites}>
-                    { _t("Accept all %(invitedRooms)s invites", { invitedRooms: this.state.invitedRoomAmt }) }
+            <div className="mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions">
+                <span className="mx_SettingsTab_subheading">
+                    {_t("Bulk options")}
+                </span>
+                <AccessibleButton
+                    onClick={onClickAccept}
+                    kind="primary"
+                    disabled={this.state.managingInvites}
+                >
+                    {_t("Accept all %(invitedRooms)s invites", {
+                        invitedRooms: this.state.invitedRoomAmt,
+                    })}
                 </AccessibleButton>
-                <AccessibleButton onClick={onClickReject} kind='danger' disabled={this.state.managingInvites}>
-                    { _t("Reject all %(invitedRooms)s invites", { invitedRooms: this.state.invitedRoomAmt }) }
+                <AccessibleButton
+                    onClick={onClickReject}
+                    kind="danger"
+                    disabled={this.state.managingInvites}
+                >
+                    {_t("Reject all %(invitedRooms)s invites", {
+                        invitedRooms: this.state.invitedRoomAmt,
+                    })}
                 </AccessibleButton>
-                { this.state.managingInvites ? <InlineSpinner /> : <div /> }
+                {this.state.managingInvites ? <InlineSpinner /> : <div />}
             </div>
         );
     }
 
     render() {
         const brand = SdkConfig.get().brand;
-        const DevicesPanel = sdk.getComponent('views.settings.DevicesPanel');
-        const SettingsFlag = sdk.getComponent('views.elements.SettingsFlag');
-        const EventIndexPanel = sdk.getComponent('views.settings.EventIndexPanel');
+        const DevicesPanel = sdk.getComponent("views.settings.DevicesPanel");
+        const SettingsFlag = sdk.getComponent("views.elements.SettingsFlag");
+        const EventIndexPanel = sdk.getComponent(
+            "views.settings.EventIndexPanel",
+        );
 
         const secureBackup = (
-            <div className='mx_SettingsTab_section'>
-                <span className="mx_SettingsTab_subheading">{ _t("Secure Backup") }</span>
-                <div className='mx_SettingsTab_subsectionText'>
+            <div className="mx_SettingsTab_section">
+                <span className="mx_SettingsTab_subheading">
+                    {_t("Secure Backup")}
+                </span>
+                <div className="mx_SettingsTab_subsectionText">
                     <SecureBackupPanel />
                 </div>
             </div>
@@ -320,7 +394,9 @@ export default class SecurityUserSettingsTab extends React.Component {
 
         const eventIndex = (
             <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{ _t("Message search") }</span>
+                <span className="mx_SettingsTab_subheading">
+                    {_t("Message search")}
+                </span>
                 <EventIndexPanel />
             </div>
         );
@@ -329,11 +405,15 @@ export default class SecurityUserSettingsTab extends React.Component {
         // it's useful to have for testing the feature. If there's no interest
         // in having advanced details here once all flows are implemented, we
         // can remove this.
-        const CrossSigningPanel = sdk.getComponent('views.settings.CrossSigningPanel');
+        const CrossSigningPanel = sdk.getComponent(
+            "views.settings.CrossSigningPanel",
+        );
         const crossSigning = (
-            <div className='mx_SettingsTab_section'>
-                <span className="mx_SettingsTab_subheading">{ _t("Cross-signing") }</span>
-                <div className='mx_SettingsTab_subsectionText'>
+            <div className="mx_SettingsTab_section">
+                <span className="mx_SettingsTab_subheading">
+                    {_t("Cross-signing")}
+                </span>
+                <div className="mx_SettingsTab_subsectionText">
                     <CrossSigningPanel />
                 </div>
             </div>
@@ -341,84 +421,121 @@ export default class SecurityUserSettingsTab extends React.Component {
 
         let warning;
         if (!privateShouldBeEncrypted()) {
-            warning = <div className="mx_SecurityUserSettingsTab_warning">
-                { _t("Your server admin has disabled end-to-end encryption by default " +
-                    "in private rooms & Direct Messages.") }
-            </div>;
+            warning = (
+                <div className="mx_SecurityUserSettingsTab_warning">
+                    {_t(
+                        "Your server admin has disabled end-to-end encryption by default " +
+                            "in private rooms & Direct Messages.",
+                    )}
+                </div>
+            );
         }
 
         let privacySection;
         if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
-            privacySection = <React.Fragment>
-                <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
-                    <div className="mx_SettingsTab_subsectionText">
-                        { _t(
-                            "%(brand)s collects anonymous analytics to allow us to improve the application.",
-                            { brand },
-                        ) }
-                        &nbsp;
-                        { _t("Privacy is important to us, so we don't collect any personal or " +
-                            "identifiable data for our analytics.") }
-                        <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
-                            { _t("Learn more about how we use analytics.") }
-                        </AccessibleButton>
+            privacySection = (
+                <React.Fragment>
+                    <div className="mx_SettingsTab_heading">
+                        {_t("Privacy")}
                     </div>
-                    <SettingsFlag name="analyticsOptIn" level={SettingLevel.DEVICE} onChange={this._updateAnalytics} />
-                </div>
-            </React.Fragment>;
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">
+                            {_t("Analytics")}
+                        </span>
+                        <div className="mx_SettingsTab_subsectionText">
+                            {_t(
+                                "%(brand)s collects anonymous analytics to allow us to improve the application.",
+                                { brand },
+                            )}
+                            &nbsp;
+                            {_t(
+                                "Privacy is important to us, so we don't collect any personal or " +
+                                    "identifiable data for our analytics.",
+                            )}
+                            <AccessibleButton
+                                className="mx_SettingsTab_linkBtn"
+                                onClick={Analytics.showDetailsModal}
+                            >
+                                {_t("Learn more about how we use analytics.")}
+                            </AccessibleButton>
+                        </div>
+                        <SettingsFlag
+                            name="analyticsOptIn"
+                            level={SettingLevel.DEVICE}
+                            onChange={this._updateAnalytics}
+                        />
+                    </div>
+                </React.Fragment>
+            );
         }
 
-        const E2eAdvancedPanel = sdk.getComponent('views.settings.E2eAdvancedPanel');
+        const E2eAdvancedPanel = sdk.getComponent(
+            "views.settings.E2eAdvancedPanel",
+        );
         let advancedSection;
         if (SettingsStore.getValue(UIFeature.AdvancedSettings)) {
             const ignoreUsersPanel = this._renderIgnoredUsers();
             const invitesPanel = this._renderManageInvites();
-            const e2ePanel = isE2eAdvancedPanelPossible() ? <E2eAdvancedPanel /> : null;
+            const e2ePanel = isE2eAdvancedPanelPossible() ? (
+                <E2eAdvancedPanel />
+            ) : null;
             // only show the section if there's something to show
             if (ignoreUsersPanel || invitesPanel || e2ePanel) {
-                advancedSection = <>
-                    <div className="mx_SettingsTab_heading">{ _t("Advanced") }</div>
-                    <div className="mx_SettingsTab_section">
-                        { ignoreUsersPanel }
-                        { invitesPanel }
-                        { e2ePanel }
-                    </div>
-                </>;
+                advancedSection = (
+                    <>
+                        <div className="mx_SettingsTab_heading">
+                            {_t("Advanced")}
+                        </div>
+                        <div className="mx_SettingsTab_section">
+                            {ignoreUsersPanel}
+                            {invitesPanel}
+                            {e2ePanel}
+                        </div>
+                    </>
+                );
             }
         }
 
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
-                { warning }
-                <div className="mx_SettingsTab_heading">{ _t("Where you’re logged in") }</div>
+                {warning}
+                <div className="mx_SettingsTab_heading">
+                    {_t("Where you’re logged in")}
+                </div>
                 <div className="mx_SettingsTab_section">
                     <span>
-                        { _t(
+                        {_t(
                             "Manage the names of and sign out of your sessions below or " +
-                            "<a>verify them in your User Profile</a>.", {},
+                                "<a>verify them in your User Profile</a>.",
+                            {},
                             {
-                                a: sub => <AccessibleButton kind="link" onClick={this._onGoToUserProfileClick}>
-                                    { sub }
-                                </AccessibleButton>,
+                                a: (sub) => (
+                                    <AccessibleButton
+                                        kind="link"
+                                        onClick={this._onGoToUserProfileClick}
+                                    >
+                                        {sub}
+                                    </AccessibleButton>
+                                ),
                             },
-                        ) }
+                        )}
                     </span>
-                    <div className='mx_SettingsTab_subsectionText'>
-                        { _t("A session's public name is visible to people you communicate with") }
+                    <div className="mx_SettingsTab_subsectionText">
+                        {_t(
+                            "A session's public name is visible to people you communicate with",
+                        )}
                         <DevicesPanel />
                     </div>
                 </div>
-                <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
+                <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
                 <div className="mx_SettingsTab_section">
-                    { secureBackup }
-                    { eventIndex }
-                    { crossSigning }
-                    { this._renderCurrentDeviceInfo() }
+                    {secureBackup}
+                    {eventIndex}
+                    {crossSigning}
+                    {this._renderCurrentDeviceInfo()}
                 </div>
-                { privacySection }
-                { advancedSection }
+                {privacySection}
+                {advancedSection}
             </div>
         );
     }

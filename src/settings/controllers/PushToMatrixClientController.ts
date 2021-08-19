@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { SettingLevel } from "../SettingLevel";
 import SettingController from "./SettingController";
 
@@ -29,6 +29,9 @@ export default class PushToMatrixClientController extends SettingController {
     public onChange(level: SettingLevel, roomId: string, newValue: any) {
         // XXX does this work? This surely isn't necessarily the effective value,
         // but it's what NotificationsEnabledController does...
-        this.setter.call(MatrixClientPeg.get(), this.inverse ? !newValue : newValue);
+        this.setter.call(
+            MatrixClientPeg.get(),
+            this.inverse ? !newValue : newValue,
+        );
     }
 }

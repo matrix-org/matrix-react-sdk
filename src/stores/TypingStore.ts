@@ -64,11 +64,14 @@ export default class TypingStore {
      * @param {boolean} isTyping Whether the user is typing or not.
      */
     setSelfTyping(roomId: string, isTyping: boolean): void {
-        if (!SettingsStore.getValue('sendTypingNotifications')) return;
-        if (SettingsStore.getValue('lowBandwidth')) return;
+        if (!SettingsStore.getValue("sendTypingNotifications")) return;
+        if (SettingsStore.getValue("lowBandwidth")) return;
 
         let currentTyping = this.typingStates[roomId];
-        if ((!isTyping && !currentTyping) || (currentTyping && currentTyping.isTyping === isTyping)) {
+        if (
+            (!isTyping && !currentTyping) ||
+            (currentTyping && currentTyping.isTyping === isTyping)
+        ) {
             // No change in state, so don't do anything. We'll let the timer run its course.
             return;
         }
@@ -85,22 +88,32 @@ export default class TypingStore {
 
         if (isTyping) {
             if (!currentTyping.serverTimer.isRunning()) {
-                currentTyping.serverTimer.restart().finished().then(() => {
-                    const currentTyping = this.typingStates[roomId];
-                    if (currentTyping) currentTyping.isTyping = false;
+                currentTyping.serverTimer
+                    .restart()
+                    .finished()
+                    .then(() => {
+                        const currentTyping = this.typingStates[roomId];
+                        if (currentTyping) currentTyping.isTyping = false;
 
-                    // The server will (should) time us out on typing, so we don't
-                    // need to advertise a stop of typing.
-                });
+                        // The server will (should) time us out on typing, so we don't
+                        // need to advertise a stop of typing.
+                    });
             } else currentTyping.serverTimer.restart();
 
             if (!currentTyping.userTimer.isRunning()) {
-                currentTyping.userTimer.restart().finished().then(() => {
-                    this.setSelfTyping(roomId, false);
-                });
+                currentTyping.userTimer
+                    .restart()
+                    .finished()
+                    .then(() => {
+                        this.setSelfTyping(roomId, false);
+                    });
             } else currentTyping.userTimer.restart();
         }
 
-        MatrixClientPeg.get().sendTyping(roomId, isTyping, TYPING_SERVER_TIMEOUT);
+        MatrixClientPeg.get().sendTyping(
+            roomId,
+            isTyping,
+            TYPING_SERVER_TIMEOUT,
+        );
     }
 }

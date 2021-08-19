@@ -56,8 +56,10 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
      * @returns {VoiceRecording} The recording.
      */
     public startRecording(): VoiceRecording {
-        if (!this.matrixClient) throw new Error("Cannot start a recording without a MatrixClient");
-        if (this.state.recording) throw new Error("A recording is already in progress");
+        if (!this.matrixClient)
+            throw new Error("Cannot start a recording without a MatrixClient");
+        if (this.state.recording)
+            throw new Error("A recording is already in progress");
 
         const recording = new VoiceRecording(this.matrixClient);
 

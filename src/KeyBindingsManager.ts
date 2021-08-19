@@ -14,113 +14,113 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { defaultBindingsProvider } from './KeyBindingsDefaults';
-import { isMac } from './Keyboard';
+import { defaultBindingsProvider } from "./KeyBindingsDefaults";
+import { isMac } from "./Keyboard";
 
 /** Actions for the chat message composer component */
 export enum MessageComposerAction {
     /** Send a message */
-    Send = 'Send',
+    Send = "Send",
     /** Go backwards through the send history and use the message in composer view */
-    SelectPrevSendHistory = 'SelectPrevSendHistory',
+    SelectPrevSendHistory = "SelectPrevSendHistory",
     /** Go forwards through the send history */
-    SelectNextSendHistory = 'SelectNextSendHistory',
+    SelectNextSendHistory = "SelectNextSendHistory",
     /** Start editing the user's last sent message */
-    EditPrevMessage = 'EditPrevMessage',
+    EditPrevMessage = "EditPrevMessage",
     /** Start editing the user's next sent message */
-    EditNextMessage = 'EditNextMessage',
+    EditNextMessage = "EditNextMessage",
     /** Cancel editing a message or cancel replying to a message */
-    CancelEditing = 'CancelEditing',
+    CancelEditing = "CancelEditing",
 
     /** Set bold format the current selection */
-    FormatBold = 'FormatBold',
+    FormatBold = "FormatBold",
     /** Set italics format the current selection */
-    FormatItalics = 'FormatItalics',
+    FormatItalics = "FormatItalics",
     /** Format the current selection as quote */
-    FormatQuote = 'FormatQuote',
+    FormatQuote = "FormatQuote",
     /** Undo the last editing */
-    EditUndo = 'EditUndo',
+    EditUndo = "EditUndo",
     /** Redo editing */
-    EditRedo = 'EditRedo',
+    EditRedo = "EditRedo",
     /** Insert new line */
-    NewLine = 'NewLine',
+    NewLine = "NewLine",
     /** Move the cursor to the start of the message */
-    MoveCursorToStart = 'MoveCursorToStart',
+    MoveCursorToStart = "MoveCursorToStart",
     /** Move the cursor to the end of the message */
-    MoveCursorToEnd = 'MoveCursorToEnd',
+    MoveCursorToEnd = "MoveCursorToEnd",
 }
 
 /** Actions for text editing autocompletion */
 export enum AutocompleteAction {
     /** Accepts chosen autocomplete selection */
-    Complete = 'Complete',
+    Complete = "Complete",
     /** Accepts chosen autocomplete selection or,
      * if the autocompletion window is not shown, open the window and select the first selection */
-    ForceComplete = 'ForceComplete',
+    ForceComplete = "ForceComplete",
     /** Move to the previous autocomplete selection */
-    PrevSelection = 'PrevSelection',
+    PrevSelection = "PrevSelection",
     /** Move to the next autocomplete selection */
-    NextSelection = 'NextSelection',
+    NextSelection = "NextSelection",
     /** Close the autocompletion window */
-    Cancel = 'Cancel',
+    Cancel = "Cancel",
 }
 
 /** Actions for the room list sidebar */
 export enum RoomListAction {
     /** Clear room list filter field */
-    ClearSearch = 'ClearSearch',
+    ClearSearch = "ClearSearch",
     /** Navigate up/down in the room list */
-    PrevRoom = 'PrevRoom',
+    PrevRoom = "PrevRoom",
     /** Navigate down in the room list */
-    NextRoom = 'NextRoom',
+    NextRoom = "NextRoom",
     /** Select room from the room list */
-    SelectRoom = 'SelectRoom',
+    SelectRoom = "SelectRoom",
     /** Collapse room list section */
-    CollapseSection = 'CollapseSection',
+    CollapseSection = "CollapseSection",
     /** Expand room list section, if already expanded, jump to first room in the selection */
-    ExpandSection = 'ExpandSection',
+    ExpandSection = "ExpandSection",
 }
 
 /** Actions for the current room view */
 export enum RoomAction {
     /** Scroll up in the timeline */
-    ScrollUp = 'ScrollUp',
+    ScrollUp = "ScrollUp",
     /** Scroll down in the timeline */
-    RoomScrollDown = 'RoomScrollDown',
+    RoomScrollDown = "RoomScrollDown",
     /** Dismiss read marker and jump to bottom */
-    DismissReadMarker = 'DismissReadMarker',
+    DismissReadMarker = "DismissReadMarker",
     /** Jump to oldest unread message */
-    JumpToOldestUnread = 'JumpToOldestUnread',
+    JumpToOldestUnread = "JumpToOldestUnread",
     /** Upload a file */
-    UploadFile = 'UploadFile',
+    UploadFile = "UploadFile",
     /** Focus search message in a room (must be enabled) */
-    FocusSearch = 'FocusSearch',
+    FocusSearch = "FocusSearch",
     /** Jump to the first (downloaded) message in the room */
-    JumpToFirstMessage = 'JumpToFirstMessage',
+    JumpToFirstMessage = "JumpToFirstMessage",
     /** Jump to the latest message in the room */
-    JumpToLatestMessage = 'JumpToLatestMessage',
+    JumpToLatestMessage = "JumpToLatestMessage",
 }
 
 /** Actions for navigating do various menus, dialogs or screens */
 export enum NavigationAction {
     /** Jump to room search (search for a room) */
-    FocusRoomSearch = 'FocusRoomSearch',
+    FocusRoomSearch = "FocusRoomSearch",
     /** Toggle the room side panel */
-    ToggleRoomSidePanel = 'ToggleRoomSidePanel',
+    ToggleRoomSidePanel = "ToggleRoomSidePanel",
     /** Toggle the user menu */
-    ToggleUserMenu = 'ToggleUserMenu',
+    ToggleUserMenu = "ToggleUserMenu",
     /** Toggle the short cut help dialog */
-    ToggleShortCutDialog = 'ToggleShortCutDialog',
+    ToggleShortCutDialog = "ToggleShortCutDialog",
     /** Got to the Element home screen */
-    GoToHome = 'GoToHome',
+    GoToHome = "GoToHome",
     /** Select prev room */
-    SelectPrevRoom = 'SelectPrevRoom',
+    SelectPrevRoom = "SelectPrevRoom",
     /** Select next room */
-    SelectNextRoom = 'SelectNextRoom',
+    SelectNextRoom = "SelectNextRoom",
     /** Select prev room with unread messages */
-    SelectPrevUnreadRoom = 'SelectPrevUnreadRoom',
+    SelectPrevUnreadRoom = "SelectPrevUnreadRoom",
     /** Select next room with unread messages */
-    SelectNextUnreadRoom = 'SelectNextUnreadRoom',
+    SelectNextUnreadRoom = "SelectNextUnreadRoom",
 }
 
 /**
@@ -150,7 +150,11 @@ export type KeyBinding<T extends string> = {
  *
  * Note, this method is only exported for testing.
  */
-export function isKeyComboMatch(ev: KeyboardEvent | React.KeyboardEvent, combo: KeyCombo, onMac: boolean): boolean {
+export function isKeyComboMatch(
+    ev: KeyboardEvent | React.KeyboardEvent,
+    combo: KeyCombo,
+    onMac: boolean,
+): boolean {
     if (combo.key !== undefined) {
         // When shift is pressed, letters are returned as upper case chars. In this case do a lower case comparison.
         // This works for letter combos such as shift + U as well for none letter combos such as shift + Escape.
@@ -176,27 +180,33 @@ export function isKeyComboMatch(ev: KeyboardEvent | React.KeyboardEvent, combo: 
     // When ctrlOrCmd is set, the keys need do evaluated differently on PC and Mac
     if (combo.ctrlOrCmd) {
         if (onMac) {
-            if (!evMeta
-                || evCtrl !== comboCtrl
-                || evAlt !== comboAlt
-                || evShift !== comboShift) {
+            if (
+                !evMeta ||
+                evCtrl !== comboCtrl ||
+                evAlt !== comboAlt ||
+                evShift !== comboShift
+            ) {
                 return false;
             }
         } else {
-            if (!evCtrl
-                || evMeta !== comboMeta
-                || evAlt !== comboAlt
-                || evShift !== comboShift) {
+            if (
+                !evCtrl ||
+                evMeta !== comboMeta ||
+                evAlt !== comboAlt ||
+                evShift !== comboShift
+            ) {
                 return false;
             }
         }
         return true;
     }
 
-    if (evMeta !== comboMeta
-        || evCtrl !== comboCtrl
-        || evAlt !== comboAlt
-        || evShift !== comboShift) {
+    if (
+        evMeta !== comboMeta ||
+        evCtrl !== comboCtrl ||
+        evAlt !== comboAlt ||
+        evShift !== comboShift
+    ) {
         return false;
     }
 
@@ -222,9 +232,7 @@ export class KeyBindingsManager {
      * To overwrite the default key bindings add a new providers before the default provider, e.g. a provider for
      * customized key bindings.
      */
-    bindingsProviders: IKeyBindingsProvider[] = [
-        defaultBindingsProvider,
-    ];
+    bindingsProviders: IKeyBindingsProvider[] = [defaultBindingsProvider];
 
     /**
      * Finds a matching KeyAction for a given KeyboardEvent
@@ -235,7 +243,9 @@ export class KeyBindingsManager {
     ): T | undefined {
         for (const getter of getters) {
             const bindings = getter();
-            const binding = bindings.find(it => isKeyComboMatch(ev, it.keyCombo, isMac));
+            const binding = bindings.find((it) =>
+                isKeyComboMatch(ev, it.keyCombo, isMac),
+            );
             if (binding) {
                 return binding.action;
             }
@@ -243,24 +253,49 @@ export class KeyBindingsManager {
         return undefined;
     }
 
-    getMessageComposerAction(ev: KeyboardEvent | React.KeyboardEvent): MessageComposerAction | undefined {
-        return this.getAction(this.bindingsProviders.map(it => it.getMessageComposerBindings), ev);
+    getMessageComposerAction(
+        ev: KeyboardEvent | React.KeyboardEvent,
+    ): MessageComposerAction | undefined {
+        return this.getAction(
+            this.bindingsProviders.map((it) => it.getMessageComposerBindings),
+            ev,
+        );
     }
 
-    getAutocompleteAction(ev: KeyboardEvent | React.KeyboardEvent): AutocompleteAction | undefined {
-        return this.getAction(this.bindingsProviders.map(it => it.getAutocompleteBindings), ev);
+    getAutocompleteAction(
+        ev: KeyboardEvent | React.KeyboardEvent,
+    ): AutocompleteAction | undefined {
+        return this.getAction(
+            this.bindingsProviders.map((it) => it.getAutocompleteBindings),
+            ev,
+        );
     }
 
-    getRoomListAction(ev: KeyboardEvent | React.KeyboardEvent): RoomListAction | undefined {
-        return this.getAction(this.bindingsProviders.map(it => it.getRoomListBindings), ev);
+    getRoomListAction(
+        ev: KeyboardEvent | React.KeyboardEvent,
+    ): RoomListAction | undefined {
+        return this.getAction(
+            this.bindingsProviders.map((it) => it.getRoomListBindings),
+            ev,
+        );
     }
 
-    getRoomAction(ev: KeyboardEvent | React.KeyboardEvent): RoomAction | undefined {
-        return this.getAction(this.bindingsProviders.map(it => it.getRoomBindings), ev);
+    getRoomAction(
+        ev: KeyboardEvent | React.KeyboardEvent,
+    ): RoomAction | undefined {
+        return this.getAction(
+            this.bindingsProviders.map((it) => it.getRoomBindings),
+            ev,
+        );
     }
 
-    getNavigationAction(ev: KeyboardEvent | React.KeyboardEvent): NavigationAction | undefined {
-        return this.getAction(this.bindingsProviders.map(it => it.getNavigationBindings), ev);
+    getNavigationAction(
+        ev: KeyboardEvent | React.KeyboardEvent,
+    ): NavigationAction | undefined {
+        return this.getAction(
+            this.bindingsProviders.map((it) => it.getNavigationBindings),
+            ev,
+        );
     }
 }
 

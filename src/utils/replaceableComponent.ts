@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from 'react';
-import * as sdk from '../index';
+import * as React from "react";
+import * as sdk from "../index";
 
 /**
  * Replaces a component with a skinned version if a skinned version exists.
@@ -34,7 +34,10 @@ import * as sdk from '../index';
  * thus is optional for purposes of types.
  * @returns {ClassDecorator} The decorator.
  */
-export function replaceableComponent(name: string, origComponent?: React.Component): ClassDecorator {
+export function replaceableComponent(
+    name: string,
+    origComponent?: React.Component,
+): ClassDecorator {
     // Decorators return a function to override the class (origComponent). This
     // ultimately assumes that `getComponent()` won't throw an error and instead
     // return a falsey value like `null` when the skin doesn't have a component.

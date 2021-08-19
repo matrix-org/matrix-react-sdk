@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { asyncAction } from './actionCreators';
+import { asyncAction } from "./actionCreators";
 import { AsyncActionPayload } from "../dispatcher/payloads";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
@@ -28,7 +28,13 @@ export default class GroupActions {
      * @returns {AsyncActionPayload} An async action payload.
      * @see asyncAction
      */
-    public static fetchJoinedGroups(matrixClient: MatrixClient): AsyncActionPayload {
-        return asyncAction('GroupActions.fetchJoinedGroups', () => matrixClient.getJoinedGroups(), null);
+    public static fetchJoinedGroups(
+        matrixClient: MatrixClient,
+    ): AsyncActionPayload {
+        return asyncAction(
+            "GroupActions.fetchJoinedGroups",
+            () => matrixClient.getJoinedGroups(),
+            null,
+        );
     }
 }

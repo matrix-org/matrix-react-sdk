@@ -33,7 +33,9 @@ const ALGORITHM_INSTANCES: { [algorithm in SortAlgorithm]: IAlgorithm } = {
  * @param {SortAlgorithm} algorithm The algorithm to get an instance of.
  * @returns {IAlgorithm} The algorithm instance.
  */
-export function getSortingAlgorithmInstance(algorithm: SortAlgorithm): IAlgorithm {
+export function getSortingAlgorithmInstance(
+    algorithm: SortAlgorithm,
+): IAlgorithm {
     if (!ALGORITHM_INSTANCES[algorithm]) {
         throw new Error(`${algorithm} is not a known algorithm`);
     }
@@ -48,6 +50,10 @@ export function getSortingAlgorithmInstance(algorithm: SortAlgorithm): IAlgorith
  * @param {SortAlgorithm} algorithm The algorithm to use for sorting.
  * @returns {Room[]} Returns the sorted rooms.
  */
-export function sortRoomsWithAlgorithm(rooms: Room[], tagId: TagID, algorithm: SortAlgorithm): Room[] {
+export function sortRoomsWithAlgorithm(
+    rooms: Room[],
+    tagId: TagID,
+    algorithm: SortAlgorithm,
+): Room[] {
     return getSortingAlgorithmInstance(algorithm).sortRooms(rooms, tagId);
 }

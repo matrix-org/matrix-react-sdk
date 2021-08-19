@@ -23,8 +23,8 @@ import ThemeWatcher from "./settings/watchers/ThemeWatcher";
 
 export function enumerateThemes() {
     const BUILTIN_THEMES = {
-        "light": _t("Light"),
-        "dark": _t("Dark"),
+        light: _t("Light"),
+        dark: _t("Dark"),
     };
     const customThemes = SettingsStore.getValue("custom_themes");
     const customThemeNames = {};
@@ -42,7 +42,9 @@ function clearCustomTheme() {
             document.body.style.removeProperty(prop);
         }
     }
-    const customFontFaceStyle = document.querySelector("head > style[title='custom-theme-font-faces']");
+    const customFontFaceStyle = document.querySelector(
+        "head > style[title='custom-theme-font-faces']",
+    );
     if (customFontFaceStyle) {
         customFontFaceStyle.remove();
     }
@@ -62,33 +64,43 @@ const allowedFontFaceProps = [
 ];
 
 function generateCustomFontFaceCSS(faces) {
-    return faces.map(face => {
-        const src = face.src && face.src.map(srcElement => {
-            let format;
-            if (srcElement.format) {
-                format = `format("${srcElement.format}")`;
-            }
-            if (srcElement.url) {
-                return `url("${srcElement.url}") ${format}`;
-            } else if (srcElement.local) {
-                return `local("${srcElement.local}") ${format}`;
-            }
-            return "";
-        }).join(", ");
-        const props = Object.keys(face).filter(prop => allowedFontFaceProps.includes(prop));
-        const body = props.map(prop => {
-            let value;
-            if (prop === "src") {
-                value = src;
-            } else if (prop === "font-family") {
-                value = `"${face[prop]}"`;
-            } else {
-                value = face[prop];
-            }
-            return `${prop}: ${value}`;
-        }).join(";");
-        return `@font-face {${body}}`;
-    }).join("\n");
+    return faces
+        .map((face) => {
+            const src =
+                face.src &&
+                face.src
+                    .map((srcElement) => {
+                        let format;
+                        if (srcElement.format) {
+                            format = `format("${srcElement.format}")`;
+                        }
+                        if (srcElement.url) {
+                            return `url("${srcElement.url}") ${format}`;
+                        } else if (srcElement.local) {
+                            return `local("${srcElement.local}") ${format}`;
+                        }
+                        return "";
+                    })
+                    .join(", ");
+            const props = Object.keys(face).filter((prop) =>
+                allowedFontFaceProps.includes(prop),
+            );
+            const body = props
+                .map((prop) => {
+                    let value;
+                    if (prop === "src") {
+                        value = src;
+                    } else if (prop === "font-family") {
+                        value = `"${face[prop]}"`;
+                    } else {
+                        value = face[prop];
+                    }
+                    return `${prop}: ${value}`;
+                })
+                .join(";");
+            return `@font-face {${body}}`;
+        })
+        .join("\n");
 }
 
 function setCustomThemeVars(customTheme) {
@@ -138,12 +150,16 @@ export function getCustomTheme(themeName) {
     // set css variables
     const customThemes = SettingsStore.getValue("custom_themes");
     if (!customThemes) {
-        throw new Error(`No custom themes set, can't set custom theme "${themeName}"`);
+        throw new Error(
+            `No custom themes set, can't set custom theme "${themeName}"`,
+        );
     }
-    const customTheme = customThemes.find(t => t.name === themeName);
+    const customTheme = customThemes.find((t) => t.name === themeName);
     if (!customTheme) {
-        const knownNames = customThemes.map(t => t.name).join(", ");
-        throw new Error(`Can't find custom theme "${themeName}", only know ${knownNames}`);
+        const knownNames = customThemes.map((t) => t.name).join(", ");
+        throw new Error(
+            `Can't find custom theme "${themeName}", only know ${knownNames}`,
+        );
     }
     return customTheme;
 }
@@ -171,9 +187,10 @@ export async function setTheme(theme) {
     // look for the stylesheet elements.
     // styleElements is a map from style name to HTMLLinkElement.
     const styleElements = Object.create(null);
-    const themes = Array.from(document.querySelectorAll('[data-mx-theme]'));
-    themes.forEach(theme => {
-        styleElements[theme.attributes['data-mx-theme'].value.toLowerCase()] = theme;
+    const themes = Array.from(document.querySelectorAll("[data-mx-theme]"));
+    themes.forEach((theme) => {
+        styleElements[theme.attributes["data-mx-theme"].value.toLowerCase()] =
+            theme;
     });
 
     if (!(stylesheetName in styleElements)) {
@@ -194,7 +211,7 @@ export async function setTheme(theme) {
     styleElements[stylesheetName].disabled = false;
 
     return new Promise((resolve) => {
-        const switchTheme = function() {
+        const switchTheme = function () {
             // we re-enable our theme here just in case we raced with another
             // theme set request as per https://github.com/vector-im/element-web/issues/5601.
             // We could alternatively lock or similar to stop the race, but
@@ -206,7 +223,8 @@ export async function setTheme(theme) {
             });
             const bodyStyles = global.getComputedStyle(document.body);
             if (bodyStyles.backgroundColor) {
-                document.querySelector('meta[name="theme-color"]').content = bodyStyles.backgroundColor;
+                document.querySelector('meta[name="theme-color"]').content =
+                    bodyStyles.backgroundColor;
             }
             resolve();
         };

@@ -59,7 +59,8 @@ export default function createMatrixClient(opts: ICreateClientOpts) {
 
     if (indexedDB) {
         storeOpts.cryptoStore = new IndexedDBCryptoStore(
-            indexedDB, "matrix-js-sdk:crypto",
+            indexedDB,
+            "matrix-js-sdk:crypto",
         );
     }
 

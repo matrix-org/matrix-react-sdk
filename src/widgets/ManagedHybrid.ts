@@ -18,7 +18,10 @@ import { IWidget } from "matrix-widget-api";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCallBehaviourWellKnown } from "../utils/WellKnownUtils";
 import WidgetUtils from "../utils/WidgetUtils";
-import { IStoredLayout, WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
+import {
+    IStoredLayout,
+    WidgetLayoutStore,
+} from "../stores/widgets/WidgetLayoutStore";
 import WidgetEchoStore from "../stores/WidgetEchoStore";
 import WidgetStore from "../stores/WidgetStore";
 import SdkConfig from "../SdkConfig";
@@ -67,7 +70,10 @@ export async function addManagedHybridWidget(roomId: string) {
         const response = await fetch(`${widgetBuildUrl}?roomId=${roomId}`);
         widgetData = await response.json();
     } catch (e) {
-        console.error(`Managed hybrid widget builder failed for room ${roomId}`, e);
+        console.error(
+            `Managed hybrid widget builder failed for room ${roomId}`,
+            e,
+        );
         return;
     }
     if (!widgetData) {
@@ -77,12 +83,13 @@ export async function addManagedHybridWidget(roomId: string) {
 
     // Ensure the widget is not already present in the room
     let widgets = WidgetStore.instance.getApps(roomId);
-    const existing = (
-        widgets.some(w => w.id === widgetId) ||
-        WidgetEchoStore.roomHasPendingWidgets(roomId, [])
-    );
+    const existing =
+        widgets.some((w) => w.id === widgetId) ||
+        WidgetEchoStore.roomHasPendingWidgets(roomId, []);
     if (existing) {
-        console.error(`Managed hybrid widget already present in room ${roomId}`);
+        console.error(
+            `Managed hybrid widget already present in room ${roomId}`,
+        );
         return;
     }
 
@@ -90,7 +97,10 @@ export async function addManagedHybridWidget(roomId: string) {
     try {
         await WidgetUtils.setRoomWidgetContent(roomId, widgetId, widgetContent);
     } catch (e) {
-        console.error(`Unable to add managed hybrid widget in room ${roomId}`, e);
+        console.error(
+            `Unable to add managed hybrid widget in room ${roomId}`,
+            e,
+        );
         return;
     }
 
@@ -99,11 +109,19 @@ export async function addManagedHybridWidget(roomId: string) {
         return;
     }
     widgets = WidgetStore.instance.getApps(roomId);
-    const installedWidget = widgets.find(w => w.id === widgetId);
+    const installedWidget = widgets.find((w) => w.id === widgetId);
     if (!installedWidget) {
         return;
     }
-    WidgetLayoutStore.instance.moveToContainer(room, installedWidget, layout.container);
-    WidgetLayoutStore.instance.setContainerHeight(room, layout.container, layout.height);
+    WidgetLayoutStore.instance.moveToContainer(
+        room,
+        installedWidget,
+        layout.container,
+    );
+    WidgetLayoutStore.instance.setContainerHeight(
+        room,
+        layout.container,
+        layout.height,
+    );
     WidgetLayoutStore.instance.copyLayoutToRoom(room);
 }

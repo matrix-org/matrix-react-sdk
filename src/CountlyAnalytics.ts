@@ -18,9 +18,9 @@ import { randomString } from "matrix-js-sdk/src/randomstring";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { sleep } from "matrix-js-sdk/src/utils";
 
-import { getCurrentLanguage } from './languageHandler';
-import PlatformPeg from './PlatformPeg';
-import SdkConfig from './SdkConfig';
+import { getCurrentLanguage } from "./languageHandler";
+import PlatformPeg from "./PlatformPeg";
+import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import RoomViewStore from "./stores/RoomViewStore";
 import { Action } from "./dispatcher/actions";
@@ -81,39 +81,39 @@ interface IStarRatingEvent extends IEvent {
 type Value = string | number | boolean;
 
 interface IOperationInc {
-    "$inc": number;
+    $inc: number;
 }
 interface IOperationMul {
-    "$mul": number;
+    $mul: number;
 }
 interface IOperationMax {
-    "$max": number;
+    $max: number;
 }
 interface IOperationMin {
-    "$min": number;
+    $min: number;
 }
 interface IOperationSetOnce {
-    "$setOnce": Value;
+    $setOnce: Value;
 }
 interface IOperationPush {
-    "$push": Value | Value[];
+    $push: Value | Value[];
 }
 interface IOperationAddToSet {
-    "$addToSet": Value | Value[];
+    $addToSet: Value | Value[];
 }
 interface IOperationPull {
-    "$pull": Value | Value[];
+    $pull: Value | Value[];
 }
 
 type Operation =
-    IOperationInc |
-    IOperationMul |
-    IOperationMax |
-    IOperationMin |
-    IOperationSetOnce |
-    IOperationPush |
-    IOperationAddToSet |
-    IOperationPull;
+    | IOperationInc
+    | IOperationMul
+    | IOperationMax
+    | IOperationMin
+    | IOperationSetOnce
+    | IOperationPush
+    | IOperationAddToSet
+    | IOperationPull;
 
 interface IUserDetails {
     name?: string;
@@ -275,12 +275,30 @@ interface IJoinRoomEvent extends IEvent {
 const hashHex = async (input: string): Promise<string> => {
     const buf = new TextEncoder().encode(input);
     const digestBuf = await window.crypto.subtle.digest("sha-256", buf);
-    return [...new Uint8Array(digestBuf)].map((b: number) => b.toString(16).padStart(2, "0")).join("");
+    return [...new Uint8Array(digestBuf)]
+        .map((b: number) => b.toString(16).padStart(2, "0"))
+        .join("");
 };
 
 const knownScreens = new Set([
-    "register", "login", "forgot_password", "soft_logout", "new", "settings", "welcome", "home", "start", "directory",
-    "start_sso", "start_cas", "groups", "complete_security", "post_registration", "room", "user", "group",
+    "register",
+    "login",
+    "forgot_password",
+    "soft_logout",
+    "new",
+    "settings",
+    "welcome",
+    "home",
+    "start",
+    "directory",
+    "start_sso",
+    "start_cas",
+    "groups",
+    "complete_security",
+    "post_registration",
+    "room",
+    "user",
+    "group",
 ]);
 
 interface IViewData {
@@ -296,7 +314,7 @@ async function getViewData(anonymous = true): Promise<IViewData> {
     let { pathname } = window.location;
 
     // Redact paths which could contain unexpected PII
-    if (origin.startsWith('file://')) {
+    if (origin.startsWith("file://")) {
         pathname = `/<redacted_${rand}>/`; // XXX: inject rand because Count.ly doesn't like X->X transitions
     }
 
@@ -335,15 +353,22 @@ const getRoomStats = (roomId: string) => {
     const room = cli?.getRoom(roomId);
 
     return {
-        "num_users": room?.getJoinedMemberCount(),
-        "is_encrypted": cli?.isRoomEncrypted(roomId),
+        num_users: room?.getJoinedMemberCount(),
+        is_encrypted: cli?.isRoomEncrypted(roomId),
         // eslint-disable-next-line camelcase
-        "is_public": room?.currentState.getStateEvents("m.room.join_rules", "")?.getContent()?.join_rule === "public",
+        is_public:
+            room?.currentState
+                .getStateEvents("m.room.join_rules", "")
+                ?.getContent()?.join_rule === "public",
     };
 };
 
 // async wrapper for regex-powered String.prototype.replace
-const strReplaceAsync = async (str: string, regex: RegExp, fn: (...args: string[]) => Promise<string>) => {
+const strReplaceAsync = async (
+    str: string,
+    regex: RegExp,
+    fn: (...args: string[]) => Promise<string>,
+) => {
     const promises: Promise<string>[] = [];
     // dry-run to calculate the replace values
     str.replace(regex, (...args: string[]) => {
@@ -389,7 +414,11 @@ export default class CountlyAnalytics {
 
     public canEnable() {
         const config = SdkConfig.get();
-        return Boolean(navigator.doNotTrack !== "1" && config?.countly?.url && config?.countly?.appKey);
+        return Boolean(
+            navigator.doNotTrack !== "1" &&
+                config?.countly?.url &&
+                config?.countly?.appKey,
+        );
     }
 
     private async changeUserKey(userKey: string, merge = false) {
@@ -417,7 +446,10 @@ export default class CountlyAnalytics {
         if (anonymous) {
             await this.changeUserKey(randomString(64));
         } else {
-            await this.changeUserKey(await hashHex(MatrixClientPeg.get().getUserId()), true);
+            await this.changeUserKey(
+                await hashHex(MatrixClientPeg.get().getUserId()),
+                true,
+            );
         }
 
         const platform = PlatformPeg.get();
@@ -429,14 +461,17 @@ export default class CountlyAnalytics {
         }
 
         // start heartbeat
-        this.heartbeatIntervalId = setInterval(this.heartbeat.bind(this), HEARTBEAT_INTERVAL);
+        this.heartbeatIntervalId = setInterval(
+            this.heartbeat.bind(this),
+            HEARTBEAT_INTERVAL,
+        );
         this.trackSessions();
         this.trackErrors();
     }
 
     public async disable() {
         if (this.disabled) return;
-        await this.track("Opt-Out" );
+        await this.track("Opt-Out");
         this.endSession();
         window.clearInterval(this.heartbeatIntervalId);
         window.clearTimeout(this.activityIntervalId);
@@ -452,7 +487,13 @@ export default class CountlyAnalytics {
     }
 
     public reportFeedback(rating: 1 | 2 | 3 | 4 | 5, comment: string) {
-        this.track<IStarRatingEvent>("[CLY]_star_rating", { rating, comment }, null, {}, true);
+        this.track<IStarRatingEvent>(
+            "[CLY]_star_rating",
+            { rating, comment },
+            null,
+            {},
+            true,
+        );
     }
 
     public trackPageChange(generationTimeMs?: number) {
@@ -535,9 +576,13 @@ export default class CountlyAnalytics {
         }
 
         // sanitize the error from identifiers
-        error = await strReplaceAsync(error, /([!@+#]).+?:[\w:.]+/g, async (substring: string, glyph: string) => {
-            return glyph + await hashHex(substring.substring(1));
-        });
+        error = await strReplaceAsync(
+            error,
+            /([!@+#]).+?:[\w:.]+/g,
+            async (substring: string, glyph: string) => {
+                return glyph + (await hashHex(substring.substring(1)));
+            },
+        );
 
         const metrics = this.getMetrics();
         const ob: ICrash = {
@@ -595,8 +640,15 @@ export default class CountlyAnalytics {
             }
         };
 
-        window.addEventListener('unhandledrejection', (event) => {
-            this.recordError(new Error(`Unhandled rejection (reason: ${event.reason?.stack || event.reason}).`), true);
+        window.addEventListener("unhandledrejection", (event) => {
+            this.recordError(
+                new Error(
+                    `Unhandled rejection (reason: ${
+                        event.reason?.stack || event.reason
+                    }).`,
+                ),
+                true,
+            );
         });
     }
 
@@ -619,8 +671,11 @@ export default class CountlyAnalytics {
     }
 
     private async request(
-        args: Omit<IParams, "app_key" | "device_id" | "timestamp" | "hour" | "dow">
-            & Partial<Pick<IParams, "device_id">> = {},
+        args: Omit<
+            IParams,
+            "app_key" | "device_id" | "timestamp" | "hour" | "dow"
+        > &
+            Partial<Pick<IParams, "device_id">> = {},
     ) {
         const request: IParams = {
             app_key: this.appKey,
@@ -662,7 +717,10 @@ export default class CountlyAnalytics {
         };
     }
 
-    private queue(args: Omit<IEvent, "timestamp" | "hour" | "dow" | "count"> & Partial<Pick<IEvent, "count">>) {
+    private queue(
+        args: Omit<IEvent, "timestamp" | "hour" | "dow" | "count"> &
+            Partial<Pick<IEvent, "count">>,
+    ) {
         const { count = 1, ...rest } = args;
         const ev = {
             ...this.getTimeParams(),
@@ -693,8 +751,10 @@ export default class CountlyAnalytics {
     private startTime() {
         if (!this.trackTime) {
             this.trackTime = true;
-            this.lastBeat = CountlyAnalytics.getTimestamp() - this.storedDuration;
-            this.lastViewTime = CountlyAnalytics.getTimestamp() - this.lastViewStoredDuration;
+            this.lastBeat =
+                CountlyAnalytics.getTimestamp() - this.storedDuration;
+            this.lastViewTime =
+                CountlyAnalytics.getTimestamp() - this.lastViewStoredDuration;
             this.lastViewStoredDuration = 0;
         }
     }
@@ -702,8 +762,10 @@ export default class CountlyAnalytics {
     private stopTime() {
         if (this.trackTime) {
             this.trackTime = false;
-            this.storedDuration = CountlyAnalytics.getTimestamp() - this.lastBeat;
-            this.lastViewStoredDuration = CountlyAnalytics.getTimestamp() - this.lastViewTime;
+            this.storedDuration =
+                CountlyAnalytics.getTimestamp() - this.lastBeat;
+            this.lastViewStoredDuration =
+                CountlyAnalytics.getTimestamp() - this.lastViewTime;
         }
     }
 
@@ -742,12 +804,16 @@ export default class CountlyAnalytics {
 
             const userDetails: IUserDetails = {
                 custom: {
-                    "home_server": MatrixClientPeg.get() && MatrixClientPeg.getHomeserverName(), // TODO hash?
-                    "anonymous": this.anonymous,
+                    home_server:
+                        MatrixClientPeg.get() &&
+                        MatrixClientPeg.getHomeserverName(), // TODO hash?
+                    anonymous: this.anonymous,
                 },
             };
 
-            const request: Parameters<typeof CountlyAnalytics.prototype.request>[0] = {
+            const request: Parameters<
+                typeof CountlyAnalytics.prototype.request
+            >[0] = {
                 begin_session: 1,
                 user_details: JSON.stringify(userDetails),
             };
@@ -763,11 +829,18 @@ export default class CountlyAnalytics {
 
     private reportViewDuration() {
         if (this.lastView) {
-            this.track<IViewEvent>("[CLY]_view", {
-                name: this.lastView,
-            }, null, {
-                dur: this.trackTime ? CountlyAnalytics.getTimestamp() - this.lastViewTime : this.lastViewStoredDuration,
-            });
+            this.track<IViewEvent>(
+                "[CLY]_view",
+                {
+                    name: this.lastView,
+                },
+                null,
+                {
+                    dur: this.trackTime
+                        ? CountlyAnalytics.getTimestamp() - this.lastViewTime
+                        : this.lastViewStoredDuration,
+                },
+            );
             this.lastView = null;
         }
     }
@@ -779,7 +852,8 @@ export default class CountlyAnalytics {
             this.reportViewDuration();
             this.request({
                 end_session: 1,
-                session_duration: CountlyAnalytics.getTimestamp() - this.lastBeat,
+                session_duration:
+                    CountlyAnalytics.getTimestamp() - this.lastBeat,
             });
         }
         this.sessionStarted = false;
@@ -812,7 +886,9 @@ export default class CountlyAnalytics {
         window.addEventListener("keydown", this.onUserActivity);
         // Using the passive option to not block the main thread
         // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
-        window.addEventListener("scroll", this.onUserActivity, { passive: true });
+        window.addEventListener("scroll", this.onUserActivity, {
+            passive: true,
+        });
 
         this.activityIntervalId = setInterval(() => {
             this.inactivityCounter++;
@@ -839,7 +915,7 @@ export default class CountlyAnalytics {
         let endTime = CountlyAnalytics.getTimestamp();
         const cli = MatrixClientPeg.get();
         if (!cli.getRoom(roomId)) {
-            await new Promise<void>(resolve => {
+            await new Promise<void>((resolve) => {
                 const handler = (room) => {
                     if (room.roomId === roomId) {
                         cli.off("Room", handler);
@@ -856,7 +932,11 @@ export default class CountlyAnalytics {
         });
     }
 
-    public trackRoomJoin(startTime: number, roomId: string, type: IJoinRoomEvent["segmentation"]["type"]) {
+    public trackRoomJoin(
+        startTime: number,
+        roomId: string,
+        type: IJoinRoomEvent["segmentation"]["type"],
+    ) {
         this.track<IJoinRoomEvent>(Action.JoinRoom, { type }, roomId, {
             dur: CountlyAnalytics.getTimestamp() - startTime,
         });
@@ -865,7 +945,7 @@ export default class CountlyAnalytics {
     public async trackSendMessage(
         startTime: number,
         // eslint-disable-next-line camelcase
-        sendPromise: Promise<{event_id: string}>,
+        sendPromise: Promise<{ event_id: string }>,
         roomId: string,
         isEdit: boolean,
         isReply: boolean,
@@ -879,7 +959,7 @@ export default class CountlyAnalytics {
         let endTime = CountlyAnalytics.getTimestamp();
 
         if (!room.findEventById(eventId)) {
-            await new Promise<void>(resolve => {
+            await new Promise<void>((resolve) => {
                 const handler = (ev) => {
                     if (ev.getId() === eventId) {
                         room.off("Room.localEchoUpdated", handler);
@@ -892,28 +972,41 @@ export default class CountlyAnalytics {
             endTime = CountlyAnalytics.getTimestamp();
         }
 
-        this.track<ISendMessageEvent>("send_message", {
-            is_edit: isEdit,
-            is_reply: isReply,
-            msgtype: content.msgtype,
-            format: content.format,
-        }, roomId, {
-            dur: endTime - startTime,
-        });
+        this.track<ISendMessageEvent>(
+            "send_message",
+            {
+                is_edit: isEdit,
+                is_reply: isReply,
+                msgtype: content.msgtype,
+                format: content.format,
+            },
+            roomId,
+            {
+                dur: endTime - startTime,
+            },
+        );
     }
 
     public trackStartCall(roomId: string, isVideo = false, isJitsi = false) {
-        this.track<IStartCallEvent>("start_call", {
-            is_video: isVideo,
-            is_jitsi: isJitsi,
-        }, roomId);
+        this.track<IStartCallEvent>(
+            "start_call",
+            {
+                is_video: isVideo,
+                is_jitsi: isJitsi,
+            },
+            roomId,
+        );
     }
 
     public trackJoinCall(roomId: string, isVideo = false, isJitsi = false) {
-        this.track<IJoinCallEvent>("join_call", {
-            is_video: isVideo,
-            is_jitsi: isJitsi,
-        }, roomId);
+        this.track<IJoinCallEvent>(
+            "join_call",
+            {
+                is_video: isVideo,
+                is_jitsi: isJitsi,
+            },
+            roomId,
+        );
     }
 
     public trackRoomDirectoryBegin() {
@@ -927,17 +1020,25 @@ export default class CountlyAnalytics {
     }
 
     public trackRoomDirectorySearch(numResults: number, query: string) {
-        this.track<IRoomDirectorySearchEvent>("room_directory_search", {
-            query_length: query.length,
-            query_num_words: query.split(" ").length,
-        }, null, {
-            sum: numResults,
-        });
+        this.track<IRoomDirectorySearchEvent>(
+            "room_directory_search",
+            {
+                query_length: query.length,
+                query_num_words: query.split(" ").length,
+            },
+            null,
+            {
+                sum: numResults,
+            },
+        );
     }
 
     public async track<E extends IEvent>(
         key: E["key"],
-        segments?: Omit<E["segmentation"], "room_id" | "num_users" | "is_encrypted" | "is_public">,
+        segments?: Omit<
+            E["segmentation"],
+            "room_id" | "num_users" | "is_encrypted" | "is_public"
+        >,
         roomId?: string,
         args?: Partial<Pick<E, "dur" | "sum" | "timestamp">>,
         anonymous = false,

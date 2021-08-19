@@ -24,7 +24,11 @@ export enum AddressType {
     MatrixRoomId = "mx-room-id",
 }
 
-export const addressTypes = [AddressType.Email, AddressType.MatrixRoomId, AddressType.MatrixUserId];
+export const addressTypes = [
+    AddressType.Email,
+    AddressType.MatrixRoomId,
+    AddressType.MatrixUserId,
+];
 
 // PropType definition for an object describing
 // an address that can be invited to a room (which

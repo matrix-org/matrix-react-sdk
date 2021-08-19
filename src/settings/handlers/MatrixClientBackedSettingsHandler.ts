@@ -47,7 +47,10 @@ export default abstract class MatrixClientBackedSettingsHandler extends Settings
         return MatrixClientBackedSettingsHandler._matrixClient;
     }
 
-    protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
+    protected initMatrixClient(
+        oldClient: MatrixClient,
+        newClient: MatrixClient,
+    ) {
         console.warn("initMatrixClient not overridden");
     }
 }

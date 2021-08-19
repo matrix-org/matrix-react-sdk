@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import dis from '../dispatcher/dispatcher';
-import EventEmitter from 'events';
+import dis from "../dispatcher/dispatcher";
+import EventEmitter from "events";
 import { throttle } from "lodash";
 import SettingsStore from "../settings/SettingsStore";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "./room-list/RoomListStore";
@@ -36,7 +36,7 @@ function commonPrefix(a, b) {
     if (prefix === undefined) {
         prefix = a.substr(0, len);
     }
-    const spaceIdx = prefix.indexOf(' ');
+    const spaceIdx = prefix.indexOf(" ");
     if (spaceIdx !== -1) {
         prefix = prefix.substr(0, spaceIdx + 1);
     }
@@ -56,14 +56,12 @@ class CustomRoomTagStore extends EventEmitter {
 
         // as RoomListStore gets updated by every timeline event
         // throttle this to only run every 500ms
-        this._getUpdatedTags = throttle(
-            this._getUpdatedTags, 500, {
-                leading: true,
-                trailing: true,
-            },
-        );
+        this._getUpdatedTags = throttle(this._getUpdatedTags, 500, {
+            leading: true,
+            trailing: true,
+        });
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this._onListsUpdated);
-        dis.register(payload => this._onDispatch(payload));
+        dis.register((payload) => this._onDispatch(payload));
     }
 
     getTags() {
@@ -89,14 +87,21 @@ class CustomRoomTagStore extends EventEmitter {
         const prefixes = tagNames.map((name, i) => {
             const isFirst = i === 0;
             const isLast = i === tagNames.length - 1;
-            const backwardsPrefix = !isFirst ? commonPrefix(name, tagNames[i - 1]) : "";
-            const forwardsPrefix = !isLast ? commonPrefix(name, tagNames[i + 1]) : "";
-            const longestPrefix = backwardsPrefix.length > forwardsPrefix.length ?
-                backwardsPrefix : forwardsPrefix;
+            const backwardsPrefix = !isFirst
+                ? commonPrefix(name, tagNames[i - 1])
+                : "";
+            const forwardsPrefix = !isLast
+                ? commonPrefix(name, tagNames[i + 1])
+                : "";
+            const longestPrefix =
+                backwardsPrefix.length > forwardsPrefix.length
+                    ? backwardsPrefix
+                    : forwardsPrefix;
             return longestPrefix;
         });
         return tagNames.map((name, i) => {
-            const notifs = RoomNotificationStateStore.instance.getListState(name);
+            const notifs =
+                RoomNotificationStateStore.instance.getListState(name);
             let badgeNotifState;
             if (notifs.hasUnreadCount) {
                 badgeNotifState = notifs;
@@ -116,7 +121,7 @@ class CustomRoomTagStore extends EventEmitter {
 
     _onDispatch(payload) {
         switch (payload.action) {
-            case 'select_custom_room_tag': {
+            case "select_custom_room_tag": {
                 const oldTags = this._state.tags;
                 if (oldTags.hasOwnProperty(payload.tag)) {
                     const tag = {};
@@ -126,11 +131,14 @@ class CustomRoomTagStore extends EventEmitter {
                 }
                 break;
             }
-            case 'on_client_not_viable':
-            case 'on_logged_out': {
+            case "on_client_not_viable":
+            case "on_logged_out": {
                 // we assume to always have a tags object in the state
                 this._state = { tags: {} };
-                RoomListStore.instance.off(LISTS_UPDATE_EVENT, this._onListsUpdated);
+                RoomListStore.instance.off(
+                    LISTS_UPDATE_EVENT,
+                    this._onListsUpdated,
+                );
                 break;
             }
         }
@@ -141,7 +149,9 @@ class CustomRoomTagStore extends EventEmitter {
             return {}; // none
         }
 
-        const newTagNames = Object.keys(RoomListStore.instance.orderedLists).filter(t => isCustomTag(t)).sort();
+        const newTagNames = Object.keys(RoomListStore.instance.orderedLists)
+            .filter((t) => isCustomTag(t))
+            .sort();
         const prevTags = this._state && this._state.tags;
         return newTagNames.reduce((c, tagName) => {
             c[tagName] = (prevTags && prevTags[tagName]) || false;

@@ -26,17 +26,34 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
         super();
         this.elementUrl = elementUrl;
 
-        if (!this.elementUrl.startsWith("http:") && !this.elementUrl.startsWith("https:")) {
-            throw new Error("Element prefix URL does not appear to be an HTTP(S) URL");
+        if (
+            !this.elementUrl.startsWith("http:") &&
+            !this.elementUrl.startsWith("https:")
+        ) {
+            throw new Error(
+                "Element prefix URL does not appear to be an HTTP(S) URL",
+            );
         }
     }
 
-    forEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
-        return `${this.elementUrl}/#/room/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
+    forEvent(
+        roomId: string,
+        eventId: string,
+        serverCandidates: string[],
+    ): string {
+        return `${
+            this.elementUrl
+        }/#/room/${roomId}/${eventId}${this.encodeServerCandidates(
+            serverCandidates,
+        )}`;
     }
 
     forRoom(roomIdOrAlias: string, serverCandidates?: string[]): string {
-        return `${this.elementUrl}/#/room/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
+        return `${
+            this.elementUrl
+        }/#/room/${roomIdOrAlias}${this.encodeServerCandidates(
+            serverCandidates,
+        )}`;
     }
 
     forUser(userId: string): string {
@@ -48,11 +65,11 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
     }
 
     forEntity(entityId: string): string {
-        if (entityId[0] === '!' || entityId[0] === '#') {
+        if (entityId[0] === "!" || entityId[0] === "#") {
             return this.forRoom(entityId);
-        } else if (entityId[0] === '@') {
+        } else if (entityId[0] === "@") {
             return this.forUser(entityId);
-        } else if (entityId[0] === '+') {
+        } else if (entityId[0] === "+") {
             return this.forGroup(entityId);
         } else throw new Error("Unrecognized entity");
     }
@@ -63,8 +80,10 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
     }
 
     encodeServerCandidates(candidates?: string[]) {
-        if (!candidates || candidates.length === 0) return '';
-        return `?via=${candidates.map(c => encodeURIComponent(c)).join("&via=")}`;
+        if (!candidates || candidates.length === 0) return "";
+        return `?via=${candidates
+            .map((c) => encodeURIComponent(c))
+            .join("&via=")}`;
     }
 
     // Heavily inspired by/borrowed from the matrix-bot-sdk (with permission):
@@ -88,7 +107,8 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
     static parseAppRoute(route: string): PermalinkParts {
         const parts = route.split("/");
 
-        if (parts.length < 2) { // we're expecting an entity and an ID of some kind at least
+        if (parts.length < 2) {
+            // we're expecting an entity and an ID of some kind at least
             throw new Error("URL is missing parts");
         }
 
@@ -99,16 +119,16 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
 
         const entityType = parts[0];
         const entity = parts[1];
-        if (entityType === 'user') {
+        if (entityType === "user") {
             // Probably a user, no further parsing needed.
             return PermalinkParts.forUser(entity);
-        } else if (entityType === 'group') {
+        } else if (entityType === "group") {
             // Probably a group, no further parsing needed.
             return PermalinkParts.forGroup(entity);
-        } else if (entityType === 'room') {
+        } else if (entityType === "room") {
             // Rejoin the rest because v3 events can have slashes (annoyingly)
-            const eventId = parts.length > 2 ? parts.slice(2).join('/') : "";
-            const via = query.split(/&?via=/).filter(p => !!p);
+            const eventId = parts.length > 2 ? parts.slice(2).join("/") : "";
+            const via = query.split(/&?via=/).filter((p) => !!p);
             return PermalinkParts.forEvent(entity, eventId, via);
         } else {
             throw new Error("Unknown entity type in permalink");

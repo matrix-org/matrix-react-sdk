@@ -92,11 +92,20 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
 
     protected async onNotReady() {
         if (this.monitoredUser) {
-            this.monitoredUser.removeListener("User.displayName", this.onProfileUpdate);
-            this.monitoredUser.removeListener("User.avatarUrl", this.onProfileUpdate);
+            this.monitoredUser.removeListener(
+                "User.displayName",
+                this.onProfileUpdate,
+            );
+            this.monitoredUser.removeListener(
+                "User.avatarUrl",
+                this.onProfileUpdate,
+            );
         }
         if (this.matrixClient) {
-            this.matrixClient.removeListener("RoomState.events", this.onStateEvents);
+            this.matrixClient.removeListener(
+                "RoomState.events",
+                this.onStateEvents,
+            );
         }
         await this.reset({});
     }
@@ -123,9 +132,14 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
     private onProfileUpdate = async () => {
         // We specifically do not use the User object we stored for profile info as it
         // could easily be wrong (such as per-room instead of global profile).
-        const profileInfo = await this.matrixClient.getProfileInfo(this.matrixClient.getUserId());
+        const profileInfo = await this.matrixClient.getProfileInfo(
+            this.matrixClient.getUserId(),
+        );
         if (profileInfo.displayname) {
-            window.localStorage.setItem(KEY_DISPLAY_NAME, profileInfo.displayname);
+            window.localStorage.setItem(
+                KEY_DISPLAY_NAME,
+                profileInfo.displayname,
+            );
         } else {
             window.localStorage.removeItem(KEY_DISPLAY_NAME);
         }
@@ -134,13 +148,24 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         } else {
             window.localStorage.removeItem(KEY_AVATAR_URL);
         }
-        await this.updateState({ displayName: profileInfo.displayname, avatarUrl: profileInfo.avatar_url });
+        await this.updateState({
+            displayName: profileInfo.displayname,
+            avatarUrl: profileInfo.avatar_url,
+        });
     };
 
-    private onStateEvents = throttle(async (ev: MatrixEvent) => {
-        const myUserId = MatrixClientPeg.get().getUserId();
-        if (ev.getType() === 'm.room.member' && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
-            await this.onProfileUpdate();
-        }
-    }, 200, { trailing: true, leading: true });
+    private onStateEvents = throttle(
+        async (ev: MatrixEvent) => {
+            const myUserId = MatrixClientPeg.get().getUserId();
+            if (
+                ev.getType() === "m.room.member" &&
+                ev.getSender() === myUserId &&
+                ev.getStateKey() === myUserId
+            ) {
+                await this.onProfileUpdate();
+            }
+        },
+        200,
+        { trailing: true, leading: true },
+    );
 }

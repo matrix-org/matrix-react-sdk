@@ -41,8 +41,7 @@ const keyMap = new EnhancedMap<Object, EnhancedMap<string, unknown>>();
  * variables to strings to essentially namespace the field, for most cases.
  */
 export class Singleflight {
-    private constructor() {
-    }
+    private constructor() {}
 
     /**
      * A void marker to help with returning a value in a singleflight context.
@@ -57,7 +56,8 @@ export class Singleflight {
      * @returns {SingleflightContext} Returns the context to execute the function.
      */
     public static for(instance: Object, key: string): SingleflightContext {
-        if (!instance || !key) throw new Error("An instance and key must be supplied");
+        if (!instance || !key)
+            throw new Error("An instance and key must be supplied");
         return new SingleflightContext(instance, key);
     }
 
@@ -80,8 +80,7 @@ export class Singleflight {
 }
 
 class SingleflightContext {
-    public constructor(private instance: Object, private key: string) {
-    }
+    public constructor(private instance: Object, private key: string) {}
 
     /**
      * Forget this particular instance and key combination, discarding the result.
@@ -112,7 +111,10 @@ class SingleflightContext {
      * @returns The recorded value.
      */
     public do<T>(fn: () => T): T {
-        const map = keyMap.getOrCreate(this.instance, new EnhancedMap<string, unknown>());
+        const map = keyMap.getOrCreate(
+            this.instance,
+            new EnhancedMap<string, unknown>(),
+        );
 
         // We have to manually getOrCreate() because we need to execute the fn
         let val = <T>map.get(this.key);

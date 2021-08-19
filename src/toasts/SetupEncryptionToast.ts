@@ -62,7 +62,9 @@ const getDescription = (kind: Kind) => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
         case Kind.UPGRADE_ENCRYPTION:
-            return _t("Safeguard against losing access to encrypted messages & data");
+            return _t(
+                "Safeguard against losing access to encrypted messages & data",
+            );
         case Kind.VERIFY_THIS_SESSION:
             return _t("Other users may not trust it");
     }
@@ -85,11 +87,22 @@ export const showToast = (kind: Kind) => {
 
     const onAccept = async () => {
         if (kind === Kind.VERIFY_THIS_SESSION) {
-            Modal.createTrackedDialog("Verify session", "Verify session", SetupEncryptionDialog,
-                {}, null, /* priority = */ false, /* static = */ true);
+            Modal.createTrackedDialog(
+                "Verify session",
+                "Verify session",
+                SetupEncryptionDialog,
+                {},
+                null,
+                /* priority = */ false,
+                /* static = */ true,
+            );
         } else {
             const modal = Modal.createDialog(
-                Spinner, null, "mx_Dialog_spinner", /* priority */ false, /* static */ true,
+                Spinner,
+                null,
+                "mx_Dialog_spinner",
+                /* priority */ false,
+                /* static */ true,
             );
             try {
                 await accessSecretStorage();

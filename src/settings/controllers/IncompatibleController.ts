@@ -24,7 +24,10 @@ import SettingsStore from "../SettingsStore";
  * labs flags.
  */
 export default class IncompatibleController extends SettingController {
-    public constructor(private settingName: string, private forcedValue = false) {
+    public constructor(
+        private settingName: string,
+        private forcedValue = false,
+    ) {
         super();
     }
 

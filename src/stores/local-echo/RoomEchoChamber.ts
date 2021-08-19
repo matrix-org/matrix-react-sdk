@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { GenericEchoChamber, implicitlyReverted, PROPERTY_UPDATED } from "./GenericEchoChamber";
+import {
+    GenericEchoChamber,
+    implicitlyReverted,
+    PROPERTY_UPDATED,
+} from "./GenericEchoChamber";
 import { getRoomNotifsState, setRoomNotifsState } from "../../RoomNotifs";
 import { RoomEchoContext } from "./RoomEchoContext";
 import { _t } from "../../languageHandler";
@@ -27,7 +31,11 @@ export enum CachedRoomKey {
     NotificationVolume,
 }
 
-export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedRoomKey, CachedRoomValues> {
+export class RoomEchoChamber extends GenericEchoChamber<
+    RoomEchoContext,
+    CachedRoomKey,
+    CachedRoomValues
+> {
     private properties = new Map<CachedRoomKey, CachedRoomValues>();
 
     public constructor(context: RoomEchoContext) {
@@ -50,8 +58,12 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
 
     private onAccountData = (event: MatrixEvent) => {
         if (event.getType() === "m.push_rules") {
-            const currentVolume = this.properties.get(CachedRoomKey.NotificationVolume) as Volume;
-            const newVolume = getRoomNotifsState(this.context.room.roomId) as Volume;
+            const currentVolume = this.properties.get(
+                CachedRoomKey.NotificationVolume,
+            ) as Volume;
+            const newVolume = getRoomNotifsState(
+                this.context.room.roomId,
+            ) as Volume;
             if (currentVolume !== newVolume) {
                 this.updateNotificationVolume();
             }
@@ -59,7 +71,10 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
     };
 
     private updateNotificationVolume() {
-        this.properties.set(CachedRoomKey.NotificationVolume, getRoomNotifsState(this.context.room.roomId));
+        this.properties.set(
+            CachedRoomKey.NotificationVolume,
+            getRoomNotifsState(this.context.room.roomId),
+        );
         this.markEchoReceived(CachedRoomKey.NotificationVolume);
         this.emit(PROPERTY_UPDATED, CachedRoomKey.NotificationVolume);
     }
@@ -71,8 +86,14 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
     }
 
     public set notificationVolume(v: Volume) {
-        this.setValue(_t("Change notification settings"), CachedRoomKey.NotificationVolume, v, async () => {
-            return setRoomNotifsState(this.context.room.roomId, v);
-        }, implicitlyReverted);
+        this.setValue(
+            _t("Change notification settings"),
+            CachedRoomKey.NotificationVolume,
+            v,
+            async () => {
+                return setRoomNotifsState(this.context.room.roomId, v);
+            },
+            implicitlyReverted,
+        );
     }
 }

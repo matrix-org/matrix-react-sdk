@@ -31,12 +31,14 @@ function matrixLinkify(linkify) {
     const S_START = linkify.parser.start;
 
     if (TT.UNDERSCORE === undefined) {
-        throw new Error("linkify-matrix requires linkifyjs 2.1.1: this version is too old.");
+        throw new Error(
+            "linkify-matrix requires linkifyjs 2.1.1: this version is too old.",
+        );
     }
 
-    const ROOMALIAS = function(value) {
+    const ROOMALIAS = function (value) {
         MultiToken.call(this, value);
-        this.type = 'roomalias';
+        this.type = "roomalias";
         this.isLink = true;
     };
     ROOMALIAS.prototype = new MultiToken();
@@ -81,9 +83,9 @@ function matrixLinkify(linkify) {
     S_ROOMALIAS.on(TT.COLON, S_ROOMALIAS_COLON); // do not accept trailing `:`
     S_ROOMALIAS_COLON.on(TT.NUM, S_ROOMALIAS_COLON_NUM); // but do accept :NUM (port specifier)
 
-    const USERID = function(value) {
+    const USERID = function (value) {
         MultiToken.call(this, value);
-        this.type = 'userid';
+        this.type = "userid";
         this.isLink = true;
     };
     USERID.prototype = new MultiToken();
@@ -126,9 +128,9 @@ function matrixLinkify(linkify) {
     S_USERID.on(TT.COLON, S_USERID_COLON); // do not accept trailing `:`
     S_USERID_COLON.on(TT.NUM, S_USERID_COLON_NUM); // but do accept :NUM (port specifier)
 
-    const GROUPID = function(value) {
+    const GROUPID = function (value) {
         MultiToken.call(this, value);
-        this.type = 'groupid';
+        this.type = "groupid";
         this.isLink = true;
     };
     GROUPID.prototype = new MultiToken();
@@ -173,11 +175,17 @@ function matrixLinkify(linkify) {
 }
 
 // stubs, overwritten in MatrixChat's componentDidMount
-matrixLinkify.onUserClick = function(e, userId) { e.preventDefault(); };
-matrixLinkify.onAliasClick = function(e, roomAlias) { e.preventDefault(); };
-matrixLinkify.onGroupClick = function(e, groupId) { e.preventDefault(); };
+matrixLinkify.onUserClick = function (e, userId) {
+    e.preventDefault();
+};
+matrixLinkify.onAliasClick = function (e, roomAlias) {
+    e.preventDefault();
+};
+matrixLinkify.onGroupClick = function (e, groupId) {
+    e.preventDefault();
+};
 
-const escapeRegExp = function(string) {
+const escapeRegExp = function (string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
@@ -185,18 +193,20 @@ const escapeRegExp = function(string) {
 // Anyone else really should be using matrix.to.
 matrixLinkify.ELEMENT_URL_PATTERN =
     "^(?:https?://)?(?:" +
-        escapeRegExp(window.location.host + window.location.pathname) + "|" +
-        "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
-        "(?:app|beta|staging|develop)\\.element\\.io/" +
+    escapeRegExp(window.location.host + window.location.pathname) +
+    "|" +
+    "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
+    "(?:app|beta|staging|develop)\\.element\\.io/" +
     ")(#.*)";
 
-matrixLinkify.MATRIXTO_URL_PATTERN = "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
+matrixLinkify.MATRIXTO_URL_PATTERN =
+    "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
 matrixLinkify.MATRIXTO_MD_LINK_PATTERN =
-    '\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
-matrixLinkify.MATRIXTO_BASE_URL= baseUrl;
+    "\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)";
+matrixLinkify.MATRIXTO_BASE_URL = baseUrl;
 
 matrixLinkify.options = {
-    events: function(href, type) {
+    events: function (href, type) {
         switch (type) {
             case "url": {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
@@ -204,7 +214,7 @@ matrixLinkify.options = {
                     const permalink = parsePermalink(href);
                     if (permalink && permalink.userId) {
                         return {
-                            click: function(e) {
+                            click: function (e) {
                                 matrixLinkify.onUserClick(e, permalink.userId);
                             },
                         };
@@ -216,30 +226,30 @@ matrixLinkify.options = {
             }
             case "userid":
                 return {
-                    click: function(e) {
+                    click: function (e) {
                         matrixLinkify.onUserClick(e, href);
                     },
                 };
             case "roomalias":
                 return {
-                    click: function(e) {
+                    click: function (e) {
                         matrixLinkify.onAliasClick(e, href);
                     },
                 };
             case "groupid":
                 return {
-                    click: function(e) {
+                    click: function (e) {
                         matrixLinkify.onGroupClick(e, href);
                     },
                 };
         }
     },
 
-    formatHref: function(href, type) {
+    formatHref: function (href, type) {
         switch (type) {
-            case 'roomalias':
-            case 'userid':
-            case 'groupid':
+            case "roomalias":
+            case "userid":
+            case "groupid":
             default: {
                 return tryTransformEntityToPermalink(href);
             }
@@ -247,17 +257,22 @@ matrixLinkify.options = {
     },
 
     linkAttributes: {
-        rel: 'noreferrer noopener',
+        rel: "noreferrer noopener",
     },
 
-    target: function(href, type) {
-        if (type === 'url') {
+    target: function (href, type) {
+        if (type === "url") {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
-                if (transformed !== href || decodeURIComponent(href).match(matrixLinkify.ELEMENT_URL_PATTERN)) {
+                if (
+                    transformed !== href ||
+                    decodeURIComponent(href).match(
+                        matrixLinkify.ELEMENT_URL_PATTERN,
+                    )
+                ) {
                     return null;
                 } else {
-                    return '_blank';
+                    return "_blank";
                 }
             } catch (e) {
                 // malformed URI

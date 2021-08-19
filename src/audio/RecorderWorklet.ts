@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IAmplitudePayload, ITimingPayload, PayloadEvent, WORKLET_NAME } from "./consts";
+import {
+    IAmplitudePayload,
+    ITimingPayload,
+    PayloadEvent,
+    WORKLET_NAME,
+} from "./consts";
 import { percentageOf } from "../utils/numbers";
 
 // from AudioWorkletGlobalScope: https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletGlobalScope
@@ -31,12 +36,17 @@ const TARGET_AMPLITUDE_FREQUENCY = 16; // Hz
 
 function roundTimeToTargetFreq(seconds: number): number {
     // Epsilon helps avoid floating point rounding issues (1 + 1 = 1.999999, etc)
-    return Math.round((seconds + Number.EPSILON) * TARGET_AMPLITUDE_FREQUENCY) / TARGET_AMPLITUDE_FREQUENCY;
+    return (
+        Math.round((seconds + Number.EPSILON) * TARGET_AMPLITUDE_FREQUENCY) /
+        TARGET_AMPLITUDE_FREQUENCY
+    );
 }
 
 function nextTimeForTargetFreq(roundedSeconds: number): number {
     // The extra round is just to make sure we cut off any floating point issues
-    return roundTimeToTargetFreq(roundedSeconds + (1 / TARGET_AMPLITUDE_FREQUENCY));
+    return roundTimeToTargetFreq(
+        roundedSeconds + 1 / TARGET_AMPLITUDE_FREQUENCY,
+    );
 }
 
 class MxVoiceWorklet extends AudioWorkletProcessor {
@@ -57,7 +67,8 @@ class MxVoiceWorklet extends AudioWorkletProcessor {
             // We translate the amplitude down to 0-1 for sanity's sake.
             const minVal = Math.min(...monoChan);
             const maxVal = Math.max(...monoChan);
-            const amplitude = percentageOf(maxVal, -1, 1) - percentageOf(minVal, -1, 1);
+            const amplitude =
+                percentageOf(maxVal, -1, 1) - percentageOf(minVal, -1, 1);
 
             this.port.postMessage(<IAmplitudePayload>{
                 ev: PayloadEvent.AmplitudeMark,
@@ -68,7 +79,10 @@ class MxVoiceWorklet extends AudioWorkletProcessor {
         }
 
         // We mostly use this worklet to fire regular clock updates through to components
-        this.port.postMessage(<ITimingPayload>{ ev: PayloadEvent.Timekeep, timeSeconds: currentTime });
+        this.port.postMessage(<ITimingPayload>{
+            ev: PayloadEvent.Timekeep,
+            timeSeconds: currentTime,
+        });
 
         // We're supposed to return false when we're "done" with the audio clip, but seeing as
         // we are acting as a passive processor we are never truly "done". The browser will clean

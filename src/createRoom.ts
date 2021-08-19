@@ -18,7 +18,11 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType, RoomCreateTypeField, RoomType } from "matrix-js-sdk/src/@types/event";
+import {
+    EventType,
+    RoomCreateTypeField,
+    RoomType,
+} from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import {
     HistoryVisibility,
@@ -28,9 +32,9 @@ import {
     Visibility,
 } from "matrix-js-sdk/src/@types/partials";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
-import { _t } from './languageHandler';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
 import dis from "./dispatcher/dispatcher";
 import * as Rooms from "./Rooms";
 import DMRoomMap from "./utils/DMRoomMap";
@@ -94,11 +98,13 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
 
     const client = MatrixClientPeg.get();
     if (client.isGuest()) {
-        dis.dispatch({ action: 'require_registration' });
+        dis.dispatch({ action: "require_registration" });
         return null;
     }
 
-    const defaultPreset = opts.dmUserId ? Preset.TrustedPrivateChat : Preset.PrivateChat;
+    const defaultPreset = opts.dmUserId
+        ? Preset.TrustedPrivateChat
+        : Preset.PrivateChat;
 
     // set some defaults for the creation
     const createOpts: ICreateRoomOpts = opts.createOpts || {};
@@ -106,15 +112,18 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     createOpts.visibility = createOpts.visibility || Visibility.Private;
     if (opts.dmUserId && createOpts.invite === undefined) {
         switch (getAddressType(opts.dmUserId)) {
-            case 'mx-user-id':
+            case "mx-user-id":
                 createOpts.invite = [opts.dmUserId];
                 break;
-            case 'email':
-                createOpts.invite_3pid = [{
-                    id_server: MatrixClientPeg.get().getIdentityServerUrl(true),
-                    medium: 'email',
-                    address: opts.dmUserId,
-                }];
+            case "email":
+                createOpts.invite_3pid = [
+                    {
+                        id_server:
+                            MatrixClientPeg.get().getIdentityServerUrl(true),
+                        medium: "email",
+                        address: opts.dmUserId,
+                    },
+                ];
         }
     }
     if (opts.dmUserId && createOpts.is_direct === undefined) {
@@ -140,44 +149,50 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     // actually drop you right in to a chat.
     if (opts.guestAccess) {
         createOpts.initial_state.push({
-            type: 'm.room.guest_access',
-            state_key: '',
+            type: "m.room.guest_access",
+            state_key: "",
             content: {
-                guest_access: 'can_join',
+                guest_access: "can_join",
             },
         });
     }
 
     if (opts.encryption) {
         createOpts.initial_state.push({
-            type: 'm.room.encryption',
-            state_key: '',
+            type: "m.room.encryption",
+            state_key: "",
             content: {
-                algorithm: 'm.megolm.v1.aes-sha2',
+                algorithm: "m.megolm.v1.aes-sha2",
             },
         });
     }
 
     if (opts.parentSpace) {
-        createOpts.initial_state.push(makeSpaceParentEvent(opts.parentSpace, true));
+        createOpts.initial_state.push(
+            makeSpaceParentEvent(opts.parentSpace, true),
+        );
         if (!opts.historyVisibility) {
-            opts.historyVisibility = createOpts.preset === Preset.PublicChat
-                ? HistoryVisibility.WorldReadable
-                : HistoryVisibility.Invited;
+            opts.historyVisibility =
+                createOpts.preset === Preset.PublicChat
+                    ? HistoryVisibility.WorldReadable
+                    : HistoryVisibility.Invited;
         }
 
         if (opts.joinRule === JoinRule.Restricted) {
             if (SpaceStore.instance.restrictedJoinRuleSupport?.preferred) {
-                createOpts.room_version = SpaceStore.instance.restrictedJoinRuleSupport.preferred;
+                createOpts.room_version =
+                    SpaceStore.instance.restrictedJoinRuleSupport.preferred;
 
                 createOpts.initial_state.push({
                     type: EventType.RoomJoinRules,
                     content: {
-                        "join_rule": JoinRule.Restricted,
-                        "allow": [{
-                            "type": RestrictedAllowType.RoomMembership,
-                            "room_id": opts.parentSpace.roomId,
-                        }],
+                        join_rule: JoinRule.Restricted,
+                        allow: [
+                            {
+                                type: RestrictedAllowType.RoomMembership,
+                                room_id: opts.parentSpace.roomId,
+                            },
+                        ],
                     },
                 });
             }
@@ -208,98 +223,130 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         createOpts.initial_state.push({
             type: EventType.RoomHistoryVisibility,
             content: {
-                "history_visibility": opts.historyVisibility,
+                history_visibility: opts.historyVisibility,
             },
         });
     }
 
     let modal;
-    if (opts.spinner) modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
+    if (opts.spinner)
+        modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
 
     let roomId;
-    return client.createRoom(createOpts).finally(function() {
-        if (modal) modal.close();
-    }).then(function(res) {
-        roomId = res.room_id;
-        if (opts.dmUserId) {
-            return Rooms.setDMRoom(roomId, opts.dmUserId);
-        } else {
-            return Promise.resolve();
-        }
-    }).then(() => {
-        if (opts.parentSpace) {
-            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], true);
-        }
-        if (opts.associatedWithCommunity) {
-            return GroupStore.addRoomToGroup(opts.associatedWithCommunity, roomId, false);
-        }
-    }).then(function() {
-        // NB createRoom doesn't block on the client seeing the echo that the
-        // room has been created, so we race here with the client knowing that
-        // the room exists, causing things like
-        // https://github.com/vector-im/vector-web/issues/1813
-        // Even if we were to block on the echo, servers tend to split the room
-        // state over multiple syncs so we can't atomically know when we have the
-        // entire thing.
-        if (opts.andView) {
-            dis.dispatch({
-                action: 'view_room',
-                room_id: roomId,
-                should_peek: false,
-                // Creating a room will have joined us to the room,
-                // so we are expecting the room to come down the sync
-                // stream, if it hasn't already.
-                joining: true,
-                justCreatedOpts: opts,
-            });
-        }
-        CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
-        return roomId;
-    }, function(err) {
-        // Raise the error if the caller requested that we do so.
-        if (opts.inlineErrors) throw err;
+    return client
+        .createRoom(createOpts)
+        .finally(function () {
+            if (modal) modal.close();
+        })
+        .then(function (res) {
+            roomId = res.room_id;
+            if (opts.dmUserId) {
+                return Rooms.setDMRoom(roomId, opts.dmUserId);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .then(() => {
+            if (opts.parentSpace) {
+                return SpaceStore.instance.addRoomToSpace(
+                    opts.parentSpace,
+                    roomId,
+                    [client.getDomain()],
+                    true,
+                );
+            }
+            if (opts.associatedWithCommunity) {
+                return GroupStore.addRoomToGroup(
+                    opts.associatedWithCommunity,
+                    roomId,
+                    false,
+                );
+            }
+        })
+        .then(
+            function () {
+                // NB createRoom doesn't block on the client seeing the echo that the
+                // room has been created, so we race here with the client knowing that
+                // the room exists, causing things like
+                // https://github.com/vector-im/vector-web/issues/1813
+                // Even if we were to block on the echo, servers tend to split the room
+                // state over multiple syncs so we can't atomically know when we have the
+                // entire thing.
+                if (opts.andView) {
+                    dis.dispatch({
+                        action: "view_room",
+                        room_id: roomId,
+                        should_peek: false,
+                        // Creating a room will have joined us to the room,
+                        // so we are expecting the room to come down the sync
+                        // stream, if it hasn't already.
+                        joining: true,
+                        justCreatedOpts: opts,
+                    });
+                }
+                CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
+                return roomId;
+            },
+            function (err) {
+                // Raise the error if the caller requested that we do so.
+                if (opts.inlineErrors) throw err;
 
-        // We also failed to join the room (this sets joining to false in RoomViewStore)
-        dis.dispatch({
-            action: Action.JoinRoomError,
-            roomId,
-        });
-        console.error("Failed to create room " + roomId + " " + err);
-        let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
-        if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
-            // Technically not possible with the UI as of April 2019 because there's no
-            // options for the user to change this. However, it's not a bad thing to report
-            // the error to the user for if/when the UI is available.
-            description = _t("The server does not support the room version specified.");
-        }
-        Modal.createTrackedDialog('Failure to create room', '', ErrorDialog, {
-            title: _t("Failure to create room"),
-            description,
-        });
-        return null;
-    });
+                // We also failed to join the room (this sets joining to false in RoomViewStore)
+                dis.dispatch({
+                    action: Action.JoinRoomError,
+                    roomId,
+                });
+                console.error("Failed to create room " + roomId + " " + err);
+                let description = _t(
+                    "Server may be unavailable, overloaded, or you hit a bug.",
+                );
+                if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
+                    // Technically not possible with the UI as of April 2019 because there's no
+                    // options for the user to change this. However, it's not a bad thing to report
+                    // the error to the user for if/when the UI is available.
+                    description = _t(
+                        "The server does not support the room version specified.",
+                    );
+                }
+                Modal.createTrackedDialog(
+                    "Failure to create room",
+                    "",
+                    ErrorDialog,
+                    {
+                        title: _t("Failure to create room"),
+                        description,
+                    },
+                );
+                return null;
+            },
+        );
 }
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
-    const rooms = roomIds.map(id => client.getRoom(id));
-    const suitableDMRooms = rooms.filter(r => {
-        // Validate that we are joined and the other person is also joined. We'll also make sure
-        // that the room also looks like a DM (until we have canonical DMs to tell us). For now,
-        // a DM is a room of two people that contains those two people exactly. This does mean
-        // that bots, assistants, etc will ruin a room's DM-ness, though this is a problem for
-        // canonical DMs to solve.
-        if (r && r.getMyMembership() === "join") {
-            const members = r.currentState.getMembers();
-            const joinedMembers = members.filter(m => isJoinedOrNearlyJoined(m.membership));
-            const otherMember = joinedMembers.find(m => m.userId === userId);
-            return otherMember && joinedMembers.length === 2;
-        }
-        return false;
-    }).sort((r1, r2) => {
-        return r2.getLastActiveTimestamp() -
-            r1.getLastActiveTimestamp();
-    });
+    const rooms = roomIds.map((id) => client.getRoom(id));
+    const suitableDMRooms = rooms
+        .filter((r) => {
+            // Validate that we are joined and the other person is also joined. We'll also make sure
+            // that the room also looks like a DM (until we have canonical DMs to tell us). For now,
+            // a DM is a room of two people that contains those two people exactly. This does mean
+            // that bots, assistants, etc will ruin a room's DM-ness, though this is a problem for
+            // canonical DMs to solve.
+            if (r && r.getMyMembership() === "join") {
+                const members = r.currentState.getMembers();
+                const joinedMembers = members.filter((m) =>
+                    isJoinedOrNearlyJoined(m.membership),
+                );
+                const otherMember = joinedMembers.find(
+                    (m) => m.userId === userId,
+                );
+                return otherMember && joinedMembers.length === 2;
+            }
+            return false;
+        })
+        .sort((r1, r2) => {
+            return r2.getLastActiveTimestamp() - r1.getLastActiveTimestamp();
+        });
     if (suitableDMRooms.length) {
         return suitableDMRooms[0];
     }
@@ -310,11 +357,17 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
  * NOTE: this assumes you've just created the room and there's not been an opportunity
  * for other code to run, so we shouldn't miss RoomState.newMember when it comes by.
  */
-export async function waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
+export async function waitForMember(
+    client: MatrixClient,
+    roomId: string,
+    userId: string,
+    opts = { timeout: 1500 },
+) {
     const { timeout } = opts;
     let handler;
     return new Promise((resolve) => {
-        handler = function(_, __, member: RoomMember) { // eslint-disable-line @typescript-eslint/naming-convention
+        handler = function (_, __, member: RoomMember) {
+            // eslint-disable-line @typescript-eslint/naming-convention
             if (member.userId !== userId) return;
             if (member.roomId !== roomId) return;
             resolve(true);
@@ -333,16 +386,23 @@ export async function waitForMember(client: MatrixClient, roomId: string, userId
  * Ensure that for every user in a room, there is at least one device that we
  * can encrypt to.
  */
-export async function canEncryptToAllUsers(client: MatrixClient, userIds: string[]) {
+export async function canEncryptToAllUsers(
+    client: MatrixClient,
+    userIds: string[],
+) {
     try {
         const usersDeviceMap = await client.downloadKeys(userIds);
         // { "@user:host": { "DEVICE": {...}, ... }, ... }
-        return Object.values(usersDeviceMap).every((userDevices) =>
-            // { "DEVICE": {...}, ... }
-            Object.keys(userDevices).length > 0,
+        return Object.values(usersDeviceMap).every(
+            (userDevices) =>
+                // { "DEVICE": {...}, ... }
+                Object.keys(userDevices).length > 0,
         );
     } catch (e) {
-        console.error("Error determining if it's possible to encrypt to all users: ", e);
+        console.error(
+            "Error determining if it's possible to encrypt to all users: ",
+            e,
+        );
         return false; // assume not
     }
 }
@@ -351,7 +411,9 @@ export async function canEncryptToAllUsers(client: MatrixClient, userIds: string
 // without polluting ensureDMExists with unrelated stuff (also
 // they're never encrypted).
 export async function ensureVirtualRoomExists(
-    client: MatrixClient, userId: string, nativeRoomId: string,
+    client: MatrixClient,
+    userId: string,
+    nativeRoomId: string,
 ): Promise<string> {
     const existingDMRoom = findDMForUser(client, userId);
     let roomId;
@@ -375,7 +437,10 @@ export async function ensureVirtualRoomExists(
     return roomId;
 }
 
-export async function ensureDMExists(client: MatrixClient, userId: string): Promise<string> {
+export async function ensureDMExists(
+    client: MatrixClient,
+    userId: string,
+): Promise<string> {
     const existingDMRoom = findDMForUser(client, userId);
     let roomId;
     if (existingDMRoom) {
@@ -386,7 +451,12 @@ export async function ensureDMExists(client: MatrixClient, userId: string): Prom
             encryption = await canEncryptToAllUsers(client, [userId]);
         }
 
-        roomId = await createRoom({ encryption, dmUserId: userId, spinner: false, andView: false });
+        roomId = await createRoom({
+            encryption,
+            dmUserId: userId,
+            spinner: false,
+            andView: false,
+        });
         await waitForMember(client, roomId, userId);
     }
     return roomId;

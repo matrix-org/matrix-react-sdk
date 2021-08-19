@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
-import GroupStore from '../../../stores/GroupStore';
+import React from "react";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
+import GroupStore from "../../../stores/GroupStore";
 import ToggleSwitch from "../elements/ToggleSwitch";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -40,8 +40,13 @@ export default class GroupPublicityToggle extends React.Component {
     _initGroupStore(groupId) {
         this._groupStoreToken = GroupStore.registerListener(groupId, () => {
             this.setState({
-                isGroupPublicised: Boolean(GroupStore.getGroupPublicity(groupId)),
-                ready: GroupStore.isStateReady(groupId, GroupStore.STATE_KEY.Summary),
+                isGroupPublicised: Boolean(
+                    GroupStore.getGroupPublicity(groupId),
+                ),
+                ready: GroupStore.isStateReady(
+                    groupId,
+                    GroupStore.STATE_KEY.Summary,
+                ),
             });
         });
     }
@@ -56,7 +61,10 @@ export default class GroupPublicityToggle extends React.Component {
             // Optimistic early update
             isGroupPublicised: !this.state.isGroupPublicised,
         });
-        GroupStore.setGroupPublicity(this.props.groupId, !this.state.isGroupPublicised).then(() => {
+        GroupStore.setGroupPublicity(
+            this.props.groupId,
+            !this.state.isGroupPublicised,
+        ).then(() => {
             this.setState({
                 busy: false,
             });
@@ -64,12 +72,20 @@ export default class GroupPublicityToggle extends React.Component {
     };
 
     render() {
-        const GroupTile = sdk.getComponent('groups.GroupTile');
-        return <div className="mx_GroupPublicity_toggle">
-            <GroupTile groupId={this.props.groupId} showDescription={false} avatarHeight={40} />
-            <ToggleSwitch checked={this.state.isGroupPublicised}
-                disabled={!this.state.ready || this.state.busy}
-                onChange={this._onPublicityToggle} />
-        </div>;
+        const GroupTile = sdk.getComponent("groups.GroupTile");
+        return (
+            <div className="mx_GroupPublicity_toggle">
+                <GroupTile
+                    groupId={this.props.groupId}
+                    showDescription={false}
+                    avatarHeight={40}
+                />
+                <ToggleSwitch
+                    checked={this.state.isGroupPublicised}
+                    disabled={!this.state.ready || this.state.busy}
+                    onChange={this._onPublicityToggle}
+                />
+            </div>
+        );
     }
 }

@@ -15,9 +15,12 @@ limitations under the License.
 */
 
 // Pull in the encryption lib so that we can decrypt attachments.
-import encrypt from 'browser-encrypt-attachment';
+import encrypt from "browser-encrypt-attachment";
 import { mediaFromContent } from "../customisations/Media";
-import { IEncryptedFile, IMediaEventInfo } from "../customisations/models/IMediaEventContent";
+import {
+    IEncryptedFile,
+    IMediaEventInfo,
+} from "../customisations/models/IMediaEventContent";
 import { getBlobSafeMimeType } from "./blobs";
 
 /**
@@ -35,22 +38,28 @@ export function decryptFile(
 ): Promise<Blob> {
     const media = mediaFromContent({ file });
     // Download the encrypted file as an array buffer.
-    return media.downloadSource().then((response) => {
-        return response.arrayBuffer();
-    }).then((responseData) => {
-        // Decrypt the array buffer using the information taken from
-        // the event content.
-        return encrypt.decryptAttachment(responseData, file);
-    }).then((dataArray) => {
-        // Turn the array into a Blob and give it the correct MIME-type.
+    return media
+        .downloadSource()
+        .then((response) => {
+            return response.arrayBuffer();
+        })
+        .then((responseData) => {
+            // Decrypt the array buffer using the information taken from
+            // the event content.
+            return encrypt.decryptAttachment(responseData, file);
+        })
+        .then((dataArray) => {
+            // Turn the array into a Blob and give it the correct MIME-type.
 
-        // IMPORTANT: we must not allow scriptable mime-types into Blobs otherwise
-        // they introduce XSS attacks if the Blob URI is viewed directly in the
-        // browser (e.g. by copying the URI into a new tab or window.)
-        // See warning at top of file.
-        let mimetype = info?.mimetype ? info.mimetype.split(";")[0].trim() : '';
-        mimetype = getBlobSafeMimeType(mimetype);
+            // IMPORTANT: we must not allow scriptable mime-types into Blobs otherwise
+            // they introduce XSS attacks if the Blob URI is viewed directly in the
+            // browser (e.g. by copying the URI into a new tab or window.)
+            // See warning at top of file.
+            let mimetype = info?.mimetype
+                ? info.mimetype.split(";")[0].trim()
+                : "";
+            mimetype = getBlobSafeMimeType(mimetype);
 
-        return new Blob([dataArray], { type: mimetype });
-    });
+            return new Blob([dataArray], { type: mimetype });
+        });
 }

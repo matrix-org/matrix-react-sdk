@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
-import Modal from '../../../Modal';
-import AccessibleButton from '../elements/AccessibleButton';
+import React from "react";
+import PropTypes from "prop-types";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import * as sdk from "../../../index";
+import Modal from "../../../Modal";
+import AccessibleButton from "../elements/AccessibleButton";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 
@@ -39,10 +39,16 @@ export default class RoomAvatarEvent extends React.Component {
         const httpUrl = mediaFromMxc(ev.getContent().url).srcHttp;
 
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
-        const text = _t('%(senderDisplayName)s changed the avatar for %(roomName)s', {
-            senderDisplayName: ev.sender && ev.sender.name ? ev.sender.name : ev.getSender(),
-            roomName: room ? room.name : '',
-        });
+        const text = _t(
+            "%(senderDisplayName)s changed the avatar for %(roomName)s",
+            {
+                senderDisplayName:
+                    ev.sender && ev.sender.name
+                        ? ev.sender.name
+                        : ev.getSender(),
+                roomName: room ? room.name : "",
+            },
+        );
 
         const ImageView = sdk.getComponent("elements.ImageView");
         const params = {
@@ -54,13 +60,16 @@ export default class RoomAvatarEvent extends React.Component {
 
     render() {
         const ev = this.props.mxEvent;
-        const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
+        const senderDisplayName =
+            ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         const RoomAvatar = sdk.getComponent("avatars.RoomAvatar");
 
         if (!ev.getContent().url || ev.getContent().url.trim().length === 0) {
             return (
                 <div className="mx_TextualEvent">
-                    { _t('%(senderDisplayName)s removed the room avatar.', { senderDisplayName }) }
+                    {_t("%(senderDisplayName)s removed the room avatar.", {
+                        senderDisplayName,
+                    })}
                 </div>
             );
         }
@@ -74,19 +83,25 @@ export default class RoomAvatarEvent extends React.Component {
 
         return (
             <div className="mx_RoomAvatarEvent">
-                { _t('%(senderDisplayName)s changed the room avatar to <img/>',
+                {_t(
+                    "%(senderDisplayName)s changed the room avatar to <img/>",
                     { senderDisplayName: senderDisplayName },
                     {
-                        'img': () =>
+                        img: () => (
                             <AccessibleButton
                                 key="avatar"
                                 className="mx_RoomAvatarEvent_avatar"
                                 onClick={this.onAvatarClick}
                             >
-                                <RoomAvatar width={14} height={14} oobData={oobData} />
-                            </AccessibleButton>,
-                    })
-                }
+                                <RoomAvatar
+                                    width={14}
+                                    height={14}
+                                    oobData={oobData}
+                                />
+                            </AccessibleButton>
+                        ),
+                    },
+                )}
             </div>
         );
     }

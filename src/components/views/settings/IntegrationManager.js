@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
+import React from "react";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
 import { Key } from "../../../Keyboard";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -71,7 +71,7 @@ export default class IntegrationManager extends React.Component {
     };
 
     onAction = (payload) => {
-        if (payload.action === 'close_scalar') {
+        if (payload.action === "close_scalar") {
             this.props.onFinished();
         }
     };
@@ -84,8 +84,8 @@ export default class IntegrationManager extends React.Component {
         if (this.props.loading) {
             const Spinner = sdk.getComponent("elements.Spinner");
             return (
-                <div className='mx_IntegrationManager_loading'>
-                    <h3>{ _t("Connecting to integration manager...") }</h3>
+                <div className="mx_IntegrationManager_loading">
+                    <h3>{_t("Connecting to integration manager...")}</h3>
                     <Spinner />
                 </div>
             );
@@ -93,9 +93,13 @@ export default class IntegrationManager extends React.Component {
 
         if (!this.props.connected || this.state.errored) {
             return (
-                <div className='mx_IntegrationManager_error'>
-                    <h3>{ _t("Cannot connect to integration manager") }</h3>
-                    <p>{ _t("The integration manager is offline or it cannot reach your homeserver.") }</p>
+                <div className="mx_IntegrationManager_error">
+                    <h3>{_t("Cannot connect to integration manager")}</h3>
+                    <p>
+                        {_t(
+                            "The integration manager is offline or it cannot reach your homeserver.",
+                        )}
+                    </p>
                 </div>
             );
         }

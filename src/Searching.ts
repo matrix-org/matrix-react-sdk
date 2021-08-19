@@ -35,7 +35,7 @@ const SEARCH_LIMIT = 10;
 async function serverSideSearch(
     term: string,
     roomId: string = undefined,
-): Promise<{ response: ISearchResponse, query: ISearchRequestBody }> {
+): Promise<{ response: ISearchResponse; query: ISearchRequestBody }> {
     const client = MatrixClientPeg.get();
 
     const filter: IRoomEventFilter = {
@@ -64,7 +64,10 @@ async function serverSideSearch(
     return { response, query: body };
 }
 
-async function serverSideSearchProcess(term: string, roomId: string = undefined): Promise<ISearchResults> {
+async function serverSideSearchProcess(
+    term: string,
+    roomId: string = undefined,
+): Promise<ISearchResults> {
     const client = MatrixClientPeg.get();
     const result = await serverSideSearch(term, roomId);
 
@@ -125,7 +128,8 @@ async function combinedSearch(searchTerm: string): Promise<ISearchResults> {
     const emptyResult: ISeshatSearchResults = {
         seshatQuery: localQuery,
         _query: serverQuery,
-        serverSideNextBatch: serverResponse.search_categories.room_events.next_batch,
+        serverSideNextBatch:
+            serverResponse.search_categories.room_events.next_batch,
         cachedEvents: [],
         oldestEventFrom: "server",
         results: [],
@@ -133,7 +137,11 @@ async function combinedSearch(searchTerm: string): Promise<ISearchResults> {
     };
 
     // Combine our results.
-    const combinedResult = combineResponses(emptyResult, localResponse, serverResponse.search_categories.room_events);
+    const combinedResult = combineResponses(
+        emptyResult,
+        localResponse,
+        serverResponse.search_categories.room_events,
+    );
 
     // Let the client process the combined result.
     const response: ISearchResponse = {
@@ -154,7 +162,7 @@ async function localSearch(
     searchTerm: string,
     roomId: string = undefined,
     processResult = true,
-): Promise<{ response: IResultRoomEvents, query: ISearchArgs }> {
+): Promise<{ response: IResultRoomEvents; query: ISearchArgs }> {
     const eventIndex = EventIndexPeg.get();
 
     const searchArgs: ISearchArgs = {
@@ -189,7 +197,10 @@ export interface ISeshatSearchResults extends ISearchResults {
     serverSideNextBatch?: string;
 }
 
-async function localSearchProcess(searchTerm: string, roomId: string = undefined): Promise<ISeshatSearchResults> {
+async function localSearchProcess(
+    searchTerm: string,
+    roomId: string = undefined,
+): Promise<ISeshatSearchResults> {
     const emptyResult = {
         results: [],
         highlights: [],
@@ -207,14 +218,19 @@ async function localSearchProcess(searchTerm: string, roomId: string = undefined
         },
     };
 
-    const processedResult = MatrixClientPeg.get().processRoomEventsSearch(emptyResult, response);
+    const processedResult = MatrixClientPeg.get().processRoomEventsSearch(
+        emptyResult,
+        response,
+    );
     // Restore our encryption info so we can properly re-verify the events.
     restoreEncryptionInfo(processedResult.results);
 
     return processedResult;
 }
 
-async function localPagination(searchResult: ISeshatSearchResults): Promise<ISeshatSearchResults> {
+async function localPagination(
+    searchResult: ISeshatSearchResults,
+): Promise<ISeshatSearchResults> {
     const eventIndex = EventIndexPeg.get();
 
     const searchArgs = searchResult.seshatQuery;
@@ -232,10 +248,15 @@ async function localPagination(searchResult: ISeshatSearchResults): Promise<ISes
         },
     };
 
-    const result = MatrixClientPeg.get().processRoomEventsSearch(searchResult, response);
+    const result = MatrixClientPeg.get().processRoomEventsSearch(
+        searchResult,
+        response,
+    );
 
     // Restore our encryption info so we can properly re-verify the events.
-    const newSlice = result.results.slice(Math.max(result.results.length - newResultCount, 0));
+    const newSlice = result.results.slice(
+        Math.max(result.results.length - newResultCount, 0),
+    );
     restoreEncryptionInfo(newSlice);
 
     searchResult.pendingRequest = null;
@@ -243,12 +264,19 @@ async function localPagination(searchResult: ISeshatSearchResults): Promise<ISes
     return result;
 }
 
-function compareOldestEvents(firstResults: ISearchResult[], secondResults: ISearchResult[]): number {
+function compareOldestEvents(
+    firstResults: ISearchResult[],
+    secondResults: ISearchResult[],
+): number {
     try {
         const oldestFirstEvent = firstResults[firstResults.length - 1].result;
-        const oldestSecondEvent = secondResults[secondResults.length - 1].result;
+        const oldestSecondEvent =
+            secondResults[secondResults.length - 1].result;
 
-        if (oldestFirstEvent.origin_server_ts <= oldestSecondEvent.origin_server_ts) {
+        if (
+            oldestFirstEvent.origin_server_ts <=
+            oldestSecondEvent.origin_server_ts
+        ) {
             return -1;
         } else {
             return 1;
@@ -395,12 +423,21 @@ function combineEvents(
         // This is a first search call, combine the events from the server and
         // the local index. Note where our oldest event came from, we shall
         // fetch the next batch of events from the other source.
-        if (compareOldestEvents(localEvents.results, serverEvents.results) < 0) {
+        if (
+            compareOldestEvents(localEvents.results, serverEvents.results) < 0
+        ) {
             oldestEventFrom = "local";
         }
 
-        combineEventSources(previousSearchResult, response, localEvents.results, serverEvents.results);
-        response.highlights = localEvents.highlights.concat(serverEvents.highlights);
+        combineEventSources(
+            previousSearchResult,
+            response,
+            localEvents.results,
+            serverEvents.results,
+        );
+        response.highlights = localEvents.highlights.concat(
+            serverEvents.highlights,
+        );
     } else if (localEvents) {
         // This is a pagination call fetching more events from the local index,
         // meaning that our oldest event was on the server.
@@ -409,7 +446,12 @@ function combineEvents(
         if (compareOldestEvents(localEvents.results, cachedEvents) < 0) {
             oldestEventFrom = "local";
         }
-        combineEventSources(previousSearchResult, response, localEvents.results, cachedEvents);
+        combineEventSources(
+            previousSearchResult,
+            response,
+            localEvents.results,
+            cachedEvents,
+        );
     } else if (serverEvents && serverEvents.results) {
         // This is a pagination call fetching more events from the server,
         // meaning that our oldest event was in the local index.
@@ -418,7 +460,12 @@ function combineEvents(
         if (compareOldestEvents(serverEvents.results, cachedEvents) < 0) {
             oldestEventFrom = "server";
         }
-        combineEventSources(previousSearchResult, response, serverEvents.results, cachedEvents);
+        combineEventSources(
+            previousSearchResult,
+            response,
+            serverEvents.results,
+            cachedEvents,
+        );
     } else {
         // This is a pagination call where we exhausted both of our event
         // sources, let's push the remaining cached events.
@@ -449,7 +496,11 @@ function combineResponses(
     serverEvents: IResultRoomEvents = undefined,
 ): IResultRoomEvents {
     // Combine our events first.
-    const response = combineEvents(previousSearchResult, localEvents, serverEvents);
+    const response = combineEvents(
+        previousSearchResult,
+        localEvents,
+        serverEvents,
+    );
 
     // Our first search will contain counts from both sources, subsequent
     // pagination requests will fetch responses only from one of the sources, so
@@ -512,7 +563,8 @@ function restoreEncryptionInfo(searchResultSlice: SearchResult[] = []): void {
                     ev.ed25519Key,
                 );
                 // @ts-ignore
-                mxEv.forwardingCurve25519KeyChain = ev.forwardingCurve25519KeyChain;
+                mxEv.forwardingCurve25519KeyChain =
+                    ev.forwardingCurve25519KeyChain;
 
                 delete ev.curve25519Key;
                 delete ev.ed25519Key;
@@ -523,7 +575,9 @@ function restoreEncryptionInfo(searchResultSlice: SearchResult[] = []): void {
     }
 }
 
-async function combinedPagination(searchResult: ISeshatSearchResults): Promise<ISeshatSearchResults> {
+async function combinedPagination(
+    searchResult: ISeshatSearchResults,
+): Promise<ISeshatSearchResults> {
     const eventIndex = EventIndexPeg.get();
     const client = MatrixClientPeg.get();
 
@@ -535,14 +589,23 @@ async function combinedPagination(searchResult: ISeshatSearchResults): Promise<I
 
     // Fetch events from the local index if we have a token for it and if it's
     // the local indexes turn or the server has exhausted its results.
-    if (searchArgs.next_batch && (!searchResult.serverSideNextBatch || oldestEventFrom === "server")) {
+    if (
+        searchArgs.next_batch &&
+        (!searchResult.serverSideNextBatch || oldestEventFrom === "server")
+    ) {
         localResult = await eventIndex.search(searchArgs);
     }
 
     // Fetch events from the server if we have a token for it and if it's the
     // local indexes turn or the local index has exhausted its results.
-    if (searchResult.serverSideNextBatch && (oldestEventFrom === "local" || !searchArgs.next_batch)) {
-        const body = { body: searchResult._query, next_batch: searchResult.serverSideNextBatch };
+    if (
+        searchResult.serverSideNextBatch &&
+        (oldestEventFrom === "local" || !searchArgs.next_batch)
+    ) {
+        const body = {
+            body: searchResult._query,
+            next_batch: searchResult.serverSideNextBatch,
+        };
         serverSideResult = await client.search(body);
     }
 
@@ -553,7 +616,11 @@ async function combinedPagination(searchResult: ISeshatSearchResults): Promise<I
     }
 
     // Combine our events.
-    const combinedResult = combineResponses(searchResult, localResult, serverEvents);
+    const combinedResult = combineResponses(
+        searchResult,
+        localResult,
+        serverEvents,
+    );
 
     const response = {
         search_categories: {
@@ -561,14 +628,18 @@ async function combinedPagination(searchResult: ISeshatSearchResults): Promise<I
         },
     };
 
-    const oldResultCount = searchResult.results ? searchResult.results.length : 0;
+    const oldResultCount = searchResult.results
+        ? searchResult.results.length
+        : 0;
 
     // Let the client process the combined result.
     const result = client.processRoomEventsSearch(searchResult, response);
 
     // Restore our encryption info so we can properly re-verify the events.
     const newResultCount = result.results.length - oldResultCount;
-    const newSlice = result.results.slice(Math.max(result.results.length - newResultCount, 0));
+    const newSlice = result.results.slice(
+        Math.max(result.results.length - newResultCount, 0),
+    );
     restoreEncryptionInfo(newSlice);
 
     searchResult.pendingRequest = null;
@@ -576,7 +647,10 @@ async function combinedPagination(searchResult: ISeshatSearchResults): Promise<I
     return result;
 }
 
-function eventIndexSearch(term: string, roomId: string = undefined): Promise<ISearchResults> {
+function eventIndexSearch(
+    term: string,
+    roomId: string = undefined,
+): Promise<ISearchResults> {
     let searchPromise: Promise<ISearchResults>;
 
     if (roomId !== undefined) {
@@ -598,7 +672,9 @@ function eventIndexSearch(term: string, roomId: string = undefined): Promise<ISe
     return searchPromise;
 }
 
-function eventIndexSearchPagination(searchResult: ISeshatSearchResults): Promise<ISeshatSearchResults> {
+function eventIndexSearchPagination(
+    searchResult: ISeshatSearchResults,
+): Promise<ISeshatSearchResults> {
     const client = MatrixClientPeg.get();
 
     const seshatQuery = searchResult.seshatQuery;
@@ -624,17 +700,23 @@ function eventIndexSearchPagination(searchResult: ISeshatSearchResults): Promise
     }
 }
 
-export function searchPagination(searchResult: ISearchResults): Promise<ISearchResults> {
+export function searchPagination(
+    searchResult: ISearchResults,
+): Promise<ISearchResults> {
     const eventIndex = EventIndexPeg.get();
     const client = MatrixClientPeg.get();
 
     if (searchResult.pendingRequest) return searchResult.pendingRequest;
 
-    if (eventIndex === null) return client.backPaginateRoomEventsSearch(searchResult);
+    if (eventIndex === null)
+        return client.backPaginateRoomEventsSearch(searchResult);
     else return eventIndexSearchPagination(searchResult);
 }
 
-export default function eventSearch(term: string, roomId: string = undefined): Promise<ISearchResults> {
+export default function eventSearch(
+    term: string,
+    roomId: string = undefined,
+): Promise<ISearchResults> {
     const eventIndex = EventIndexPeg.get();
 
     if (eventIndex === null) return serverSideSearchProcess(term, roomId);

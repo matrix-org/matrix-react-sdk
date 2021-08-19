@@ -36,7 +36,8 @@ export default class IndicatorScrollbar extends React.Component {
     constructor(props) {
         super(props);
         this._collectScroller = this._collectScroller.bind(this);
-        this._collectScrollerComponent = this._collectScrollerComponent.bind(this);
+        this._collectScrollerComponent =
+            this._collectScrollerComponent.bind(this);
         this.checkOverflow = this.checkOverflow.bind(this);
         this._scrollElement = null;
         this._autoHideScrollbar = null;
@@ -61,7 +62,9 @@ export default class IndicatorScrollbar extends React.Component {
             this._scrollElement = scroller;
             // Using the passive option to not block the main thread
             // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
-            this._scrollElement.addEventListener("scroll", this.checkOverflow, { passive: true });
+            this._scrollElement.addEventListener("scroll", this.checkOverflow, {
+                passive: true,
+            });
             this.checkOverflow();
         }
     }
@@ -71,8 +74,9 @@ export default class IndicatorScrollbar extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        const prevLen = prevProps && prevProps.children && prevProps.children.length || 0;
-        const curLen = this.props.children && this.props.children.length || 0;
+        const prevLen =
+            (prevProps && prevProps.children && prevProps.children.length) || 0;
+        const curLen = (this.props.children && this.props.children.length) || 0;
         // check overflow only if amount of children changes.
         // if we don't guard here, we end up with an infinite
         // render > componentDidUpdate > checkOverflow > setState > render loop
@@ -87,40 +91,62 @@ export default class IndicatorScrollbar extends React.Component {
 
     checkOverflow() {
         const hasTopOverflow = this._scrollElement.scrollTop > 0;
-        const hasBottomOverflow = this._scrollElement.scrollHeight >
-            (this._scrollElement.scrollTop + this._scrollElement.clientHeight);
+        const hasBottomOverflow =
+            this._scrollElement.scrollHeight >
+            this._scrollElement.scrollTop + this._scrollElement.clientHeight;
         const hasLeftOverflow = this._scrollElement.scrollLeft > 0;
-        const hasRightOverflow = this._scrollElement.scrollWidth >
-            (this._scrollElement.scrollLeft + this._scrollElement.clientWidth);
+        const hasRightOverflow =
+            this._scrollElement.scrollWidth >
+            this._scrollElement.scrollLeft + this._scrollElement.clientWidth;
 
         if (hasTopOverflow) {
-            this._scrollElement.classList.add("mx_IndicatorScrollbar_topOverflow");
+            this._scrollElement.classList.add(
+                "mx_IndicatorScrollbar_topOverflow",
+            );
         } else {
-            this._scrollElement.classList.remove("mx_IndicatorScrollbar_topOverflow");
+            this._scrollElement.classList.remove(
+                "mx_IndicatorScrollbar_topOverflow",
+            );
         }
         if (hasBottomOverflow) {
-            this._scrollElement.classList.add("mx_IndicatorScrollbar_bottomOverflow");
+            this._scrollElement.classList.add(
+                "mx_IndicatorScrollbar_bottomOverflow",
+            );
         } else {
-            this._scrollElement.classList.remove("mx_IndicatorScrollbar_bottomOverflow");
+            this._scrollElement.classList.remove(
+                "mx_IndicatorScrollbar_bottomOverflow",
+            );
         }
         if (hasLeftOverflow) {
-            this._scrollElement.classList.add("mx_IndicatorScrollbar_leftOverflow");
+            this._scrollElement.classList.add(
+                "mx_IndicatorScrollbar_leftOverflow",
+            );
         } else {
-            this._scrollElement.classList.remove("mx_IndicatorScrollbar_leftOverflow");
+            this._scrollElement.classList.remove(
+                "mx_IndicatorScrollbar_leftOverflow",
+            );
         }
         if (hasRightOverflow) {
-            this._scrollElement.classList.add("mx_IndicatorScrollbar_rightOverflow");
+            this._scrollElement.classList.add(
+                "mx_IndicatorScrollbar_rightOverflow",
+            );
         } else {
-            this._scrollElement.classList.remove("mx_IndicatorScrollbar_rightOverflow");
+            this._scrollElement.classList.remove(
+                "mx_IndicatorScrollbar_rightOverflow",
+            );
         }
 
         if (this.props.trackHorizontalOverflow) {
             this.setState({
                 // Offset from absolute position of the container
-                leftIndicatorOffset: hasLeftOverflow ? `${this._scrollElement.scrollLeft}px` : '0',
+                leftIndicatorOffset: hasLeftOverflow
+                    ? `${this._scrollElement.scrollLeft}px`
+                    : "0",
 
                 // Negative because we're coming from the right
-                rightIndicatorOffset: hasRightOverflow ? `-${this._scrollElement.scrollLeft}px` : '0',
+                rightIndicatorOffset: hasRightOverflow
+                    ? `-${this._scrollElement.scrollLeft}px`
+                    : "0",
             });
         }
     }
@@ -131,7 +157,10 @@ export default class IndicatorScrollbar extends React.Component {
 
     componentWillUnmount() {
         if (this._scrollElement) {
-            this._scrollElement.removeEventListener("scroll", this.checkOverflow);
+            this._scrollElement.removeEventListener(
+                "scroll",
+                this.checkOverflow,
+            );
         }
     }
 
@@ -151,11 +180,14 @@ export default class IndicatorScrollbar extends React.Component {
             const now = new Date().getTime();
             if (Math.abs(e.deltaX) > 0) {
                 this._likelyTrackpadUser = true;
-                this._checkAgainForTrackpad = now + (1 * 60 * 1000);
+                this._checkAgainForTrackpad = now + 1 * 60 * 1000;
             } else {
                 // if we haven't seen any horizontal scrolling for a while, assume
                 // the user might have plugged in a mousewheel
-                if (this._likelyTrackpadUser && now >= this._checkAgainForTrackpad) {
+                if (
+                    this._likelyTrackpadUser &&
+                    now >= this._checkAgainForTrackpad
+                ) {
                     this._likelyTrackpadUser = false;
                 }
             }
@@ -166,7 +198,8 @@ export default class IndicatorScrollbar extends React.Component {
                 return;
             }
 
-            if (Math.abs(e.deltaX) <= xyThreshold) { // we are vertically scrolling.
+            if (Math.abs(e.deltaX) <= xyThreshold) {
+                // we are vertically scrolling.
                 // HACK: We increase the amount of scroll to counteract smooth scrolling browsers.
                 // Smooth scrolling browsers (Firefox) use the relative area to determine the scroll
                 // amount, which means the likely small area of content results in a small amount of
@@ -177,7 +210,10 @@ export default class IndicatorScrollbar extends React.Component {
                 const additionalScroll = e.deltaY < 0 ? -50 : 50;
 
                 // noinspection JSSuspiciousNameCombination
-                const val = Math.abs(e.deltaY) < 25 ? (e.deltaY + additionalScroll) : e.deltaY;
+                const val =
+                    Math.abs(e.deltaY) < 25
+                        ? e.deltaY + additionalScroll
+                        : e.deltaY;
                 this._scrollElement.scrollLeft += val * yRetention;
             }
         }
@@ -185,24 +221,39 @@ export default class IndicatorScrollbar extends React.Component {
 
     render() {
         // eslint-disable-next-line no-unused-vars
-        const { children, trackHorizontalOverflow, verticalScrollsHorizontally, ...otherProps } = this.props;
+        const {
+            children,
+            trackHorizontalOverflow,
+            verticalScrollsHorizontally,
+            ...otherProps
+        } = this.props;
 
         const leftIndicatorStyle = { left: this.state.leftIndicatorOffset };
         const rightIndicatorStyle = { right: this.state.rightIndicatorOffset };
-        const leftOverflowIndicator = trackHorizontalOverflow
-            ? <div className="mx_IndicatorScrollbar_leftOverflowIndicator" style={leftIndicatorStyle} /> : null;
-        const rightOverflowIndicator = trackHorizontalOverflow
-            ? <div className="mx_IndicatorScrollbar_rightOverflowIndicator" style={rightIndicatorStyle} /> : null;
+        const leftOverflowIndicator = trackHorizontalOverflow ? (
+            <div
+                className="mx_IndicatorScrollbar_leftOverflowIndicator"
+                style={leftIndicatorStyle}
+            />
+        ) : null;
+        const rightOverflowIndicator = trackHorizontalOverflow ? (
+            <div
+                className="mx_IndicatorScrollbar_rightOverflowIndicator"
+                style={rightIndicatorStyle}
+            />
+        ) : null;
 
-        return (<AutoHideScrollbar
-            ref={this._collectScrollerComponent}
-            wrappedRef={this._collectScroller}
-            onWheel={this.onMouseWheel}
-            {...otherProps}
-        >
-            { leftOverflowIndicator }
-            { children }
-            { rightOverflowIndicator }
-        </AutoHideScrollbar>);
+        return (
+            <AutoHideScrollbar
+                ref={this._collectScrollerComponent}
+                wrappedRef={this._collectScroller}
+                onWheel={this.onMouseWheel}
+                {...otherProps}
+            >
+                {leftOverflowIndicator}
+                {children}
+                {rightOverflowIndicator}
+            </AutoHideScrollbar>
+        );
     }
 }

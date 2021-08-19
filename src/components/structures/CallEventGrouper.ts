@@ -16,9 +16,14 @@ limitations under the License.
 
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { CallEvent, CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
-import CallHandler, { CallHandlerEvent } from '../../CallHandler';
-import { EventEmitter } from 'events';
+import {
+    CallEvent,
+    CallState,
+    CallType,
+    MatrixCall,
+} from "matrix-js-sdk/src/webrtc/call";
+import CallHandler, { CallHandlerEvent } from "../../CallHandler";
+import { EventEmitter } from "events";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 
@@ -34,10 +39,7 @@ const CONNECTING_STATES = [
     CallState.CreateAnswer,
 ];
 
-const SUPPORTED_STATES = [
-    CallState.Connected,
-    CallState.Ringing,
-];
+const SUPPORTED_STATES = [CallState.Connected, CallState.Ringing];
 
 export enum CustomCallState {
     Missed = "missed",
@@ -51,24 +53,38 @@ export default class CallEventGrouper extends EventEmitter {
     constructor() {
         super();
 
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallsChanged, this.setCall);
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.SilencedCallsChanged, this.onSilencedCallsChanged);
+        CallHandler.sharedInstance().addListener(
+            CallHandlerEvent.CallsChanged,
+            this.setCall,
+        );
+        CallHandler.sharedInstance().addListener(
+            CallHandlerEvent.SilencedCallsChanged,
+            this.onSilencedCallsChanged,
+        );
     }
 
     private get invite(): MatrixEvent {
-        return [...this.events].find((event) => event.getType() === EventType.CallInvite);
+        return [...this.events].find(
+            (event) => event.getType() === EventType.CallInvite,
+        );
     }
 
     private get hangup(): MatrixEvent {
-        return [...this.events].find((event) => event.getType() === EventType.CallHangup);
+        return [...this.events].find(
+            (event) => event.getType() === EventType.CallHangup,
+        );
     }
 
     private get reject(): MatrixEvent {
-        return [...this.events].find((event) => event.getType() === EventType.CallReject);
+        return [...this.events].find(
+            (event) => event.getType() === EventType.CallReject,
+        );
     }
 
     private get selectAnswer(): MatrixEvent {
-        return [...this.events].find((event) => event.getType() === EventType.CallSelectAnswer);
+        return [...this.events].find(
+            (event) => event.getType() === EventType.CallSelectAnswer,
+        );
     }
 
     public get isVoice(): boolean {
@@ -76,7 +92,8 @@ export default class CallEventGrouper extends EventEmitter {
         if (!invite) return;
 
         // FIXME: Find a better way to determine this from the event?
-        if (invite.getContent()?.offer?.sdp?.indexOf('m=video') !== -1) return false;
+        if (invite.getContent()?.offer?.sdp?.indexOf("m=video") !== -1)
+            return false;
         return true;
     }
 
@@ -94,14 +111,20 @@ export default class CallEventGrouper extends EventEmitter {
 
     public get duration(): Date {
         if (!this.hangup || !this.selectAnswer) return;
-        return new Date(this.hangup.getDate().getTime() - this.selectAnswer.getDate().getTime());
+        return new Date(
+            this.hangup.getDate().getTime() -
+                this.selectAnswer.getDate().getTime(),
+        );
     }
 
     /**
      * Returns true if there are only events from the other side - we missed the call
      */
     private get callWasMissed(): boolean {
-        return ![...this.events].some((event) => event.sender?.userId === MatrixClientPeg.get().getUserId());
+        return ![...this.events].some(
+            (event) =>
+                event.sender?.userId === MatrixClientPeg.get().getUserId(),
+        );
     }
 
     private get callId(): string {
@@ -109,7 +132,9 @@ export default class CallEventGrouper extends EventEmitter {
     }
 
     private onSilencedCallsChanged = () => {
-        const newState = CallHandler.sharedInstance().isCallSilenced(this.callId);
+        const newState = CallHandler.sharedInstance().isCallSilenced(
+            this.callId,
+        );
         this.emit(CallEventGrouperEvent.SilencedChanged, newState);
     };
 
@@ -123,17 +148,19 @@ export default class CallEventGrouper extends EventEmitter {
 
     public callBack = () => {
         defaultDispatcher.dispatch({
-            action: 'place_call',
+            action: "place_call",
             type: this.isVoice ? CallType.Voice : CallType.Video,
             room_id: [...this.events][0]?.getRoomId(),
         });
     };
 
     public toggleSilenced = () => {
-        const silenced = CallHandler.sharedInstance().isCallSilenced(this.callId);
-        silenced ?
-            CallHandler.sharedInstance().unSilenceCall(this.callId) :
-            CallHandler.sharedInstance().silenceCall(this.callId);
+        const silenced = CallHandler.sharedInstance().isCallSilenced(
+            this.callId,
+        );
+        silenced
+            ? CallHandler.sharedInstance().unSilenceCall(this.callId)
+            : CallHandler.sharedInstance().silenceCall(this.callId);
     };
 
     private setCallListeners() {
@@ -150,7 +177,8 @@ export default class CallEventGrouper extends EventEmitter {
             if (this.callWasMissed) this.state = CustomCallState.Missed;
             else if (this.reject) this.state = CallState.Ended;
             else if (this.hangup) this.state = CallState.Ended;
-            else if (this.invite && this.call) this.state = CallState.Connecting;
+            else if (this.invite && this.call)
+                this.state = CallState.Connecting;
         }
         this.emit(CallEventGrouperEvent.StateChanged, this.state);
     };

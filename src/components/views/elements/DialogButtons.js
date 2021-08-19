@@ -18,7 +18,7 @@ limitations under the License.
 
 import React from "react";
 import PropTypes from "prop-types";
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 /**
@@ -78,35 +78,42 @@ export default class DialogButtons extends React.Component {
         let cancelButton;
 
         if (this.props.cancelButton || this.props.hasCancel) {
-            cancelButton = <button
-                // important: the default type is 'submit' and this button comes before the
-                // primary in the DOM so will get form submissions unless we make it not a submit.
-                type="button"
-                onClick={this._onCancelClick}
-                className={this.props.cancelButtonClass}
-                disabled={this.props.disabled}
-            >
-                { this.props.cancelButton || _t("Cancel") }
-            </button>;
+            cancelButton = (
+                <button
+                    // important: the default type is 'submit' and this button comes before the
+                    // primary in the DOM so will get form submissions unless we make it not a submit.
+                    type="button"
+                    onClick={this._onCancelClick}
+                    className={this.props.cancelButtonClass}
+                    disabled={this.props.disabled}
+                >
+                    {this.props.cancelButton || _t("Cancel")}
+                </button>
+            );
         }
 
         let additive = null;
         if (this.props.additive) {
-            additive = <div className="mx_Dialog_buttons_additive">{ this.props.additive }</div>;
+            additive = (
+                <div className="mx_Dialog_buttons_additive">
+                    {this.props.additive}
+                </div>
+            );
         }
 
         return (
             <div className="mx_Dialog_buttons">
-                { additive }
-                { cancelButton }
-                { this.props.children }
-                <button type={this.props.primaryIsSubmit ? 'submit' : 'button'}
+                {additive}
+                {cancelButton}
+                {this.props.children}
+                <button
+                    type={this.props.primaryIsSubmit ? "submit" : "button"}
                     className={primaryButtonClassName}
                     onClick={this.props.onPrimaryButtonClick}
                     autoFocus={this.props.focus}
                     disabled={this.props.disabled || this.props.primaryDisabled}
                 >
-                    { this.props.primaryButton }
+                    {this.props.primaryButton}
                 </button>
             </div>
         );

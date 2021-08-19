@@ -28,9 +28,10 @@ export default class VerificationQRCode extends React.PureComponent {
     render() {
         return (
             <QRCode
-                data={[{ data: this.props.qrCodeData.buffer, mode: 'byte' }]}
+                data={[{ data: this.props.qrCodeData.buffer, mode: "byte" }]}
                 className="mx_VerificationQRCode"
-                width={196} />
+                width={196}
+            />
         );
     }
 }

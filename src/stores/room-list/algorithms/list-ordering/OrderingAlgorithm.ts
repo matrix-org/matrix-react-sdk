@@ -26,7 +26,10 @@ export abstract class OrderingAlgorithm {
     protected cachedOrderedRooms: Room[];
     protected sortingAlgorithm: SortAlgorithm;
 
-    protected constructor(protected tagId: TagID, initialSortingAlgorithm: SortAlgorithm) {
+    protected constructor(
+        protected tagId: TagID,
+        initialSortingAlgorithm: SortAlgorithm,
+    ) {
         // noinspection JSIgnoredPromiseFromCall
         this.setSortAlgorithm(initialSortingAlgorithm); // we use the setter for validation
     }
@@ -44,7 +47,8 @@ export abstract class OrderingAlgorithm {
      * @returns Resolves when complete.
      */
     public setSortAlgorithm(newAlgorithm: SortAlgorithm) {
-        if (!newAlgorithm) throw new Error("A sorting algorithm must be defined");
+        if (!newAlgorithm)
+            throw new Error("A sorting algorithm must be defined");
         this.sortingAlgorithm = newAlgorithm;
 
         // Force regeneration of the rooms
@@ -66,13 +70,21 @@ export abstract class OrderingAlgorithm {
      * @param cause The cause of the update.
      * @returns True if the update requires the Algorithm to update the presentation layers.
      */
-    public abstract handleRoomUpdate(room: Room, cause: RoomUpdateCause): boolean;
+    public abstract handleRoomUpdate(
+        room: Room,
+        cause: RoomUpdateCause,
+    ): boolean;
 
     protected getRoomIndex(room: Room): number {
         let roomIdx = this.cachedOrderedRooms.indexOf(room);
-        if (roomIdx === -1) { // can only happen if the js-sdk's store goes sideways.
-            console.warn(`Degrading performance to find missing room in "${this.tagId}": ${room.roomId}`);
-            roomIdx = this.cachedOrderedRooms.findIndex(r => r.roomId === room.roomId);
+        if (roomIdx === -1) {
+            // can only happen if the js-sdk's store goes sideways.
+            console.warn(
+                `Degrading performance to find missing room in "${this.tagId}": ${room.roomId}`,
+            );
+            roomIdx = this.cachedOrderedRooms.findIndex(
+                (r) => r.roomId === room.roomId,
+            );
         }
         return roomIdx;
     }

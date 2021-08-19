@@ -39,14 +39,17 @@ export class PlaybackManager {
      * @param playback Optional. The playback to leave untouched.
      */
     public playOnly(playback?: Playback) {
-        this.instances.filter(p => p !== playback).forEach(p => p.stop());
+        this.instances.filter((p) => p !== playback).forEach((p) => p.stop());
     }
 
     public destroyPlaybackInstance(playback: ManagedPlayback) {
-        this.instances = this.instances.filter(p => p !== playback);
+        this.instances = this.instances.filter((p) => p !== playback);
     }
 
-    public createPlaybackInstance(buf: ArrayBuffer, waveform = DEFAULT_WAVEFORM): Playback {
+    public createPlaybackInstance(
+        buf: ArrayBuffer,
+        waveform = DEFAULT_WAVEFORM,
+    ): Playback {
         const instance = new ManagedPlayback(this, buf, waveform);
         this.instances.push(instance);
         return instance;

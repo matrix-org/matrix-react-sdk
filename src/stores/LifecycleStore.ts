@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Store } from 'flux/utils';
+import { Store } from "flux/utils";
 
-import dis from '../dispatcher/dispatcher';
+import dis from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 
 interface IState {
@@ -44,32 +44,36 @@ class LifecycleStore extends Store<ActionPayload> {
         this.__emitChange();
     }
 
-    protected __onDispatch(payload: ActionPayload) { // eslint-disable-line @typescript-eslint/naming-convention
+    protected __onDispatch(payload: ActionPayload) {
+        // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
-            case 'do_after_sync_prepared':
+            case "do_after_sync_prepared":
                 this.setState({
                     deferredAction: payload.deferred_action,
                 });
                 break;
-            case 'cancel_after_sync_prepared':
+            case "cancel_after_sync_prepared":
                 this.setState({
                     deferredAction: null,
                 });
                 break;
-            case 'sync_state': {
-                if (payload.state !== 'PREPARED') {
+            case "sync_state": {
+                if (payload.state !== "PREPARED") {
                     break;
                 }
                 if (!this.state.deferredAction) break;
-                const deferredAction = Object.assign({}, this.state.deferredAction);
+                const deferredAction = Object.assign(
+                    {},
+                    this.state.deferredAction,
+                );
                 this.setState({
                     deferredAction: null,
                 });
                 dis.dispatch(deferredAction);
                 break;
             }
-            case 'on_client_not_viable':
-            case 'on_logged_out':
+            case "on_client_not_viable":
+            case "on_logged_out":
                 this.reset();
                 break;
         }

@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import SettingController from "./SettingController";
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { SettingLevel } from "../SettingLevel";
 
 // XXX: This feels wrong.
@@ -31,17 +31,23 @@ export function isPushNotifyDisabled(): boolean {
     const masterRule = processor.getPushRuleById(".m.rule.master");
 
     if (!masterRule) {
-        console.warn("No master push rule! Notifications are disabled for this user.");
+        console.warn(
+            "No master push rule! Notifications are disabled for this user.",
+        );
         return true;
     }
 
     // If the rule is enabled then check it does not notify on everything
-    return masterRule.enabled && !masterRule.actions.includes(PushRuleActionName.Notify);
+    return (
+        masterRule.enabled &&
+        !masterRule.actions.includes(PushRuleActionName.Notify)
+    );
 }
 
-function getNotifier(): any { // TODO: [TS] Formal type that doesn't cause a cyclical reference.
+function getNotifier(): any {
+    // TODO: [TS] Formal type that doesn't cause a cyclical reference.
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    let Notifier = require('../../Notifier'); // avoids cyclical references
+    let Notifier = require("../../Notifier"); // avoids cyclical references
     if (Notifier.default) Notifier = Notifier.default; // correct for webpack require() weirdness
     return Notifier;
 }
@@ -70,7 +76,11 @@ export class NotificationsEnabledController extends SettingController {
 }
 
 export class NotificationBodyEnabledController extends SettingController {
-    public getValueOverride(level: SettingLevel, roomId: string, calculatedValue: any): any {
+    public getValueOverride(
+        level: SettingLevel,
+        roomId: string,
+        calculatedValue: any,
+    ): any {
         if (!getNotifier().isPossible()) return false;
 
         if (calculatedValue === null) {

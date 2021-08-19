@@ -15,45 +15,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from './languageHandler';
+import { _t } from "./languageHandler";
 
 function getDaysArray(): string[] {
     return [
-        _t('Sun'),
-        _t('Mon'),
-        _t('Tue'),
-        _t('Wed'),
-        _t('Thu'),
-        _t('Fri'),
-        _t('Sat'),
+        _t("Sun"),
+        _t("Mon"),
+        _t("Tue"),
+        _t("Wed"),
+        _t("Thu"),
+        _t("Fri"),
+        _t("Sat"),
     ];
 }
 
 function getMonthsArray(): string[] {
     return [
-        _t('Jan'),
-        _t('Feb'),
-        _t('Mar'),
-        _t('Apr'),
-        _t('May'),
-        _t('Jun'),
-        _t('Jul'),
-        _t('Aug'),
-        _t('Sep'),
-        _t('Oct'),
-        _t('Nov'),
-        _t('Dec'),
+        _t("Jan"),
+        _t("Feb"),
+        _t("Mar"),
+        _t("Apr"),
+        _t("May"),
+        _t("Jun"),
+        _t("Jul"),
+        _t("Aug"),
+        _t("Sep"),
+        _t("Oct"),
+        _t("Nov"),
+        _t("Dec"),
     ];
 }
 
 function pad(n: number): string {
-    return (n < 10 ? '0' : '') + n;
+    return (n < 10 ? "0" : "") + n;
 }
 
 function twelveHourTime(date: Date, showSeconds = false): string {
     let hours = date.getHours() % 12;
     const minutes = pad(date.getMinutes());
-    const ampm = date.getHours() >= 12 ? _t('PM') : _t('AM');
+    const ampm = date.getHours() >= 12 ? _t("PM") : _t("AM");
     hours = hours ? hours : 12; // convert 0 -> 12
     if (showSeconds) {
         const seconds = pad(date.getSeconds());
@@ -70,13 +70,13 @@ export function formatDate(date: Date, showTwelveHour = false): string {
         return formatTime(date, showTwelveHour);
     } else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
         // TODO: use standard date localize function provided in counterpart
-        return _t('%(weekDayName)s %(time)s', {
+        return _t("%(weekDayName)s %(time)s", {
             weekDayName: days[date.getDay()],
             time: formatTime(date, showTwelveHour),
         });
     } else if (now.getFullYear() === date.getFullYear()) {
         // TODO: use standard date localize function provided in counterpart
-        return _t('%(weekDayName)s, %(monthName)s %(day)s %(time)s', {
+        return _t("%(weekDayName)s, %(monthName)s %(day)s %(time)s", {
             weekDayName: days[date.getDay()],
             monthName: months[date.getMonth()],
             day: date.getDate(),
@@ -89,7 +89,7 @@ export function formatDate(date: Date, showTwelveHour = false): string {
 export function formatFullDateNoTime(date: Date): string {
     const days = getDaysArray();
     const months = getMonthsArray();
-    return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s', {
+    return _t("%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s", {
         weekDayName: days[date.getDay()],
         monthName: months[date.getMonth()],
         day: date.getDate(),
@@ -97,15 +97,21 @@ export function formatFullDateNoTime(date: Date): string {
     });
 }
 
-export function formatFullDate(date: Date, showTwelveHour = false, showSeconds = true): string {
+export function formatFullDate(
+    date: Date,
+    showTwelveHour = false,
+    showSeconds = true,
+): string {
     const days = getDaysArray();
     const months = getMonthsArray();
-    return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {
+    return _t("%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s", {
         weekDayName: days[date.getDay()],
         monthName: months[date.getMonth()],
         day: date.getDate(),
         fullYear: date.getFullYear(),
-        time: showSeconds ? formatFullTime(date, showTwelveHour) : formatTime(date, showTwelveHour),
+        time: showSeconds
+            ? formatFullTime(date, showTwelveHour)
+            : formatTime(date, showTwelveHour),
     });
 }
 
@@ -113,14 +119,20 @@ export function formatFullTime(date: Date, showTwelveHour = false): string {
     if (showTwelveHour) {
         return twelveHourTime(date, true);
     }
-    return pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds());
+    return (
+        pad(date.getHours()) +
+        ":" +
+        pad(date.getMinutes()) +
+        ":" +
+        pad(date.getSeconds())
+    );
 }
 
 export function formatTime(date: Date, showTwelveHour = false): string {
     if (showTwelveHour) {
         return twelveHourTime(date);
     }
-    return pad(date.getHours()) + ':' + pad(date.getMinutes());
+    return pad(date.getHours()) + ":" + pad(date.getMinutes());
 }
 
 export function formatCallTime(delta: Date): string {
@@ -137,12 +149,18 @@ export function formatCallTime(delta: Date): string {
 }
 
 const MILLIS_IN_DAY = 86400000;
-export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): boolean {
+export function wantsDateSeparator(
+    prevEventDate: Date,
+    nextEventDate: Date,
+): boolean {
     if (!nextEventDate || !prevEventDate) {
         return false;
     }
     // Return early for events that are > 24h apart
-    if (Math.abs(prevEventDate.getTime() - nextEventDate.getTime()) > MILLIS_IN_DAY) {
+    if (
+        Math.abs(prevEventDate.getTime() - nextEventDate.getTime()) >
+        MILLIS_IN_DAY
+    ) {
         return true;
     }
 

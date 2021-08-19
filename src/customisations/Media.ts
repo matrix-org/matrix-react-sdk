@@ -18,7 +18,11 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import { IMediaEventContent, IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
+import {
+    IMediaEventContent,
+    IPreparedMedia,
+    prepEventContentAsMedia,
+} from "./models/IMediaEventContent";
 
 // Populate this class with the details of your customisations when copying it.
 
@@ -38,7 +42,9 @@ export class Media {
     constructor(private prepared: IPreparedMedia, client?: MatrixClient) {
         this.client = client ?? MatrixClientPeg.get();
         if (!this.client) {
-            throw new Error("No possible MatrixClient for media resolution. Please provide one or log in.");
+            throw new Error(
+                "No possible MatrixClient for media resolution. Please provide one or log in.",
+            );
         }
     }
 
@@ -97,7 +103,11 @@ export class Media {
      * @param {"scale"|"crop"} mode The desired thumbnailing mode. Defaults to scale.
      * @returns {string} The HTTP URL which points to the thumbnail.
      */
-    public getThumbnailHttp(width: number, height: number, mode: ResizeMethod = "scale"): string | null | undefined {
+    public getThumbnailHttp(
+        width: number,
+        height: number,
+        mode: ResizeMethod = "scale",
+    ): string | null | undefined {
         if (!this.hasThumbnail) return null;
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
@@ -113,7 +123,11 @@ export class Media {
      * @param {"scale"|"crop"} mode The desired thumbnailing mode. Defaults to scale.
      * @returns {string} The HTTP URL which points to the thumbnail.
      */
-    public getThumbnailOfSourceHttp(width: number, height: number, mode: ResizeMethod = "scale"): string {
+    public getThumbnailOfSourceHttp(
+        width: number,
+        height: number,
+        mode: ResizeMethod = "scale",
+    ): string {
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
@@ -130,9 +144,9 @@ export class Media {
     public getSquareThumbnailHttp(dim: number): string {
         dim = Math.floor(dim * window.devicePixelRatio); // scale using the device pixel ratio to keep images clear
         if (this.hasThumbnail) {
-            return this.getThumbnailHttp(dim, dim, 'crop');
+            return this.getThumbnailHttp(dim, dim, "crop");
         }
-        return this.getThumbnailOfSourceHttp(dim, dim, 'crop');
+        return this.getThumbnailOfSourceHttp(dim, dim, "crop");
     }
 
     /**
@@ -150,7 +164,10 @@ export class Media {
  * @param {MatrixClient} client? Optional client to use.
  * @returns {Media} The media object.
  */
-export function mediaFromContent(content: IMediaEventContent, client?: MatrixClient): Media {
+export function mediaFromContent(
+    content: IMediaEventContent,
+    client?: MatrixClient,
+): Media {
     return new Media(prepEventContentAsMedia(content), client);
 }
 

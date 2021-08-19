@@ -22,7 +22,7 @@ export interface ICanvasEffectConstructable {
      * @param {{[key:string]:any}} options? Optional animation options
      * @returns ICanvasEffect Returns a new instance of the canvas effect
      */
-    new(options?: { [key: string]: any }): ICanvasEffect;
+    new (options?: { [key: string]: any }): ICanvasEffect;
 }
 
 /**

@@ -23,16 +23,18 @@ function remoteRender(event) {
 
     // Apply image style after so we can steal the anchor's colour.
     // Style copied from a rendered version of mx_MFileBody_download_icon
-    img.style = (data.imgStyle || "" +
-        "width: 12px; height: 12px;" +
-        "-webkit-mask-size: 12px;" +
-        "mask-size: 12px;" +
-        "-webkit-mask-position: center;" +
-        "mask-position: center;" +
-        "-webkit-mask-repeat: no-repeat;" +
-        "mask-repeat: no-repeat;" +
-        "display: inline-block;") + "" +
-
+    img.style =
+        (data.imgStyle ||
+            "" +
+                "width: 12px; height: 12px;" +
+                "-webkit-mask-size: 12px;" +
+                "mask-size: 12px;" +
+                "-webkit-mask-position: center;" +
+                "mask-position: center;" +
+                "-webkit-mask-repeat: no-repeat;" +
+                "mask-repeat: no-repeat;" +
+                "display: inline-block;") +
+        "" +
         // Always add these styles
         `-webkit-mask-image: url('${data.imgSrc}');` +
         `mask-image: url('${data.imgSrc}');` +
@@ -48,7 +50,7 @@ function remoteRender(event) {
     }
 }
 
-window.onmessage = function(e) {
+window.onmessage = function (e) {
     if (e.origin === window.location.origin) {
         if (e.data.blob) remoteRender(e);
     }

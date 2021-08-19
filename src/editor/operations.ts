@@ -21,14 +21,20 @@ import { Part, Type } from "./parts";
  * Some common queries and transformations on the editor model
  */
 
-export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): void {
+export function replaceRangeAndExpandSelection(
+    range: Range,
+    newParts: Part[],
+): void {
     const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
         const addedLen = range.replace(newParts);
         const firstOffset = range.start.asOffset(model);
         const lastOffset = firstOffset.add(oldLen + addedLen);
-        return model.startRange(firstOffset.asPosition(model), lastOffset.asPosition(model));
+        return model.startRange(
+            firstOffset.asPosition(model),
+            lastOffset.asPosition(model),
+        );
     });
 }
 
@@ -47,7 +53,9 @@ export function rangeStartsAtBeginningOfLine(range: Range): boolean {
     const { model } = range;
     const startsWithPartial = range.start.offset !== 0;
     const isFirstPart = range.start.index === 0;
-    const previousIsNewline = !isFirstPart && model.parts[range.start.index - 1].type === Type.Newline;
+    const previousIsNewline =
+        !isFirstPart &&
+        model.parts[range.start.index - 1].type === Type.Newline;
     return !startsWithPartial && (isFirstPart || previousIsNewline);
 }
 
@@ -56,7 +64,8 @@ export function rangeEndsAtEndOfLine(range: Range): boolean {
     const lastPart = model.parts[range.end.index];
     const endsWithPartial = range.end.offset !== lastPart.text.length;
     const isLastPart = range.end.index === model.parts.length - 1;
-    const nextIsNewline = !isLastPart && model.parts[range.end.index + 1].type === Type.Newline;
+    const nextIsNewline =
+        !isLastPart && model.parts[range.end.index + 1].type === Type.Newline;
     return !endsWithPartial && (isLastPart || nextIsNewline);
 }
 
@@ -84,15 +93,13 @@ export function formatRangeAsQuote(range: Range): void {
 export function formatRangeAsCode(range: Range): void {
     const { model, parts } = range;
     const { partCreator } = model;
-    const needsBlock = parts.some(p => p.type === Type.Newline);
+    const needsBlock = parts.some((p) => p.type === Type.Newline);
     if (needsBlock) {
         parts.unshift(partCreator.plain("```"), partCreator.newline());
         if (!rangeStartsAtBeginningOfLine(range)) {
             parts.unshift(partCreator.newline());
         }
-        parts.push(
-            partCreator.newline(),
-            partCreator.plain("```"));
+        parts.push(partCreator.newline(), partCreator.plain("```"));
         if (!rangeEndsAtEndOfLine(range)) {
             parts.push(partCreator.newline());
         }
@@ -104,10 +111,14 @@ export function formatRangeAsCode(range: Range): void {
 }
 
 // parts helper methods
-const isBlank = part => !part.text || !/\S/.test(part.text);
-const isNL = part => part.type === Type.Newline;
+const isBlank = (part) => !part.text || !/\S/.test(part.text);
+const isNL = (part) => part.type === Type.Newline;
 
-export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix): void {
+export function toggleInlineFormat(
+    range: Range,
+    prefix: string,
+    suffix = prefix,
+): void {
     const { model, parts } = range;
     const { partCreator } = model;
 
@@ -121,7 +132,12 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
         // - newline part, plain(<empty or just spaces>), newline part
 
         // bump startIndex onto the first non-blank after the paragraph ending
-        if (isBlank(parts[i - 2]) && isNL(parts[i - 1]) && !isNL(parts[i]) && !isBlank(parts[i])) {
+        if (
+            isBlank(parts[i - 2]) &&
+            isNL(parts[i - 1]) &&
+            !isNL(parts[i]) &&
+            !isBlank(parts[i])
+        ) {
             startIndex = i;
         }
 
@@ -129,7 +145,11 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
         if (isNL(parts[i - 1]) && isNL(parts[i])) {
             paragraphIndexes.push([startIndex, i - 1]);
             startIndex = i + 1;
-        } else if (isNL(parts[i - 2]) && isBlank(parts[i - 1]) && isNL(parts[i])) {
+        } else if (
+            isNL(parts[i - 2]) &&
+            isBlank(parts[i - 1]) &&
+            isNL(parts[i])
+        ) {
             paragraphIndexes.push([startIndex, i - 2]);
             startIndex = i + 1;
         }
@@ -148,19 +168,25 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
         const base = startIdx + offset;
         const index = endIdx + offset;
 
-        const isFormatted = (index - base > 0) &&
+        const isFormatted =
+            index - base > 0 &&
             parts[base].text.startsWith(prefix) &&
             parts[index - 1].text.endsWith(suffix);
 
         if (isFormatted) {
             // remove prefix and suffix
             const partWithoutPrefix = parts[base].serialize();
-            partWithoutPrefix.text = partWithoutPrefix.text.substr(prefix.length);
+            partWithoutPrefix.text = partWithoutPrefix.text.substr(
+                prefix.length,
+            );
             parts[base] = partCreator.deserializePart(partWithoutPrefix);
 
             const partWithoutSuffix = parts[index - 1].serialize();
             const suffixPartText = partWithoutSuffix.text;
-            partWithoutSuffix.text = suffixPartText.substring(0, suffixPartText.length - suffix.length);
+            partWithoutSuffix.text = suffixPartText.substring(
+                0,
+                suffixPartText.length - suffix.length,
+            );
             parts[index - 1] = partCreator.deserializePart(partWithoutSuffix);
         } else {
             parts.splice(index, 0, partCreator.plain(suffix)); // splice in the later one first to not change offset

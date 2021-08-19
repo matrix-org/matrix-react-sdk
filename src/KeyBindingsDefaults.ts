@@ -14,8 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AutocompleteAction, IKeyBindingsProvider, KeyBinding, MessageComposerAction, NavigationAction, RoomAction,
-    RoomListAction } from "./KeyBindingsManager";
+import {
+    AutocompleteAction,
+    IKeyBindingsProvider,
+    KeyBinding,
+    MessageComposerAction,
+    NavigationAction,
+    RoomAction,
+    RoomListAction,
+} from "./KeyBindingsManager";
 import { isMac, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
 
@@ -117,7 +124,7 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             },
         });
     }
-    if (SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend')) {
+    if (SettingsStore.getValue("MessageComposerInput.ctrlEnterToSend")) {
         bindings.push({
             action: MessageComposerAction.Send,
             keyCombo: {
@@ -299,7 +306,7 @@ const roomBindings = (): KeyBinding<RoomAction>[] => {
         },
     ];
 
-    if (SettingsStore.getValue('ctrlFForSearch')) {
+    if (SettingsStore.getValue("ctrlFForSearch")) {
         bindings.push({
             action: RoomAction.FocusSearch,
             keyCombo: {

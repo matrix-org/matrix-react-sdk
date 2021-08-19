@@ -19,7 +19,10 @@ import { TagID } from "../room-list/models";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "./NotificationState";
+import {
+    NOTIFICATION_STATE_UPDATE,
+    NotificationState,
+} from "./NotificationState";
 
 export type FetchRoomFn = (room: Room) => RoomNotificationState;
 
@@ -27,7 +30,11 @@ export class ListNotificationState extends NotificationState {
     private rooms: Room[] = [];
     private states: { [roomId: string]: RoomNotificationState } = {};
 
-    constructor(private byTileCount = false, private tagId: TagID, private getRoomFn: FetchRoomFn) {
+    constructor(
+        private byTileCount = false,
+        private tagId: TagID,
+        private getRoomFn: FetchRoomFn,
+    ) {
         super();
     }
 
@@ -50,11 +57,17 @@ export class ListNotificationState extends NotificationState {
             const state = this.states[oldRoom.roomId];
             if (!state) continue; // We likely just didn't have a badge (race condition)
             delete this.states[oldRoom.roomId];
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(
+                NOTIFICATION_STATE_UPDATE,
+                this.onRoomNotificationStateUpdate,
+            );
         }
         for (const newRoom of diff.added) {
             const state = this.getRoomFn(newRoom);
-            state.on(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.on(
+                NOTIFICATION_STATE_UPDATE,
+                this.onRoomNotificationStateUpdate,
+            );
             this.states[newRoom.roomId] = state;
         }
 
@@ -70,7 +83,10 @@ export class ListNotificationState extends NotificationState {
     public destroy() {
         super.destroy();
         for (const state of Object.values(this.states)) {
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(
+                NOTIFICATION_STATE_UPDATE,
+                this.onRoomNotificationStateUpdate,
+            );
         }
         this.states = {};
     }
@@ -98,4 +114,3 @@ export class ListNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-

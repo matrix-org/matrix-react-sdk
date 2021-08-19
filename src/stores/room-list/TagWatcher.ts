@@ -37,17 +37,21 @@ export class TagWatcher {
             // Selected tags changed, do some filtering
 
             if (!this.store.matrixClient) {
-                console.warn("Tag update without an associated matrix client - ignoring");
+                console.warn(
+                    "Tag update without an associated matrix client - ignoring",
+                );
                 return;
             }
 
             const newFilters = new Map<string, CommunityFilterCondition>();
-            const filterableTags = newTags.filter(t => t.startsWith("+"));
+            const filterableTags = newTags.filter((t) => t.startsWith("+"));
 
             for (const tag of filterableTags) {
                 const group = this.store.matrixClient.getGroup(tag);
                 if (!group) {
-                    console.warn(`Group selected with no group object available: ${tag}`);
+                    console.warn(
+                        `Group selected with no group object available: ${tag}`,
+                    );
                     continue;
                 }
 

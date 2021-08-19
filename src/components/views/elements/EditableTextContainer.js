@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
+import React from "react";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 /**
@@ -54,14 +54,18 @@ export default class EditableTextContainer extends React.Component {
 
         this.props.getInitialValue().then(
             (result) => {
-                if (this._unmounted) { return; }
+                if (this._unmounted) {
+                    return;
+                }
                 this.setState({
                     busy: false,
                     value: result,
                 });
             },
             (error) => {
-                if (this._unmounted) { return; }
+                if (this._unmounted) {
+                    return;
+                }
                 this.setState({
                     errorString: error.toString(),
                     busy: false,
@@ -86,14 +90,18 @@ export default class EditableTextContainer extends React.Component {
 
         this.props.onSubmit(value).then(
             () => {
-                if (this._unmounted) { return; }
+                if (this._unmounted) {
+                    return;
+                }
                 this.setState({
                     busy: false,
                     value: value,
                 });
             },
             (error) => {
-                if (this._unmounted) { return; }
+                if (this._unmounted) {
+                    return;
+                }
                 this.setState({
                     errorString: error.toString(),
                     busy: false,
@@ -105,17 +113,14 @@ export default class EditableTextContainer extends React.Component {
     render() {
         if (this.state.busy) {
             const Loader = sdk.getComponent("elements.Spinner");
-            return (
-                <Loader />
-            );
+            return <Loader />;
         } else if (this.state.errorString) {
-            return (
-                <div className="error">{ this.state.errorString }</div>
-            );
+            return <div className="error">{this.state.errorString}</div>;
         } else {
-            const EditableText = sdk.getComponent('elements.EditableText');
+            const EditableText = sdk.getComponent("elements.EditableText");
             return (
-                <EditableText initialValue={this.state.value}
+                <EditableText
+                    initialValue={this.state.value}
                     placeholder={this.props.placeholder}
                     onValueChanged={this._onValueChanged}
                     blurToSubmit={this.props.blurToSubmit}
@@ -148,5 +153,7 @@ EditableTextContainer.defaultProps = {
     initialValue: "",
     placeholder: "",
     blurToSubmit: false,
-    onSubmit: function(v) {return Promise.resolve(); },
+    onSubmit: function (v) {
+        return Promise.resolve();
+    },
 };

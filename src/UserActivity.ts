@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import dis from './dispatcher/dispatcher';
-import Timer from './utils/Timer';
+import dis from "./dispatcher/dispatcher";
+import Timer from "./utils/Timer";
 
 // important these are larger than the timeouts of timers
 // used with UserActivity.timeWhileActive*,
@@ -45,7 +45,10 @@ export default class UserActivity {
     private lastScreenX = 0;
     private lastScreenY = 0;
 
-    constructor(private readonly window: Window, private readonly document: Document) {
+    constructor(
+        private readonly window: Window,
+        private readonly document: Document,
+    ) {
         this.activeNowTimeout = new Timer(CURRENTLY_ACTIVE_THRESHOLD_MS);
         this.activeRecentlyTimeout = new Timer(RECENTLY_ACTIVE_THRESHOLD_MS);
     }
@@ -95,14 +98,18 @@ export default class UserActivity {
         if (index === -1) {
             attachedTimers.push(timer);
             // remove when done or aborted
-            timer.finished().finally(() => {
-                const index = attachedTimers.indexOf(timer);
-                if (index !== -1) { // should never be -1
-                    attachedTimers.splice(index, 1);
-                }
-            // as we fork the promise here,
-            // avoid unhandled rejection warnings
-            }).catch((err) => {});
+            timer
+                .finished()
+                .finally(() => {
+                    const index = attachedTimers.indexOf(timer);
+                    if (index !== -1) {
+                        // should never be -1
+                        attachedTimers.splice(index, 1);
+                    }
+                    // as we fork the promise here,
+                    // avoid unhandled rejection warnings
+                })
+                .catch((err) => {});
         }
     }
 
@@ -110,17 +117,20 @@ export default class UserActivity {
      * Start listening to user activity
      */
     public start() {
-        this.document.addEventListener('mousedown', this.onUserActivity);
-        this.document.addEventListener('mousemove', this.onUserActivity);
-        this.document.addEventListener('keydown', this.onUserActivity);
-        this.document.addEventListener("visibilitychange", this.onPageVisibilityChanged);
+        this.document.addEventListener("mousedown", this.onUserActivity);
+        this.document.addEventListener("mousemove", this.onUserActivity);
+        this.document.addEventListener("keydown", this.onUserActivity);
+        this.document.addEventListener(
+            "visibilitychange",
+            this.onPageVisibilityChanged,
+        );
         this.window.addEventListener("blur", this.onWindowBlurred);
         this.window.addEventListener("focus", this.onUserActivity);
         // can't use document.scroll here because that's only the document
         // itself being scrolled. Need to use addEventListener's useCapture.
         // also this needs to be the wheel event, not scroll, as scroll is
         // fired when the view scrolls down for a new message.
-        this.window.addEventListener('wheel', this.onUserActivity, {
+        this.window.addEventListener("wheel", this.onUserActivity, {
             passive: true,
             capture: true,
         });
@@ -130,13 +140,16 @@ export default class UserActivity {
      * Stop tracking user activity
      */
     public stop() {
-        this.document.removeEventListener('mousedown', this.onUserActivity);
-        this.document.removeEventListener('mousemove', this.onUserActivity);
-        this.document.removeEventListener('keydown', this.onUserActivity);
-        this.window.removeEventListener('wheel', this.onUserActivity, {
+        this.document.removeEventListener("mousedown", this.onUserActivity);
+        this.document.removeEventListener("mousemove", this.onUserActivity);
+        this.document.removeEventListener("keydown", this.onUserActivity);
+        this.window.removeEventListener("wheel", this.onUserActivity, {
             capture: true,
         });
-        this.document.removeEventListener("visibilitychange", this.onPageVisibilityChanged);
+        this.document.removeEventListener(
+            "visibilitychange",
+            this.onPageVisibilityChanged,
+        );
         this.window.removeEventListener("blur", this.onWindowBlurred);
         this.window.removeEventListener("focus", this.onUserActivity);
     }
@@ -164,7 +177,7 @@ export default class UserActivity {
         return this.activeRecentlyTimeout.isRunning();
     }
 
-    private onPageVisibilityChanged = e => {
+    private onPageVisibilityChanged = (e) => {
         if (this.document.visibilityState === "hidden") {
             this.activeNowTimeout.abort();
             this.activeRecentlyTimeout.abort();
@@ -183,7 +196,10 @@ export default class UserActivity {
         if (!this.document.hasFocus()) return;
 
         if (event.screenX && event.type === "mousemove") {
-            if (event.screenX === this.lastScreenX && event.screenY === this.lastScreenY) {
+            if (
+                event.screenX === this.lastScreenX &&
+                event.screenY === this.lastScreenY
+            ) {
                 // mouse hasn't actually moved
                 return;
             }
@@ -191,12 +207,15 @@ export default class UserActivity {
             this.lastScreenY = event.screenY;
         }
 
-        dis.dispatch({ action: 'user_activity' });
+        dis.dispatch({ action: "user_activity" });
         if (!this.activeNowTimeout.isRunning()) {
             this.activeNowTimeout.start();
-            dis.dispatch({ action: 'user_activity_start' });
+            dis.dispatch({ action: "user_activity_start" });
 
-            UserActivity.runTimersUntilTimeout(this.attachedActiveNowTimers, this.activeNowTimeout);
+            UserActivity.runTimersUntilTimeout(
+                this.attachedActiveNowTimers,
+                this.activeNowTimeout,
+            );
         } else {
             this.activeNowTimeout.restart();
         }
@@ -204,17 +223,25 @@ export default class UserActivity {
         if (!this.activeRecentlyTimeout.isRunning()) {
             this.activeRecentlyTimeout.start();
 
-            UserActivity.runTimersUntilTimeout(this.attachedActiveRecentlyTimers, this.activeRecentlyTimeout);
+            UserActivity.runTimersUntilTimeout(
+                this.attachedActiveRecentlyTimers,
+                this.activeRecentlyTimeout,
+            );
         } else {
             this.activeRecentlyTimeout.restart();
         }
     };
 
-    private static async runTimersUntilTimeout(attachedTimers: Timer[], timeout: Timer) {
+    private static async runTimersUntilTimeout(
+        attachedTimers: Timer[],
+        timeout: Timer,
+    ) {
         attachedTimers.forEach((t) => t.start());
         try {
             await timeout.finished();
-        } catch (_e) { /* aborted */ }
+        } catch (_e) {
+            /* aborted */
+        }
         attachedTimers.forEach((t) => t.abort());
     }
 }

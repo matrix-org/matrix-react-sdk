@@ -73,7 +73,7 @@ export const Key = {
     Z: "z",
 };
 
-export const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+export const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 
 export function isOnlyCtrlOrCmdKeyEvent(ev) {
     if (isMac) {

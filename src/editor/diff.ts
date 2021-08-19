@@ -67,7 +67,11 @@ export function diffDeletion(oldStr: string, newStr: string): IDiff {
  *                  `added` with the added string (if any), and
  *                  `removed` with the removed string (if any)
  */
-export function diffAtCaret(oldValue: string, newValue: string, caretPosition: number): IDiff {
+export function diffAtCaret(
+    oldValue: string,
+    newValue: string,
+    caretPosition: number,
+): IDiff {
     const diffLen = newValue.length - oldValue.length;
     const caretPositionBeforeInput = caretPosition - diffLen;
     const oldValueBeforeCaret = oldValue.substr(0, caretPositionBeforeInput);

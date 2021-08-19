@@ -33,8 +33,12 @@ export function sum(...i: number[]): number {
     return [...i].reduce((p, c) => c + p, 0);
 }
 
-export function percentageWithin(pct: number, min: number, max: number): number {
-    return (pct * (max - min)) + min;
+export function percentageWithin(
+    pct: number,
+    min: number,
+    max: number,
+): number {
+    return pct * (max - min) + min;
 }
 
 export function percentageOf(val: number, min: number, max: number): number {

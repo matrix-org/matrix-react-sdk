@@ -15,11 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import TagTile from './TagTile';
+import TagTile from "./TagTile";
 
-import React from 'react';
-import { ContextMenu, toRightOf, useContextMenu } from "../../structures/ContextMenu";
-import * as sdk from '../../../index';
+import React from "react";
+import {
+    ContextMenu,
+    toRightOf,
+    useContextMenu,
+} from "../../structures/ContextMenu";
+import * as sdk from "../../../index";
 
 export default function DNDTagTile(props) {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
@@ -27,20 +31,28 @@ export default function DNDTagTile(props) {
     let contextMenu = null;
     if (menuDisplayed && handle.current) {
         const elementRect = handle.current.getBoundingClientRect();
-        const TagTileContextMenu = sdk.getComponent('context_menus.TagTileContextMenu');
+        const TagTileContextMenu = sdk.getComponent(
+            "context_menus.TagTileContextMenu",
+        );
         contextMenu = (
             <ContextMenu {...toRightOf(elementRect)} onFinished={closeMenu}>
-                <TagTileContextMenu tag={props.tag} onFinished={closeMenu} index={props.index} />
+                <TagTileContextMenu
+                    tag={props.tag}
+                    onFinished={closeMenu}
+                    index={props.index}
+                />
             </ContextMenu>
         );
     }
-    return <>
-        <TagTile
-            {...props}
-            contextMenuButtonRef={handle}
-            menuDisplayed={menuDisplayed}
-            openMenu={openMenu}
-        />
-        { contextMenu }
-    </>;
+    return (
+        <>
+            <TagTile
+                {...props}
+                contextMenuButtonRef={handle}
+                menuDisplayed={menuDisplayed}
+                openMenu={openMenu}
+            />
+            {contextMenu}
+        </>
+    );
 }

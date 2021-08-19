@@ -22,10 +22,13 @@ import { Whenable } from "../../utils/Whenable";
 export enum ContextTransactionState {
     NotStarted,
     PendingErrors,
-    AllSuccessful
+    AllSuccessful,
 }
 
-export abstract class EchoContext extends Whenable<ContextTransactionState> implements IDestroyable {
+export abstract class EchoContext
+    extends Whenable<ContextTransactionState>
+    implements IDestroyable
+{
     private _transactions: EchoTransaction[] = [];
     private _state = ContextTransactionState.NotStarted;
 
@@ -38,7 +41,9 @@ export abstract class EchoContext extends Whenable<ContextTransactionState> impl
     }
 
     public get firstFailedTime(): Date {
-        const failedTxn = this.transactions.find(t => t.didPreviouslyFail || t.status === TransactionStatus.Error);
+        const failedTxn = this.transactions.find(
+            (t) => t.didPreviouslyFail || t.status === TransactionStatus.Error,
+        );
         if (failedTxn) return failedTxn.startTime;
         return null;
     }
@@ -65,7 +70,10 @@ export abstract class EchoContext extends Whenable<ContextTransactionState> impl
     private checkTransactions = () => {
         let status = ContextTransactionState.AllSuccessful;
         for (const txn of this.transactions) {
-            if (txn.status === TransactionStatus.Error || txn.didPreviouslyFail) {
+            if (
+                txn.status === TransactionStatus.Error ||
+                txn.didPreviouslyFail
+            ) {
                 status = ContextTransactionState.PendingErrors;
                 break;
             } else if (txn.status === TransactionStatus.Pending) {

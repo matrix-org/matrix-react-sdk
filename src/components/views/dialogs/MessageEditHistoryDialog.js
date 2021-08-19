@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import * as sdk from "../../../index";
-import { wantsDateSeparator } from '../../../DateUtils';
-import SettingsStore from '../../../settings/SettingsStore';
+import { wantsDateSeparator } from "../../../DateUtils";
+import SettingsStore from "../../../settings/SettingsStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.dialogs.MessageEditHistoryDialog")
@@ -53,10 +53,18 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
         let result;
         let resolve;
         let reject;
-        const promise = new Promise((_resolve, _reject) => {resolve = _resolve; reject = _reject;});
+        const promise = new Promise((_resolve, _reject) => {
+            resolve = _resolve;
+            reject = _reject;
+        });
         try {
             result = await client.relations(
-                roomId, eventId, "m.replace", "m.room.message", opts);
+                roomId,
+                eventId,
+                "m.replace",
+                "m.room.message",
+                opts,
+            );
         } catch (error) {
             // log if the server returned an error
             if (error.errcode) {
@@ -68,17 +76,20 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
 
         const newEvents = result.events;
         this._locallyRedactEventsIfNeeded(newEvents);
-        this.setState({
-            originalEvent: this.state.originalEvent || result.originalEvent,
-            events: this.state.events.concat(newEvents),
-            nextBatch: result.nextBatch,
-            isLoading: false,
-        }, () => {
-            const hasMoreResults = !!this.state.nextBatch;
-            resolve(hasMoreResults);
-        });
+        this.setState(
+            {
+                originalEvent: this.state.originalEvent || result.originalEvent,
+                events: this.state.events.concat(newEvents),
+                nextBatch: result.nextBatch,
+                isLoading: false,
+            },
+            () => {
+                const hasMoreResults = !!this.state.nextBatch;
+                resolve(hasMoreResults);
+            },
+        );
         return promise;
-    }
+    };
 
     _locallyRedactEventsIfNeeded(newEvents) {
         const roomId = this.props.mxEvent.getRoomId();
@@ -86,8 +97,11 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
         const room = client.getRoom(roomId);
         const pendingEvents = room.getPendingEvents();
         for (const e of newEvents) {
-            const pendingRedaction = pendingEvents.find(pe => {
-                return pe.getType() === "m.room.redaction" && pe.getAssociatedId() === e.getId();
+            const pendingRedaction = pendingEvents.find((pe) => {
+                return (
+                    pe.getType() === "m.room.redaction" &&
+                    pe.getAssociatedId() === e.getId()
+                );
             });
             if (pendingRedaction) {
                 e.markLocallyRedacted(pendingRedaction);
@@ -100,8 +114,10 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
     }
 
     _renderEdits() {
-        const EditHistoryMessage = sdk.getComponent('messages.EditHistoryMessage');
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
+        const EditHistoryMessage = sdk.getComponent(
+            "messages.EditHistoryMessage",
+        );
+        const DateSeparator = sdk.getComponent("messages.DateSeparator");
         const nodes = [];
         let lastEvent;
         let allEvents = this.state.events;
@@ -111,18 +127,26 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
         }
         const baseEventId = this.props.mxEvent.getId();
         allEvents.forEach((e, i) => {
-            if (!lastEvent || wantsDateSeparator(lastEvent.getDate(), e.getDate())) {
-                nodes.push(<li key={e.getTs() + "~"}><DateSeparator ts={e.getTs()} /></li>);
+            if (
+                !lastEvent ||
+                wantsDateSeparator(lastEvent.getDate(), e.getDate())
+            ) {
+                nodes.push(
+                    <li key={e.getTs() + "~"}>
+                        <DateSeparator ts={e.getTs()} />
+                    </li>,
+                );
             }
             const isBaseEvent = e.getId() === baseEventId;
-            nodes.push((
+            nodes.push(
                 <EditHistoryMessage
                     key={e.getId()}
                     previousEdit={!isBaseEvent ? allEvents[i + 1] : null}
                     isBaseEvent={isBaseEvent}
                     mxEvent={e}
                     isTwelveHour={this.state.isTwelveHour}
-                />));
+                />,
+            );
             lastEvent = e;
         });
         return nodes;
@@ -133,44 +157,58 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
         if (this.state.error) {
             const { error } = this.state;
             if (error.errcode === "M_UNRECOGNIZED") {
-                content = (<p className="mx_MessageEditHistoryDialog_error">
-                    { _t("Your homeserver doesn't seem to support this feature.") }
-                </p>);
+                content = (
+                    <p className="mx_MessageEditHistoryDialog_error">
+                        {_t(
+                            "Your homeserver doesn't seem to support this feature.",
+                        )}
+                    </p>
+                );
             } else if (error.errcode) {
                 // some kind of error from the homeserver
-                content = (<p className="mx_MessageEditHistoryDialog_error">
-                    { _t("Something went wrong!") }
-                </p>);
+                content = (
+                    <p className="mx_MessageEditHistoryDialog_error">
+                        {_t("Something went wrong!")}
+                    </p>
+                );
             } else {
-                content = (<p className="mx_MessageEditHistoryDialog_error">
-                    { _t("Cannot reach homeserver") }
-                    <br />
-                    { _t("Ensure you have a stable internet connection, or get in touch with the server admin") }
-                </p>);
+                content = (
+                    <p className="mx_MessageEditHistoryDialog_error">
+                        {_t("Cannot reach homeserver")}
+                        <br />
+                        {_t(
+                            "Ensure you have a stable internet connection, or get in touch with the server admin",
+                        )}
+                    </p>
+                );
             }
         } else if (this.state.isLoading) {
             const Spinner = sdk.getComponent("elements.Spinner");
             content = <Spinner />;
         } else {
             const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
-            content = (<ScrollPanel
-                className="mx_MessageEditHistoryDialog_scrollPanel"
-                onFillRequest={this.loadMoreEdits}
-                stickyBottom={false}
-                startAtBottom={false}
-            >
-                <ul className="mx_MessageEditHistoryDialog_edits">{ this._renderEdits() }</ul>
-            </ScrollPanel>);
+            content = (
+                <ScrollPanel
+                    className="mx_MessageEditHistoryDialog_scrollPanel"
+                    onFillRequest={this.loadMoreEdits}
+                    stickyBottom={false}
+                    startAtBottom={false}
+                >
+                    <ul className="mx_MessageEditHistoryDialog_edits">
+                        {this._renderEdits()}
+                    </ul>
+                </ScrollPanel>
+            );
         }
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
+        const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
         return (
             <BaseDialog
-                className='mx_MessageEditHistoryDialog'
+                className="mx_MessageEditHistoryDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
                 title={_t("Message edits")}
             >
-                { content }
+                {content}
             </BaseDialog>
         );
     }

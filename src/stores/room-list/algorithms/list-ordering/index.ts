@@ -24,10 +24,13 @@ interface AlgorithmFactory {
     (tagId: TagID, initialSortingAlgorithm: SortAlgorithm): OrderingAlgorithm;
 }
 
-const ALGORITHM_FACTORIES: { [algorithm in ListAlgorithm]: AlgorithmFactory } = {
-    [ListAlgorithm.Natural]: (tagId, initSort) => new NaturalAlgorithm(tagId, initSort),
-    [ListAlgorithm.Importance]: (tagId, initSort) => new ImportanceAlgorithm(tagId, initSort),
-};
+const ALGORITHM_FACTORIES: { [algorithm in ListAlgorithm]: AlgorithmFactory } =
+    {
+        [ListAlgorithm.Natural]: (tagId, initSort) =>
+            new NaturalAlgorithm(tagId, initSort),
+        [ListAlgorithm.Importance]: (tagId, initSort) =>
+            new ImportanceAlgorithm(tagId, initSort),
+    };
 
 /**
  * Gets an instance of the defined algorithm

@@ -22,8 +22,7 @@ export class LazyValue<T> {
     private prom: Promise<T>;
     private done = false;
 
-    public constructor(private getFn: () => Promise<T>) {
-    }
+    public constructor(private getFn: () => Promise<T>) {}
 
     /**
      * Whether or not a cached value is present.
@@ -49,7 +48,7 @@ export class LazyValue<T> {
         this.prom = this.getFn();
 
         // Fork the promise chain to avoid accidentally making it return undefined always.
-        this.prom.then(v => {
+        this.prom.then((v) => {
             this.val = v;
             this.done = true;
         });

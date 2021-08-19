@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 const CALL_BEHAVIOUR_WK_KEY = "io.element.call_behaviour";
 const E2EE_WK_KEY = "io.element.e2ee";
@@ -65,8 +65,12 @@ export function getSecureBackupSetupMethods(): SecureBackupSetupMethod[] {
         !wellKnown["secure_backup_setup_methods"] ||
         !wellKnown["secure_backup_setup_methods"].length ||
         !(
-            wellKnown["secure_backup_setup_methods"].includes(SecureBackupSetupMethod.Key) ||
-            wellKnown["secure_backup_setup_methods"].includes(SecureBackupSetupMethod.Passphrase)
+            wellKnown["secure_backup_setup_methods"].includes(
+                SecureBackupSetupMethod.Key,
+            ) ||
+            wellKnown["secure_backup_setup_methods"].includes(
+                SecureBackupSetupMethod.Passphrase,
+            )
         )
     ) {
         return [

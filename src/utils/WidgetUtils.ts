@@ -16,14 +16,19 @@ limitations under the License.
 */
 
 import * as url from "url";
-import { Capability, IWidget, IWidgetData, MatrixCapabilities } from "matrix-widget-api";
+import {
+    Capability,
+    IWidget,
+    IWidgetData,
+    MatrixCapabilities,
+} from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 import SdkConfig from "../SdkConfig";
-import dis from '../dispatcher/dispatcher';
-import WidgetEchoStore from '../stores/WidgetEchoStore';
+import dis from "../dispatcher/dispatcher";
+import WidgetEchoStore from "../stores/WidgetEchoStore";
 import SettingsStore from "../settings/SettingsStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
 import { WidgetType } from "../widgets/WidgetType";
@@ -53,13 +58,13 @@ export default class WidgetUtils {
      */
     static canUserModifyWidgets(roomId: string): boolean {
         if (!roomId) {
-            console.warn('No room ID specified');
+            console.warn("No room ID specified");
             return false;
         }
 
         const client = MatrixClientPeg.get();
         if (!client) {
-            console.warn('User must be be logged in');
+            console.warn("User must be be logged in");
             return false;
         }
 
@@ -71,7 +76,7 @@ export default class WidgetUtils {
 
         const me = client.credentials.userId;
         if (!me) {
-            console.warn('Failed to get user ID');
+            console.warn("Failed to get user ID");
             return false;
         }
 
@@ -81,7 +86,10 @@ export default class WidgetUtils {
         }
 
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        return room.currentState.maySendStateEvent('im.vector.modular.widgets', me);
+        return room.currentState.maySendStateEvent(
+            "im.vector.modular.widgets",
+            me,
+        );
     }
 
     // TODO: Generify the name of this function. It's not just scalar.
@@ -92,14 +100,15 @@ export default class WidgetUtils {
      */
     static isScalarUrl(testUrlString: string): boolean {
         if (!testUrlString) {
-            console.error('Scalar URL check failed. No URL specified');
+            console.error("Scalar URL check failed. No URL specified");
             return false;
         }
 
         const testUrl = url.parse(testUrlString);
         let scalarUrls = SdkConfig.get().integrations_widgets_urls;
         if (!scalarUrls || scalarUrls.length === 0) {
-            const defaultManager = IntegrationManagers.sharedInstance().getPrimaryManager();
+            const defaultManager =
+                IntegrationManagers.sharedInstance().getPrimaryManager();
             if (defaultManager) {
                 scalarUrls = [defaultManager.apiUrl];
             } else {
@@ -146,25 +155,39 @@ export default class WidgetUtils {
                 }
             }
 
-            const startingAccountDataEvent = MatrixClientPeg.get().getAccountData('m.widgets');
+            const startingAccountDataEvent =
+                MatrixClientPeg.get().getAccountData("m.widgets");
             if (eventInIntendedState(startingAccountDataEvent)) {
                 resolve();
                 return;
             }
 
             function onAccountData(ev) {
-                const currentAccountDataEvent = MatrixClientPeg.get().getAccountData('m.widgets');
+                const currentAccountDataEvent =
+                    MatrixClientPeg.get().getAccountData("m.widgets");
                 if (eventInIntendedState(currentAccountDataEvent)) {
-                    MatrixClientPeg.get().removeListener('accountData', onAccountData);
+                    MatrixClientPeg.get().removeListener(
+                        "accountData",
+                        onAccountData,
+                    );
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = setTimeout(() => {
-                MatrixClientPeg.get().removeListener('accountData', onAccountData);
-                reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
+                MatrixClientPeg.get().removeListener(
+                    "accountData",
+                    onAccountData,
+                );
+                reject(
+                    new Error(
+                        "Timed out waiting for widget ID " +
+                            widgetId +
+                            " to appear",
+                    ),
+                );
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on('accountData', onAccountData);
+            MatrixClientPeg.get().on("accountData", onAccountData);
         });
     }
 
@@ -180,13 +203,19 @@ export default class WidgetUtils {
      * @returns {Promise} that resolves when the widget is in the
      *     requested state according to the `add` param
      */
-    static waitForRoomWidget(widgetId: string, roomId: string, add: boolean): Promise<void> {
+    static waitForRoomWidget(
+        widgetId: string,
+        roomId: string,
+        add: boolean,
+    ): Promise<void> {
         return new Promise((resolve, reject) => {
             // Tests a list of state events, returning true if it's in the state
             // we're waiting for it to be in
             function eventsInIntendedState(evList) {
                 const widgetPresent = evList.some((ev) => {
-                    return ev.getContent() && ev.getContent()['id'] === widgetId;
+                    return (
+                        ev.getContent() && ev.getContent()["id"] === widgetId
+                    );
                 });
                 if (add) {
                     return widgetPresent;
@@ -197,7 +226,9 @@ export default class WidgetUtils {
 
             const room = MatrixClientPeg.get().getRoom(roomId);
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-            const startingWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+            const startingWidgetEvents = room.currentState.getStateEvents(
+                "im.vector.modular.widgets",
+            );
             if (eventsInIntendedState(startingWidgetEvents)) {
                 resolve();
                 return;
@@ -207,19 +238,33 @@ export default class WidgetUtils {
                 if (ev.getRoomId() !== roomId) return;
 
                 // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-                const currentWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+                const currentWidgetEvents = room.currentState.getStateEvents(
+                    "im.vector.modular.widgets",
+                );
 
                 if (eventsInIntendedState(currentWidgetEvents)) {
-                    MatrixClientPeg.get().removeListener('RoomState.events', onRoomStateEvents);
+                    MatrixClientPeg.get().removeListener(
+                        "RoomState.events",
+                        onRoomStateEvents,
+                    );
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = setTimeout(() => {
-                MatrixClientPeg.get().removeListener('RoomState.events', onRoomStateEvents);
-                reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
+                MatrixClientPeg.get().removeListener(
+                    "RoomState.events",
+                    onRoomStateEvents,
+                );
+                reject(
+                    new Error(
+                        "Timed out waiting for widget ID " +
+                            widgetId +
+                            " to appear",
+                    ),
+                );
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on('RoomState.events', onRoomStateEvents);
+            MatrixClientPeg.get().on("RoomState.events", onRoomStateEvents);
         });
     }
 
@@ -257,7 +302,7 @@ export default class WidgetUtils {
                 content: content,
                 sender: client.getUserId(),
                 state_key: widgetId,
-                type: 'm.widget',
+                type: "m.widget",
                 id: widgetId,
             };
         }
@@ -266,11 +311,14 @@ export default class WidgetUtils {
         // since the widget won't appear added until this happens. If we don't
         // wait for this, the action will complete but if the user is fast enough,
         // the widget still won't actually be there.
-        return client.setAccountData('m.widgets', userWidgets).then(() => {
-            return WidgetUtils.waitForUserWidget(widgetId, addingWidget);
-        }).then(() => {
-            dis.dispatch({ action: "user_widget_updated" });
-        });
+        return client
+            .setAccountData("m.widgets", userWidgets)
+            .then(() => {
+                return WidgetUtils.waitForUserWidget(widgetId, addingWidget);
+            })
+            .then(() => {
+                dis.dispatch({ action: "user_widget_updated" });
+            });
     }
 
     static setRoomWidget(
@@ -312,11 +360,23 @@ export default class WidgetUtils {
 
         const client = MatrixClientPeg.get();
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        return client.sendStateEvent(roomId, "im.vector.modular.widgets", content, widgetId).then(() => {
-            return WidgetUtils.waitForRoomWidget(widgetId, roomId, addingWidget);
-        }).finally(() => {
-            WidgetEchoStore.removeRoomWidgetEcho(roomId, widgetId);
-        });
+        return client
+            .sendStateEvent(
+                roomId,
+                "im.vector.modular.widgets",
+                content,
+                widgetId,
+            )
+            .then(() => {
+                return WidgetUtils.waitForRoomWidget(
+                    widgetId,
+                    roomId,
+                    addingWidget,
+                );
+            })
+            .finally(() => {
+                WidgetEchoStore.removeRoomWidgetEcho(roomId, widgetId);
+            });
     }
 
     /**
@@ -326,7 +386,9 @@ export default class WidgetUtils {
      */
     static getRoomWidgets(room: Room) {
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        const appsStateEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+        const appsStateEvents = room.currentState.getStateEvents(
+            "im.vector.modular.widgets",
+        );
         if (!appsStateEvents) {
             return [];
         }
@@ -343,9 +405,9 @@ export default class WidgetUtils {
     static getUserWidgets(): Record<string, IWidgetEvent> {
         const client = MatrixClientPeg.get();
         if (!client) {
-            throw new Error('User not logged in');
+            throw new Error("User not logged in");
         }
-        const userWidgets = client.getAccountData('m.widgets');
+        const userWidgets = client.getAccountData("m.widgets");
         if (userWidgets && userWidgets.getContent()) {
             return userWidgets.getContent();
         }
@@ -366,7 +428,10 @@ export default class WidgetUtils {
      */
     static getStickerpickerWidgets(): IWidgetEvent[] {
         const widgets = WidgetUtils.getUserWidgetsArray();
-        return widgets.filter((widget) => widget.content && widget.content.type === "m.stickerpicker");
+        return widgets.filter(
+            (widget) =>
+                widget.content && widget.content.type === "m.stickerpicker",
+        );
     }
 
     /**
@@ -375,12 +440,14 @@ export default class WidgetUtils {
      */
     static getIntegrationManagerWidgets(): IWidgetEvent[] {
         const widgets = WidgetUtils.getUserWidgetsArray();
-        return widgets.filter(w => w.content && w.content.type === "m.integration_manager");
+        return widgets.filter(
+            (w) => w.content && w.content.type === "m.integration_manager",
+        );
     }
 
     static getRoomWidgetsOfType(room: Room, type: WidgetType): MatrixEvent[] {
         const widgets = WidgetUtils.getRoomWidgets(room) || [];
-        return widgets.filter(w => {
+        return widgets.filter((w) => {
             const content = w.getContent();
             return content.url && type.matches(content.type);
         });
@@ -389,26 +456,34 @@ export default class WidgetUtils {
     static async removeIntegrationManagerWidgets(): Promise<void> {
         const client = MatrixClientPeg.get();
         if (!client) {
-            throw new Error('User not logged in');
+            throw new Error("User not logged in");
         }
-        const widgets = client.getAccountData('m.widgets');
+        const widgets = client.getAccountData("m.widgets");
         if (!widgets) return;
-        const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
+        const userWidgets: Record<string, IWidgetEvent> =
+            widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
-            if (widget.content && widget.content.type === "m.integration_manager") {
+            if (
+                widget.content &&
+                widget.content.type === "m.integration_manager"
+            ) {
                 delete userWidgets[key];
             }
         });
-        await client.setAccountData('m.widgets', userWidgets);
+        await client.setAccountData("m.widgets", userWidgets);
     }
 
-    static addIntegrationManagerWidget(name: string, uiUrl: string, apiUrl: string): Promise<void> {
+    static addIntegrationManagerWidget(
+        name: string,
+        uiUrl: string,
+        apiUrl: string,
+    ): Promise<void> {
         return WidgetUtils.setUserWidget(
-            "integration_manager_" + (new Date().getTime()),
+            "integration_manager_" + new Date().getTime(),
             WidgetType.INTEGRATION_MANAGER,
             uiUrl,
             "Integration manager: " + name,
-            { "api_url": apiUrl },
+            { api_url: apiUrl },
         );
     }
 
@@ -419,17 +494,18 @@ export default class WidgetUtils {
     static async removeStickerpickerWidgets(): Promise<void> {
         const client = MatrixClientPeg.get();
         if (!client) {
-            throw new Error('User not logged in');
+            throw new Error("User not logged in");
         }
-        const widgets = client.getAccountData('m.widgets');
+        const widgets = client.getAccountData("m.widgets");
         if (!widgets) return;
-        const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
+        const userWidgets: Record<string, IWidgetEvent> =
+            widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
-            if (widget.content && widget.content.type === 'm.stickerpicker') {
+            if (widget.content && widget.content.type === "m.stickerpicker") {
                 delete userWidgets[key];
             }
         });
-        await client.setAccountData('m.widgets', userWidgets);
+        await client.setAccountData("m.widgets", userWidgets);
     }
 
     static makeAppConfig(
@@ -440,7 +516,9 @@ export default class WidgetUtils {
         eventId: string,
     ): IApp {
         if (!senderUserId) {
-            throw new Error("Widgets must be created by someone - provide a senderUserId");
+            throw new Error(
+                "Widgets must be created by someone - provide a senderUserId",
+            );
         }
         app.creatorUserId = senderUserId;
 
@@ -452,10 +530,18 @@ export default class WidgetUtils {
         return app as IApp;
     }
 
-    static getCapWhitelistForAppTypeInRoomId(appType: string, roomId: string): Capability[] {
-        const enableScreenshots = SettingsStore.getValue("enableWidgetScreenshots", roomId);
+    static getCapWhitelistForAppTypeInRoomId(
+        appType: string,
+        roomId: string,
+    ): Capability[] {
+        const enableScreenshots = SettingsStore.getValue(
+            "enableWidgetScreenshots",
+            roomId,
+        );
 
-        const capWhitelist = enableScreenshots ? [MatrixCapabilities.Screenshots] : [];
+        const capWhitelist = enableScreenshots
+            ? [MatrixCapabilities.Screenshots]
+            : [];
 
         // Obviously anyone that can add a widget can claim it's a jitsi widget,
         // so this doesn't really offer much over the set of domains we load
@@ -467,23 +553,25 @@ export default class WidgetUtils {
         return capWhitelist;
     }
 
-    static getLocalJitsiWrapperUrl(opts: {forLocalRender?: boolean, auth?: string} = {}) {
+    static getLocalJitsiWrapperUrl(
+        opts: { forLocalRender?: boolean; auth?: string } = {},
+    ) {
         // NB. we can't just encodeURIComponent all of these because the $ signs need to be there
         const queryStringParts = [
-            'conferenceDomain=$domain',
-            'conferenceId=$conferenceId',
-            'isAudioOnly=$isAudioOnly',
-            'displayName=$matrix_display_name',
-            'avatarUrl=$matrix_avatar_url',
-            'userId=$matrix_user_id',
-            'roomId=$matrix_room_id',
-            'theme=$theme',
-            'roomName=$roomName',
+            "conferenceDomain=$domain",
+            "conferenceId=$conferenceId",
+            "isAudioOnly=$isAudioOnly",
+            "displayName=$matrix_display_name",
+            "avatarUrl=$matrix_avatar_url",
+            "userId=$matrix_user_id",
+            "roomId=$matrix_room_id",
+            "theme=$theme",
+            "roomName=$roomName",
         ];
         if (opts.auth) {
             queryStringParts.push(`auth=${opts.auth}`);
         }
-        const queryString = queryStringParts.join('&');
+        const queryString = queryStringParts.join("&");
 
         let baseUrl = window.location.href;
         if (window.location.protocol !== "https:" && !opts.forLocalRender) {
@@ -509,9 +597,15 @@ export default class WidgetUtils {
     static editWidget(room: Room, app: IApp): void {
         // TODO: Open the right manager for the widget
         if (SettingsStore.getValue("feature_many_integration_managers")) {
-            IntegrationManagers.sharedInstance().openAll(room, 'type_' + app.type, app.id);
+            IntegrationManagers.sharedInstance().openAll(
+                room,
+                "type_" + app.type,
+                app.id,
+            );
         } else {
-            IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
+            IntegrationManagers.sharedInstance()
+                .getPrimaryManager()
+                .open(room, "type_" + app.type, app.id);
         }
     }
 

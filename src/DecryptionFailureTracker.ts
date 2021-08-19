@@ -20,7 +20,10 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 export class DecryptionFailure {
     public readonly ts: number;
 
-    constructor(public readonly failedEventId: string, public readonly errorCode: string) {
+    constructor(
+        public readonly failedEventId: string,
+        public readonly errorCode: string,
+    ) {
         this.ts = Date.now();
     }
 }
@@ -73,13 +76,20 @@ export class DecryptionFailureTracker {
      * @param {function?} errorCodeMapFn The function used to map error codes to the
      * trackedErrorCode. If not provided, the `.code` of errors will be used.
      */
-    constructor(private readonly fn: TrackingFn, private readonly errorCodeMapFn?: ErrCodeMapFn) {
-        if (!fn || typeof fn !== 'function') {
-            throw new Error('DecryptionFailureTracker requires tracking function');
+    constructor(
+        private readonly fn: TrackingFn,
+        private readonly errorCodeMapFn?: ErrCodeMapFn,
+    ) {
+        if (!fn || typeof fn !== "function") {
+            throw new Error(
+                "DecryptionFailureTracker requires tracking function",
+            );
         }
 
-        if (errorCodeMapFn && typeof errorCodeMapFn !== 'function') {
-            throw new Error('DecryptionFailureTracker second constructor argument should be a function');
+        if (errorCodeMapFn && typeof errorCodeMapFn !== "function") {
+            throw new Error(
+                "DecryptionFailureTracker second constructor argument should be a function",
+            );
         }
     }
 
@@ -93,7 +103,9 @@ export class DecryptionFailureTracker {
 
     public eventDecrypted(e: MatrixEvent, err: MatrixError | Error): void {
         if (err) {
-            this.addDecryptionFailure(new DecryptionFailure(e.getId(), err.code));
+            this.addDecryptionFailure(
+                new DecryptionFailure(e.getId(), err.code),
+            );
         } else {
             // Could be an event in the failures, remove it
             this.removeDecryptionFailuresForEvent(e);
@@ -105,7 +117,9 @@ export class DecryptionFailureTracker {
     }
 
     public removeDecryptionFailuresForEvent(e: MatrixEvent): void {
-        this.failures = this.failures.filter((f) => f.failedEventId !== e.getId());
+        this.failures = this.failures.filter(
+            (f) => f.failedEventId !== e.getId(),
+        );
     }
 
     /**
@@ -184,7 +198,8 @@ export class DecryptionFailureTracker {
     private aggregateFailures(failures: DecryptionFailure[]): void {
         for (const failure of failures) {
             const errorCode = failure.errorCode;
-            this.failureCounts[errorCode] = (this.failureCounts[errorCode] || 0) + 1;
+            this.failureCounts[errorCode] =
+                (this.failureCounts[errorCode] || 0) + 1;
         }
     }
 
@@ -195,7 +210,9 @@ export class DecryptionFailureTracker {
     public trackFailures(): void {
         for (const errorCode of Object.keys(this.failureCounts)) {
             if (this.failureCounts[errorCode] > 0) {
-                const trackedErrorCode = this.errorCodeMapFn ? this.errorCodeMapFn(errorCode) : errorCode;
+                const trackedErrorCode = this.errorCodeMapFn
+                    ? this.errorCodeMapFn(errorCode)
+                    : errorCode;
 
                 this.fn(this.failureCounts[errorCode], trackedErrorCode);
                 this.failureCounts[errorCode] = 0;

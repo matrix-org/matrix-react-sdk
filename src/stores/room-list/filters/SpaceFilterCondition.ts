@@ -17,7 +17,11 @@ limitations under the License.
 import { EventEmitter } from "events";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./IFilterCondition";
+import {
+    FILTER_CHANGED,
+    FilterKind,
+    IFilterCondition,
+} from "./IFilterCondition";
 import { IDestroyable } from "../../../utils/IDestroyable";
 import SpaceStore, { HOME_SPACE } from "../../SpaceStore";
 import { setHasDiff } from "../../../utils/sets";
@@ -28,7 +32,10 @@ import { setHasDiff } from "../../../utils/sets";
  *  + Orphaned rooms (ones not in any space you are a part of)
  *  + All DMs
  */
-export class SpaceFilterCondition extends EventEmitter implements IFilterCondition, IDestroyable {
+export class SpaceFilterCondition
+    extends EventEmitter
+    implements IFilterCondition, IDestroyable
+{
     private roomIds = new Set<string>();
     private space: Room = null;
 
@@ -43,7 +50,9 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
     private onStoreUpdate = async (): Promise<void> => {
         const beforeRoomIds = this.roomIds;
         // clone the set as it may be mutated by the space store internally
-        this.roomIds = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(this.space));
+        this.roomIds = new Set(
+            SpaceStore.instance.getSpaceFilteredRoomIds(this.space),
+        );
 
         if (setHasDiff(beforeRoomIds, this.roomIds)) {
             this.emit(FILTER_CHANGED);
@@ -55,15 +64,25 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
         }
     };
 
-    private getSpaceEventKey = (space: Room | null) => space ? space.roomId : HOME_SPACE;
+    private getSpaceEventKey = (space: Room | null) =>
+        space ? space.roomId : HOME_SPACE;
 
     public updateSpace(space: Room) {
-        SpaceStore.instance.off(this.getSpaceEventKey(this.space), this.onStoreUpdate);
-        SpaceStore.instance.on(this.getSpaceEventKey(this.space = space), this.onStoreUpdate);
+        SpaceStore.instance.off(
+            this.getSpaceEventKey(this.space),
+            this.onStoreUpdate,
+        );
+        SpaceStore.instance.on(
+            this.getSpaceEventKey((this.space = space)),
+            this.onStoreUpdate,
+        );
         this.onStoreUpdate(); // initial update from the change to the space
     }
 
     public destroy(): void {
-        SpaceStore.instance.off(this.getSpaceEventKey(this.space), this.onStoreUpdate);
+        SpaceStore.instance.off(
+            this.getSpaceEventKey(this.space),
+            this.onStoreUpdate,
+        );
     }
 }

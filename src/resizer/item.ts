@@ -28,7 +28,11 @@ export default class ResizeItem<C extends IConfig = IConfig> {
         public readonly sizer: Sizer,
     ) {
         this.reverse = resizer.isReverseResizeHandle(handle);
-        this.domNode = <HTMLElement>(this.reverse ? handle.nextElementSibling : handle.previousElementSibling);
+        this.domNode = <HTMLElement>(
+            (this.reverse
+                ? handle.nextElementSibling
+                : handle.previousElementSibling)
+        );
         this.id = handle.getAttribute("data-id");
     }
 
@@ -39,7 +43,9 @@ export default class ResizeItem<C extends IConfig = IConfig> {
 
     private advance(forwards: boolean) {
         // opposite direction from fromResizeHandle to get back to handle
-        let handle = this.reverse ? this.domNode.previousElementSibling : this.domNode.nextElementSibling;
+        let handle = this.reverse
+            ? this.domNode.previousElementSibling
+            : this.domNode.nextElementSibling;
         const moveNext = forwards !== this.reverse; // xor
         // iterate at least once to avoid infinite loop
         do {
@@ -51,7 +57,11 @@ export default class ResizeItem<C extends IConfig = IConfig> {
         } while (handle && !this.resizer.isResizeHandle(<HTMLElement>handle));
 
         if (handle) {
-            const nextHandle = this.copyWith(<HTMLElement>handle, this.resizer, this.sizer);
+            const nextHandle = this.copyWith(
+                <HTMLElement>handle,
+                this.resizer,
+                this.sizer,
+            );
             nextHandle.reverse = this.reverse;
             return nextHandle;
         }
@@ -106,20 +116,32 @@ export default class ResizeItem<C extends IConfig = IConfig> {
     }
 
     public first() {
-        const firstHandle = Array.from(this.domNode.parentElement.children).find(el => {
+        const firstHandle = Array.from(
+            this.domNode.parentElement.children,
+        ).find((el) => {
             return this.resizer.isResizeHandle(<HTMLElement>el);
         });
         if (firstHandle) {
-            return this.copyWith(<HTMLElement>firstHandle, this.resizer, this.sizer);
+            return this.copyWith(
+                <HTMLElement>firstHandle,
+                this.resizer,
+                this.sizer,
+            );
         }
     }
 
     public last() {
-        const lastHandle = Array.from(this.domNode.parentElement.children).reverse().find(el => {
-            return this.resizer.isResizeHandle(<HTMLElement>el);
-        });
+        const lastHandle = Array.from(this.domNode.parentElement.children)
+            .reverse()
+            .find((el) => {
+                return this.resizer.isResizeHandle(<HTMLElement>el);
+            });
         if (lastHandle) {
-            return this.copyWith(<HTMLElement>lastHandle, this.resizer, this.sizer);
+            return this.copyWith(
+                <HTMLElement>lastHandle,
+                this.resizer,
+                this.sizer,
+            );
         }
     }
 }

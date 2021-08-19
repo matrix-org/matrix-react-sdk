@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 class ItemRange {
@@ -32,8 +32,11 @@ class ItemRange {
         if (!range.renderCount && this.renderCount) {
             return false;
         }
-        return range.topCount >= this.topCount &&
-            (range.topCount + range.renderCount) <= (this.topCount + this.renderCount);
+        return (
+            range.topCount >= this.topCount &&
+            range.topCount + range.renderCount <=
+                this.topCount + this.renderCount
+        );
     }
 
     expand(amount) {
@@ -68,10 +71,16 @@ export default class LazyRenderList extends React.Component {
         const range = LazyRenderList.getVisibleRangeFromProps(props);
         const intersectRange = range.expand(props.overflowMargin);
         const renderRange = range.expand(props.overflowItems);
-        const listHasChangedSize = !!state.renderRange && renderRange.totalSize() !== state.renderRange.totalSize();
+        const listHasChangedSize =
+            !!state.renderRange &&
+            renderRange.totalSize() !== state.renderRange.totalSize();
         // only update render Range if the list has shrunk/grown and we need to adjust padding OR
         // if the new range + overflowMargin isn't contained by the old anymore
-        if (listHasChangedSize || !state.renderRange || !state.renderRange.contains(intersectRange)) {
+        if (
+            listHasChangedSize ||
+            !state.renderRange ||
+            !state.renderRange.contains(intersectRange)
+        ) {
             return { renderRange };
         }
         return null;
@@ -80,7 +89,10 @@ export default class LazyRenderList extends React.Component {
     static getVisibleRangeFromProps(props) {
         const { items, itemHeight, scrollTop, height } = props;
         const length = items ? items.length : 0;
-        const topCount = Math.min(Math.max(0, Math.floor(scrollTop / itemHeight)), length);
+        const topCount = Math.min(
+            Math.max(0, Math.floor(scrollTop / itemHeight)),
+            length,
+        );
         const itemsAfterTop = length - topCount;
         const visibleItems = height !== 0 ? Math.ceil(height / itemHeight) : 0;
         const renderCount = Math.min(visibleItems, itemsAfterTop);
@@ -102,10 +114,17 @@ export default class LazyRenderList extends React.Component {
 
         const element = this.props.element || "div";
         const elementProps = {
-            "style": { paddingTop: `${paddingTop}px`, paddingBottom: `${paddingBottom}px` },
-            "className": this.props.className,
+            style: {
+                paddingTop: `${paddingTop}px`,
+                paddingBottom: `${paddingBottom}px`,
+            },
+            className: this.props.className,
         };
-        return React.createElement(element, elementProps, renderedItems.map(renderItem));
+        return React.createElement(
+            element,
+            elementProps,
+            renderedItems.map(renderItem),
+        );
     }
 }
 

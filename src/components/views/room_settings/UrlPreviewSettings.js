@@ -17,10 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import * as sdk from "../../../index";
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -50,22 +50,39 @@ export default class UrlPreviewSettings extends React.Component {
 
         if (!isEncrypted) {
             // Only show account setting state and room state setting state in non-e2ee rooms where they apply
-            const accountEnabled = SettingsStore.getValueAt(SettingLevel.ACCOUNT, "urlPreviewsEnabled");
+            const accountEnabled = SettingsStore.getValueAt(
+                SettingLevel.ACCOUNT,
+                "urlPreviewsEnabled",
+            );
             if (accountEnabled) {
-                previewsForAccount = (
-                    _t("You have <a>enabled</a> URL previews by default.", {}, {
-                        'a': (sub)=><a onClick={this._onClickUserSettings} href=''>{ sub }</a>,
-                    })
+                previewsForAccount = _t(
+                    "You have <a>enabled</a> URL previews by default.",
+                    {},
+                    {
+                        a: (sub) => (
+                            <a onClick={this._onClickUserSettings} href="">
+                                {sub}
+                            </a>
+                        ),
+                    },
                 );
             } else {
-                previewsForAccount = (
-                    _t("You have <a>disabled</a> URL previews by default.", {}, {
-                        'a': (sub)=><a onClick={this._onClickUserSettings} href=''>{ sub }</a>,
-                    })
+                previewsForAccount = _t(
+                    "You have <a>disabled</a> URL previews by default.",
+                    {},
+                    {
+                        a: (sub) => (
+                            <a onClick={this._onClickUserSettings} href="">
+                                {sub}
+                            </a>
+                        ),
+                    },
                 );
             }
 
-            if (SettingsStore.canSetValue("urlPreviewsEnabled", roomId, "room")) {
+            if (
+                SettingsStore.canSetValue("urlPreviewsEnabled", roomId, "room")
+            ) {
                 previewsForRoom = (
                     <label>
                         <SettingsFlag
@@ -77,37 +94,56 @@ export default class UrlPreviewSettings extends React.Component {
                     </label>
                 );
             } else {
-                let str = _td("URL previews are enabled by default for participants in this room.");
-                if (!SettingsStore.getValueAt(SettingLevel.ROOM, "urlPreviewsEnabled", roomId, /*explicit=*/true)) {
-                    str = _td("URL previews are disabled by default for participants in this room.");
+                let str = _td(
+                    "URL previews are enabled by default for participants in this room.",
+                );
+                if (
+                    !SettingsStore.getValueAt(
+                        SettingLevel.ROOM,
+                        "urlPreviewsEnabled",
+                        roomId,
+                        /*explicit=*/ true,
+                    )
+                ) {
+                    str = _td(
+                        "URL previews are disabled by default for participants in this room.",
+                    );
                 }
-                previewsForRoom = (<label>{ _t(str) }</label>);
+                previewsForRoom = <label>{_t(str)}</label>;
             }
         } else {
-            previewsForAccount = (
-                _t("In encrypted rooms, like this one, URL previews are disabled by default to ensure that your " +
+            previewsForAccount = _t(
+                "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your " +
                     "homeserver (where the previews are generated) cannot gather information about links you see in " +
-                    "this room.")
+                    "this room.",
             );
         }
 
         const previewsForRoomAccount = ( // in an e2ee room we use a special key to enforce per-room opt-in
-            <SettingsFlag name={isEncrypted ? 'urlPreviewsEnabled_e2ee' : 'urlPreviewsEnabled'}
+            <SettingsFlag
+                name={
+                    isEncrypted
+                        ? "urlPreviewsEnabled_e2ee"
+                        : "urlPreviewsEnabled"
+                }
                 level={SettingLevel.ROOM_ACCOUNT}
-                roomId={roomId} />
+                roomId={roomId}
+            />
         );
 
         return (
             <div>
-                <div className='mx_SettingsTab_subsectionText'>
-                    { _t('When someone puts a URL in their message, a URL preview can be shown to give more ' +
-                        'information about that link such as the title, description, and an image from the website.') }
+                <div className="mx_SettingsTab_subsectionText">
+                    {_t(
+                        "When someone puts a URL in their message, a URL preview can be shown to give more " +
+                            "information about that link such as the title, description, and an image from the website.",
+                    )}
                 </div>
-                <div className='mx_SettingsTab_subsectionText'>
-                    { previewsForAccount }
+                <div className="mx_SettingsTab_subsectionText">
+                    {previewsForAccount}
                 </div>
-                { previewsForRoom }
-                <label>{ previewsForRoomAccount }</label>
+                {previewsForRoom}
+                <label>{previewsForRoomAccount}</label>
             </div>
         );
     }

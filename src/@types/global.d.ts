@@ -169,7 +169,7 @@ declare global {
         process(
             inputs: Float32Array[][],
             outputs: Float32Array[][],
-            parameters: Record<string, Float32Array>
+            parameters: Record<string, Float32Array>,
         ): boolean;
     }
 
@@ -183,10 +183,10 @@ declare global {
     function registerProcessor(
         name: string,
         processorCtor: (new (
-            options?: AudioWorkletNodeOptions
+            options?: AudioWorkletNodeOptions,
         ) => AudioWorkletProcessor) & {
             parameterDescriptors?: AudioParamDescriptor[];
-        }
+        },
     );
 
     // eslint-disable-next-line no-var

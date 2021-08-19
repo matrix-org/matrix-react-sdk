@@ -16,7 +16,12 @@ limitations under the License.
 
 import EventEmitter from "events";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
-import { arrayFastResample, arrayRescale, arraySeed, arraySmoothingResample } from "../utils/arrays";
+import {
+    arrayFastResample,
+    arrayRescale,
+    arraySeed,
+    arraySmoothingResample,
+} from "../utils/arrays";
 import { SimpleObservable } from "matrix-widget-api";
 import { IDestroyable } from "../utils/IDestroyable";
 import { PlaybackClock } from "./PlaybackClock";
@@ -36,11 +41,15 @@ export const DEFAULT_WAVEFORM = arraySeed(0, PLAYBACK_WAVEFORM_SAMPLES);
 
 function makePlaybackWaveform(input: number[]): number[] {
     // First, convert negative amplitudes to positive so we don't detect zero as "noisy".
-    const noiseWaveform = input.map(v => Math.abs(v));
+    const noiseWaveform = input.map((v) => Math.abs(v));
 
     // Then, we'll resample the waveform using a smoothing approach so we can keep the same rough shape.
     // We also rescale the waveform to be 0-1 so we end up with a clamped waveform to rely upon.
-    return arrayRescale(arraySmoothingResample(noiseWaveform, PLAYBACK_WAVEFORM_SAMPLES), 0, 1);
+    return arrayRescale(
+        arraySmoothingResample(noiseWaveform, PLAYBACK_WAVEFORM_SAMPLES),
+        0,
+        1,
+    );
 }
 
 export class Playback extends EventEmitter implements IDestroyable {
@@ -71,8 +80,14 @@ export class Playback extends EventEmitter implements IDestroyable {
         // Capture the file size early as reading the buffer will result in a 0-length buffer left behind
         this.fileSize = this.buf.byteLength;
         this.context = createAudioContext();
-        this.resampledWaveform = arrayFastResample(seedWaveform ?? DEFAULT_WAVEFORM, PLAYBACK_WAVEFORM_SAMPLES);
-        this.thumbnailWaveform = arrayFastResample(seedWaveform ?? DEFAULT_WAVEFORM, THUMBNAIL_WAVEFORM_SAMPLES);
+        this.resampledWaveform = arrayFastResample(
+            seedWaveform ?? DEFAULT_WAVEFORM,
+            PLAYBACK_WAVEFORM_SAMPLES,
+        );
+        this.thumbnailWaveform = arrayFastResample(
+            seedWaveform ?? DEFAULT_WAVEFORM,
+            THUMBNAIL_WAVEFORM_SAMPLES,
+        );
         this.waveformObservable.update(this.resampledWaveform);
         this.clock = new PlaybackClock(this.context);
     }
@@ -136,8 +151,11 @@ export class Playback extends EventEmitter implements IDestroyable {
         // Overall, the point of this is to avoid memory-related issues due to storing a massive
         // audio buffer in memory, as that can balloon to far greater than the input buffer's
         // byte length.
-        if (this.buf.byteLength > 5 * 1024 * 1024) { // 5mb
-            console.log("Audio file too large: processing through <audio /> element");
+        if (this.buf.byteLength > 5 * 1024 * 1024) {
+            // 5mb
+            console.log(
+                "Audio file too large: processing through <audio /> element",
+            );
             this.element = document.createElement("AUDIO") as HTMLAudioElement;
             const prom = new Promise((resolve, reject) => {
                 this.element.onloadeddata = () => resolve(null);
@@ -148,25 +166,38 @@ export class Playback extends EventEmitter implements IDestroyable {
         } else {
             // Safari compat: promise API not supported on this function
             this.audioBuf = await new Promise((resolve, reject) => {
-                this.context.decodeAudioData(this.buf, b => resolve(b), async e => {
-                    try {
-                        // This error handler is largely for Safari as well, which doesn't support Opus/Ogg
-                        // very well.
-                        console.error("Error decoding recording: ", e);
-                        console.warn("Trying to re-encode to WAV instead...");
+                this.context.decodeAudioData(
+                    this.buf,
+                    (b) => resolve(b),
+                    async (e) => {
+                        try {
+                            // This error handler is largely for Safari as well, which doesn't support Opus/Ogg
+                            // very well.
+                            console.error("Error decoding recording: ", e);
+                            console.warn(
+                                "Trying to re-encode to WAV instead...",
+                            );
 
-                        const wav = await decodeOgg(this.buf);
+                            const wav = await decodeOgg(this.buf);
 
-                        // noinspection ES6MissingAwait - not needed when using callbacks
-                        this.context.decodeAudioData(wav, b => resolve(b), e => {
-                            console.error("Still failed to decode recording: ", e);
+                            // noinspection ES6MissingAwait - not needed when using callbacks
+                            this.context.decodeAudioData(
+                                wav,
+                                (b) => resolve(b),
+                                (e) => {
+                                    console.error(
+                                        "Still failed to decode recording: ",
+                                        e,
+                                    );
+                                    reject(e);
+                                },
+                            );
+                        } catch (e) {
+                            console.error("Caught decoding error:", e);
                             reject(e);
-                        });
-                    } catch (e) {
-                        console.error("Caught decoding error:", e);
-                        reject(e);
-                    }
-                });
+                        }
+                    },
+                );
             });
 
             // Update the waveform to the real waveform once we have channel data to use. We don't
@@ -179,7 +210,9 @@ export class Playback extends EventEmitter implements IDestroyable {
 
         this.emit(PlaybackState.Stopped); // signal that we're not decoding anymore
         this.clock.flagLoadTime(); // must happen first because setting the duration fires a clock update
-        this.clock.durationSeconds = this.element ? this.element.duration : this.audioBuf.duration;
+        this.clock.durationSeconds = this.element
+            ? this.element.duration
+            : this.audioBuf.duration;
     }
 
     private onPlaybackEnd = async () => {

@@ -66,10 +66,12 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     return split;
 }
 
-export function getEffectiveMembership(membership: string): EffectiveMembership {
-    if (membership === 'invite') {
+export function getEffectiveMembership(
+    membership: string,
+): EffectiveMembership {
+    if (membership === "invite") {
         return EffectiveMembership.Invite;
-    } else if (membership === 'join') {
+    } else if (membership === "join") {
         // TODO: Include knocks? Update docs as needed in the enum. https://github.com/vector-im/element-web/issues/14237
         return EffectiveMembership.Join;
     } else {
@@ -80,7 +82,10 @@ export function getEffectiveMembership(membership: string): EffectiveMembership 
 
 export function isJoinedOrNearlyJoined(membership: string): boolean {
     const effective = getEffectiveMembership(membership);
-    return effective === EffectiveMembership.Join || effective === EffectiveMembership.Invite;
+    return (
+        effective === EffectiveMembership.Join ||
+        effective === EffectiveMembership.Invite
+    );
 }
 
 export async function leaveRoomBehaviour(roomId: string) {
@@ -95,44 +100,58 @@ export async function leaveRoomBehaviour(roomId: string) {
         }
     }
 
-    let results: { [roomId: string]: Error & { errcode: string, message: string } } = {};
+    let results: {
+        [roomId: string]: Error & { errcode: string; message: string };
+    } = {};
     if (!leavingAllVersions) {
         try {
             await MatrixClientPeg.get().leave(roomId);
         } catch (e) {
             if (e && e.data && e.data.errcode) {
-                const message = e.data.error || _t("Unexpected server error trying to leave the room");
-                results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode });
+                const message =
+                    e.data.error ||
+                    _t("Unexpected server error trying to leave the room");
+                results[roomId] = Object.assign(new Error(message), {
+                    errcode: e.data.errcode,
+                });
             } else {
-                results[roomId] = e || new Error("Failed to leave room for unknown causes");
+                results[roomId] =
+                    e || new Error("Failed to leave room for unknown causes");
             }
         }
     } else {
         results = await MatrixClientPeg.get().leaveRoomChain(roomId);
     }
 
-    const errors = Object.entries(results).filter(r => !!r[1]);
+    const errors = Object.entries(results).filter((r) => !!r[1]);
     if (errors.length > 0) {
         const messages = [];
         for (const roomErr of errors) {
             const err = roomErr[1]; // [0] is the roomId
-            let message = _t("Unexpected server error trying to leave the room");
+            let message = _t(
+                "Unexpected server error trying to leave the room",
+            );
             if (err.errcode && err.message) {
-                if (err.errcode === 'M_CANNOT_LEAVE_SERVER_NOTICE_ROOM') {
-                    Modal.createTrackedDialog('Error Leaving Room', '', ErrorDialog, {
-                        title: _t("Can't leave Server Notices room"),
-                        description: _t(
-                            "This room is used for important messages from the Homeserver, " +
-                            "so you cannot leave it.",
-                        ),
-                    });
+                if (err.errcode === "M_CANNOT_LEAVE_SERVER_NOTICE_ROOM") {
+                    Modal.createTrackedDialog(
+                        "Error Leaving Room",
+                        "",
+                        ErrorDialog,
+                        {
+                            title: _t("Can't leave Server Notices room"),
+                            description: _t(
+                                "This room is used for important messages from the Homeserver, " +
+                                    "so you cannot leave it.",
+                            ),
+                        },
+                    );
                     return;
                 }
                 message = results[roomId].message;
             }
-            messages.push(message, React.createElement('BR')); // createElement to avoid using a tsx file in utils
+            messages.push(message, React.createElement("BR")); // createElement to avoid using a tsx file in utils
         }
-        Modal.createTrackedDialog('Error Leaving Room', '', ErrorDialog, {
+        Modal.createTrackedDialog("Error Leaving Room", "", ErrorDialog, {
             title: _t("Error leaving room"),
             description: messages,
         });
@@ -140,6 +159,6 @@ export async function leaveRoomBehaviour(roomId: string) {
     }
 
     if (RoomViewStore.getRoomId() === roomId) {
-        dis.dispatch({ action: 'view_home_page' });
+        dis.dispatch({ action: "view_home_page" });
     }
 }

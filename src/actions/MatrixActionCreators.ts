@@ -33,9 +33,13 @@ import { ActionPayload } from "../dispatcher/payloads";
  * @param {string} prevState the previous sync state.
  * @returns {Object} an action of type MatrixActions.sync.
  */
-function createSyncAction(matrixClient: MatrixClient, state: string, prevState: string): ActionPayload {
+function createSyncAction(
+    matrixClient: MatrixClient,
+    state: string,
+    prevState: string,
+): ActionPayload {
     return {
-        action: 'MatrixActions.sync',
+        action: "MatrixActions.sync",
         state,
         prevState,
         matrixClient,
@@ -59,9 +63,12 @@ function createSyncAction(matrixClient: MatrixClient, state: string, prevState: 
  * @param {MatrixEvent} accountDataEvent the account data event.
  * @returns {AccountDataAction} an action of type MatrixActions.accountData.
  */
-function createAccountDataAction(matrixClient: MatrixClient, accountDataEvent: MatrixEvent): ActionPayload {
+function createAccountDataAction(
+    matrixClient: MatrixClient,
+    accountDataEvent: MatrixEvent,
+): ActionPayload {
     return {
-        action: 'MatrixActions.accountData',
+        action: "MatrixActions.accountData",
         event: accountDataEvent,
         event_type: accountDataEvent.getType(),
         event_content: accountDataEvent.getContent(),
@@ -93,7 +100,7 @@ function createRoomAccountDataAction(
     room: Room,
 ): ActionPayload {
     return {
-        action: 'MatrixActions.Room.accountData',
+        action: "MatrixActions.Room.accountData",
         event: accountDataEvent,
         event_type: accountDataEvent.getType(),
         event_content: accountDataEvent.getContent(),
@@ -116,8 +123,11 @@ function createRoomAccountDataAction(
  * @param {Room} room the Room that was stored.
  * @returns {RoomAction} an action of type `MatrixActions.Room`.
  */
-function createRoomAction(matrixClient: MatrixClient, room: Room): ActionPayload {
-    return { action: 'MatrixActions.Room', room };
+function createRoomAction(
+    matrixClient: MatrixClient,
+    room: Room,
+): ActionPayload {
+    return { action: "MatrixActions.Room", room };
 }
 
 /**
@@ -137,8 +147,12 @@ function createRoomAction(matrixClient: MatrixClient, room: Room): ActionPayload
  * @param {Room} room the Room whose tags were changed.
  * @returns {RoomTagsAction} an action of type `MatrixActions.Room.tags`.
  */
-function createRoomTagsAction(matrixClient: MatrixClient, roomTagsEvent: MatrixEvent, room: Room): ActionPayload {
-    return { action: 'MatrixActions.Room.tags', room };
+function createRoomTagsAction(
+    matrixClient: MatrixClient,
+    roomTagsEvent: MatrixEvent,
+    room: Room,
+): ActionPayload {
+    return { action: "MatrixActions.Room.tags", room };
 }
 
 /**
@@ -150,9 +164,13 @@ function createRoomTagsAction(matrixClient: MatrixClient, roomTagsEvent: MatrixE
  * @param {Room} room the room the receipt happened in.
  * @returns {Object} an action of type MatrixActions.Room.receipt.
  */
-function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent, room: Room): ActionPayload {
+function createRoomReceiptAction(
+    matrixClient: MatrixClient,
+    event: MatrixEvent,
+    room: Room,
+): ActionPayload {
     return {
-        action: 'MatrixActions.Room.receipt',
+        action: "MatrixActions.Room.receipt",
         event,
         room,
         matrixClient,
@@ -200,11 +218,12 @@ function createRoomTimelineAction(
     },
 ): ActionPayload {
     return {
-        action: 'MatrixActions.Room.timeline',
+        action: "MatrixActions.Room.timeline",
         event: timelineEvent,
         isLiveEvent: data.liveEvent,
         isLiveUnfilteredRoomTimelineEvent:
-            room && data.timeline.getTimelineSet() === room.getUnfilteredTimelineSet(),
+            room &&
+            data.timeline.getTimelineSet() === room.getUnfilteredTimelineSet(),
     };
 }
 
@@ -234,7 +253,12 @@ function createSelfMembershipAction(
     membership: string,
     oldMembership: string,
 ): ActionPayload {
-    return { action: 'MatrixActions.Room.myMembership', room, membership, oldMembership };
+    return {
+        action: "MatrixActions.Room.myMembership",
+        room,
+        membership,
+        oldMembership,
+    };
 }
 
 /**
@@ -253,12 +277,18 @@ function createSelfMembershipAction(
  * @param {MatrixEvent} event the matrix event that was decrypted.
  * @returns {EventDecryptedAction} an action of type `MatrixActions.Event.decrypted`.
  */
-function createEventDecryptedAction(matrixClient: MatrixClient, event: MatrixEvent): ActionPayload {
-    return { action: 'MatrixActions.Event.decrypted', event };
+function createEventDecryptedAction(
+    matrixClient: MatrixClient,
+    event: MatrixEvent,
+): ActionPayload {
+    return { action: "MatrixActions.Event.decrypted", event };
 }
 
 type Listener = () => void;
-type ActionCreator = (matrixClient: MatrixClient, ...args: any) => ActionPayload;
+type ActionCreator = (
+    matrixClient: MatrixClient,
+    ...args: any
+) => ActionPayload;
 
 // A list of callbacks to call to unregister all listeners added
 let matrixClientListenersStop: Listener[] = [];
@@ -272,7 +302,11 @@ let matrixClientListenersStop: Listener[] = [];
  *                                 when given the MatrixClient as an argument as well as
  *                                 arguments emitted in the MatrixClient event.
  */
-function addMatrixClientListener(matrixClient: MatrixClient, eventName: string, actionCreator: ActionCreator): void {
+function addMatrixClientListener(
+    matrixClient: MatrixClient,
+    eventName: string,
+    actionCreator: ActionCreator,
+): void {
     const listener: Listener = (...args) => {
         const payload = actionCreator(matrixClient, ...args);
         if (payload) {
@@ -296,15 +330,43 @@ export default {
      * @param {MatrixClient} matrixClient the MatrixClient to listen to events from
      */
     start(matrixClient: MatrixClient) {
-        addMatrixClientListener(matrixClient, 'sync', createSyncAction);
-        addMatrixClientListener(matrixClient, 'accountData', createAccountDataAction);
-        addMatrixClientListener(matrixClient, 'Room.accountData', createRoomAccountDataAction);
-        addMatrixClientListener(matrixClient, 'Room', createRoomAction);
-        addMatrixClientListener(matrixClient, 'Room.tags', createRoomTagsAction);
-        addMatrixClientListener(matrixClient, 'Room.receipt', createRoomReceiptAction);
-        addMatrixClientListener(matrixClient, 'Room.timeline', createRoomTimelineAction);
-        addMatrixClientListener(matrixClient, 'Room.myMembership', createSelfMembershipAction);
-        addMatrixClientListener(matrixClient, 'Event.decrypted', createEventDecryptedAction);
+        addMatrixClientListener(matrixClient, "sync", createSyncAction);
+        addMatrixClientListener(
+            matrixClient,
+            "accountData",
+            createAccountDataAction,
+        );
+        addMatrixClientListener(
+            matrixClient,
+            "Room.accountData",
+            createRoomAccountDataAction,
+        );
+        addMatrixClientListener(matrixClient, "Room", createRoomAction);
+        addMatrixClientListener(
+            matrixClient,
+            "Room.tags",
+            createRoomTagsAction,
+        );
+        addMatrixClientListener(
+            matrixClient,
+            "Room.receipt",
+            createRoomReceiptAction,
+        );
+        addMatrixClientListener(
+            matrixClient,
+            "Room.timeline",
+            createRoomTimelineAction,
+        );
+        addMatrixClientListener(
+            matrixClient,
+            "Room.myMembership",
+            createSelfMembershipAction,
+        );
+        addMatrixClientListener(
+            matrixClient,
+            "Event.decrypted",
+            createEventDecryptedAction,
+        );
     },
 
     /**

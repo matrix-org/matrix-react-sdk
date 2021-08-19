@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
-import FlairStore from '../../../stores/FlairStore';
+import React from "react";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
+import dis from "../../../dispatcher/dispatcher";
+import FlairStore from "../../../stores/FlairStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
@@ -48,44 +48,57 @@ class GroupTile extends React.Component {
     };
 
     componentDidMount() {
-        FlairStore.getGroupProfileCached(this.context, this.props.groupId).then((profile) => {
-            this.setState({ profile });
-        }).catch((err) => {
-            console.error('Error whilst getting cached profile for GroupTile', err);
-        });
+        FlairStore.getGroupProfileCached(this.context, this.props.groupId)
+            .then((profile) => {
+                this.setState({ profile });
+            })
+            .catch((err) => {
+                console.error(
+                    "Error whilst getting cached profile for GroupTile",
+                    err,
+                );
+            });
     }
 
-    onClick = e => {
+    onClick = (e) => {
         e.preventDefault();
         dis.dispatch({
-            action: 'view_group',
+            action: "view_group",
             group_id: this.props.groupId,
         });
     };
 
-    onPinClick = e => {
+    onPinClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        dis.dispatch(TagOrderActions.moveTag(this.context, this.props.groupId, 0));
+        dis.dispatch(
+            TagOrderActions.moveTag(this.context, this.props.groupId, 0),
+        );
     };
 
-    onUnpinClick = e => {
+    onUnpinClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        dis.dispatch(TagOrderActions.removeTag(this.context, this.props.groupId));
+        dis.dispatch(
+            TagOrderActions.removeTag(this.context, this.props.groupId),
+        );
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
+        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
         const profile = this.state.profile || {};
         const name = profile.name || this.props.groupId;
         const avatarHeight = this.props.avatarHeight;
-        const descElement = this.props.showDescription ?
-            <div className="mx_GroupTile_desc">{ profile.shortDescription }</div> :
-            <div />;
+        const descElement = this.props.showDescription ? (
+            <div className="mx_GroupTile_desc">{profile.shortDescription}</div>
+        ) : (
+            <div />
+        );
         const httpUrl = profile.avatarUrl
-            ? mediaFromMxc(profile.avatarUrl).getSquareThumbnailHttp(avatarHeight)
+            ? mediaFromMxc(profile.avatarUrl).getSquareThumbnailHttp(
+                  avatarHeight,
+              )
             : null;
 
         const avatarElement = (
@@ -95,26 +108,37 @@ class GroupTile extends React.Component {
                     idName={this.props.groupId}
                     url={httpUrl}
                     width={avatarHeight}
-                    height={avatarHeight} />
+                    height={avatarHeight}
+                />
             </div>
         );
 
-        return <AccessibleButton className="mx_GroupTile" onClick={this.onClick}>
-            { avatarElement }
-            <div className="mx_GroupTile_profile">
-                <div className="mx_GroupTile_name">{ name }</div>
-                { descElement }
-                <div className="mx_GroupTile_groupId">{ this.props.groupId }</div>
-                { !(GroupFilterOrderStore.getOrderedTags() || []).includes(this.props.groupId)
-                    ? <AccessibleButton kind="link" onClick={this.onPinClick}>
-                        { _t("Pin") }
-                    </AccessibleButton>
-                    : <AccessibleButton kind="link" onClick={this.onUnpinClick}>
-                        { _t("Unpin") }
-                    </AccessibleButton>
-                }
-            </div>
-        </AccessibleButton>;
+        return (
+            <AccessibleButton className="mx_GroupTile" onClick={this.onClick}>
+                {avatarElement}
+                <div className="mx_GroupTile_profile">
+                    <div className="mx_GroupTile_name">{name}</div>
+                    {descElement}
+                    <div className="mx_GroupTile_groupId">
+                        {this.props.groupId}
+                    </div>
+                    {!(GroupFilterOrderStore.getOrderedTags() || []).includes(
+                        this.props.groupId,
+                    ) ? (
+                        <AccessibleButton kind="link" onClick={this.onPinClick}>
+                            {_t("Pin")}
+                        </AccessibleButton>
+                    ) : (
+                        <AccessibleButton
+                            kind="link"
+                            onClick={this.onUnpinClick}
+                        >
+                            {_t("Unpin")}
+                        </AccessibleButton>
+                    )}
+                </div>
+            </AccessibleButton>
+        );
     }
 }
 

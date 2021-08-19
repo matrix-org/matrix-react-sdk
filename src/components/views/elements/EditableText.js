@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { createRef } from "react";
+import PropTypes from "prop-types";
 import { Key } from "../../../Keyboard";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -44,9 +44,9 @@ export default class EditableText extends React.Component {
 
     static defaultProps = {
         onValueChanged() {},
-        initialValue: '',
-        label: '',
-        placeholder: '',
+        initialValue: "",
+        label: "",
+        placeholder: "",
         editable: true,
         className: "mx_EditableText",
         placeholderClassName: "mx_EditableText_placeholder",
@@ -58,7 +58,7 @@ export default class EditableText extends React.Component {
 
         // we track value as an JS object field rather than in React state
         // as React doesn't play nice with contentEditable.
-        this.value = '';
+        this.value = "";
         this.placeholder = false;
 
         this._editable_div = createRef();
@@ -86,23 +86,28 @@ export default class EditableText extends React.Component {
         }
     }
 
-    showPlaceholder = show => {
+    showPlaceholder = (show) => {
         if (show) {
             this._editable_div.current.textContent = this.props.placeholder;
-            this._editable_div.current.setAttribute("class", this.props.className
-                + " " + this.props.placeholderClassName);
+            this._editable_div.current.setAttribute(
+                "class",
+                this.props.className + " " + this.props.placeholderClassName,
+            );
             this.placeholder = true;
-            this.value = '';
+            this.value = "";
         } else {
             this._editable_div.current.textContent = this.value;
-            this._editable_div.current.setAttribute("class", this.props.className);
+            this._editable_div.current.setAttribute(
+                "class",
+                this.props.className,
+            );
             this.placeholder = false;
         }
     };
 
     getValue = () => this.value;
 
-    setValue = value => {
+    setValue = (value) => {
         this.value = value;
         this.showPlaceholder(!this.value);
     };
@@ -123,11 +128,11 @@ export default class EditableText extends React.Component {
         this._editable_div.current.blur();
     };
 
-    onValueChanged = shouldSubmit => {
+    onValueChanged = (shouldSubmit) => {
         this.props.onValueChanged(this.value, shouldSubmit);
     };
 
-    onKeyDown = ev => {
+    onKeyDown = (ev) => {
         // console.log("keyDown: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
 
         if (this.placeholder) {
@@ -142,7 +147,7 @@ export default class EditableText extends React.Component {
         // console.log("keyDown: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
     };
 
-    onKeyUp = ev => {
+    onKeyUp = (ev) => {
         // console.log("keyUp: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
 
         if (!ev.target.textContent) {
@@ -160,7 +165,7 @@ export default class EditableText extends React.Component {
         // console.log("keyUp: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
     };
 
-    onClickDiv = ev => {
+    onClickDiv = (ev) => {
         if (!this.props.editable) return;
 
         this.setState({
@@ -168,7 +173,7 @@ export default class EditableText extends React.Component {
         });
     };
 
-    onFocus = ev => {
+    onFocus = (ev) => {
         //ev.target.setSelectionRange(0, ev.target.textContent.length);
 
         const node = ev.target.childNodes[0];
@@ -185,17 +190,20 @@ export default class EditableText extends React.Component {
 
     onFinish = (ev, shouldSubmit) => {
         const self = this;
-        const submit = (ev.key === Key.ENTER) || shouldSubmit;
-        this.setState({
-            phase: EditableText.Phases.Display,
-        }, () => {
-            if (this.value !== this.props.initialValue) {
-                self.onValueChanged(submit);
-            }
-        });
+        const submit = ev.key === Key.ENTER || shouldSubmit;
+        this.setState(
+            {
+                phase: EditableText.Phases.Display,
+            },
+            () => {
+                if (this.value !== this.props.initialValue) {
+                    self.onValueChanged(submit);
+                }
+            },
+        );
     };
 
-    onBlur = ev => {
+    onBlur = (ev) => {
         const sel = window.getSelection();
         sel.removeAllRanges();
 
@@ -209,27 +217,38 @@ export default class EditableText extends React.Component {
     };
 
     render() {
-        const { className, editable, initialValue, label, labelClassName } = this.props;
+        const { className, editable, initialValue, label, labelClassName } =
+            this.props;
         let editableEl;
 
-        if (!editable || (this.state.phase === EditableText.Phases.Display &&
-            (label || labelClassName) && !this.value)
+        if (
+            !editable ||
+            (this.state.phase === EditableText.Phases.Display &&
+                (label || labelClassName) &&
+                !this.value)
         ) {
             // show the label
-            editableEl = <div className={className + " " + labelClassName} onClick={this.onClickDiv}>
-                { label || initialValue }
-            </div>;
+            editableEl = (
+                <div
+                    className={className + " " + labelClassName}
+                    onClick={this.onClickDiv}
+                >
+                    {label || initialValue}
+                </div>
+            );
         } else {
             // show the content editable div, but manually manage its contents as react and contentEditable don't play nice together
-            editableEl = <div
-                ref={this._editable_div}
-                contentEditable={true}
-                className={className}
-                onKeyDown={this.onKeyDown}
-                onKeyUp={this.onKeyUp}
-                onFocus={this.onFocus}
-                onBlur={this.onBlur}
-            />;
+            editableEl = (
+                <div
+                    ref={this._editable_div}
+                    contentEditable={true}
+                    className={className}
+                    onKeyDown={this.onKeyDown}
+                    onKeyUp={this.onKeyUp}
+                    onFocus={this.onFocus}
+                    onBlur={this.onBlur}
+                />
+            );
         }
 
         return editableEl;

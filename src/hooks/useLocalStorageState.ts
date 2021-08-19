@@ -14,7 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import {
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useState,
+} from "react";
 
 const getValue = <T>(key: string, initialValue: T): T => {
     try {
@@ -26,7 +32,10 @@ const getValue = <T>(key: string, initialValue: T): T => {
 };
 
 // Hook behaving like useState but persisting the value to localStorage. Returns same as useState
-export const useLocalStorageState = <T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>] => {
+export const useLocalStorageState = <T>(
+    key: string,
+    initialValue: T,
+): [T, Dispatch<SetStateAction<T>>] => {
     const lsKey = "mx_" + key;
 
     const [value, setValue] = useState<T>(getValue(lsKey, initialValue));
@@ -35,10 +44,13 @@ export const useLocalStorageState = <T>(key: string, initialValue: T): [T, Dispa
         setValue(getValue(lsKey, initialValue));
     }, [lsKey, initialValue]);
 
-    const _setValue: Dispatch<SetStateAction<T>> = useCallback((v: T) => {
-        window.localStorage.setItem(lsKey, JSON.stringify(v));
-        setValue(v);
-    }, [lsKey]);
+    const _setValue: Dispatch<SetStateAction<T>> = useCallback(
+        (v: T) => {
+            window.localStorage.setItem(lsKey, JSON.stringify(v));
+            setValue(v);
+        },
+        [lsKey],
+    );
 
     return [value, _setValue];
 };

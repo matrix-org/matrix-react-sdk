@@ -23,7 +23,11 @@ import { Part, Type } from "./parts";
 
 export type Caret = Range | DocumentPosition;
 
-export function setSelection(editor: HTMLDivElement, model: EditorModel, selection: Range | IPosition) {
+export function setSelection(
+    editor: HTMLDivElement,
+    model: EditorModel,
+    selection: Range | IPosition,
+) {
     if (selection instanceof Range) {
         setDocumentRangeSelection(editor, model, selection);
     } else {
@@ -31,7 +35,11 @@ export function setSelection(editor: HTMLDivElement, model: EditorModel, selecti
     }
 }
 
-function setDocumentRangeSelection(editor: HTMLDivElement, model: EditorModel, range: Range) {
+function setDocumentRangeSelection(
+    editor: HTMLDivElement,
+    model: EditorModel,
+    range: Range,
+) {
     const sel = document.getSelection();
     sel.removeAllRanges();
     const selectionRange = document.createRange();
@@ -42,9 +50,17 @@ function setDocumentRangeSelection(editor: HTMLDivElement, model: EditorModel, r
     sel.addRange(selectionRange);
 }
 
-export function setCaretPosition(editor: HTMLDivElement, model: EditorModel, caretPosition: IPosition) {
+export function setCaretPosition(
+    editor: HTMLDivElement,
+    model: EditorModel,
+    caretPosition: IPosition,
+) {
     const range = document.createRange();
-    const { node, offset } = getNodeAndOffsetForPosition(editor, model, caretPosition);
+    const { node, offset } = getNodeAndOffsetForPosition(
+        editor,
+        model,
+        caretPosition,
+    );
     range.setStart(node, offset);
     range.collapse(true);
 
@@ -67,8 +83,15 @@ export function setCaretPosition(editor: HTMLDivElement, model: EditorModel, car
     sel.addRange(range);
 }
 
-function getNodeAndOffsetForPosition(editor: HTMLDivElement, model: EditorModel, position: IPosition) {
-    const { offset, lineIndex, nodeIndex } = getLineAndNodePosition(model, position);
+function getNodeAndOffsetForPosition(
+    editor: HTMLDivElement,
+    model: EditorModel,
+    position: IPosition,
+) {
+    const { offset, lineIndex, nodeIndex } = getLineAndNodePosition(
+        model,
+        position,
+    );
     const lineNode = editor.childNodes[lineIndex];
 
     let focusNode;
@@ -85,7 +108,10 @@ function getNodeAndOffsetForPosition(editor: HTMLDivElement, model: EditorModel,
     return { node: focusNode, offset };
 }
 
-export function getLineAndNodePosition(model: EditorModel, caretPosition: IPosition) {
+export function getLineAndNodePosition(
+    model: EditorModel,
+    caretPosition: IPosition,
+) {
     const { parts } = model;
     const partIndex = caretPosition.index;
     const lineResult = findNodeInLineForPart(parts, partIndex);
@@ -99,7 +125,12 @@ export function getLineAndNodePosition(model: EditorModel, caretPosition: IPosit
         offset = 0;
     } else {
         // move caret out of uneditable part (into caret node, or empty line br) if needed
-        ({ nodeIndex, offset } = moveOutOfUneditablePart(parts, partIndex, nodeIndex, offset));
+        ({ nodeIndex, offset } = moveOutOfUneditablePart(
+            parts,
+            partIndex,
+            nodeIndex,
+            offset,
+        ));
     }
     return { lineIndex, nodeIndex, offset };
 }
@@ -128,7 +159,8 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
             // and not an adjacent caret node
             if (i < partIndex) {
                 const nextPart = parts[i + 1];
-                const isLastOfLine = !nextPart || nextPart.type === Type.Newline;
+                const isLastOfLine =
+                    !nextPart || nextPart.type === Type.Newline;
                 if (needsCaretNodeAfter(part, isLastOfLine)) {
                     nodeIndex += 1;
                 }
@@ -140,7 +172,12 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
     return { lineIndex, nodeIndex };
 }
 
-function moveOutOfUneditablePart(parts: Part[], partIndex: number, nodeIndex: number, offset: number) {
+function moveOutOfUneditablePart(
+    parts: Part[],
+    partIndex: number,
+    nodeIndex: number,
+    offset: number,
+) {
     // move caret before or after uneditable part
     const part = parts[partIndex];
     if (part && !part.canEdit) {

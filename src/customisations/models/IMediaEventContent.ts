@@ -27,14 +27,15 @@ export interface IEncryptedFile {
         ext: boolean;
     };
     iv: string;
-    hashes: {[alg: string]: string};
+    hashes: { [alg: string]: string };
     v: string;
 }
 
 export interface IMediaEventInfo {
     thumbnail_url?: string; // eslint-disable-line camelcase
     thumbnail_file?: IEncryptedFile; // eslint-disable-line camelcase
-    thumbnail_info?: { // eslint-disable-line camelcase
+    thumbnail_info?: {
+        // eslint-disable-line camelcase
         mimetype: string;
         w?: number;
         h?: number;
@@ -69,7 +70,9 @@ export interface IMediaObject {
  * @returns {IPreparedMedia} A prepared media object.
  * @throws Throws if the given content cannot be packaged into a prepared media object.
  */
-export function prepEventContentAsMedia(content: IMediaEventContent): IPreparedMedia {
+export function prepEventContentAsMedia(
+    content: IMediaEventContent,
+): IPreparedMedia {
     let thumbnail: IMediaObject = null;
     if (content?.info?.thumbnail_url) {
         thumbnail = {
@@ -97,5 +100,7 @@ export function prepEventContentAsMedia(content: IMediaEventContent): IPreparedM
         };
     }
 
-    throw new Error("Invalid file provided: cannot determine MXC URI. Has it been redacted?");
+    throw new Error(
+        "Invalid file provided: cannot determine MXC URI. Has it been redacted?",
+    );
 }

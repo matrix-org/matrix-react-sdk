@@ -45,4 +45,5 @@ export interface IWidgetPermissionCustomisations {
 
 // A real customisation module will define and export one or more of the
 // customisation points that make up the interface above.
-export const WidgetPermissionCustomisations: IWidgetPermissionCustomisations = {};
+export const WidgetPermissionCustomisations: IWidgetPermissionCustomisations =
+    {};

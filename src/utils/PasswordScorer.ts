@@ -14,15 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import zxcvbn, { ZXCVBNFeedbackWarning } from 'zxcvbn';
+import zxcvbn, { ZXCVBNFeedbackWarning } from "zxcvbn";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import { _t, _td } from '../languageHandler';
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { _t, _td } from "../languageHandler";
 
-const ZXCVBN_USER_INPUTS = [
-    'riot',
-    'matrix',
-];
+const ZXCVBN_USER_INPUTS = ["riot", "matrix"];
 
 // Translations for zxcvbn's suggestion strings
 _td("Use a few words, avoid common phrases");
@@ -40,8 +37,8 @@ _td("Predictable substitutions like '@' instead of 'a' don't help very much");
 _td("Add another word or two. Uncommon words are better.");
 
 // and warnings
-_td("Repeats like \"aaa\" are easy to guess");
-_td("Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\"");
+_td('Repeats like "aaa" are easy to guess');
+_td('Repeats like "abcabcabc" are only slightly harder to guess than "abc"');
 _td("Sequences like abc or 6543 are easy to guess");
 _td("Recent years are easy to guess");
 _td("Dates are often easy to guess");
@@ -73,18 +70,23 @@ export function scorePassword(password: string) {
 
     let zxcvbnResult = zxcvbn(password, userInputs);
     // Work around https://github.com/dropbox/zxcvbn/issues/216
-    if (password.includes(' ')) {
-        const resultNoSpaces = zxcvbn(password.replace(/ /g, ''), userInputs);
-        if (resultNoSpaces.score < zxcvbnResult.score) zxcvbnResult = resultNoSpaces;
+    if (password.includes(" ")) {
+        const resultNoSpaces = zxcvbn(password.replace(/ /g, ""), userInputs);
+        if (resultNoSpaces.score < zxcvbnResult.score)
+            zxcvbnResult = resultNoSpaces;
     }
 
     for (let i = 0; i < zxcvbnResult.feedback.suggestions.length; ++i) {
         // translate suggestions
-        zxcvbnResult.feedback.suggestions[i] = _t(zxcvbnResult.feedback.suggestions[i]);
+        zxcvbnResult.feedback.suggestions[i] = _t(
+            zxcvbnResult.feedback.suggestions[i],
+        );
     }
     // and warning, if any
     if (zxcvbnResult.feedback.warning) {
-        zxcvbnResult.feedback.warning = _t(zxcvbnResult.feedback.warning) as ZXCVBNFeedbackWarning;
+        zxcvbnResult.feedback.warning = _t(
+            zxcvbnResult.feedback.warning,
+        ) as ZXCVBNFeedbackWarning;
     }
 
     return zxcvbnResult;

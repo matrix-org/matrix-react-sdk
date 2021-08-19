@@ -25,11 +25,14 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
  * @param {string} userId A user ID
  * @returns {Object} Read receipt
  */
-export function findReadReceiptFromUserId(receiptEvent: MatrixEvent, userId: string): object | null {
+export function findReadReceiptFromUserId(
+    receiptEvent: MatrixEvent,
+    userId: string,
+): object | null {
     const receiptKeys = Object.keys(receiptEvent.getContent());
     for (let i = 0; i < receiptKeys.length; ++i) {
         const rcpt = receiptEvent.getContent()[receiptKeys[i]];
-        if (rcpt['m.read'] && rcpt['m.read'][userId]) {
+        if (rcpt["m.read"] && rcpt["m.read"][userId]) {
             return rcpt;
         }
     }

@@ -68,9 +68,12 @@ interface IBasePart {
     toDOMNode(): Node;
 }
 
-interface IPillCandidatePart extends Omit<IBasePart, "type" | "createAutoComplete"> {
+interface IPillCandidatePart
+    extends Omit<IBasePart, "type" | "createAutoComplete"> {
     type: Type.PillCandidate | Type.Command;
-    createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel;
+    createAutoComplete(
+        updateCallback: UpdateCallback,
+    ): AutocompleteWrapperModel;
 }
 
 interface IPillPart extends Omit<IBasePart, "type" | "resourceId"> {
@@ -87,7 +90,11 @@ abstract class BasePart {
         this._text = text;
     }
 
-    protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
+    protected acceptsInsertion(
+        chr: string,
+        offset: number,
+        inputType: string,
+    ): boolean {
         return true;
     }
 
@@ -109,8 +116,9 @@ abstract class BasePart {
     // if the part would become invalid if it removed everything.
     public remove(offset: number, len: number): string | undefined {
         // validate
-        const strWithRemoval = this.text.substr(0, offset) + this.text.substr(offset + len);
-        for (let i = offset; i < (len + offset); ++i) {
+        const strWithRemoval =
+            this.text.substr(0, offset) + this.text.substr(offset + len);
+        for (let i = offset; i < len + offset; ++i) {
             const chr = this.text.charAt(i);
             if (!this.acceptsRemoval(i, chr)) {
                 return strWithRemoval;
@@ -120,7 +128,10 @@ abstract class BasePart {
     }
 
     // append str, returns the remaining string if a character was rejected.
-    public appendUntilRejected(str: string, inputType: string): string | undefined {
+    public appendUntilRejected(
+        str: string,
+        inputType: string,
+    ): string | undefined {
         const offset = this.text.length;
         for (let i = 0; i < str.length; ++i) {
             const chr = str.charAt(i);
@@ -134,7 +145,11 @@ abstract class BasePart {
 
     // inserts str at offset if all the characters in str were accepted, otherwise don't do anything
     // return whether the str was accepted or not.
-    public validateAndInsert(offset: number, str: string, inputType: string): boolean {
+    public validateAndInsert(
+        offset: number,
+        str: string,
+        inputType: string,
+    ): boolean {
         for (let i = 0; i < str.length; ++i) {
             const chr = str.charAt(i);
             if (!this.acceptsInsertion(chr, offset + i, inputType)) {
@@ -182,7 +197,11 @@ abstract class BasePart {
 }
 
 abstract class PlainBasePart extends BasePart {
-    protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
+    protected acceptsInsertion(
+        chr: string,
+        offset: number,
+        inputType: string,
+    ): boolean {
         if (chr === "\n") {
             return false;
         }
@@ -199,8 +218,10 @@ abstract class PlainBasePart extends BasePart {
 
             // or split if the previous character is a space
             // or if it is a + and this is a :
-            return this._text[offset - 1] !== " " &&
-                (this._text[offset - 1] !== "+" || chr !== ":");
+            return (
+                this._text[offset - 1] !== " " &&
+                (this._text[offset - 1] !== "+" || chr !== ":")
+            );
         }
         return true;
     }
@@ -245,7 +266,7 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     protected acceptsRemoval(position: number, chr: string): boolean {
-        return position !== 0;  //if you remove initial # or @, pill should become plain
+        return position !== 0; //if you remove initial # or @, pill should become plain
     }
 
     public toDOMNode(): Node {
@@ -274,19 +295,28 @@ export abstract class PillPart extends BasePart implements IPillPart {
     }
 
     public canUpdateDOMNode(node: HTMLElement): boolean {
-        return node.nodeType === Node.ELEMENT_NODE &&
-               node.nodeName === "SPAN" &&
-               node.childNodes.length === 1 &&
-               node.childNodes[0].nodeType === Node.TEXT_NODE;
+        return (
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.nodeName === "SPAN" &&
+            node.childNodes.length === 1 &&
+            node.childNodes[0].nodeType === Node.TEXT_NODE
+        );
     }
 
     // helper method for subclasses
-    protected setAvatarVars(node: HTMLElement, avatarUrl: string, initialLetter: string): void {
+    protected setAvatarVars(
+        node: HTMLElement,
+        avatarUrl: string,
+        initialLetter: string,
+    ): void {
         const avatarBackground = `url('${avatarUrl}')`;
         const avatarLetter = `'${initialLetter}'`;
         // check if the value is changing,
         // otherwise the avatars flicker on every keystroke while updating.
-        if (node.style.getPropertyValue("--avatar-background") !== avatarBackground) {
+        if (
+            node.style.getPropertyValue("--avatar-background") !==
+            avatarBackground
+        ) {
             node.style.setProperty("--avatar-background", avatarBackground);
         }
         if (node.style.getPropertyValue("--avatar-letter") !== avatarLetter) {
@@ -360,8 +390,12 @@ class RoomPillPart extends PillPart {
         let initialLetter = "";
         let avatarUrl = Avatar.avatarUrlForRoom(this.room, 16, 16, "crop");
         if (!avatarUrl) {
-            initialLetter = Avatar.getInitialLetter(this.room ? this.room.name : this.resourceId);
-            avatarUrl = Avatar.defaultAvatarUrlForString(this.room ? this.room.roomId : this.resourceId);
+            initialLetter = Avatar.getInitialLetter(
+                this.room ? this.room.name : this.resourceId,
+            );
+            avatarUrl = Avatar.defaultAvatarUrlForString(
+                this.room ? this.room.roomId : this.resourceId,
+            );
         }
         this.setAvatarVars(node, avatarUrl, initialLetter);
     }
@@ -410,8 +444,15 @@ class UserPillPart extends PillPart {
             return;
         }
         const name = this.member.name || this.member.userId;
-        const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(this.member.userId);
-        const avatarUrl = Avatar.avatarUrlForMember(this.member, 16, 16, "crop");
+        const defaultAvatarUrl = Avatar.defaultAvatarUrlForString(
+            this.member.userId,
+        );
+        const avatarUrl = Avatar.avatarUrlForMember(
+            this.member,
+            16,
+            16,
+            "crop",
+        );
         let initialLetter = "";
         if (avatarUrl === defaultAvatarUrl) {
             initialLetter = Avatar.getInitialLetter(name);
@@ -428,15 +469,24 @@ class UserPillPart extends PillPart {
 }
 
 class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
-    constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
+    constructor(
+        text: string,
+        private autoCompleteCreator: IAutocompleteCreator,
+    ) {
         super(text);
     }
 
-    public createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel {
+    public createAutoComplete(
+        updateCallback: UpdateCallback,
+    ): AutocompleteWrapperModel {
         return this.autoCompleteCreator.create(updateCallback);
     }
 
-    protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
+    protected acceptsInsertion(
+        chr: string,
+        offset: number,
+        inputType: string,
+    ): boolean {
         if (offset === 0) {
             return true;
         } else {
@@ -457,7 +507,10 @@ class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
     }
 }
 
-export function getAutoCompleteCreator(getAutocompleterComponent: GetAutocompleterComponent, updateQuery: UpdateQuery) {
+export function getAutoCompleteCreator(
+    getAutocompleterComponent: GetAutocompleterComponent,
+    updateQuery: UpdateQuery,
+) {
     return (partCreator: PartCreator) => {
         return (updateCallback: UpdateCallback) => {
             return new AutocompleteWrapperModel(
@@ -489,11 +542,17 @@ export class PartCreator {
         this.autoCompleteCreator = { create: autoCompleteCreator?.(this) };
     }
 
-    public setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator): void {
+    public setAutoCompleteCreator(
+        autoCompleteCreator: AutoCompleteCreator,
+    ): void {
         this.autoCompleteCreator.create = autoCompleteCreator(this);
     }
 
-    public createPartForInput(input: string, partIndex: number, inputType?: string): Part {
+    public createPartForInput(
+        input: string,
+        partIndex: number,
+        inputType?: string,
+    ): Part {
         switch (input[0]) {
             case "#":
             case "@":
@@ -546,8 +605,10 @@ export class PartCreator {
             room = this.client.getRoom(roomId || alias);
         } else {
             room = this.client.getRooms().find((r) => {
-                return r.getCanonicalAlias() === alias ||
-                       r.getAltAliases().includes(alias);
+                return (
+                    r.getCanonicalAlias() === alias ||
+                    r.getAltAliases().includes(alias)
+                );
             });
         }
         return new RoomPillPart(alias, room ? room.name : alias, room);

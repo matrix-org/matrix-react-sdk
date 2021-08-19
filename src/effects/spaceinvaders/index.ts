@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import ICanvasEffect from '../ICanvasEffect';
+import ICanvasEffect from "../ICanvasEffect";
 import { arrayFastClone } from "../../utils/arrays";
 
 export type SpaceInvadersOptions = {
@@ -59,11 +59,13 @@ export default class SpaceInvaders implements ICanvasEffect {
         if (!canvas) {
             return;
         }
-        this.context = canvas.getContext('2d');
+        this.context = canvas.getContext("2d");
         this.particles = [];
         const count = this.options.maxCount;
         while (this.particles.length < count) {
-            this.particles.push(this.resetParticle({} as Invader, canvas.width, canvas.height));
+            this.particles.push(
+                this.resetParticle({} as Invader, canvas.width, canvas.height),
+            );
         }
         this.isRunning = true;
         requestAnimationFrame(this.renderLoop);
@@ -76,11 +78,15 @@ export default class SpaceInvaders implements ICanvasEffect {
         this.isRunning = false;
     };
 
-    private resetParticle = (particle: Invader, width: number, height: number): Invader => {
+    private resetParticle = (
+        particle: Invader,
+        width: number,
+        height: number,
+    ): Invader => {
         particle.x = Math.random() * width;
         particle.y = Math.random() * -height;
         particle.xCol = particle.x;
-        particle.gravity = this.options.gravity + (Math.random() * 6) + 4;
+        particle.gravity = this.options.gravity + Math.random() * 6 + 4;
         return particle;
     };
 
@@ -89,12 +95,22 @@ export default class SpaceInvaders implements ICanvasEffect {
             return;
         }
         if (this.particles.length === 0) {
-            this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+            this.context.clearRect(
+                0,
+                0,
+                this.context.canvas.width,
+                this.context.canvas.height,
+            );
         } else {
             const timeDelta = Date.now() - this.lastAnimationTime;
             if (timeDelta >= KEY_FRAME_INTERVAL || !this.lastAnimationTime) {
                 // Clear the screen first
-                this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+                this.context.clearRect(
+                    0,
+                    0,
+                    this.context.canvas.width,
+                    this.context.canvas.height,
+                );
 
                 this.lastAnimationTime = Date.now();
                 this.animateAndRenderInvaders();

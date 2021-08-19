@@ -14,7 +14,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import ICanvasEffect from '../ICanvasEffect';
+import ICanvasEffect from "../ICanvasEffect";
 
 export type ConfettiOptions = {
     /**
@@ -67,10 +67,20 @@ export default class Confetti implements ICanvasEffect {
 
     private context: CanvasRenderingContext2D | null = null;
     private supportsAnimationFrame = window.requestAnimationFrame;
-    private colors = ['rgba(30,144,255,', 'rgba(107,142,35,', 'rgba(255,215,0,',
-        'rgba(255,192,203,', 'rgba(106,90,205,', 'rgba(173,216,230,',
-        'rgba(238,130,238,', 'rgba(152,251,152,', 'rgba(70,130,180,',
-        'rgba(244,164,96,', 'rgba(210,105,30,', 'rgba(220,20,60,'];
+    private colors = [
+        "rgba(30,144,255,",
+        "rgba(107,142,35,",
+        "rgba(255,215,0,",
+        "rgba(255,192,203,",
+        "rgba(106,90,205,",
+        "rgba(173,216,230,",
+        "rgba(238,130,238,",
+        "rgba(152,251,152,",
+        "rgba(70,130,180,",
+        "rgba(244,164,96,",
+        "rgba(210,105,30,",
+        "rgba(220,20,60,",
+    ];
 
     private lastFrameTime = Date.now();
     private particles: Array<ConfettiParticle> = [];
@@ -82,11 +92,17 @@ export default class Confetti implements ICanvasEffect {
         if (!canvas) {
             return;
         }
-        this.context = canvas.getContext('2d');
+        this.context = canvas.getContext("2d");
         this.particles = [];
         const count = this.options.maxCount;
         while (this.particles.length < count) {
-            this.particles.push(this.resetParticle({} as ConfettiParticle, canvas.width, canvas.height));
+            this.particles.push(
+                this.resetParticle(
+                    {} as ConfettiParticle,
+                    canvas.width,
+                    canvas.height,
+                ),
+            );
         }
         this.isRunning = true;
         this.runAnimation();
@@ -99,10 +115,18 @@ export default class Confetti implements ICanvasEffect {
         this.isRunning = false;
     };
 
-    private resetParticle = (particle: ConfettiParticle, width: number, height: number): ConfettiParticle => {
-        particle.color = this.colors[(Math.random() * this.colors.length) | 0] + (this.options.alpha + ')');
+    private resetParticle = (
+        particle: ConfettiParticle,
+        width: number,
+        height: number,
+    ): ConfettiParticle => {
+        particle.color =
+            this.colors[(Math.random() * this.colors.length) | 0] +
+            (this.options.alpha + ")");
         if (this.options.gradient) {
-            particle.color2 = this.colors[(Math.random() * this.colors.length) | 0] + (this.options.alpha + ')');
+            particle.color2 =
+                this.colors[(Math.random() * this.colors.length) | 0] +
+                (this.options.alpha + ")");
         } else {
             particle.color2 = particle.color;
         }
@@ -120,12 +144,25 @@ export default class Confetti implements ICanvasEffect {
             return;
         }
         if (this.particles.length === 0) {
-            this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+            this.context.clearRect(
+                0,
+                0,
+                this.context.canvas.width,
+                this.context.canvas.height,
+            );
         } else {
             const now = Date.now();
             const delta = now - this.lastFrameTime;
-            if (!this.supportsAnimationFrame || delta > this.options.frameInterval) {
-                this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+            if (
+                !this.supportsAnimationFrame ||
+                delta > this.options.frameInterval
+            ) {
+                this.context.clearRect(
+                    0,
+                    0,
+                    this.context.canvas.width,
+                    this.context.canvas.height,
+                );
                 this.updateParticles();
                 this.drawParticles(this.context);
                 this.lastFrameTime = now - (delta % this.options.frameInterval);
@@ -138,7 +175,9 @@ export default class Confetti implements ICanvasEffect {
         if (!this.context || !this.context.canvas) {
             return;
         }
-        let x; let x2; let y2;
+        let x;
+        let x2;
+        let y2;
         for (const particle of this.particles) {
             this.context.beginPath();
             context.lineWidth = particle.diameter;
@@ -146,7 +185,12 @@ export default class Confetti implements ICanvasEffect {
             x = x2 + particle.diameter / 2;
             y2 = particle.y + particle.tilt + particle.diameter / 2;
             if (this.options.gradient) {
-                const gradient = context.createLinearGradient(x, particle.y, x2, y2);
+                const gradient = context.createLinearGradient(
+                    x,
+                    particle.y,
+                    x2,
+                    y2,
+                );
                 gradient.addColorStop(0, particle.color);
                 gradient.addColorStop(1.0, particle.color2);
                 context.strokeStyle = gradient;
@@ -174,11 +218,22 @@ export default class Confetti implements ICanvasEffect {
             } else {
                 particle.tiltAngle += particle.tiltAngleIncrement;
                 particle.x += Math.sin(this.waveAngle) - 0.5;
-                particle.y += (Math.cos(this.waveAngle) + particle.diameter + this.options.speed) * 0.5;
+                particle.y +=
+                    (Math.cos(this.waveAngle) +
+                        particle.diameter +
+                        this.options.speed) *
+                    0.5;
                 particle.tilt = Math.sin(particle.tiltAngle) * 15;
             }
-            if (particle.x > width + 20 || particle.x < -20 || particle.y > height) {
-                if (this.isRunning && this.particles.length <= this.options.maxCount) {
+            if (
+                particle.x > width + 20 ||
+                particle.x < -20 ||
+                particle.y > height
+            ) {
+                if (
+                    this.isRunning &&
+                    this.particles.length <= this.options.maxCount
+                ) {
                     this.resetParticle(particle, width, height);
                 } else {
                     this.particles.splice(i, 1);

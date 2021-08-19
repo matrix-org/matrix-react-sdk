@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import IdentityAuthClient from './IdentityAuthClient';
+import IdentityAuthClient from "./IdentityAuthClient";
 
 export async function getThreepidsWithBindStatus(client, filterMedium) {
     const userId = client.getUserId();
@@ -28,11 +28,19 @@ export async function getThreepidsWithBindStatus(client, filterMedium) {
     if (threepids.length > 0 && !!client.getIdentityServerUrl()) {
         try {
             const authClient = new IdentityAuthClient();
-            const identityAccessToken = await authClient.getAccessToken({ check: false });
+            const identityAccessToken = await authClient.getAccessToken({
+                check: false,
+            });
 
             // Restructure for lookup query
-            const query = threepids.map(({ medium, address }) => [medium, address]);
-            const lookupResults = await client.bulkLookupThreePids(query, identityAccessToken);
+            const query = threepids.map(({ medium, address }) => [
+                medium,
+                address,
+            ]);
+            const lookupResults = await client.bulkLookupThreePids(
+                query,
+                identityAccessToken,
+            );
 
             // Record which are already bound
             for (const [medium, address, mxid] of lookupResults.threepids) {
@@ -42,7 +50,9 @@ export async function getThreepidsWithBindStatus(client, filterMedium) {
                 if (filterMedium && medium !== filterMedium) {
                     continue;
                 }
-                const threepid = threepids.find(e => e.medium === medium && e.address === address);
+                const threepid = threepids.find(
+                    (e) => e.medium === medium && e.address === address,
+                );
                 if (!threepid) continue;
                 threepid.bound = true;
             }

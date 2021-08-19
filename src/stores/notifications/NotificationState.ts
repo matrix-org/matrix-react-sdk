@@ -20,7 +20,10 @@ import { IDestroyable } from "../../utils/IDestroyable";
 
 export const NOTIFICATION_STATE_UPDATE = "update";
 
-export abstract class NotificationState extends EventEmitter implements IDestroyable {
+export abstract class NotificationState
+    extends EventEmitter
+    implements IDestroyable
+{
     protected _symbol: string;
     protected _count: number;
     protected _color: NotificationColor;
@@ -46,7 +49,10 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
     }
 
     public get hasUnreadCount(): boolean {
-        return this.color >= NotificationColor.Grey && (!!this.count || !!this.symbol);
+        return (
+            this.color >= NotificationColor.Grey &&
+            (!!this.count || !!this.symbol)
+        );
     }
 
     public get hasMentions(): boolean {
@@ -80,8 +86,16 @@ export class NotificationStateSnapshot {
     }
 
     public isDifferentFrom(other: NotificationState): boolean {
-        const before = { count: this.count, symbol: this.symbol, color: this.color };
-        const after = { count: other.count, symbol: other.symbol, color: other.color };
+        const before = {
+            count: this.count,
+            symbol: this.symbol,
+            color: this.color,
+        };
+        const after = {
+            count: other.count,
+            symbol: other.symbol,
+            color: other.color,
+        };
         return JSON.stringify(before) !== JSON.stringify(after);
     }
 }

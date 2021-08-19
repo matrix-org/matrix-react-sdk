@@ -28,28 +28,30 @@ export class MessageEventPreview implements IPreview {
 
         if (event.isRelation("m.replace")) {
             // It's an edit, generate the preview on the new text
-            eventContent = event.getContent()['m.new_content'];
+            eventContent = event.getContent()["m.new_content"];
         }
 
-        if (!eventContent || !eventContent['body']) return null; // invalid for our purposes
+        if (!eventContent || !eventContent["body"]) return null; // invalid for our purposes
 
-        let body = (eventContent['body'] || '').trim();
-        const msgtype = eventContent['msgtype'];
+        let body = (eventContent["body"] || "").trim();
+        const msgtype = eventContent["msgtype"];
         if (!body || !msgtype) return null; // invalid event, no preview
 
-        const hasHtml = eventContent.format === "org.matrix.custom.html" && eventContent.formatted_body;
+        const hasHtml =
+            eventContent.format === "org.matrix.custom.html" &&
+            eventContent.formatted_body;
         if (hasHtml) {
             body = eventContent.formatted_body;
         }
 
         // XXX: Newer relations have a getRelation() function which is not compatible with replies.
-        const mRelatesTo = event.getWireContent()['m.relates_to'];
-        if (mRelatesTo && mRelatesTo['m.in_reply_to']) {
+        const mRelatesTo = event.getWireContent()["m.relates_to"];
+        if (mRelatesTo && mRelatesTo["m.in_reply_to"]) {
             // If this is a reply, get the real reply and use that
             if (hasHtml) {
-                body = (ReplyThread.stripHTMLReply(body) || '').trim();
+                body = (ReplyThread.stripHTMLReply(body) || "").trim();
             } else {
-                body = (ReplyThread.stripPlainReply(body) || '').trim();
+                body = (ReplyThread.stripPlainReply(body) || "").trim();
             }
             if (!body) return null; // invalid event, no preview
         }
@@ -60,14 +62,23 @@ export class MessageEventPreview implements IPreview {
 
         body = sanitizeForTranslation(body);
 
-        if (msgtype === 'm.emote') {
-            return _t("* %(senderName)s %(emote)s", { senderName: getSenderName(event), emote: body });
+        if (msgtype === "m.emote") {
+            return _t("* %(senderName)s %(emote)s", {
+                senderName: getSenderName(event),
+                emote: body,
+            });
         }
 
-        if (isSelf(event) || !shouldPrefixMessagesIn(event.getRoomId(), tagId)) {
+        if (
+            isSelf(event) ||
+            !shouldPrefixMessagesIn(event.getRoomId(), tagId)
+        ) {
             return body;
         } else {
-            return _t("%(senderName)s: %(message)s", { senderName: getSenderName(event), message: body });
+            return _t("%(senderName)s: %(message)s", {
+                senderName: getSenderName(event),
+                message: body,
+            });
         }
     }
 }

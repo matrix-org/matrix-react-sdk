@@ -21,7 +21,11 @@ import DocumentOffset from "./offset";
 type Predicate = (node: Node) => boolean;
 type Callback = (node: Node) => void;
 
-export function walkDOMDepthFirst(rootNode: Node, enterNodeCallback: Predicate, leaveNodeCallback: Callback) {
+export function walkDOMDepthFirst(
+    rootNode: Node,
+    enterNodeCallback: Predicate,
+    leaveNodeCallback: Callback,
+) {
     let node = rootNode.firstChild;
     while (node && node !== rootNode) {
         const shouldDescend = enterNodeCallback(node);
@@ -44,11 +48,18 @@ export function walkDOMDepthFirst(rootNode: Node, enterNodeCallback: Predicate, 
 }
 
 export function getCaretOffsetAndText(editor: HTMLDivElement, sel: Selection) {
-    const { offset, text } = getSelectionOffsetAndText(editor, sel.focusNode, sel.focusOffset);
+    const { offset, text } = getSelectionOffsetAndText(
+        editor,
+        sel.focusNode,
+        sel.focusOffset,
+    );
     return { caret: offset, text };
 }
 
-function tryReduceSelectionToTextNode(selectionNode: Node, selectionOffset: number) {
+function tryReduceSelectionToTextNode(
+    selectionNode: Node,
+    selectionOffset: number,
+) {
     // if selectionNode is an element, the selected location comes after the selectionOffset-th child node,
     // which can point past any childNode, in which case, the end of selectionNode is selected.
     // we try to simplify this to point at a text node with the offset being
@@ -85,8 +96,15 @@ function tryReduceSelectionToTextNode(selectionNode: Node, selectionOffset: numb
     };
 }
 
-function getSelectionOffsetAndText(editor: HTMLDivElement, selectionNode: Node, selectionOffset: number) {
-    const { node, characterOffset } = tryReduceSelectionToTextNode(selectionNode, selectionOffset);
+function getSelectionOffsetAndText(
+    editor: HTMLDivElement,
+    selectionNode: Node,
+    selectionOffset: number,
+) {
+    const { node, characterOffset } = tryReduceSelectionToTextNode(
+        selectionNode,
+        selectionOffset,
+    );
     const { text, offsetToNode } = getTextAndOffsetToNode(editor, node);
     const offset = getCaret(node, offsetToNode, characterOffset);
     return { offset, text };
@@ -138,7 +156,8 @@ function getTextAndOffsetToNode(editor: HTMLDivElement, selectionNode: Node) {
             }
             text += "\n";
         }
-        const nodeText = node.nodeType === Node.TEXT_NODE && getTextNodeValue(node);
+        const nodeText =
+            node.nodeType === Node.TEXT_NODE && getTextNodeValue(node);
         if (nodeText) {
             if (!foundNode) {
                 offsetToNode += nodeText.length;
@@ -153,7 +172,11 @@ function getTextAndOffsetToNode(editor: HTMLDivElement, selectionNode: Node) {
         // we don't just check if there is a nextSibling because sometimes the caret ends up
         // after the last DIV and it creates a newline if you type then,
         // whereas you just want it to be appended to the current line
-        if (node.tagName === "DIV" && node.nextSibling && node.nextSibling.tagName === "DIV") {
+        if (
+            node.tagName === "DIV" &&
+            node.nextSibling &&
+            node.nextSibling.tagName === "DIV"
+        ) {
             text += "\n";
             if (!foundNode) {
                 offsetToNode += 1;

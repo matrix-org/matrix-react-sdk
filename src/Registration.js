@@ -20,10 +20,10 @@ limitations under the License.
  * registration code.
  */
 
-import dis from './dispatcher/dispatcher';
-import * as sdk from './index';
-import Modal from './Modal';
-import { _t } from './languageHandler';
+import dis from "./dispatcher/dispatcher";
+import * as sdk from "./index";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
 
 // Regex for what a "safe" or "Matrix-looking" localpart would be.
 // TODO: Update as needed for https://github.com/matrix-org/matrix-doc/issues/1514
@@ -44,31 +44,44 @@ export const SAFE_LOCALPART_REGEX = /^[a-z0-9=_\-./]+$/;
 export async function startAnyRegistrationFlow(options) {
     if (options === undefined) options = {};
     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-    const modal = Modal.createTrackedDialog('Registration required', '', QuestionDialog, {
-        hasCancelButton: true,
-        quitOnly: true,
-        title: _t("Sign In or Create Account"),
-        description: _t("Use your account or create a new one to continue."),
-        button: _t("Create Account"),
-        extraButtons: [
-            <button
-                key="start_login"
-                onClick={() => {
-                    modal.close();
-                    dis.dispatch({ action: 'start_login', screenAfterLogin: options.screen_after });
-                }}
-            >
-                { _t('Sign In') }
-            </button>,
-        ],
-        onFinished: (proceed) => {
-            if (proceed) {
-                dis.dispatch({ action: 'start_registration', screenAfterLogin: options.screen_after });
-            } else if (options.go_home_on_cancel) {
-                dis.dispatch({ action: 'view_home_page' });
-            } else if (options.go_welcome_on_cancel) {
-                dis.dispatch({ action: 'view_welcome_page' });
-            }
+    const modal = Modal.createTrackedDialog(
+        "Registration required",
+        "",
+        QuestionDialog,
+        {
+            hasCancelButton: true,
+            quitOnly: true,
+            title: _t("Sign In or Create Account"),
+            description: _t(
+                "Use your account or create a new one to continue.",
+            ),
+            button: _t("Create Account"),
+            extraButtons: [
+                <button
+                    key="start_login"
+                    onClick={() => {
+                        modal.close();
+                        dis.dispatch({
+                            action: "start_login",
+                            screenAfterLogin: options.screen_after,
+                        });
+                    }}
+                >
+                    {_t("Sign In")}
+                </button>,
+            ],
+            onFinished: (proceed) => {
+                if (proceed) {
+                    dis.dispatch({
+                        action: "start_registration",
+                        screenAfterLogin: options.screen_after,
+                    });
+                } else if (options.go_home_on_cancel) {
+                    dis.dispatch({ action: "view_home_page" });
+                } else if (options.go_welcome_on_cancel) {
+                    dis.dispatch({ action: "view_welcome_page" });
+                }
+            },
         },
-    });
+    );
 }

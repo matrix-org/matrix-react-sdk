@@ -30,12 +30,20 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
     }
 
     public setRooms(rooms: Room[]): void {
-        this.cachedOrderedRooms = sortRoomsWithAlgorithm(rooms, this.tagId, this.sortingAlgorithm);
+        this.cachedOrderedRooms = sortRoomsWithAlgorithm(
+            rooms,
+            this.tagId,
+            this.sortingAlgorithm,
+        );
     }
 
     public handleRoomUpdate(room, cause): boolean {
-        const isSplice = cause === RoomUpdateCause.NewRoom || cause === RoomUpdateCause.RoomRemoved;
-        const isInPlace = cause === RoomUpdateCause.Timeline || cause === RoomUpdateCause.ReadReceipt;
+        const isSplice =
+            cause === RoomUpdateCause.NewRoom ||
+            cause === RoomUpdateCause.RoomRemoved;
+        const isInPlace =
+            cause === RoomUpdateCause.Timeline ||
+            cause === RoomUpdateCause.ReadReceipt;
         if (!isSplice && !isInPlace) {
             throw new Error(`Unsupported update cause: ${cause}`);
         }
@@ -47,13 +55,19 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
             if (idx >= 0) {
                 this.cachedOrderedRooms.splice(idx, 1);
             } else {
-                console.warn(`Tried to remove unknown room from ${this.tagId}: ${room.roomId}`);
+                console.warn(
+                    `Tried to remove unknown room from ${this.tagId}: ${room.roomId}`,
+                );
             }
         }
 
         // TODO: Optimize this to avoid useless operations: https://github.com/vector-im/element-web/issues/14457
         // For example, we can skip updates to alphabetic (sometimes) and manually ordered tags
-        this.cachedOrderedRooms = sortRoomsWithAlgorithm(this.cachedOrderedRooms, this.tagId, this.sortingAlgorithm);
+        this.cachedOrderedRooms = sortRoomsWithAlgorithm(
+            this.cachedOrderedRooms,
+            this.tagId,
+            this.sortingAlgorithm,
+        );
 
         return true;
     }

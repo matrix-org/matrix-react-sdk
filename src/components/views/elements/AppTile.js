@@ -17,18 +17,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from 'url';
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import AccessibleButton from './AccessibleButton';
-import { _t } from '../../../languageHandler';
-import AppPermission from './AppPermission';
-import AppWarning from './AppWarning';
-import Spinner from './Spinner';
-import dis from '../../../dispatcher/dispatcher';
-import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
-import classNames from 'classnames';
+import url from "url";
+import React, { createRef } from "react";
+import PropTypes from "prop-types";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import AccessibleButton from "./AccessibleButton";
+import { _t } from "../../../languageHandler";
+import AppPermission from "./AppPermission";
+import AppWarning from "./AppWarning";
+import Spinner from "./Spinner";
+import dis from "../../../dispatcher/dispatcher";
+import ActiveWidgetStore from "../../../stores/ActiveWidgetStore";
+import classNames from "classnames";
 import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, ContextMenuButton } from "../../structures/ContextMenu";
 import PersistedElement, { getPersistKey } from "./PersistedElement";
@@ -60,7 +60,11 @@ export default class AppTile extends React.Component {
         this.state = this._getNewState(props);
         this._contextMenuButton = createRef();
 
-        this._allowedWidgetsWatchRef = SettingsStore.watchSetting("allowedWidgets", null, this.onAllowedWidgetsChange);
+        this._allowedWidgetsWatchRef = SettingsStore.watchSetting(
+            "allowedWidgets",
+            null,
+            this.onAllowedWidgetsChange,
+        );
     }
 
     // This is a function to make the impact of calling SettingsStore slightly less
@@ -68,7 +72,10 @@ export default class AppTile extends React.Component {
         if (this._usingLocalWidget()) return true;
         if (!props.room) return true; // user widgets always have permissions
 
-        const currentlyAllowedWidgets = SettingsStore.getValue("allowedWidgets", props.room.roomId);
+        const currentlyAllowedWidgets = SettingsStore.getValue(
+            "allowedWidgets",
+            props.room.roomId,
+        );
         if (currentlyAllowedWidgets[props.app.eventId] === undefined) {
             return props.userId === props.creatorUserId;
         }
@@ -85,7 +92,9 @@ export default class AppTile extends React.Component {
         return {
             initialising: true, // True while we are mangling the widget URL
             // True while the iframe content is loading
-            loading: this.props.waitForIframeLoad && !PersistedElement.isMounted(this._persistKey),
+            loading:
+                this.props.waitForIframeLoad &&
+                !PersistedElement.isMounted(this._persistKey),
             // Assume that widget has permission to load if we are the user who
             // added it to the room, or if explicitly granted by the user
             hasPermissionToLoad: this.hasPermissionToLoad(newProps),
@@ -112,9 +121,17 @@ export default class AppTile extends React.Component {
         const parentContentProtocol = window.location.protocol;
         const u = url.parse(this.props.app.url);
         const childContentProtocol = u.protocol;
-        if (parentContentProtocol === 'https:' && childContentProtocol !== 'https:') {
-            console.warn("Refusing to load mixed-content app:",
-                parentContentProtocol, childContentProtocol, window.location, this.props.app.url);
+        if (
+            parentContentProtocol === "https:" &&
+            childContentProtocol !== "https:"
+        ) {
+            console.warn(
+                "Refusing to load mixed-content app:",
+                parentContentProtocol,
+                childContentProtocol,
+                window.location,
+                this.props.app.url,
+            );
             return true;
         }
         return false;
@@ -178,7 +195,8 @@ export default class AppTile extends React.Component {
     };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        // eslint-disable-line camelcase
         if (nextProps.app.url !== this.props.app.url) {
             this._getNewState(nextProps);
             if (this.state.hasPermissionToLoad) {
@@ -198,7 +216,8 @@ export default class AppTile extends React.Component {
      * @private
      * @returns {Promise<*>} Resolves when the widget is terminated, or timeout passed.
      */
-    async _endWidgetActions() { // widget migration dev note: async to maintain signature
+    async _endWidgetActions() {
+        // widget migration dev note: async to maintain signature
         // HACK: This is a really dirty way to ensure that Jitsi cleans up
         // its hold on the webcam. Without this, the widget holds a media
         // stream open, even after death. See https://github.com/vector-im/element-web/issues/7351
@@ -209,11 +228,11 @@ export default class AppTile extends React.Component {
             // the iframe at a page that is reasonably safe to use in the
             // event the iframe doesn't wink away.
             // This is relative to where the Element instance is located.
-            this.iframe.src = 'about:blank';
+            this.iframe.src = "about:blank";
         }
 
         if (WidgetType.JITSI.matches(this.props.app.type)) {
-            dis.dispatch({ action: 'hangup_conference' });
+            dis.dispatch({ action: "hangup_conference" });
         }
 
         // Delete the widget from the persisted store for good measure.
@@ -228,19 +247,31 @@ export default class AppTile extends React.Component {
 
     _onWidgetReady = () => {
         if (WidgetType.JITSI.matches(this.props.app.type)) {
-            this._sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
+            this._sgWidget.widgetApi.transport.send(
+                ElementWidgetActions.ClientReady,
+                {},
+            );
         }
     };
 
-    _onAction = payload => {
+    _onAction = (payload) => {
         if (payload.widgetId === this.props.app.id) {
             switch (payload.action) {
-                case 'm.sticker':
-                    if (this._sgWidget.widgetApi.hasCapability(MatrixCapabilities.StickerSending)) {
-                        dis.dispatch({ action: 'post_sticker_message', data: payload.data });
-                        dis.dispatch({ action: 'stickerpicker_close' });
+                case "m.sticker":
+                    if (
+                        this._sgWidget.widgetApi.hasCapability(
+                            MatrixCapabilities.StickerSending,
+                        )
+                    ) {
+                        dis.dispatch({
+                            action: "post_sticker_message",
+                            data: payload.data,
+                        });
+                        dis.dispatch({ action: "stickerpicker_close" });
                     } else {
-                        console.warn('Ignoring sticker message. Invalid capability');
+                        console.warn(
+                            "Ignoring sticker message. Invalid capability",
+                        );
                     }
                     break;
             }
@@ -249,19 +280,23 @@ export default class AppTile extends React.Component {
 
     _grantWidgetPermission = () => {
         const roomId = this.props.room.roomId;
-        console.info("Granting permission for widget to load: " + this.props.app.eventId);
+        console.info(
+            "Granting permission for widget to load: " + this.props.app.eventId,
+        );
         const current = SettingsStore.getValue("allowedWidgets", roomId);
         current[this.props.app.eventId] = true;
         const level = SettingsStore.firstSupportedLevel("allowedWidgets");
-        SettingsStore.setValue("allowedWidgets", roomId, level, current).then(() => {
-            this.setState({ hasPermissionToLoad: true });
+        SettingsStore.setValue("allowedWidgets", roomId, level, current)
+            .then(() => {
+                this.setState({ hasPermissionToLoad: true });
 
-            // Fetch a token for the integration manager, now that we're allowed to
-            this._startWidget();
-        }).catch(err => {
-            console.error(err);
-            // We don't really need to do anything about this - the user will just hit the button again.
-        });
+                // Fetch a token for the integration manager, now that we're allowed to
+                this._startWidget();
+            })
+            .catch((err) => {
+                console.error(err);
+                // We don't really need to do anything about this - the user will just hit the button again.
+            });
     };
 
     formatAppTileName() {
@@ -284,16 +319,22 @@ export default class AppTile extends React.Component {
     _getTileTitle() {
         const name = this.formatAppTileName();
         const titleSpacer = <span>&nbsp;-&nbsp;</span>;
-        let title = '';
-        if (this.state.widgetPageTitle && this.state.widgetPageTitle !== this.formatAppTileName()) {
+        let title = "";
+        if (
+            this.state.widgetPageTitle &&
+            this.state.widgetPageTitle !== this.formatAppTileName()
+        ) {
             title = this.state.widgetPageTitle;
         }
 
         return (
             <span>
                 <WidgetAvatar app={this.props.app} />
-                <b>{ name }</b>
-                <span>{ title ? titleSpacer : '' }{ title }</span>
+                <b>{name}</b>
+                <span>
+                    {title ? titleSpacer : ""}
+                    {title}
+                </span>
             </span>
         );
     }
@@ -313,8 +354,11 @@ export default class AppTile extends React.Component {
         }
         // Using Object.assign workaround as the following opens in a new window instead of a new tab.
         // window.open(this._getPopoutUrl(), '_blank', 'noopener=yes');
-        Object.assign(document.createElement('a'),
-            { target: '_blank', href: this._sgWidget.popoutUrl, rel: 'noreferrer noopener' }).click();
+        Object.assign(document.createElement("a"), {
+            target: "_blank",
+            href: this._sgWidget.popoutUrl,
+            rel: "noreferrer noopener",
+        }).click();
     };
 
     _onContextMenuClick = () => {
@@ -333,17 +377,20 @@ export default class AppTile extends React.Component {
         // this would only be for content hosted on the same origin as the element client: anything
         // hosted on the same origin as the client will get the same access as if you clicked
         // a link to it.
-        const sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox "+
+        const sandboxFlags =
+            "allow-forms allow-popups allow-popups-to-escape-sandbox " +
             "allow-same-origin allow-scripts allow-presentation";
 
         // Additional iframe feature pemissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
-        const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write;";
+        const iframeFeatures =
+            "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write;";
 
-        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
+        const appTileBodyClass =
+            "mx_AppTileBody" + (this.props.miniMode ? "_mini  " : " ");
         const appTileBodyStyles = {};
         if (this.props.pointerEvents) {
-            appTileBodyStyles['pointer-events'] = this.props.pointerEvents;
+            appTileBodyStyles["pointer-events"] = this.props.pointerEvents;
         }
 
         const loadingElement = (
@@ -359,7 +406,9 @@ export default class AppTile extends React.Component {
             );
         } else if (!this.state.hasPermissionToLoad) {
             // only possible for room widgets, can assert this.props.room here
-            const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(this.props.room.roomId);
+            const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(
+                this.props.room.roomId,
+            );
             appTileBody = (
                 <div className={appTileBodyClass} style={appTileBodyStyles}>
                     <AppPermission
@@ -373,8 +422,14 @@ export default class AppTile extends React.Component {
             );
         } else if (this.state.initialising) {
             appTileBody = (
-                <div className={appTileBodyClass + (this.state.loading ? 'mx_AppLoading' : '')} style={appTileBodyStyles}>
-                    { loadingElement }
+                <div
+                    className={
+                        appTileBodyClass +
+                        (this.state.loading ? "mx_AppLoading" : "")
+                    }
+                    style={appTileBodyStyles}
+                >
+                    {loadingElement}
                 </div>
             );
         } else {
@@ -386,8 +441,14 @@ export default class AppTile extends React.Component {
                 );
             } else {
                 appTileBody = (
-                    <div className={appTileBodyClass + (this.state.loading ? 'mx_AppLoading' : '')} style={appTileBodyStyles}>
-                        { this.state.loading && loadingElement }
+                    <div
+                        className={
+                            appTileBodyClass +
+                            (this.state.loading ? "mx_AppLoading" : "")
+                        }
+                        style={appTileBodyStyles}
+                    >
+                        {this.state.loading && loadingElement}
                         <iframe
                             allow={iframeFeatures}
                             ref={this._iframeRefChange}
@@ -406,11 +467,13 @@ export default class AppTile extends React.Component {
 
                     // Also wrap the PersistedElement in a div to fix the height, otherwise
                     // AppTile's border is in the wrong place
-                    appTileBody = <div className="mx_AppTile_persistedWrapper">
-                        <PersistedElement persistKey={this._persistKey}>
-                            { appTileBody }
-                        </PersistedElement>
-                    </div>;
+                    appTileBody = (
+                        <div className="mx_AppTile_persistedWrapper">
+                            <PersistedElement persistKey={this._persistKey}>
+                                {appTileBody}
+                            </PersistedElement>
+                        </div>
+                    );
                 }
             }
         }
@@ -429,7 +492,10 @@ export default class AppTile extends React.Component {
         if (this.state.menuDisplayed) {
             contextMenu = (
                 <RoomWidgetContextMenu
-                    {...aboveLeftOf(this._contextMenuButton.current.getBoundingClientRect(), null)}
+                    {...aboveLeftOf(
+                        this._contextMenuButton.current.getBoundingClientRect(),
+                        null,
+                    )}
                     app={this.props.app}
                     onFinished={this._closeContextMenu}
                     showUnpin={!this.props.userWidget}
@@ -440,37 +506,50 @@ export default class AppTile extends React.Component {
             );
         }
 
-        return <React.Fragment>
-            <div className={appTileClasses} id={this.props.app.id}>
-                { this.props.showMenubar &&
-                <div className="mx_AppTileMenuBar">
-                    <span className="mx_AppTileMenuBarTitle" style={{ pointerEvents: (this.props.handleMinimisePointerEvents ? 'all' : false) }}>
-                        { this.props.showTitle && this._getTileTitle() }
-                    </span>
-                    <span className="mx_AppTileMenuBarWidgets">
-                        { this.props.showPopout && <AccessibleButton
-                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
-                            title={_t('Popout widget')}
-                            onClick={this._onPopoutWidgetClick}
-                        /> }
-                        <ContextMenuButton
-                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_menu"
-                            label={_t("Options")}
-                            isExpanded={this.state.menuDisplayed}
-                            inputRef={this._contextMenuButton}
-                            onClick={this._onContextMenuClick}
-                        />
-                    </span>
-                </div> }
-                { appTileBody }
-            </div>
+        return (
+            <React.Fragment>
+                <div className={appTileClasses} id={this.props.app.id}>
+                    {this.props.showMenubar && (
+                        <div className="mx_AppTileMenuBar">
+                            <span
+                                className="mx_AppTileMenuBarTitle"
+                                style={{
+                                    pointerEvents: this.props
+                                        .handleMinimisePointerEvents
+                                        ? "all"
+                                        : false,
+                                }}
+                            >
+                                {this.props.showTitle && this._getTileTitle()}
+                            </span>
+                            <span className="mx_AppTileMenuBarWidgets">
+                                {this.props.showPopout && (
+                                    <AccessibleButton
+                                        className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
+                                        title={_t("Popout widget")}
+                                        onClick={this._onPopoutWidgetClick}
+                                    />
+                                )}
+                                <ContextMenuButton
+                                    className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_menu"
+                                    label={_t("Options")}
+                                    isExpanded={this.state.menuDisplayed}
+                                    inputRef={this._contextMenuButton}
+                                    onClick={this._onContextMenuClick}
+                                />
+                            </span>
+                        </div>
+                    )}
+                    {appTileBody}
+                </div>
 
-            { contextMenu }
-        </React.Fragment>;
+                {contextMenu}
+            </React.Fragment>
+        );
     }
 }
 
-AppTile.displayName = 'AppTile';
+AppTile.displayName = "AppTile";
 
 AppTile.propTypes = {
     app: PropTypes.object.isRequired,

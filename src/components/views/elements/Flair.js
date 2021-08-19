@@ -14,10 +14,10 @@
  limitations under the License.
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import FlairStore from '../../../stores/FlairStore';
-import dis from '../../../dispatcher/dispatcher';
+import React from "react";
+import PropTypes from "prop-types";
+import FlairStore from "../../../stores/FlairStore";
+import dis from "../../../dispatcher/dispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
@@ -33,22 +33,27 @@ class FlairAvatar extends React.Component {
         // Don't trigger onClick of parent element
         ev.stopPropagation();
         dis.dispatch({
-            action: 'view_group',
+            action: "view_group",
             group_id: this.props.groupProfile.groupId,
         });
     }
 
     render() {
-        const httpUrl = mediaFromMxc(this.props.groupProfile.avatarUrl).getSquareThumbnailHttp(16);
-        const tooltip = this.props.groupProfile.name ?
-            `${this.props.groupProfile.name} (${this.props.groupProfile.groupId})`:
-            this.props.groupProfile.groupId;
-        return <img
-            src={httpUrl}
-            width="16"
-            height="16"
-            onClick={this.onClick}
-            title={tooltip} />;
+        const httpUrl = mediaFromMxc(
+            this.props.groupProfile.avatarUrl,
+        ).getSquareThumbnailHttp(16);
+        const tooltip = this.props.groupProfile.name
+            ? `${this.props.groupProfile.name} (${this.props.groupProfile.groupId})`
+            : this.props.groupProfile.groupId;
+        return (
+            <img
+                src={httpUrl}
+                width="16"
+                height="16"
+                onClick={this.onClick}
+                title={tooltip}
+            />
+        );
     }
 }
 
@@ -81,7 +86,8 @@ export default class Flair extends React.Component {
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    UNSAFE_componentWillReceiveProps(newProps) {  // eslint-disable-line camelcase
+    UNSAFE_componentWillReceiveProps(newProps) {
+        // eslint-disable-line camelcase
         this._generateAvatars(newProps.groups);
     }
 
@@ -90,9 +96,12 @@ export default class Flair extends React.Component {
         for (const groupId of groups) {
             let groupProfile = null;
             try {
-                groupProfile = await FlairStore.getGroupProfileCached(this.context, groupId);
+                groupProfile = await FlairStore.getGroupProfileCached(
+                    this.context,
+                    groupId,
+                );
             } catch (err) {
-                console.error('Could not get profile for group', groupId, err);
+                console.error("Could not get profile for group", groupId, err);
             }
             profiles.push(groupProfile);
         }
@@ -120,11 +129,7 @@ export default class Flair extends React.Component {
         const avatars = this.state.profiles.map((profile, index) => {
             return <FlairAvatar key={index} groupProfile={profile} />;
         });
-        return (
-            <span className="mx_Flair">
-                { avatars }
-            </span>
-        );
+        return <span className="mx_Flair">{avatars}</span>;
     }
 }
 

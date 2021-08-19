@@ -20,7 +20,11 @@ import type { EventEmitter } from "events";
 type Handler = (...args: any[]) => void;
 
 // Hook to wrap event emitter on and removeListener in hook lifecycle
-export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbol, handler: Handler) => {
+export const useEventEmitter = (
+    emitter: EventEmitter,
+    eventName: string | symbol,
+    handler: Handler,
+) => {
     // Create a ref that stores handler
     const savedHandler = useRef(handler);
 
@@ -51,11 +55,18 @@ export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbo
 
 type Mapper<T> = (...args: any[]) => T;
 
-export const useEventEmitterState = <T>(emitter: EventEmitter, eventName: string | symbol, fn: Mapper<T>): T => {
+export const useEventEmitterState = <T>(
+    emitter: EventEmitter,
+    eventName: string | symbol,
+    fn: Mapper<T>,
+): T => {
     const [value, setValue] = useState<T>(fn());
-    const handler = useCallback((...args: any[]) => {
-        setValue(fn(...args));
-    }, [fn]);
+    const handler = useCallback(
+        (...args: any[]) => {
+            setValue(fn(...args));
+        },
+        [fn],
+    );
     useEventEmitter(emitter, eventName, handler);
     return value;
 };

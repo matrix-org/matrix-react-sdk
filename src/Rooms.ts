@@ -16,8 +16,8 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import AliasCustomisations from './customisations/Alias';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import AliasCustomisations from "./customisations/Alias";
 
 /**
  * Given a room object, return the alias we should use for it,
@@ -30,30 +30,45 @@ import AliasCustomisations from './customisations/Alias';
  */
 export function getDisplayAliasForRoom(room: Room): string {
     return getDisplayAliasForAliasSet(
-        room.getCanonicalAlias(), room.getAltAliases(),
+        room.getCanonicalAlias(),
+        room.getAltAliases(),
     );
 }
 
 // The various display alias getters should all feed through this one path so
 // there's a single place to change the logic.
-export function getDisplayAliasForAliasSet(canonicalAlias: string, altAliases: string[]): string {
+export function getDisplayAliasForAliasSet(
+    canonicalAlias: string,
+    altAliases: string[],
+): string {
     if (AliasCustomisations.getDisplayAliasForAliasSet) {
-        return AliasCustomisations.getDisplayAliasForAliasSet(canonicalAlias, altAliases);
+        return AliasCustomisations.getDisplayAliasForAliasSet(
+            canonicalAlias,
+            altAliases,
+        );
     }
     return canonicalAlias || altAliases?.[0];
 }
 
-export function looksLikeDirectMessageRoom(room: Room, myUserId: string): boolean {
+export function looksLikeDirectMessageRoom(
+    room: Room,
+    myUserId: string,
+): boolean {
     const myMembership = room.getMyMembership();
     const me = room.getMember(myUserId);
 
-    if (myMembership == "join" || myMembership === "ban" || (me && me.isKicked())) {
+    if (
+        myMembership == "join" ||
+        myMembership === "ban" ||
+        (me && me.isKicked())
+    ) {
         // Used to split rooms via tags
         const tagNames = Object.keys(room.tags);
         // Used for 1:1 direct chats
         // Show 1:1 chats in seperate "Direct Messages" section as long as they haven't
         // been moved to a different tag section
-        const totalMemberCount = room.currentState.getJoinedMemberCount() +
+        const totalMemberCount =
+            room.currentState.getJoinedMemberCount() +
             room.currentState.getInvitedMemberCount();
         if (totalMemberCount === 2 && !tagNames.length) {
             return true;
@@ -62,11 +77,15 @@ export function looksLikeDirectMessageRoom(room: Room, myUserId: string): boolea
     return false;
 }
 
-export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> {
+export function guessAndSetDMRoom(
+    room: Room,
+    isDirect: boolean,
+): Promise<void> {
     let newTarget;
     if (isDirect) {
         const guessedUserId = guessDMRoomTargetId(
-            room, MatrixClientPeg.get().getUserId(),
+            room,
+            MatrixClientPeg.get().getUserId(),
         );
         newTarget = guessedUserId;
     } else {
@@ -87,7 +106,7 @@ export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> 
 export async function setDMRoom(roomId: string, userId: string): Promise<void> {
     if (MatrixClientPeg.get().isGuest()) return;
 
-    const mDirectEvent = MatrixClientPeg.get().getAccountData('m.direct');
+    const mDirectEvent = MatrixClientPeg.get().getAccountData("m.direct");
     let dmRoomMap = {};
 
     if (mDirectEvent !== undefined) dmRoomMap = mDirectEvent.getContent();
@@ -114,7 +133,7 @@ export async function setDMRoom(roomId: string, userId: string): Promise<void> {
         dmRoomMap[userId] = roomList;
     }
 
-    await MatrixClientPeg.get().setAccountData('m.direct', dmRoomMap);
+    await MatrixClientPeg.get().setAccountData("m.direct", dmRoomMap);
 }
 
 /**
@@ -133,7 +152,10 @@ function guessDMRoomTargetId(room: Room, myUserId: string): string {
     for (const user of room.getJoinedMembers()) {
         if (user.userId == myUserId) continue;
 
-        if (oldestTs === undefined || (user.events.member && user.events.member.getTs() < oldestTs)) {
+        if (
+            oldestTs === undefined ||
+            (user.events.member && user.events.member.getTs() < oldestTs)
+        ) {
             oldestUser = user;
             oldestTs = user.events.member.getTs();
         }
@@ -144,7 +166,10 @@ function guessDMRoomTargetId(room: Room, myUserId: string): string {
     for (const user of room.currentState.getMembers()) {
         if (user.userId == myUserId) continue;
 
-        if (oldestTs === undefined || (user.events.member && user.events.member.getTs() < oldestTs)) {
+        if (
+            oldestTs === undefined ||
+            (user.events.member && user.events.member.getTs() < oldestTs)
+        ) {
             oldestUser = user;
             oldestTs = user.events.member.getTs();
         }

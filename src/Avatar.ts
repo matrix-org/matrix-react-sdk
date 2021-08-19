@@ -20,7 +20,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { split } from "lodash";
 
-import DMRoomMap from './utils/DMRoomMap';
+import DMRoomMap from "./utils/DMRoomMap";
 import { mediaFromMxc } from "./customisations/Media";
 import SpaceStore from "./stores/SpaceStore";
 
@@ -33,13 +33,17 @@ export function avatarUrlForMember(
 ): string {
     let url: string;
     if (member?.getMxcAvatarUrl()) {
-        url = mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+        url = mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
+            width,
+            height,
+            resizeMethod,
+        );
     }
     if (!url) {
         // member can be null here currently since on invites, the JS SDK
         // does not have enough info to build a RoomMember object for
         // the inviter.
-        url = defaultAvatarUrlForString(member ? member.userId : '');
+        url = defaultAvatarUrlForString(member ? member.userId : "");
     }
     return url;
 }
@@ -51,14 +55,23 @@ export function avatarUrlForUser(
     resizeMethod?: ResizeMethod,
 ): string | null {
     if (!user.avatarUrl) return null;
-    return mediaFromMxc(user.avatarUrl).getThumbnailOfSourceHttp(width, height, resizeMethod);
+    return mediaFromMxc(user.avatarUrl).getThumbnailOfSourceHttp(
+        width,
+        height,
+        resizeMethod,
+    );
 }
 
 function isValidHexColor(color: string): boolean {
-    return typeof color === "string" &&
+    return (
+        typeof color === "string" &&
         (color.length === 7 || color.length === 9) &&
         color.charAt(0) === "#" &&
-        !color.substr(1).split("").some(c => isNaN(parseInt(c, 16)));
+        !color
+            .substr(1)
+            .split("")
+            .some((c) => isNaN(parseInt(c, 16)))
+    );
 }
 
 function urlForColor(color: string): string {
@@ -83,7 +96,7 @@ const colorToDataURLCache = new Map<string, string>();
 
 export function defaultAvatarUrlForString(s: string): string {
     if (!s) return ""; // XXX: should never happen but empirically does by evidence of a rageshake
-    const defaultColors = ['#0DBD8B', '#368bd6', '#ac3ba8'];
+    const defaultColors = ["#0DBD8B", "#368bd6", "#ac3ba8"];
     let total = 0;
     for (let i = 0; i < s.length; ++i) {
         total += s.charCodeAt(i);
@@ -124,7 +137,7 @@ export function getInitialLetter(name: string): string {
     }
 
     const initial = name[0];
-    if ((initial === '@' || initial === '#' || initial === '+') && name[1]) {
+    if ((initial === "@" || initial === "#" || initial === "+") && name[1]) {
         name = name.substring(1);
     }
 
@@ -132,11 +145,20 @@ export function getInitialLetter(name: string): string {
     return split(name, "", 1)[0].toUpperCase();
 }
 
-export function avatarUrlForRoom(room: Room, width: number, height: number, resizeMethod?: ResizeMethod) {
+export function avatarUrlForRoom(
+    room: Room,
+    width: number,
+    height: number,
+    resizeMethod?: ResizeMethod,
+) {
     if (!room) return null; // null-guard
 
     if (room.getMxcAvatarUrl()) {
-        return mediaFromMxc(room.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+        return mediaFromMxc(room.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
+            width,
+            height,
+            resizeMethod,
+        );
     }
 
     // space rooms cannot be DMs so skip the rest
@@ -152,7 +174,9 @@ export function avatarUrlForRoom(room: Room, width: number, height: number, resi
         otherMember = room.getAvatarFallbackMember();
     }
     if (otherMember?.getMxcAvatarUrl()) {
-        return mediaFromMxc(otherMember.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
+        return mediaFromMxc(
+            otherMember.getMxcAvatarUrl(),
+        ).getThumbnailOfSourceHttp(width, height, resizeMethod);
     }
     return null;
 }

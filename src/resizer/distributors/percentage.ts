@@ -31,11 +31,15 @@ class PercentageSizer extends Sizer {
         const parent = item.offsetParent as HTMLElement;
         if (!parent) return;
         if (this.vertical) {
-            const p = ((item.offsetHeight / parent.offsetHeight) * 100).toFixed(2) + "%";
+            const p =
+                ((item.offsetHeight / parent.offsetHeight) * 100).toFixed(2) +
+                "%";
             item.style.minHeight = p;
             item.style.height = p;
         } else {
-            const p = ((item.offsetWidth / parent.offsetWidth) * 100).toFixed(2) + "%";
+            const p =
+                ((item.offsetWidth / parent.offsetWidth) * 100).toFixed(2) +
+                "%";
             item.style.minWidth = p;
             item.style.width = p;
         }
@@ -43,7 +47,11 @@ class PercentageSizer extends Sizer {
 }
 
 export default class PercentageDistributor extends FixedDistributor<IConfig> {
-    static createSizer(containerElement: HTMLElement, vertical: boolean, reverse: boolean) {
+    static createSizer(
+        containerElement: HTMLElement,
+        vertical: boolean,
+        reverse: boolean,
+    ) {
         return new PercentageSizer(containerElement, vertical, reverse);
     }
 }

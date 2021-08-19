@@ -15,7 +15,11 @@ limitations under the License.
 */
 
 import { PushRuleVectorState, VectorState } from "./PushRuleVectorState";
-import { IAnnotatedPushRule, IPushRules, PushRuleKind } from "matrix-js-sdk/src/@types/PushRules";
+import {
+    IAnnotatedPushRule,
+    IPushRules,
+    PushRuleKind,
+} from "matrix-js-sdk/src/@types/PushRules";
 
 export interface IContentRules {
     vectorState: VectorState;
@@ -71,13 +75,20 @@ export class ContentRules {
             return {
                 vectorState: VectorState.Off,
                 rules: contentRules.loud_but_disabled,
-                externalRules: [...contentRules.on, ...contentRules.on_but_disabled, ...contentRules.other],
+                externalRules: [
+                    ...contentRules.on,
+                    ...contentRules.on_but_disabled,
+                    ...contentRules.other,
+                ],
             };
         } else if (contentRules.on.length) {
             return {
                 vectorState: VectorState.On,
                 rules: contentRules.on,
-                externalRules: [...contentRules.on_but_disabled, ...contentRules.other],
+                externalRules: [
+                    ...contentRules.on_but_disabled,
+                    ...contentRules.other,
+                ],
             };
         } else if (contentRules.on_but_disabled.length) {
             return {
@@ -95,7 +106,10 @@ export class ContentRules {
     }
 
     private static categoriseContentRules(rulesets: IPushRules) {
-        const contentRules: Record<"on"|"on_but_disabled"|"loud"|"loud_but_disabled"|"other", IAnnotatedPushRule[]> = {
+        const contentRules: Record<
+            "on" | "on_but_disabled" | "loud" | "loud_but_disabled" | "other",
+            IAnnotatedPushRule[]
+        > = {
             on: [],
             on_but_disabled: [],
             loud: [],
@@ -104,11 +118,18 @@ export class ContentRules {
         };
 
         for (const kind in rulesets.global) {
-            for (let i = 0; i < Object.keys(rulesets.global[kind]).length; ++i) {
+            for (
+                let i = 0;
+                i < Object.keys(rulesets.global[kind]).length;
+                ++i
+            ) {
                 const r = rulesets.global[kind][i];
 
                 // check it's not a default rule
-                if (r.rule_id[0] === '.' || kind !== PushRuleKind.ContentSpecific) {
+                if (
+                    r.rule_id[0] === "." ||
+                    kind !== PushRuleKind.ContentSpecific
+                ) {
                     continue;
                 }
 

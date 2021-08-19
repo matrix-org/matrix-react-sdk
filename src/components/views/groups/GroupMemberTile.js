@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
-import { GroupMemberType } from '../../../groups';
+import React from "react";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
+import dis from "../../../dispatcher/dispatcher";
+import { GroupMemberType } from "../../../groups";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
@@ -34,21 +34,23 @@ export default class GroupMemberTile extends React.Component {
 
     static contextType = MatrixClientContext;
 
-    onClick = e => {
+    onClick = (e) => {
         dis.dispatch({
-            action: 'view_group_user',
+            action: "view_group_user",
             member: this.props.member,
             groupId: this.props.groupId,
         });
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
-        const EntityTile = sdk.getComponent('rooms.EntityTile');
+        const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
+        const EntityTile = sdk.getComponent("rooms.EntityTile");
 
         const name = this.props.member.displayname || this.props.member.userId;
         const avatarUrl = this.props.member.avatarUrl
-            ? mediaFromMxc(this.props.member.avatarUrl).getSquareThumbnailHttp(36)
+            ? mediaFromMxc(this.props.member.avatarUrl).getSquareThumbnailHttp(
+                  36,
+              )
             : null;
 
         const av = (
@@ -69,7 +71,11 @@ export default class GroupMemberTile extends React.Component {
                 onClick={this.onClick}
                 suppressOnHover={true}
                 presenceState="online"
-                powerStatus={this.props.member.isPrivileged ? EntityTile.POWER_STATUS_ADMIN : null}
+                powerStatus={
+                    this.props.member.isPrivileged
+                        ? EntityTile.POWER_STATUS_ADMIN
+                        : null
+                }
             />
         );
     }

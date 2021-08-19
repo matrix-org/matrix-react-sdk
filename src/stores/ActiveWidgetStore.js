@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventEmitter from 'events';
+import EventEmitter from "events";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
 
 /**
@@ -39,12 +39,15 @@ class ActiveWidgetStore extends EventEmitter {
     }
 
     start() {
-        MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
+        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
     }
 
     stop() {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener('RoomState.events', this.onRoomStateEvents);
+            MatrixClientPeg.get().removeListener(
+                "RoomState.events",
+                this.onRoomStateEvents,
+            );
         }
         this._roomIdByWidgetId = {};
     }
@@ -55,7 +58,7 @@ class ActiveWidgetStore extends EventEmitter {
         // on this class which is terrible. This store should just listen for events
         // and keep itself up to date.
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        if (ev.getType() !== 'im.vector.modular.widgets') return;
+        if (ev.getType() !== "im.vector.modular.widgets") return;
 
         if (ev.getStateKey() === this._persistentWidgetId) {
             this.destroyPersistentWidget(this._persistentWidgetId);
@@ -78,7 +81,7 @@ class ActiveWidgetStore extends EventEmitter {
         } else if (this._persistentWidgetId !== widgetId && val) {
             this._persistentWidgetId = widgetId;
         }
-        this.emit('update');
+        this.emit("update");
     }
 
     getWidgetPersistence(widgetId) {
@@ -95,12 +98,12 @@ class ActiveWidgetStore extends EventEmitter {
 
     setRoomId(widgetId, roomId) {
         this._roomIdByWidgetId[widgetId] = roomId;
-        this.emit('update');
+        this.emit("update");
     }
 
     delRoomId(widgetId) {
         delete this._roomIdByWidgetId[widgetId];
-        this.emit('update');
+        this.emit("update");
     }
 }
 
