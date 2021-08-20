@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629439735024,
+  "lastUpdate": 1629448190998,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18104,6 +18104,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4466.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ea38990d94538cda532c3e2a0e9ecea284aedcea",
+          "message": "Merge pull request #6647 from SimonBrandner/fix/call-tile-bubbles/18648\n\nFix call tiles on the bubble layout",
+          "timestamp": "2021-08-20T09:24:42+01:00",
+          "tree_id": "9cfbf96ff1b11cbf094704e5bee0a8cb86fbcdd7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ea38990d94538cda532c3e2a0e9ecea284aedcea"
+        },
+        "date": 1629448189552,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4071.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 994.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
