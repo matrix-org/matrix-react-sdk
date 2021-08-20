@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629472583218,
+  "lastUpdate": 1629474407147,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18236,6 +18236,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4805.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "374a0265b3d7d85cf2c43c2bb0559340330c9556",
+          "message": "Merge pull request #6652 from matrix-org/fix/palid/space-room-view-css\n\nFix space room view invalid css",
+          "timestamp": "2021-08-20T17:41:26+02:00",
+          "tree_id": "4cab6689b13c391e268b0546ba4162ea3ba4af43",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/374a0265b3d7d85cf2c43c2bb0559340330c9556"
+        },
+        "date": 1629474405096,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4448.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1005.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1709.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4407.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
