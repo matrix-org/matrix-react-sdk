@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629474407147,
+  "lastUpdate": 1629477349686,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18284,6 +18284,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4407.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1c29505c8339c7bcd70d7bc4f9f2e08be3626e29",
+          "message": "Merge pull request #6653 from matrix-org/fix/palid/space-room-view-css\n\nFix content not being centered",
+          "timestamp": "2021-08-20T18:30:43+02:00",
+          "tree_id": "716f526755b56af136e841e2abb1bb4701edda68",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1c29505c8339c7bcd70d7bc4f9f2e08be3626e29"
+        },
+        "date": 1629477348552,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4144,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 800.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
