@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629458143147,
+  "lastUpdate": 1629472583218,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18188,6 +18188,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4254.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3e19fc1984d614170461d695ef3e4205f21cebe6",
+          "message": "Merge pull request #6620 from SimonBrandner/feature/vertical-autocomplete/18558\n\nFormat autocomplete suggestions vertically",
+          "timestamp": "2021-08-20T09:10:36-06:00",
+          "tree_id": "2ce7f56679e094bc1cb0afb9c2e8d5821f7b8ae4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3e19fc1984d614170461d695ef3e4205f21cebe6"
+        },
+        "date": 1629472581435,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5407.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1102.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1995.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4805.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
