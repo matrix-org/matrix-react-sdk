@@ -236,6 +236,8 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
+        const loop = Boolean(content.info?.["fi.mau.loop"]);
+        const controls = !content.info?.["fi.mau.hide_controls"];
         let height = null;
         let width = null;
         let poster = null;
@@ -252,6 +254,15 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 preload = "none";
             }
         }
+        let onMouseOver;
+        let onMouseOut;
+        if (!autoplay && !controls) {
+            onMouseOver = event => (event.target as HTMLVideoElement).play();
+            onMouseOut = event => {
+                (event.target as HTMLVideoElement).pause();
+                (event.target as HTMLVideoElement).currentTime = 0;
+            };
+        }
         return (
             <span className="mx_MVideoBody">
                 <video
@@ -259,13 +270,16 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     ref={this.videoRef}
                     src={contentUrl}
                     title={content.body}
-                    controls
+                    controls={controls}
+                    loop={loop}
                     preload={preload}
                     muted={autoplay}
                     autoPlay={autoplay}
                     height={height}
                     width={width}
                     poster={poster}
+                    onMouseOver={onMouseOver}
+                    onMouseOut={onMouseOut}
                     onPlay={this.videoOnPlay}
                 />
                 { this.props.tileShape && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
