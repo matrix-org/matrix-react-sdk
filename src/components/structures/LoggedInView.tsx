@@ -55,15 +55,19 @@ import { getKeyBindingsManager, NavigationAction, RoomAction } from '../../KeyBi
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import CallHandler, { CallHandlerEvent } from '../../CallHandler';
+import CallHandler from '../../CallHandler';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
+import { OwnProfileStore } from '../../stores/OwnProfileStore';
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RoomView from './RoomView';
 import ToastContainer from './ToastContainer';
 import MyGroups from "./MyGroups";
 import UserView from "./UserView";
 import GroupView from "./GroupView";
+import BackdropPanel from "./BackdropPanel";
 import SpaceStore from "../../stores/SpaceStore";
+import classNames from 'classnames';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -127,6 +131,7 @@ interface IState {
     usageLimitEventTs?: number;
     useCompactLayout: boolean;
     activeCalls: Array<MatrixCall>;
+    backgroundImage?: CanvasImageSource;
 }
 
 /**
@@ -142,6 +147,7 @@ interface IState {
 class LoggedInView extends React.Component<IProps, IState> {
     static displayName = 'LoggedInView';
 
+    private dispatcherRef: string;
     protected readonly _matrixClient: MatrixClient;
     protected readonly _roomView: React.RefObject<any>;
     protected readonly _resizeContainer: React.RefObject<ResizeHandle>;
@@ -156,7 +162,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
             usageLimitDismissed: false,
-            activeCalls: [],
+            activeCalls: CallHandler.sharedInstance().getAllActiveCalls(),
         };
 
         // stash the MatrixClient in case we log out before we are unmounted
@@ -172,7 +178,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     componentDidMount() {
         document.addEventListener('keydown', this.onNativeKeyDown, false);
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallsChanged, this.onCallsChanged);
+        this.dispatcherRef = dis.register(this.onAction);
 
         this.updateServerNoticeEvents();
 
@@ -192,23 +198,39 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         this.resizer = this.createResizer();
         this.resizer.attach();
+
+        OwnProfileStore.instance.on(UPDATE_EVENT, this.refreshBackgroundImage);
         this.loadResizerPreferences();
+        this.refreshBackgroundImage();
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.onNativeKeyDown, false);
-        CallHandler.sharedInstance().removeListener(CallHandlerEvent.CallsChanged, this.onCallsChanged);
+        dis.unregister(this.dispatcherRef);
         this._matrixClient.removeListener("accountData", this.onAccountData);
         this._matrixClient.removeListener("sync", this.onSync);
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
+        OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
         this.resizer.detach();
     }
 
-    private onCallsChanged = () => {
+    private refreshBackgroundImage = async (): Promise<void> => {
         this.setState({
-            activeCalls: CallHandler.sharedInstance().getAllActiveCalls(),
+            backgroundImage: await OwnProfileStore.instance.getAvatarBitmap(),
         });
+    };
+
+    private onAction = (payload): void => {
+        switch (payload.action) {
+            case 'call_state': {
+                const activeCalls = CallHandler.sharedInstance().getAllActiveCalls();
+                if (activeCalls !== this.state.activeCalls) {
+                    this.setState({ activeCalls });
+                }
+                break;
+            }
+        }
     };
 
     public canResetTimelineInRoom = (roomId: string) => {
@@ -529,24 +551,24 @@ class LoggedInView extends React.Component<IProps, IState> {
         }
 
         const isModifier = ev.key === Key.ALT || ev.key === Key.CONTROL || ev.key === Key.META || ev.key === Key.SHIFT;
-        if (!isModifier && !ev.altKey && !ev.ctrlKey && !ev.metaKey) {
+        if (!isModifier && !ev.ctrlKey && !ev.metaKey) {
             // The above condition is crafted to _allow_ characters with Shift
             // already pressed (but not the Shift key down itself).
-
             const isClickShortcut = ev.target !== document.body &&
                 (ev.key === Key.SPACE || ev.key === Key.ENTER);
 
-            // Do not capture the context menu key to improve keyboard accessibility
-            if (ev.key === Key.CONTEXT_MENU) {
-                return;
-            }
+            // We explicitly allow alt to be held due to it being a common accent modifier.
+            // XXX: Forwarding Dead keys in this way does not work as intended but better to at least
+            // move focus to the composer so the user can re-type the dead key correctly.
+            const isPrintable = ev.key.length === 1 || ev.key === "Dead";
 
-            if (!isClickShortcut && ev.key !== Key.TAB && !canElementReceiveInput(ev.target)) {
+            // If the user is entering a printable character outside of an input field
+            // redirect it to the composer for them.
+            if (!isClickShortcut && isPrintable && !canElementReceiveInput(ev.target)) {
                 // synchronous dispatch so we focus before key generates input
                 dis.fire(Action.FocusSendMessageComposer, true);
                 ev.stopPropagation();
-                // we should *not* preventDefault() here as
-                // that would prevent typing in the now-focussed composer
+                // we should *not* preventDefault() here as that would prevent typing in the now-focused composer
             }
         }
     };
@@ -601,10 +623,11 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
         }
 
-        let bodyClasses = 'mx_MatrixChat';
-        if (this.state.useCompactLayout) {
-            bodyClasses += ' mx_MatrixChat_useCompactLayout';
-        }
+        const bodyClasses = classNames({
+            'mx_MatrixChat': true,
+            'mx_MatrixChat_useCompactLayout': this.state.useCompactLayout,
+            'mx_MatrixChat--with-avatar': this.state.backgroundImage,
+        });
 
         const audioFeedArraysForCalls = this.state.activeCalls.map((call) => {
             return (
@@ -622,14 +645,17 @@ class LoggedInView extends React.Component<IProps, IState> {
                 >
                     <ToastContainer />
                     <div ref={this._resizeContainer} className={bodyClasses}>
+                        <BackdropPanel
+                            backgroundImage={this.state.backgroundImage}
+                        />
                         { SpaceStore.spacesEnabled ? <SpacePanel /> : null }
                         <LeftPanel
                             isMinimized={this.props.collapseLhs || false}
                             resizeNotifier={this.props.resizeNotifier}
                         />
                         <ResizeHandle />
-                        { pageElement }
                     </div>
+                    { pageElement }
                 </div>
                 <CallContainer />
                 <NonUrgentToastContainer />

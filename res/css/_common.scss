@@ -18,6 +18,7 @@ limitations under the License.
 
 @import "./_font-sizes.scss";
 @import "./_font-weights.scss";
+@import "./_animations.scss";
 
 $hover-transition: 0.08s cubic-bezier(.46, .03, .52, .96); // quadratic
 
@@ -167,7 +168,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 // it has the appearance of a text box so the controls
 // appear to be part of the input
 
-.mx_Dialog, .mx_MatrixChat {
+.mx_Dialog, .mx_MatrixChat_wrapper {
     .mx_textinput > input[type=text],
     .mx_textinput > input[type=search] {
         border: none;
