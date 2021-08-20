@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629404262925,
+  "lastUpdate": 1629439735024,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18056,6 +18056,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4521,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fcf47f6539bd0fdb6625f1a5553ce5b75fc1dab9",
+          "message": "Merge pull request #6626 from SimonBrandner/fix/correct-colors-call-tiles\n\nAdjust colors in call tiles",
+          "timestamp": "2021-08-20T00:02:56-06:00",
+          "tree_id": "132fe8c4fe86207d0d8fd5b50eedd3ca1b2258e9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fcf47f6539bd0fdb6625f1a5553ce5b75fc1dab9"
+        },
+        "date": 1629439732738,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5357.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1131.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1876.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4466.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
