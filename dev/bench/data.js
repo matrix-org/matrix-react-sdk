@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629448190998,
+  "lastUpdate": 1629458143147,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18140,6 +18140,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 994.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7d1e71fea4da0188ef7f09b99775d4cafb855aef",
+          "message": "Merge pull request #6641 from matrix-org/palid/fix/chat-flex-values\n\nFix flex values after blur changes",
+          "timestamp": "2021-08-20T13:10:40+02:00",
+          "tree_id": "0559cafbd3bafd516765d14153408206b459624e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7d1e71fea4da0188ef7f09b99775d4cafb855aef"
+        },
+        "date": 1629458141683,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4333.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 919.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4254.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
