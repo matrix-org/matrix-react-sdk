@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629707127175,
+  "lastUpdate": 1629707205821,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18464,6 +18464,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5048.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "30a08ea1c30c8a8c540c165e26f21e47e549aabf",
+          "message": "Merge pull request #6646 from SimonBrandner/fix/hide-encryption/18646",
+          "timestamp": "2021-08-23T09:19:54+01:00",
+          "tree_id": "0861ea55d9b4b9fa76fb1cbf5e91c7de342d246b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/30a08ea1c30c8a8c540c165e26f21e47e549aabf"
+        },
+        "date": 1629707203557,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5575.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1253.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1810.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5207.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
