@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629698152381,
+  "lastUpdate": 1629706386425,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18368,6 +18368,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5057.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f62f54949beba6f49f9c3b1468f91e82db07e5f",
+          "message": "Merge pull request #6656 from SimonBrandner/task/move-pip-css\n\nMove `CallPreview` CSS",
+          "timestamp": "2021-08-23T09:07:53+01:00",
+          "tree_id": "3dccc47a76f0eb248f5c4a0ffa9812b1039a6ce9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6f62f54949beba6f49f9c3b1468f91e82db07e5f"
+        },
+        "date": 1629706384829,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4238.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1181.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1666,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4311.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
