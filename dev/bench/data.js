@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629755862446,
+  "lastUpdate": 1629759075084,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18944,6 +18944,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4735.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "32343f3382179e00a6e62a1427380db342a2981f",
+          "message": "Merge pull request #5698 from SimonBrandner/public-e2ee-warn\n\nAdd a warning on E2EE rooms if you try to make them public",
+          "timestamp": "2021-08-23T16:45:47-06:00",
+          "tree_id": "14d66cb45e6aca4874635dbbf428b7db67e82419",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/32343f3382179e00a6e62a1427380db342a2981f"
+        },
+        "date": 1629759073592,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4241.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 826.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1648.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4329.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
