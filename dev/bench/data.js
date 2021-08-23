@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629718749509,
+  "lastUpdate": 1629742263875,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18848,6 +18848,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4326.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6205cbbdec0c47c3a2c805d5ecb719469b7bd36a",
+          "message": "Merge pull request #6659 from matrix-org/palid/fix/backdrop-blur\n\nOptimize background image from avatar on left panel",
+          "timestamp": "2021-08-23T20:05:49+02:00",
+          "tree_id": "cfb6dbb3bdfb2eda6d297ffeda48841298bf373a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6205cbbdec0c47c3a2c805d5ecb719469b7bd36a"
+        },
+        "date": 1629742262233,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4118.3000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 754.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1612.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4035.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
