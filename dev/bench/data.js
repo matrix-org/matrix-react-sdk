@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629714918154,
+  "lastUpdate": 1629717358545,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18752,6 +18752,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4930.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a3cf1c1cf069d5fea583fb8377088c3ecf4a29f1",
+          "message": "Merge pull request #6654 from matrix-org/fix/palid/space-room-view-css\n\nFix spaces preview screen",
+          "timestamp": "2021-08-23T13:10:15+02:00",
+          "tree_id": "e923f4050dfefcc551b0a3151dd6805d6d27b78b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a3cf1c1cf069d5fea583fb8377088c3ecf4a29f1"
+        },
+        "date": 1629717357138,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4844.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1061.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1772.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4540.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
