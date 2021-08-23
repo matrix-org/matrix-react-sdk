@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629707205821,
+  "lastUpdate": 1629708466097,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18512,6 +18512,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5207.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5344b86de422cfe35e4a5cafc57b9667beed2467",
+          "message": "Merge pull request #6633 from matrix-org/dbkr/fix_cross_signing_setup_settings\n\nFix cross signing setup from settings screen",
+          "timestamp": "2021-08-23T09:41:24+01:00",
+          "tree_id": "54ef5288edd866d9cef41f8b3aaed906114112e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5344b86de422cfe35e4a5cafc57b9667beed2467"
+        },
+        "date": 1629708464468,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4921,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1118.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1819.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4926.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
