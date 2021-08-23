@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629714880628,
+  "lastUpdate": 1629714918154,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18704,6 +18704,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4493.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "86c21c389a88501272c23f114017051dac6e7889",
+          "message": "Merge pull request #6650 from SimonBrandner/fix/autocomplete/18593\n\nImprove emoji in composer",
+          "timestamp": "2021-08-23T11:28:56+01:00",
+          "tree_id": "1ad48fdceec40b5b61b974ea45878763fb0ab7f4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/86c21c389a88501272c23f114017051dac6e7889"
+        },
+        "date": 1629714916563,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4723.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1176.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1750.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4930.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
