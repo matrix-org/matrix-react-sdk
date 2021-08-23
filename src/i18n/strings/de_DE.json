@@ -2920,7 +2920,7 @@
     "Decide where your account is hosted": "Gib an wo dein Benutzerkonto gehostet werden soll",
     "Already have an account? <a>Sign in here</a>": "Hast du schon ein Benutzerkonto? <a>Melde dich hier an</a>",
     "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s oder %(usernamePassword)s",
-    "Continue with %(ssoButtons)s": "Mit %(ssoButtons)s fortfahren",
+    "Continue with %(ssoButtons)s": "Fortfahren mit %(ssoButtons)s",
     "That username already exists, please try another.": "Dieser Benutzername existiert schon. Bitte versuche es mit einem anderen.",
     "New? <a>Create account</a>": "Neu? <a>Erstelle ein Benutzerkonto</a>",
     "There was a problem communicating with the homeserver, please try again later.": "Es gab ein Problem bei der Kommunikation mit dem Homseserver. Bitte versuche es später erneut.",
