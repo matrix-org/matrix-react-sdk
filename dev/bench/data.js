@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629742263875,
+  "lastUpdate": 1629755862446,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18896,6 +18896,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4035.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "15c731d5741d2e66ab4d53145647c636def960dd",
+          "message": "Merge pull request #6507 from matrix-org/t3chguy/fix/18089\n\nAllow pagination of the space hierarchy and use new APIs",
+          "timestamp": "2021-08-23T15:51:34-06:00",
+          "tree_id": "9736935ae93eccb4ec47e5e6decec6dc8ef65b42",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/15c731d5741d2e66ab4d53145647c636def960dd"
+        },
+        "date": 1629755860421,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4479.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 964.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1659.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4735.5,
             "unit": "ms",
             "extra": "type: measure"
           }
