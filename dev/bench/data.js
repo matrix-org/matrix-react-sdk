@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629714148401,
+  "lastUpdate": 1629714875650,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18608,6 +18608,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4933.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e946e39194d39dbaa5766ea5995fc95350e4f35d",
+          "message": "Merge pull request #6629 from SimonBrandner/feature/voice-messages-replies\n\nAllow playback of replied-to voice message",
+          "timestamp": "2021-08-23T11:29:41+01:00",
+          "tree_id": "63156e9535c494a9d9578e6952071983717c1340",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e946e39194d39dbaa5766ea5995fc95350e4f35d"
+        },
+        "date": 1629714874325,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4289,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 921.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1673.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4147.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
