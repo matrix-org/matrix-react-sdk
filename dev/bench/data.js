@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629708466097,
+  "lastUpdate": 1629714148401,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18560,6 +18560,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4926.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1fad454fe0676fe36fd140fc4427671f41c02593",
+          "message": "Merge pull request #6655 from SimonBrandner/fix/autocomplete-scroll",
+          "timestamp": "2021-08-23T11:16:02+01:00",
+          "tree_id": "620339b21b954b4c48f47e2c5545be5191bcd244",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1fad454fe0676fe36fd140fc4427671f41c02593"
+        },
+        "date": 1629714146775,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4766.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1133.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1965.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4933.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
