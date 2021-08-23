@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629714875650,
+  "lastUpdate": 1629714880628,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18656,6 +18656,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4147.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b391ee0bbfa49f46c1356b6840a9576158e4da14",
+          "message": "Merge pull request #6451 from SimonBrandner/fix/replies-bubble/18184\n\nFix replies on the bubble layout",
+          "timestamp": "2021-08-23T11:29:28+01:00",
+          "tree_id": "ff6e70d4721c3a69ffebb49b096f88c819eddc76",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b391ee0bbfa49f46c1356b6840a9576158e4da14"
+        },
+        "date": 1629714879514,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4499.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1179.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1700.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4493.5,
             "unit": "ms",
             "extra": "type: measure"
           }
