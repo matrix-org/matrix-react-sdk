@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629477349686,
+  "lastUpdate": 1629698152381,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18320,6 +18320,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 800.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "397a0f78490172816ae5aecab3795236dd049f79",
+          "message": "Merge pull request #6651 from SimonBrandner/feature/watch-rl-background\n\nWatch `RoomList.backgroundImage`",
+          "timestamp": "2021-08-22T23:49:32-06:00",
+          "tree_id": "2b084d26d16837d524dbc9ccf48e76fee05c0e67",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/397a0f78490172816ae5aecab3795236dd049f79"
+        },
+        "date": 1629698150038,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4392,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1213.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1860.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5057.5,
             "unit": "ms",
             "extra": "type: measure"
           }
