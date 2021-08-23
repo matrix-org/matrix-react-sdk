@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629706386425,
+  "lastUpdate": 1629707127175,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18416,6 +18416,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4311.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0daa6ab8453ae976105a4cc3c0a1bffabc8f6b20",
+          "message": "Merge pull request #6648 from matrix-org/palid/fix/modern-layout\n\nFix modern layout",
+          "timestamp": "2021-08-23T10:18:49+02:00",
+          "tree_id": "529d7a5ff065c2855ec95b3c34b00d294c6e81cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0daa6ab8453ae976105a4cc3c0a1bffabc8f6b20"
+        },
+        "date": 1629707125517,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5203.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1238.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1999.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5048.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
