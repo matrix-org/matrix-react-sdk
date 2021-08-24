@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629824171371,
+  "lastUpdate": 1629824910974,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19376,6 +19376,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4212.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dbc69fbe756d2e7a51a5a5192765bdafe17914e4",
+          "message": "Merge pull request #6383 from matrix-org/dbkr/ci_for_release_mode_types\n\nAdd CI script to switch the js-sdk into 'release mode'",
+          "timestamp": "2021-08-24T18:02:45+01:00",
+          "tree_id": "3774b2499af0244fbc68882e834e30b21b1beae8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dbc69fbe756d2e7a51a5a5192765bdafe17914e4"
+        },
+        "date": 1629824909581,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4532.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 958.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1671.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4621,
             "unit": "ms",
             "extra": "type: measure"
           }
