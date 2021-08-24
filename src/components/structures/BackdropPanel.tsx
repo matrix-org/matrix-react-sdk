@@ -24,7 +24,9 @@ interface IProps {
 export const BackdropPanel: React.FC<IProps> = ({ backgroundImage, blurMultiplier }) => {
     if (!backgroundImage) return null;
 
-    const styles: CSSProperties = {};
+    const styles: CSSProperties = {
+        backgroundImage: `url(${backgroundImage})`,
+    };
     if (blurMultiplier) {
         const rootStyle = getComputedStyle(document.documentElement);
         const blurValue = rootStyle.getPropertyValue('--lp-background-blur');
@@ -35,10 +37,10 @@ export const BackdropPanel: React.FC<IProps> = ({ backgroundImage, blurMultiplie
         }
     }
     return <div className="mx_BackdropPanel">
-        <img
+        <div
             style={styles}
             className="mx_BackdropPanel--image"
-            src={backgroundImage} />
+        />
     </div>;
 };
 export default BackdropPanel;
