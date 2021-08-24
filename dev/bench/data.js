@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629815733384,
+  "lastUpdate": 1629821534438,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19232,6 +19232,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4067.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c2a410c724fa727ae1771e67e2ca6cc0bc1dd8a3",
+          "message": "Merge pull request #6665 from SimonBrandner/fix/add-button/18706\n\nAdd padding to the Add button in the notification settings",
+          "timestamp": "2021-08-24T10:06:17-06:00",
+          "tree_id": "5763bbb01f5b2d3c8c0fbb3098f29b964b3e0356",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c2a410c724fa727ae1771e67e2ca6cc0bc1dd8a3"
+        },
+        "date": 1629821532334,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5578.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 969.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1774.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4393.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
