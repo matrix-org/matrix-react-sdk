@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629824910974,
+  "lastUpdate": 1629830295267,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19424,6 +19424,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4621,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "536a9aec65e048de8a2e02cfc3030a78ba65a5fe",
+          "message": "Merge pull request #6644 from matrix-org/palid/fix/layers-overwhelming\n\nIncrease general app performance by optimizing layers",
+          "timestamp": "2021-08-24T20:32:07+02:00",
+          "tree_id": "2136017625f1a4923e2a5b784055235fc092c341",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/536a9aec65e048de8a2e02cfc3030a78ba65a5fe"
+        },
+        "date": 1629830293076,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4365.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 970.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1795.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4507.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
