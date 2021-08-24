@@ -37,6 +37,7 @@ import RoomViewStore from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import CallHandler from "./CallHandler";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -379,7 +380,16 @@ export const Notifier = {
     },
 
     _evaluateEvent: function(ev) {
-        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        let roomId = ev.getRoomId();
+        if (CallHandler.sharedInstance().getSupportsVirtualRooms()) {
+            // Attempt to translate a virtual room to a native one
+            const nativeRoomId = window.mxVoipUserMapper.nativeRoomForVirtualRoom(roomId);
+            if (nativeRoomId) {
+                roomId = nativeRoomId;
+            }
+        }
+        const room = MatrixClientPeg.get().getRoom(roomId);
+
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions && actions.notify) {
             if (RoomViewStore.getRoomId() === room.roomId && UserActivity.sharedInstance().userActiveRecently()) {
