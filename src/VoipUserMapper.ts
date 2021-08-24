@@ -41,6 +41,18 @@ export default class VoipUserMapper {
         return results[0].userid;
     }
 
+    /*
+     * Given a virtual user, attempt to find a corresponding native user via a call to
+     * the third-party lookup API.
+     *
+     * @params userId The MXID of the virtual user.
+     */
+    public async virtualUserToNativeUser(userId: string): Promise<string> {
+        const results = await CallHandler.sharedInstance().sipNativeLookup(userId);
+        if (results.length === 0 || !results[0].fields.lookup_success) return null;
+        return results[0].userid;
+    }
+
     public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string> {
         const userId = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (!userId) return null;

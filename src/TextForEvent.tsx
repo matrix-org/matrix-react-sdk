@@ -33,13 +33,49 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
+import CallHandler from './CallHandler';
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
 
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
-    const getSenderName = () => event.sender ? event.sender.name : _t('Someone');
+    const getSenderName = () => {
+        const room = MatrixClientPeg.get().getRoom(event.getRoomId());
+
+        // Check if the event is from a virtual room
+        if (!CallHandler.sharedInstance().getSupportsVirtualRooms() || !window.mxVoipUserMapper.isVirtualRoom(room)) {
+            // If not, simply extract the sender information from the incoming event
+            return event.sender ? event.sender.name : _t('Someone');
+        }
+
+        // Otherwise, assume the caller is a virtual user and attempt to look up the corresponding
+        // native user
+        const senderMxid = event.getSender();
+        let nativeUserId: string = null;
+
+        // Perform a virtual to native user third-party lookup
+        window.mxVoipUserMapper.virtualUserToNativeUser(senderMxid).then((userId) => {
+            nativeUserId = userId;
+        });
+
+        // If a native user was found, return their information instead
+        if (nativeUserId) {
+            // TODO: Optimize for 2 people rooms
+            MatrixClientPeg.get().getProfileInfo(nativeUserId).then((resp) => {
+                if (resp.displayname) {
+                    return resp.displayname;
+                }
+
+                return nativeUserId;
+            }).catch((e) => {
+                console.error('Error getting native user profile', e);
+                return nativeUserId;
+            });
+        }
+
+    }
+
     // FIXME: Find a better way to determine this from the event?
     let isVoice = true;
     if (event.getContent().offer && event.getContent().offer.sdp &&
