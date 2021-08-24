@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629780939759,
+  "lastUpdate": 1629781371320,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19040,6 +19040,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4260.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "52e1884bbd4db78ff3e44865f7656ddfa9319b6f",
+          "message": "Merge pull request #6661 from matrix-org/travis/blurhash-opt\n\nEnsure blurhash is treated as optional",
+          "timestamp": "2021-08-23T22:56:32-06:00",
+          "tree_id": "6aad29fa8382e0951cfe66d7c951f744f60972ad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/52e1884bbd4db78ff3e44865f7656ddfa9319b6f"
+        },
+        "date": 1629781368865,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4679.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 973.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1900.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4771.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
