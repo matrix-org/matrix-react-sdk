@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629759075084,
+  "lastUpdate": 1629780939759,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -18992,6 +18992,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4329.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "924983d64bf7082be45488dde60754ea841543a7",
+          "message": "Merge pull request #6663 from matrix-org/travis/fix-room-list\n\nHonour user-selected background image from settings",
+          "timestamp": "2021-08-23T22:50:46-06:00",
+          "tree_id": "d04750f9b1240f0e79af5cda8f0e030307ac9f7d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/924983d64bf7082be45488dde60754ea841543a7"
+        },
+        "date": 1629780938298,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4324.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 802.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1579.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4260.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
