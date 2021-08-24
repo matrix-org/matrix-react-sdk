@@ -1092,7 +1092,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         onClick={this.onRoomClicked}
                     >
                         <RoomAvatar room={room} width={28} height={28} />
-                        { room ? room.name : '' }
+                        { room?.name || '' }
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
