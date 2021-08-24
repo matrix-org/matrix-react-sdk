@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629811073847,
+  "lastUpdate": 1629815733384,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19184,6 +19184,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4539.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb50d64146fd80096f612effc1268a009add4fd0",
+          "message": "Merge pull request #6669 from matrix-org/palid/fix/difficult-to-grab-scrollbar\n\nFix remaining scrollbar/background blur regressions",
+          "timestamp": "2021-08-24T16:30:20+02:00",
+          "tree_id": "efce2b4c07faf8100670fccdef06d4de24f123b5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb50d64146fd80096f612effc1268a009add4fd0"
+        },
+        "date": 1629815732036,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4298.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 871,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1748.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4067.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
