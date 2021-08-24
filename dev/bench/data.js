@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629821534438,
+  "lastUpdate": 1629822803749,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19280,6 +19280,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4393.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4d7b6f3c4dc9a3f261e677303cd9f33daa25b24e",
+          "message": "Merge pull request #6670 from matrix-org/palid/fix/difficult-to-grab-scrollbar\n\nFix resizer for detaching",
+          "timestamp": "2021-08-24T18:28:09+02:00",
+          "tree_id": "353ca2c139916f48f6a76ef68d2cd728411bdb6f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4d7b6f3c4dc9a3f261e677303cd9f33daa25b24e"
+        },
+        "date": 1629822802024,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4198.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1091.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1602.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4221.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
