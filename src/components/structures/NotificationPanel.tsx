@@ -61,8 +61,15 @@ export default class NotificationPanel extends React.PureComponent<IProps> {
             content = <Spinner />;
         }
 
-        return <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
-            { content }
-        </BaseCard>;
+        return (
+            <BaseCard
+                className="mx_NotificationPanel"
+                onClose={this.props.onClose}
+                withoutScrollContainer
+                header={<h2>{ _t("Notifications") }</h2>}
+            >
+                { content }
+            </BaseCard>
+        );
     }
 }

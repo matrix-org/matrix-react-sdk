@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,117 +15,121 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_NotificationPanel {
+.mx_BaseCard.mx_NotificationPanel {
+    padding-top: 0;
     order: 2;
     flex: 1 1 0;
     overflow-y: auto;
     display: flex;
-}
 
-.mx_NotificationPanel .mx_RoomView_messageListWrapper {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
+    .mx_BaseCard_header {
+        text-align: center;
+        margin-top: 0;
+        border-bottom: 1px solid $menu-border-color;
 
-.mx_NotificationPanel .mx_RoomView_MessageList {
-    width: 100%;
-}
+        > h2 {
+            font-weight: $font-semi-bold;
+            font-size: $font-18px;
+            margin: 8px 0;
+        }
 
-.mx_NotificationPanel .mx_RoomView_MessageList h2 {
-    margin-left: 0px;
-}
-
-/* FIXME: rather than having EventTile's default CSS be for MessagePanel,
-   we should make EventTile a base CSS class and customise it specifically
-   for usage in {Message,File,Notification}Panel. */
-
-.mx_NotificationPanel .mx_EventTile {
-    word-break: break-word;
-    position: relative;
-    padding-bottom: 18px;
-
-    &:not(.mx_EventTile_last):not(.mx_EventTile_lastInSection)::after {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: $tertiary-fg-color;
-        height: 1px;
-        opacity: 0.4;
-        content: '';
-    }
-}
-
-.mx_NotificationPanel .mx_EventTile_roomName {
-    font-weight: bold;
-    font-size: $font-14px;
-
-    > * {
-        vertical-align: middle;
+        .mx_BaseCard_close {
+            margin-right: 6px;
+        }
     }
 
-    > .mx_BaseAvatar {
-        margin-right: 8px;
+    .mx_NotificationPanel_empty::before {
+        mask-image: url('$(res)/img/element-icons/notifications.svg');
     }
-}
 
-.mx_NotificationPanel .mx_EventTile_roomName a {
-    color: $primary-fg-color;
-}
-
-.mx_NotificationPanel .mx_EventTile_avatar {
-    display: none; // we don't need this in this view
-}
-
-.mx_NotificationPanel .mx_EventTile .mx_SenderProfile,
-.mx_NotificationPanel .mx_EventTile .mx_MessageTimestamp {
-    color: $primary-fg-color;
-    font-size: $font-12px;
-    display: inline;
-}
-
-.mx_NotificationPanel .mx_EventTile:not([data-layout=bubble]) .mx_EventTile_senderDetails {
-    padding-left: 36px; // align with the room name
-    position: relative;
-
-    a {
-        display: flex;
+    .mx_RoomView_messageListWrapper {
+        justify-content: center;
+        min-height: unset;
     }
-}
 
-.mx_NotificationPanel .mx_EventTile_roomName a,
-.mx_NotificationPanel .mx_EventTile_senderDetails a {
-    text-decoration: none !important;
-}
+    .mx_AutoHideScrollbar {
+        padding-right: 0;
 
-.mx_NotificationPanel .mx_EventTile .mx_MessageTimestamp {
-    visibility: visible;
-    position: initial;
-    display: inline;
-    padding-left: 5px;
-}
 
-.mx_NotificationPanel .mx_EventTile:not([data-layout=bubble]) .mx_EventTile_line {
-    margin-right: 0px;
-    padding-left: 36px; // align with the room name
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-right: 0px;
-}
+        .mx_RoomView_MessageList {
+            padding: 0;
 
-.mx_NotificationPanel .mx_EventTile_selected .mx_EventTile_line {
-    padding-left: 0px;
-}
+            .mx_EventTile {
+                word-break: break-word;
+                position: relative;
+                padding-bottom: 18px;
 
-.mx_NotificationPanel .mx_EventTile:hover .mx_EventTile_line {
-    background-color: $primary-bg-color;
-}
+                &::after {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background-color: $menu-border-color;
+                    height: 1px;
+                    opacity: 0.4;
+                    content: '';
+                }
 
-.mx_NotificationPanel .mx_EventTile_content {
-    margin-right: 0px;
-}
+                &:hover .mx_EventTile_line {
+                    background-color: unset;
+                }
 
-.mx_NotificationPanel_empty::before {
-    mask-image: url('$(res)/img/element-icons/notifications.svg');
+                .mx_EventTile_roomName {
+                    font-weight: bold;
+                    font-size: $font-14px;
+                    display: flex;
+                    align-items: center;
+                    color: $primary-fg-color;
+                    cursor: pointer;
+
+                    > .mx_BaseAvatar {
+                        margin-right: 8px;
+                    }
+                }
+
+                .mx_EventTile_senderDetails {
+                    padding-left: 0;
+                    position: relative;
+
+                    .mx_SenderProfile {
+                        max-width: unset;
+                        cursor: text;
+                    }
+                }
+
+                .mx_EventTile_line {
+                    margin-bottom: 5px;
+                    margin-right: 0;
+                    padding-left: 0;
+
+                    .mx_EventTile_content {
+                        margin-right: 0;
+                    }
+                }
+
+                .mx_EventTile_footer {
+                    font-size: 10px;
+                    line-height: 12px;
+
+                    .mx_EventTile_footer_timestamp {
+                        font-size: inherit;
+                        line-height: inherit;
+                        color: $secondary-fg-color;
+                    }
+
+                    .mx_AccessibleButton_kind_link {
+                        padding: 0;
+                        margin-left: 12px;
+                        font-size: inherit;
+                        line-height: inherit;
+                    }
+                }
+            }
+
+            .mx_DateSeparator {
+                // We don't show date separators as we show the date in the footer
+                display: none;
+            }
+        }
+    }
 }

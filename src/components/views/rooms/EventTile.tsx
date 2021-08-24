@@ -28,7 +28,7 @@ import { hasText } from "../../../TextForEvent";
 import * as sdk from "../../../index";
 import dis from '../../../dispatcher/dispatcher';
 import { Layout } from "../../../settings/Layout";
-import { formatTime } from "../../../DateUtils";
+import { formatDate, formatTime } from "../../../DateUtils";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { ALL_RULE_TYPES } from "../../../mjolnir/BanList";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -55,6 +55,7 @@ import ReadReceiptMarker from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
+import AccessibleButton from "../elements/AccessibleButton";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -780,6 +781,16 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
+    private onRoomClicked = (e: React.MouseEvent) => {
+        // This allows the permalink to be opened in a new tab/window or copied as
+        // matrix.to, but also for it to enable routing within Element when clicked.
+        e.preventDefault();
+        dis.dispatch({
+            action: 'view_room',
+            room_id: this.props.mxEvent.getRoomId(),
+        });
+    };
+
     private renderE2EPadlock() {
         const ev = this.props.mxEvent;
 
@@ -1075,18 +1086,17 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                 }, [
-                    <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
+                    <div
+                        className="mx_EventTile_roomName"
+                        key="mx_EventTile_roomName"
+                        onClick={this.onRoomClicked}
+                    >
                         <RoomAvatar room={room} width={28} height={28} />
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { room ? room.name : '' }
-                        </a>
+                        { room ? room.name : '' }
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { sender }
-                            { timestamp }
-                        </a>
+                        { sender }
                     </div>,
                     <div className="mx_EventTile_line" key="mx_EventTile_line">
                         <EventTileType ref={this.tile}
@@ -1097,6 +1107,15 @@ export default class EventTile extends React.Component<IProps, IState> {
                             onHeightChanged={this.props.onHeightChanged}
                             tileShape={this.props.tileShape}
                         />
+                    </div>,
+                    <div className="mx_EventTile_footer" key="mx_EventTile_footer">
+                        <span className="mx_EventTile_footer_timestamp">
+                            { formatDate(new Date(this.props.mxEvent.getTs())) }
+                        </span>
+
+                        <AccessibleButton onClick={this.onPermalinkClicked} kind="link">
+                            { _t("View message") }
+                        </AccessibleButton>
                     </div>,
                 ]);
             }
