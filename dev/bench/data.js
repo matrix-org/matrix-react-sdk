@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629810952956,
+  "lastUpdate": 1629811073847,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19136,6 +19136,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4374.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a1a6350ed5d0361ce4828d60bc227b849bd4a6ed",
+          "message": "Merge pull request #6667 from RiotTranslateBot/weblate-element-web-matrix-react-sdk\n\nTranslations update from Weblate",
+          "timestamp": "2021-08-24T14:11:59+01:00",
+          "tree_id": "347b6a813f93b170126c8585b778130bf037bff3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a1a6350ed5d0361ce4828d60bc227b849bd4a6ed"
+        },
+        "date": 1629811071583,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4580.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 911.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1664.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4539.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
