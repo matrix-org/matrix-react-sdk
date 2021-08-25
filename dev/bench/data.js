@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629920426323,
+  "lastUpdate": 1629920572771,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19796,6 +19796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4673.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aa0a753105793127fd7b8b25561095fee18ca635",
+          "message": "Merge pull request #6681 from SimonBrandner/fix/codeblock-formatting\n\nFix codeblock formatting with syntax highlighting on",
+          "timestamp": "2021-08-25T13:36:47-06:00",
+          "tree_id": "d36661091f5f30332627d99ba15ec041d88f60bc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aa0a753105793127fd7b8b25561095fee18ca635"
+        },
+        "date": 1629920570849,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4711,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1355.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1610.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4476.100000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
