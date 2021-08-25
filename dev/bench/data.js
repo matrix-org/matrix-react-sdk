@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629875949204,
+  "lastUpdate": 1629904911211,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19616,6 +19616,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4550.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dc32df1ba5ed6831b7f0e367f4c8b8bd4cfbee4d",
+          "message": "Merge pull request #6639 from SimonBrandner/feature/voice-activity\n\nAdd active speaker indicators",
+          "timestamp": "2021-08-25T09:16:37-06:00",
+          "tree_id": "fb947ac1952a469e54e802c33e1807f6c3520f23",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dc32df1ba5ed6831b7f0e367f4c8b8bd4cfbee4d"
+        },
+        "date": 1629904909513,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4095.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 801.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1648.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4334.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
