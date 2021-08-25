@@ -276,6 +276,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new PseudonymousAnalyticsController(),
     },
+    "feature_message_attachments": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td('Message attachments'),
+        default: false,
+    },
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,

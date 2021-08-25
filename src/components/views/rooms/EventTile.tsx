@@ -55,6 +55,7 @@ import ReadReceiptMarker from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
+import SettingsStore from "../../../settings/SettingsStore";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -1209,6 +1210,8 @@ export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean) {
         return hasText(e, showHiddenEvents);
     } else if (handler === 'messages.RoomCreate') {
         return Boolean(e.getContent()['predecessor']);
+    } else if (SettingsStore.getValue("feature_message_attachments") && e.getContent()['is_attachment']) {
+        return false;
     } else {
         return true;
     }

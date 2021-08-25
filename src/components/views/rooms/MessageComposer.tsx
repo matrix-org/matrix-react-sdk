@@ -45,6 +45,7 @@ import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
 import EmojiPicker from '../emojipicker/EmojiPicker';
 import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
+import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
 
 interface IComposerAvatarProps {
     me: object;
@@ -107,6 +108,7 @@ const EmojiButton = ({ addEmoji }) => {
 
 interface IUploadButtonProps {
     roomId: string;
+    composer?: MessageComposer;
 }
 
 class UploadButton extends React.Component<IUploadButtonProps> {
@@ -146,9 +148,13 @@ class UploadButton extends React.Component<IUploadButtonProps> {
         for (let i = 0; i < ev.target.files.length; ++i) {
             tfiles.push(ev.target.files[i]);
         }
+        
+        let promAfter = SettingsStore.getValue("feature_message_attachments") && this.props.composer && ev.target.files.length === 1 && !this.props.composer.state.isComposerEmpty ? (event: ISendEventResponse) => {
+            return this.props.composer.sendMessage(event.event_id);
+        } : null;
 
         ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(),
+            tfiles, this.props.roomId, MatrixClientPeg.get(), promAfter,
         );
 
         // This is the onChange handler for a file form control, but we're
@@ -324,7 +330,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         });
     }
 
-    private sendMessage = async () => {
+    public sendMessage = async (attachmentEventId?: string) => {
         if (this.state.haveRecording && this.voiceRecordingButton) {
             // There shouldn't be any text message to send when a voice recording is active, so
             // just send out the voice recording.
@@ -332,7 +338,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             return;
         }
 
-        this.messageComposerInput.sendMessage();
+        this.messageComposerInput.sendMessage(attachmentEventId);
     };
 
     private onChange = (model: EditorModel) => {

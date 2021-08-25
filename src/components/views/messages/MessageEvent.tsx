@@ -27,6 +27,8 @@ import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { ReactAnyComponent } from "../../../@types/common";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { IBodyProps } from "./IBodyProps";
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import { Room } from 'matrix-js-sdk/src/models/room';
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed"> {
@@ -37,15 +39,20 @@ interface IProps extends Omit<IBodyProps, "onMessageAllowed"> {
 
 @replaceableComponent("views.messages.MessageEvent")
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
+    public static contextType = MatrixClientContext;
     private body: React.RefObject<React.Component | IOperableEventTile> = createRef();
     private mediaHelper: MediaEventHelper;
+    private room: Room;
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
 
         if (MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
         }
+
+        this.context = context;
+        this.room = this.context.getRoom(this.props.mxEvent.getRoomId());
     }
 
     public componentWillUnmount() {
@@ -127,9 +134,35 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 }
             }
         }
+        
+        let attachment = null;
+        if (SettingsStore.getValue("feature_message_attachments")) {
+            if (this.props.mxEvent.isRelation("m.attachment")) {
+                let relation = this.props.mxEvent.getRelation();
+                if (this.room && relation && relation.event_id) {
+                    let event = this.room.findEventById(relation.event_id);
+                    if (event) {
+                        attachment = (
+                            <MessageEvent
+                                mxEvent={event}
+                                highlights={this.props.highlights}
+                                highlightLink={this.props.highlightLink}
+                                tileShape={this.props.tileShape}
+                                maxImageHeight={this.props.maxImageHeight}
+                                onHeightChanged={this.props.onHeightChanged}
+                                overrideBodyTypes={this.props.overrideBodyTypes}
+                                overrideEventTypes={this.props.overrideEventTypes}
+                                permalinkCreator={this.props.permalinkCreator}
+                                mediaEventHelper={this.props.mediaEventHelper}
+                            />
+                        );
+                    }
+                }
+            }
+        }
 
         // @ts-ignore - this is a dynamic react component
-        return BodyType ? <BodyType
+        let body = BodyType ? <BodyType
             ref={this.body}
             mxEvent={this.props.mxEvent}
             highlights={this.props.highlights}
@@ -144,5 +177,6 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             permalinkCreator={this.props.permalinkCreator}
             mediaEventHelper={this.mediaHelper}
         /> : null;
+        return [body, attachment];
     }
 }

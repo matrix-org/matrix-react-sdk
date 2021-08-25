@@ -430,7 +430,7 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient) {
+    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient, promAfter?: (ISendEventResponse) => Promise<any>) {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
@@ -508,6 +508,7 @@ export default class ContentMessages {
             }
             promBefore = this.sendContentToRoom(file, roomId, matrixClient, promBefore);
         }
+        promBefore.then(promAfter);
     }
 
     getCurrentUploads() {

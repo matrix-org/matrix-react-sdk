@@ -54,6 +54,7 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
 
 function addReplyToMessageContent(
     content: IContent,
@@ -74,11 +75,25 @@ function addReplyToMessageContent(
     }
 }
 
+function addAttachmentToMessageContent(
+    content: IContent,
+    attachEventId: string,
+): void {
+    const attachContent = {
+        'm.relates_to': {
+            'rel_type': 'm.attachment',
+            'event_id': attachEventId,
+        }
+    };
+    Object.assign(content, attachContent);
+}
+
 // exported for tests
 export function createMessageContent(
     model: EditorModel,
     permalinkCreator: RoomPermalinkCreator,
     replyToEvent: MatrixEvent,
+    attachEventId: string,
 ): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
@@ -102,6 +117,10 @@ export function createMessageContent(
 
     if (replyToEvent) {
         addReplyToMessageContent(content, replyToEvent, permalinkCreator);
+    }
+    
+    if (attachEventId) {
+        addAttachmentToMessageContent(content, attachEventId);
     }
 
     return content;
@@ -342,7 +361,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
         }
     }
 
-    public async sendMessage(): Promise<void> {
+    public async sendMessage(attachmentEventId?: string): Promise<void> {
         if (this.model.isEmpty) {
             return;
         }
@@ -358,6 +377,9 @@ export default class SendMessageComposer extends React.Component<IProps> {
                     content = await this.runSlashCommand(cmd, args);
                     if (replyToEvent) {
                         addReplyToMessageContent(content, replyToEvent, this.props.permalinkCreator);
+                    }
+                    if (attachmentEventId) {
+                        addAttachmentToMessageContent(content, attachmentEventId);
                     }
                 } else {
                     this.runSlashCommand(cmd, args);
@@ -400,7 +422,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
             const startTime = CountlyAnalytics.getTimestamp();
             const { roomId } = this.props.room;
             if (!content) {
-                content = createMessageContent(this.model, this.props.permalinkCreator, replyToEvent);
+                content = createMessageContent(this.model, this.props.permalinkCreator, replyToEvent, attachmentEventId);
             }
             // don't bother sending an empty message
             if (!content.body.trim()) return;
@@ -519,8 +541,11 @@ export default class SendMessageComposer extends React.Component<IProps> {
         // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
+            let promAfter = SettingsStore.getValue("feature_message_attachments") && clipboardData.files.length === 1 && !this.model.isEmpty ? (event: ISendEventResponse) => {
+                return this.sendMessage(event.event_id);
+            } : null;
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.context,
+                Array.from(clipboardData.files), this.props.room.roomId, this.context, promAfter,
             );
             return true; // to skip internal onPaste handler
         }
