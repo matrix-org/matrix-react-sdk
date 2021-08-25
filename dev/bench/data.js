@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629830545309,
+  "lastUpdate": 1629875807314,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19520,6 +19520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3990.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "44543fe4ea3dc6013a8546981f07c94ee4f40b32",
+          "message": "Merge pull request #6673 from matrix-org/travis/rm-room-list-logging\n\nRemove advanced room logging setting",
+          "timestamp": "2021-08-25T01:11:39-06:00",
+          "tree_id": "f0e2ab13f82618dcf2255b1b707311c7c52dd8c1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/44543fe4ea3dc6013a8546981f07c94ee4f40b32"
+        },
+        "date": 1629875805732,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4219.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 831.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4019.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
