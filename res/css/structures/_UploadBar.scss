@@ -25,7 +25,7 @@ limitations under the License.
 
 .mx_UploadBar_filename {
     margin-top: 5px;
-    color: $muted-fg-color;
+    color: $tertiary-content;
     position: relative;
     padding-left: 22px; // 18px for icon, 4px for padding
     font-size: $font-15px;
@@ -40,7 +40,7 @@ limitations under the License.
         left: 0;
         mask-repeat: no-repeat;
         mask-position: center;
-        background-color: $muted-fg-color;
+        background-color: $tertiary-content;
         mask-image: url('$(res)/img/element-icons/upload.svg');
     }
 }
@@ -54,6 +54,6 @@ limitations under the License.
     margin-right: 16px; // align over rightmost button in composer
     mask-repeat: no-repeat;
     mask-position: center;
-    background-color: $muted-fg-color;
+    background-color: $tertiary-content;
     mask-image: url('$(res)/img/icons-close.svg');
 }

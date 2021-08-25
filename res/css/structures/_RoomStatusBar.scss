@@ -108,7 +108,7 @@ limitations under the License.
         flex-grow: 1;
         text-align: right;
         margin-right: 22px;
-        color: $muted-fg-color;
+        color: $tertiary-content;
 
         .mx_AccessibleButton {
             padding: 5px 10px;
@@ -124,7 +124,7 @@ limitations under the License.
                 content: '';
                 position: absolute;
                 left: 10px; // inset for regular button padding
-                background-color: $muted-fg-color;
+                background-color: $tertiary-content;
                 mask-repeat: no-repeat;
                 mask-position: center;
                 mask-size: contain;

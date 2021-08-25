@@ -31,7 +31,7 @@ limitations under the License.
 
             .mx_CreateCommunityPrototypeDialog_subtext {
                 display: block;
-                color: $muted-fg-color;
+                color: $tertiary-content;
                 margin-bottom: 16px;
 
                 &:last-child {
@@ -94,7 +94,7 @@ limitations under the License.
             .mx_CreateCommunityPrototypeDialog_tip {
                 & > b, & > span {
                     display: block;
-                    color: $muted-fg-color;
+                    color: $tertiary-content;
                 }
             }
         }

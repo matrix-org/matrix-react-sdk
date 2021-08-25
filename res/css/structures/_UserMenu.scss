@@ -90,7 +90,7 @@ limitations under the License.
             }
 
             .mx_UserMenu_subUserName {
-                color: $muted-fg-color;
+                color: $tertiary-content;
                 font-size: $font-13px;
                 line-height: $font-18px;
                 flex: 1;
@@ -132,7 +132,7 @@ limitations under the License.
                 mask-position: center;
                 mask-size: contain;
                 mask-repeat: no-repeat;
-                background: $muted-fg-color;
+                background: $tertiary-content;
             }
 
             &.mx_UserMenu_dnd_noisy::before {

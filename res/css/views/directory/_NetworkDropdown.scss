@@ -84,7 +84,7 @@ limitations under the License.
         line-height: $font-14px;
         margin-top: -4px;
         margin-bottom: 4px;
-        color: $muted-fg-color;
+        color: $tertiary-content;
     }
 
     .mx_NetworkDropdown_server_network {
@@ -135,7 +135,7 @@ limitations under the License.
         mask-position: center;
         mask-size: contain;
         mask-image: url('$(res)/img/feather-customised/plus.svg');
-        background-color: $muted-fg-color;
+        background-color: $tertiary-content;
     }
 }
 
@@ -157,7 +157,7 @@ limitations under the License.
     }
 
     .mx_NetworkDropdown_handle_server {
-        color: $muted-fg-color;
+        color: $tertiary-content;
         font-size: $font-12px;
     }
 }

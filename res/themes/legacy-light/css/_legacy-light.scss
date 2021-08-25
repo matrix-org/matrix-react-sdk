@@ -29,7 +29,6 @@ $primary-fg-color: #2e2f32;
 $secondary-fg-color: $primary-fg-color;
 $tertiary-fg-color: $primary-fg-color;
 $primary-bg-color: #ffffff;
-$muted-fg-color: #61708b; // Commonly used in headings and relevant alt text
 
 // Legacy theme backports
 $primary-content: $primary-fg-color;
@@ -298,7 +297,7 @@ $progressbar-bg-color: rgba(141, 151, 165, 0.2);
 
 $room-warning-bg-color: $yellow-background;
 
-$memberstatus-placeholder-color: $muted-fg-color;
+$memberstatus-placeholder-color: $tertiary-content;
 
 $authpage-bg-color: #2e3649;
 $authpage-modal-bg-color: rgba(255, 255, 255, 0.59);

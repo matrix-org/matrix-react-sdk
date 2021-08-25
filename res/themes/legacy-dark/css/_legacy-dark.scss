@@ -21,7 +21,6 @@ $primary-fg-color: $text-primary-color;
 $secondary-fg-color: $primary-fg-color;
 $tertiary-fg-color: $primary-fg-color;
 $primary-bg-color: $bg-color;
-$muted-fg-color: $header-panel-text-primary-color;
 
 // Legacy theme backports
 $primary-content: $primary-fg-color;
@@ -73,7 +72,7 @@ $input-invalid-border-color: $warning-color;
 
 $field-focused-label-bg-color: $bg-color;
 
-$resend-button-divider-color: $muted-fg-color;
+$resend-button-divider-color: $tertiary-content;
 
 // scrollbars
 $scrollbar-thumb-color: rgba(255, 255, 255, 0.2);

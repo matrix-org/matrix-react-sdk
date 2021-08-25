@@ -39,9 +39,6 @@ $notice-primary-color: #ff4b55;
 $notice-primary-bg-color: rgba(255, 75, 85, 0.16);
 $header-panel-bg-color: #f3f8fd;
 
-// typical text (dark-on-white in light skin)
-$muted-fg-color: #61708b; // Commonly used in headings and relevant alt text
-
 // used for dialog box text
 $light-fg-color: #747474;
 
@@ -295,7 +292,7 @@ $progressbar-bg-color: rgba(141, 151, 165, 0.2);
 
 $room-warning-bg-color: $yellow-background;
 
-$memberstatus-placeholder-color: $muted-fg-color;
+$memberstatus-placeholder-color: $tertiary-content;
 
 $authpage-bg-color: #2e3649;
 $authpage-modal-bg-color: rgba(245, 245, 245, 0.90);

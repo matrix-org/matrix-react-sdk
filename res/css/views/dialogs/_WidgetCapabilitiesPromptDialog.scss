@@ -30,7 +30,7 @@ limitations under the License.
         line-height: $font-15px;
 
         .mx_WidgetCapabilitiesPromptDialog_byline {
-            color: $muted-fg-color;
+            color: $tertiary-content;
             margin-left: 26px;
             font-size: $font-12px;
             line-height: $font-12px;
@@ -43,7 +43,7 @@ limitations under the License.
 
     .mx_SettingsFlag {
         line-height: calc($font-14px + 7px + 7px); // 7px top & bottom padding
-        color: $muted-fg-color;
+        color: $tertiary-content;
         font-size: $font-12px;
 
         .mx_ToggleSwitch {

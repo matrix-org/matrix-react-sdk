@@ -84,7 +84,7 @@ limitations under the License.
 
     h3 {
         font-size: $font-12px;
-        color: $muted-fg-color;
+        color: $tertiary-content;
         font-weight: bold;
         text-transform: uppercase;
     }
@@ -101,7 +101,7 @@ limitations under the License.
         margin-bottom: 10px;
         margin-top: -10px; // HACK: Positioning with margins is bad
         font-size: $font-12px;
-        color: $muted-fg-color;
+        color: $tertiary-content;
     }
 }
 
@@ -125,7 +125,7 @@ limitations under the License.
     > h3 {
         margin: 12px 0;
         font-size: $font-12px;
-        color: $muted-fg-color;
+        color: $tertiary-content;
         font-weight: bold;
         text-transform: uppercase;
     }
@@ -226,7 +226,7 @@ limitations under the License.
 
     .mx_InviteDialog_roomTile_userId {
         font-size: $font-12px;
-        color: $muted-fg-color;
+        color: $tertiary-content;
         margin-left: 7px;
     }
 
@@ -240,7 +240,7 @@ limitations under the License.
     .mx_InviteDialog_roomTile_time {
         text-align: right;
         font-size: $font-12px;
-        color: $muted-fg-color;
+        color: $tertiary-content;
         float: right;
         line-height: $font-36px; // Height of the avatar to keep the time vertically aligned
     }
