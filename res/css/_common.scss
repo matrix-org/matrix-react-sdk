@@ -27,6 +27,12 @@ $EventTile_e2e_state_indicator_width: 4px;
 $MessageTimestamp_width: 46px; /* 8 + 30 (avatar) + 8 */
 $MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $EventTile_e2e_state_indicator_width);
 
+// There's no reasonable way to disable this via config flags, so we just hardcode it to
+// be hidden. Remove this to return usage of the dialog.
+#react-refresh-overlay {
+    display: none;
+}
+
 :root {
     font-size: 10px;
 
