@@ -34,6 +34,7 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import CallHandler from './CallHandler';
+import { RoomMember } from '../../matrix-js-sdk/src';
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
@@ -41,42 +42,66 @@ import CallHandler from './CallHandler';
 
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     const getSenderName = () => {
-        const room = MatrixClientPeg.get().getRoom(event.getRoomId());
+        // Retrieve the room ID from the event
+        const potentiallyVirtualRoom = MatrixClientPeg.get().getRoom(event.getRoomId());
 
         // Check if the event is from a virtual room
-        if (!CallHandler.sharedInstance().getSupportsVirtualRooms() || !window.mxVoipUserMapper.isVirtualRoom(room)) {
+        if (
+            !CallHandler.sharedInstance().getSupportsVirtualRooms() ||
+            !window.mxVoipUserMapper.isVirtualRoom(potentiallyVirtualRoom)
+        ) {
             // If not, simply extract the sender information from the incoming event
             return event.sender ? event.sender.name : _t('Someone');
         }
 
         // Otherwise, assume the caller is a virtual user and attempt to look up the corresponding
         // native user
-        const senderMxid = event.getSender();
-        let nativeUserId: string = null;
 
-        // Perform a virtual to native user third-party lookup
-        window.mxVoipUserMapper.virtualUserToNativeUser(senderMxid).then((userId) => {
-            nativeUserId = userId;
-        });
+        // We can avoid a potentially expensive virtual -> native user lookup by checking if the native room
+        // only has two people in it. If so, then the other user in that room is likely the matching native user.
+        const nativeRoomId = window.mxVoipUserMapper.nativeRoomForVirtualRoom(potentiallyVirtualRoom.roomId);
+        const nativeRoom = MatrixClientPeg.get().getRoom(nativeRoomId);
+        const nativeRoomjoinedMembers = nativeRoom.getJoinedMembers();
 
-        // If a native user was found, return their information instead
-        if (nativeUserId) {
-            // TODO: Optimize for 2 people rooms
-            MatrixClientPeg.get().getProfileInfo(nativeUserId).then((resp) => {
+        const getSenderNameForUserId = (userId) => {
+            return MatrixClientPeg.get().getProfileInfo(userId).then((resp) => {
                 if (resp.displayname) {
                     return resp.displayname;
                 }
 
-                return nativeUserId;
+                return userId;
             }).catch((e) => {
                 console.error('Error getting native user profile', e);
-                return nativeUserId;
+                return userId;
             });
         }
 
-    }
+        let nativeUser: RoomMember;
+        if (nativeRoomjoinedMembers.length === 2) {
+            // Assume the other user in the native room is the native user.
+            // Find and pull them from the room's joined member list
+            const myUserId = MatrixClientPeg.get().getUserId();
+            nativeUser = nativeRoomjoinedMembers.find((roomMember) => {
+                return roomMember.userId !== myUserId;
+            });
 
-    // FIXME: Find a better way to determine this from the event?
+            // If a native user was found, return their profile information
+            if (nativeUser) {
+                return getSenderNameForUserId(nativeUser.userId);
+            }
+        } else {
+            // Perform a virtual to native user third-party lookup
+            return window.mxVoipUserMapper.virtualUserToNativeUser(event.sender.userId).then((nativeUserId) => {
+                // If a native user was found, return their profile information
+                if (nativeUserId) {
+                    return getSenderNameForUserId(nativeUser.userId);
+                }
+            }).catch((e) => {
+                console.error('Error lookup up native user for virtual user', e);
+                return event.sender.userId;
+            });
+        }
+    }
     let isVoice = true;
     if (event.getContent().offer && event.getContent().offer.sdp &&
         event.getContent().offer.sdp.indexOf('m=video') !== -1) {
