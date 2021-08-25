@@ -66,6 +66,7 @@ interface IContent {
     };
     file?: string;
     url?: string;
+    // eslint-disable-next-line camelcase
     is_attachment?: boolean;
 }
 
@@ -431,7 +432,10 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient, attachToMessage?: (ISendEventResponse) => Promise<any>) {
+    async sendContentListToRoom(
+        files: File[], roomId: string, matrixClient: MatrixClient,
+        attachToMessage?: (ISendEventResponse) => Promise<any>
+    ) {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
@@ -541,8 +545,9 @@ export default class ContentMessages {
             msgtype: "", // set later
         };
 
-        if (attachment)
+        if (attachment) {
             content.is_attachment = true;
+        }
 
         // if we have a mime type for the file, add it to the message metadata
         if (file.type) {

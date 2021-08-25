@@ -83,7 +83,7 @@ function addAttachmentToMessageContent(
         'm.relates_to': {
             'rel_type': 'm.attachment',
             'event_id': attachEventId,
-        }
+        },
     };
     Object.assign(content, attachContent);
 }
@@ -118,7 +118,7 @@ export function createMessageContent(
     if (replyToEvent) {
         addReplyToMessageContent(content, replyToEvent, permalinkCreator);
     }
-    
+
     if (attachEventId) {
         addAttachmentToMessageContent(content, attachEventId);
     }
@@ -422,7 +422,9 @@ export default class SendMessageComposer extends React.Component<IProps> {
             const startTime = CountlyAnalytics.getTimestamp();
             const { roomId } = this.props.room;
             if (!content) {
-                content = createMessageContent(this.model, this.props.permalinkCreator, replyToEvent, attachmentEventId);
+                content = createMessageContent(
+                    this.model, this.props.permalinkCreator, replyToEvent, attachmentEventId,
+                );
             }
             // don't bother sending an empty message
             if (!content.body.trim()) return;
@@ -541,9 +543,11 @@ export default class SendMessageComposer extends React.Component<IProps> {
         // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
-            let promAfter = SettingsStore.getValue("feature_message_attachments") && clipboardData.files.length === 1 && !this.model.isEmpty ? (event: ISendEventResponse) => {
-                return this.sendMessage(event.event_id);
-            } : null;
+            const promAfter = (SettingsStore.getValue("feature_message_attachents")
+                && clipboardData.files.length === 1 && !this.model.isEmpty) ?
+                (event: ISendEventResponse) => {
+                    return this.sendMessage(event.event_id);
+                } : null;
             ContentMessages.sharedInstance().sendContentListToRoom(
                 Array.from(clipboardData.files), this.props.room.roomId, this.context, promAfter,
             );

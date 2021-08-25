@@ -134,13 +134,13 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 }
             }
         }
-        
+
         let attachment = null;
         if (SettingsStore.getValue("feature_message_attachments")) {
             if (this.props.mxEvent.isRelation("m.attachment")) {
-                let relation = this.props.mxEvent.getRelation();
+                const relation = this.props.mxEvent.getRelation();
                 if (this.room && relation && relation.event_id) {
-                    let event = this.room.findEventById(relation.event_id);
+                    const event = this.room.findEventById(relation.event_id);
                     if (event) {
                         attachment = (
                             <MessageEvent
@@ -162,7 +162,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         }
 
         // @ts-ignore - this is a dynamic react component
-        let body = BodyType ? <BodyType
+        const body = BodyType ? <BodyType
             ref={this.body}
             mxEvent={this.props.mxEvent}
             highlights={this.props.highlights}

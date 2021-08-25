@@ -148,10 +148,12 @@ class UploadButton extends React.Component<IUploadButtonProps> {
         for (let i = 0; i < ev.target.files.length; ++i) {
             tfiles.push(ev.target.files[i]);
         }
-        
-        let promAfter = SettingsStore.getValue("feature_message_attachments") && this.props.composer && ev.target.files.length === 1 && !this.props.composer.state.isComposerEmpty ? (event: ISendEventResponse) => {
-            return this.props.composer.sendMessage(event.event_id);
-        } : null;
+
+        const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.props.composer
+            && ev.target.files.length === 1 && !this.props.composer.state.isComposerEmpty) ?
+            (event: ISendEventResponse) => {
+                return this.props.composer.sendMessage(event.event_id);
+            } : null;
 
         ContentMessages.sharedInstance().sendContentListToRoom(
             tfiles, this.props.roomId, MatrixClientPeg.get(), promAfter,
