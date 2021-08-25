@@ -34,74 +34,82 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import CallHandler from './CallHandler';
-import { RoomMember } from '../../matrix-js-sdk/src';
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+
+/*
+ * Attempt to retrieve the displayname of a user from an event. If the user is a virtual user,
+ * return the displayname of the native user instead. In either case, if a displayname cannot
+ * be found, simply return the MXID of the user instead.
+ *
+ * @param event The event to extract the user from.
+ */
+function getSenderNameFromPotentiallyVirtualUser(event: MatrixEvent) {
+    // Retrieve the room ID from the event
+    const potentiallyVirtualRoom = MatrixClientPeg.get().getRoom(event.getRoomId());
+
+    // Check if the event is from a virtual room
+    if (
+        !CallHandler.sharedInstance().getSupportsVirtualRooms() ||
+        !window.mxVoipUserMapper.isVirtualRoom(potentiallyVirtualRoom)
+    ) {
+        // If not, simply extract the sender information from the incoming event
+        return event.sender ? event.sender.name : _t('Someone');
+    }
+
+    // Otherwise, assume the caller is a virtual user and attempt to look up the corresponding
+    // native user
+
+    // We can avoid a potentially expensive virtual -> native user lookup by checking if the native room
+    // only has two people in it. If so, then the other user in that room is likely the matching native user.
+    const nativeRoomId = window.mxVoipUserMapper.nativeRoomForVirtualRoom(potentiallyVirtualRoom.roomId);
+    const nativeRoom = MatrixClientPeg.get().getRoom(nativeRoomId);
+    const nativeRoomjoinedMembers = nativeRoom.getJoinedMembers();
+
+    const getSenderNameForUserId = (userId) => {
+        return MatrixClientPeg.get().getProfileInfo(userId).then((resp) => {
+            if (resp.displayname) {
+                return resp.displayname;
+            }
+
+            return userId;
+        }).catch((e) => {
+            console.error('Error getting native user profile', e);
+            return userId;
+        });
+    };
+
+    let nativeUser: RoomMember;
+    if (nativeRoomjoinedMembers.length === 2) {
+        // Assume the other user in the native room is the native user.
+        // Find and pull them from the room's joined member list
+        const myUserId = MatrixClientPeg.get().getUserId();
+        nativeUser = nativeRoomjoinedMembers.find((roomMember) => {
+            return roomMember.userId !== myUserId;
+        });
+
+        // If a native user was found, return their profile information
+        if (nativeUser) {
+            return getSenderNameForUserId(nativeUser.userId);
+        }
+    } else {
+        // Perform a virtual to native user third-party lookup
+        return window.mxVoipUserMapper.virtualUserToNativeUser(event.sender.userId).then((nativeUserId) => {
+            // If a native user was found, return their profile information
+            if (nativeUserId) {
+                return getSenderNameForUserId(nativeUser.userId);
+            }
+        }).catch((e) => {
+            console.error('Error lookup up native user for virtual user', e);
+            return event.sender.userId;
+        });
+    }
+}
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
 
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
-    const getSenderName = () => {
-        // Retrieve the room ID from the event
-        const potentiallyVirtualRoom = MatrixClientPeg.get().getRoom(event.getRoomId());
-
-        // Check if the event is from a virtual room
-        if (
-            !CallHandler.sharedInstance().getSupportsVirtualRooms() ||
-            !window.mxVoipUserMapper.isVirtualRoom(potentiallyVirtualRoom)
-        ) {
-            // If not, simply extract the sender information from the incoming event
-            return event.sender ? event.sender.name : _t('Someone');
-        }
-
-        // Otherwise, assume the caller is a virtual user and attempt to look up the corresponding
-        // native user
-
-        // We can avoid a potentially expensive virtual -> native user lookup by checking if the native room
-        // only has two people in it. If so, then the other user in that room is likely the matching native user.
-        const nativeRoomId = window.mxVoipUserMapper.nativeRoomForVirtualRoom(potentiallyVirtualRoom.roomId);
-        const nativeRoom = MatrixClientPeg.get().getRoom(nativeRoomId);
-        const nativeRoomjoinedMembers = nativeRoom.getJoinedMembers();
-
-        const getSenderNameForUserId = (userId) => {
-            return MatrixClientPeg.get().getProfileInfo(userId).then((resp) => {
-                if (resp.displayname) {
-                    return resp.displayname;
-                }
-
-                return userId;
-            }).catch((e) => {
-                console.error('Error getting native user profile', e);
-                return userId;
-            });
-        }
-
-        let nativeUser: RoomMember;
-        if (nativeRoomjoinedMembers.length === 2) {
-            // Assume the other user in the native room is the native user.
-            // Find and pull them from the room's joined member list
-            const myUserId = MatrixClientPeg.get().getUserId();
-            nativeUser = nativeRoomjoinedMembers.find((roomMember) => {
-                return roomMember.userId !== myUserId;
-            });
-
-            // If a native user was found, return their profile information
-            if (nativeUser) {
-                return getSenderNameForUserId(nativeUser.userId);
-            }
-        } else {
-            // Perform a virtual to native user third-party lookup
-            return window.mxVoipUserMapper.virtualUserToNativeUser(event.sender.userId).then((nativeUserId) => {
-                // If a native user was found, return their profile information
-                if (nativeUserId) {
-                    return getSenderNameForUserId(nativeUser.userId);
-                }
-            }).catch((e) => {
-                console.error('Error lookup up native user for virtual user', e);
-                return event.sender.userId;
-            });
-        }
-    }
     let isVoice = true;
     if (event.getContent().offer && event.getContent().offer.sdp &&
         event.getContent().offer.sdp.indexOf('m=video') !== -1) {
@@ -114,19 +122,19 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     // and more accurate, we break out the string-based variables to a couple booleans.
     if (isVoice && isSupported) {
         return () => _t("%(senderName)s placed a voice call.", {
-            senderName: getSenderName(),
+            senderName: getSenderNameFromPotentiallyVirtualUser(event),
         });
     } else if (isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
-            senderName: getSenderName(),
+            senderName: getSenderNameFromPotentiallyVirtualUser(event),
         });
     } else if (!isVoice && isSupported) {
         return () => _t("%(senderName)s placed a video call.", {
-            senderName: getSenderName(),
+            senderName: getSenderNameFromPotentiallyVirtualUser(event),
         });
     } else if (!isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
-            senderName: getSenderName(),
+            senderName: getSenderNameFromPotentiallyVirtualUser(event),
         });
     }
 }
