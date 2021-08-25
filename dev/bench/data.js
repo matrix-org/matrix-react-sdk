@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629920578401,
+  "lastUpdate": 1629921541288,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19892,6 +19892,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4193.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ee95e36a7c7c18881362148206048f5a3624682f",
+          "message": "Merge pull request #6675 from matrix-org/gsouquet/remove-linter-warning\n\nAdd ESLint shared settings to detect React version",
+          "timestamp": "2021-08-25T20:53:35+01:00",
+          "tree_id": "5dd2e9d25f1b5bae0fdfe24af92fae3e91137747",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ee95e36a7c7c18881362148206048f5a3624682f"
+        },
+        "date": 1629921539281,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4400.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 848,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1617.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4509.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
