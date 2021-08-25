@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629915917142,
+  "lastUpdate": 1629920426323,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19748,6 +19748,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4581.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d442845cb967f51fa5e4adc8d0c213f195c70da7",
+          "message": "Merge pull request #6680 from SimonBrandner/fix/commands/18670\n\nFix command autocomplete",
+          "timestamp": "2021-08-25T13:34:13-06:00",
+          "tree_id": "12beab20273d778a4ca22c61dbd091085f4aa384",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d442845cb967f51fa5e4adc8d0c213f195c70da7"
+        },
+        "date": 1629920423843,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4343.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 941.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1823.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4673.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
