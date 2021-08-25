@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629875807314,
+  "lastUpdate": 1629875949204,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19568,6 +19568,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4019.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "94449953054a511d19a14c80a397a518bafc768f",
+          "message": "Merge pull request #6662 from matrix-org/travis/safe-labs\n\nFlag a couple features as having dependencies",
+          "timestamp": "2021-08-25T01:12:48-06:00",
+          "tree_id": "d50b17383a6e292ee1310fdbd392c7d0e86ee4e0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/94449953054a511d19a14c80a397a518bafc768f"
+        },
+        "date": 1629875946891,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4258.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1885.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4550.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
