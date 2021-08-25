@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629920572771,
+  "lastUpdate": 1629920578401,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19844,6 +19844,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4476.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8fd44f0b5eb14400eb3fbfe86cfef6c43037c2c0",
+          "message": "Merge pull request #6595 from SimonBrandner/fix/rl-resort/110\n\nDon't re-sort the room-list based on profile/status changes",
+          "timestamp": "2021-08-25T13:37:53-06:00",
+          "tree_id": "0a059f824c8458fb4214485b5ec7a984ae4d3f15",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8fd44f0b5eb14400eb3fbfe86cfef6c43037c2c0"
+        },
+        "date": 1629920576840,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4029.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 750.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1785.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4193.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
