@@ -1,7 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2017, 2018, 2020 New Vector Ltd
+Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -68,6 +66,9 @@ import GroupView from "./GroupView";
 import BackdropPanel from "./BackdropPanel";
 import SpaceStore from "../../stores/SpaceStore";
 import classNames from 'classnames';
+import GroupFilterPanel from './GroupFilterPanel';
+import CustomRoomTagPanel from './CustomRoomTagPanel';
+import { mediaFromMxc } from "../../customisations/Media";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -131,7 +132,7 @@ interface IState {
     usageLimitEventTs?: number;
     useCompactLayout: boolean;
     activeCalls: Array<MatrixCall>;
-    backgroundImage?: CanvasImageSource;
+    backgroundImage?: string;
 }
 
 /**
@@ -150,8 +151,10 @@ class LoggedInView extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     protected readonly _matrixClient: MatrixClient;
     protected readonly _roomView: React.RefObject<any>;
-    protected readonly _resizeContainer: React.RefObject<ResizeHandle>;
+    protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
+    protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
     protected compactLayoutWatcherRef: string;
+    protected backgroundImageWatcherRef: string;
     protected resizer: Resizer;
 
     constructor(props, context) {
@@ -174,6 +177,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         this._roomView = React.createRef();
         this._resizeContainer = React.createRef();
+        this.resizeHandler = React.createRef();
     }
 
     componentDidMount() {
@@ -195,6 +199,9 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.compactLayoutWatcherRef = SettingsStore.watchSetting(
             "useCompactLayout", null, this.onCompactLayoutChanged,
         );
+        this.backgroundImageWatcherRef = SettingsStore.watchSetting(
+            "RoomList.backgroundImage", null, this.refreshBackgroundImage,
+        );
 
         this.resizer = this.createResizer();
         this.resizer.attach();
@@ -212,13 +219,19 @@ class LoggedInView extends React.Component<IProps, IState> {
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
+        SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
         this.resizer.detach();
     }
 
     private refreshBackgroundImage = async (): Promise<void> => {
-        this.setState({
-            backgroundImage: await OwnProfileStore.instance.getAvatarBitmap(),
-        });
+        let backgroundImage = SettingsStore.getValue("RoomList.backgroundImage");
+        if (backgroundImage) {
+            // convert to http before going much further
+            backgroundImage = mediaFromMxc(backgroundImage).srcHttp;
+        } else {
+            backgroundImage = OwnProfileStore.instance.getHttpAvatarUrl();
+        }
+        this.setState({ backgroundImage });
     };
 
     private onAction = (payload): void => {
@@ -269,6 +282,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             isItemCollapsed: domNode => {
                 return domNode.classList.contains("mx_LeftPanel_minimized");
             },
+            handler: this.resizeHandler.current,
         };
         const resizer = new Resizer(this._resizeContainer.current, CollapseDistributor, collapseConfig);
         resizer.setClassNames({
@@ -284,7 +298,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         if (isNaN(lhsSize)) {
             lhsSize = 350;
         }
-        this.resizer.forHandleAt(0).resize(lhsSize);
+        this.resizer.forHandleWithId('lp-resizer').resize(lhsSize);
     }
 
     private onAccountData = (event: MatrixEvent) => {
@@ -623,9 +637,12 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
         }
 
+        const wrapperClasses = classNames({
+            'mx_MatrixChat_wrapper': true,
+            'mx_MatrixChat_useCompactLayout': this.state.useCompactLayout,
+        });
         const bodyClasses = classNames({
             'mx_MatrixChat': true,
-            'mx_MatrixChat_useCompactLayout': this.state.useCompactLayout,
             'mx_MatrixChat--with-avatar': this.state.backgroundImage,
         });
 
@@ -640,22 +657,48 @@ class LoggedInView extends React.Component<IProps, IState> {
                 <div
                     onPaste={this.onPaste}
                     onKeyDown={this.onReactKeyDown}
-                    className='mx_MatrixChat_wrapper'
+                    className={wrapperClasses}
                     aria-hidden={this.props.hideToSRUsers}
                 >
                     <ToastContainer />
-                    <div ref={this._resizeContainer} className={bodyClasses}>
-                        <BackdropPanel
-                            backgroundImage={this.state.backgroundImage}
-                        />
-                        { SpaceStore.spacesEnabled ? <SpacePanel /> : null }
-                        <LeftPanel
-                            isMinimized={this.props.collapseLhs || false}
-                            resizeNotifier={this.props.resizeNotifier}
-                        />
-                        <ResizeHandle />
+                    <div className={bodyClasses}>
+                        <div className='mx_LeftPanel_wrapper'>
+                            { SettingsStore.getValue('TagPanel.enableTagPanel') &&
+                                (<div className="mx_GroupFilterPanelContainer">
+                                    <BackdropPanel
+                                        blurMultiplier={0.5}
+                                        backgroundImage={this.state.backgroundImage}
+                                    />
+                                    <GroupFilterPanel />
+                                    { SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null }
+                                </div>)
+                            }
+                            { SpaceStore.spacesEnabled ? <>
+                                <BackdropPanel
+                                    blurMultiplier={0.5}
+                                    backgroundImage={this.state.backgroundImage}
+                                />
+                                <SpacePanel />
+                            </> : null }
+                            <BackdropPanel
+                                backgroundImage={this.state.backgroundImage}
+                            />
+                            <div
+                                className="mx_LeftPanel_wrapper--user"
+                                ref={this._resizeContainer}
+                                data-collapsed={this.props.collapseLhs ? true : undefined}
+                            >
+                                <LeftPanel
+                                    isMinimized={this.props.collapseLhs || false}
+                                    resizeNotifier={this.props.resizeNotifier}
+                                />
+                            </div>
+                        </div>
+                        <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
+                        <div className="mx_RoomView_wrapper">
+                            { pageElement }
+                        </div>
                     </div>
-                    { pageElement }
                 </div>
                 <CallContainer />
                 <NonUrgentToastContainer />
