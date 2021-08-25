@@ -350,7 +350,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     font-size: $font-22px;
     font-weight: $font-semi-bold;
     line-height: $font-36px;
-    color: $dialog-title-fg-color;
+    color: $primary-content;
 }
 
 .mx_Dialog_header.mx_Dialog_headerWithButton > .mx_Dialog_title {
