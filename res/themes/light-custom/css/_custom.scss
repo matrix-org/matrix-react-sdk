@@ -156,8 +156,6 @@ $username-variant8-color: var(--username-colors_7, $username-variant8-color);
 $event-selected-color: var(--timeline-highlights-color);
 $event-highlight-bg-color: var(--timeline-highlights-color);
 //
-// redirect some variables away from their hardcoded values in the light theme
-$settings-grey-fg-color: $primary-content;
 
 // --eventbubble colors
 $eventbubble-self-bg: var(--eventbubble-self-bg, $eventbubble-self-bg);
