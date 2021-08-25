@@ -1210,7 +1210,7 @@ export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean) {
         return hasText(e, showHiddenEvents);
     } else if (handler === 'messages.RoomCreate') {
         return Boolean(e.getContent()['predecessor']);
-    } else if (SettingsStore.getValue("feature_message_attachments") && e.getContent()['is_attachment']) {
+    } else if (SettingsStore.getValue("feature_message_attachments") && e.getContent().is_attachment) {
         return false;
     } else {
         return true;

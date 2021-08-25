@@ -66,6 +66,7 @@ interface IContent {
     };
     file?: string;
     url?: string;
+    is_attachment?: boolean;
 }
 
 interface IThumbnail {
@@ -430,7 +431,7 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient, promAfter?: (ISendEventResponse) => Promise<any>) {
+    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient, attachToMessage?: (ISendEventResponse) => Promise<any>) {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
@@ -506,9 +507,9 @@ export default class ContentMessages {
                     uploadAll = true;
                 }
             }
-            promBefore = this.sendContentToRoom(file, roomId, matrixClient, promBefore);
+            promBefore = this.sendContentToRoom(file, roomId, matrixClient, promBefore, Boolean(attachToMessage));
         }
-        promBefore.then(promAfter);
+        promBefore.then(attachToMessage);
     }
 
     getCurrentUploads() {
@@ -530,15 +531,18 @@ export default class ContentMessages {
         }
     }
 
-    private sendContentToRoom(file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>) {
+    private sendContentToRoom(file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>, attachment: boolean) {
         const startTime = CountlyAnalytics.getTimestamp();
-        const content: IContent = {
+        let content: IContent = {
             body: file.name || 'Attachment',
             info: {
                 size: file.size,
             },
             msgtype: "", // set later
         };
+
+        if (attachment)
+            content.is_attachment = true;
 
         // if we have a mime type for the file, add it to the message metadata
         if (file.type) {
