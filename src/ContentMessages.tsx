@@ -434,7 +434,7 @@ export default class ContentMessages {
 
     async sendContentListToRoom(
         files: File[], roomId: string, matrixClient: MatrixClient,
-        attachToMessage?: (ISendEventResponse) => Promise<any>
+        attachToMessage?: (ISendEventResponse) => Promise<any>,
     ) {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
@@ -535,9 +535,11 @@ export default class ContentMessages {
         }
     }
 
-    private sendContentToRoom(file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>, attachment: boolean) {
+    private sendContentToRoom(
+        file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>, attachment: boolean,
+    ) {
         const startTime = CountlyAnalytics.getTimestamp();
-        let content: IContent = {
+        const content: IContent = {
             body: file.name || 'Attachment',
             info: {
                 size: file.size,

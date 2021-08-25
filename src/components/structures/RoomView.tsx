@@ -752,7 +752,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                     payload.data.content.info,
                     payload.data.description || payload.data.name);
                 break;
-            case 'picture_snapshot':
+            case 'picture_snapshot': {
                 const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.messageComposer
                     && !this.messageComposer.state.isComposerEmpty) ?
                     (event: ISendEventResponse) => {
@@ -762,6 +762,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                     [payload.file], this.state.room.roomId, this.context, promAfter,
                 );
                 break;
+            }
             case 'notifier_enabled':
             case Action.UploadStarted:
             case Action.UploadFinished:
@@ -1253,11 +1254,11 @@ export default class RoomView extends React.Component<IProps, IState> {
     private onDrop = ev => {
         ev.stopPropagation();
         ev.preventDefault();
-        let promAfter = (SettingsStore.getValue("feature_message_attachments") && this.messageComposer
+        const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.messageComposer
             && ev.dataTransfer.files.length === 1 && !this.messageComposer.state.isComposerEmpty) ?
             (event: ISendEventResponse) => {
                 return this.messageComposer.sendMessage(event.event_id);
-            } : null
+            } : null;
         ContentMessages.sharedInstance().sendContentListToRoom(
             ev.dataTransfer.files, this.state.room.roomId, this.context, promAfter,
         );
