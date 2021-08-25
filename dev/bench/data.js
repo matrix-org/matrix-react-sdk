@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629904911211,
+  "lastUpdate": 1629906302594,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19664,6 +19664,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4334.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e4f8971c6747de7a863b59676b10302fe967e474",
+          "message": "Merge pull request #6676 from matrix-org/dbkr/yarn_upgrade_20210824\n\nyarn upgrade",
+          "timestamp": "2021-08-25T16:39:59+01:00",
+          "tree_id": "8e503ebed690a545b0918354c41ee6ebb739c6bd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e4f8971c6747de7a863b59676b10302fe967e474"
+        },
+        "date": 1629906300778,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4065.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 911.5,
             "unit": "ms",
             "extra": "type: measure"
           }
