@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629906302594,
+  "lastUpdate": 1629915917142,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -19700,6 +19700,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 911.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7951c8dabc6321263c4611a686b7ab1b8d07728b",
+          "message": "Merge pull request #6677 from matrix-org/gsouquet/migrate-sticker-picker",
+          "timestamp": "2021-08-25T19:19:52+01:00",
+          "tree_id": "1eca05dc90c075cf6d5c494916689d3d73955eb3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7951c8dabc6321263c4611a686b7ab1b8d07728b"
+        },
+        "date": 1629915915579,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5094.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 961.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1602.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4581.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
