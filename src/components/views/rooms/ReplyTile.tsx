@@ -25,9 +25,10 @@ import MImageReplyBody from "../messages/MImageReplyBody";
 import * as sdk from '../../../index';
 import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
 import { replaceableComponent } from '../../../utils/replaceableComponent';
-import { getEventDisplayInfo } from '../../../utils/EventUtils';
+import { getEventDisplayInfo, isVoiceMessage } from '../../../utils/EventUtils';
 import MFileBody from "../messages/MFileBody";
 import MemberAvatar from '../avatars/MemberAvatar';
+import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -95,7 +96,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         const mxEvent = this.props.mxEvent;
         const msgType = mxEvent.getContent().msgtype;
 
-        const { tileHandler, isInfoMessage } = getEventDisplayInfo(this.props.mxEvent);
+        const { tileHandler, isInfoMessage } = getEventDisplayInfo(mxEvent);
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
         if (!tileHandler) {
@@ -109,14 +110,14 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         const EventTileType = sdk.getComponent(tileHandler);
 
         const classes = classNames("mx_ReplyTile", {
-            mx_ReplyTile_info: isInfoMessage && !this.props.mxEvent.isRedacted(),
+            mx_ReplyTile_info: isInfoMessage && !mxEvent.isRedacted(),
             mx_ReplyTile_audio: msgType === MsgType.Audio,
             mx_ReplyTile_video: msgType === MsgType.Video,
         });
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
         }
 
         let sender;
@@ -125,13 +126,13 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             sender = (
                 <div className="mx_ReplyTile_sender">
                     <MemberAvatar
-                        member={this.props.mxEvent.sender}
-                        fallbackUserId={this.props.mxEvent.getSender()}
+                        member={mxEvent.sender}
+                        fallbackUserId={mxEvent.getSender()}
                         width={14}
                         height={14}
                     />
                     <SenderProfile
-                        mxEvent={this.props.mxEvent}
+                        mxEvent={mxEvent}
                         enableFlair={false}
                     />
                 </div>
@@ -140,8 +141,8 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         const msgtypeOverrides = {
             [MsgType.Image]: MImageReplyBody,
-            // Override audio and video body with file body
-            [MsgType.Audio]: MFileBody,
+            // Override audio and video body with file body. We also hide the download/decrypt button using CSS
+            [MsgType.Audio]: isVoiceMessage(mxEvent) ? MVoiceMessageBody : MFileBody,
             [MsgType.Video]: MFileBody,
         };
         const evOverrides = {
@@ -155,14 +156,14 @@ export default class ReplyTile extends React.PureComponent<IProps> {
                     { sender }
                     <EventTileType
                         ref="tile"
-                        mxEvent={this.props.mxEvent}
+                        mxEvent={mxEvent}
                         highlights={this.props.highlights}
                         highlightLink={this.props.highlightLink}
                         onHeightChanged={this.props.onHeightChanged}
                         showUrlPreview={false}
                         overrideBodyTypes={msgtypeOverrides}
                         overrideEventTypes={evOverrides}
-                        replacingEventId={this.props.mxEvent.replacingEventId()}
+                        replacingEventId={mxEvent.replacingEventId()}
                         maxImageHeight={96} />
                 </a>
             </div>
