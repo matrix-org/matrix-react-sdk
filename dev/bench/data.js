@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629984046382,
+  "lastUpdate": 1629984544286,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20072,6 +20072,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4136.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9aadb7c48756956a0427c10bb9170d27d70998f0",
+          "message": "Merge pull request #6564 from SimonBrandner/fix/codeblock-border/18367\n\nSoften codeblock border color",
+          "timestamp": "2021-08-26T14:23:48+01:00",
+          "tree_id": "bac016ccf03e02ac8c33ffb1e760914c4eec97e9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9aadb7c48756956a0427c10bb9170d27d70998f0"
+        },
+        "date": 1629984542424,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4197.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 917,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1614.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4319.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
