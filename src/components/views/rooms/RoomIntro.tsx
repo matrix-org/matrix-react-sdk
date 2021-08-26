@@ -160,11 +160,21 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
         });
     }
 
-    const sub2 = _t(
+    const subText = _t(
         "Your private messages are normally encrypted, but this room isn't. "+
         "Usually this is due to an unsupported device or method being used, " +
-        "like email invites. <a>Enable encryption in settings.</a>", {},
-        { a: sub => <a onClick={openRoomSettings} href="#">{ sub }</a> },
+        "like email invites.",
+    );
+
+    let subButton;
+    if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, cli)) {
+        subButton = (
+            <a onClick={openRoomSettings} href="#"> { _t("Enable encryption in settings.") }</a>
+        );
+    }
+
+    const subtitle = (
+        <span>{ subText } { subButton }</span>
     );
 
     return <div className="mx_RoomIntro">
@@ -172,7 +182,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
             <EventTileBubble
                 className="mx_cryptoEvent mx_cryptoEvent_icon_warning"
                 title={_t("End-to-end encryption isn't enabled")}
-                subtitle={sub2}
+                subtitle={subtitle}
             />
         ) }
         { avatar }
