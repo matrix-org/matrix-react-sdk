@@ -754,7 +754,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                 break;
             case 'picture_snapshot': {
                 const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.messageComposer
-                    && !this.messageComposer.state.isComposerEmpty) ?
+                    && (!this.messageComposer.state.isComposerEmpty || this.messageComposer.props.replyToEvent)) ?
                     (event: ISendEventResponse) => {
                         return this.messageComposer.sendMessage(event.event_id);
                     } : null;
@@ -1255,7 +1255,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         ev.stopPropagation();
         ev.preventDefault();
         const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.messageComposer
-            && ev.dataTransfer.files.length === 1 && !this.messageComposer.state.isComposerEmpty) ?
+            && ev.dataTransfer.files.length === 1
+            && (!this.messageComposer.state.isComposerEmpty || this.messageComposer.props.replyToEvent)) ?
             (event: ISendEventResponse) => {
                 return this.messageComposer.sendMessage(event.event_id);
             } : null;

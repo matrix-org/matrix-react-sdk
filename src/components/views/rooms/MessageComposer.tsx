@@ -150,7 +150,8 @@ class UploadButton extends React.Component<IUploadButtonProps> {
         }
 
         const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.props.composer
-            && ev.target.files.length === 1 && !this.props.composer.state.isComposerEmpty) ?
+            && ev.target.files.length === 1
+            && (!this.props.composer.state.isComposerEmpty || this.props.composer.props.replyToEvent)) ?
             (event: ISendEventResponse) => {
                 return this.props.composer.sendMessage(event.event_id);
             } : null;

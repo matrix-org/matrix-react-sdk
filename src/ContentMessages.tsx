@@ -39,6 +39,7 @@ import {
 import { IUpload } from "./models/IUpload";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { BlurhashEncoder } from "./BlurhashEncoder";
+import SettingsStore from "./settings/SettingsStore";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -442,7 +443,7 @@ export default class ContentMessages {
         }
 
         const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
-        if (isQuoting) {
+        if (isQuoting && !SettingsStore.getValue("feature_message_attachments")) {
             // FIXME: Using an import will result in Element crashing
             const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             const { finished } = Modal.createTrackedDialog<[boolean]>('Upload Reply Warning', '', QuestionDialog, {
