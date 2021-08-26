@@ -17,6 +17,6 @@ limitations under the License.
 .mx_CreateEvent {
     &::before {
         background-color: $composer-e2e-icon-color;
-        mask-image: url('$(res)/img/element-icons/chat-bubbles.svg');
+        mask-image: url("$(res)/img/element-icons/chat-bubbles.svg");
     }
 }

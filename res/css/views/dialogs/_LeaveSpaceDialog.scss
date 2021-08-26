@@ -66,7 +66,7 @@ limitations under the License.
             color: $secondary-fg-color;
 
             &::before {
-                content: '';
+                content: "";
                 position: absolute;
                 left: 10px;
                 top: calc(50% - 8px); // vertical centering
@@ -75,7 +75,7 @@ limitations under the License.
                 background-color: $secondary-fg-color;
                 mask-repeat: no-repeat;
                 mask-size: contain;
-                mask-image: url('$(res)/img/element-icons/room/room-summary.svg');
+                mask-image: url("$(res)/img/element-icons/room/room-summary.svg");
                 mask-position: center;
             }
         }

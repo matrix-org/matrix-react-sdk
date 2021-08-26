@@ -72,7 +72,7 @@ limitations under the License.
                 mask-repeat: no-repeat;
                 mask-position: center;
                 mask-size: contain;
-                mask-image: url('$(res)/img/feather-customised/x.svg');
+                mask-image: url("$(res)/img/feather-customised/x.svg");
                 background-color: $notice-primary-color;
             }
         }
@@ -98,7 +98,7 @@ limitations under the License.
         white-space: nowrap;
         text-overflow: ellipsis;
 
-        &[aria-checked=true]::after {
+        &[aria-checked="true"]::after {
             content: "";
             position: absolute;
             width: 16px;
@@ -107,7 +107,7 @@ limitations under the License.
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: contain;
-            mask-image: url('$(res)/img/feather-customised/check.svg');
+            mask-image: url("$(res)/img/feather-customised/check.svg");
             background-color: $input-valid-border-color;
         }
     }
@@ -134,7 +134,7 @@ limitations under the License.
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: contain;
-        mask-image: url('$(res)/img/feather-customised/plus.svg');
+        mask-image: url("$(res)/img/feather-customised/plus.svg");
         background-color: $muted-fg-color;
     }
 }
@@ -152,7 +152,7 @@ limitations under the License.
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: contain;
-        mask-image: url('$(res)/img/feather-customised/chevron-down-thin.svg');
+        mask-image: url("$(res)/img/feather-customised/chevron-down-thin.svg");
         background-color: $primary-fg-color;
     }
 

@@ -32,7 +32,7 @@ limitations under the License.
 
 .mx_CallViewHeader_secondaryCallInfo {
     &::before {
-        content: '·';
+        content: "·";
         margin-left: 6px;
         margin-right: 6px;
     }
@@ -48,7 +48,7 @@ limitations under the License.
     cursor: pointer;
 
     &::before {
-        content: '';
+        content: "";
         display: inline-block;
         height: 20px;
         width: 20px;
@@ -62,13 +62,13 @@ limitations under the License.
 
 .mx_CallViewHeader_button_fullscreen {
     &::before {
-        mask-image: url('$(res)/img/element-icons/call/fullscreen.svg');
+        mask-image: url("$(res)/img/element-icons/call/fullscreen.svg");
     }
 }
 
 .mx_CallViewHeader_button_expand {
     &::before {
-        mask-image: url('$(res)/img/element-icons/call/expand.svg');
+        mask-image: url("$(res)/img/element-icons/call/expand.svg");
     }
 }
 
@@ -107,7 +107,7 @@ limitations under the License.
     vertical-align: middle;
 
     &::before {
-        content: '';
+        content: "";
         display: inline-block;
         vertical-align: top;
 
@@ -120,10 +120,10 @@ limitations under the License.
     }
 
     &.mx_CallViewHeader_callTypeIcon_voice::before {
-        mask-image: url('$(res)/img/element-icons/call/voice-call.svg');
+        mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
     }
 
     &.mx_CallViewHeader_callTypeIcon_video::before {
-        mask-image: url('$(res)/img/element-icons/call/video-call.svg');
+        mask-image: url("$(res)/img/element-icons/call/video-call.svg");
     }
 }

@@ -101,7 +101,7 @@ limitations under the License.
             border-radius: 8px;
 
             &::before {
-                content: '';
+                content: "";
                 width: 16px;
                 height: 16px;
                 position: absolute;
@@ -127,11 +127,11 @@ limitations under the License.
         }
 
         .mx_RoomSublist_auxButton::before {
-            mask-image: url('$(res)/img/element-icons/roomlist/plus.svg');
+            mask-image: url("$(res)/img/element-icons/roomlist/plus.svg");
         }
 
         .mx_RoomSublist_menuButton::before {
-            mask-image: url('$(res)/img/element-icons/context-menu.svg');
+            mask-image: url("$(res)/img/element-icons/context-menu.svg");
         }
 
         .mx_RoomSublist_headerText {
@@ -154,7 +154,7 @@ limitations under the License.
                 margin-right: 6px;
 
                 &::before {
-                    content: '';
+                    content: "";
                     width: 18px;
                     height: 18px;
                     position: absolute;
@@ -162,7 +162,7 @@ limitations under the License.
                     mask-size: contain;
                     mask-repeat: no-repeat;
                     background-color: $roomlist-header-color;
-                    mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+                    mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
                 }
 
                 &.mx_RoomSublist_collapseBtn_collapsed::before {
@@ -230,7 +230,8 @@ limitations under the License.
             bottom: 0 !important; // override from library
         }
 
-        &:hover, &.mx_RoomSublist_hasMenuOpen {
+        &:hover,
+        &.mx_RoomSublist_hasMenuOpen {
             .mx_RoomSublist_resizerHandle {
                 opacity: 0.8;
                 background-color: $primary-fg-color;
@@ -268,7 +269,7 @@ limitations under the License.
 
         .mx_RoomSublist_showMoreButtonChevron,
         .mx_RoomSublist_showLessButtonChevron {
-            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+            mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
         }
 
         .mx_RoomSublist_showLessButtonChevron {
@@ -277,7 +278,8 @@ limitations under the License.
     }
 
     &.mx_RoomSublist_hasMenuOpen,
-    &:not(.mx_RoomSublist_minimized) > .mx_RoomSublist_headerContainer:focus-within,
+    &:not(.mx_RoomSublist_minimized)
+        > .mx_RoomSublist_headerContainer:focus-within,
     &:not(.mx_RoomSublist_minimized) > .mx_RoomSublist_headerContainer:hover {
         .mx_RoomSublist_menuButton {
             visibility: visible;
@@ -385,7 +387,8 @@ limitations under the License.
         margin-bottom: 4px;
     }
 
-    .mx_RadioButton, .mx_Checkbox {
+    .mx_RadioButton,
+    .mx_Checkbox {
         margin-top: 8px;
     }
 }
@@ -405,10 +408,10 @@ limitations under the License.
         width: 100%;
         height: 100%;
 
-        content: '';
+        content: "";
         position: absolute;
         mask-repeat: repeat-y;
         mask-size: auto 48px;
-        mask-image: url('$(res)/img/element-icons/roomlist/skeleton-ui.svg');
+        mask-image: url("$(res)/img/element-icons/roomlist/skeleton-ui.svg");
     }
 }

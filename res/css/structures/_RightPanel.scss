@@ -59,7 +59,7 @@ limitations under the License.
     border-radius: 100%;
 
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 4px; // center with parent of 32px
         left: 4px; // center with parent of 32px
@@ -80,22 +80,22 @@ limitations under the License.
 }
 
 .mx_RightPanel_notifsButton::before {
-    mask-image: url('$(res)/img/element-icons/notifications.svg');
+    mask-image: url("$(res)/img/element-icons/notifications.svg");
     mask-position: center;
 }
 
 .mx_RightPanel_roomSummaryButton::before {
-    mask-image: url('$(res)/img/element-icons/room/room-summary.svg');
+    mask-image: url("$(res)/img/element-icons/room/room-summary.svg");
     mask-position: center;
 }
 
 .mx_RightPanel_groupMembersButton::before {
-    mask-image: url('$(res)/img/element-icons/community-members.svg');
+    mask-image: url("$(res)/img/element-icons/community-members.svg");
     mask-position: center;
 }
 
 .mx_RightPanel_roomsButton::before {
-    mask-image: url('$(res)/img/element-icons/community-rooms.svg');
+    mask-image: url("$(res)/img/element-icons/community-rooms.svg");
     mask-position: center;
 }
 
@@ -104,7 +104,7 @@ $pulse-color: $pinned-unread-color;
 
 .mx_RightPanel_pinnedMessagesButton {
     &::before {
-        mask-image: url('$(res)/img/element-icons/room/pin.svg');
+        mask-image: url("$(res)/img/element-icons/room/pin.svg");
         mask-position: center;
     }
 
@@ -215,12 +215,13 @@ $pulse-color: $pinned-unread-color;
         margin: 16px 0;
     }
 
-    h2, p {
+    h2,
+    p {
         font-size: $font-14px;
     }
 
     &::before {
-        content: '';
+        content: "";
         display: block;
         margin: 11px auto 29px auto;
         height: 42px;

@@ -39,7 +39,8 @@ limitations under the License.
     padding: 0;
     color: $primary-fg-color;
 
-    span.mx_EditHistoryMessage_deletion, span.mx_EditHistoryMessage_insertion {
+    span.mx_EditHistoryMessage_deletion,
+    span.mx_EditHistoryMessage_insertion {
         padding: 0px 2px;
     }
 
@@ -55,7 +56,8 @@ limitations under the License.
         text-decoration: underline;
     }
 
-    .mx_EventTile_line, .mx_EventTile_content {
+    .mx_EventTile_line,
+    .mx_EventTile_content {
         margin-right: 0px;
     }
 
@@ -64,4 +66,3 @@ limitations under the License.
         padding: 0 8px;
     }
 }
-

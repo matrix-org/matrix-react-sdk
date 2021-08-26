@@ -1,16 +1,16 @@
 // Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A741
-$accent: #0DBD8B;
-$alert: #FF5B55;
+$accent: #0dbd8b;
+$alert: #ff5b55;
 $links: #0086e6;
 $primary-content: #ffffff;
-$secondary-content: #A9B2BC;
-$tertiary-content: #8E99A4;
-$quaternary-content: #6F7882;
+$secondary-content: #a9b2bc;
+$tertiary-content: #8e99a4;
+$quaternary-content: #6f7882;
 $quinary-content: #394049;
-$system: #21262C;
-$background: #15191E;
+$system: #21262c;
+$background: #15191e;
 $panels: rgba($system, 0.9);
-$panel-base: #8D97A5; // This color is not intended for use in the app
+$panel-base: #8d97a5; // This color is not intended for use in the app
 $panel-selected: rgba($panel-base, 0.3);
 $panel-hover: rgba($panel-base, 0.1);
 $panel-actions: rgba($panel-base, 0.2);
@@ -23,12 +23,12 @@ $space-nav: rgba($panel-base, 0.1);
 $bg-color: $background;
 $base-color: $bg-color;
 $base-text-color: $primary-content;
-$header-panel-bg-color: #20252B;
+$header-panel-bg-color: #20252b;
 $header-panel-border-color: #000000;
-$header-panel-text-primary-color: #B9BEC6;
+$header-panel-text-primary-color: #b9bec6;
 $header-panel-text-secondary-color: #c8c8cd;
 $text-primary-color: $primary-content;
-$text-secondary-color: #B9BEC6;
+$text-secondary-color: #b9bec6;
 $quaternary-fg-color: $quaternary-content;
 $search-bg-color: #181b21;
 $search-placeholder-color: #61708b;
@@ -137,12 +137,21 @@ $composer-e2e-icon-color: $header-panel-text-primary-color;
 $theme-button-bg-color: #e3e8f0;
 $dialpad-button-bg-color: $quinary-content;
 
-$roomlist-button-bg-color: rgba(141, 151, 165, 0.2); // Buttons include the filter box, explore button, and sublist buttons
+$roomlist-button-bg-color: rgba(
+    141,
+    151,
+    165,
+    0.2
+); // Buttons include the filter box, explore button, and sublist buttons
 $roomlist-filter-active-bg-color: $bg-color;
-$roomlist-bg-color: rgba(33, 38, 44, 0.90);
+$roomlist-bg-color: rgba(33, 38, 44, 0.9);
 $roomlist-header-color: $tertiary-fg-color;
 $roomsublist-divider-color: $primary-fg-color;
-$roomsublist-skeleton-ui-bg: linear-gradient(180deg, #3e444c 0%, #3e444c00 100%);
+$roomsublist-skeleton-ui-bg: linear-gradient(
+    180deg,
+    #3e444c 0%,
+    #3e444c00 100%
+);
 
 $groupFilterPanel-divider-color: $roomlist-header-color;
 
@@ -164,7 +173,7 @@ $event-redacted-fg-color: #606060;
 $event-redacted-border-color: #000000;
 
 $event-highlight-fg-color: $warning-color;
-$event-highlight-bg-color: #25271F;
+$event-highlight-bg-color: #25271f;
 
 // event timestamp
 $event-timestamp-color: $text-secondary-color;
@@ -245,11 +254,11 @@ $groupFilterPanel-background-blur-amount: 30px;
 $composer-shadow-color: rgba(0, 0, 0, 0.28);
 
 // Bubble tiles
-$eventbubble-self-bg: #14322E;
+$eventbubble-self-bg: #14322e;
 $eventbubble-others-bg: $event-selected-color;
-$eventbubble-bg-hover: #1C2026;
+$eventbubble-bg-hover: #1c2026;
 $eventbubble-avatar-outline: $bg-color;
-$eventbubble-reply-color: #C1C6CD;
+$eventbubble-reply-color: #c1c6cd;
 
 // ***** Mixins! *****
 

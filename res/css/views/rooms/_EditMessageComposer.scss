@@ -16,14 +16,12 @@ limitations under the License.
 */
 
 .mx_EditMessageComposer {
-
     padding: 3px;
     // this is to try not make the text move but still have some
     // padding around and in the editor.
     // Actual values from fiddling around in inspector
     margin: -7px -10px -5px -10px;
-    overflow: visible !important;   // override mx_EventTile_content
-
+    overflow: visible !important; // override mx_EventTile_content
 
     .mx_BasicMessageComposer_input {
         border-radius: 4px;

@@ -44,7 +44,9 @@ limitations under the License.
 
             .mx_ServerOfflineDialog_content_context_timeline {
                 display: inline-block;
-                width: calc(100% - 155px); // 115px timestamp width + 40px right margin
+                width: calc(
+                    100% - 155px
+                ); // 115px timestamp width + 40px right margin
 
                 .mx_ServerOfflineDialog_content_context_timeline_header {
                     span {
@@ -58,7 +60,9 @@ limitations under the License.
                     margin-top: 8px;
 
                     .mx_ServerOfflineDialog_content_context_txn_desc {
-                        width: calc(100% - 100px); // 100px is an arbitrary margin for the button
+                        width: calc(
+                            100% - 100px
+                        ); // 100px is an arbitrary margin for the button
                     }
 
                     .mx_AccessibleButton {

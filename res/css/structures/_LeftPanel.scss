@@ -78,11 +78,22 @@ $roomListCollapsedWidth: 68px;
             }
 
             &.mx_IndicatorScrollbar_rightOverflow {
-                mask-image: linear-gradient(90deg, black, black 95%, transparent);
+                mask-image: linear-gradient(
+                    90deg,
+                    black,
+                    black 95%,
+                    transparent
+                );
             }
 
             &.mx_IndicatorScrollbar_rightOverflow.mx_IndicatorScrollbar_leftOverflow {
-                mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+                mask-image: linear-gradient(
+                    90deg,
+                    transparent,
+                    black 5%,
+                    black 95%,
+                    transparent
+                );
             }
         }
 
@@ -96,7 +107,8 @@ $roomListCollapsedWidth: 68px;
             display: flex;
             align-items: center;
 
-            .mx_RoomSearch_focused, .mx_RoomSearch_hasQuery {
+            .mx_RoomSearch_focused,
+            .mx_RoomSearch_hasQuery {
                 & + .mx_LeftPanel_exploreButton {
                     // Cheaty way to return the occupied space to the filter input
                     flex-basis: 0;
@@ -120,13 +132,13 @@ $roomListCollapsedWidth: 68px;
                 margin-left: 8px;
 
                 &::before {
-                    content: '';
+                    content: "";
                     position: absolute;
                     top: 8px;
                     left: 8px;
                     width: 16px;
                     height: 16px;
-                    mask-image: url('$(res)/img/element-icons/call/dialpad.svg');
+                    mask-image: url("$(res)/img/element-icons/call/dialpad.svg");
                     mask-position: center;
                     mask-size: contain;
                     mask-repeat: no-repeat;
@@ -143,13 +155,13 @@ $roomListCollapsedWidth: 68px;
                 margin-left: 8px;
 
                 &::before {
-                    content: '';
+                    content: "";
                     position: absolute;
                     top: 8px;
                     left: 8px;
                     width: 16px;
                     height: 16px;
-                    mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
+                    mask-image: url("$(res)/img/element-icons/roomlist/explore.svg");
                     mask-position: center;
                     mask-size: contain;
                     mask-repeat: no-repeat;
@@ -157,7 +169,7 @@ $roomListCollapsedWidth: 68px;
                 }
 
                 &.mx_LeftPanel_exploreButton_space::before {
-                    mask-image: url('$(res)/img/element-icons/roomlist/browse.svg');
+                    mask-image: url("$(res)/img/element-icons/roomlist/browse.svg");
                 }
             }
         }

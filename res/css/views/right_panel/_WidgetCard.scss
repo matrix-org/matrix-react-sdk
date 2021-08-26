@@ -50,7 +50,7 @@ limitations under the License.
                 mask-repeat: no-repeat;
                 mask-position: center;
                 mask-size: contain;
-                mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
+                mask-image: url("$(res)/img/element-icons/room/ellipsis.svg");
                 background-color: $secondary-fg-color;
             }
         }

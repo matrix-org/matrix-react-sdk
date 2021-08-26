@@ -23,8 +23,10 @@ limitations under the License.
 }
 
 // TODO: Make this selector less painful
-.mx_GeneralUserSettingsTab_accountSection .mx_SettingsTab_subheading:nth-child(n + 1),
-.mx_GeneralUserSettingsTab_discovery .mx_SettingsTab_subheading:nth-child(n + 2),
+.mx_GeneralUserSettingsTab_accountSection
+    .mx_SettingsTab_subheading:nth-child(n + 1),
+.mx_GeneralUserSettingsTab_discovery
+    .mx_SettingsTab_subheading:nth-child(n + 2),
 .mx_SetIdServer .mx_SettingsTab_subheading {
     margin-top: 24px;
 }

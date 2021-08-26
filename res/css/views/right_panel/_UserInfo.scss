@@ -37,7 +37,7 @@ limitations under the License.
             height: 16px;
             width: 16px;
             padding: 4px;
-            mask-image: url('$(res)/img/minimise.svg');
+            mask-image: url("$(res)/img/minimise.svg");
             mask-repeat: no-repeat;
             mask-position: 7px center;
             background-color: $rightpanel-button-color;
@@ -55,7 +55,7 @@ limitations under the License.
     }
 
     .mx_UserInfo_separator {
-        border-bottom: 1px solid rgba($primary-fg-color, .1);
+        border-bottom: 1px solid rgba($primary-fg-color, 0.1);
     }
 
     .mx_UserInfo_memberDetailsContainer {
@@ -223,7 +223,6 @@ limitations under the License.
             display: flex;
             margin: 8px 0;
 
-
             &.mx_UserInfo_device_verified {
                 .mx_UserInfo_device_trusted {
                     color: $accent-color;
@@ -266,7 +265,6 @@ limitations under the License.
         display: block;
         margin: 16px 0 8px;
     }
-
 
     .mx_VerificationShowSas {
         .mx_AccessibleButton + .mx_AccessibleButton {

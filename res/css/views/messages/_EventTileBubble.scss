@@ -24,7 +24,8 @@ limitations under the License.
     display: grid;
     grid-template-columns: 24px minmax(0, 1fr) min-content;
 
-    &::before, &::after {
+    &::before,
+    &::after {
         position: relative;
         grid-column: 1;
         grid-row: 1 / 3;
@@ -41,7 +42,8 @@ limitations under the License.
         margin-top: 4px;
     }
 
-    .mx_EventTileBubble_title, .mx_EventTileBubble_subtitle {
+    .mx_EventTileBubble_title,
+    .mx_EventTileBubble_subtitle {
         overflow-wrap: break-word;
     }
 

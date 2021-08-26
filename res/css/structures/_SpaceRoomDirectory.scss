@@ -163,7 +163,7 @@ limitations under the License.
         background-color: $primary-bg-color;
 
         &::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
@@ -174,7 +174,7 @@ limitations under the License.
             background-color: $tertiary-fg-color;
             mask-size: 16px;
             transform: rotate(270deg);
-            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+            mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
         }
 
         &.mx_SpaceRoomDirectory_subspace_toggle_shown::before {
@@ -269,7 +269,8 @@ limitations under the License.
             }
         }
 
-        &:hover, &:focus-within {
+        &:hover,
+        &:focus-within {
             background-color: $groupFilterPanel-bg-color;
 
             .mx_AccessibleButton {

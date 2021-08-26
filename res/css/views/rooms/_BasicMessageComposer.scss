@@ -30,8 +30,12 @@ limitations under the License.
     }
 
     @keyframes visualbell {
-        from { background-color: $visual-bell-bg-color; }
-        to { background-color: $primary-bg-color; }
+        from {
+            background-color: $visual-bell-bg-color;
+        }
+        to {
+            background-color: $primary-bg-color;
+        }
     }
 
     &.mx_BasicMessageComposer_input_error {
@@ -45,7 +49,8 @@ limitations under the License.
         overflow-x: hidden;
 
         &.mx_BasicMessageComposer_input_shouldShowPillAvatar {
-            span.mx_UserPill, span.mx_RoomPill {
+            span.mx_UserPill,
+            span.mx_RoomPill {
                 position: relative;
 
                 // avatar psuedo element

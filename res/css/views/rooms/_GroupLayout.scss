@@ -34,7 +34,8 @@ $left-gutter: 64px;
             width: $MessageTimestamp_width;
         }
 
-        .mx_EventTile_line, .mx_EventTile_reply {
+        .mx_EventTile_line,
+        .mx_EventTile_reply {
             padding-top: 1px;
             padding-bottom: 3px;
             line-height: $font-22px;
@@ -48,7 +49,8 @@ $left-gutter: 64px;
     .mx_EventTile {
         padding-top: 4px;
 
-        .mx_EventTile_line, .mx_EventTile_reply {
+        .mx_EventTile_line,
+        .mx_EventTile_reply {
             padding-top: 0;
             padding-bottom: 0;
         }
@@ -57,7 +59,8 @@ $left-gutter: 64px;
             // same as the padding for non-compact .mx_EventTile.mx_EventTile_info
             padding-top: 0px;
             font-size: $font-13px;
-            .mx_EventTile_line, .mx_EventTile_reply {
+            .mx_EventTile_line,
+            .mx_EventTile_reply {
                 line-height: $font-20px;
             }
             .mx_EventTile_avatar {
@@ -75,7 +78,8 @@ $left-gutter: 64px;
             .mx_EventTile_avatar {
                 top: 2px;
             }
-            .mx_EventTile_line, .mx_EventTile_reply {
+            .mx_EventTile_line,
+            .mx_EventTile_reply {
                 padding-top: 0px;
                 padding-bottom: 1px;
             }
@@ -83,7 +87,8 @@ $left-gutter: 64px;
 
         &.mx_EventTile_emote.mx_EventTile_continuation {
             padding-top: 0;
-            .mx_EventTile_line, .mx_EventTile_reply {
+            .mx_EventTile_line,
+            .mx_EventTile_reply {
                 padding-top: 0px;
                 padding-bottom: 0px;
             }
@@ -104,7 +109,13 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_content .markdown-body {
-            p, ul, ol, dl, blockquote, pre, table {
+            p,
+            ul,
+            ol,
+            dl,
+            blockquote,
+            pre,
+            table {
                 margin-bottom: 4px; // 1/4 of the non-compact margin-bottom
             }
         }

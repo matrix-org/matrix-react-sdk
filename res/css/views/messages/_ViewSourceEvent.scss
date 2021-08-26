@@ -19,7 +19,8 @@ limitations under the License.
     opacity: 0.6;
     font-size: $font-12px;
 
-    pre, code {
+    pre,
+    code {
         flex: 1;
     }
 
@@ -35,13 +36,13 @@ limitations under the License.
         mask-size: auto 12px;
         visibility: hidden;
         background-color: $accent-color;
-        mask-image: url('$(res)/img/feather-customised/maximise.svg');
+        mask-image: url("$(res)/img/feather-customised/maximise.svg");
     }
 
     &.mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle {
         mask-position: 0 bottom;
         margin-bottom: 7px;
-        mask-image: url('$(res)/img/feather-customised/minimise.svg');
+        mask-image: url("$(res)/img/feather-customised/minimise.svg");
     }
 }
 

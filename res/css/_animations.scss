@@ -34,13 +34,17 @@ limitations under the License.
     transition: opacity 300ms ease;
 }
 
-
 @keyframes mx--anim-pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
 }
-
 
 @media (prefers-reduced-motion) {
     @keyframes mx--anim-pulse {

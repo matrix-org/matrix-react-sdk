@@ -18,7 +18,9 @@ limitations under the License.
     color: $primary-fg-color; // override from default settings page styles
 
     .mx_UserNotifSettings_pushRulesTable {
-        width: calc(100% + 12px); // +12px to line up center of 'Noisy' column with toggle switches
+        width: calc(
+            100% + 12px
+        ); // +12px to line up center of 'Noisy' column with toggle switches
         table-layout: fixed;
         border-collapse: collapse;
         border-spacing: 0;
@@ -65,7 +67,8 @@ limitations under the License.
     .mx_UserNotifSettings_floatingSection {
         margin-top: 40px;
 
-        & > div:first-child { // section header
+        & > div:first-child {
+            // section header
             font-size: $font-18px;
             font-weight: $font-semi-bold;
         }

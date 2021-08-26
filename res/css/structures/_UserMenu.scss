@@ -34,7 +34,7 @@ limitations under the License.
 
         // we cheat opacity on the theme colour with an after selector here
         &::after {
-            content: '';
+            content: "";
             border-bottom: 1px solid $primary-fg-color; // XXX: Variable abuse
             opacity: 0.2;
             display: block;
@@ -49,7 +49,7 @@ limitations under the License.
         display: block;
 
         &::before {
-            content: '';
+            content: "";
             width: 16px;
             height: 16px;
             position: absolute;
@@ -59,7 +59,7 @@ limitations under the License.
             mask-size: contain;
             mask-repeat: no-repeat;
             background: $tertiary-fg-color;
-            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+            mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
         }
     }
 
@@ -125,7 +125,7 @@ limitations under the License.
             position: relative;
 
             &::before {
-                content: '';
+                content: "";
                 position: absolute;
                 width: 24px;
                 height: 24px;
@@ -136,11 +136,11 @@ limitations under the License.
             }
 
             &.mx_UserMenu_dnd_noisy::before {
-                mask-image: url('$(res)/img/element-icons/notifications.svg');
+                mask-image: url("$(res)/img/element-icons/notifications.svg");
             }
 
             &.mx_UserMenu_dnd_muted::before {
-                mask-image: url('$(res)/img/element-icons/roomlist/notifications-off.svg');
+                mask-image: url("$(res)/img/element-icons/roomlist/notifications-off.svg");
             }
         }
     }
@@ -213,7 +213,9 @@ limitations under the License.
             // Create another flexbox of columns to handle large user IDs
             display: flex;
             flex-direction: column;
-            width: calc(100% - 40px); // 40px = 32px theme button + 8px margin to theme button
+            width: calc(
+                100% - 40px
+            ); // 40px = 32px theme button + 8px margin to theme button
 
             * {
                 // Automatically grow all subelements to fit the container
@@ -285,7 +287,7 @@ limitations under the License.
         display: block;
 
         &::before {
-            content: '';
+            content: "";
             width: 16px;
             height: 16px;
             display: block;
@@ -297,41 +299,41 @@ limitations under the License.
     }
 
     .mx_UserMenu_iconHome::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/home.svg');
+        mask-image: url("$(res)/img/element-icons/roomlist/home.svg");
     }
     .mx_UserMenu_iconHosting::before {
-        mask-image: url('$(res)/img/element-icons/brands/element.svg');
+        mask-image: url("$(res)/img/element-icons/brands/element.svg");
     }
 
     .mx_UserMenu_iconBell::before {
-        mask-image: url('$(res)/img/element-icons/notifications.svg');
+        mask-image: url("$(res)/img/element-icons/notifications.svg");
     }
 
     .mx_UserMenu_iconLock::before {
-        mask-image: url('$(res)/img/element-icons/security.svg');
+        mask-image: url("$(res)/img/element-icons/security.svg");
     }
 
     .mx_UserMenu_iconSettings::before {
-        mask-image: url('$(res)/img/element-icons/settings.svg');
+        mask-image: url("$(res)/img/element-icons/settings.svg");
     }
 
     .mx_UserMenu_iconArchive::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/archived.svg');
+        mask-image: url("$(res)/img/element-icons/roomlist/archived.svg");
     }
 
     .mx_UserMenu_iconMessage::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/feedback.svg');
+        mask-image: url("$(res)/img/element-icons/roomlist/feedback.svg");
     }
 
     .mx_UserMenu_iconSignOut::before {
-        mask-image: url('$(res)/img/element-icons/leave.svg');
+        mask-image: url("$(res)/img/element-icons/leave.svg");
     }
 
     .mx_UserMenu_iconMembers::before {
-        mask-image: url('$(res)/img/element-icons/room/members.svg');
+        mask-image: url("$(res)/img/element-icons/room/members.svg");
     }
 
     .mx_UserMenu_iconInvite::before {
-        mask-image: url('$(res)/img/element-icons/room/invite.svg');
+        mask-image: url("$(res)/img/element-icons/room/invite.svg");
     }
 }

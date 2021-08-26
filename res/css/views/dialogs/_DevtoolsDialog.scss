@@ -27,7 +27,8 @@ limitations under the License.
     margin-bottom: 10px;
 }
 
-.mx_DevTools_RoomStateExplorer_button, .mx_DevTools_ServersInRoomList_button {
+.mx_DevTools_RoomStateExplorer_button,
+.mx_DevTools_ServersInRoomList_button {
     margin-bottom: 10px;
     width: 100%;
 }
@@ -122,12 +123,12 @@ limitations under the License.
 .mx_DevTools_tgl-flip {
     + .mx_DevTools_tgl-btn {
         padding: 2px;
-        transition: all .2s ease;
+        transition: all 0.2s ease;
         perspective: 100px;
         &::after,
         &::before {
             display: inline-block;
-            transition: all .4s ease;
+            transition: all 0.4s ease;
             width: 100%;
             text-align: center;
             position: absolute;
@@ -219,7 +220,8 @@ limitations under the License.
             text-align: left;
         }
 
-        td, th {
+        td,
+        th {
             width: 360px; // "feels right" number
 
             text-overflow: ellipsis;
@@ -227,7 +229,8 @@ limitations under the License.
             white-space: nowrap;
         }
 
-        td + td, th + th {
+        td + td,
+        th + th {
             width: auto;
         }
 

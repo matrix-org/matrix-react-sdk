@@ -105,10 +105,10 @@ limitations under the License.
     display: inline-flex;
 
     &::before {
-        content: '';
+        content: "";
         display: inline-block;
         background-color: $button-fg-color;
-        mask-image: url('$(res)/img/element-icons/room/invite.svg');
+        mask-image: url("$(res)/img/element-icons/room/invite.svg");
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: 20px;
@@ -119,9 +119,9 @@ limitations under the License.
 }
 
 .mx_MemberList_inviteCommunity span::before {
-    mask-image: url('$(res)/img/icon-invite-people.svg');
+    mask-image: url("$(res)/img/icon-invite-people.svg");
 }
 
 .mx_MemberList_addRoomToCommunity span::before {
-    mask-image: url('$(res)/img/icons-room-add.svg');
+    mask-image: url("$(res)/img/icons-room-add.svg");
 }

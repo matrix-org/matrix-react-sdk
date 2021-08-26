@@ -41,8 +41,9 @@ limitations under the License.
     height: 40px;
 }
 
-.mx_CustomRoomTagPanel .mx_AccessibleButton.CustomRoomTagPanel_tileSelected::before {
-    content: '';
+.mx_CustomRoomTagPanel
+    .mx_AccessibleButton.CustomRoomTagPanel_tileSelected::before {
+    content: "";
     height: 56px;
     background-color: $accent-color-alt;
     width: 5px;

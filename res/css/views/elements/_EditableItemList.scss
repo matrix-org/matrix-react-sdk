@@ -31,7 +31,7 @@ limitations under the License.
     vertical-align: middle;
     width: 14px;
     height: 14px;
-    mask-image: url('$(res)/img/feather-customised/cancel.svg');
+    mask-image: url("$(res)/img/feather-customised/cancel.svg");
     mask-repeat: no-repeat;
     background-color: $warning-color;
     mask-size: 100%;
@@ -61,4 +61,3 @@ limitations under the License.
 .mx_EditableItemList_label {
     margin-bottom: 5px;
 }
-

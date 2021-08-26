@@ -37,7 +37,7 @@ $SpaceRoomViewInnerWidth: 428px;
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         width: 32px;
         height: 32px;
         top: 24px;
@@ -175,7 +175,7 @@ $SpaceRoomViewInnerWidth: 428px;
                 mask-repeat: no-repeat;
                 mask-position: center;
                 mask-size: contain;
-                mask-image: url('$(res)/img/element-icons/room/room-summary.svg');
+                mask-image: url("$(res)/img/element-icons/room/room-summary.svg");
                 background-color: $secondary-fg-color;
             }
         }
@@ -313,7 +313,7 @@ $SpaceRoomViewInnerWidth: 428px;
                     mask-position: center;
                     mask-size: 16px;
                     mask-repeat: no-repeat;
-                    mask-image: url('$(res)/img/element-icons/room/invite.svg');
+                    mask-image: url("$(res)/img/element-icons/room/invite.svg");
                 }
             }
 
@@ -334,7 +334,7 @@ $SpaceRoomViewInnerWidth: 428px;
                     mask-position: center;
                     mask-size: contain;
                     mask-repeat: no-repeat;
-                    mask-image: url('$(res)/img/element-icons/settings.svg');
+                    mask-image: url("$(res)/img/element-icons/settings.svg");
                 }
             }
         }
@@ -354,7 +354,7 @@ $SpaceRoomViewInnerWidth: 428px;
 
         .mx_SpaceFeedbackPrompt {
             padding: 7px; // 8px - 1px border
-            border: 1px solid rgba($primary-fg-color, .1);
+            border: 1px solid rgba($primary-fg-color, 0.1);
             border-radius: 8px;
             width: max-content;
             margin: 0 0 -40px auto; // collapse its own height to not push other components down
@@ -372,11 +372,11 @@ $SpaceRoomViewInnerWidth: 428px;
         }
 
         .mx_SpaceRoomView_privateScope_justMeButton::before {
-            mask-image: url('$(res)/img/element-icons/room/members.svg');
+            mask-image: url("$(res)/img/element-icons/room/members.svg");
         }
 
         .mx_SpaceRoomView_privateScope_meAndMyTeammatesButton::before {
-            mask-image: url('$(res)/img/element-icons/community-members.svg');
+            mask-image: url("$(res)/img/element-icons/community-members.svg");
         }
     }
 
@@ -405,11 +405,11 @@ $SpaceRoomViewInnerWidth: 428px;
         }
 
         &::before {
-            mask-image: url('$(res)/img/element-icons/room/room-summary.svg');
+            mask-image: url("$(res)/img/element-icons/room/room-summary.svg");
             mask-position: center;
             mask-repeat: no-repeat;
             mask-size: contain;
-            content: '';
+            content: "";
             width: 20px;
             height: 20px;
             position: absolute;
@@ -466,7 +466,7 @@ $SpaceRoomViewInnerWidth: 428px;
             }
 
             .mx_SpaceRoomView_inviteTeammates_inviteDialogButton::before {
-                mask-image: url('$(res)/img/element-icons/room/invite.svg');
+                mask-image: url("$(res)/img/element-icons/room/invite.svg");
             }
         }
     }

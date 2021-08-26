@@ -58,7 +58,7 @@ limitations under the License.
                 margin-right: 6px;
 
                 &::before {
-                    content: '';
+                    content: "";
                     position: absolute;
                     height: inherit;
                     width: inherit;
@@ -71,15 +71,19 @@ limitations under the License.
 
         &.mx_IncomingCallToast_content_voice {
             .mx_CallEvent_type .mx_CallEvent_type_icon::before,
-            .mx_IncomingCallToast_buttons .mx_IncomingCallToast_button_accept span::before {
-                mask-image: url('$(res)/img/element-icons/call/voice-call.svg');
+            .mx_IncomingCallToast_buttons
+                .mx_IncomingCallToast_button_accept
+                span::before {
+                mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
             }
         }
 
         &.mx_IncomingCallToast_content_video {
             .mx_CallEvent_type .mx_CallEvent_type_icon::before,
-            .mx_IncomingCallToast_buttons .mx_IncomingCallToast_button_accept span::before {
-                mask-image: url('$(res)/img/element-icons/call/video-call.svg');
+            .mx_IncomingCallToast_buttons
+                .mx_IncomingCallToast_button_accept
+                span::before {
+                mask-image: url("$(res)/img/element-icons/call/video-call.svg");
             }
         }
 
@@ -104,7 +108,7 @@ limitations under the License.
                     align-items: center;
 
                     &::before {
-                        content: '';
+                        content: "";
                         display: inline-block;
                         background-color: $button-fg-color;
                         mask-position: center;
@@ -120,7 +124,7 @@ limitations under the License.
                 }
 
                 &.mx_IncomingCallToast_button_decline span::before {
-                    mask-image: url('$(res)/img/element-icons/call/hangup.svg');
+                    mask-image: url("$(res)/img/element-icons/call/hangup.svg");
                     mask-size: 16px;
                     width: 16px;
                     height: 16px;
@@ -135,7 +139,7 @@ limitations under the License.
         width: 20px;
 
         &::before {
-            content: '';
+            content: "";
 
             height: inherit;
             width: inherit;
@@ -147,10 +151,10 @@ limitations under the License.
     }
 
     .mx_IncomingCallToast_silence::before {
-        mask-image: url('$(res)/img/voip/silence.svg');
+        mask-image: url("$(res)/img/voip/silence.svg");
     }
 
     .mx_IncomingCallToast_unSilence::before {
-        mask-image: url('$(res)/img/voip/un-silence.svg');
+        mask-image: url("$(res)/img/voip/un-silence.svg");
     }
 }

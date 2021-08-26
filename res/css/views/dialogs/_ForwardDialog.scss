@@ -36,7 +36,7 @@ limitations under the License.
         flex-shrink: 0;
         overflow-y: auto;
 
-        .mx_EventTile[data-layout=bubble] {
+        .mx_EventTile[data-layout="bubble"] {
             margin-top: 20px;
         }
 
@@ -128,7 +128,8 @@ limitations under the License.
                         visibility: hidden;
                     }
 
-                    .mx_ForwardList_sendIcon, .mx_NotificationBadge {
+                    .mx_ForwardList_sendIcon,
+                    .mx_NotificationBadge {
                         position: absolute;
                     }
 
@@ -139,7 +140,7 @@ limitations under the License.
 
                     &.mx_ForwardList_sending .mx_ForwardList_sendIcon {
                         background-color: $button-primary-bg-color;
-                        mask-image: url('$(res)/img/element-icons/circle-sending.svg');
+                        mask-image: url("$(res)/img/element-icons/circle-sending.svg");
                         mask-position: center;
                         mask-repeat: no-repeat;
                         mask-size: 14px;
@@ -149,7 +150,7 @@ limitations under the License.
 
                     &.mx_ForwardList_sent .mx_ForwardList_sendIcon {
                         background-color: $button-primary-bg-color;
-                        mask-image: url('$(res)/img/element-icons/circle-sent.svg');
+                        mask-image: url("$(res)/img/element-icons/circle-sent.svg");
                         mask-position: center;
                         mask-repeat: no-repeat;
                         mask-size: 14px;

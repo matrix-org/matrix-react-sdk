@@ -75,10 +75,10 @@ limitations under the License.
 
         .mx_EventTile {
             margin: 0;
-            &[data-layout=bubble] {
+            &[data-layout="bubble"] {
                 margin-right: 40px;
             }
-            &[data-layout=irc] {
+            &[data-layout="irc"] {
                 > a {
                     display: none;
                 }

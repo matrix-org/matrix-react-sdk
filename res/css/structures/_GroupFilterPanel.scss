@@ -100,11 +100,11 @@ limitations under the License.
     position: relative;
 
     &::before {
-        mask-image: url('$(res)/img/element-icons/home.svg');
+        mask-image: url("$(res)/img/element-icons/home.svg");
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: 21px;
-        content: '';
+        content: "";
         display: inline-block;
         width: 32px;
         height: 32px;
@@ -126,10 +126,10 @@ limitations under the License.
 
     &::before {
         background-color: $roomheader-addroom-fg-color;
-        mask-image: url('$(res)/img/feather-customised/plus.svg');
+        mask-image: url("$(res)/img/feather-customised/plus.svg");
         mask-position: center;
         mask-repeat: no-repeat;
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         bottom: 0;
@@ -139,7 +139,7 @@ limitations under the License.
 }
 
 .mx_GroupFilterPanel .mx_TagTile.mx_TagTile_selected::before {
-    content: '';
+    content: "";
     height: 100%;
     background-color: $accent-color;
     width: 4px;

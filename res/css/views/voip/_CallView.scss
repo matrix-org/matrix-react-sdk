@@ -40,7 +40,7 @@ limitations under the License.
     width: 320px;
     padding-bottom: 8px;
     background-color: $system;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.20);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
 
     .mx_CallView_video_hold,
@@ -160,7 +160,7 @@ limitations under the License.
     background-position: center;
     filter: blur(20px);
     &::after {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         width: 100%;
@@ -184,10 +184,10 @@ limitations under the License.
         display: block;
         margin-left: auto;
         margin-right: auto;
-        content: '';
+        content: "";
         width: 40px;
         height: 40px;
-        background-image: url('$(res)/img/voip/paused.svg');
+        background-image: url("$(res)/img/voip/paused.svg");
         background-position: center;
         background-size: cover;
     }
@@ -199,7 +199,6 @@ limitations under the License.
         padding: 0px;
     }
 }
-
 
 .mx_CallView_presenting {
     opacity: 1;

@@ -18,7 +18,7 @@ limitations under the License.
 $left-gutter: 64px;
 $hover-select-border: 4px;
 
-.mx_EventTile:not([data-layout=bubble]) {
+.mx_EventTile:not([data-layout="bubble"]) {
     max-width: 100%;
     clear: both;
     padding-top: 18px;
@@ -99,7 +99,8 @@ $hover-select-border: 4px;
         clear: both;
     }
 
-    .mx_EventTile_line, .mx_EventTile_reply {
+    .mx_EventTile_line,
+    .mx_EventTile_reply {
         position: relative;
         padding-left: $left-gutter;
         border-radius: 8px;
@@ -167,7 +168,7 @@ $hover-select-border: 4px;
             mask-size: 14px;
             width: 14px;
             height: 14px;
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
@@ -175,10 +176,10 @@ $hover-select-border: 4px;
         }
     }
     .mx_EventTile_receiptSent::before {
-        mask-image: url('$(res)/img/element-icons/circle-sent.svg');
+        mask-image: url("$(res)/img/element-icons/circle-sent.svg");
     }
     .mx_EventTile_receiptSending::before {
-        mask-image: url('$(res)/img/element-icons/circle-sending.svg');
+        mask-image: url("$(res)/img/element-icons/circle-sending.svg");
     }
 
     &.mx_EventTile_contextual {
@@ -215,15 +216,18 @@ $hover-select-border: 4px;
     }
 
     &:hover.mx_EventTile_verified .mx_EventTile_line {
-        border-left: $e2e-verified-color $EventTile_e2e_state_indicator_width solid;
+        border-left: $e2e-verified-color $EventTile_e2e_state_indicator_width
+            solid;
     }
 
     &:hover.mx_EventTile_unverified .mx_EventTile_line {
-        border-left: $e2e-unverified-color $EventTile_e2e_state_indicator_width solid;
+        border-left: $e2e-unverified-color $EventTile_e2e_state_indicator_width
+            solid;
     }
 
     &:hover.mx_EventTile_unknown .mx_EventTile_line {
-        border-left: $e2e-unknown-color $EventTile_e2e_state_indicator_width solid;
+        border-left: $e2e-unknown-color $EventTile_e2e_state_indicator_width
+            solid;
     }
 
     &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
@@ -239,7 +243,10 @@ $hover-select-border: 4px;
 
     // Explicit relationships so that it doesn't apply to nested EventTile components (e.g in Replies)
     &:hover.mx_EventTile_verified .mx_EventTile_line > a > .mx_MessageTimestamp,
-    &:hover.mx_EventTile_unverified .mx_EventTile_line > a > .mx_MessageTimestamp,
+    &:hover.mx_EventTile_unverified
+        .mx_EventTile_line
+        > a
+        > .mx_MessageTimestamp,
     &:hover.mx_EventTile_unknown .mx_EventTile_line > a > .mx_MessageTimestamp {
         left: calc(-$hover-select-border);
     }
@@ -270,12 +277,15 @@ $hover-select-border: 4px;
     }
 }
 
-.mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_EventListSummary:not([data-layout=bubble]) > :not(.mx_EventTile) .mx_EventTile_avatar ~ .mx_EventTile_line {
+.mx_EventTile:not([data-layout="bubble"]).mx_EventTile_info .mx_EventTile_line,
+.mx_EventListSummary:not([data-layout="bubble"])
+    > :not(.mx_EventTile)
+    .mx_EventTile_avatar
+    ~ .mx_EventTile_line {
     padding-left: calc($left-gutter + 18px);
 }
 
-.mx_EventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
+.mx_EventListSummary:not([data-layout="bubble"]) .mx_EventTile_line {
     padding-left: calc($left-gutter);
 }
 
@@ -310,7 +320,7 @@ $hover-select-border: 4px;
 }
 
 .mx_RoomView_timeline_rr_enabled {
-    .mx_EventTile[data-layout=group] {
+    .mx_EventTile[data-layout="group"] {
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
             margin-right: 110px;
@@ -365,8 +375,7 @@ $hover-select-border: 4px;
     width: $font-14px;
 
     will-change: left, top;
-    transition:
-        left var(--transition-short) ease-out,
+    transition: left var(--transition-short) ease-out,
         top var(--transition-standard) ease-out;
 }
 
@@ -391,7 +400,6 @@ $hover-select-border: 4px;
     cursor: pointer;
 }
 
-
 .mx_EventTile_e2eIcon {
     position: relative;
     width: 14px;
@@ -401,7 +409,8 @@ $hover-select-border: 4px;
     background-repeat: no-repeat;
     background-size: contain;
 
-    &::before, &::after {
+    &::before,
+    &::after {
         content: "";
         display: block;
         position: absolute;
@@ -416,16 +425,17 @@ $hover-select-border: 4px;
 
     &::before {
         background-color: #ffffff;
-        mask-image: url('$(res)/img/e2e/normal.svg');
+        mask-image: url("$(res)/img/e2e/normal.svg");
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: 80%;
     }
 }
 
-.mx_EventTile_e2eIcon_undecryptable, .mx_EventTile_e2eIcon_unverified {
+.mx_EventTile_e2eIcon_undecryptable,
+.mx_EventTile_e2eIcon_unverified {
     &::after {
-        mask-image: url('$(res)/img/e2e/warning.svg');
+        mask-image: url("$(res)/img/e2e/warning.svg");
         background-color: $notice-primary-color;
     }
     opacity: 1;
@@ -433,7 +443,7 @@ $hover-select-border: 4px;
 
 .mx_EventTile_e2eIcon_unknown {
     &::after {
-        mask-image: url('$(res)/img/e2e/warning.svg');
+        mask-image: url("$(res)/img/e2e/warning.svg");
         background-color: $notice-primary-color;
     }
     opacity: 1;
@@ -441,7 +451,7 @@ $hover-select-border: 4px;
 
 .mx_EventTile_e2eIcon_unencrypted {
     &::after {
-        mask-image: url('$(res)/img/e2e/warning.svg');
+        mask-image: url("$(res)/img/e2e/warning.svg");
         background-color: $notice-primary-color;
     }
     opacity: 1;
@@ -449,7 +459,7 @@ $hover-select-border: 4px;
 
 .mx_EventTile_e2eIcon_unauthenticated {
     &::after {
-        mask-image: url('$(res)/img/e2e/normal.svg');
+        mask-image: url("$(res)/img/e2e/normal.svg");
         background-color: $composer-e2e-icon-color;
     }
     opacity: 1;
@@ -474,7 +484,8 @@ $hover-select-border: 4px;
     color: inherit; // inherit the colour from the dark or light theme by default (but not for code blocks)
     font-size: $font-14px;
 
-    pre, code {
+    pre,
+    code {
         font-family: $monospace-font-family !important;
         background-color: $header-panel-bg-color;
     }
@@ -553,12 +564,22 @@ $hover-select-border: 4px;
     mask-image: url($expand-button-url);
 }
 
-.mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_copyButton,
+.mx_EventTile_body
+    .mx_EventTile_pre_container:focus-within
+    .mx_EventTile_copyButton,
 .mx_EventTile_body .mx_EventTile_pre_container:hover .mx_EventTile_copyButton,
-.mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_collapseButton,
-.mx_EventTile_body .mx_EventTile_pre_container:hover .mx_EventTile_collapseButton,
-.mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_expandButton,
-.mx_EventTile_body .mx_EventTile_pre_container:hover .mx_EventTile_expandButton {
+.mx_EventTile_body
+    .mx_EventTile_pre_container:focus-within
+    .mx_EventTile_collapseButton,
+.mx_EventTile_body
+    .mx_EventTile_pre_container:hover
+    .mx_EventTile_collapseButton,
+.mx_EventTile_body
+    .mx_EventTile_pre_container:focus-within
+    .mx_EventTile_expandButton,
+.mx_EventTile_body
+    .mx_EventTile_pre_container:hover
+    .mx_EventTile_expandButton {
     visibility: visible;
 }
 
@@ -571,7 +592,6 @@ $hover-select-border: 4px;
     font-family: inherit !important;
     color: inherit;
 }
-
 
 /* Make h1 and h2 the same size as h3. */
 .mx_EventTile_content .markdown-body h1,
@@ -607,7 +627,6 @@ $hover-select-border: 4px;
 */
 
 /* end of overrides */
-
 
 .mx_EventTile_keyRequestInfo {
     font-size: $font-12px;
@@ -659,13 +678,14 @@ $hover-select-border: 4px;
 
 .mx_EventTile:hover .mx_MessageActionBar,
 .mx_EventTile.mx_EventTile_actionBarFocused .mx_MessageActionBar,
-[data-whatinput='keyboard'] .mx_EventTile:focus-within .mx_MessageActionBar,
+[data-whatinput="keyboard"] .mx_EventTile:focus-within .mx_MessageActionBar,
 .mx_EventTile.focus-visible:focus-within .mx_MessageActionBar {
     visibility: visible;
 }
 
 @media only screen and (max-width: 480px) {
-    .mx_EventTile_line, .mx_EventTile_reply {
+    .mx_EventTile_line,
+    .mx_EventTile_reply {
         padding-left: 0;
         margin-right: 0;
     }

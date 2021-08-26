@@ -25,7 +25,7 @@ limitations under the License.
 }
 
 .mx_TagTileContextMenu_item::before {
-    content: '';
+    content: "";
     height: 15px;
     width: 15px;
     background-color: currentColor;
@@ -35,24 +35,24 @@ limitations under the License.
 }
 
 .mx_TagTileContextMenu_viewCommunity::before {
-    mask-image: url('$(res)/img/element-icons/view-community.svg');
+    mask-image: url("$(res)/img/element-icons/view-community.svg");
 }
 
 .mx_TagTileContextMenu_moveUp::before {
     transform: rotate(180deg);
-    mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+    mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
 }
 
 .mx_TagTileContextMenu_moveDown::before {
-    mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+    mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
 }
 
 .mx_TagTileContextMenu_hideCommunity::before {
-    mask-image: url('$(res)/img/element-icons/hide.svg');
+    mask-image: url("$(res)/img/element-icons/hide.svg");
 }
 
 .mx_TagTileContextMenu_createSpace::before {
-    mask-image: url('$(res)/img/element-icons/message/fwd.svg');
+    mask-image: url("$(res)/img/element-icons/message/fwd.svg");
 }
 
 .mx_TagTileContextMenu_separator {

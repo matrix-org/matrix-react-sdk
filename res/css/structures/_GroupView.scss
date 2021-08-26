@@ -38,7 +38,8 @@ limitations under the License.
     padding-right: 8px;
 }
 
-.mx_GroupView_header_avatar, .mx_GroupView_header_info {
+.mx_GroupView_header_avatar,
+.mx_GroupView_header_info {
     display: table-cell;
     vertical-align: middle;
 }
@@ -52,7 +53,7 @@ limitations under the License.
     width: 20px;
 
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         height: 20px;
         width: 20px;
@@ -63,11 +64,11 @@ limitations under the License.
 }
 
 .mx_GroupHeader_editButton::before {
-    mask-image: url('$(res)/img/element-icons/settings.svg');
+    mask-image: url("$(res)/img/element-icons/settings.svg");
 }
 
 .mx_GroupHeader_shareButton::before {
-    mask-image: url('$(res)/img/element-icons/room/share.svg');
+    mask-image: url("$(res)/img/element-icons/room/share.svg");
 }
 
 .mx_GroupView_hostingSignup img {
@@ -86,7 +87,9 @@ limitations under the License.
     box-shadow: none;
 }
 
-.mx_GroupView_header_isUserMember .mx_GroupView_header_name:hover div:not(.mx_GroupView_editable) {
+.mx_GroupView_header_isUserMember
+    .mx_GroupView_header_name:hover
+    div:not(.mx_GroupView_editable) {
     color: $accent-color;
     cursor: pointer;
 }
@@ -169,7 +172,7 @@ limitations under the License.
     top: 5px;
 }
 
-.mx_GroupView input[type='radio'] {
+.mx_GroupView input[type="radio"] {
     margin: 10px 10px 0px 10px;
 }
 
@@ -383,7 +386,8 @@ limitations under the License.
         font-weight: $font-semi-bold;
     }
 
-    > p, h2 {
+    > p,
+    h2 {
         margin: 0;
     }
 
@@ -396,7 +400,7 @@ limitations under the License.
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: contain;
-        mask-image: url('$(res)/img/element-icons/room/room-summary.svg');
+        mask-image: url("$(res)/img/element-icons/room/room-summary.svg");
         background-color: $secondary-fg-color;
     }
 
@@ -421,13 +425,16 @@ limitations under the License.
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: 8px;
-            mask-image: url('$(res)/img/image-view/close.svg');
+            mask-image: url("$(res)/img/image-view/close.svg");
             background-color: $secondary-fg-color;
         }
     }
 }
 
-.mx_GroupView .mx_MemberInfo .mx_AutoHideScrollbar > :not(.mx_MemberInfo_avatar) {
+.mx_GroupView
+    .mx_MemberInfo
+    .mx_AutoHideScrollbar
+    > :not(.mx_MemberInfo_avatar) {
     padding-left: 16px;
     padding-right: 16px;
 }

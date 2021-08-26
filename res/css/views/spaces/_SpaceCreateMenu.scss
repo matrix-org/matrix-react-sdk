@@ -55,10 +55,10 @@ $spacePanelWidth: 71px;
         }
 
         .mx_SpaceCreateMenuType_public::before {
-            mask-image: url('$(res)/img/globe.svg');
+            mask-image: url("$(res)/img/globe.svg");
         }
         .mx_SpaceCreateMenuType_private::before {
-            mask-image: url('$(res)/img/element-icons/lock.svg');
+            mask-image: url("$(res)/img/element-icons/lock.svg");
         }
 
         .mx_SpaceCreateMenu_back {
@@ -81,7 +81,7 @@ $spacePanelWidth: 71px;
                 mask-repeat: no-repeat;
                 mask-position: 2px 3px;
                 mask-size: 24px;
-                mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+                mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
             }
         }
 

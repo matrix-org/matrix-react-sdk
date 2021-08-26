@@ -29,7 +29,9 @@ limitations under the License.
             margin-left: 16px; // distance from <Field>
         }
 
-        .mx_Field, .mx_Field input, .mx_AccessibleButton {
+        .mx_Field,
+        .mx_Field input,
+        .mx_AccessibleButton {
             // So they look related to each other by feeling the same
             border-radius: 8px;
         }
@@ -48,7 +50,7 @@ limitations under the License.
 
             // Cheaty way to get an opacified variable colour background
             &::before {
-                content: '';
+                content: "";
                 border-radius: 20px;
                 background-color: $tertiary-fg-color;
                 opacity: 0.15;
@@ -65,7 +67,7 @@ limitations under the License.
         }
 
         .mx_AccessibleButton {
-            background-image: url('$(res)/img/subtract.svg');
+            background-image: url("$(res)/img/subtract.svg");
             width: 16px;
             height: 16px;
             margin-left: 8px;

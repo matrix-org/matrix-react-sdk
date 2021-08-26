@@ -35,9 +35,8 @@ limitations under the License.
         margin-left: 2px;
         margin-right: 2px;
 
-
         &::before {
-            content: '';
+            content: "";
             display: inline-block;
 
             height: 48px;
@@ -48,49 +47,48 @@ limitations under the License.
             background-position: center;
         }
 
-
         &.mx_CallViewButtons_dialpad::before {
-            background-image: url('$(res)/img/voip/dialpad.svg');
+            background-image: url("$(res)/img/voip/dialpad.svg");
         }
 
         &.mx_CallViewButtons_button_micOn::before {
-            background-image: url('$(res)/img/voip/mic-on.svg');
+            background-image: url("$(res)/img/voip/mic-on.svg");
         }
 
         &.mx_CallViewButtons_button_micOff::before {
-            background-image: url('$(res)/img/voip/mic-off.svg');
+            background-image: url("$(res)/img/voip/mic-off.svg");
         }
 
         &.mx_CallViewButtons_button_vidOn::before {
-            background-image: url('$(res)/img/voip/vid-on.svg');
+            background-image: url("$(res)/img/voip/vid-on.svg");
         }
 
         &.mx_CallViewButtons_button_vidOff::before {
-            background-image: url('$(res)/img/voip/vid-off.svg');
+            background-image: url("$(res)/img/voip/vid-off.svg");
         }
 
         &.mx_CallViewButtons_button_screensharingOn::before {
-            background-image: url('$(res)/img/voip/screensharing-on.svg');
+            background-image: url("$(res)/img/voip/screensharing-on.svg");
         }
 
         &.mx_CallViewButtons_button_screensharingOff::before {
-            background-image: url('$(res)/img/voip/screensharing-off.svg');
+            background-image: url("$(res)/img/voip/screensharing-off.svg");
         }
 
         &.mx_CallViewButtons_button_sidebarOn::before {
-            background-image: url('$(res)/img/voip/sidebar-on.svg');
+            background-image: url("$(res)/img/voip/sidebar-on.svg");
         }
 
         &.mx_CallViewButtons_button_sidebarOff::before {
-            background-image: url('$(res)/img/voip/sidebar-off.svg');
+            background-image: url("$(res)/img/voip/sidebar-off.svg");
         }
 
         &.mx_CallViewButtons_button_hangup::before {
-            background-image: url('$(res)/img/voip/hangup.svg');
+            background-image: url("$(res)/img/voip/hangup.svg");
         }
 
         &.mx_CallViewButtons_button_more::before {
-            background-image: url('$(res)/img/voip/more.svg');
+            background-image: url("$(res)/img/voip/more.svg");
         }
 
         &.mx_CallViewButtons_button_invisible {

@@ -58,9 +58,9 @@ limitations under the License.
                     width: 96px;
                     height: 96px;
                     mask-position: center;
-                    content: '';
+                    content: "";
                     vertical-align: middle;
-                    mask-image: url('$(res)/img/element-icons/add-photo.svg');
+                    mask-image: url("$(res)/img/element-icons/add-photo.svg");
                 }
             }
         }
@@ -68,7 +68,8 @@ limitations under the License.
         .mx_EditCommunityPrototypeDialog_tip {
             margin-left: 20px;
 
-            & > b, & > span {
+            & > b,
+            & > span {
                 display: block;
                 color: $muted-fg-color;
             }

@@ -40,8 +40,12 @@ $avatar-bg-color: var(--timeline-background-color);
 $message-action-bar-bg-color: var(--timeline-background-color);
 $primary-bg-color: var(--timeline-background-color);
 $togglesw-ball-color: var(--timeline-background-color);
-$droptarget-bg-color: var(--timeline-background-color-50pct); //still needs alpha at .5
-$authpage-modal-bg-color: var(--timeline-background-color-50pct); //still needs alpha at .59
+$droptarget-bg-color: var(
+    --timeline-background-color-50pct
+); //still needs alpha at .5
+$authpage-modal-bg-color: var(
+    --timeline-background-color-50pct
+); //still needs alpha at .59
 $roomheader-bg-color: var(--timeline-background-color);
 //
 // --roomlist-highlights-color
@@ -57,7 +61,8 @@ $roomlist-button-bg-color: var(--sidebar-color-15pct);
 // --roomlist-background-color
 $header-panel-bg-color: var(--roomlist-background-color);
 $reaction-row-button-bg-color: var(--roomlist-background-color);
-$panel-gradient: var(--roomlist-background-color-0pct), var(--roomlist-background-color);
+$panel-gradient: var(--roomlist-background-color-0pct),
+    var(--roomlist-background-color);
 // these were #f2f5f8 instead of #f3f8fd, but close enough
 $dark-panel-bg-color: var(--roomlist-background-color);
 $input-lighter-bg-color: var(--roomlist-background-color);
@@ -73,7 +78,7 @@ $primary-fg-color: var(--timeline-text-color);
 $settings-profile-overlay-placeholder-fg-color: var(--timeline-text-color);
 $roomtopic-color: var(--timeline-text-color-50pct);
 $tab-label-fg-color: var(--timeline-text-color);
-$tab-label-icon-bg-color: var(--timeline-text-color);   //was #454545
+$tab-label-icon-bg-color: var(--timeline-text-color); //was #454545
 // was #212121
 $topleftmenu-color: var(--timeline-text-color);
 // was #45474a
@@ -90,8 +95,12 @@ $roomtile-default-badge-bg-color: var(--roomlist-text-secondary-color);
 //
 // --roomlist-separator-color
 $input-darker-bg-color: var(--roomlist-separator-color);
-$panel-divider-color: var(--roomlist-separator-color);// originally #dee1f3, but close enough
-$primary-hairline-color: var(--roomlist-separator-color);// originally #e5e5e5, but close enough
+$panel-divider-color: var(
+    --roomlist-separator-color
+); // originally #dee1f3, but close enough
+$primary-hairline-color: var(
+    --roomlist-separator-color
+); // originally #e5e5e5, but close enough
 $roomsublist-divider-color: var(--roomlist-separator-color);
 //
 // --timeline-text-secondary-color
@@ -122,7 +131,9 @@ $mention-user-pill-bg-color: var(--warning-color);
 $notice-primary-color: var(--warning-color);
 $pinned-unread-color: var(--warning-color);
 $warning-color: var(--warning-color);
-$button-danger-disabled-bg-color: var(--warning-color-50pct); // still needs alpha at 0.5
+$button-danger-disabled-bg-color: var(
+    --warning-color-50pct
+); // still needs alpha at 0.5
 //
 // --username colors (which use a 0-based index)
 $username-variant1-color: var(--username-colors_0, $username-variant1-color);
@@ -145,5 +156,11 @@ $settings-grey-fg-color: $primary-fg-color;
 $eventbubble-self-bg: var(--eventbubble-self-bg, $eventbubble-self-bg);
 $eventbubble-others-bg: var(--eventbubble-others-bg, $eventbubble-others-bg);
 $eventbubble-bg-hover: var(--eventbubble-bg-hover, $eventbubble-bg-hover);
-$eventbubble-avatar-outline: var(--eventbubble-avatar-outline, $eventbubble-avatar-outline);
-$eventbubble-reply-color: var(--eventbubble-reply-color, $eventbubble-reply-color);
+$eventbubble-avatar-outline: var(
+    --eventbubble-avatar-outline,
+    $eventbubble-avatar-outline
+);
+$eventbubble-reply-color: var(
+    --eventbubble-reply-color,
+    $eventbubble-reply-color
+);

@@ -47,8 +47,8 @@ limitations under the License.
         @mixin mx_Dialog_link;
     }
 
-    input[type=text],
-    input[type=password] {
+    input[type="text"],
+    input[type="password"] {
         color: $authpage-primary-color;
     }
 

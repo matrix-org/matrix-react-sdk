@@ -25,7 +25,6 @@ $irc-line-height: $font-18px;
     line-height: $irc-line-height !important;
 
     .mx_EventTile {
-
         // timestamps are links which shouldn't be underlined
         > a {
             text-decoration: none;
@@ -50,7 +49,8 @@ $irc-line-height: $font-18px;
             }
         }
 
-        .mx_EventTile_line, .mx_EventTile_reply {
+        .mx_EventTile_line,
+        .mx_EventTile_reply {
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -71,7 +71,8 @@ $irc-line-height: $font-18px;
             align-items: center;
 
             // Need to use important to override the js provided height and width values.
-            > .mx_BaseAvatar, > .mx_BaseAvatar > * {
+            > .mx_BaseAvatar,
+            > .mx_BaseAvatar > * {
                 height: $font-14px !important;
                 width: $font-14px !important;
                 font-size: $font-10px !important;
@@ -135,7 +136,10 @@ $irc-line-height: $font-18px;
 
     .mx_EventListSummary {
         > .mx_EventTile_line {
-            padding-left: calc(var(--name-width) + $icon-width + $timestamp-width + 3 * $right-padding); // 15 px of padding
+            padding-left: calc(
+                var(--name-width) + $icon-width + $timestamp-width + 3 *
+                    $right-padding
+            ); // 15 px of padding
         }
 
         .mx_EventListSummary_avatars {

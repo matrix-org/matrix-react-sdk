@@ -45,7 +45,7 @@ limitations under the License.
 
 /* Overrides for the attachment body tiles */
 
-.mx_FilePanel .mx_EventTile:not([data-layout=bubble]) {
+.mx_FilePanel .mx_EventTile:not([data-layout="bubble"]) {
     word-break: break-word;
     margin-top: 10px;
     padding-top: 0;
@@ -98,7 +98,7 @@ limitations under the License.
     line-height: initial;
     padding: 0px;
     font-size: $font-14px;
-    opacity: 1.0;
+    opacity: 1;
     color: $event-timestamp-color;
 }
 
@@ -108,7 +108,7 @@ limitations under the License.
     visibility: visible;
     position: initial;
     font-size: $font-14px;
-    opacity: 1.0;
+    opacity: 1;
     color: $event-timestamp-color;
 }
 
@@ -124,5 +124,5 @@ limitations under the License.
 }
 
 .mx_FilePanel_empty::before {
-    mask-image: url('$(res)/img/element-icons/room/files.svg');
+    mask-image: url("$(res)/img/element-icons/room/files.svg");
 }

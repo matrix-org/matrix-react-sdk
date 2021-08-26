@@ -47,7 +47,7 @@ $activeBorderColor: $secondary-fg-color;
         margin-left: $gutterSize;
         margin-bottom: 12px;
         background-color: $roomlist-header-color;
-        mask-image: url('$(res)/img/element-icons/expand-space-panel.svg');
+        mask-image: url("$(res)/img/element-icons/expand-space-panel.svg");
 
         &.expanded {
             transform: scaleX(-1);
@@ -159,7 +159,7 @@ $activeBorderColor: $secondary-fg-color;
             mask-size: 20px;
             mask-repeat: no-repeat;
             background-color: $roomlist-header-color;
-            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+            mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
         }
 
         .mx_SpaceButton_icon {
@@ -171,7 +171,7 @@ $activeBorderColor: $secondary-fg-color;
 
             &::before {
                 position: absolute;
-                content: '';
+                content: "";
                 width: $topLevelHeight;
                 height: $topLevelHeight;
                 top: 0;
@@ -187,18 +187,18 @@ $activeBorderColor: $secondary-fg-color;
 
             &::before {
                 background-color: #3f3d3d;
-                mask-image: url('$(res)/img/element-icons/home.svg');
+                mask-image: url("$(res)/img/element-icons/home.svg");
             }
         }
 
         &.mx_SpaceButton_new .mx_SpaceButton_icon {
             background-color: $accent-color;
-            transition: all .1s ease-in-out; // TODO transition
+            transition: all 0.1s ease-in-out; // TODO transition
 
             &::before {
                 background-color: #ffffff;
-                mask-image: url('$(res)/img/element-icons/plus.svg');
-                transition: all .2s ease-in-out; // TODO transition
+                mask-image: url("$(res)/img/element-icons/plus.svg");
+                transition: all 0.2s ease-in-out; // TODO transition
             }
         }
 
@@ -227,14 +227,14 @@ $activeBorderColor: $secondary-fg-color;
             &::before {
                 top: 2px;
                 left: 2px;
-                content: '';
+                content: "";
                 width: 16px;
                 height: 16px;
                 position: absolute;
                 mask-position: center;
                 mask-size: contain;
                 mask-repeat: no-repeat;
-                mask-image: url('$(res)/img/element-icons/context-menu.svg');
+                mask-image: url("$(res)/img/element-icons/context-menu.svg");
                 background: $primary-fg-color;
             }
         }
@@ -336,37 +336,38 @@ $activeBorderColor: $secondary-fg-color;
         line-height: $font-18px;
     }
 
-    .mx_IconizedContextMenu_optionList .mx_AccessibleButton.mx_SpacePanel_contextMenu_inviteButton {
+    .mx_IconizedContextMenu_optionList
+        .mx_AccessibleButton.mx_SpacePanel_contextMenu_inviteButton {
         color: $accent-color;
 
         .mx_SpacePanel_iconInvite::before {
             background-color: $accent-color;
-            mask-image: url('$(res)/img/element-icons/room/invite.svg');
+            mask-image: url("$(res)/img/element-icons/room/invite.svg");
         }
     }
 
     .mx_SpacePanel_iconSettings::before {
-        mask-image: url('$(res)/img/element-icons/settings.svg');
+        mask-image: url("$(res)/img/element-icons/settings.svg");
     }
 
     .mx_SpacePanel_iconLeave::before {
-        mask-image: url('$(res)/img/element-icons/leave.svg');
+        mask-image: url("$(res)/img/element-icons/leave.svg");
     }
 
     .mx_SpacePanel_iconMembers::before {
-        mask-image: url('$(res)/img/element-icons/room/members.svg');
+        mask-image: url("$(res)/img/element-icons/room/members.svg");
     }
 
     .mx_SpacePanel_iconPlus::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/plus-circle.svg');
+        mask-image: url("$(res)/img/element-icons/roomlist/plus-circle.svg");
     }
 
     .mx_SpacePanel_iconHash::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/hash-circle.svg');
+        mask-image: url("$(res)/img/element-icons/roomlist/hash-circle.svg");
     }
 
     .mx_SpacePanel_iconExplore::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/browse.svg');
+        mask-image: url("$(res)/img/element-icons/roomlist/browse.svg");
     }
 
     .mx_SpacePanel_noIcon {
@@ -377,7 +378,6 @@ $activeBorderColor: $secondary-fg-color;
         }
     }
 }
-
 
 .mx_SpacePanel_sharePublicSpace {
     margin: 0;

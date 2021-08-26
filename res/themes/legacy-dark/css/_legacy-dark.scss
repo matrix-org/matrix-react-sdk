@@ -1,5 +1,5 @@
 // Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A741
-$system: #21262C;
+$system: #21262c;
 
 // unified palette
 // try to use these colors when possible
@@ -24,7 +24,7 @@ $primary-bg-color: $bg-color;
 $muted-fg-color: $header-panel-text-primary-color;
 
 // Legacy theme backports
-$quaternary-fg-color: #6F7882;
+$quaternary-fg-color: #6f7882;
 
 // used for dialog box text
 $light-fg-color: $header-panel-text-secondary-color;
@@ -117,35 +117,38 @@ $composer-e2e-icon-color: $header-panel-text-primary-color;
 // ********************
 
 $theme-button-bg-color: #e3e8f0;
-$dialpad-button-bg-color: #6F7882;
+$dialpad-button-bg-color: #6f7882;
 
-
-$roomlist-button-bg-color: #1A1D23; // Buttons include the filter box, explore button, and sublist buttons
+$roomlist-button-bg-color: #1a1d23; // Buttons include the filter box, explore button, and sublist buttons
 $roomlist-filter-active-bg-color: $roomlist-button-bg-color;
 $roomlist-bg-color: $header-panel-bg-color;
 
 $roomsublist-divider-color: $primary-fg-color;
-$roomsublist-skeleton-ui-bg: linear-gradient(180deg, #3e444c 0%, #3e444c00 100%);
+$roomsublist-skeleton-ui-bg: linear-gradient(
+    180deg,
+    #3e444c 0%,
+    #3e444c00 100%
+);
 
 $groupFilterPanel-divider-color: $roomlist-header-color;
 
 $roomtile-preview-color: #9e9e9e;
 $roomtile-default-badge-bg-color: #61708b;
-$roomtile-selected-bg-color: #1A1D23;
+$roomtile-selected-bg-color: #1a1d23;
 
 // ********************
 
 $panel-divider-color: $header-panel-border-color;
 
 $widget-menu-bar-bg-color: $header-panel-bg-color;
-$widget-body-bg-color: #1A1D23;
+$widget-body-bg-color: #1a1d23;
 
 // event redaction
 $event-redacted-fg-color: #606060;
 $event-redacted-border-color: #000000;
 
 $event-highlight-fg-color: $warning-color;
-$event-highlight-bg-color: #25271F;
+$event-highlight-bg-color: #25271f;
 
 // event timestamp
 $event-timestamp-color: $text-secondary-color;
@@ -208,14 +211,14 @@ $user-tile-hover-bg-color: $header-panel-bg-color;
 $message-body-panel-fg-color: $secondary-fg-color;
 $message-body-panel-bg-color: #394049;
 $message-body-panel-icon-fg-color: $secondary-fg-color;
-$message-body-panel-icon-bg-color: #21262C;
+$message-body-panel-icon-bg-color: #21262c;
 
 // See non-legacy dark for variable information
-$voice-record-stop-border-color: #6F7882;
-$voice-record-waveform-incomplete-fg-color: #6F7882;
-$voice-record-icon-color: #6F7882;
+$voice-record-stop-border-color: #6f7882;
+$voice-record-waveform-incomplete-fg-color: #6f7882;
+$voice-record-icon-color: #6f7882;
 $voice-playback-button-bg-color: $tertiary-fg-color;
-$voice-playback-button-fg-color: #21262C;
+$voice-playback-button-fg-color: #21262c;
 
 // Appearance tab colors
 $appearance-tab-border-color: $room-highlight-color;
@@ -223,11 +226,11 @@ $appearance-tab-border-color: $room-highlight-color;
 $composer-shadow-color: tranparent;
 
 // Bubble tiles
-$eventbubble-self-bg: #14322E;
+$eventbubble-self-bg: #14322e;
 $eventbubble-others-bg: $event-selected-color;
-$eventbubble-bg-hover: #1C2026;
+$eventbubble-bg-hover: #1c2026;
 $eventbubble-avatar-outline: $bg-color;
-$eventbubble-reply-color: #C1C6CD;
+$eventbubble-reply-color: #c1c6cd;
 
 // ***** Mixins! *****
 

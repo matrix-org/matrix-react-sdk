@@ -20,7 +20,8 @@ limitations under the License.
     margin-top: 32px;
     margin-bottom: 32px;
 
-    &::before, &::after {
+    &::before,
+    &::after {
         position: absolute;
         width: 116px;
         height: 116px;
@@ -35,7 +36,7 @@ limitations under the License.
     }
 
     &::after {
-        background-image: url('$(res)/img/element-icons/email-prompt.svg');
+        background-image: url("$(res)/img/element-icons/email-prompt.svg");
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;

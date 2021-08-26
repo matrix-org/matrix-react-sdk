@@ -25,21 +25,21 @@ limitations under the License.
     color: inherit;
 }
 
-.m_RoomView_auxPanel_stateViews_span[data-severity=warning] {
+.m_RoomView_auxPanel_stateViews_span[data-severity="warning"] {
     font-weight: bold;
     color: orange;
 }
 
-.m_RoomView_auxPanel_stateViews_span[data-severity=alert] {
+.m_RoomView_auxPanel_stateViews_span[data-severity="alert"] {
     font-weight: bold;
     color: red;
 }
 
-.m_RoomView_auxPanel_stateViews_span[data-severity=normal] {
+.m_RoomView_auxPanel_stateViews_span[data-severity="normal"] {
     font-weight: normal;
 }
 
-.m_RoomView_auxPanel_stateViews_span[data-severity=notice] {
+.m_RoomView_auxPanel_stateViews_span[data-severity="notice"] {
     font-weight: normal;
     color: $settings-grey-fg-color;
 }

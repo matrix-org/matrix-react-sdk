@@ -136,13 +136,13 @@ limitations under the License.
             position: relative;
 
             &::before {
-                content: '';
+                content: "";
                 position: absolute;
                 background-color: $primary-fg-color;
                 mask-repeat: no-repeat;
                 mask-position: center;
                 mask-size: contain;
-                mask-image: url('$(res)/img/element-icons/retry.svg');
+                mask-image: url("$(res)/img/element-icons/retry.svg");
                 width: 18px;
                 height: 18px;
                 left: 0;
@@ -175,12 +175,12 @@ limitations under the License.
         &::before {
             width: inherit;
             height: inherit;
-            content: '';
+            content: "";
             position: absolute;
             background-color: $accent-color;
             mask-repeat: no-repeat;
             mask-position: center;
-            mask-image: url('$(res)/img/element-icons/roomlist/checkmark.svg');
+            mask-image: url("$(res)/img/element-icons/roomlist/checkmark.svg");
             mask-size: 48px;
         }
     }
