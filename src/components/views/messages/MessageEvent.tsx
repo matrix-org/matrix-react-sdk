@@ -137,7 +137,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
 
         let attachment = null;
         if (SettingsStore.getValue("feature_message_attachments")) {
-            if (this.props.mxEvent.isRelation("m.attachment")) {
+            if (this.props.mxEvent.isRelation("org.matrix.msc2881.m.attachment")) {
                 const relation = this.props.mxEvent.getRelation();
                 if (this.room && relation && relation.event_id) {
                     const event = this.room.findEventById(relation.event_id);

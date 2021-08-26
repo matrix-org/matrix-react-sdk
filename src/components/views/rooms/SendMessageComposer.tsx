@@ -81,7 +81,7 @@ function addAttachmentToMessageContent(
 ): void {
     const attachContent = {
         'm.relates_to': {
-            'rel_type': 'm.attachment',
+            'rel_type': 'org.matrix.msc2881.m.attachment',
             'event_id': attachEventId,
         },
     };
