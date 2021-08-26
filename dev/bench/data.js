@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629984544286,
+  "lastUpdate": 1629985918350,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20120,6 +20120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4319.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "32ad94bce5278e899bc0b15e536854b755c86a52",
+          "message": "Merge pull request #6692 from matrix-org/jryans/changelog-link-colour\n\nFix changelog link colour back to blue",
+          "timestamp": "2021-08-26T14:46:25+01:00",
+          "tree_id": "3ddaadf8a9719b56b94068268e751a646ef8228b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/32ad94bce5278e899bc0b15e536854b755c86a52"
+        },
+        "date": 1629985916713,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4484.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 954.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1736.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4441.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
