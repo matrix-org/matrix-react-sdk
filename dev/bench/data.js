@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629983809179,
+  "lastUpdate": 1629984046382,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20024,6 +20024,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 833.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c13b3be600572259f96fc7975095d5f89e6e02dc",
+          "message": "Merge pull request #6691 from SimonBrandner/fix/agressive-pausing/18588\n\nPause ringing more aggressively",
+          "timestamp": "2021-08-26T14:15:33+01:00",
+          "tree_id": "d18af6bb181fb354c0ea4fbefc9ba490cf3d6bb6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c13b3be600572259f96fc7975095d5f89e6e02dc"
+        },
+        "date": 1629984044298,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3865.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 790.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1576.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4136.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
