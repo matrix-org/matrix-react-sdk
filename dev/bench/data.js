@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629996750046,
+  "lastUpdate": 1629996786355,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20252,6 +20252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4099.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a1a7de0f3789d70086c29663c97995024b8900cd",
+          "message": "Merge pull request #6687 from matrix-org/travis/left-panel-widget-expand\n\nFix left panel widgets not remembering collapsed state",
+          "timestamp": "2021-08-26T10:46:51-06:00",
+          "tree_id": "feaea662eab15a488c27ba5a62f259ced007e2d0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a1a7de0f3789d70086c29663c97995024b8900cd"
+        },
+        "date": 1629996784326,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4452.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1644.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4448.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
