@@ -236,6 +236,10 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         />;
     }
 
+    public static hasThreadReply(event: MatrixEvent) {
+        return Boolean(ReplyThread.getParentEventId(event));
+    }
+
     componentDidMount() {
         this.initialize();
     }

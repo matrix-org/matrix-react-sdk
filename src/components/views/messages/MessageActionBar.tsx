@@ -300,6 +300,15 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 toolbarOpts.push(cancelSendingButton);
             }
 
+            if (ReplyThread.hasThreadReply(this.props.mxEvent)) {
+                toolbarOpts.push(<RovingAccessibleTooltipButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_expandMessageButton"
+                    title={_t("Expand")}
+                    onClick={() => alert('expand')}
+                    key="expand"
+                />)
+            }
+
             // The menu button should be last, so dump it there.
             toolbarOpts.push(<OptionsButton
                 mxEvent={this.props.mxEvent}
