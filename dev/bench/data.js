@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629996744532,
+  "lastUpdate": 1629996750046,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20204,6 +20204,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 915.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "22a78cf4815724bf8fb7005ef145f8b9b5ce1ee3",
+          "message": "Merge pull request #6685 from matrix-org/travis/fix-widget-remember\n\nFix client forgetting which capabilities a widget was approved for",
+          "timestamp": "2021-08-26T10:47:10-06:00",
+          "tree_id": "8b17ea06ca06365064d02d2dd03ae246fccb1db3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/22a78cf4815724bf8fb7005ef145f8b9b5ce1ee3"
+        },
+        "date": 1629996748110,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4289.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 810.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4099.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
