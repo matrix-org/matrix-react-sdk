@@ -17,8 +17,8 @@ limitations under the License.
 */
 
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { EventStatus } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { Relations } from 'matrix-js-sdk/src/models/relations';
 
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
@@ -34,30 +34,47 @@ import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import DownloadActionButton from "./DownloadActionButton";
+import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
+import ReplyThread from '../elements/ReplyThread';
+import MessageContextMenu from "../context_menus/MessageContextMenu";
 
-const OptionsButton = ({ mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange }) => {
+interface OptionsButtonProps {
+    mxEvent: MatrixEvent;
+    // TODO: This can't really be typed without refactoring the entire EventTile.tsx to properly import components.
+    // It's probably some kind of Message component though.
+    getTile: () => any | null;
+    getReplyThread: () => ReplyThread | undefined;
+    permalinkCreator?: RoomPermalinkCreator;
+    onFocusChange: (isFocused: boolean) => void;
+}
+
+const OptionsButton: React.FC<OptionsButtonProps> = ({
+    mxEvent,
+    getTile,
+    getReplyThread,
+    permalinkCreator,
+    onFocusChange,
+}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
 
-    let contextMenu;
+    let contextMenu: any = null;
     if (menuDisplayed) {
-        const MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
-
-        const tile = getTile && getTile();
-        const replyThread = getReplyThread && getReplyThread();
+        const tile = getTile();
+        const replyThread = getReplyThread();
 
         const buttonRect = button.current.getBoundingClientRect();
-        contextMenu = <MessageContextMenu
+        contextMenu = (<MessageContextMenu
             {...aboveLeftOf(buttonRect)}
             mxEvent={mxEvent}
             permalinkCreator={permalinkCreator}
             eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
             collapseReplyThread={replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined}
             onFinished={closeMenu}
-        />;
+        />);
     }
 
     return <React.Fragment>
@@ -106,18 +123,19 @@ const ReactButton = ({ mxEvent, reactions, onFocusChange }) => {
     </React.Fragment>;
 };
 
-@replaceableComponent("views.messages.MessageActionBar")
-export default class MessageActionBar extends React.PureComponent {
-    static propTypes = {
-        mxEvent: PropTypes.object.isRequired,
-        // The Relations model from the JS SDK for reactions to `mxEvent`
-        reactions: PropTypes.object,
-        permalinkCreator: PropTypes.object,
-        getTile: PropTypes.func,
-        getReplyThread: PropTypes.func,
-        onFocusChange: PropTypes.func,
-    };
+interface IMessageActionBarProps {
+    mxEvent: MatrixEvent;
+    // The Relations model from the JS SDK for reactions to `mxEvent`
+    reactions?: Relations;
 
+    getTile: () => any | null;
+    getReplyThread: () => ReplyThread | undefined;
+    permalinkCreator?: RoomPermalinkCreator;
+    onFocusChange: (isFocused: boolean) => void;
+}
+
+@replaceableComponent("views.messages.MessageActionBar")
+export default class MessageActionBar extends React.PureComponent<IMessageActionBarProps> {
     static contextType = RoomContext;
 
     componentDidMount() {
@@ -186,9 +204,7 @@ export default class MessageActionBar extends React.PureComponent {
      * @param {Function} fn The execution function.
      * @param {Function} checkFn The test function.
      */
-    runActionOnFailedEv(fn, checkFn) {
-        if (!checkFn) checkFn = () => true;
-
+    runActionOnFailedEv(fn: (event: MatrixEvent) => void, checkFn: (event: MatrixEvent) => boolean = () => true) {
         const mxEvent = this.props.mxEvent;
         const editEvent = mxEvent.replacingEvent();
         const redactEvent = mxEvent.localRedactionEvent();
@@ -235,7 +251,7 @@ export default class MessageActionBar extends React.PureComponent {
         const editStatus = mxEvent.replacingEvent() && mxEvent.replacingEvent().status;
         const redactStatus = mxEvent.localRedactionEvent() && mxEvent.localRedactionEvent().status;
         const allowCancel = canCancel(mxEvent.status) || canCancel(editStatus) || canCancel(redactStatus);
-        const isFailed = [mxEvent.status, editStatus, redactStatus].includes("not_sent");
+        const isFailed = [mxEvent.status, editStatus, redactStatus].includes(EventStatus.NOT_SENT);
         if (allowCancel && isFailed) {
             // The resend button needs to appear ahead of the edit button, so insert to the
             // start of the opts

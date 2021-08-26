@@ -321,7 +321,7 @@ interface IState {
 export default class EventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
-    private tile = React.createRef();
+    private tile = React.createRef<unknown>();
     private replyThread = React.createRef<ReplyThread>();
 
     public readonly ref = createRef<HTMLElement>();
@@ -829,7 +829,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
-    getTile = () => this.tile.current;
+    getTile: () => unknown = () => this.tile.current;
 
     getReplyThread = () => this.replyThread.current;
 

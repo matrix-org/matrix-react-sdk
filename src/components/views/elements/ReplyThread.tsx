@@ -79,7 +79,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         this.room = this.context.getRoom(this.props.parentEv.getRoomId());
     }
 
-    public static getParentEventId(ev: MatrixEvent): string {
+    public static getParentEventId(ev: MatrixEvent): string | undefined {
         if (!ev || ev.isRedacted()) return;
 
         // XXX: For newer relations (annotations, replacements, etc.), we now
@@ -130,7 +130,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
     public static getNestedReplyText(
         ev: MatrixEvent,
         permalinkCreator: RoomPermalinkCreator,
-    ): { body: string, html: string } {
+    ): { body: string, html: string } | null {
         if (!ev) return null;
 
         let { body, formatted_body: html } = ev.getContent();
