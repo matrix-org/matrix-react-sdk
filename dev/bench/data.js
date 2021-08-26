@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629985918350,
+  "lastUpdate": 1629996744532,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20168,6 +20168,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4441.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "470bc0ffe7a03cbd08b72546cfb8cd1467d8d4cd",
+          "message": "Merge pull request #6686 from matrix-org/travis/widget-redact\n\nSpecial case redaction event sending from widgets per MSC2762",
+          "timestamp": "2021-08-26T10:47:17-06:00",
+          "tree_id": "cbda7e177c2cdfa266c15b59e7c448c8dc11a11e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/470bc0ffe7a03cbd08b72546cfb8cd1467d8d4cd"
+        },
+        "date": 1629996742768,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4197.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 915.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
