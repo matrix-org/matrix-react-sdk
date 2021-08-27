@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630072367972,
+  "lastUpdate": 1630077226920,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20396,6 +20396,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4171.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5e934c17da974647a0669bcc9f1532abb37fac30",
+          "message": "Merge pull request #6694 from SimonBrandner/task/set-new-layout\n\nSet the new layout setting when reading it",
+          "timestamp": "2021-08-27T09:08:40-06:00",
+          "tree_id": "a02ffb33e70550668284340f51fe94c20af74e86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5e934c17da974647a0669bcc9f1532abb37fac30"
+        },
+        "date": 1630077225411,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4020.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 808.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1595.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4221.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
