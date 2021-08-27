@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1629996786355,
+  "lastUpdate": 1630051532815,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20300,6 +20300,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4448.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bbeda37f7c19680e30a2001f4d39d86db984fc83",
+          "message": "Merge pull request #6697 from SimonBrandner/fix/leave-space/18592",
+          "timestamp": "2021-08-27T08:59:38+01:00",
+          "tree_id": "88bd63b6b34b8153eb4ad90933fb7bb6056f2bfe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bbeda37f7c19680e30a2001f4d39d86db984fc83"
+        },
+        "date": 1630051530598,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4217.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 952,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1649.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4591.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
