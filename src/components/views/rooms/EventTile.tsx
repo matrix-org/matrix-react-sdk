@@ -315,6 +315,7 @@ interface IState {
     reactions: Relations;
 
     hover: boolean;
+    isThreadExpanded?: boolean;
 }
 
 @replaceableComponent("views.rooms.EventTile")
@@ -854,6 +855,12 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
+    private setThreadExpanded = (expanded?: boolean) => {
+        this.setState({
+            isThreadExpanded: expanded,
+        });
+    };
+
     render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
@@ -875,6 +882,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                 </div>
             </div>;
         }
+
         const EventTileType = sdk.getComponent(tileHandler);
 
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
@@ -994,6 +1002,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             getTile={this.getTile}
             getReplyThread={this.getReplyThread}
             onFocusChange={this.onActionBarFocusChange}
+            isThreadExpanded={this.state.isThreadExpanded}
+            toggleThreadExpanded={() => this.setThreadExpanded(!this.state.isThreadExpanded)}
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs()
@@ -1132,15 +1142,17 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
 
             default: {
-                const thread = ReplyThread.makeThread(
-                    this.props.mxEvent,
-                    this.props.onHeightChanged,
-                    this.props.permalinkCreator,
-                    this.replyThread,
-                    this.props.layout,
-                    this.props.alwaysShowTimestamps || this.state.hover,
-                );
-
+                const thread = ReplyThread.hasThreadReply(this.props.mxEvent) ? (
+                    <ReplyThread
+                        parentEv={this.props.mxEvent}
+                        onHeightChanged={this.props.onHeightChanged}
+                        ref={this.replyThread}
+                        permalinkCreator={this.props.permalinkCreator}
+                        layout={this.props.layout}
+                        alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
+                        isThreadExpanded={this.state.isThreadExpanded}
+                        setThreadExpandable={() => this.setThreadExpanded(false)}
+                    />) : null;
                 const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
 
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers

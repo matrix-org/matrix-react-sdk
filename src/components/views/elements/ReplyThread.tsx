@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
@@ -44,6 +46,8 @@ interface IProps {
     layout?: Layout;
     // Whether to always show a timestamp
     alwaysShowTimestamps?: boolean;
+    isThreadExpanded?: boolean;
+    setThreadExpandable: () => void;
 }
 
 interface IState {
@@ -65,6 +69,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
     static contextType = MatrixClientContext;
     private unmounted = false;
     private room: Room;
+    private blockquoteRef = React.createRef<HTMLElement>();
 
     constructor(props, context) {
         super(props, context);
@@ -217,39 +222,34 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         };
     }
 
-    public static makeThread(
-        parentEv: MatrixEvent,
-        onHeightChanged: () => void,
-        permalinkCreator: RoomPermalinkCreator,
-        ref: React.RefObject<ReplyThread>,
-        layout: Layout,
-        alwaysShowTimestamps: boolean,
-    ): JSX.Element {
-        if (!ReplyThread.getParentEventId(parentEv)) return null;
-        return <ReplyThread
-            parentEv={parentEv}
-            onHeightChanged={onHeightChanged}
-            ref={ref}
-            permalinkCreator={permalinkCreator}
-            layout={layout}
-            alwaysShowTimestamps={alwaysShowTimestamps}
-        />;
-    }
-
     public static hasThreadReply(event: MatrixEvent) {
         return Boolean(ReplyThread.getParentEventId(event));
     }
 
     componentDidMount() {
         this.initialize();
+        this.updateExpandStatus();
     }
 
     componentDidUpdate() {
         this.props.onHeightChanged();
+        this.updateExpandStatus();
     }
 
     componentWillUnmount() {
         this.unmounted = true;
+    }
+
+    private updateExpandStatus() {
+        if (this.props.isThreadExpanded === undefined && this.blockquoteRef.current) {
+            const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
+            if (el) {
+                const isElipsisShown = el.offsetHeight > 60;
+                if (isElipsisShown) {
+                    this.props.setThreadExpandable();
+                }
+            }
+        }
     }
 
     private async initialize(): Promise<void> {
@@ -358,13 +358,22 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         }
 
         const evTiles = this.state.events.map((ev) => {
-            return <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(ev)}`} key={ev.getId()}>
-                <ReplyTile
-                    mxEvent={ev}
-                    onHeightChanged={this.props.onHeightChanged}
-                    permalinkCreator={this.props.permalinkCreator}
-                />
-            </blockquote>;
+            const classname = classNames({
+                'mx_ReplyThread': true,
+                [this.getReplyThreadColorClass(ev)]: true,
+                'mx_ReplyThread--expanded': this.props.isThreadExpanded === true,
+                'mx_ReplyThread--collapsed': this.props.isThreadExpanded === false,
+            });
+            return (
+
+                <blockquote ref={this.blockquoteRef} className={classname} key={ev.getId()}>
+                    <ReplyTile
+                        mxEvent={ev}
+                        onHeightChanged={this.props.onHeightChanged}
+                        permalinkCreator={this.props.permalinkCreator}
+                    />
+                </blockquote>
+            );
         });
 
         return <div className="mx_ReplyThread_wrapper">

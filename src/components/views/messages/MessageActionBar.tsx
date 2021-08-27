@@ -37,6 +37,7 @@ import DownloadActionButton from "./DownloadActionButton";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyThread from '../elements/ReplyThread';
 import MessageContextMenu from "../context_menus/MessageContextMenu";
+import classNames from 'classnames';
 
 interface OptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -132,6 +133,8 @@ interface IMessageActionBarProps {
     getReplyThread: () => ReplyThread | undefined;
     permalinkCreator?: RoomPermalinkCreator;
     onFocusChange: (isFocused: boolean) => void;
+    isThreadExpanded?: boolean;
+    toggleThreadExpanded: () => void;
 }
 
 @replaceableComponent("views.messages.MessageActionBar")
@@ -300,13 +303,18 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 toolbarOpts.push(cancelSendingButton);
             }
 
-            if (ReplyThread.hasThreadReply(this.props.mxEvent)) {
+            if (this.props.isThreadExpanded !== undefined && ReplyThread.hasThreadReply(this.props.mxEvent)) {
+                const expandClassName = classNames({
+                    'mx_MessageActionBar_maskButton': true,
+                    'mx_MessageActionBar_expandMessageButton': this.props.isThreadExpanded === true,
+                    'mx_MessageActionBar_collapseMessageButton': this.props.isThreadExpanded === false,
+                });
                 toolbarOpts.push(<RovingAccessibleTooltipButton
-                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_expandMessageButton"
-                    title={_t("Expand")}
-                    onClick={() => alert('expand')}
+                    className={expandClassName}
+                    title={this.props.isThreadExpanded ? _t("Collapse") : _t("Expand")}
+                    onClick={this.props.toggleThreadExpanded}
                     key="expand"
-                />)
+                />);
             }
 
             // The menu button should be last, so dump it there.
