@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630051532815,
+  "lastUpdate": 1630072367972,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20348,6 +20348,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4591.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cd1610eea8bef9e7678ac606f4189f606ea29958",
+          "message": "Merge pull request #6696 from matrix-org/travis/ff-voice\n\nAlways trigger the first amplitude capture from the worklet",
+          "timestamp": "2021-08-27T07:47:38-06:00",
+          "tree_id": "46f3a452b747882ff8c1cd9fb4fba744a66bb4a5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cd1610eea8bef9e7678ac606f4189f606ea29958"
+        },
+        "date": 1630072366422,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4106.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 838.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4171.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
