@@ -18,7 +18,6 @@ import { CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React from 'react';
 import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
 import CallView from './CallView';
-import dis from '../../../dispatcher/dispatcher';
 import { Resizable } from "re-resizable";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -53,23 +52,14 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        this.dispatcherRef = dis.register(this.onAction);
+        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCall);
         CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
 
     public componentWillUnmount() {
-        dis.unregister(this.dispatcherRef);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.updateCall);
         CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
-
-    private onAction = (payload) => {
-        switch (payload.action) {
-            case 'call_state': {
-                this.updateCall();
-                break;
-            }
-        }
-    };
 
     private updateCall = () => {
         const newCall = this.getCall();

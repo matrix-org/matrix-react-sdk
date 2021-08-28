@@ -88,6 +88,14 @@ function untilDispatch(waitForAction: string): Promise<ActionPayload> {
     });
 }
 
+function untilCallHandlerEvent(callHandler: CallHandler, event: CallHandlerEvent): Promise<void> {
+    return new Promise<void>((resolve) => {
+        callHandler.addListener(event, () => {
+            resolve();
+        });
+    });
+}
+
 describe('CallHandler', () => {
     let dmRoomMap;
     let callHandler;
@@ -192,8 +200,7 @@ describe('CallHandler', () => {
             room_id: REAL_ROOM_ID,
         }, true);
 
-        // wait for the call to be set up
-        await untilDispatch('call_state');
+        await untilCallHandlerEvent(callHandler, CallHandlerEvent.CallState);
 
         // should start off in the actual room ID it's in at the protocol level
         expect(callHandler.getCallForRoom(REAL_ROOM_ID)).toBe(fakeCall);

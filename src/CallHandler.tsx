@@ -142,6 +142,7 @@ export enum CallHandlerEvent {
     CallsChanged = "calls_changed",
     CallChangeRoom = "call_change_room",
     SilencedCallsChanged = "silenced_calls_changed",
+    CallState = "call_state",
 }
 
 export default class CallHandler extends EventEmitter {
@@ -674,11 +675,7 @@ export default class CallHandler extends EventEmitter {
             ToastStore.sharedInstance().dismissToast(toastKey);
         }
 
-        dis.dispatch({
-            action: 'call_state',
-            room_id: mappedRoomId,
-            state: status,
-        });
+        this.emit(CallHandlerEvent.CallState, mappedRoomId, status);
     }
 
     private removeCallForRoom(roomId: string) {

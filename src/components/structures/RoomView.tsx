@@ -34,7 +34,7 @@ import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import ContentMessages from '../../ContentMessages';
 import Modal from '../../Modal';
-import CallHandler, { PlaceCallType } from '../../CallHandler';
+import CallHandler, { CallHandlerEvent, PlaceCallType } from '../../CallHandler';
 import dis from '../../dispatcher/dispatcher';
 import * as Rooms from '../../Rooms';
 import eventSearch, { searchPagination } from '../../Searching';
@@ -583,6 +583,7 @@ export default class RoomView extends React.Component<IProps, IState> {
     }
 
     componentDidUpdate() {
+        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.onCallState);
         if (this.roomView.current) {
             const roomView = this.roomView.current;
             if (!roomView.ondrop) {
@@ -612,6 +613,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         //
         // (We could use isMounted, but facebook have deprecated that.)
         this.unmounted = true;
+
+        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.onCallState);
 
         // update the scroll map before we get unmounted
         if (this.state.roomId) {
@@ -739,6 +742,15 @@ export default class RoomView extends React.Component<IProps, IState> {
         }
     };
 
+    private onCallState = (roomId: string): void => {
+        // don't filter out payloads for room IDs other than props.room because
+        // we may be interested in the conf 1:1 room
+
+        if (!roomId) return;
+        const call = this.getCallForRoom();
+        this.setState({ callState: call ? call.state : null });
+    };
+
     private onAction = payload => {
         switch (payload.action) {
             case 'message_sent':
@@ -760,21 +772,6 @@ export default class RoomView extends React.Component<IProps, IState> {
             case Action.UploadCanceled:
                 this.forceUpdate();
                 break;
-            case 'call_state': {
-                // don't filter out payloads for room IDs other than props.room because
-                // we may be interested in the conf 1:1 room
-
-                if (!payload.room_id) {
-                    return;
-                }
-
-                const call = this.getCallForRoom();
-
-                this.setState({
-                    callState: call ? call.state : null,
-                });
-                break;
-            }
             case 'appsDrawer':
                 this.setState({
                     showApps: payload.show,
