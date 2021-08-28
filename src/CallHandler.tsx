@@ -133,11 +133,6 @@ interface ThirdpartyLookupResponse {
     fields: ThirdpartyLookupResponseFields;
 }
 
-export enum PlaceCallType {
-    Voice = 'voice',
-    Video = 'video',
-}
-
 export enum CallHandlerEvent {
     CallsChanged = "calls_changed",
     CallChangeRoom = "call_change_room",
@@ -762,9 +757,9 @@ export default class CallHandler extends EventEmitter {
         }, null, true);
     }
 
-    private async placeCall(roomId: string, type: PlaceCallType, transferee: MatrixCall) {
+    private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall) {
         Analytics.trackEvent('voip', 'placeCall', 'type', type);
-        CountlyAnalytics.instance.trackStartCall(roomId, type === PlaceCallType.Video, false);
+        CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, false);
 
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
@@ -784,7 +779,7 @@ export default class CallHandler extends EventEmitter {
 
         this.setActiveCallRoomId(roomId);
 
-        if (type === PlaceCallType.Voice) {
+        if (type === CallType.Voice) {
             call.placeVoiceCall();
         } else if (type === 'video') {
             call.placeVideoCall();
@@ -793,71 +788,70 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
+    public placeCall(roomId: string, type?: CallType, transferee?: MatrixCall): void {
+        // We might be using managed hybrid widgets
+        if (isManagedHybridWidgetEnabled()) {
+            addManagedHybridWidget(roomId);
+            return;
+        }
+
+        // if the runtime env doesn't do VoIP, whine.
+        if (!MatrixClientPeg.get().supportsVoip()) {
+            Modal.createTrackedDialog('Call Handler', 'VoIP is unsupported', ErrorDialog, {
+                title: _t('VoIP is unsupported'),
+                description: _t('You cannot place VoIP calls in this browser.'),
+            });
+            return;
+        }
+
+        // don't allow > 2 calls to be placed.
+        if (this.getAllActiveCalls().length > 1) {
+            Modal.createTrackedDialog('Call Handler', 'Existing Call', ErrorDialog, {
+                title: _t('Too Many Calls'),
+                description: _t("You've reached the maximum number of simultaneous calls."),
+            });
+            return;
+        }
+
+        const room = MatrixClientPeg.get().getRoom(roomId);
+        if (!room) {
+            console.error(`Room ${roomId} does not exist.`);
+            return;
+        }
+
+        if (this.getCallForRoom(room.roomId)) {
+            Modal.createTrackedDialog('Call Handler', 'Existing Call with user', ErrorDialog, {
+                title: _t('Already in call'),
+                description: _t("You're already in a call with this person."),
+            });
+            return;
+        }
+
+        const members = room.getJoinedMembers();
+        if (members.length <= 1) {
+            Modal.createTrackedDialog('Call Handler', 'Cannot place call with self', ErrorDialog, {
+                description: _t('You cannot place a call with yourself.'),
+            });
+            return;
+        } else if (members.length === 2) {
+            console.info(`Place ${type} call in ${roomId}`);
+
+            this.placeMatrixCall(roomId, type, transferee);
+        } else { // > 2
+            dis.dispatch({
+                action: "place_conference_call",
+                room_id: roomId,
+                type: type,
+            });
+        }
+    }
+
     private onAction = (payload: ActionPayload) => {
         switch (payload.action) {
-            case 'place_call':
-                {
-                    // We might be using managed hybrid widgets
-                    if (isManagedHybridWidgetEnabled()) {
-                        addManagedHybridWidget(payload.room_id);
-                        return;
-                    }
-
-                    // if the runtime env doesn't do VoIP, whine.
-                    if (!MatrixClientPeg.get().supportsVoip()) {
-                        Modal.createTrackedDialog('Call Handler', 'VoIP is unsupported', ErrorDialog, {
-                            title: _t('VoIP is unsupported'),
-                            description: _t('You cannot place VoIP calls in this browser.'),
-                        });
-                        return;
-                    }
-
-                    // don't allow > 2 calls to be placed.
-                    if (this.getAllActiveCalls().length > 1) {
-                        Modal.createTrackedDialog('Call Handler', 'Existing Call', ErrorDialog, {
-                            title: _t('Too Many Calls'),
-                            description: _t("You've reached the maximum number of simultaneous calls."),
-                        });
-                        return;
-                    }
-
-                    const room = MatrixClientPeg.get().getRoom(payload.room_id);
-                    if (!room) {
-                        console.error(`Room ${payload.room_id} does not exist.`);
-                        return;
-                    }
-
-                    if (this.getCallForRoom(room.roomId)) {
-                        Modal.createTrackedDialog('Call Handler', 'Existing Call with user', ErrorDialog, {
-                            title: _t('Already in call'),
-                            description: _t("You're already in a call with this person."),
-                        });
-                        return;
-                    }
-
-                    const members = room.getJoinedMembers();
-                    if (members.length <= 1) {
-                        Modal.createTrackedDialog('Call Handler', 'Cannot place call with self', ErrorDialog, {
-                            description: _t('You cannot place a call with yourself.'),
-                        });
-                        return;
-                    } else if (members.length === 2) {
-                        console.info(`Place ${payload.type} call in ${payload.room_id}`);
-
-                        this.placeCall(payload.room_id, payload.type, payload.transferee);
-                    } else { // > 2
-                        dis.dispatch({
-                            action: "place_conference_call",
-                            room_id: payload.room_id,
-                            type: payload.type,
-                        });
-                    }
-                }
-                break;
             case 'place_conference_call':
                 console.info("Place conference call in " + payload.room_id);
                 Analytics.trackEvent('voip', 'placeConferenceCall');
-                CountlyAnalytics.instance.trackStartCall(payload.room_id, payload.type === PlaceCallType.Video, true);
+                CountlyAnalytics.instance.trackStartCall(payload.room_id, payload.type === CallType.Video, true);
                 this.startCallApp(payload.room_id, payload.type);
                 break;
             case 'end_conference':
@@ -963,7 +957,7 @@ export default class CallHandler extends EventEmitter {
             room_id: roomId,
         });
 
-        await this.placeCall(roomId, PlaceCallType.Voice, null);
+        await this.placeMatrixCall(roomId, CallType.Voice, null);
     }
 
     private async startTransferToPhoneNumber(call: MatrixCall, destination: string, consultFirst: boolean) {
@@ -983,12 +977,7 @@ export default class CallHandler extends EventEmitter {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
 
-            dis.dispatch({
-                action: 'place_call',
-                type: call.type,
-                room_id: dmRoomId,
-                transferee: call,
-            });
+            this.placeCall(dmRoomId, call.type, call);
             dis.dispatch({
                 action: 'view_room',
                 room_id: dmRoomId,

@@ -27,7 +27,6 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { PlaceCallType } from "../../../CallHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Modal from '../../../Modal';
 import InfoDialog from "../dialogs/InfoDialog";
@@ -36,6 +35,7 @@ import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -50,7 +50,7 @@ interface IProps {
     onSettingsClick: () => void;
     onSearchClick: () => void;
     onForgetClick: () => void;
-    onCallPlaced: (type: PlaceCallType) => void;
+    onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
     e2eStatus: E2EStatus;
     appsShown: boolean;
@@ -190,13 +190,13 @@ export default class RoomHeader extends React.Component<IProps> {
             voiceCallButton =
                 <AccessibleTooltipButton
                     className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
-                    onClick={() => this.props.onCallPlaced(PlaceCallType.Voice)}
+                    onClick={() => this.props.onCallPlaced(CallType.Voice)}
                     title={_t("Voice call")} />;
             videoCallButton =
                 <AccessibleTooltipButton
                     className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
                     onClick={(ev) => ev.shiftKey ?
-                        this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(PlaceCallType.Video)}
+                        this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(CallType.Video)}
                     title={_t("Video call")} />;
         }
 

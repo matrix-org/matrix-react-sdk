@@ -34,7 +34,7 @@ import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import ContentMessages from '../../ContentMessages';
 import Modal from '../../Modal';
-import CallHandler, { CallHandlerEvent, PlaceCallType } from '../../CallHandler';
+import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import dis from '../../dispatcher/dispatcher';
 import * as Rooms from '../../Rooms';
 import eventSearch, { searchPagination } from '../../Searching';
@@ -66,7 +66,7 @@ import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
-import { CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import { CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import WidgetStore from "../../stores/WidgetStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
@@ -1429,12 +1429,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         return ret;
     }
 
-    private onCallPlaced = (type: PlaceCallType) => {
-        dis.dispatch({
-            action: 'place_call',
-            type: type,
-            room_id: this.state.room.roomId,
-        });
+    private onCallPlaced = (type: CallType): void => {
+        CallHandler.instance.placeCall(this.state.room?.roomId, type);
     };
 
     private onSettingsClick = () => {

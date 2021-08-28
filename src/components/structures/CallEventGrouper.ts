@@ -20,7 +20,6 @@ import { CallEvent, CallState, CallType, MatrixCall } from "matrix-js-sdk/src/we
 import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import { EventEmitter } from 'events';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import defaultDispatcher from "../../dispatcher/dispatcher";
 
 export enum CallEventGrouperEvent {
     StateChanged = "state_changed",
@@ -108,6 +107,10 @@ export default class CallEventGrouper extends EventEmitter {
         return [...this.events][0].getContent().call_id;
     }
 
+    private get roomId(): string {
+        return [...this.events][0]?.getRoomId();
+    }
+
     private onSilencedCallsChanged = () => {
         const newState = CallHandler.instance.isCallSilenced(this.callId);
         this.emit(CallEventGrouperEvent.SilencedChanged, newState);
@@ -122,11 +125,7 @@ export default class CallEventGrouper extends EventEmitter {
     };
 
     public callBack = () => {
-        defaultDispatcher.dispatch({
-            action: 'place_call',
-            type: this.isVoice ? CallType.Voice : CallType.Video,
-            room_id: [...this.events][0]?.getRoomId(),
-        });
+        CallHandler.instance.placeCall(this.roomId, this.isVoice ? CallType.Voice : CallType.Video);
     };
 
     public toggleSilenced = () => {

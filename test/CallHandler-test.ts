@@ -16,11 +16,11 @@ limitations under the License.
 
 import './skinned-sdk';
 
-import CallHandler, { PlaceCallType, CallHandlerEvent } from '../src/CallHandler';
+import CallHandler, { CallHandlerEvent } from '../src/CallHandler';
 import { stubClient, mkStubRoom } from './test-utils';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import dis from '../src/dispatcher/dispatcher';
-import { CallEvent, CallState } from 'matrix-js-sdk/src/webrtc/call';
+import { CallEvent, CallState, CallType } from 'matrix-js-sdk/src/webrtc/call';
 import DMRoomMap from '../src/utils/DMRoomMap';
 import EventEmitter from 'events';
 import SdkConfig from '../src/SdkConfig';
@@ -194,11 +194,7 @@ describe('CallHandler', () => {
     });
 
     it('should move calls between rooms when remote asserted identity changes', async () => {
-        dis.dispatch({
-            action: 'place_call',
-            type: PlaceCallType.Voice,
-            room_id: REAL_ROOM_ID,
-        }, true);
+        callHandler.placeCall(REAL_ROOM_ID, CallType.Voice);
 
         await untilCallHandlerEvent(callHandler, CallHandlerEvent.CallState);
 
