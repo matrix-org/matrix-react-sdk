@@ -890,15 +890,6 @@ export default class CallHandler extends EventEmitter {
                 });
                 break;
             }
-            case Action.DialNumber:
-                this.dialNumber(payload.number);
-                break;
-            case Action.TransferCallToMatrixID:
-                this.startTransferToMatrixID(payload.call, payload.destination, payload.consultFirst);
-                break;
-            case Action.TransferCallToPhoneNumber:
-                this.startTransferToPhoneNumber(payload.call, payload.destination, payload.consultFirst);
-                break;
         }
     };
 
@@ -908,7 +899,7 @@ export default class CallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    private async dialNumber(number: string) {
+    public async dialNumber(number: string) {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -941,7 +932,7 @@ export default class CallHandler extends EventEmitter {
         await this.placeMatrixCall(roomId, CallType.Voice, null);
     }
 
-    private async startTransferToPhoneNumber(call: MatrixCall, destination: string, consultFirst: boolean) {
+    public async startTransferToPhoneNumber(call: MatrixCall, destination: string, consultFirst: boolean) {
         const results = await this.pstnLookup(destination);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -954,7 +945,7 @@ export default class CallHandler extends EventEmitter {
         await this.startTransferToMatrixID(call, results[0].userid, consultFirst);
     }
 
-    private async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean) {
+    public async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean) {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
 

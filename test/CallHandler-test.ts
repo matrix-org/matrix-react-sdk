@@ -25,7 +25,6 @@ import DMRoomMap from '../src/utils/DMRoomMap';
 import EventEmitter from 'events';
 import SdkConfig from '../src/SdkConfig';
 import { ActionPayload } from '../src/dispatcher/payloads';
-import { Action } from '../src/dispatcher/actions';
 
 const REAL_ROOM_ID = '$room1:example.org';
 const MAPPED_ROOM_ID = '$room2:example.org';
@@ -181,10 +180,7 @@ describe('CallHandler', () => {
             },
         }]);
 
-        dis.dispatch({
-            action: Action.DialNumber,
-            number: '01818118181',
-        }, true);
+        await callHandler.dialNumber('01818118181');
 
         const viewRoomPayload = await untilDispatch('view_room');
         expect(viewRoomPayload.room_id).toEqual(MAPPED_ROOM_ID);
