@@ -166,7 +166,7 @@ export default class CallHandler extends EventEmitter {
 
     private silencedCalls = new Set<string>(); // callIds
 
-    static sharedInstance() {
+    public static get instance() {
         if (!window.mxCallHandler) {
             window.mxCallHandler = new CallHandler();
         }
@@ -655,7 +655,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private setCallState(call: MatrixCall, status: CallState) {
-        const mappedRoomId = CallHandler.sharedInstance().roomIdForCall(call);
+        const mappedRoomId = CallHandler.instance.roomIdForCall(call);
 
         console.log(
             `Call state in ${mappedRoomId} changed to ${status}`,
@@ -860,7 +860,7 @@ export default class CallHandler extends EventEmitter {
 
                     const call = payload.call as MatrixCall;
 
-                    const mappedRoomId = CallHandler.sharedInstance().roomIdForCall(call);
+                    const mappedRoomId = CallHandler.instance.roomIdForCall(call);
                     if (this.getCallForRoom(mappedRoomId)) {
                         console.log(
                             "Got incoming call for room " + mappedRoomId +

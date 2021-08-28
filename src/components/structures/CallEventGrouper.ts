@@ -51,8 +51,8 @@ export default class CallEventGrouper extends EventEmitter {
     constructor() {
         super();
 
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallsChanged, this.setCall);
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.SilencedCallsChanged, this.onSilencedCallsChanged);
+        CallHandler.instance.addListener(CallHandlerEvent.CallsChanged, this.setCall);
+        CallHandler.instance.addListener(CallHandlerEvent.SilencedCallsChanged, this.onSilencedCallsChanged);
     }
 
     private get invite(): MatrixEvent {
@@ -109,7 +109,7 @@ export default class CallEventGrouper extends EventEmitter {
     }
 
     private onSilencedCallsChanged = () => {
-        const newState = CallHandler.sharedInstance().isCallSilenced(this.callId);
+        const newState = CallHandler.instance.isCallSilenced(this.callId);
         this.emit(CallEventGrouperEvent.SilencedChanged, newState);
     };
 
@@ -130,10 +130,10 @@ export default class CallEventGrouper extends EventEmitter {
     };
 
     public toggleSilenced = () => {
-        const silenced = CallHandler.sharedInstance().isCallSilenced(this.callId);
+        const silenced = CallHandler.instance.isCallSilenced(this.callId);
         silenced ?
-            CallHandler.sharedInstance().unSilenceCall(this.callId) :
-            CallHandler.sharedInstance().silenceCall(this.callId);
+            CallHandler.instance.unSilenceCall(this.callId) :
+            CallHandler.instance.silenceCall(this.callId);
     };
 
     private setCallListeners() {
@@ -158,7 +158,7 @@ export default class CallEventGrouper extends EventEmitter {
     private setCall = () => {
         if (this.call) return;
 
-        this.call = CallHandler.sharedInstance().getCallById(this.callId);
+        this.call = CallHandler.instance.getCallById(this.callId);
         this.setCallListeners();
         this.setState();
     };

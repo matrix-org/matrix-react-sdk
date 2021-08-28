@@ -54,12 +54,12 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
 
     public componentWillUnmount() {
         dis.unregister(this.dispatcherRef);
-        CallHandler.sharedInstance().removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
 
     private onAction = (payload) => {
@@ -79,7 +79,7 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     };
 
     private getCall(): MatrixCall {
-        const call = CallHandler.sharedInstance().getCallForRoom(this.props.roomId);
+        const call = CallHandler.instance.getCallForRoom(this.props.roomId);
 
         if (call && [CallState.Ended, CallState.Ringing].includes(call.state)) return null;
         return call;

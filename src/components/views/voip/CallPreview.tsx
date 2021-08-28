@@ -100,7 +100,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
         const roomId = RoomViewStore.getRoomId();
 
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(roomId),
+            CallHandler.instance.getAllActiveCallsNotInRoom(roomId),
         );
 
         this.state = {
@@ -111,14 +111,14 @@ export default class CallPreview extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
+        CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
     }
 
     public componentWillUnmount() {
-        CallHandler.sharedInstance().removeListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
         MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
@@ -132,7 +132,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
 
         const roomId = RoomViewStore.getRoomId();
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(roomId),
+            CallHandler.instance.getAllActiveCallsNotInRoom(roomId),
         );
 
         this.setState({
@@ -156,7 +156,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
 
     private updateCalls = () => {
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(this.state.roomId),
+            CallHandler.instance.getAllActiveCallsNotInRoom(this.state.roomId),
         );
 
         this.setState({
@@ -167,7 +167,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
 
     private onCallRemoteHold = () => {
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(this.state.roomId),
+            CallHandler.instance.getAllActiveCallsNotInRoom(this.state.roomId),
         );
 
         this.setState({

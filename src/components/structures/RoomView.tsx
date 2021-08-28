@@ -1675,7 +1675,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         if (!this.state.room) {
             return null;
         }
-        return CallHandler.sharedInstance().getCallForRoom(this.state.room.roomId);
+        return CallHandler.instance.getCallForRoom(this.state.room.roomId);
     }
 
     // this has to be a proper method rather than an unnamed function,
