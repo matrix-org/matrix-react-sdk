@@ -843,14 +843,6 @@ export default class CallHandler extends EventEmitter {
 
     private onAction = (payload: ActionPayload) => {
         switch (payload.action) {
-            case 'end_conference':
-                console.info("Terminating conference call in " + payload.room_id);
-                this.terminateCallApp(payload.room_id);
-                break;
-            case 'hangup_conference':
-                console.info("Leaving conference call in "+ payload.room_id);
-                this.hangupCallApp(payload.room_id);
-                break;
             case 'hangup':
             case 'reject':
                 this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);
@@ -1083,7 +1075,9 @@ export default class CallHandler extends EventEmitter {
         });
     }
 
-    private terminateCallApp(roomId: string) {
+    public terminateCallApp(roomId: string) {
+        console.info("Terminating conference call in " + roomId);
+
         Modal.createTrackedDialog('Confirm Jitsi Terminate', '', QuestionDialog, {
             hasCancelButton: true,
             title: _t("End conference"),
@@ -1104,7 +1098,9 @@ export default class CallHandler extends EventEmitter {
         });
     }
 
-    private hangupCallApp(roomId: string) {
+    public hangupCallApp(roomId: string) {
+        console.info("Leaving conference call in " + roomId);
+
         const roomInfo = WidgetStore.instance.getRoom(roomId);
         if (!roomInfo) return; // "should never happen" clauses go here
 

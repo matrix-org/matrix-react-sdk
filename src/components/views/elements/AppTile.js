@@ -39,6 +39,7 @@ import { MatrixCapabilities } from "matrix-widget-api";
 import RoomWidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import CallHandler from '../../../CallHandler';
 
 @replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component {
@@ -213,7 +214,7 @@ export default class AppTile extends React.Component {
         }
 
         if (WidgetType.JITSI.matches(this.props.app.type)) {
-            dis.dispatch({ action: 'hangup_conference' });
+            CallHandler.instance.hangupCallApp(this.props.room.roomId);
         }
 
         // Delete the widget from the persisted store for good measure.
