@@ -865,33 +865,33 @@ export default class CallHandler extends EventEmitter {
                 // don't remove the call yet: let the hangup event handler do it (otherwise it will throw
                 // the hangup event away)
                 break;
-            case 'answer': {
-                this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);
-
-                if (!this.calls.has(payload.room_id)) {
-                    return; // no call to answer
-                }
-
-                if (this.getAllActiveCalls().length > 1) {
-                    Modal.createTrackedDialog('Call Handler', 'Existing Call', ErrorDialog, {
-                        title: _t('Too Many Calls'),
-                        description: _t("You've reached the maximum number of simultaneous calls."),
-                    });
-                    return;
-                }
-
-                const call = this.calls.get(payload.room_id);
-                call.answer();
-                this.setActiveCallRoomId(payload.room_id);
-                CountlyAnalytics.instance.trackJoinCall(payload.room_id, call.type === CallType.Video, false);
-                dis.dispatch({
-                    action: "view_room",
-                    room_id: payload.room_id,
-                });
-                break;
-            }
         }
     };
+
+    public answerCall(roomId: string): void {
+        const call = this.calls.get(roomId);
+
+        this.stopRingingIfPossible(call.callId);
+
+        // no call to answer
+        if (!this.calls.has(roomId)) return;
+
+        if (this.getAllActiveCalls().length > 1) {
+            Modal.createTrackedDialog('Call Handler', 'Existing Call', ErrorDialog, {
+                title: _t('Too Many Calls'),
+                description: _t("You've reached the maximum number of simultaneous calls."),
+            });
+            return;
+        }
+
+        call.answer();
+        this.setActiveCallRoomId(roomId);
+        CountlyAnalytics.instance.trackJoinCall(roomId, call.type === CallType.Video, false);
+        dis.dispatch({
+            action: "view_room",
+            room_id: roomId,
+        });
+    }
 
     private stopRingingIfPossible(callId: string): void {
         this.silencedCalls.delete(callId);

@@ -63,10 +63,7 @@ export default class IncomingCallToast extends React.Component<IProps, IState> {
 
     private onAnswerClick = (e: React.MouseEvent): void => {
         e.stopPropagation();
-        dis.dispatch({
-            action: 'answer',
-            room_id: CallHandler.instance.roomIdForCall(this.props.call),
-        });
+        CallHandler.instance.answerCall(CallHandler.instance.roomIdForCall(this.props.call));
     };
 
     private onRejectClick= (e: React.MouseEvent): void => {
