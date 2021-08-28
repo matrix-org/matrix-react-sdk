@@ -329,14 +329,34 @@ export default class CallHandler extends EventEmitter {
         );
     }
 
-    private onCallIncoming = (call) => {
-        // we dispatch this synchronously to make sure that the event
-        // handlers on the call are set up immediately (so that if
-        // we get an immediate hangup, we don't get a stuck call)
-        dis.dispatch({
-            action: 'incoming_call',
-            call: call,
-        }, true);
+    private onCallIncoming = (call: MatrixCall): void => {
+        // if the runtime env doesn't do VoIP, stop here.
+        if (!MatrixClientPeg.get().supportsVoip()) {
+            return;
+        }
+
+        const mappedRoomId = CallHandler.instance.roomIdForCall(call);
+        if (this.getCallForRoom(mappedRoomId)) {
+            console.log(
+                "Got incoming call for room " + mappedRoomId +
+                " but there's already a call for this room: ignoring",
+            );
+            return;
+        }
+
+        Analytics.trackEvent('voip', 'receiveCall', 'type', call.type);
+        console.log("Adding call for room ", mappedRoomId);
+        this.calls.set(mappedRoomId, call);
+        this.emit(CallHandlerEvent.CallsChanged, this.calls);
+        this.setCallListeners(call);
+        // Explicitly handle first state change
+        this.onCallStateChanged(call.state, null, call);
+
+        // get ready to send encrypted events in the room, so if the user does answer
+        // the call, we'll be ready to send. NB. This is the protocol-level room ID not
+        // the mapped one: that's where we'll send the events.
+        const cli = MatrixClientPeg.get();
+        cli.prepareToEncrypt(cli.getRoom(call.roomId));
     };
 
     public getCallById(callId: string): MatrixCall {
@@ -847,39 +867,6 @@ export default class CallHandler extends EventEmitter {
             case 'hangup_conference':
                 console.info("Leaving conference call in "+ payload.room_id);
                 this.hangupCallApp(payload.room_id);
-                break;
-            case 'incoming_call':
-                {
-                    // if the runtime env doesn't do VoIP, stop here.
-                    if (!MatrixClientPeg.get().supportsVoip()) {
-                        return;
-                    }
-
-                    const call = payload.call as MatrixCall;
-
-                    const mappedRoomId = CallHandler.instance.roomIdForCall(call);
-                    if (this.getCallForRoom(mappedRoomId)) {
-                        console.log(
-                            "Got incoming call for room " + mappedRoomId +
-                            " but there's already a call for this room: ignoring",
-                        );
-                        return;
-                    }
-
-                    Analytics.trackEvent('voip', 'receiveCall', 'type', call.type);
-                    console.log("Adding call for room ", mappedRoomId);
-                    this.calls.set(mappedRoomId, call);
-                    this.emit(CallHandlerEvent.CallsChanged, this.calls);
-                    this.setCallListeners(call);
-                    // Explicitly handle first state change
-                    this.onCallStateChanged(call.state, null, call);
-
-                    // get ready to send encrypted events in the room, so if the user does answer
-                    // the call, we'll be ready to send. NB. This is the protocol-level room ID not
-                    // the mapped one: that's where we'll send the events.
-                    const cli = MatrixClientPeg.get();
-                    cli.prepareToEncrypt(cli.getRoom(call.roomId));
-                }
                 break;
             case 'hangup':
             case 'reject':
