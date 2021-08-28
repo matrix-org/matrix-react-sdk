@@ -841,6 +841,13 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
+    public hangupAllCalls(): void {
+        for (const call of this.calls.values()) {
+            this.stopRingingIfPossible(call.callId);
+            call.hangup(CallErrorCode.UserHangup, false);
+        }
+    }
+
     private onAction = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'hangup':
@@ -857,13 +864,6 @@ export default class CallHandler extends EventEmitter {
                 }
                 // don't remove the call yet: let the hangup event handler do it (otherwise it will throw
                 // the hangup event away)
-                break;
-            case 'hangup_all':
-                this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);
-
-                for (const call of this.calls.values()) {
-                    call.hangup(CallErrorCode.UserHangup, false);
-                }
                 break;
             case 'answer': {
                 this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);

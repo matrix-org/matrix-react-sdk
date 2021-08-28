@@ -109,6 +109,7 @@ import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
 import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
+import CallHandler from "../../CallHandler";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -594,7 +595,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             case 'logout':
-                dis.dispatch({ action: "hangup_all" });
+                CallHandler.instance.hangupAllCalls();
                 Lifecycle.logout();
                 break;
             case 'require_registration':
