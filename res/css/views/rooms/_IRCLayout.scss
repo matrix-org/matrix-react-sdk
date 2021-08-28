@@ -116,10 +116,56 @@ $irc-line-height: $font-18px;
         .mx_EditMessageComposer_buttons {
             position: relative;
         }
+    }
+
+    // Reactions are not in bubble messages
+    .mx_EventTile:not(.mx_EventTile_bubbleContainer):not(.mx_EventTile_leftAlignedBubble) {
+        .mx_EventTile_content {
+            margin-right: 0.5em;
+        }
+
+        .mx_EventTile_line {
+            display: grid;
+            justify-content: space-between;
+            // First column: all content, take as much width as possible
+            // Second column: Minimum 2 reactions, 18px (icon) 1.1em (number as text) 14px (padding and border) 2px (gap)
+            // Use auto-fit to collapse if the second column is empty (no reaction), and give place for event line
+            grid-template-columns: minmax(0, auto) repeat(auto-fit, minmax(calc(2 * (18px + 1.1em + 14px + 2px)), 1fr));
+            // Repeat 5 rows to ensure reactions span all rows.
+            // Assume there's no more than 5 element in the message.
+            grid-template-rows: repeat(5, min-content);
+
+            > *:not(.mx_ReactionsRow) {
+                grid-column: 1;
+            }
+
+            > .mx_ReactionsRow {
+                grid-row: 1/-1;
+                grid-column: 2;
+            }
+        }
 
         .mx_ReactionsRow {
+            align-self: start;
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+
             padding-left: 0;
             padding-right: 0;
+
+            justify-content: flex-end;
+        }
+
+        .mx_ReactionsRowButton {
+            margin: 0;
+        }
+
+        .mx_ReactionsRow_addReactionButton {
+            // Reactions are just below the action bar
+            // So the "add reaction" is redundant here
+            display: none;
         }
     }
 
