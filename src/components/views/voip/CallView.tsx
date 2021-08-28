@@ -332,10 +332,7 @@ export default class CallView extends React.Component<IProps, IState> {
     };
 
     private onHangupClick = (): void => {
-        dis.dispatch({
-            action: 'hangup',
-            room_id: CallHandler.instance.roomIdForCall(this.props.call),
-        });
+        CallHandler.instance.hangupOrReject(CallHandler.instance.roomIdForCall(this.props.call));
     };
 
     private onToggleSidebar = (): void => {

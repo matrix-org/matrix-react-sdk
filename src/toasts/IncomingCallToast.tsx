@@ -22,7 +22,6 @@ import { CallType, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import classNames from 'classnames';
 import { replaceableComponent } from '../utils/replaceableComponent';
 import CallHandler, { CallHandlerEvent } from '../CallHandler';
-import dis from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import { _t } from '../languageHandler';
 import RoomAvatar from '../components/views/avatars/RoomAvatar';
@@ -68,10 +67,7 @@ export default class IncomingCallToast extends React.Component<IProps, IState> {
 
     private onRejectClick= (e: React.MouseEvent): void => {
         e.stopPropagation();
-        dis.dispatch({
-            action: 'reject',
-            room_id: CallHandler.instance.roomIdForCall(this.props.call),
-        });
+        CallHandler.instance.hangupOrReject(CallHandler.instance.roomIdForCall(this.props.call), true);
     };
 
     private onSilenceClick = (e: React.MouseEvent): void => {

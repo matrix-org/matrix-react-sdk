@@ -65,7 +65,6 @@ import SettingsStore from './settings/SettingsStore';
 import { Jitsi } from "./widgets/Jitsi";
 import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
-import { ActionPayload } from "./dispatcher/payloads";
 import { base32 } from "rfc4648";
 
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
@@ -146,7 +145,6 @@ export default class CallHandler extends EventEmitter {
     // call with a different party to this one.
     private transferees = new Map<string, MatrixCall>(); // callId (target) -> call (transferee)
     private audioPromises = new Map<AudioID, Promise<void>>();
-    private dispatcherRef: string = null;
     private supportsPstnProtocol = null;
     private pstnSupportPrefixed = null; // True if the server only support the prefixed pstn protocol
     private supportsSipNativeVirtual = null; // im.vector.protocol.sip_virtual and im.vector.protocol.sip_native
@@ -191,7 +189,6 @@ export default class CallHandler extends EventEmitter {
     }
 
     start() {
-        this.dispatcherRef = dis.register(this.onAction);
         // add empty handlers for media actions, otherwise the media keys
         // end up causing the audio elements with our ring/ringback etc
         // audio clips in to play.
@@ -215,10 +212,6 @@ export default class CallHandler extends EventEmitter {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener('Call.incoming', this.onCallIncoming);
-        }
-        if (this.dispatcherRef !== null) {
-            dis.unregister(this.dispatcherRef);
-            this.dispatcherRef = null;
         }
     }
 
@@ -848,25 +841,22 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    private onAction = (payload: ActionPayload) => {
-        switch (payload.action) {
-            case 'hangup':
-            case 'reject':
-                this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);
+    public hangupOrReject(roomId: string, reject?: boolean): void {
+        const call = this.calls.get(roomId);
 
-                if (!this.calls.get(payload.room_id)) {
-                    return; // no call to hangup
-                }
-                if (payload.action === 'reject') {
-                    this.calls.get(payload.room_id).reject();
-                } else {
-                    this.calls.get(payload.room_id).hangup(CallErrorCode.UserHangup, false);
-                }
-                // don't remove the call yet: let the hangup event handler do it (otherwise it will throw
-                // the hangup event away)
-                break;
+        // no call to hangup
+        if (!call) return;
+
+        this.stopRingingIfPossible(call.callId);
+
+        if (reject) {
+            call.reject();
+        } else {
+            call.hangup(CallErrorCode.UserHangup, false);
         }
-    };
+        // don't remove the call yet: let the hangup event handler do it (otherwise it will throw
+        // the hangup event away)
+    }
 
     public answerCall(roomId: string): void {
         const call = this.calls.get(roomId);
