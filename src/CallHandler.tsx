@@ -832,28 +832,17 @@ export default class CallHandler extends EventEmitter {
             Modal.createTrackedDialog('Call Handler', 'Cannot place call with self', ErrorDialog, {
                 description: _t('You cannot place a call with yourself.'),
             });
-            return;
         } else if (members.length === 2) {
             console.info(`Place ${type} call in ${roomId}`);
 
             this.placeMatrixCall(roomId, type, transferee);
         } else { // > 2
-            dis.dispatch({
-                action: "place_conference_call",
-                room_id: roomId,
-                type: type,
-            });
+            this.placeJitsiCall(roomId, type);
         }
     }
 
     private onAction = (payload: ActionPayload) => {
         switch (payload.action) {
-            case 'place_conference_call':
-                console.info("Place conference call in " + payload.room_id);
-                Analytics.trackEvent('voip', 'placeConferenceCall');
-                CountlyAnalytics.instance.trackStartCall(payload.room_id, payload.type === CallType.Video, true);
-                this.startCallApp(payload.room_id, payload.type);
-                break;
             case 'end_conference':
                 console.info("Terminating conference call in " + payload.room_id);
                 this.terminateCallApp(payload.room_id);
@@ -1024,7 +1013,11 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
-    private async startCallApp(roomId: string, type: string) {
+    private async placeJitsiCall(roomId: string, type: string) {
+        console.info("Place conference call in " + roomId);
+        Analytics.trackEvent('voip', 'placeConferenceCall');
+        CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, true);
+
         dis.dispatch({
             action: 'appsDrawer',
             show: true,
