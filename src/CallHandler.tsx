@@ -17,43 +17,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/*
- * Manages a list of all the currently active calls.
- *
- * This handler dispatches when voip calls are added/updated/removed from this list:
- * {
- *   action: 'call_state'
- *   room_id: <room ID of the call>
- * }
- *
- * To know the state of the call, this handler exposes a getter to
- * obtain the call for a room:
- *   var call = CallHandler.getCall(roomId)
- *   var state = call.call_state; // ringing|ringback|connected|ended|busy|stop_ringback|stop_ringing
- *
- * This handler listens for and handles the following actions:
- * {
- *   action: 'place_call',
- *   type: 'voice|video',
- *   room_id: <room that the place call button was pressed in>
- * }
- *
- * {
- *   action: 'incoming_call'
- *   call: MatrixCall
- * }
- *
- * {
- *   action: 'hangup'
- *   room_id: <room that the hangup button was pressed in>
- * }
- *
- * {
- *   action: 'answer'
- *   room_id: <room that the answer button was pressed in>
- * }
- */
-
 import React from 'react';
 
 import { MatrixClientPeg } from './MatrixClientPeg';
@@ -139,6 +102,11 @@ export enum CallHandlerEvent {
     CallState = "call_state",
 }
 
+/**
+ * CallHandler manages all currently active calls. It should be used for
+ * placing, answering, rejecting and hanging up calls. It also handles ringing,
+ * PSTN support and other things.
+ */
 export default class CallHandler extends EventEmitter {
     private calls = new Map<string, MatrixCall>(); // roomId -> call
     // Calls started as an attended transfer, ie. with the intention of transferring another
