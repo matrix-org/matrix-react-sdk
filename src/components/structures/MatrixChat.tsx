@@ -99,6 +99,7 @@ import ForgotPassword from "./auth/ForgotPassword";
 import E2eSetup from "./auth/E2eSetup";
 import Registration from './auth/Registration';
 import Login from "./auth/Login";
+import AutoLogin from "./auth/AutoLogin";
 import ErrorBoundary from '../views/elements/ErrorBoundary';
 import VerificationRequestToast from '../views/toasts/VerificationRequestToast';
 
@@ -118,6 +119,9 @@ export enum Views {
 
     // we are showing the welcome view
     WELCOME,
+
+    // we are showing the auto-login view
+    AUTO_LOGIN,
 
     // we are showing the login view
     LOGIN,
@@ -621,6 +625,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 this.viewLogin();
                 break;
+            case 'auto_login':
+                this.viewAutoLogin();
+                break;
             case 'start_password_recovery':
                 this.setStateForNewView({
                     view: Views.FORGOT_PASSWORD,
@@ -999,6 +1006,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.notifyNewScreen('welcome');
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
+    }
+
+    private viewAutoLogin(otherState?: any) {
+        this.setStateForNewView({
+            view: Views.AUTO_LOGIN,
+            ...otherState,
+        });
+        this.notifyNewScreen('auto_login');
     }
 
     private viewLogin(otherState?: any) {
@@ -1646,7 +1661,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        if (screen === 'register') {
+        if (screen === 'auto_login') {
+            dis.dispatch({
+                action: 'auto_login',
+                params: params,
+            });
+        } else if (screen === 'register') {
             dis.dispatch({
                 action: 'start_registration',
                 params: params,
@@ -2096,6 +2116,22 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     {...this.getServerProperties()}
                 />
             );
+        } else if (this.state.view === Views.AUTO_LOGIN) {
+            const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
+            view = (
+                <AutoLogin
+                    isSyncing={this.state.pendingInitialSync}
+                    onLoggedIn={this.onUserCompletedLoginFlow}
+                    onRegisterClick={this.onRegisterClick}
+                    fallbackHsUrl={this.getFallbackHsUrl()}
+                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                    onForgotPasswordClick={showPasswordReset ? this.onForgotPasswordClick : undefined}
+                    onServerConfigChange={this.onServerConfigChange}
+                    fragmentAfterLogin={fragmentAfterLogin}
+                    defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
+                    {...this.getServerProperties()}
+                />
+            )
         } else if (this.state.view === Views.LOGIN) {
             const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
             view = (
