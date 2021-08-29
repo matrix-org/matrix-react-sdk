@@ -2117,7 +2117,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             );
         } else if (this.state.view === Views.AUTO_LOGIN) {
             const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
-            const autoLogin = { type_: "AutoLoginData", username: "test1", password: "a;sldkfjgh" }
+
+            // Get creds from url params.
+            const username = this.props.startingFragmentQueryParams.username;
+            const password = this.props.startingFragmentQueryParams.password;
+            const autoLogin = { type_: "AutoLoginData", username: username, password: password };
+
             view = (
                 <Login
                     autoLogin={autoLogin}

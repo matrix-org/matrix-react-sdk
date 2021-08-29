@@ -155,8 +155,14 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     }
 
     componentDidMount() {
+        // TODO: If user manually change URL to /auto_login,
+        //       after having landed on /login before,
+        //       the following init code won't be called again.
+        //       Maybe present an error hint to the user.
         if (this.props.autoLogin.type_ === "AutoLoginData") {
-            this.onPasswordLogin( "test0", "", "", "a;sldkfjgh" );
+            this.onPasswordLogin(
+                this.props.autoLogin.username, "", "", this.props.autoLogin.password
+            );
         }
     }
 
