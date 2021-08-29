@@ -99,7 +99,6 @@ import ForgotPassword from "./auth/ForgotPassword";
 import E2eSetup from "./auth/E2eSetup";
 import Registration from './auth/Registration';
 import Login from "./auth/Login";
-import AutoLogin from "./auth/AutoLogin";
 import ErrorBoundary from '../views/elements/ErrorBoundary';
 import VerificationRequestToast from '../views/toasts/VerificationRequestToast';
 
@@ -2118,8 +2117,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             );
         } else if (this.state.view === Views.AUTO_LOGIN) {
             const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
+            const autoLogin = { type_: "AutoLoginData", username: "test1", password: "a;sldkfjgh" }
             view = (
-                <AutoLogin
+                <Login
+                    autoLogin={autoLogin}
                     isSyncing={this.state.pendingInitialSync}
                     onLoggedIn={this.onUserCompletedLoginFlow}
                     onRegisterClick={this.onRegisterClick}
@@ -2134,8 +2135,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             )
         } else if (this.state.view === Views.LOGIN) {
             const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
+            const noAutoLogin = { type_: "NoAutoLogin" }
             view = (
                 <Login
+                    autoLogin={noAutoLogin}
                     isSyncing={this.state.pendingInitialSync}
                     onLoggedIn={this.onUserCompletedLoginFlow}
                     onRegisterClick={this.onRegisterClick}

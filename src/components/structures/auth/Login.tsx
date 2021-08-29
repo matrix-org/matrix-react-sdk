@@ -49,7 +49,12 @@ _td("Invalid base_url for m.identity_server");
 _td("Identity server URL does not appear to be a valid identity server");
 _td("General failure");
 
+interface AutoLoginData { type_: "AutoLoginData", username: string, password: string }
+interface NoAutoLogin { type_: "NoAutoLogin" }
+
 interface IProps {
+    autoLogin: AutoLoginData | NoAutoLogin
+    
     serverConfig: ValidatedServerConfig;
     // If true, the component will consider itself busy.
     busy?: boolean;
@@ -147,6 +152,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     // eslint-disable-next-line
     UNSAFE_componentWillMount() {
         this.initLoginLogic(this.props.serverConfig);
+    }
+
+    componentDidMount() {
+        if (this.props.autoLogin.type_ === "AutoLoginData") {
+            this.onPasswordLogin( "test0", "", "", "a;sldkfjgh" );
+        }
     }
 
     componentWillUnmount() {
@@ -593,24 +604,31 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             );
         }
 
-        return (
-            <AuthPage>
-                <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
-                <AuthBody>
-                    <h2>
-                        { _t('Sign in') }
-                        { loader }
-                    </h2>
-                    { errorTextSection }
-                    { serverDeadSection }
-                    <ServerPicker
-                        serverConfig={this.props.serverConfig}
-                        onServerConfigChange={this.props.onServerConfigChange}
-                    />
-                    { this.renderLoginComponentForFlows() }
-                    { footer }
-                </AuthBody>
-            </AuthPage>
-        );
+        if (this.props.autoLogin.type_ === "AutoLoginData") {
+            return (
+                <p>Auto-login in progress with credentials: </p>
+            )
+        }
+        else if (this.props.autoLogin.type_ === "NoAutoLogin") {
+            return (
+                <AuthPage>
+                    <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
+                    <AuthBody>
+                        <h2>
+                            { _t('Sign in') }
+                            { loader }
+                        </h2>
+                        { errorTextSection }
+                        { serverDeadSection }
+                        <ServerPicker
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.props.onServerConfigChange}
+                        />
+                        { this.renderLoginComponentForFlows() }
+                        { footer }
+                    </AuthBody>
+                </AuthPage>
+            );
+        }
     }
 }
