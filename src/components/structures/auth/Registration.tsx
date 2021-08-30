@@ -37,7 +37,12 @@ import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
 
+interface AutoRegisterData { type_: "AutoRegisterData", username: string, password: string }
+interface NoAutoRegister { type_: "NoAutoRegister" }
+
 interface IProps {
+    autoRegister: AutoRegisterData | NoAutoRegister
+    
     serverConfig: ValidatedServerConfig;
     defaultDeviceDisplayName: string;
     email?: string;
@@ -137,6 +142,19 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
+        // Auto-register?
+        if (this.props.autoRegister.type_ === "AutoRegisterData") {
+            // TODO: Is async stuff needed here,
+            //       like in ../../views/RegistrationForm?
+            this.onFormSubmit({
+                username: this.props.autoRegister.username,
+                password: this.props.autoRegister.password,
+                email: "",
+                phoneCountry: "",
+                phoneNumber: "",
+            });
+        }
+
         this.replaceClient(this.props.serverConfig);
     }
 

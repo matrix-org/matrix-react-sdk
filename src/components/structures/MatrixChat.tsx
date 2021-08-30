@@ -125,6 +125,9 @@ export enum Views {
     // we are showing the login view
     LOGIN,
 
+    // we are showing the auto-registration view
+    AUTO_REGISTER,
+
     // we are showing the registration view
     REGISTER,
 
@@ -603,6 +606,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'require_registration':
                 startAnyRegistrationFlow(payload);
                 break;
+            case 'auto_registration':
+                // TODO: Handle soft logout and screenAfterLogin?
+                if (Lifecycle.isSoftLogout()) {
+                    this.onSoftLogout();
+                    break;
+                }
+                // This starts the full registration flow
+                if (payload.screenAfterLogin) {
+                    this.screenAfterLogin = payload.screenAfterLogin;
+                }
+                this.startRegistration(payload.params || {}, true);
+                break;
             case 'start_registration':
                 if (Lifecycle.isSoftLogout()) {
                     this.onSoftLogout();
@@ -612,7 +627,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (payload.screenAfterLogin) {
                     this.screenAfterLogin = payload.screenAfterLogin;
                 }
-                this.startRegistration(payload.params || {});
+                this.startRegistration(payload.params || {}, false);
+                break;
+            case 'auto_login':
+                // TODO: Handle soft logout and screenAfterLogin?
+                this.viewAutoLogin();
                 break;
             case 'start_login':
                 if (Lifecycle.isSoftLogout()) {
@@ -623,9 +642,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.screenAfterLogin = payload.screenAfterLogin;
                 }
                 this.viewLogin();
-                break;
-            case 'auto_login':
-                this.viewAutoLogin();
                 break;
             case 'start_password_recovery':
                 this.setStateForNewView({
@@ -852,9 +868,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
     }
 
-    private async startRegistration(params: {[key: string]: string}) {
+    private async startRegistration(params: {[key: string]: string}, isAutoRegister: boolean) {
         const newState: Partial<IState> = {
-            view: Views.REGISTER,
+            view: isAutoRegister ? Views.AUTO_REGISTER : Views.REGISTER,
         };
 
         // Only honour params if they are all present, otherwise we reset
@@ -877,7 +893,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setStateForNewView(newState);
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
-        this.notifyNewScreen('register');
+        this.notifyNewScreen(isAutoRegister ? 'auto_register' : 'register');
     }
 
     // switch view to the given room
@@ -1660,17 +1676,24 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        if (screen === 'auto_login') {
+        if (screen === 'auto_register') {
             dis.dispatch({
-                action: 'auto_login',
+                action: 'auto_registration',
                 params: params,
             });
+            // TODO: Performance monitor?
         } else if (screen === 'register') {
             dis.dispatch({
                 action: 'start_registration',
                 params: params,
             });
             PerformanceMonitor.instance.start(PerformanceEntryNames.REGISTER);
+        } else if (screen === 'auto_login') {
+            dis.dispatch({
+                action: 'auto_login',
+                params: params,
+            });
+            // TODO: Performance monitor?
         } else if (screen === 'login') {
             dis.dispatch({
                 action: 'start_login',
@@ -2088,10 +2111,42 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
         } else if (this.state.view === Views.WELCOME) {
             view = <Welcome />;
-        } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
+        } else if (this.state.view === Views.AUTO_REGISTER) {
             const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
+
+            // Get auto-register creds from URL params.
+            const username = this.props.startingFragmentQueryParams.username;
+            const password = this.props.startingFragmentQueryParams.password;
+            const autoRegister = {
+                type_: "AutoRegisterData",
+                username: username,
+                password: password
+            };
+
             view = (
                 <Registration
+                    autoRegister={autoRegister}
+                    clientSecret={this.state.register_client_secret}
+                    sessionId={this.state.register_session_id}
+                    idSid={this.state.register_id_sid}
+                    email={email}
+                    brand={this.props.config.brand}
+                    makeRegistrationUrl={this.makeRegistrationUrl}
+                    onLoggedIn={this.onRegisterFlowComplete}
+                    onLoginClick={this.onLoginClick}
+                    onServerConfigChange={this.onServerConfigChange}
+                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                    fragmentAfterLogin={fragmentAfterLogin}
+                    {...this.getServerProperties()}
+                />
+            );
+
+        } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
+            const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
+            const noAutoRegister = { type_: "NoAutoRegister" }
+            view = (
+                <Registration
+                    autoRegister={noAutoRegister}
                     clientSecret={this.state.register_client_secret}
                     sessionId={this.state.register_session_id}
                     idSid={this.state.register_id_sid}
@@ -2118,7 +2173,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (this.state.view === Views.AUTO_LOGIN) {
             const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
 
-            // Get creds from url params.
+            // Get auto-login creds from url params.
             const username = this.props.startingFragmentQueryParams.username;
             const password = this.props.startingFragmentQueryParams.password;
             const autoLogin = { type_: "AutoLoginData", username: username, password: password };
