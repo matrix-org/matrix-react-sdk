@@ -31,6 +31,7 @@ import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CountryDropdown from "./CountryDropdown";
+import InfoDialog from "../dialogs/InfoDialog";
 
 enum RegistrationField {
     Email = "field_email",
@@ -150,16 +151,22 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             email: !!email,
         });
 
-        // If auto-registering, password is randomly generated.
-        // If not, password is input from the form field.
-        let password;
         if (this.props.autoRegister.type_ === "AutoRegisterData") {
             // TODO: Generate random pw, of cos!
-            password = "a;sldkfjgh";
-        } else if (this.props.autoRegister.type_ === "NoAutoRegister") {
-            password = this.state.password.trim();
-        }
+            let password = "a;sldkfjgh";
 
+            // TODO: Write the callback after user has confirmed they have saved the link.
+            Modal.createDialog( InfoDialog, {
+                title: "Final Step!",
+                description: "Bookmark the link!!",
+                onFinished: () => this.register(ev, password, email)
+            });
+        } else if (this.props.autoRegister.type_ === "NoAutoRegister") {
+            this.register(ev, this.state.password.trim(), email);
+        }
+    }
+
+    private register(ev, password: string, email:string) {
         const promise = this.props.onRegisterClick({
             username: this.state.username.trim(),
             password: password,
