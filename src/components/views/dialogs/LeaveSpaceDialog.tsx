@@ -91,6 +91,9 @@ const LeaveRoomsPicker = ({ space, spaceChildren, roomsToLeave, setRoomsToLeave 
     }, [setRoomsToLeave, state, spaceChildren]);
 
     return <div className="mx_LeaveSpaceDialog_section">
+        <p>
+            { _t("What should happen to the rooms and child spaces of this space?") }
+        </p>
         <StyledRadioGroup
             name="roomsToLeave"
             value={state}
@@ -98,7 +101,7 @@ const LeaveRoomsPicker = ({ space, spaceChildren, roomsToLeave, setRoomsToLeave 
             definitions={[
                 {
                     value: RoomsToLeave.None,
-                    label: _t("Don't leave any"),
+                    label: _t("Leave space, but not rooms or child spaces"),
                 }, {
                     value: RoomsToLeave.All,
                     label: _t("Leave all rooms and spaces"),
