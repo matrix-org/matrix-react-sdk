@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630077226920,
+  "lastUpdate": 1630339388446,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20444,6 +20444,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4221.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a5ccd690a659e55b6d6b7d9f5e874a5c657f2456",
+          "message": "Merge pull request #6708 from SimonBrandner/fix/ml-filter-load\n\nFilter members on `MemberList` load",
+          "timestamp": "2021-08-30T09:57:22-06:00",
+          "tree_id": "cddb42ad59bd5c9ca45b65cf1d5be8a98fe8e45d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a5ccd690a659e55b6d6b7d9f5e874a5c657f2456"
+        },
+        "date": 1630339386433,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4598.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 955.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1622.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4282.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
