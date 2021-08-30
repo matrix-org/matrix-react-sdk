@@ -43,6 +43,8 @@ enum RegistrationField {
 export const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from offline slow-hash scenario.
 
 interface IProps {
+    autoRegister: AutoRegister
+
     // Values pre-filled in the input boxes when the component loads
     defaultEmail?: string;
     defaultPhoneCountry?: string;
@@ -148,9 +150,19 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             email: !!email,
         });
 
+        // If auto-registering, password is randomly generated.
+        // If not, password is input from the form field.
+        let password;
+        if (this.props.autoRegister.type_ === "AutoRegisterData") {
+            // TODO: Generate random pw, of cos!
+            password = "a;sldkfjgh";
+        } else if (this.props.autoRegister.type_ === "NoAutoRegister") {
+            password = this.state.password.trim();
+        }
+
         const promise = this.props.onRegisterClick({
             username: this.state.username.trim(),
-            password: this.state.password.trim(),
+            password: password,
             email: email,
             phoneCountry: this.state.phoneCountry,
             phoneNumber: this.state.phoneNumber,
@@ -533,16 +545,26 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             }
         }
 
+        // If auto-register, no password field is needed.
+        let optionalPasswordRow;
+        if (this.props.autoRegister.type_ === "AutoRegisterData") {
+            optionalPasswordRow = null;
+        } else if (this.props.autoRegister.type_ === "NoAutoRegister") {
+            optionalPasswordRow = (
+                <div className="mx_AuthBody_fieldRow">
+                    { this.renderPassword() }
+                    { this.renderPasswordConfirm() }
+                </div>
+            )
+        }
+
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
                     <div className="mx_AuthBody_fieldRow">
                         { this.renderUsername() }
                     </div>
-                    <div className="mx_AuthBody_fieldRow">
-                        { this.renderPassword() }
-                        { this.renderPasswordConfirm() }
-                    </div>
+                    { optionalPasswordRow }
                     <div className="mx_AuthBody_fieldRow">
                         { this.renderEmail() }
                         { this.renderPhoneNumber() }

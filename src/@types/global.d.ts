@@ -203,6 +203,11 @@ declare global {
               ) => string;
               isReady: () => boolean;
           };
+
+    interface AutoRegisterData { type_: "AutoRegisterData", username: string, password: string }
+    interface NoAutoRegister { type_: "NoAutoRegister" }
+    type AutoRegister = AutoRegisterData | NoAutoRegister
 }
+
 
 /* eslint-enable @typescript-eslint/naming-convention */

@@ -37,11 +37,8 @@ import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
 
-interface AutoRegisterData { type_: "AutoRegisterData", username: string, password: string }
-interface NoAutoRegister { type_: "NoAutoRegister" }
-
 interface IProps {
-    autoRegister: AutoRegisterData | NoAutoRegister
+    autoRegister: AutoRegister
     
     serverConfig: ValidatedServerConfig;
     defaultDeviceDisplayName: string;
@@ -142,19 +139,6 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
-        // Auto-register?
-        if (this.props.autoRegister.type_ === "AutoRegisterData") {
-            // TODO: Is async stuff needed here,
-            //       like in ../../views/RegistrationForm?
-            this.onFormSubmit({
-                username: this.props.autoRegister.username,
-                password: this.props.autoRegister.password,
-                email: "",
-                phoneCountry: "",
-                phoneNumber: "",
-            });
-        }
-
         this.replaceClient(this.props.serverConfig);
     }
 
@@ -514,6 +498,7 @@ export default class Registration extends React.Component<IProps, IState> {
             return <React.Fragment>
                 { ssoSection }
                 <RegistrationForm
+                    autoRegister={this.props.autoRegister}
                     defaultUsername={this.state.formVals.username}
                     defaultEmail={this.state.formVals.email}
                     defaultPhoneCountry={this.state.formVals.phoneCountry}
@@ -612,20 +597,56 @@ export default class Registration extends React.Component<IProps, IState> {
                 { regDoneText }
             </div>;
         } else {
-            body = <div>
-                <h2>{ _t('Create account') }</h2>
-                { errorText }
-                { serverDeadSection }
+            let intro;
+            if (this.props.autoRegister.type_ === "AutoRegisterData") {
+                intro = (
+                    <div>
+                        <h2>Auto Register!</h2>
+                        <p>
+                            Create an account just by choosing a username.<br />
+                            Leave the rest to us!
+                        </p>
+                    </div>
+                );
+            } else if (this.props.autoRegister.type_ === "NoAutoRegister" ) {
+                intro = <h2>{ _t('Create account') }</h2>
+            }
+
+            const serverPicker = (
                 <ServerPicker
                     title={_t("Host account on")}
                     dialogTitle={_t("Decide where your account is hosted")}
                     serverConfig={this.props.serverConfig}
-                    onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
+                    onServerConfigChange=
+                        {this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
                 />
-                { this.renderRegisterComponent() }
-                { goBack }
-                { signIn }
-            </div>;
+            );
+
+            if (this.props.autoRegister.type_ === "AutoRegisterData") {
+                // Auto-register emphasizes simplicity during onboarding,
+                // So homeserver picker appears later.
+                body = (
+                    <div>
+                        { intro }
+                        { errorText }
+                        { serverDeadSection }
+                        { this.renderRegisterComponent() }
+                        { serverPicker }
+                        { goBack }
+                        { signIn }
+                    </div>
+                )
+            } else if (this.props.autoRegister.type_ === "NoAutoRegister" ) {
+                body = <div>
+                    { intro }
+                    { errorText }
+                    { serverDeadSection }
+                    { serverPicker }
+                    { this.renderRegisterComponent() }
+                    { goBack }
+                    { signIn }
+                </div>;
+            }
         }
 
         return (
