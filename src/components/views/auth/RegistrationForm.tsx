@@ -32,6 +32,7 @@ import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDia
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CountryDropdown from "./CountryDropdown";
 import InfoDialog from "../dialogs/InfoDialog";
+import PasswordWordlist from "../../../PasswordWordlist"
 
 enum RegistrationField {
     Email = "field_email",
@@ -153,6 +154,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
         if (this.props.autoRegister.type_ === "AutoRegisterData") {
             // TODO: Generate random pw, of cos!
+            console.log( "logging in comp!", PasswordWordlist.words );
             let password = "a;sldkfjgh";
 
             // TODO: Write the callback after user has confirmed they have saved the link.
