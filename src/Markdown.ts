@@ -80,12 +80,30 @@ export default class Markdown {
     isPlainText(): boolean {
         const walker = this.parsed.walker();
 
+        let emptyItemWithNoSiblings = (node: Node) => {
+            return !node.prev && !node.next && !node.firstChild
+        }
+
         let ev;
         while ( (ev = walker.next()) ) {
             const node = ev.node;
             if (TEXT_NODES.indexOf(node.type) > -1) {
                 // definitely text
                 continue;
+            } else if (node.type == 'list' || node.type == 'item') {
+                // Special handling for inputs like `+`, `*`, `-` and `2021.` which
+                // would otherwise be treated as a list of a single empty item.
+                // See https://github.com/vector-im/element-web/issues/7631
+                if (node.type == 'list' && emptyItemWithNoSiblings(node.firstChild)) {
+                    // A list with a single empty item is treated as plain text.
+                    continue;
+                } else if (node.type == 'item' && emptyItemWithNoSiblings(node)) {
+                    // An empty list item with no sibling items is treated as plain text.
+                    continue;
+                } else {
+                    // Everything else is actual lists and therefore not plaintext.
+                    return false;
+                }
             } else if (node.type == 'html_inline' || node.type == 'html_block') {
                 // if it's an allowed html tag, we need to render it and therefore
                 // we will need to use HTML. If it's not allowed, it's not HTML since
@@ -97,6 +115,7 @@ export default class Markdown {
                 return false;
             }
         }
+
         return true;
     }
 
