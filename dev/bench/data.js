@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630424460456,
+  "lastUpdate": 1630425609495,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20636,6 +20636,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4266.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e0363ddee5ddadc824dc84fcf2532fc78eff9899",
+          "message": "Merge pull request #6713 from matrix-org/t3chguy/fix/18737\n\nFix membership updates to Spaces not applying in real-time",
+          "timestamp": "2021-08-31T16:54:02+01:00",
+          "tree_id": "5282c7feb76c51bbf3ae58f0b5bf14f273948b20",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e0363ddee5ddadc824dc84fcf2532fc78eff9899"
+        },
+        "date": 1630425607323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4871.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 932.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1842.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4466.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
