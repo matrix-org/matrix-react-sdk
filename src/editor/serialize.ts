@@ -23,9 +23,14 @@ import SettingsStore from '../settings/SettingsStore';
 import SdkConfig from '../SdkConfig';
 import cheerio from 'cheerio';
 import { Type } from './parts';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import { EMOTICON_TO_EMOJI } from "../emoji";
+
+// matches emoticons which follow the start of a line or whitespace
+const REGEX_EMOTICON_WHITESPACE = new RegExp("(?<=^|\\s)("+ EMOTICON_REGEX.source +")(?=\\s|$)", "g");
 
 export function mdSerialize(model: EditorModel): string {
-    return model.parts.reduce((html, part) => {
+    const md = model.parts.reduce((html, part) => {
         switch (part.type) {
             case Type.Newline:
                 return html + "\n";
@@ -44,6 +49,8 @@ export function mdSerialize(model: EditorModel): string {
                     `[${part.text.replace(/[[\\\]]/g, c => "\\" + c)}](${makeGenericPermalink(part.resourceId)})`;
         }
     }, "");
+
+    return replaceEmoticonsIfNeeded(md);
 }
 
 export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } = {}): string {
@@ -158,7 +165,7 @@ export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } 
 }
 
 export function textSerialize(model: EditorModel): string {
-    return model.parts.reduce((text, part) => {
+    const text = model.parts.reduce((text, part) => {
         switch (part.type) {
             case Type.Newline:
                 return text + "\n";
@@ -175,6 +182,8 @@ export function textSerialize(model: EditorModel): string {
                 return text + `${part.text}`;
         }
     }, "");
+
+    return replaceEmoticonsIfNeeded(text);
 }
 
 export function containsEmote(model: EditorModel): boolean {
@@ -216,4 +225,13 @@ export function unescapeMessage(model: EditorModel): EditorModel {
         }
     }
     return model;
+}
+
+export function replaceEmoticonsIfNeeded(str: string): string {
+    if (!SettingsStore.getValue("MessageComposerInput.autoReplaceEmoji")) return str;
+
+    return str.replace(REGEX_EMOTICON_WHITESPACE, (substring: string) => {
+        // Try both exact match and lower-case, this means that xd won't match xD but :P will match :p
+        return (EMOTICON_TO_EMOJI.get(substring) || EMOTICON_TO_EMOJI.get(substring.toLowerCase()))?.unicode;
+    });
 }
