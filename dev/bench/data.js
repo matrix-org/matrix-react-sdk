@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630423308782,
+  "lastUpdate": 1630424460456,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20588,6 +20588,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3952.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4e1e30461682c09434fd712f45472d7f9fb4d920",
+          "message": "Merge pull request #6698 from SimonBrandner/fix/space-invite-dialog/18745",
+          "timestamp": "2021-08-31T16:35:36+01:00",
+          "tree_id": "3f61f6a969d0b2083607931e7b54eef04c49198a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4e1e30461682c09434fd712f45472d7f9fb4d920"
+        },
+        "date": 1630424458221,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4395.3000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 859.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1610.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4266.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
