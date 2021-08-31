@@ -306,8 +306,8 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             if (this.props.isThreadExpanded !== undefined && ReplyThread.hasThreadReply(this.props.mxEvent)) {
                 const expandClassName = classNames({
                     'mx_MessageActionBar_maskButton': true,
-                    'mx_MessageActionBar_expandMessageButton': this.props.isThreadExpanded === true,
-                    'mx_MessageActionBar_collapseMessageButton': this.props.isThreadExpanded === false,
+                    'mx_MessageActionBar_expandMessageButton': !this.props.isThreadExpanded,
+                    'mx_MessageActionBar_collapseMessageButton': this.props.isThreadExpanded,
                 });
                 toolbarOpts.push(<RovingAccessibleTooltipButton
                     className={expandClassName}
