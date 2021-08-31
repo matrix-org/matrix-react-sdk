@@ -27,6 +27,7 @@ import AutocompleteWrapperModel, {
 import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
+import SettingsStore from "../settings/SettingsStore";
 
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Command | Type.PillCandidate;
@@ -568,7 +569,9 @@ export class PartCreator {
         userId: string,
     ): [UserPillPart, PlainPart] {
         const pill = this.userPill(displayName, userId);
-        const postfix = this.plain(insertTrailingCharacter ? ": " : " ");
+        const postfix = this.plain(
+            insertTrailingCharacter && SettingsStore.getValue("MessageComposerInput.insertTrailingComma") ? ": " : " ",
+        );
         return [pill, postfix];
     }
 }
