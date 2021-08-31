@@ -18,7 +18,6 @@ import classNames from 'classnames';
 import React, { createRef, ClipboardEvent } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
@@ -37,7 +36,6 @@ import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { Key } from "../../../Keyboard";
-import { EMOTICON_TO_EMOJI } from "../../../emoji";
 import { CommandCategories, CommandMap, parseCommandString } from "../../../SlashCommands";
 import Range from "../../../editor/range";
 import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar";
@@ -48,9 +46,6 @@ import DocumentPosition from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-// matches emoticons which follow the start of a line or whitespace
-const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
 
 const IS_MAC = navigator.platform.indexOf("Mac") !== -1;
 
@@ -123,7 +118,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private lastCaret: DocumentOffset;
     private lastSelection: ReturnType<typeof cloneSelection>;
 
-    private readonly emoticonSettingHandle: string;
     private readonly shouldShowPillAvatarSettingHandle: string;
     private readonly surroundWithHandle: string;
     private readonly historyManager = new HistoryManager();
@@ -136,9 +130,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             showVisualBell: false,
         };
 
-        this.emoticonSettingHandle = SettingsStore.watchSetting('MessageComposerInput.autoReplaceEmoji', null,
-            this.configureEmoticonAutoReplace);
-        this.configureEmoticonAutoReplace();
         this.shouldShowPillAvatarSettingHandle = SettingsStore.watchSetting("Pill.shouldShowPillAvatar", null,
             this.configureShouldShowPillAvatar);
         this.surroundWithHandle = SettingsStore.watchSetting("MessageComposerInput.surroundWith", null,
@@ -160,38 +151,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             }
         }
     }
-
-    private replaceEmoticon = (caretPosition: DocumentPosition): number => {
-        const { model } = this.props;
-        const range = model.startRange(caretPosition);
-        // expand range max 8 characters backwards from caretPosition,
-        // as a space to look for an emoticon
-        let n = 8;
-        range.expandBackwardsWhile((index, offset) => {
-            const part = model.parts[index];
-            n -= 1;
-            return n >= 0 && (part.type === Type.Plain || part.type === Type.PillCandidate);
-        });
-        const emoticonMatch = REGEX_EMOTICON_WHITESPACE.exec(range.text);
-        if (emoticonMatch) {
-            const query = emoticonMatch[1].replace("-", "");
-            // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
-            const data = EMOTICON_TO_EMOJI.get(query) || EMOTICON_TO_EMOJI.get(query.toLowerCase());
-
-            if (data) {
-                const { partCreator } = model;
-                const hasPrecedingSpace = emoticonMatch[0][0] === " ";
-                // we need the range to only comprise of the emoticon
-                // because we'll replace the whole range with an emoji,
-                // so move the start forward to the start of the emoticon.
-                // Take + 1 because index is reported without the possible preceding space.
-                range.moveStart(emoticonMatch.index + (hasPrecedingSpace ? 1 : 0));
-                // this returns the amount of added/removed characters during the replace
-                // so the caret position can be adjusted.
-                return range.replace([partCreator.plain(data.unicode + " ")]);
-            }
-        }
-    };
 
     private updateEditorState = (selection: Caret, inputType?: string, diff?: IDiff): void => {
         renderModel(this.editorRef.current, this.props.model);
@@ -606,11 +565,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.setState({ completionIndex });
     };
 
-    private configureEmoticonAutoReplace = (): void => {
-        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
-        this.props.model.setTransformCallback(shouldReplace ? this.replaceEmoticon : null);
-    };
-
     private configureShouldShowPillAvatar = (): void => {
         const showPillAvatar = SettingsStore.getValue("Pill.shouldShowPillAvatar");
         this.setState({ showPillAvatar });
@@ -626,7 +580,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.editorRef.current.removeEventListener("input", this.onInput, true);
         this.editorRef.current.removeEventListener("compositionstart", this.onCompositionStart, true);
         this.editorRef.current.removeEventListener("compositionend", this.onCompositionEnd, true);
-        SettingsStore.unwatchSetting(this.emoticonSettingHandle);
         SettingsStore.unwatchSetting(this.shouldShowPillAvatarSettingHandle);
         SettingsStore.unwatchSetting(this.surroundWithHandle);
     }
