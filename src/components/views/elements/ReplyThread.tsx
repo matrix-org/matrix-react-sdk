@@ -357,12 +357,15 @@ export default class ReplyThread extends React.Component<IProps, IState> {
             header = <Spinner w={16} h={16} />;
         }
 
+        const { isThreadExpanded } = this.props;
         const evTiles = this.state.events.map((ev) => {
             const classname = classNames({
                 'mx_ReplyThread': true,
                 [this.getReplyThreadColorClass(ev)]: true,
-                'mx_ReplyThread--expanded': this.props.isThreadExpanded === true,
-                'mx_ReplyThread--collapsed': this.props.isThreadExpanded === false,
+                // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
+                'mx_ReplyThread--expanded': isThreadExpanded === true,
+                // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
+                'mx_ReplyThread--collapsed': isThreadExpanded === false,
             });
             return (
 
