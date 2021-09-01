@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630517496235,
+  "lastUpdate": 1630524157106,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21152,6 +21152,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4392,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bf5fe29448a2a8153cb6cc33c1f7279185a9bade",
+          "message": "Merge pull request #6695 from matrix-org/travis/keep-old-out\n\nDon't send prehistorical events to widgets during decryption at startup",
+          "timestamp": "2021-09-01T13:16:47-06:00",
+          "tree_id": "2a35f1cff3b592c48bb0197a9696bda515e711fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bf5fe29448a2a8153cb6cc33c1f7279185a9bade"
+        },
+        "date": 1630524155086,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4756.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 904,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4411.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
