@@ -39,6 +39,7 @@ import {
 import { IUpload } from "./models/IUpload";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { BlurhashEncoder } from "./BlurhashEncoder";
+import SettingsStore from "./settings/SettingsStore";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -66,6 +67,8 @@ interface IContent {
     };
     file?: string;
     url?: string;
+    // eslint-disable-next-line camelcase
+    is_attachment?: boolean;
 }
 
 interface IThumbnail {
@@ -430,14 +433,17 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient) {
+    async sendContentListToRoom(
+        files: File[], roomId: string, matrixClient: MatrixClient,
+        attachToMessage?: (ISendEventResponse) => Promise<any>,
+    ) {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
         }
 
         const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
-        if (isQuoting) {
+        if (isQuoting && !SettingsStore.getValue("feature_message_attachments")) {
             // FIXME: Using an import will result in Element crashing
             const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             const { finished } = Modal.createTrackedDialog<[boolean]>('Upload Reply Warning', '', QuestionDialog, {
@@ -506,8 +512,9 @@ export default class ContentMessages {
                     uploadAll = true;
                 }
             }
-            promBefore = this.sendContentToRoom(file, roomId, matrixClient, promBefore);
+            promBefore = this.sendContentToRoom(file, roomId, matrixClient, promBefore, Boolean(attachToMessage));
         }
+        promBefore.then(attachToMessage);
     }
 
     getCurrentUploads() {
@@ -529,7 +536,9 @@ export default class ContentMessages {
         }
     }
 
-    private sendContentToRoom(file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>) {
+    private sendContentToRoom(
+        file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>, attachment: boolean,
+    ) {
         const startTime = CountlyAnalytics.getTimestamp();
         const content: IContent = {
             body: file.name || 'Attachment',
@@ -538,6 +547,10 @@ export default class ContentMessages {
             },
             msgtype: "", // set later
         };
+
+        if (attachment) {
+            content.is_attachment = true;
+        }
 
         // if we have a mime type for the file, add it to the message metadata
         if (file.type) {

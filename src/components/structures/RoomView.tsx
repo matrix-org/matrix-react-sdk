@@ -90,6 +90,7 @@ import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/SpaceStore";
+import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -203,6 +204,7 @@ export default class RoomView extends React.Component<IProps, IState> {
     private roomView = createRef<HTMLElement>();
     private searchResultsPanel = createRef<ScrollPanel>();
     private messagePanel: TimelinePanel;
+    private messageComposer: MessageComposer;
 
     static contextType = MatrixClientContext;
 
@@ -750,10 +752,17 @@ export default class RoomView extends React.Component<IProps, IState> {
                     payload.data.content.info,
                     payload.data.description || payload.data.name);
                 break;
-            case 'picture_snapshot':
+            case 'picture_snapshot': {
+                const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.messageComposer
+                    && (!this.messageComposer.state.isComposerEmpty || this.messageComposer.props.replyToEvent)) ?
+                    (event: ISendEventResponse) => {
+                        return this.messageComposer.sendMessage(event.event_id);
+                    } : null;
                 ContentMessages.sharedInstance().sendContentListToRoom(
-                    [payload.file], this.state.room.roomId, this.context);
+                    [payload.file], this.state.room.roomId, this.context, promAfter,
+                );
                 break;
+            }
             case 'notifier_enabled':
             case Action.UploadStarted:
             case Action.UploadFinished:
@@ -1245,8 +1254,14 @@ export default class RoomView extends React.Component<IProps, IState> {
     private onDrop = ev => {
         ev.stopPropagation();
         ev.preventDefault();
+        const promAfter = (SettingsStore.getValue("feature_message_attachments") && this.messageComposer
+            && ev.dataTransfer.files.length === 1
+            && (!this.messageComposer.state.isComposerEmpty || this.messageComposer.props.replyToEvent)) ?
+            (event: ISendEventResponse) => {
+                return this.messageComposer.sendMessage(event.event_id);
+            } : null;
         ContentMessages.sharedInstance().sendContentListToRoom(
-            ev.dataTransfer.files, this.state.room.roomId, this.context,
+            ev.dataTransfer.files, this.state.room.roomId, this.context, promAfter,
         );
         dis.fire(Action.FocusSendMessageComposer);
 
@@ -1684,6 +1699,10 @@ export default class RoomView extends React.Component<IProps, IState> {
         this.messagePanel = r;
     };
 
+    private gatherMessageComposerRef = r => {
+        this.messageComposer = r;
+    };
+
     private getOldRoom() {
         const createEvent = this.state.room.currentState.getStateEvents("m.room.create", "");
         if (!createEvent || !createEvent.getContent()['predecessor']) return null;
@@ -1945,6 +1964,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         if (canSpeak) {
             messageComposer =
                 <MessageComposer
+                    ref={this.gatherMessageComposerRef}
                     room={this.state.room}
                     e2eStatus={this.state.e2eStatus}
                     resizeNotifier={this.props.resizeNotifier}

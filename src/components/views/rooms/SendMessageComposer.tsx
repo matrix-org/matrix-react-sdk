@@ -54,6 +54,8 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
+import DocumentOffset from '../../../editor/offset';
 
 function addReplyToMessageContent(
     content: IContent,
@@ -74,11 +76,25 @@ function addReplyToMessageContent(
     }
 }
 
+function addAttachmentToMessageContent(
+    content: IContent,
+    attachEventId: string,
+): void {
+    const attachContent = {
+        'm.relates_to': {
+            'rel_type': 'org.matrix.msc2881.m.attachment',
+            'event_id': attachEventId,
+        },
+    };
+    Object.assign(content, attachContent);
+}
+
 // exported for tests
 export function createMessageContent(
     model: EditorModel,
     permalinkCreator: RoomPermalinkCreator,
     replyToEvent: MatrixEvent,
+    attachEventId: string,
 ): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
@@ -95,13 +111,20 @@ export function createMessageContent(
         body: body,
     };
     const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: !!replyToEvent });
-    if (formattedBody) {
+    if (formattedBody || replyToEvent) {
         content.format = "org.matrix.custom.html";
-        content.formatted_body = formattedBody;
+        content.formatted_body = formattedBody || body;
     }
 
     if (replyToEvent) {
         addReplyToMessageContent(content, replyToEvent, permalinkCreator);
+    }
+
+    // TODO: Currently, an attachment will override a reply.
+    // This allows replying with images, but removes the reply relation from the message.
+    // When/if we get the ability to add multiple relations, this will be fixed.
+    if (attachEventId) {
+        addAttachmentToMessageContent(content, attachEventId);
     }
 
     return content;
@@ -342,9 +365,14 @@ export default class SendMessageComposer extends React.Component<IProps> {
         }
     }
 
-    public async sendMessage(): Promise<void> {
+    public async sendMessage(attachmentEventId?: string): Promise<void> {
         if (this.model.isEmpty) {
-            return;
+            if (!attachmentEventId) {
+                return;
+            }
+            // If replying with just an attachment, add empty text to model so it has at least one part.
+            // Otherwise, various functions expecting at least one part will fail.
+            this.model.update(" ", "insertText", new DocumentOffset(1, true));
         }
 
         const replyToEvent = this.props.replyToEvent;
@@ -358,6 +386,9 @@ export default class SendMessageComposer extends React.Component<IProps> {
                     content = await this.runSlashCommand(cmd, args);
                     if (replyToEvent) {
                         addReplyToMessageContent(content, replyToEvent, this.props.permalinkCreator);
+                    }
+                    if (attachmentEventId) {
+                        addAttachmentToMessageContent(content, attachmentEventId);
                     }
                 } else {
                     this.runSlashCommand(cmd, args);
@@ -400,7 +431,9 @@ export default class SendMessageComposer extends React.Component<IProps> {
             const startTime = CountlyAnalytics.getTimestamp();
             const { roomId } = this.props.room;
             if (!content) {
-                content = createMessageContent(this.model, this.props.permalinkCreator, replyToEvent);
+                content = createMessageContent(
+                    this.model, this.props.permalinkCreator, replyToEvent, attachmentEventId,
+                );
             }
             // don't bother sending an empty message
             if (!content.body.trim()) return;
@@ -519,8 +552,13 @@ export default class SendMessageComposer extends React.Component<IProps> {
         // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
+            const promAfter = (SettingsStore.getValue("feature_message_attachments")
+                && clipboardData.files.length === 1 && (!this.model.isEmpty || this.props.replyToEvent)) ?
+                (event: ISendEventResponse) => {
+                    return this.sendMessage(event.event_id);
+                } : null;
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.context,
+                Array.from(clipboardData.files), this.props.room.roomId, this.context, promAfter,
             );
             return true; // to skip internal onPaste handler
         }
