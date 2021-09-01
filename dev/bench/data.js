@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630504254865,
+  "lastUpdate": 1630508830622,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21008,6 +21008,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 954.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f19030bcfad80169d2d676db18ac71aa811a1c98",
+          "message": "Merge pull request #6723 from SimonBrandner/fix/fallback-user-image-view",
+          "timestamp": "2021-09-01T16:01:24+01:00",
+          "tree_id": "26611aaa441091d8a8668ef426a731b77d8e233d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f19030bcfad80169d2d676db18ac71aa811a1c98"
+        },
+        "date": 1630508828623,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4434,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 916.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1606.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4231.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
