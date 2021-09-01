@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630508830622,
+  "lastUpdate": 1630511076902,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21056,6 +21056,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4231.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0d2f7db6711ad4db96ade2e021bbff1f2c381915",
+          "message": "Merge pull request #6725 from matrix-org/t3chguy/fix/18797\n\nWhen creating subspaces properly set restricted join rule",
+          "timestamp": "2021-09-01T16:38:11+01:00",
+          "tree_id": "fb89b35694c643c316cf2a687f49909d42a02686",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0d2f7db6711ad4db96ade2e021bbff1f2c381915"
+        },
+        "date": 1630511074781,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4830.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 949.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1717.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4601.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
