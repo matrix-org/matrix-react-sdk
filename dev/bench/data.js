@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630503389461,
+  "lastUpdate": 1630504254865,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20972,6 +20972,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4479,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "34e9443abc666230f80d6ab1979c7271d77e5be0",
+          "message": "Merge pull request #6722 from SimonBrandner/fix/autocomplete-dir",
+          "timestamp": "2021-09-01T14:45:30+01:00",
+          "tree_id": "dcd758a1420941cc5fa59944987824a21aadd695",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/34e9443abc666230f80d6ab1979c7271d77e5be0"
+        },
+        "date": 1630504253503,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4546.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 954.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
