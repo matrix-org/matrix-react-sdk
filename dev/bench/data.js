@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630511076902,
+  "lastUpdate": 1630517496235,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21104,6 +21104,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4601.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3ed76f5de7c59271e921c5f91d32ddc159145337",
+          "message": "Merge pull request #6719 from matrix-org/travis/widgets/no-limits\n\nRemove arbitrary limits from send/receive events for widgets",
+          "timestamp": "2021-09-01T11:26:15-06:00",
+          "tree_id": "58fb325e579138065a6edb1af3d93ebd24f1c602",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3ed76f5de7c59271e921c5f91d32ddc159145337"
+        },
+        "date": 1630517494214,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4697.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 881,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1645.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4392,
             "unit": "ms",
             "extra": "type: measure"
           }
