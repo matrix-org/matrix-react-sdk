@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630524157106,
+  "lastUpdate": 1630524848349,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21200,6 +21200,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4411.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3046f0ed85704ccee3de6d5d663950fe8c72752b",
+          "message": "Merge pull request #6684 from matrix-org/travis/cross-room\n\nAdd support for MSC2762's timeline functionality",
+          "timestamp": "2021-09-01T13:28:26-06:00",
+          "tree_id": "9489f615b99d72df25602d3200f21d6cc9bacab3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3046f0ed85704ccee3de6d5d663950fe8c72752b"
+        },
+        "date": 1630524846518,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4682.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 951.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1598.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4337.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
