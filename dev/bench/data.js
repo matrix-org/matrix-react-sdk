@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630483628047,
+  "lastUpdate": 1630483689293,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -20780,6 +20780,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4254.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0fa0b60e93308e549d6e13954339b011261ad542",
+          "message": "Merge pull request #6717 from matrix-org/t3chguy/fix/18686\n\nFix EmojiPicker filtering to lower case emojibase data strings",
+          "timestamp": "2021-09-01T09:02:16+01:00",
+          "tree_id": "f08096c5ec625fe34d01e80fd8cd5bbd1fc002d9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0fa0b60e93308e549d6e13954339b011261ad542"
+        },
+        "date": 1630483687257,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4241,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 917.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1749.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4223.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
