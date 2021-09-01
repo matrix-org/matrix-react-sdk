@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630524848349,
+  "lastUpdate": 1630528429274,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21248,6 +21248,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4337.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f0cf00433b10a8990f772aaf2159b801277578f9",
+          "message": "Merge pull request #6702 from nordeck/nic/fix/even-tile-preview\n\nReplace fake username in EventTilePreview with a proper loading state",
+          "timestamp": "2021-09-01T14:28:12-06:00",
+          "tree_id": "6b9160a5cfb4e30c87bf25b6321df3ce24fcc041",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f0cf00433b10a8990f772aaf2159b801277578f9"
+        },
+        "date": 1630528426966,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4673.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 884.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1772.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4337.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
