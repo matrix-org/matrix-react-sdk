@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630529559885,
+  "lastUpdate": 1630529710622,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21344,6 +21344,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4455.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7a083946866e9f28917cc90c65c51f8cc3ad01d8",
+          "message": "Merge pull request #6707 from SimonBrandner/task/fix-actions\n\nMake GH actions clone from the correct fork and cleanup",
+          "timestamp": "2021-09-01T14:49:56-06:00",
+          "tree_id": "dbf9db59b46a27419020f994ac8bec9dcf8b20c2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7a083946866e9f28917cc90c65c51f8cc3ad01d8"
+        },
+        "date": 1630529708717,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4439,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 835.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1743,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4082.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
