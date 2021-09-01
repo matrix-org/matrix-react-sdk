@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630528429274,
+  "lastUpdate": 1630529559885,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21296,6 +21296,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4337.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5692b74b281de5bf66dab75e699a3f9c00833dcb",
+          "message": "Merge pull request #6703 from nordeck/nic/feat/invite-reason-formatting\n\nAllow to use basic html to format invite messages",
+          "timestamp": "2021-09-01T14:46:54-06:00",
+          "tree_id": "7d852bf75253a229c3a58d0e89397169dc48ccf3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5692b74b281de5bf66dab75e699a3f9c00833dcb"
+        },
+        "date": 1630529558309,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4828.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 893.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1734.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4455.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
