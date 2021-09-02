@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630601152882,
+  "lastUpdate": 1630601299811,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21584,6 +21584,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4346.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8f6d2926cffd56d5cf3b6faf0b6acb25e81588f",
+          "message": "Merge pull request #6688 from matrix-org/palid/fix/stronger-light-theme-background-blur\n\nMake stronger background blur for light theme",
+          "timestamp": "2021-09-02T18:42:58+02:00",
+          "tree_id": "c8f531747a64a219f3f6084921e63f33698e8b99",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8f6d2926cffd56d5cf3b6faf0b6acb25e81588f"
+        },
+        "date": 1630601298366,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4158.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 930.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1728.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4088.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
