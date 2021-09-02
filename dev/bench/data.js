@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630568933607,
+  "lastUpdate": 1630581748617,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21440,6 +21440,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4326.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7d74cfecdab6db7c04987ad4ce5f4ba96255557c",
+          "message": "Merge pull request #6714 from matrix-org/t3chguy/fix/18760\n\nOnly make the initial space rooms suggested by default",
+          "timestamp": "2021-09-02T12:17:14+01:00",
+          "tree_id": "c7271d65a182d6cda0be2a70dbf1ef398dc37f7f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7d74cfecdab6db7c04987ad4ce5f4ba96255557c"
+        },
+        "date": 1630581746449,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4270.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 813.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4122.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
