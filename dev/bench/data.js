@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630616889005,
+  "lastUpdate": 1630620427020,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21680,6 +21680,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4014.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1772e7e3143113784822e3ba470cf70794c76e9c",
+          "message": "Merge pull request #6734 from matrix-org/travis/widget-algo\n\nImprove performance of widget startup slightly",
+          "timestamp": "2021-09-02T16:02:11-06:00",
+          "tree_id": "d498b34b95ee31464d0bca0b14da319762a5e0ea",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1772e7e3143113784822e3ba470cf70794c76e9c"
+        },
+        "date": 1630620425677,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4148.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 741.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
