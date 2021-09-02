@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630591928703,
+  "lastUpdate": 1630601152882,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21536,6 +21536,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4557.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "99a0bd935b55a597436789ab9a4480647779d982",
+          "message": "Merge pull request #6726 from SimonBrandner/feature/autoplay-split\n\nSplit autoplay GIFs and videos into different settings",
+          "timestamp": "2021-09-02T18:40:42+02:00",
+          "tree_id": "705f340c7a9d2502d8cb3a6cf2d49418975986c1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/99a0bd935b55a597436789ab9a4480647779d982"
+        },
+        "date": 1630601150940,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4443,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 839,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1595.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4346.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
