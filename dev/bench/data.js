@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630601299811,
+  "lastUpdate": 1630616889005,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21632,6 +21632,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4088.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "36f4b9f723eab8b7a34513b49f406a4602e133f6",
+          "message": "Merge pull request #6733 from matrix-org/travis/fix-widgets\n\nDon't rely on rooms having timelines to use when checking widgets",
+          "timestamp": "2021-09-02T15:02:48-06:00",
+          "tree_id": "2e6270fffba00b0d07bc35fb7f8ecd7063c14ff4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/36f4b9f723eab8b7a34513b49f406a4602e133f6"
+        },
+        "date": 1630616887119,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4414.500000000029,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 861.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1605.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4014.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
