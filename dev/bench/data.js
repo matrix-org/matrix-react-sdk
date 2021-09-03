@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630664068657,
+  "lastUpdate": 1630667276425,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21860,6 +21860,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4241.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "25fb243d0b0198d18349530b05ab33f58bcf803d",
+          "message": "Merge pull request #6731 from matrix-org/dbkr/prevent_multiple_calls\n\nFix bug where one party's media would sometimes not be shown",
+          "timestamp": "2021-09-03T12:01:54+01:00",
+          "tree_id": "72d8080b62184f233b7e3de6d3ba403392425eea",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/25fb243d0b0198d18349530b05ab33f58bcf803d"
+        },
+        "date": 1630667274628,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5046.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 979.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1723.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4480,
             "unit": "ms",
             "extra": "type: measure"
           }
