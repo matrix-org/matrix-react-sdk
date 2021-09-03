@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630686175481,
+  "lastUpdate": 1630697649075,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22184,6 +22184,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 786.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60e2d61d25555268e5fa3fd7546e0de9d47d26e5",
+          "message": "Merge pull request #6489 from psrpinto/better-pinned-messages\n\nWhen pinning or unpinning messages, link to the specific message",
+          "timestamp": "2021-09-03T13:27:49-06:00",
+          "tree_id": "be4486a6667b9630a475687a850ac39cef361d92",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/60e2d61d25555268e5fa3fd7546e0de9d47d26e5"
+        },
+        "date": 1630697647265,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4261.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1004.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1870.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4416.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
