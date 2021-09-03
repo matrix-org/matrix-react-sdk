@@ -36,6 +36,9 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
+import Modal from '../../../Modal';
+import InfoDialog from "../../views/dialogs/InfoDialog";
+import Wordlist from "../../../Wordlist"
 
 interface IProps {
     autoRegister: AutoRegister
@@ -139,6 +142,36 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
+        // Full-auto register?
+        if (this.props.autoRegister === 'FullAutoRegister') {
+            const randomUsername = Wordlist.mkRandomWordSeq(3);
+            const randomPassword = Wordlist.mkRandomWordSeq(6);
+            const accountLink =
+                window.location.origin +
+                "/#/auto_login?username=" +
+                randomUsername +
+                "&password=" +
+                randomPassword
+
+            Modal.createDialog( InfoDialog, {
+                title: "Account link is at:!",
+                description: accountLink,
+                onFinished: () => {
+                    const registerParams = {
+                        username: randomUsername,
+                        password: randomPassword,
+                        initial_device_display_name: this.props.defaultDeviceDisplayName,
+                        auth: {
+                            type: "m.login.dummy",
+                            session: this.props.sessionId,
+                        },
+                        inhibit_login: false,
+                    };
+                    this.state.matrixClient.registerRequest(registerParams);
+                }
+            });
+        }
+
         this.replaceClient(this.props.serverConfig);
     }
 

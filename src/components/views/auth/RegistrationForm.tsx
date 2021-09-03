@@ -161,7 +161,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 "&password=" +
                 randomPassword
 
-            // TODO: Write the callback after user has confirmed they have saved the link.
             Modal.createDialog( InfoDialog, {
                 title: "Final Step!",
                 description: "Bookmark the link!! " + accountLink,
