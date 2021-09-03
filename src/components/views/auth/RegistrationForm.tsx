@@ -152,7 +152,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             email: !!email,
         });
 
-        if (this.props.autoRegister.type_ === "AutoRegisterData") {
+        if (this.props.autoRegister === "SemiAutoRegister") {
             const randomPassword = Wordlist.mkRandomWordSeq(6);
             const accountLink =
                 window.location.origin +
@@ -167,7 +167,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 description: "Bookmark the link!! " + accountLink,
                 onFinished: () => this.register(ev, randomPassword, email)
             });
-        } else if (this.props.autoRegister.type_ === "NoAutoRegister") {
+        } else if (this.props.autoRegister === "NoAutoRegister") {
             this.register(ev, this.state.password.trim(), email);
         }
     }
@@ -560,9 +560,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
         // If auto-register, no password field is needed.
         let optionalPasswordRow;
-        if (this.props.autoRegister.type_ === "AutoRegisterData") {
+        if (this.props.autoRegister === "SemiAutoRegister") {
             optionalPasswordRow = null;
-        } else if (this.props.autoRegister.type_ === "NoAutoRegister") {
+        } else if (this.props.autoRegister === "NoAutoRegister") {
             optionalPasswordRow = (
                 <div className="mx_AuthBody_fieldRow">
                     { this.renderPassword() }

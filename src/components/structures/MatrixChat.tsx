@@ -125,8 +125,11 @@ export enum Views {
     // we are showing the login view
     LOGIN,
 
-    // we are showing the auto-registration view
-    AUTO_REGISTER,
+    // we are showing the full-auto registration view
+    FULL_AUTO_REGISTER,
+
+    // we are showing the semi-auto-registration view
+    SEMI_AUTO_REGISTER,
 
     // we are showing the registration view
     REGISTER,
@@ -606,8 +609,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'require_registration':
                 startAnyRegistrationFlow(payload);
                 break;
-            case 'auto_registration':
-                // TODO: Handle soft logout and screenAfterLogin?
+            case 'full_auto_registration':
                 if (Lifecycle.isSoftLogout()) {
                     this.onSoftLogout();
                     break;
@@ -616,7 +618,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (payload.screenAfterLogin) {
                     this.screenAfterLogin = payload.screenAfterLogin;
                 }
-                this.startRegistration(payload.params || {}, true);
+                this.startRegistration(payload.params || {}, "FullAutoRegister");
+                break;
+            case 'semi_auto_registration':
+                if (Lifecycle.isSoftLogout()) {
+                    this.onSoftLogout();
+                    break;
+                }
+                // This starts the full registration flow
+                if (payload.screenAfterLogin) {
+                    this.screenAfterLogin = payload.screenAfterLogin;
+                }
+                this.startRegistration(payload.params || {}, "SemiAutoRegister");
                 break;
             case 'start_registration':
                 if (Lifecycle.isSoftLogout()) {
@@ -627,7 +640,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (payload.screenAfterLogin) {
                     this.screenAfterLogin = payload.screenAfterLogin;
                 }
-                this.startRegistration(payload.params || {}, false);
+                this.startRegistration(payload.params || {}, "NoAutoRegister");
                 break;
             case 'auto_login':
                 // TODO: Handle soft logout and screenAfterLogin?
@@ -868,9 +881,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
     }
 
-    private async startRegistration(params: {[key: string]: string}, isAutoRegister: boolean) {
+    private async startRegistration(params: {[key: string]: string}, autoRegister : AutoRegister) {
+        let view, toNotify;
+        if (autoRegister === 'FullAutoRegister') {
+            view = Views.FULL_AUTO_REGISTER;
+            toNotify = 'full_auto_register';
+        } else if (autoRegister === 'SemiAutoRegister') {
+            view = Views.SEMI_AUTO_REGISTER;
+            toNotify = 'semi_auto_register';
+        } else if (autoRegister === 'NoAutoRegister') {
+            view = Views.REGISTER;
+            toNotify = 'register';
+        }
         const newState: Partial<IState> = {
-            view: isAutoRegister ? Views.AUTO_REGISTER : Views.REGISTER,
+            view: view
         };
 
         // Only honour params if they are all present, otherwise we reset
@@ -893,7 +917,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setStateForNewView(newState);
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
-        this.notifyNewScreen(isAutoRegister ? 'auto_register' : 'register');
+        this.notifyNewScreen(toNotify);
     }
 
     // switch view to the given room
@@ -1677,9 +1701,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        if (screen === 'auto_register') {
+        if (screen === 'full_auto_register') {
             dis.dispatch({
-                action: 'auto_registration',
+                action: 'full_auto_registration',
+                params: params,
+            });
+            // TODO: Performance monitor?
+        } else if (screen === 'semi_auto_register') {
+            dis.dispatch({
+                action: 'semi_auto_registration',
                 params: params,
             });
             // TODO: Performance monitor?
@@ -2112,21 +2142,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
         } else if (this.state.view === Views.WELCOME) {
             view = <Welcome />;
-        } else if (this.state.view === Views.AUTO_REGISTER) {
+        } else if (this.state.view === Views.FULL_AUTO_REGISTER) {
             const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
-
-            // Get auto-register creds from URL params.
-            const username = this.props.startingFragmentQueryParams.username;
-            const password = this.props.startingFragmentQueryParams.password;
-            const autoRegister = {
-                type_: "AutoRegisterData",
-                username: username,
-                password: password
-            };
-
             view = (
                 <Registration
-                    autoRegister={autoRegister}
+                    autoRegister="FullAutoRegister"
                     clientSecret={this.state.register_client_secret}
                     sessionId={this.state.register_session_id}
                     idSid={this.state.register_id_sid}
@@ -2141,13 +2161,30 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     {...this.getServerProperties()}
                 />
             );
-
-        } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
+        } else if (this.state.view === Views.SEMI_AUTO_REGISTER) {
             const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
-            const noAutoRegister = { type_: "NoAutoRegister" }
             view = (
                 <Registration
-                    autoRegister={noAutoRegister}
+                    autoRegister="SemiAutoRegister"
+                    clientSecret={this.state.register_client_secret}
+                    sessionId={this.state.register_session_id}
+                    idSid={this.state.register_id_sid}
+                    email={email}
+                    brand={this.props.config.brand}
+                    makeRegistrationUrl={this.makeRegistrationUrl}
+                    onLoggedIn={this.onRegisterFlowComplete}
+                    onLoginClick={this.onLoginClick}
+                    onServerConfigChange={this.onServerConfigChange}
+                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                    fragmentAfterLogin={fragmentAfterLogin}
+                    {...this.getServerProperties()}
+                />
+            );
+        } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
+            const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
+            view = (
+                <Registration
+                    autoRegister="NoAutoRegister"
                     clientSecret={this.state.register_client_secret}
                     sessionId={this.state.register_session_id}
                     idSid={this.state.register_id_sid}

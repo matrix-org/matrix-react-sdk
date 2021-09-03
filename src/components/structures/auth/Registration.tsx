@@ -598,17 +598,17 @@ export default class Registration extends React.Component<IProps, IState> {
             </div>;
         } else {
             let intro;
-            if (this.props.autoRegister.type_ === "AutoRegisterData") {
+            if (this.props.autoRegister === "SemiAutoRegister") {
                 intro = (
                     <div>
-                        <h2>Auto Register!</h2>
+                        <h2>Semi-auto Registration!</h2>
                         <p>
                             Create an account just by choosing a username.<br />
                             Leave the rest to us!
                         </p>
                     </div>
                 );
-            } else if (this.props.autoRegister.type_ === "NoAutoRegister" ) {
+            } else if (this.props.autoRegister === "NoAutoRegister" ) {
                 intro = <h2>{ _t('Create account') }</h2>
             }
 
@@ -622,7 +622,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 />
             );
 
-            if (this.props.autoRegister.type_ === "AutoRegisterData") {
+            if (this.props.autoRegister === "SemiAutoRegister") {
                 // Auto-register emphasizes simplicity during onboarding,
                 // So homeserver picker appears later.
                 body = (
@@ -636,7 +636,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         { signIn }
                     </div>
                 )
-            } else if (this.props.autoRegister.type_ === "NoAutoRegister" ) {
+            } else if (this.props.autoRegister === "NoAutoRegister" ) {
                 body = <div>
                     { intro }
                     { errorText }

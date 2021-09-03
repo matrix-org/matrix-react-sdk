@@ -204,9 +204,7 @@ declare global {
               isReady: () => boolean;
           };
 
-    interface AutoRegisterData { type_: "AutoRegisterData", username: string, password: string }
-    interface NoAutoRegister { type_: "NoAutoRegister" }
-    type AutoRegister = AutoRegisterData | NoAutoRegister
+    type AutoRegister = "FullAutoRegister" | "SemiAutoRegister" | "NoAutoRegister"
 }
 
 
