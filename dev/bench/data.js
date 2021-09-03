@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630620427020,
+  "lastUpdate": 1630642125271,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21716,6 +21716,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 741.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "781662ded7b990e0c65c5a3e480613fbdd9d3715",
+          "message": "Merge pull request #6732 from matrix-org/palid/fix/blurhash-being-stuck-forever\n\nFix unnecessary blurhash rendering",
+          "timestamp": "2021-09-03T06:03:36+02:00",
+          "tree_id": "10a3ba92b1839d7e8e74304e896062cd273fe01c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/781662ded7b990e0c65c5a3e480613fbdd9d3715"
+        },
+        "date": 1630642123823,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4383.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 810.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1644,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4072.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
