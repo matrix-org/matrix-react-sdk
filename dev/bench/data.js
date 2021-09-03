@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630655536448,
+  "lastUpdate": 1630664068657,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21812,6 +21812,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4021.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e237bfe70dd0e02a336d44f9658d28adafb9f8b",
+          "message": "Merge pull request #6735 from matrix-org/gsouquet/fix-18876\n\nFix state initialisation for DevicesPanel",
+          "timestamp": "2021-09-03T11:08:30+01:00",
+          "tree_id": "42cc9d527602e8f2d096a7c92203537bf48ba314",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e237bfe70dd0e02a336d44f9658d28adafb9f8b"
+        },
+        "date": 1630664066585,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3711.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 895.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1821,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4241.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
