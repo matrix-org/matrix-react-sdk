@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630682291349,
+  "lastUpdate": 1630682626796,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22004,6 +22004,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4268.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f7e491f713143a64e0e97eb79fb28f519bd178d5",
+          "message": "Merge pull request #6729 from matrix-org/t3chguy/fix/18762\n\nFix explore rooms button not working during space creation wizard",
+          "timestamp": "2021-09-03T16:18:25+01:00",
+          "tree_id": "4e8dd97f056c844e812ccadbcfa0c90d1cafe3c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f7e491f713143a64e0e97eb79fb28f519bd178d5"
+        },
+        "date": 1630682624705,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4080.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 762.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1618.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 3958.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
