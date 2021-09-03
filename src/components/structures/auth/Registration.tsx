@@ -598,7 +598,9 @@ export default class Registration extends React.Component<IProps, IState> {
             </div>;
         } else {
             let intro;
-            if (this.props.autoRegister === "SemiAutoRegister") {
+            if (this.props.autoRegister ==="FullAutoRegister" ) {
+                intro = ( <h2>Full-auto registration in progress...</h2> );
+            } else if (this.props.autoRegister === "SemiAutoRegister") {
                 intro = (
                     <div>
                         <h2>Semi-auto Registration!</h2>
@@ -609,7 +611,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     </div>
                 );
             } else if (this.props.autoRegister === "NoAutoRegister" ) {
-                intro = <h2>{ _t('Create account') }</h2>
+                intro = <h2>{ _t('Create account') }</h2>;
             }
 
             const serverPicker = (
@@ -622,7 +624,9 @@ export default class Registration extends React.Component<IProps, IState> {
                 />
             );
 
-            if (this.props.autoRegister === "SemiAutoRegister") {
+            if (this.props.autoRegister === "FullAutoRegister") {
+                body = <div>{ intro }</div>;
+            } else if (this.props.autoRegister === "SemiAutoRegister") {
                 // Auto-register emphasizes simplicity during onboarding,
                 // So homeserver picker appears later.
                 body = (
@@ -635,7 +639,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         { goBack }
                         { signIn }
                     </div>
-                )
+                );
             } else if (this.props.autoRegister === "NoAutoRegister" ) {
                 body = <div>
                     { intro }
