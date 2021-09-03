@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630683341696,
+  "lastUpdate": 1630686175481,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22148,6 +22148,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4255.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "de01dcfd26278e74c71676869504162b44f10359",
+          "message": "Merge pull request #6700 from SimonBrandner/feature/call-timer/18566\n\nShow call length during a call",
+          "timestamp": "2021-09-03T17:17:36+01:00",
+          "tree_id": "24301bc4bf86f3ffadaf32535a44167da6d08bfa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/de01dcfd26278e74c71676869504162b44f10359"
+        },
+        "date": 1630686173289,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4374.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 786.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
