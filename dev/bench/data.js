@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630682626796,
+  "lastUpdate": 1630683162216,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22052,6 +22052,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3958.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0b07a70b15e35e288564c20c410f1e6a4455ca24",
+          "message": "Merge pull request #6730 from matrix-org/t3chguy/fix/17974\n\nDon't context switch room on SpaceStore ready as it can break permalinks",
+          "timestamp": "2021-09-03T16:26:19+01:00",
+          "tree_id": "685293abc5ff30ac122796252f974d58d6c27ba7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0b07a70b15e35e288564c20c410f1e6a4455ca24"
+        },
+        "date": 1630683160034,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4606.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 974.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1834.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4530.5,
             "unit": "ms",
             "extra": "type: measure"
           }
