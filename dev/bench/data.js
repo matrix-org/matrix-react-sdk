@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630683162216,
+  "lastUpdate": 1630683341696,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22100,6 +22100,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4530.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5abaffbd12a6fb418ad29c6337050b451247215",
+          "message": "Merge pull request #6737 from matrix-org/t3chguy/fix/18789\n\nSerialize and retry mass-leave when leaving space",
+          "timestamp": "2021-09-03T16:30:19+01:00",
+          "tree_id": "769a1749fc83195ebbcae043e0b2b45541c50eb4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5abaffbd12a6fb418ad29c6337050b451247215"
+        },
+        "date": 1630683340114,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4483.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 846.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1562.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4255.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
