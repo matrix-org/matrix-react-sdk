@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630697649075,
+  "lastUpdate": 1630698030586,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22232,6 +22232,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4416.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9dee3eb0e1ccf2a46cfdd6e34803903f6693606d",
+          "message": "Merge pull request #6728 from matrix-org/travis/voice-messages/interrupt-text\n\nStop automatic playback of voice messages if a non-voice message is encountered",
+          "timestamp": "2021-09-03T13:34:58-06:00",
+          "tree_id": "c97df48d638a79ea0c99ddf139cf15f47a2bce1c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9dee3eb0e1ccf2a46cfdd6e34803903f6693606d"
+        },
+        "date": 1630698029028,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4312.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 783.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
