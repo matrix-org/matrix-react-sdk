@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630667276425,
+  "lastUpdate": 1630673600030,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -21908,6 +21908,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4480,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bfad9c05992ce0cfeb7bbe781180d9214d96d27a",
+          "message": "Merge pull request #6736 from matrix-org/gsouquet/fix-18876\n\nFix ProfileSettings when avatarUrl is null",
+          "timestamp": "2021-09-03T13:47:14+01:00",
+          "tree_id": "6027c7011ba44ab330634a789121cb22ed0d6dd7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bfad9c05992ce0cfeb7bbe781180d9214d96d27a"
+        },
+        "date": 1630673597810,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4390.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1147.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4476.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
