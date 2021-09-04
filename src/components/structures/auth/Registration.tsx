@@ -154,8 +154,8 @@ export default class Registration extends React.Component<IProps, IState> {
                 randomPassword
 
             Modal.createDialog( InfoDialog, {
-                title: "Account link is at:!",
-                description: accountLink,
+                title: "Save this!",
+                description: "You are invited to Element, and your account is already made. But you need to save the account link below, preferably in a bookmark. It's your only way to access. Having done that, close this page, and visit the bookmark whenever you need to login.\n\n" + accountLink,
                 onFinished: () => {
                     const registerParams = {
                         username: randomUsername,
