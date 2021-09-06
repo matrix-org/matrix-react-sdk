@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630941997198,
+  "lastUpdate": 1630943943813,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22484,6 +22484,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 918.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a4c0fa8046e52e1333994d7b725a06a914694e82",
+          "message": "Merge pull request #6745 from matrix-org/t3chguy/fix/18796\n\nPrefer matrix.to alias links over room id in spaces & share",
+          "timestamp": "2021-09-06T16:53:11+01:00",
+          "tree_id": "55f910e7d42c757b5ed7e58af7417272c261d1f6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a4c0fa8046e52e1333994d7b725a06a914694e82"
+        },
+        "date": 1630943942235,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4579.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 955.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1688.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4323.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
