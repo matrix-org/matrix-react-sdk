@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630698030586,
+  "lastUpdate": 1630918892911,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22268,6 +22268,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 783.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1e50246a78e8252d86ec205b730acc5b395599af",
+          "message": "Merge pull request #6636 from matrix-org/palid/fix/forgot-password-ux\n\nMake ForgotPassword UX slightly more user friendly",
+          "timestamp": "2021-09-06T10:55:25+02:00",
+          "tree_id": "f8b304d6e3d21d229ae399fcdff5810e9f508e12",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1e50246a78e8252d86ec205b730acc5b395599af"
+        },
+        "date": 1630918890705,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4662.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 977.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1773.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4671.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
