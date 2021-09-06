@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630930343988,
+  "lastUpdate": 1630941997198,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22448,6 +22448,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4451.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ecd1920a4a9f2399669a8876e4615d6ae92f3b72",
+          "message": "Merge pull request #6749 from matrix-org/gsouquet/fix-reply-display\n\nFix replies not appearing in timeline",
+          "timestamp": "2021-09-06T16:20:53+01:00",
+          "tree_id": "8fb0a2c9e8038f738e59a00c1b7858f69fb0df2f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ecd1920a4a9f2399669a8876e4615d6ae92f3b72"
+        },
+        "date": 1630941995415,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4635.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 918.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
