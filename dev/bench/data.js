@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630918892911,
+  "lastUpdate": 1630918937953,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22316,6 +22316,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4671.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e7cfa4816e4d5d297962f506b0895b9817d0c50c",
+          "message": "Merge pull request #6582 from SimonBrandner/fix/bubble-highlight/18295",
+          "timestamp": "2021-09-06T09:56:16+01:00",
+          "tree_id": "f3b4129880a013f1a32f117179afe3725f50309e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e7cfa4816e4d5d297962f506b0895b9817d0c50c"
+        },
+        "date": 1630918936388,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4252.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1256.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
