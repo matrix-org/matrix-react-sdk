@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630925226739,
+  "lastUpdate": 1630930343988,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22400,6 +22400,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4289.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "18b5b18f7c255868d417416e1401fe649eb78717",
+          "message": "Merge pull request #6740 from matrix-org/dbkr/debug_stuck_toast\n\nAdd logging to debug stuck toast bug",
+          "timestamp": "2021-09-06T13:06:36+01:00",
+          "tree_id": "57de307167cb688df9566877c71ad699e1fd39b2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/18b5b18f7c255868d417416e1401fe649eb78717"
+        },
+        "date": 1630930342343,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4917.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 950.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1847.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4451.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
