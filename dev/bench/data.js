@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631009653221,
+  "lastUpdate": 1631020636031,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22820,6 +22820,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4049,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "42f5efaa28387d043005424b8c6ede3a510fed83",
+          "message": "Merge pull request #6750 from matrix-org/gsouquet/migrate-messageactionbar",
+          "timestamp": "2021-09-07T14:11:20+01:00",
+          "tree_id": "873ef7a1b6939b72ed934a06bf31380e6da2308e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/42f5efaa28387d043005424b8c6ede3a510fed83"
+        },
+        "date": 1631020634415,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5072.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1015.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1801.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4403.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
