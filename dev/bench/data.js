@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630990116824,
+  "lastUpdate": 1631004809732,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22676,6 +22676,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3960.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "404ddad961b397d78b98d085480281675568e5ac",
+          "message": "Merge pull request #6751 from matrix-org/dbkr/fix_stuck_scroll\n\nFix scroll being stuck at bottom",
+          "timestamp": "2021-09-07T09:48:17+01:00",
+          "tree_id": "33784dfdc7dfe370b3ec9449e977b789d335a1b1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/404ddad961b397d78b98d085480281675568e5ac"
+        },
+        "date": 1631004808369,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4508.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 866,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1615.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4304.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
