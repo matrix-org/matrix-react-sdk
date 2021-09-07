@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631025112116,
+  "lastUpdate": 1631026320199,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22964,6 +22964,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4159.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "495b6dcd9756be5b0a71976cd6b4b0ce6ce80c75",
+          "message": "Merge pull request #6705 from SimonBrandner/fix/call-tile-dispatch/18825\n\nUse disptacher to answer/reject calls in call tiles",
+          "timestamp": "2021-09-07T15:45:40+01:00",
+          "tree_id": "f97ba23b76ae4fd4378526dbecd5ed24518e247d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/495b6dcd9756be5b0a71976cd6b4b0ce6ce80c75"
+        },
+        "date": 1631026318149,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4692.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 996.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4351.5,
             "unit": "ms",
             "extra": "type: measure"
           }
