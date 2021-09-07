@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630987937968,
+  "lastUpdate": 1630988052029,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22580,6 +22580,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3936.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb6fa4514b644dda66b9e08078f7c1d9b5ddf637",
+          "message": "Merge pull request #6752 from matrix-org/revert-6682-gsouquet/compact-composer-18533\n\nRevert \"Create narrow mode for Composer\"",
+          "timestamp": "2021-09-06T22:09:01-06:00",
+          "tree_id": "55f910e7d42c757b5ed7e58af7417272c261d1f6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb6fa4514b644dda66b9e08078f7c1d9b5ddf637"
+        },
+        "date": 1630988050685,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4027.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 814.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1726.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4174.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
