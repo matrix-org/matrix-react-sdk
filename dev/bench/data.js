@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631007606903,
+  "lastUpdate": 1631009653221,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22772,6 +22772,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4141.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "51f1d21464eda1a2bf8f9ad3356648dd4f430b7a",
+          "message": "Merge pull request #6748 from matrix-org/t3chguy/fix/18764\n\nFix Space creation wizard go to my first room button behaviour",
+          "timestamp": "2021-09-07T11:08:53+01:00",
+          "tree_id": "316fb4345ad9106f942494636f02ecd912928fc5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/51f1d21464eda1a2bf8f9ad3356648dd4f430b7a"
+        },
+        "date": 1631009651251,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4705,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 823.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1749.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4049,
             "unit": "ms",
             "extra": "type: measure"
           }
