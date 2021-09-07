@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631021660091,
+  "lastUpdate": 1631025112116,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22916,6 +22916,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4391.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "94cef3bf13bbb7785b23a103f6c1a5e4ccd8e932",
+          "message": "Merge pull request #6755 from matrix-org/gsouquet/fix-thread-creation",
+          "timestamp": "2021-09-07T15:26:28+01:00",
+          "tree_id": "75b1833998c4e850c1cfbe29cdef50e6de82f7e4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/94cef3bf13bbb7785b23a103f6c1a5e4ccd8e932"
+        },
+        "date": 1631025110741,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4230.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 873.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1623.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4159.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
