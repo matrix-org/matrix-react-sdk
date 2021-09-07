@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631037800133,
+  "lastUpdate": 1631039828719,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23108,6 +23108,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3977.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3217ab26ff15b531e5f9c8c684f1fd300b248fd9",
+          "message": "Merge pull request #5759 from panoschal/fix/call-search-areas\n\nCompact call area, better ui when in call & searching messages",
+          "timestamp": "2021-09-07T12:31:56-06:00",
+          "tree_id": "2a4fe035d9414a94c66a7b428b47f10913b9c0eb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3217ab26ff15b531e5f9c8c684f1fd300b248fd9"
+        },
+        "date": 1631039827481,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4445.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 780.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4121.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
