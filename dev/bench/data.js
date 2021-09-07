@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630988052029,
+  "lastUpdate": 1630990116824,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22628,6 +22628,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4174.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78617c01a8678e2deaa92aca959f6fd0f2c6c6bc",
+          "message": "Merge pull request #6742 from matrix-org/travis/fix-oidc-dialog\n\nConvert widget OIDC exchange dialog to TS (fixing it)",
+          "timestamp": "2021-09-06T22:43:27-06:00",
+          "tree_id": "4c6d33ba1440a127721af86a13ea8551e8d4bc4e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78617c01a8678e2deaa92aca959f6fd0f2c6c6bc"
+        },
+        "date": 1630990115370,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4447.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 837.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1570.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 3960.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
