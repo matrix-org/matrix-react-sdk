@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1630943943813,
+  "lastUpdate": 1630987937968,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22532,6 +22532,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4323.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "59de3c96a27686ab1b1fde218c75dba92d7ecff3",
+          "message": "Merge pull request #6682 from matrix-org/gsouquet/compact-composer-18533",
+          "timestamp": "2021-09-07T05:07:00+01:00",
+          "tree_id": "e2569da99be2a72e4c8ab7439a0932472af567c7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/59de3c96a27686ab1b1fde218c75dba92d7ecff3"
+        },
+        "date": 1630987935924,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4362.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 834,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1605.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 3936.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
