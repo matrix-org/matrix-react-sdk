@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631020636031,
+  "lastUpdate": 1631021660091,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -22868,6 +22868,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4403.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9d1e6dc18aab9cede6e3db26748ed9839b854a28",
+          "message": "Merge pull request #6756 from matrix-org/t3chguy/ts/123\n\nfix typing of olmVersion in settings",
+          "timestamp": "2021-09-07T14:27:54+01:00",
+          "tree_id": "e13e2abf56854dd59d6b65adea34a7fd168da89f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9d1e6dc18aab9cede6e3db26748ed9839b854a28"
+        },
+        "date": 1631021657847,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4790.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 976.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1695.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4391.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
