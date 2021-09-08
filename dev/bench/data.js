@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631118475167,
+  "lastUpdate": 1631138684427,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23432,6 +23432,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4243.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "086d36beb18fb25896c4fb806362ccf4f3c7fae9",
+          "message": "Merge pull request #6765 from matrix-org/t3chguy/fix/17018\n\nMake space members and user info behave more expectedly",
+          "timestamp": "2021-09-08T22:59:44+01:00",
+          "tree_id": "d9127ba211ecd7da378df45c25e8852068daca26",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/086d36beb18fb25896c4fb806362ccf4f3c7fae9"
+        },
+        "date": 1631138682873,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3771.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 767.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1738.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 3827.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
