@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631092204361,
+  "lastUpdate": 1631102456329,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23204,6 +23204,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4531.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "075b0613a5bff54a8603b5869919547ef77cffe0",
+          "message": "Merge pull request #6761 from matrix-org/t3chguy/fix/18781\n\nFix regressed tab view buttons in space update toast",
+          "timestamp": "2021-09-08T12:55:36+01:00",
+          "tree_id": "6953f7a889a8c331225fdabda5bae8449f4740ad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/075b0613a5bff54a8603b5869919547ef77cffe0"
+        },
+        "date": 1631102454279,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3942,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 554.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
