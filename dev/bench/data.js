@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631138714417,
+  "lastUpdate": 1631138723098,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23528,6 +23528,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4102.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d00c4d042bd13244d9769e3b8e68186de67f6ce9",
+          "message": "Merge pull request #6760 from matrix-org/t3chguy/fix/18528\n\nImprove tooltips on space quick actions and explore button",
+          "timestamp": "2021-09-08T22:59:52+01:00",
+          "tree_id": "ecc0cac5fc0ac52adb77c6222aab1ef0b5b56188",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d00c4d042bd13244d9769e3b8e68186de67f6ce9"
+        },
+        "date": 1631138721510,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4410.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1095.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1653.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4451.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
