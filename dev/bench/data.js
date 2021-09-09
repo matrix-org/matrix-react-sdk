@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631206070051,
+  "lastUpdate": 1631208569442,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23792,6 +23792,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 891.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3f28454a8eca91733230d882ad0d78f6642c30a6",
+          "message": "Merge pull request #6771 from matrix-org/dbkr/debounce_read_marker_update\n\nDebounce read marker update on scroll",
+          "timestamp": "2021-09-09T18:24:08+01:00",
+          "tree_id": "2c7fbda133bae11bc0a7188ce886f76907bc0ba8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3f28454a8eca91733230d882ad0d78f6642c30a6"
+        },
+        "date": 1631208567317,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4489.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 894.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1671.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4175.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
