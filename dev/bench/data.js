@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631210531081,
+  "lastUpdate": 1631224122451,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23936,6 +23936,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4049.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6d38256c6a6deb74028291e66a10cc2801a21431",
+          "message": "Merge pull request #6776 from robintown/bubble-corners",
+          "timestamp": "2021-09-09T22:43:32+01:00",
+          "tree_id": "db7050ddcc320ec35a48c0458a2a787f5b1f3773",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6d38256c6a6deb74028291e66a10cc2801a21431"
+        },
+        "date": 1631224120895,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4195.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 750.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
