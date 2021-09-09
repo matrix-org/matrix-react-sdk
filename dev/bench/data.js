@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631205810381,
+  "lastUpdate": 1631206070051,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23756,6 +23756,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3957.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a6d2bb5e6ca6b0131931ea0142609f18cff19082",
+          "message": "Merge pull request #6693 from SimonBrandner/fix/guest/18776\n\nRender guest settings only in public rooms/spaces",
+          "timestamp": "2021-09-09T10:42:38-06:00",
+          "tree_id": "639bc85a052cd3caa4db81909d47154963c70d5a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a6d2bb5e6ca6b0131931ea0142609f18cff19082"
+        },
+        "date": 1631206068542,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4147,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 891.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
