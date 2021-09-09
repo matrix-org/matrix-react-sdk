@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631192334511,
+  "lastUpdate": 1631205810381,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23708,6 +23708,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 909.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bdb29e96fac84369d55e5efd2bf417954cb5c3e4",
+          "message": "Merge pull request #6766 from matrix-org/travis/measure-encryption-perf\n\nAdd config option to turn on in-room event sending timing metrics",
+          "timestamp": "2021-09-09T10:38:15-06:00",
+          "tree_id": "ed0fa70f4ffb80d8448d4af8e869edd2dcb29aa7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bdb29e96fac84369d55e5efd2bf417954cb5c3e4"
+        },
+        "date": 1631205808843,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5085.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1004.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1580.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 3957.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
