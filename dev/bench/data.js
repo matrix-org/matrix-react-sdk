@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631178954638,
+  "lastUpdate": 1631192334511,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -23672,6 +23672,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4207.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8cf891f9a4725afbdb29df36d61a74e18bd0aacb",
+          "message": "Merge pull request #6770 from matrix-org/t3chguy/fix/18951\n\nUse cursor:pointer on space panel buttons",
+          "timestamp": "2021-09-09T13:53:42+01:00",
+          "tree_id": "43f1a85a2e1c97d7b5869f8cc609e14149bdbe76",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8cf891f9a4725afbdb29df36d61a74e18bd0aacb"
+        },
+        "date": 1631192333122,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4099.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 909.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
