@@ -123,6 +123,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
+    private onJumpToRelatedEventClick = (relatedEventId: string): void => {
+        dis.dispatch({
+            action: "view_room",
+            room_id: this.props.mxEvent.getRoomId(),
+            event_id: relatedEventId,
+            highlighted: true,
+        });
+    };
+
     private onReportEventClick = (): void => {
         Modal.createTrackedDialog('Report Event', '', ReportEventDialog, {
             mxEvent: this.props.mxEvent,
@@ -392,6 +401,18 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let jumpToRelatedEventButton: JSX.Element;
+        const relatedEventId = mxEvent.getWireContent()?.["m.relates_to"]?.event_id;
+        if (relatedEventId) {
+            jumpToRelatedEventButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_jumpToEvent"
+                    label={_t("Jump to relation")}
+                    onClick={() => this.onJumpToRelatedEventClick(relatedEventId)}
+                />
+            );
+        }
+
         let reportEventButton: JSX.Element;
         if (mxEvent.getSender() !== me) {
             reportEventButton = (
@@ -411,6 +432,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { permalinkButton }
                 { reportEventButton }
                 { externalURLButton }
+                { jumpToRelatedEventButton }
                 { unhidePreviewButton }
                 { viewSourceButton }
                 { resendReactionsButton }
