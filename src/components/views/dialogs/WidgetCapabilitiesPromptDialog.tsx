@@ -84,7 +84,7 @@ export default class WidgetCapabilitiesPromptDialog extends React.PureComponent<
             .map(([cap]) => cap));
     };
 
-    private onReject = async (ev) => {
+    private onReject = async () => {
         this.closeAndTryRemember([]); // nothing was approved
     };
 

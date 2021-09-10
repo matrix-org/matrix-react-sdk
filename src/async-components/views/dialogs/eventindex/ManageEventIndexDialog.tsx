@@ -146,6 +146,10 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         SettingsStore.setValue("crawlerSleepTime", null, SettingLevel.DEVICE, e.target.value);
     };
 
+    private onPrimaryButtonClick = () => {
+        this.props.onFinished(true);
+    };
+
     render() {
         const brand = SdkConfig.get().brand;
 
@@ -192,7 +196,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                 { eventIndexingSettings }
                 <DialogButtons
                     primaryButton={_t("Done")}
-                    onPrimaryButtonClick={this.props.onFinished}
+                    onPrimaryButtonClick={this.onPrimaryButtonClick}
                     primaryButtonClass="primary"
                     cancelButton={_t("Disable")}
                     onCancel={this.onDisable}

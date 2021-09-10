@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,32 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
+import React, { createRef, ReactNode } from 'react';
+
 import Field from "../elements/Field";
 import { _t, _td } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { IDialogProps } from "./IDialogProps";
+import { IFieldState, IValidationResult } from "../elements/Validation";
+import BaseDialog from './BaseDialog';
+import DialogButtons from '../elements/DialogButtons';
+
+interface IProps extends IDialogProps {
+    title?: string;
+    description?: ReactNode;
+    value?: string;
+    placeholder?: string;
+    button?: string;
+    busyMessage?: string; // pass _td string
+    focus?: boolean;
+    hasCancel?: boolean;
+    fixedWidth?: boolean;
+    validator?(state: IFieldState): Promise<IValidationResult>;
+}
+
+interface IState {
+    value?: string;
+    busy: boolean;
+    valid: boolean;
+}
 
 @replaceableComponent("views.dialogs.TextInputDialog")
-export default class TextInputDialog extends React.Component {
-    static propTypes = {
-        title: PropTypes.string,
-        description: PropTypes.oneOfType([
-            PropTypes.element,
-            PropTypes.string,
-        ]),
-        value: PropTypes.string,
-        placeholder: PropTypes.string,
-        button: PropTypes.string,
-        busyMessage: PropTypes.string, // pass _td string
-        focus: PropTypes.bool,
-        onFinished: PropTypes.func.isRequired,
-        hasCancel: PropTypes.bool,
-        validator: PropTypes.func, // result of withValidation
-        fixedWidth: PropTypes.bool,
-    };
-
+export default class TextInputDialog extends React.Component<IProps, IState> {
     static defaultProps = {
         title: "",
         value: "",
@@ -49,10 +54,10 @@ export default class TextInputDialog extends React.Component {
         hasCancel: true,
     };
 
+    private field = createRef<Field>();
+
     constructor(props) {
         super(props);
-
-        this._field = createRef();
 
         this.state = {
             value: this.props.value,
@@ -64,20 +69,20 @@ export default class TextInputDialog extends React.Component {
     componentDidMount() {
         if (this.props.focus) {
             // Set the cursor at the end of the text input
-            // this._field.current.value = this.props.value;
-            this._field.current.focus();
+            // this.field.current.value = this.props.value;
+            this.field.current.focus();
         }
     }
 
-    onOk = async ev => {
+    private onOk = async ev => {
         ev.preventDefault();
         if (this.props.validator) {
             this.setState({ busy: true });
-            await this._field.current.validate({ allowEmpty: false });
+            await this.field.current.validate({ allowEmpty: false });
 
-            if (!this._field.current.state.valid) {
-                this._field.current.focus();
-                this._field.current.validate({ allowEmpty: false, focused: true });
+            if (!this.field.current.state.valid) {
+                this.field.current.focus();
+                this.field.current.validate({ allowEmpty: false, focused: true });
                 this.setState({ busy: false });
                 return;
             }
@@ -85,17 +90,17 @@ export default class TextInputDialog extends React.Component {
         this.props.onFinished(true, this.state.value);
     };
 
-    onCancel = () => {
+    private onCancel = () => {
         this.props.onFinished(false);
     };
 
-    onChange = ev => {
+    private onChange = ev => {
         this.setState({
             value: ev.target.value,
         });
     };
 
-    onValidate = async fieldState => {
+    private onValidate = async fieldState => {
         const result = await this.props.validator(fieldState);
         this.setState({
             valid: result.valid,
@@ -104,8 +109,6 @@ export default class TextInputDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return (
             <BaseDialog
                 className="mx_TextInputDialog"
@@ -121,13 +124,13 @@ export default class TextInputDialog extends React.Component {
                         <div>
                             <Field
                                 className="mx_TextInputDialog_input"
-                                ref={this._field}
+                                ref={this.field}
                                 type="text"
                                 label={this.props.placeholder}
                                 value={this.state.value}
                                 onChange={this.onChange}
                                 onValidate={this.props.validator ? this.onValidate : undefined}
-                                size="64"
+                                size={64}
                             />
                         </div>
                     </div>

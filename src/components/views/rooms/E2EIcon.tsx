@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +15,6 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import classNames from 'classnames';
 
 import { _t, _td } from '../../../languageHandler';
@@ -42,7 +40,17 @@ const crossSigningRoomTitles = {
     [E2E_STATE.VERIFIED]: _td("Everyone in this room is verified"),
 };
 
-const E2EIcon = ({ isUser, status, className, size, onClick, hideTooltip, bordered }) => {
+interface IProps {
+    isUser?: boolean;
+    status?: string; // one of E2E_STATE
+    className?: string;
+    size?: number;
+    hideTooltip?: boolean;
+    bordered?: boolean;
+    onClick?(): void;
+}
+
+const E2EIcon = ({ isUser, status, className, size, onClick, hideTooltip, bordered }: IProps) => {
     const [hover, setHover] = useState(false);
 
     const classes = classNames({
@@ -90,14 +98,6 @@ const E2EIcon = ({ isUser, status, className, size, onClick, hideTooltip, border
     return <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style}>
         { tip }
     </div>;
-};
-
-E2EIcon.propTypes = {
-    isUser: PropTypes.bool,
-    status: PropTypes.oneOf(Object.values(E2E_STATE)),
-    className: PropTypes.string,
-    size: PropTypes.number,
-    onClick: PropTypes.func,
 };
 
 export default E2EIcon;

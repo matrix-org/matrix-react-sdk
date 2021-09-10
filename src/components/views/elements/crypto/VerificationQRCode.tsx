@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,16 +15,17 @@ limitations under the License.
 */
 
 import React from "react";
-import PropTypes from "prop-types";
+import { QRCodeData } from "matrix-js-sdk/src/crypto/verification/QRCode";
+
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
 import QRCode from "../QRCode";
 
-@replaceableComponent("views.elements.crypto.VerificationQRCode")
-export default class VerificationQRCode extends React.PureComponent {
-    static propTypes = {
-        qrCodeData: PropTypes.object.isRequired,
-    };
+interface IProps {
+    qrCodeData: QRCodeData;
+}
 
+@replaceableComponent("views.elements.crypto.VerificationQRCode")
+export default class VerificationQRCode extends React.PureComponent<IProps> {
     render() {
         return (
             <QRCode

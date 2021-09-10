@@ -128,7 +128,7 @@ const LeaveRoomsPicker = ({ space, spaceChildren, roomsToLeave, setRoomsToLeave 
 
 interface IProps {
     space: Room;
-    onFinished(leave: boolean, rooms?: Room[]): void;
+    onFinished(leave?: boolean, rooms?: Room[]): void;
 }
 
 const isOnlyAdmin = (room: Room): boolean => {

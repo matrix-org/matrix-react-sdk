@@ -1,7 +1,5 @@
 /*
-Copyright 2017 Vector Creations Ltd
-Copyright 2018, 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2017 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import FocusLock from 'react-focus-lock';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import classNames, { Argument } from 'classnames';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { Key } from '../../../Keyboard';
 import AccessibleButton from '../elements/AccessibleButton';
@@ -27,6 +25,45 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { IDialogProps } from "./IDialogProps";
+
+interface IProps extends IDialogProps {
+    // Whether the dialog should have a 'close' button that will
+    // cause the dialog to be cancelled. This should only be set
+    // to false if there is nothing the app can sensibly do if the
+    // dialog is cancelled, eg. "We can't restore your session and
+    // the app cannot work". Default: true.
+    hasCancel?: boolean;
+
+    // called when a key is pressed
+    onKeyDown?: React.KeyboardEventHandler;
+
+    // CSS class to apply to dialog div
+    className?: string;
+
+    // if true, dialog container is 60% of the viewport width. Otherwise,
+    // the container will have no fixed size, allowing its contents to
+    // determine its size. Default: true.
+    fixedWidth?: boolean;
+
+    // Title for the dialog.
+    title: ReactNode;
+
+    // Path to an icon to put in the header
+    headerImage?: string;
+
+    headerButton?: ReactNode;
+
+    // children should be the content of the dialog
+    children?: ReactNode;
+
+    // Id of content element
+    // If provided, this is used to add a aria-describedby attribute
+    contentId?: string;
+
+    // optional additional class for the title element (basically anything that can be passed to classnames)
+    titleClass?: Argument;
+}
 
 /*
  * Basic container for modal dialogs.
@@ -35,65 +72,21 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
  * dialog on escape.
  */
 @replaceableComponent("views.dialogs.BaseDialog")
-export default class BaseDialog extends React.Component {
-    static propTypes = {
-        // onFinished callback to call when Escape is pressed
-        // Take a boolean which is true if the dialog was dismissed
-        // with a positive / confirm action or false if it was
-        // cancelled (BaseDialog itself only calls this with false).
-        onFinished: PropTypes.func.isRequired,
-
-        // Whether the dialog should have a 'close' button that will
-        // cause the dialog to be cancelled. This should only be set
-        // to false if there is nothing the app can sensibly do if the
-        // dialog is cancelled, eg. "We can't restore your session and
-        // the app cannot work". Default: true.
-        hasCancel: PropTypes.bool,
-
-        // called when a key is pressed
-        onKeyDown: PropTypes.func,
-
-        // CSS class to apply to dialog div
-        className: PropTypes.string,
-
-        // if true, dialog container is 60% of the viewport width. Otherwise,
-        // the container will have no fixed size, allowing its contents to
-        // determine its size. Default: true.
-        fixedWidth: PropTypes.bool,
-
-        // Title for the dialog.
-        title: PropTypes.node.isRequired,
-
-        // Path to an icon to put in the header
-        headerImage: PropTypes.string,
-
-        // children should be the content of the dialog
-        children: PropTypes.node,
-
-        // Id of content element
-        // If provided, this is used to add a aria-describedby attribute
-        contentId: PropTypes.string,
-
-        // optional additional class for the title element (basically anything that can be passed to classnames)
-        titleClass: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.object,
-            PropTypes.arrayOf(PropTypes.string),
-        ]),
-    };
-
+export default class BaseDialog extends React.Component<IProps> {
     static defaultProps = {
         hasCancel: true,
         fixedWidth: true,
     };
 
+    private readonly matrixClient: MatrixClient;
+
     constructor(props) {
         super(props);
 
-        this._matrixClient = MatrixClientPeg.get();
+        this.matrixClient = MatrixClientPeg.get();
     }
 
-    _onKeyDown = (e) => {
+    private onKeyDown = (e: React.KeyboardEvent) => {
         if (this.props.onKeyDown) {
             this.props.onKeyDown(e);
         }
@@ -104,7 +97,7 @@ export default class BaseDialog extends React.Component {
         }
     };
 
-    _onCancelClick = (e) => {
+    private onCancelClick = (e: React.KeyboardEvent) => {
         this.props.onFinished(false);
     };
 
@@ -112,7 +105,7 @@ export default class BaseDialog extends React.Component {
         let cancelButton;
         if (this.props.hasCancel) {
             cancelButton = (
-                <AccessibleButton onClick={this._onCancelClick} className="mx_Dialog_cancelButton" aria-label={_t("Close dialog")} />
+                <AccessibleButton onClick={this.onCancelClick} className="mx_Dialog_cancelButton" aria-label={_t("Close dialog")} />
             );
         }
 
@@ -122,11 +115,11 @@ export default class BaseDialog extends React.Component {
         }
 
         return (
-            <MatrixClientContext.Provider value={this._matrixClient}>
+            <MatrixClientContext.Provider value={this.matrixClient}>
                 <FocusLock
                     returnFocus={true}
                     lockProps={{
-                        onKeyDown: this._onKeyDown,
+                        onKeyDown: this.onKeyDown,
                         role: "dialog",
                         ["aria-labelledby"]: "mx_BaseDialog_title",
                         // This should point to a node describing the dialog.

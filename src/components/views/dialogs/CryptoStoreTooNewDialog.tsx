@@ -59,7 +59,8 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
             { brand },
         );
 
-    return (<BaseDialog className="mx_CryptoStoreTooNewDialog"
+    return (<BaseDialog
+        className="mx_CryptoStoreTooNewDialog"
         contentId='mx_Dialog_content'
         title={_t("Incompatible Database")}
         hasCancel={false}
@@ -68,9 +69,10 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
         <div className="mx_Dialog_content" id='mx_Dialog_content'>
             { description }
         </div>
-        <DialogButtons primaryButton={_t('Continue With Encryption Disabled')}
+        <DialogButtons
+            primaryButton={_t('Continue With Encryption Disabled')}
             hasCancel={false}
-            onPrimaryButtonClick={props.onFinished}
+            onPrimaryButtonClick={() => props.onFinished(true)}
         >
             <button onClick={_onLogoutClicked}>
                 { _t('Sign out') }

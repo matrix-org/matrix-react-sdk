@@ -1,6 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 New Vector Ltd.
+Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,29 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 import classNames from "classnames";
 
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
+import { IDialogProps } from "./IDialogProps";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
-export default class QuestionDialog extends React.Component {
-    static propTypes = {
-        title: PropTypes.string,
-        description: PropTypes.node,
-        extraButtons: PropTypes.node,
-        button: PropTypes.string,
-        buttonDisabled: PropTypes.bool,
-        danger: PropTypes.bool,
-        focus: PropTypes.bool,
-        onFinished: PropTypes.func.isRequired,
-        headerImage: PropTypes.string,
-        quitOnly: PropTypes.bool, // quitOnly doesn't show the cancel button just the quit [x].
-        fixedWidth: PropTypes.bool,
-        className: PropTypes.string,
-    };
+interface IProps extends IDialogProps {
+    title?: string;
+    description?: ReactNode;
+    extraButtons?: ReactNode;
+    cancelButton?: ReactNode;
+    button?: string;
+    buttonDisabled?: boolean;
+    danger?: boolean;
+    focus?: boolean;
+    headerImage?: string;
+    quitOnly?: boolean; // quitOnly doesn't show the cancel button just the quit [x].
+    hasCancelButton?: boolean;
+    fixedWidth?: boolean;
+    className?: string;
+}
 
+export default class QuestionDialog extends React.Component<IProps> {
     static defaultProps = {
         title: "",
         description: "",
@@ -48,17 +49,15 @@ export default class QuestionDialog extends React.Component {
         quitOnly: false,
     };
 
-    onOk = () => {
+    private onOk = () => {
         this.props.onFinished(true);
     };
 
-    onCancel = () => {
+    private onCancel = () => {
         this.props.onFinished(false);
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         let primaryButtonClass = "";
         if (this.props.danger) {
             primaryButtonClass = "danger";
@@ -76,7 +75,8 @@ export default class QuestionDialog extends React.Component {
                 <div className="mx_Dialog_content" id='mx_Dialog_content'>
                     { this.props.description }
                 </div>
-                <DialogButtons primaryButton={this.props.button || _t('OK')}
+                <DialogButtons
+                    primaryButton={this.props.button || _t('OK')}
                     primaryButtonClass={primaryButtonClass}
                     primaryDisabled={this.props.buttonDisabled}
                     cancelButton={this.props.cancelButton}

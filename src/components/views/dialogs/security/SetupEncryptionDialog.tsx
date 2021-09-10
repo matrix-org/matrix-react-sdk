@@ -21,7 +21,7 @@ import { _t } from '../../../../languageHandler';
 import { SetupEncryptionStore, Phase } from '../../../../stores/SetupEncryptionStore';
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
 
-function iconFromPhase(phase: Phase) {
+function iconFromPhase(phase: Phase): string {
     if (phase === Phase.Done) {
         return require("../../../../../res/img/e2e/verified.svg");
     } else {
@@ -34,7 +34,7 @@ interface IProps {
 }
 
 interface IState {
-    icon: Phase;
+    icon: string;
 }
 
 @replaceableComponent("views.dialogs.security.SetupEncryptionDialog")
