@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631285225511,
+  "lastUpdate": 1631287196785,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24068,6 +24068,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4097.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1a4859ede87682fc3d860698c88d495ada1650a6",
+          "message": "Merge pull request #6727 from SimonBrandner/task/i-hate-my-code",
+          "timestamp": "2021-09-10T16:14:24+01:00",
+          "tree_id": "1267bfdf08007adcd20bf8cb118a7dd27fa9fc74",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1a4859ede87682fc3d860698c88d495ada1650a6"
+        },
+        "date": 1631287195249,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4636.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 990.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1695.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4513.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
