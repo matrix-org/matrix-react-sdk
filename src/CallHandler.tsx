@@ -507,6 +507,11 @@ export default class CallHandler extends EventEmitter {
 
         const mappedRoomId = this.roomIdForCall(call);
         this.setCallState(call, newState);
+        dis.dispatch({
+            action: 'call_state',
+            room_id: mappedRoomId,
+            state: newState,
+        });
 
         switch (oldState) {
             case CallState.Ringing:
