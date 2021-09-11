@@ -156,7 +156,7 @@ export default class CallHandler extends EventEmitter {
         return VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(call.roomId) || call.roomId;
     }
 
-    start() {
+    public start(): void {
         // add empty handlers for media actions, otherwise the media keys
         // end up causing the audio elements with our ring/ringback etc
         // audio clips in to play.
@@ -176,14 +176,14 @@ export default class CallHandler extends EventEmitter {
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
     }
 
-    stop() {
+    public stop(): void {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener('Call.incoming', this.onCallIncoming);
         }
     }
 
-    public silenceCall(callId: string) {
+    public silenceCall(callId: string): void {
         this.silencedCalls.add(callId);
         this.emit(CallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
 
@@ -192,7 +192,7 @@ export default class CallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    public unSilenceCall(callId: string) {
+    public unSilenceCall(callId: string): void {
         this.silencedCalls.delete(callId);
         this.emit(CallHandlerEvent.SilencedCallsChanged, this.silencedCalls);
         this.play(AudioID.Ring);
@@ -218,7 +218,7 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
-    private async checkProtocols(maxTries) {
+    private async checkProtocols(maxTries: number): Promise<void> {
         try {
             const protocols = await MatrixClientPeg.get().getThirdpartyProtocols();
 
@@ -253,11 +253,11 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    public getSupportsPstnProtocol() {
+    public getSupportsPstnProtocol(): boolean {
         return this.supportsPstnProtocol;
     }
 
-    public getSupportsVirtualRooms() {
+    public getSupportsVirtualRooms(): boolean {
         return this.supportsSipNativeVirtual;
     }
 
@@ -320,11 +320,11 @@ export default class CallHandler extends EventEmitter {
         return null;
     }
 
-    getCallForRoom(roomId: string): MatrixCall {
+    public getCallForRoom(roomId: string): MatrixCall | null {
         return this.calls.get(roomId) || null;
     }
 
-    getAnyActiveCall() {
+    public getAnyActiveCall(): MatrixCall | null {
         for (const call of this.calls.values()) {
             if (call.state !== CallState.Ended) {
                 return call;
@@ -333,7 +333,7 @@ export default class CallHandler extends EventEmitter {
         return null;
     }
 
-    getAllActiveCalls() {
+    public getAllActiveCalls(): MatrixCall[] {
         const activeCalls = [];
 
         for (const call of this.calls.values()) {
@@ -344,7 +344,7 @@ export default class CallHandler extends EventEmitter {
         return activeCalls;
     }
 
-    getAllActiveCallsNotInRoom(notInThisRoomId) {
+    public getAllActiveCallsNotInRoom(notInThisRoomId: string): MatrixCall[] {
         const callsNotInThatRoom = [];
 
         for (const [roomId, call] of this.calls.entries()) {
@@ -355,11 +355,11 @@ export default class CallHandler extends EventEmitter {
         return callsNotInThatRoom;
     }
 
-    getTransfereeForCallId(callId: string): MatrixCall {
+    public getTransfereeForCallId(callId: string): MatrixCall {
         return this.transferees[callId];
     }
 
-    play(audioId: AudioID) {
+    public play(audioId: AudioID): void {
         // TODO: Attach an invisible element for this instead
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
@@ -388,7 +388,7 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    pause(audioId: AudioID) {
+    public pause(audioId: AudioID): void {
         // TODO: Attach an invisible element for this instead
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
@@ -402,7 +402,7 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    private matchesCallForThisRoom(call: MatrixCall) {
+    private matchesCallForThisRoom(call: MatrixCall): boolean {
         // We don't allow placing more than one call per room, but that doesn't mean there
         // can't be more than one, eg. in a glare situation. This checks that the given call
         // is the call we consider 'the' call for its room.
@@ -412,7 +412,7 @@ export default class CallHandler extends EventEmitter {
         return callForThisRoom && call.callId === callForThisRoom.callId;
     }
 
-    private setCallListeners(call: MatrixCall) {
+    private setCallListeners(call: MatrixCall): void {
         let mappedRoomId = this.roomIdForCall(call);
 
         call.on(CallEvent.Error, (err: CallError) => {
@@ -585,7 +585,7 @@ export default class CallHandler extends EventEmitter {
         }
     };
 
-    private async logCallStats(call: MatrixCall, mappedRoomId: string) {
+    private async logCallStats(call: MatrixCall, mappedRoomId: string): Promise<void> {
         const stats = await call.getCurrentCallStats();
         logger.debug(
             `Call completed. Call ID: ${call.callId}, virtual room ID: ${call.roomId}, ` +
@@ -628,7 +628,7 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    private setCallState(call: MatrixCall, status: CallState) {
+    private setCallState(call: MatrixCall, status: CallState): void {
         const mappedRoomId = CallHandler.instance.roomIdForCall(call);
 
         console.log(
@@ -651,13 +651,13 @@ export default class CallHandler extends EventEmitter {
         this.emit(CallHandlerEvent.CallState, mappedRoomId, status);
     }
 
-    private removeCallForRoom(roomId: string) {
+    private removeCallForRoom(roomId: string): void {
         console.log("Removing call for room ", roomId);
         this.calls.delete(roomId);
         this.emit(CallHandlerEvent.CallsChanged, this.calls);
     }
 
-    private showICEFallbackPrompt() {
+    private showICEFallbackPrompt(): void {
         const cli = MatrixClientPeg.get();
         const code = sub => <code>{ sub }</code>;
         Modal.createTrackedDialog('No TURN servers', '', QuestionDialog, {
@@ -686,7 +686,7 @@ export default class CallHandler extends EventEmitter {
         }, null, true);
     }
 
-    private showMediaCaptureError(call: MatrixCall) {
+    private showMediaCaptureError(call: MatrixCall): void {
         let title;
         let description;
 
@@ -715,7 +715,7 @@ export default class CallHandler extends EventEmitter {
         }, null, true);
     }
 
-    private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall) {
+    private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
         Analytics.trackEvent('voip', 'placeCall', 'type', type);
         CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, false);
 
@@ -855,7 +855,7 @@ export default class CallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    public async dialNumber(number: string) {
+    public async dialNumber(number: string): Promise<void> {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -888,7 +888,9 @@ export default class CallHandler extends EventEmitter {
         await this.placeMatrixCall(roomId, CallType.Voice, null);
     }
 
-    public async startTransferToPhoneNumber(call: MatrixCall, destination: string, consultFirst: boolean) {
+    public async startTransferToPhoneNumber(
+        call: MatrixCall, destination: string, consultFirst: boolean,
+    ): Promise<void> {
         const results = await this.pstnLookup(destination);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -901,7 +903,9 @@ export default class CallHandler extends EventEmitter {
         await this.startTransferToMatrixID(call, results[0].userid, consultFirst);
     }
 
-    public async startTransferToMatrixID(call: MatrixCall, destination: string, consultFirst: boolean) {
+    public async startTransferToMatrixID(
+        call: MatrixCall, destination: string, consultFirst: boolean,
+    ): Promise<void> {
         if (consultFirst) {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
 
@@ -925,7 +929,7 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    setActiveCallRoomId(activeCallRoomId: string) {
+    public setActiveCallRoomId(activeCallRoomId: string): void {
         logger.info("Setting call in room " + activeCallRoomId + " active");
 
         for (const [roomId, call] of this.calls.entries()) {
@@ -943,7 +947,7 @@ export default class CallHandler extends EventEmitter {
     /**
      * @returns true if we are currently in any call where we haven't put the remote party on hold
      */
-    hasAnyUnheldCall() {
+    public hasAnyUnheldCall(): boolean {
         for (const call of this.calls.values()) {
             if (call.state === CallState.Ended) continue;
             if (!call.isRemoteOnHold()) return true;
@@ -952,7 +956,7 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
-    private async placeJitsiCall(roomId: string, type: string) {
+    private async placeJitsiCall(roomId: string, type: string): Promise<void> {
         console.info("Place conference call in " + roomId);
         Analytics.trackEvent('voip', 'placeConferenceCall');
         CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, true);
@@ -1022,7 +1026,7 @@ export default class CallHandler extends EventEmitter {
         });
     }
 
-    public terminateCallApp(roomId: string) {
+    public terminateCallApp(roomId: string): void {
         console.info("Terminating conference call in " + roomId);
 
         Modal.createTrackedDialog('Confirm Jitsi Terminate', '', QuestionDialog, {
@@ -1045,7 +1049,7 @@ export default class CallHandler extends EventEmitter {
         });
     }
 
-    public hangupCallApp(roomId: string) {
+    public hangupCallApp(roomId: string): void {
         console.info("Leaving conference call in " + roomId);
 
         const roomInfo = WidgetStore.instance.getRoom(roomId);
