@@ -33,7 +33,7 @@ function readFileAsArrayBuffer(file: File): Promise<string | ArrayBuffer> {
     });
 }
 
-export enum E2EKeysPhase {
+export enum ImportE2EKeysPhase {
     Edit = 1,
     Importing = 2,
 }
@@ -45,7 +45,7 @@ interface IProps {
 
 interface IState {
     enableSubmit: boolean;
-    phase: E2EKeysPhase;
+    phase: ImportE2EKeysPhase;
     errStr: string | null;
 }
 
@@ -58,7 +58,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
         super(props);
         this.state = {
             enableSubmit: false,
-            phase: E2EKeysPhase.Edit,
+            phase: ImportE2EKeysPhase.Edit,
             errStr: null,
         };
     }
@@ -83,7 +83,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
     private startImport(file: File, passphrase: string): Promise<void> {
         this.setState({
             errStr: null,
-            phase: E2EKeysPhase.Importing,
+            phase: ImportE2EKeysPhase.Importing,
         });
 
         return readFileAsArrayBuffer(file).then((arrayBuffer) => {
@@ -103,7 +103,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
             const msg = e.friendlyText || _t('Unknown error');
             this.setState({
                 errStr: msg,
-                phase: E2EKeysPhase.Edit,
+                phase: ImportE2EKeysPhase.Edit,
             });
         });
     }
@@ -117,7 +117,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
     public render(): JSX.Element {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
 
-        const disableForm = (this.state.phase !== E2EKeysPhase.Edit);
+        const disableForm = (this.state.phase !== ImportE2EKeysPhase.Edit);
 
         return (
             <BaseDialog className='mx_importE2eKeysDialog'
