@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import PropTypes from "prop-types";
+import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import * as sdk from "../../../../index";
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import dis from "../../../../dispatcher/dispatcher";
@@ -25,31 +25,30 @@ import Modal from "../../../../Modal";
 import RestoreKeyBackupDialog from "../../../../components/views/dialogs/security/RestoreKeyBackupDialog";
 import { Action } from "../../../../dispatcher/actions";
 
-export default class NewRecoveryMethodDialog extends React.PureComponent {
-    static propTypes = {
-        // As returned by js-sdk getKeyBackupVersion()
-        newVersionInfo: PropTypes.object,
-        onFinished: PropTypes.func.isRequired,
-    }
+interface IProps {
+    newVersionInfo: IKeyBackupInfo;
+    onFinished: () => void;
+}
 
-    onOkClick = () => {
+export default class NewRecoveryMethodDialog extends React.PureComponent<IProps> {
+    private onOkClick = (): void => {
         this.props.onFinished();
-    }
+    };
 
-    onGoToSettingsClick = () => {
+    private onGoToSettingsClick = (): void => {
         this.props.onFinished();
         dis.fire(Action.ViewUserSettings);
-    }
+    };
 
-    onSetupClick = async () => {
+    private onSetupClick = (): void => {
         Modal.createTrackedDialog(
             'Restore Backup', '', RestoreKeyBackupDialog, {
                 onFinished: this.props.onFinished,
             }, null, /* priority = */ false, /* static = */ true,
         );
-    }
+    };
 
-    render() {
+    public render(): JSX.Element {
         const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
         const DialogButtons = sdk.getComponent("views.elements.DialogButtons");
 
