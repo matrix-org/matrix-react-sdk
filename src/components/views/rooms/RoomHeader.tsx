@@ -195,8 +195,11 @@ export default class RoomHeader extends React.Component<IProps> {
             videoCallButton =
                 <AccessibleTooltipButton
                     className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
-                    onClick={(ev) => ev.shiftKey ?
-                        this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(CallType.Video)}
+                    onClick={(ev: React.MouseEvent<Element>) => {
+                        ev.shiftKey ?
+                            this.displayInfoDialogAboutScreensharing() :
+                            this.props.onCallPlaced(CallType.Video);
+                    }}
                     title={_t("Video call")} />;
         }
 

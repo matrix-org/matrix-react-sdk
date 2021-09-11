@@ -24,6 +24,7 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 export enum CallEventGrouperEvent {
     StateChanged = "state_changed",
     SilencedChanged = "silenced_changed",
+    LengthChanged = "length_changed",
 }
 
 const CONNECTING_STATES = [
@@ -103,11 +104,11 @@ export default class CallEventGrouper extends EventEmitter {
         return ![...this.events].some((event) => event.sender?.userId === MatrixClientPeg.get().getUserId());
     }
 
-    private get callId(): string {
-        return [...this.events][0].getContent().call_id;
+    private get callId(): string | undefined {
+        return [...this.events][0]?.getContent()?.call_id;
     }
 
-    private get roomId(): string {
+    private get roomId(): string | undefined {
         return [...this.events][0]?.getRoomId();
     }
 
@@ -116,15 +117,19 @@ export default class CallEventGrouper extends EventEmitter {
         this.emit(CallEventGrouperEvent.SilencedChanged, newState);
     };
 
-    public answerCall = () => {
-        this.call?.answer();
+    private onLengthChanged = (length: number): void => {
+        this.emit(CallEventGrouperEvent.LengthChanged, length);
     };
 
-    public rejectCall = () => {
-        this.call?.reject();
+    public answerCall = (): void => {
+        CallHandler.instance.answerCall(this.roomId);
     };
 
-    public callBack = () => {
+    public rejectCall = (): void => {
+        CallHandler.instance.hangupOrReject(this.roomId, true);
+    };
+
+    public callBack = (): void => {
         CallHandler.instance.placeCall(this.roomId, this.isVoice ? CallType.Voice : CallType.Video);
     };
 
@@ -138,6 +143,7 @@ export default class CallEventGrouper extends EventEmitter {
     private setCallListeners() {
         if (!this.call) return;
         this.call.addListener(CallEvent.State, this.setState);
+        this.call.addListener(CallEvent.LengthChanged, this.onLengthChanged);
     }
 
     private setState = () => {
