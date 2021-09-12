@@ -333,6 +333,8 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
             // This dialog calls bootstrap itself after guiding the user through
             // passphrase creation.
             const { finished } = Modal.createTrackedDialogAsync('Create Secret Storage dialog', '',
+                // @ts-ignore: TS doesn't seem to like the type of this now that it
+                // has also been converted to TS as well, but I can't figure out why...
                 import("./async-components/views/dialogs/security/CreateSecretStorageDialog"),
                 {
                     forceReset,

@@ -83,6 +83,8 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     private onExportE2eKeysClicked = (): void => {
         Modal.createTrackedDialogAsync('Export E2E Keys', '',
+            // @ts-ignore: TS doesn't seem to like the type of this now that it
+            // has also been converted to TS as well, but I can't figure out why...
             import('../../../async-components/views/dialogs/security/ExportE2eKeysDialog'),
             {
                 matrixClient: MatrixClientPeg.get(),
@@ -109,6 +111,8 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             );
         } else {
             Modal.createTrackedDialogAsync("Key Backup", "Key Backup",
+                // @ts-ignore: TS doesn't seem to like the type of this now that it
+                // has also been converted to TS as well, but I can't figure out why...
                 import("../../../async-components/views/dialogs/security/CreateKeyBackupDialog"),
                 null, null, /* priority = */ false, /* static = */ true,
             );

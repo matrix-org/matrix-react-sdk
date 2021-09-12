@@ -1578,11 +1578,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (haveNewVersion) {
                 Modal.createTrackedDialogAsync('New Recovery Method', 'New Recovery Method',
+                    // @ts-ignore: TS doesn't seem to like the type of this now that it
+                    // has also been converted to TS as well, but I can't figure out why...
                     import('../../async-components/views/dialogs/security/NewRecoveryMethodDialog'),
                     { newVersionInfo },
                 );
             } else {
                 Modal.createTrackedDialogAsync('Recovery Method Removed', 'Recovery Method Removed',
+                    // @ts-ignore: TS doesn't seem to like the type of this now that it
+                    // has also been converted to TS as well, but I can't figure out why...
                     import('../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog'),
                 );
             }

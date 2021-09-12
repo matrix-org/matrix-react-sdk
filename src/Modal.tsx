@@ -274,7 +274,7 @@ export class ModalManager {
      * @returns {object} Object with 'close' parameter being a function that will close the dialog
      */
     private createDialogAsync<T extends any[]>(
-        prom: Promise<React.ComponentType>,
+        prom: Promise<React.ComponentType<any>>,
         props?: IProps<T>,
         className?: string,
         isPriorityModal = false,
