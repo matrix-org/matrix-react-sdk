@@ -27,7 +27,6 @@ import RoomViewStore from './stores/RoomViewStore';
 import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import Spinner from "./components/views/elements/Spinner";
-import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { Action } from "./dispatcher/actions";
 import CountlyAnalytics from "./CountlyAnalytics";
 import {

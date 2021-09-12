@@ -5,7 +5,7 @@ import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } fr
 import { Gif } from '../gifpicker/Gif';
 import GifPicker from '../gifpicker/GifPicker';
 
-const GifButton = ({addGif}) => {
+const GifButton = ({ addGif }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu;
@@ -37,9 +37,7 @@ const GifButton = ({addGif}) => {
             isExpanded={menuDisplayed}
             title={_t('GIF picker')}
             inputRef={button}
-        >
-
-        </ContextMenuTooltipButton>
+        />
 
         { contextMenu }
     </>;

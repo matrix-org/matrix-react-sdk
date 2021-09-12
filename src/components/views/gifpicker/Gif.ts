@@ -24,5 +24,8 @@ export interface Gif {
             webp: string;
             url: string;
         };
+        downsized: {
+            url: string;
+        };
     };
 }

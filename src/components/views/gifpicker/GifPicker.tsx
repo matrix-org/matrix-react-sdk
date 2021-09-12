@@ -13,7 +13,7 @@ const API_KEY = "hhMBhTnD7k8BgyoZCM9UNM1vRsPcgzaC";
 async function searchGifs(
     filter: string,
     offset: number,
-): Promise<[Gif[], { offset: number; total_count: number }]> {
+): Promise<[Gif[], { offset: number, total_count: number }]> {
     if (!filter) {
         return [[], { offset: 0, total_count: 0 }];
     }
@@ -133,21 +133,21 @@ export default class GifPicker extends React.Component<IProps, IState> {
                     onChange={this.onChangeFilter}
                     onEnter={this.onEnterFilter}
                 />
-                {this.state.gifs.length === 0 && initialNotice}
+                { this.state.gifs.length === 0 && initialNotice }
                 <ScrollPanel
                     className="mx_GifPicker_scrollPanel"
                     onFillRequest={this.onFillRequest}
                     stickyBottom={false}
                     startAtBottom={false}
                 >
-                    {this.state.gifs.map((gif) => (
+                    { this.state.gifs.map((gif) => (
                         <GifThumbnail
                             key={gif.id}
                             gif={gif}
                             onClick={this.props.addGif}
                         />
-                    ))}
-                    {this.state.loading && <Spinner />}
+                    )) }
+                    { this.state.loading && <Spinner /> }
                 </ScrollPanel>
             </div>
         );

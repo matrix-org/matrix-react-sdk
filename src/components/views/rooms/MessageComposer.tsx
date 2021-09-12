@@ -378,19 +378,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     }
 
-    async addGif(gif: Gif) {
+    private addGif = async (gif: Gif) => {
         const cli = MatrixClientPeg.get();
         const response = await fetch(gif.images.downsized.url);
-        const file = await response.blob();
-        file.name = gif.title;
+        const blob: any = await response.blob();
+        blob.name = gif.title;
 
         ContentMessages.sharedInstance().sendContentListToRoom(
-            [file],
+            [blob as File],
             this.props.room.roomId,
             cli,
             false,
         );
-    }
+    };
 
     private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton) {
