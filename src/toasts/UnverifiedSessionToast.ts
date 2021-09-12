@@ -21,7 +21,7 @@ import DeviceListener from '../DeviceListener';
 import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
 import { Action } from "../dispatcher/actions";
-import { USER_SECURITY_TAB } from "../components/views/dialogs/UserSettingsDialog";
+import { UserTab } from "../components/views/dialogs/UserSettingsDialog";
 
 function toastKey(deviceId: string) {
     return "unverified_session_" + deviceId;
@@ -34,7 +34,7 @@ export const showToast = async (deviceId: string) => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions([deviceId]);
         dis.dispatch({
             action: Action.ViewUserSettings,
-            initialTabId: USER_SECURITY_TAB,
+            initialTabId: UserTab.Security,
         });
     };
 
@@ -49,13 +49,11 @@ export const showToast = async (deviceId: string) => {
         title: _t("New login. Was this you?"),
         icon: "verification_warning",
         props: {
-            description: _t(
-                "A new login is accessing your account: %(name)s (%(deviceID)s) at %(ip)s", {
-                    name: device.display_name,
-                    deviceID: deviceId,
-                    ip: device.last_seen_ip,
-                },
-            ),
+            description: device.display_name,
+            detail: _t("%(deviceId)s from %(ip)s", {
+                deviceId,
+                ip: device.last_seen_ip,
+            }),
             acceptLabel: _t("Check your devices"),
             onAccept,
             rejectLabel: _t("Later"),

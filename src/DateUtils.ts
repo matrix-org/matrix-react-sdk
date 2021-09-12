@@ -97,7 +97,7 @@ export function formatFullDateNoTime(date: Date): string {
     });
 }
 
-export function formatFullDate(date: Date, showTwelveHour = false): string {
+export function formatFullDate(date: Date, showTwelveHour = false, showSeconds = true): string {
     const days = getDaysArray();
     const months = getMonthsArray();
     return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {
@@ -105,7 +105,7 @@ export function formatFullDate(date: Date, showTwelveHour = false): string {
         monthName: months[date.getMonth()],
         day: date.getDate(),
         fullYear: date.getFullYear(),
-        time: formatFullTime(date, showTwelveHour),
+        time: showSeconds ? formatFullTime(date, showTwelveHour) : formatTime(date, showTwelveHour),
     });
 }
 
@@ -121,6 +121,31 @@ export function formatTime(date: Date, showTwelveHour = false): string {
         return twelveHourTime(date);
     }
     return pad(date.getHours()) + ':' + pad(date.getMinutes());
+}
+
+export function formatCallTime(delta: Date): string {
+    const hours = delta.getUTCHours();
+    const minutes = delta.getUTCMinutes();
+    const seconds = delta.getUTCSeconds();
+
+    let output = "";
+    if (hours) output += `${hours}h `;
+    if (minutes || output) output += `${minutes}m `;
+    if (seconds || output) output += `${seconds}s`;
+
+    return output;
+}
+
+export function formatSeconds(inSeconds: number): string {
+    const hours = Math.floor(inSeconds / (60 * 60)).toFixed(0).padStart(2, '0');
+    const minutes = Math.floor((inSeconds % (60 * 60)) / 60).toFixed(0).padStart(2, '0');
+    const seconds = Math.floor(((inSeconds % (60 * 60)) % 60)).toFixed(0).padStart(2, '0');
+
+    let output = "";
+    if (hours !== "00") output += `${hours}:`;
+    output += `${minutes}:${seconds}`;
+
+    return output;
 }
 
 const MILLIS_IN_DAY = 86400000;
