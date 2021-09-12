@@ -24,8 +24,8 @@ import { ResizeDelta } from '../views/rooms/RoomSublist';
 
 interface IProps {
     resizeNotifier: ResizeNotifier;
-    collapsedRhs: boolean;
-    panel: React.ComponentType;
+    collapsedRhs?: boolean;
+    panel: JSX.Element;
 }
 
 @replaceableComponent("structures.MainSplit")

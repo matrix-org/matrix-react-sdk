@@ -58,8 +58,8 @@ import { E2EStatus } from '../../utils/ShieldUtils';
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
     groupId?: string; // if showing panels for a given group, this is set
-    user?: User; // used if we know the user ahead of opening the panel
-    resizeNotifier: ResizeNotifier;
+    user?: User | RoomMember; // used if we know the user ahead of opening the panel
+    resizeNotifier?: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
 }

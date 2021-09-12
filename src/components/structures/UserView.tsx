@@ -17,7 +17,6 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import * as sdk from "../../index";
 import Modal from '../../Modal';
 import { _t } from '../../languageHandler';
 import HomePage from "./HomePage";
@@ -25,6 +24,10 @@ import { replaceableComponent } from "../../utils/replaceableComponent";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import ResizeNotifier from "../../utils/ResizeNotifier";
+import ErrorDialog from "../views/dialogs/ErrorDialog";
+import Spinner from "../views/elements/Spinner";
+import RightPanel from "./RightPanel";
+import MainSplit from "./MainSplit";
 
 interface IProps {
     userId: string;
@@ -60,7 +63,6 @@ export default class UserView extends React.Component<IProps, IState> {
         try {
             profileInfo = await cli.getProfileInfo(this.props.userId);
         } catch (err) {
-            const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
             Modal.createTrackedDialog(_t('Could not load user profile'), '', ErrorDialog, {
                 title: _t('Could not load user profile'),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
@@ -76,11 +78,8 @@ export default class UserView extends React.Component<IProps, IState> {
 
     render() {
         if (this.state.loading) {
-            const Spinner = sdk.getComponent("elements.Spinner");
             return <Spinner />;
         } else if (this.state.member) {
-            const RightPanel = sdk.getComponent('structures.RightPanel');
-            const MainSplit = sdk.getComponent('structures.MainSplit');
             const panel = <RightPanel user={this.state.member} />;
             return (<MainSplit panel={panel} resizeNotifier={this.props.resizeNotifier}>
                 <HomePage />
