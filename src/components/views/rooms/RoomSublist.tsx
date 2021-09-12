@@ -84,7 +84,7 @@ interface IProps {
 }
 
 // TODO: Use re-resizer's NumberSize when it is exposed as the type
-interface ResizeDelta {
+export interface ResizeDelta {
     width: number;
     height: number;
 }
