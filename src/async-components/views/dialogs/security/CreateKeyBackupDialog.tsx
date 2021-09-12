@@ -19,52 +19,66 @@ import React, { createRef } from 'react';
 import FileSaver from 'file-saver';
 import * as sdk from '../../../../index';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
-import PropTypes from 'prop-types';
 import { _t, _td } from '../../../../languageHandler';
 import { accessSecretStorage } from '../../../../SecurityManager';
 import AccessibleButton from "../../../../components/views/elements/AccessibleButton";
 import { copyNode } from "../../../../utils/strings";
 import PassphraseField from "../../../../components/views/auth/PassphraseField";
+import { IPreparedKeyBackupVersion } from 'matrix-js-sdk/src/crypto/backup';
+import { IValidationResult } from '../../../../components/views/elements/Validation';
+import Field from '../../../../components/views/elements/Field';
 
-const PHASE_PASSPHRASE = 0;
-const PHASE_PASSPHRASE_CONFIRM = 1;
-const PHASE_SHOWKEY = 2;
-const PHASE_KEEPITSAFE = 3;
-const PHASE_BACKINGUP = 4;
-const PHASE_DONE = 5;
-const PHASE_OPTOUT_CONFIRM = 6;
+enum CreateKeyBackupPhases {
+    Passphrase = 0,
+    PassphraseConfirm = 1,
+    ShowKey = 2,
+    KeepItSafe = 3,
+    BackingUp = 4,
+    Done = 5,
+    OptOutConfirm = 6,
+}
 
 const PASSWORD_MIN_SCORE = 4; // So secure, many characters, much complex, wow, etc, etc.
+
+interface IProps {
+    onFinished: (success: boolean) => void;
+}
+
+interface IState {
+    secureSecretStorage: boolean;
+    phase: CreateKeyBackupPhases;
+    passPhrase: string;
+    passPhraseValid: boolean;
+    passPhraseConfirm: string;
+    copied: boolean;
+    downloaded: boolean;
+    error?: Error;
+}
 
 /*
  * Walks the user through the process of creating an e2e key backup
  * on the server.
  */
-export default class CreateKeyBackupDialog extends React.PureComponent {
-    static propTypes = {
-        onFinished: PropTypes.func.isRequired,
-    }
+export default class CreateKeyBackupDialog extends React.PureComponent<IProps, IState> {
+    private recoveryKeyNode: HTMLElement = null;
+    private passphraseField: React.RefObject<Field> = createRef();
+    private keyBackupInfo: Pick<IPreparedKeyBackupVersion, "algorithm" | "auth_data" | "recovery_key"> = null;
 
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
-
-        this._recoveryKeyNode = null;
-        this._keyBackupInfo = null;
 
         this.state = {
             secureSecretStorage: null,
-            phase: PHASE_PASSPHRASE,
+            phase: CreateKeyBackupPhases.Passphrase,
             passPhrase: '',
             passPhraseValid: false,
             passPhraseConfirm: '',
             copied: false,
             downloaded: false,
         };
-
-        this._passphraseField = createRef();
     }
 
-    async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         const cli = MatrixClientPeg.get();
         const secureSecretStorage = await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
         this.setState({ secureSecretStorage });
@@ -72,41 +86,41 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
         // If we're using secret storage, skip ahead to the backing up step, as
         // `accessSecretStorage` will handle passphrases as needed.
         if (secureSecretStorage) {
-            this.setState({ phase: PHASE_BACKINGUP });
-            this._createBackup();
+            this.setState({ phase: CreateKeyBackupPhases.BackingUp });
+            this.createBackup();
         }
     }
 
-    _collectRecoveryKeyNode = (n) => {
-        this._recoveryKeyNode = n;
-    }
+    private collectRecoveryKeyNode = (n: HTMLElement): void => {
+        this.recoveryKeyNode = n;
+    };
 
-    _onCopyClick = () => {
-        const successful = copyNode(this._recoveryKeyNode);
+    private onCopyClick = (): void => {
+        const successful = copyNode(this.recoveryKeyNode);
         if (successful) {
             this.setState({
                 copied: true,
-                phase: PHASE_KEEPITSAFE,
+                phase: CreateKeyBackupPhases.KeepItSafe,
             });
         }
-    }
+    };
 
-    _onDownloadClick = () => {
-        const blob = new Blob([this._keyBackupInfo.recovery_key], {
+    private onDownloadClick = (): void => {
+        const blob = new Blob([this.keyBackupInfo.recovery_key], {
             type: 'text/plain;charset=us-ascii',
         });
         FileSaver.saveAs(blob, 'security-key.txt');
 
         this.setState({
             downloaded: true,
-            phase: PHASE_KEEPITSAFE,
+            phase: CreateKeyBackupPhases.KeepItSafe,
         });
-    }
+    };
 
-    _createBackup = async () => {
+    private createBackup = async (): Promise<void> => {
         const { secureSecretStorage } = this.state;
         this.setState({
-            phase: PHASE_BACKINGUP,
+            phase: CreateKeyBackupPhases.BackingUp,
             error: null,
         });
         let info;
@@ -121,12 +135,12 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 });
             } else {
                 info = await MatrixClientPeg.get().createKeyBackupVersion(
-                    this._keyBackupInfo,
+                    this.keyBackupInfo,
                 );
             }
             await MatrixClientPeg.get().scheduleAllGroupSessionsForBackup();
             this.setState({
-                phase: PHASE_DONE,
+                phase: CreateKeyBackupPhases.Done,
             });
         } catch (e) {
             console.error("Error creating key backup", e);
@@ -141,97 +155,97 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 error: e,
             });
         }
-    }
+    };
 
-    _onCancel = () => {
+    private onCancel = (): void => {
         this.props.onFinished(false);
-    }
+    };
 
-    _onDone = () => {
+    private onDone = (): void => {
         this.props.onFinished(true);
-    }
+    };
 
-    _onOptOutClick = () => {
-        this.setState({ phase: PHASE_OPTOUT_CONFIRM });
-    }
+    private onOptOutClick = (): void => {
+        this.setState({ phase: CreateKeyBackupPhases.OptOutConfirm });
+    };
 
-    _onSetUpClick = () => {
-        this.setState({ phase: PHASE_PASSPHRASE });
-    }
+    private onSetUpClick = (): void => {
+        this.setState({ phase: CreateKeyBackupPhases.Passphrase });
+    };
 
-    _onSkipPassPhraseClick = async () => {
-        this._keyBackupInfo = await MatrixClientPeg.get().prepareKeyBackupVersion();
+    private onSkipPassPhraseClick = async () => {
+        this.keyBackupInfo = await MatrixClientPeg.get().prepareKeyBackupVersion();
         this.setState({
             copied: false,
             downloaded: false,
-            phase: PHASE_SHOWKEY,
+            phase: CreateKeyBackupPhases.ShowKey,
         });
-    }
+    };
 
-    _onPassPhraseNextClick = async (e) => {
+    private onPassPhraseNextClick = async (e: React.MouseEvent | React.FormEvent): Promise<void> => {
         e.preventDefault();
-        if (!this._passphraseField.current) return; // unmounting
+        if (!this.passphraseField.current) return; // unmounting
 
-        await this._passphraseField.current.validate({ allowEmpty: false });
-        if (!this._passphraseField.current.state.valid) {
-            this._passphraseField.current.focus();
-            this._passphraseField.current.validate({ allowEmpty: false, focused: true });
+        await this.passphraseField.current.validate({ allowEmpty: false });
+        if (!this.passphraseField.current.state.valid) {
+            this.passphraseField.current.focus();
+            this.passphraseField.current.validate({ allowEmpty: false, focused: true });
             return;
         }
 
-        this.setState({ phase: PHASE_PASSPHRASE_CONFIRM });
+        this.setState({ phase: CreateKeyBackupPhases.PassphraseConfirm });
     };
 
-    _onPassPhraseConfirmNextClick = async (e) => {
+    private onPassPhraseConfirmNextClick = async (e: React.MouseEvent | React.FormEvent): Promise<void> => {
         e.preventDefault();
 
         if (this.state.passPhrase !== this.state.passPhraseConfirm) return;
 
-        this._keyBackupInfo = await MatrixClientPeg.get().prepareKeyBackupVersion(this.state.passPhrase);
+        this.keyBackupInfo = await MatrixClientPeg.get().prepareKeyBackupVersion(this.state.passPhrase);
         this.setState({
             copied: false,
             downloaded: false,
-            phase: PHASE_SHOWKEY,
+            phase: CreateKeyBackupPhases.ShowKey,
         });
     };
 
-    _onSetAgainClick = () => {
+    private onSetAgainClick = (): void => {
         this.setState({
             passPhrase: '',
             passPhraseValid: false,
             passPhraseConfirm: '',
-            phase: PHASE_PASSPHRASE,
+            phase: CreateKeyBackupPhases.Passphrase,
         });
-    }
+    };
 
-    _onKeepItSafeBackClick = () => {
+    private onKeepItSafeBackClick = (): void => {
         this.setState({
-            phase: PHASE_SHOWKEY,
+            phase: CreateKeyBackupPhases.ShowKey,
         });
-    }
+    };
 
-    _onPassPhraseValidate = (result) => {
+    private onPassPhraseValidate = (result: IValidationResult): void => {
         this.setState({
             passPhraseValid: result.valid,
         });
     };
 
-    _onPassPhraseChange = (e) => {
+    private onPassPhraseChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             passPhrase: e.target.value,
         });
-    }
+    };
 
-    _onPassPhraseConfirmChange = (e) => {
+    private onPassPhraseConfirmChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             passPhraseConfirm: e.target.value,
         });
-    }
+    };
 
-    _renderPhasePassPhrase() {
+    private renderPhasePassPhrase(): JSX.Element {
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
 
-        return <form onSubmit={this._onPassPhraseNextClick}>
+        return <form onSubmit={this.onPassPhraseNextClick}>
             <p>{ _t(
                 "<b>Warning</b>: You should only set up key backup from a trusted computer.", {},
                 { b: sub => <b>{ sub }</b> },
@@ -246,11 +260,11 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 <div className="mx_CreateKeyBackupDialog_passPhraseContainer">
                     <PassphraseField
                         className="mx_CreateKeyBackupDialog_passPhraseInput"
-                        onChange={this._onPassPhraseChange}
+                        onChange={this.onPassPhraseChange}
                         minScore={PASSWORD_MIN_SCORE}
                         value={this.state.passPhrase}
-                        onValidate={this._onPassPhraseValidate}
-                        fieldRef={this._passphraseField}
+                        onValidate={this.onPassPhraseValidate}
+                        fieldRef={this.passphraseField}
                         autoFocus={true}
                         label={_td("Enter a Security Phrase")}
                         labelEnterPassword={_td("Enter a Security Phrase")}
@@ -262,21 +276,21 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
 
             <DialogButtons
                 primaryButton={_t('Next')}
-                onPrimaryButtonClick={this._onPassPhraseNextClick}
+                onPrimaryButtonClick={this.onPassPhraseNextClick}
                 hasCancel={false}
                 disabled={!this.state.passPhraseValid}
             />
 
             <details>
                 <summary>{ _t("Advanced") }</summary>
-                <AccessibleButton kind='primary' onClick={this._onSkipPassPhraseClick}>
+                <AccessibleButton kind='primary' onClick={this.onSkipPassPhraseClick}>
                     { _t("Set up with a Security Key") }
                 </AccessibleButton>
             </details>
         </form>;
     }
 
-    _renderPhasePassPhraseConfirm() {
+    private renderPhasePassPhraseConfirm(): JSX.Element {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         let matchText;
@@ -301,14 +315,14 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
             passPhraseMatch = <div className="mx_CreateKeyBackupDialog_passPhraseMatch">
                 <div>{ matchText }</div>
                 <div>
-                    <AccessibleButton element="span" className="mx_linkButton" onClick={this._onSetAgainClick}>
+                    <AccessibleButton element="span" className="mx_linkButton" onClick={this.onSetAgainClick}>
                         { changeText }
                     </AccessibleButton>
                 </div>
             </div>;
         }
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        return <form onSubmit={this._onPassPhraseConfirmNextClick}>
+        return <form onSubmit={this.onPassPhraseConfirmNextClick}>
             <p>{ _t(
                 "Enter your Security Phrase a second time to confirm it.",
             ) }</p>
@@ -316,7 +330,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 <div className="mx_CreateKeyBackupDialog_passPhraseContainer">
                     <div>
                         <input type="password"
-                            onChange={this._onPassPhraseConfirmChange}
+                            onChange={this.onPassPhraseConfirmChange}
                             value={this.state.passPhraseConfirm}
                             className="mx_CreateKeyBackupDialog_passPhraseInput"
                             placeholder={_t("Repeat your Security Phrase...")}
@@ -328,14 +342,14 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
             </div>
             <DialogButtons
                 primaryButton={_t('Next')}
-                onPrimaryButtonClick={this._onPassPhraseConfirmNextClick}
+                onPrimaryButtonClick={this.onPassPhraseConfirmNextClick}
                 hasCancel={false}
                 disabled={this.state.passPhrase !== this.state.passPhraseConfirm}
             />
         </form>;
     }
 
-    _renderPhaseShowKey() {
+    private renderPhaseShowKey(): JSX.Element {
         return <div>
             <p>{ _t(
                 "Your Security Key is a safety net - you can use it to restore " +
@@ -350,13 +364,13 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 </div>
                 <div className="mx_CreateKeyBackupDialog_recoveryKeyContainer">
                     <div className="mx_CreateKeyBackupDialog_recoveryKey">
-                        <code ref={this._collectRecoveryKeyNode}>{ this._keyBackupInfo.recovery_key }</code>
+                        <code ref={this.collectRecoveryKeyNode}>{ this.keyBackupInfo.recovery_key }</code>
                     </div>
                     <div className="mx_CreateKeyBackupDialog_recoveryKeyButtons">
-                        <button className="mx_Dialog_primary" onClick={this._onCopyClick}>
+                        <button className="mx_Dialog_primary" onClick={this.onCopyClick}>
                             { _t("Copy") }
                         </button>
-                        <button className="mx_Dialog_primary" onClick={this._onDownloadClick}>
+                        <button className="mx_Dialog_primary" onClick={this.onDownloadClick}>
                             { _t("Download") }
                         </button>
                     </div>
@@ -365,7 +379,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
         </div>;
     }
 
-    _renderPhaseKeepItSafe() {
+    private renderPhaseKeepItSafe(): JSX.Element {
         let introText;
         if (this.state.copied) {
             introText = _t(
@@ -387,34 +401,34 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 <li>{ _t("<b>Copy it</b> to your personal cloud storage", {}, { b: s => <b>{ s }</b> }) }</li>
             </ul>
             <DialogButtons primaryButton={_t("Continue")}
-                onPrimaryButtonClick={this._createBackup}
+                onPrimaryButtonClick={this.createBackup}
                 hasCancel={false}>
-                <button onClick={this._onKeepItSafeBackClick}>{ _t("Back") }</button>
+                <button onClick={this.onKeepItSafeBackClick}>{ _t("Back") }</button>
             </DialogButtons>
         </div>;
     }
 
-    _renderBusyPhase(text) {
+    private renderBusyPhase(): JSX.Element {
         const Spinner = sdk.getComponent('views.elements.Spinner');
         return <div>
             <Spinner />
         </div>;
     }
 
-    _renderPhaseDone() {
+    private renderPhaseDone(): JSX.Element {
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <div>
             <p>{ _t(
                 "Your keys are being backed up (the first backup could take a few minutes).",
             ) }</p>
             <DialogButtons primaryButton={_t('OK')}
-                onPrimaryButtonClick={this._onDone}
+                onPrimaryButtonClick={this.onDone}
                 hasCancel={false}
             />
         </div>;
     }
 
-    _renderPhaseOptOutConfirm() {
+    private renderPhaseOptOutConfirm(): JSX.Element {
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <div>
             { _t(
@@ -422,35 +436,35 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 "encrypted message history if you log out or use another session.",
             ) }
             <DialogButtons primaryButton={_t('Set up Secure Message Recovery')}
-                onPrimaryButtonClick={this._onSetUpClick}
+                onPrimaryButtonClick={this.onSetUpClick}
                 hasCancel={false}
             >
-                <button onClick={this._onCancel}>I understand, continue without</button>
+                <button onClick={this.onCancel}>I understand, continue without</button>
             </DialogButtons>
         </div>;
     }
 
-    _titleForPhase(phase) {
+    private titleForPhase(phase: CreateKeyBackupPhases): string {
         switch (phase) {
-            case PHASE_PASSPHRASE:
+            case CreateKeyBackupPhases.Passphrase:
                 return _t('Secure your backup with a Security Phrase');
-            case PHASE_PASSPHRASE_CONFIRM:
+            case CreateKeyBackupPhases.PassphraseConfirm:
                 return _t('Confirm your Security Phrase');
-            case PHASE_OPTOUT_CONFIRM:
+            case CreateKeyBackupPhases.OptOutConfirm:
                 return _t('Warning!');
-            case PHASE_SHOWKEY:
-            case PHASE_KEEPITSAFE:
+            case CreateKeyBackupPhases.ShowKey:
+            case CreateKeyBackupPhases.KeepItSafe:
                 return _t('Make a copy of your Security Key');
-            case PHASE_BACKINGUP:
+            case CreateKeyBackupPhases.BackingUp:
                 return _t('Starting backup...');
-            case PHASE_DONE:
+            case CreateKeyBackupPhases.Done:
                 return _t('Success!');
             default:
                 return _t("Create key backup");
         }
     }
 
-    render() {
+    public render(): JSX.Element {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
 
         let content;
@@ -460,34 +474,34 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
                 <p>{ _t("Unable to create key backup") }</p>
                 <div className="mx_Dialog_buttons">
                     <DialogButtons primaryButton={_t('Retry')}
-                        onPrimaryButtonClick={this._createBackup}
+                        onPrimaryButtonClick={this.createBackup}
                         hasCancel={true}
-                        onCancel={this._onCancel}
+                        onCancel={this.onCancel}
                     />
                 </div>
             </div>;
         } else {
             switch (this.state.phase) {
-                case PHASE_PASSPHRASE:
-                    content = this._renderPhasePassPhrase();
+                case CreateKeyBackupPhases.Passphrase:
+                    content = this.renderPhasePassPhrase();
                     break;
-                case PHASE_PASSPHRASE_CONFIRM:
-                    content = this._renderPhasePassPhraseConfirm();
+                case CreateKeyBackupPhases.PassphraseConfirm:
+                    content = this.renderPhasePassPhraseConfirm();
                     break;
-                case PHASE_SHOWKEY:
-                    content = this._renderPhaseShowKey();
+                case CreateKeyBackupPhases.ShowKey:
+                    content = this.renderPhaseShowKey();
                     break;
-                case PHASE_KEEPITSAFE:
-                    content = this._renderPhaseKeepItSafe();
+                case CreateKeyBackupPhases.KeepItSafe:
+                    content = this.renderPhaseKeepItSafe();
                     break;
-                case PHASE_BACKINGUP:
-                    content = this._renderBusyPhase();
+                case CreateKeyBackupPhases.BackingUp:
+                    content = this.renderBusyPhase();
                     break;
-                case PHASE_DONE:
-                    content = this._renderPhaseDone();
+                case CreateKeyBackupPhases.Done:
+                    content = this.renderPhaseDone();
                     break;
-                case PHASE_OPTOUT_CONFIRM:
-                    content = this._renderPhaseOptOutConfirm();
+                case CreateKeyBackupPhases.OptOutConfirm:
+                    content = this.renderPhaseOptOutConfirm();
                     break;
             }
         }
@@ -495,8 +509,8 @@ export default class CreateKeyBackupDialog extends React.PureComponent {
         return (
             <BaseDialog className='mx_CreateKeyBackupDialog'
                 onFinished={this.props.onFinished}
-                title={this._titleForPhase(this.state.phase)}
-                hasCancel={[PHASE_PASSPHRASE, PHASE_DONE].includes(this.state.phase)}
+                title={this.titleForPhase(this.state.phase)}
+                hasCancel={[CreateKeyBackupPhases.Passphrase, CreateKeyBackupPhases.Done].includes(this.state.phase)}
             >
                 <div>
                     { content }

@@ -437,9 +437,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         if (!this.passphraseField.current) return; // unmounting
 
         await this.passphraseField.current.validate({ allowEmpty: false });
-        if (!this.passphraseField.current.state.valid) { // TODO: FIXME
-            // this.passphraseField.current.props.fieldRef.
-            //     this.passphraseField.current.validate({ allowEmpty: false, focused: true });
+        if (!this.passphraseField.current.state.valid) {
+            this.passphraseField.current.focus();
+            this.passphraseField.current.validate({ allowEmpty: false, focused: true });
             return;
         }
 
