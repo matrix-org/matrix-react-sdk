@@ -19,7 +19,6 @@ import React, { createRef } from 'react';
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
 import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
-import * as sdk from '../../../../index';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import FileSaver from 'file-saver';
 import { _t, _td } from '../../../../languageHandler';
@@ -41,6 +40,9 @@ import {
 import SecurityCustomisations from "../../../../customisations/Security";
 import { IValidationResult } from '../../../../components/views/elements/Validation';
 import Field from '../../../../components/views/elements/Field';
+import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
+import Spinner from '../../../../components/views/elements/Spinner';
+import InteractiveAuthDialog from '../../../../components/views/dialogs/InteractiveAuthDialog';
 
 enum CreateSecretStoragePhases {
     Loading = 0,
@@ -287,8 +289,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 password: this.state.accountPassword,
             });
         } else {
-            const InteractiveAuthDialog = sdk.getComponent("dialogs.InteractiveAuthDialog");
-
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {
                     title: _t("Use Single Sign On to continue"),
@@ -565,7 +565,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         // Once we're confident enough in this (and it's supported enough) we can do
         // it automatically.
         // https://github.com/vector-im/element-web/issues/11696
-        const Field = sdk.getComponent('views.elements.Field');
 
         let authPrompt;
         let nextCaption = _t("Next");
@@ -650,8 +649,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     private renderPhasePassPhraseConfirm(): JSX.Element {
-        const Field = sdk.getComponent('views.elements.Field');
-
         let matchText;
         let changeText;
         if (this.state.passPhraseConfirm === this.state.passPhrase) {
@@ -760,7 +757,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     private renderBusyPhase(): JSX.Element {
-        const Spinner = sdk.getComponent('views.elements.Spinner');
         return <div>
             <Spinner />
         </div>;
@@ -818,8 +814,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     public render(): JSX.Element {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         let content;
         if (this.state.error) {
             content = <div>

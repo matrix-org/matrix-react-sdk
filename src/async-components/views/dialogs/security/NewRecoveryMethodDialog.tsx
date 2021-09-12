@@ -17,13 +17,14 @@ limitations under the License.
 
 import React from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import * as sdk from "../../../../index";
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import dis from "../../../../dispatcher/dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
 import RestoreKeyBackupDialog from "../../../../components/views/dialogs/security/RestoreKeyBackupDialog";
 import { Action } from "../../../../dispatcher/actions";
+import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
+import DialogButtons from "../../../../components/views/elements/DialogButtons";
 
 interface IProps {
     newVersionInfo: IKeyBackupInfo;
@@ -49,9 +50,6 @@ export default class NewRecoveryMethodDialog extends React.PureComponent<IProps>
     };
 
     public render(): JSX.Element {
-        const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
-        const DialogButtons = sdk.getComponent("views.elements.DialogButtons");
-
         const title = <span className="mx_KeyBackupFailedDialog_title">
             { _t("New Recovery Method") }
         </span>;

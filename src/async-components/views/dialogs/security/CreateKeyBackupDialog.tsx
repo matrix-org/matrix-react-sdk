@@ -17,7 +17,6 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import FileSaver from 'file-saver';
-import * as sdk from '../../../../index';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { _t, _td } from '../../../../languageHandler';
 import { accessSecretStorage } from '../../../../SecurityManager';
@@ -27,6 +26,9 @@ import PassphraseField from "../../../../components/views/auth/PassphraseField";
 import { IPreparedKeyBackupVersion } from 'matrix-js-sdk/src/crypto/backup';
 import { IValidationResult } from '../../../../components/views/elements/Validation';
 import Field from '../../../../components/views/elements/Field';
+import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
+import DialogButtons from "../../../../components/views/elements/DialogButtons";
+import Spinner from '../../../../components/views/elements/Spinner';
 
 enum CreateKeyBackupPhases {
     Passphrase = 0,
@@ -243,8 +245,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     };
 
     private renderPhasePassPhrase(): JSX.Element {
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-
         return <form onSubmit={this.onPassPhraseNextClick}>
             <p>{ _t(
                 "<b>Warning</b>: You should only set up key backup from a trusted computer.", {},
@@ -291,8 +291,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     }
 
     private renderPhasePassPhraseConfirm(): JSX.Element {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
         let matchText;
         let changeText;
         if (this.state.passPhraseConfirm === this.state.passPhrase) {
@@ -321,7 +319,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                 </div>
             </div>;
         }
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <form onSubmit={this.onPassPhraseConfirmNextClick}>
             <p>{ _t(
                 "Enter your Security Phrase a second time to confirm it.",
@@ -392,7 +389,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                 {}, { b: s => <b>{ s }</b> },
             );
         }
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <div>
             { introText }
             <ul>
@@ -409,14 +405,12 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     }
 
     private renderBusyPhase(): JSX.Element {
-        const Spinner = sdk.getComponent('views.elements.Spinner');
         return <div>
             <Spinner />
         </div>;
     }
 
     private renderPhaseDone(): JSX.Element {
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <div>
             <p>{ _t(
                 "Your keys are being backed up (the first backup could take a few minutes).",
@@ -429,7 +423,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     }
 
     private renderPhaseOptOutConfirm(): JSX.Element {
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <div>
             { _t(
                 "Without setting up Secure Message Recovery, you won't be able to restore your " +
@@ -465,11 +458,8 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     }
 
     public render(): JSX.Element {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         let content;
         if (this.state.error) {
-            const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
             content = <div>
                 <p>{ _t("Unable to create key backup") }</p>
                 <div className="mx_Dialog_buttons">

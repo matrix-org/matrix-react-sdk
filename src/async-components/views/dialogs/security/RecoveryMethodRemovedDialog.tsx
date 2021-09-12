@@ -16,11 +16,12 @@ limitations under the License.
 */
 
 import React from "react";
-import * as sdk from "../../../../index";
 import dis from "../../../../dispatcher/dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
 import { Action } from "../../../../dispatcher/actions";
+import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
+import DialogButtons from "../../../../components/views/elements/DialogButtons";
 
 interface IProps {
     onFinished: () => void;
@@ -35,15 +36,14 @@ export default class RecoveryMethodRemovedDialog extends React.PureComponent<IPr
     private onSetupClick = (): void => {
         this.props.onFinished();
         Modal.createTrackedDialogAsync("Key Backup", "Key Backup",
+            // @ts-ignore: TS doesn't seem to like the type of this now that it
+            // has also been converted to TS as well, but I can't figure out why...
             import("./CreateKeyBackupDialog"),
             null, null, /* priority = */ false, /* static = */ true,
         );
     };
 
     public render(): JSX.Element {
-        const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
-        const DialogButtons = sdk.getComponent("views.elements.DialogButtons");
-
         const title = <span className="mx_KeyBackupFailedDialog_title">
             { _t("Recovery Method Removed") }
         </span>;

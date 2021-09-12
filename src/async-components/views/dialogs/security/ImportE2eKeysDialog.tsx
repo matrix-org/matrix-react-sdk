@@ -18,8 +18,8 @@ import React, { createRef } from 'react';
 
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryption';
-import * as sdk from '../../../../index';
 import { _t } from '../../../../languageHandler';
+import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 
 function readFileAsArrayBuffer(file: File): Promise<string | ArrayBuffer> {
     return new Promise((resolve, reject) => {
@@ -115,8 +115,6 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
     };
 
     public render(): JSX.Element {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         const disableForm = (this.state.phase !== ImportE2EKeysPhase.Edit);
 
         return (
