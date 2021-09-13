@@ -382,7 +382,6 @@ export default class ReplyThread extends React.Component<IProps, IState> {
                 'mx_ReplyThread--collapsed': isQuoteExpanded === false,
             });
             return (
-
                 <blockquote ref={this.blockquoteRef} className={classname} key={ev.getId()}>
                     <ReplyTile
                         mxEvent={ev}
