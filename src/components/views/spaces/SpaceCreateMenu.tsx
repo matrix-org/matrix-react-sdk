@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, RefObject, SyntheticEvent, useContext, useRef, useState } from "react";
+import React, { ComponentProps, RefObject, SyntheticEvent, KeyboardEvent, useContext, useRef, useState } from "react";
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import FocusLock from "react-focus-lock";
@@ -38,6 +38,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserSettingsDialog";
+import { Key } from "../../../Keyboard";
 
 export const createSpace = async (
     name: string,
@@ -55,7 +56,7 @@ export const createSpace = async (
             power_level_content_override: {
                 // Only allow Admins to write to the timeline to prevent hidden sync spam
                 events_default: 100,
-                ...isPublic ? { invite: 0 } : {},
+                invite: isPublic ? 0 : 50,
             },
             room_alias_name: isPublic && alias ? alias.substr(1, alias.indexOf(":") - 1) : undefined,
             topic,
@@ -159,6 +160,12 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
     const cli = useContext(MatrixClientContext);
     const domain = cli.getDomain();
 
+    const onKeyDown = (ev: KeyboardEvent) => {
+        if (ev.key === Key.ENTER) {
+            onSubmit(ev);
+        }
+    };
+
     return <form className="mx_SpaceBasicSettings" onSubmit={onSubmit}>
         <SpaceAvatar avatarUrl={avatarUrl} setAvatar={setAvatar} avatarDisabled={busy} />
 
@@ -174,9 +181,11 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
                 }
                 setName(newName);
             }}
+            onKeyDown={onKeyDown}
             ref={nameFieldRef}
             onValidate={spaceNameValidator}
             disabled={busy}
+            autoComplete="off"
         />
 
         { showAliasField
@@ -188,6 +197,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
                 placeholder={name ? nameToAlias(name, domain) : _t("e.g. my-space")}
                 label={_t("Address")}
                 disabled={busy}
+                onKeyDown={onKeyDown}
             />
             : null
         }

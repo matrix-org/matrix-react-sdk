@@ -21,6 +21,7 @@ import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { UNSTABLE_ELEMENT_REPLY_IN_THREAD } from "matrix-js-sdk/src/@types/event";
 import { makeUserPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import SettingsStore from "../../../settings/SettingsStore";
 import { Layout } from "../../../settings/Layout";
@@ -46,7 +47,7 @@ interface IProps {
     layout?: Layout;
     // Whether to always show a timestamp
     alwaysShowTimestamps?: boolean;
-    isThreadExpanded?: boolean;
+    isQuoteExpanded?: boolean;
     setThreadExpandable: () => void;
 }
 
@@ -211,15 +212,28 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         return { body, html };
     }
 
-    public static makeReplyMixIn(ev: MatrixEvent) {
+    public static makeReplyMixIn(ev: MatrixEvent, replyInThread: boolean) {
         if (!ev) return {};
-        return {
+
+        const replyMixin = {
             'm.relates_to': {
                 'm.in_reply_to': {
                     'event_id': ev.getId(),
                 },
             },
         };
+
+        /**
+         * @experimental
+         * Rendering hint for threads, only attached if true to make
+         * sure that Element does not start sending that property for all events
+         */
+        if (replyInThread) {
+            const inReplyTo = replyMixin['m.relates_to']['m.in_reply_to'];
+            inReplyTo[UNSTABLE_ELEMENT_REPLY_IN_THREAD.name] = replyInThread;
+        }
+
+        return replyMixin;
     }
 
     public static hasThreadReply(event: MatrixEvent) {
@@ -241,7 +255,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
     }
 
     private updateExpandStatus() {
-        if (this.props.isThreadExpanded === undefined && this.blockquoteRef.current) {
+        if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
             const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
             if (el) {
                 const isElipsisShown = el.offsetHeight > 60;
@@ -357,15 +371,15 @@ export default class ReplyThread extends React.Component<IProps, IState> {
             header = <Spinner w={16} h={16} />;
         }
 
-        const { isThreadExpanded } = this.props;
+        const { isQuoteExpanded } = this.props;
         const evTiles = this.state.events.map((ev) => {
             const classname = classNames({
                 'mx_ReplyThread': true,
                 [this.getReplyThreadColorClass(ev)]: true,
                 // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
-                'mx_ReplyThread--expanded': isThreadExpanded === true,
+                'mx_ReplyThread--expanded': isQuoteExpanded === true,
                 // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
-                'mx_ReplyThread--collapsed': isThreadExpanded === false,
+                'mx_ReplyThread--collapsed': isQuoteExpanded === false,
             });
             return (
 

@@ -21,6 +21,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import ReplyThread from "../elements/ReplyThread";
 import { _t } from '../../../languageHandler';
@@ -55,6 +56,8 @@ import ReadReceiptMarker from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
+import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import SettingsStore from "../../../settings/SettingsStore";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -240,6 +243,7 @@ interface IProps {
     // opaque readreceipt info for each userId; used by ReadReceiptMarker
     // to manage its animations. Should be an empty object when the room
     // first loads
+    // TODO: Proper typing for RR info
     readReceiptMap?: any;
 
     // A function which is used to check if the parent panel is being
@@ -299,6 +303,9 @@ interface IProps {
 
     // whether or not to display the sender
     hideSender?: boolean;
+
+    // whether or not to display thread info
+    showThreadInfo?: boolean;
 }
 
 interface IState {
@@ -315,7 +322,9 @@ interface IState {
     reactions: Relations;
 
     hover: boolean;
-    isThreadExpanded?: boolean;
+    isQuoteExpanded?: boolean;
+
+    thread?: Thread;
 }
 
 @replaceableComponent("views.rooms.EventTile")
@@ -352,6 +361,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             reactions: this.getReactions(),
 
             hover: false,
+
+            thread: this.props.mxEvent?.getThread(),
         };
 
         // don't do RR animations until we are mounted
@@ -452,7 +463,19 @@ export default class EventTile extends React.Component<IProps, IState> {
             client.on("Room.receipt", this.onRoomReceipt);
             this.isListeningForReceipts = true;
         }
+
+        if (SettingsStore.getValue("feature_thread")) {
+            this.props.mxEvent.once("Thread.ready", this.updateThread);
+            this.props.mxEvent.on("Thread.update", this.updateThread);
+        }
     }
+
+    private updateThread = (thread) => {
+        this.setState({
+            thread,
+        });
+        this.forceUpdate();
+    };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line
@@ -464,7 +487,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
         if (objectHasDiff(this.state, nextState)) {
             return true;
         }
@@ -490,6 +513,43 @@ export default class EventTile extends React.Component<IProps, IState> {
             this.context.on("Room.receipt", this.onRoomReceipt);
             this.isListeningForReceipts = true;
         }
+    }
+
+    private renderThreadInfo(): React.ReactNode {
+        if (!SettingsStore.getValue("feature_thread")) {
+            return null;
+        }
+
+        const thread = this.state.thread;
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        if (!thread || this.props.showThreadInfo === false) {
+            return null;
+        }
+
+        const avatars = Array.from(thread.participants).map((mxId: string) => {
+            const member = room.getMember(mxId);
+            return <MemberAvatar key={member.userId} member={member} width={14} height={14} />;
+        });
+
+        return (
+            <div
+                className="mx_ThreadInfo"
+                onClick={() => {
+                    dis.dispatch({
+                        action: Action.SetRightPanelPhase,
+                        phase: RightPanelPhases.ThreadView,
+                        refireParams: {
+                            event: this.props.mxEvent,
+                        },
+                    });
+                }}
+            >
+                <span className="mx_EventListSummary_avatars">
+                    { avatars }
+                </span>
+                { thread.length - 1 } { thread.length === 2 ? 'reply' : 'replies' }
+            </div>
+        );
     }
 
     private onRoomReceipt = (ev, room) => {
@@ -857,7 +917,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private setThreadExpanded = (expanded?: boolean) => {
         this.setState({
-            isThreadExpanded: expanded,
+            isQuoteExpanded: expanded,
         });
     };
 
@@ -1002,8 +1062,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             getTile={this.getTile}
             getReplyThread={this.getReplyThread}
             onFocusChange={this.onActionBarFocusChange}
-            isThreadExpanded={this.state.isThreadExpanded}
-            toggleThreadExpanded={() => this.setThreadExpanded(!this.state.isThreadExpanded)}
+            isQuoteExpanded={this.state.isQuoteExpanded}
+            toggleThreadExpanded={() => this.setThreadExpanded(!this.state.isQuoteExpanded)}
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs()
@@ -1150,7 +1210,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator}
                         layout={this.props.layout}
                         alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
-                        isThreadExpanded={this.state.isThreadExpanded}
+                        isQuoteExpanded={this.state.isQuoteExpanded}
                         setThreadExpandable={() => this.setThreadExpanded(false)}
                     />) : null;
                 const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
@@ -1192,6 +1252,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { keyRequestInfo }
                             { actionBar }
                             { this.props.layout === Layout.IRC && (reactionsRow) }
+                            { this.renderThreadInfo() }
                         </div>
                         { this.props.layout !== Layout.IRC && (reactionsRow) }
                         { msgOption }
