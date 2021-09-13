@@ -27,7 +27,12 @@ import { makeRoomPermalink, RoomPermalinkCreator } from '../../../utils/permalin
 import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
 import SettingsStore from "../../../settings/SettingsStore";
-import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
+import {
+    aboveLeftOf,
+    ContextMenu,
+    useContextMenu,
+    AboveLeftOf,
+} from "../../structures/ContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
 import { UIFeature } from "../../../settings/UIFeature";
@@ -377,6 +382,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 null,
         ];
 
+<<<<<<< HEAD
+=======
+        let menuPosition: AboveLeftOf | undefined;
+        if (this.ref.current) {
+            const contentRect = this.ref.current.getBoundingClientRect();
+            menuPosition = aboveLeftOf(contentRect);
+        }
+
+>>>>>>> e913f03a67... Add missing types
         if (!this.state.tombstone && this.state.canSendMessages) {
             controls.push(
                 <SendMessageComposer
