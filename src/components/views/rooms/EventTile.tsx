@@ -323,7 +323,6 @@ interface IState {
 
     hover: boolean;
     isQuoteExpanded?: boolean;
-
     thread?: Thread;
 }
 

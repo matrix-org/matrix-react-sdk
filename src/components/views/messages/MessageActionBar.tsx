@@ -18,7 +18,7 @@ limitations under the License.
 
 import React, { useEffect } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Relations } from 'matrix-js-sdk/src/models/relations';
+import type { Relations } from 'matrix-js-sdk/src/models/relations';
 
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
@@ -129,13 +129,12 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
 
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
-    // The Relations model from the JS SDK for reactions to `mxEvent`
     reactions?: Relations;
 
     getTile: () => any | null;
     getReplyThread: () => ReplyThread | undefined;
     permalinkCreator?: RoomPermalinkCreator;
-    onFocusChange: (isFocused: boolean) => void;
+    onFocusChange: (menuDisplayed: boolean) => void;
     isQuoteExpanded?: boolean;
     toggleThreadExpanded: () => void;
 }
