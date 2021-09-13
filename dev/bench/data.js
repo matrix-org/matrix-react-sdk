@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631539018563,
+  "lastUpdate": 1631553669994,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24248,6 +24248,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 914.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6249a1be5fd70604a9f84ebff82660e2fa3c1ade",
+          "message": "Merge pull request #6768 from AndrewFerr/develop\n\nSet dark theme colors for auth components",
+          "timestamp": "2021-09-13T11:14:31-06:00",
+          "tree_id": "74d2d9cd1fe331fb990c159c9d554b89780a7ea1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6249a1be5fd70604a9f84ebff82660e2fa3c1ade"
+        },
+        "date": 1631553667508,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4849.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1126.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1865.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4801.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
