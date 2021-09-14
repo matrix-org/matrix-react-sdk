@@ -65,19 +65,6 @@ export default function shouldHideEvent(ev: MatrixEvent, ctx?: IState): boolean 
     if (ev.isRedacted() && !isEnabled('showRedactions')) return true;
 
     // Hide replacement events since they update the original tile (if enabled)
-    if (
-        ev.event.room_id === "!iaiMnvSLPTbPYMnjvJ:my.matrix.host" &&
-        [
-            // The event being replied to
-            '$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og',
-            // The original "foo" message
-            '$yvuev9bF2nLRf8fscG55njpVjY3FHJzWgZ4BKI9_0eg',
-            // The replacing event
-            '$4gJk89MFndw_By0dJoxwF2fekM-0ufw7kkdlUD2DNUQ'
-        ].includes(ev.event.event_id)
-    ) {
-        console.log('shouldHideEvent', ev.isRelation("m.replace"), ev.event.event_id)
-    }
     if (ev.isRelation("m.replace")) return true;
 
     const eventDiff = memberEventDiff(ev);
