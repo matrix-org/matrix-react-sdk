@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631648563334,
+  "lastUpdate": 1631648792620,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25220,6 +25220,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4520.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "30972c597d0c94fbb3a9c743ef78c800a8c85bf0",
+          "message": "Merge pull request #6777 from robintown/room-list-scroll-jumps\n\nFix room list scroll jumps",
+          "timestamp": "2021-09-14T13:40:20-06:00",
+          "tree_id": "dc1a877a14c7deaab7ad541f2c93cd18b48fba21",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/30972c597d0c94fbb3a9c743ef78c800a8c85bf0"
+        },
+        "date": 1631648790883,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4136.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1013.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1843.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4773.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
