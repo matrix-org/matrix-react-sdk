@@ -1193,6 +1193,8 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             default: {
                 let thread;
+                // When the "showHiddenEventsInTimeline" lab is enabled,
+                // avoid showing replies for hidden events (events without tiles)
                 if (haveTileForEvent(this.props.mxEvent)) {
                     thread = ReplyThread.makeThread(
                         this.props.mxEvent,
