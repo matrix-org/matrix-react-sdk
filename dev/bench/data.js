@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631588565196,
+  "lastUpdate": 1631607121806,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24344,6 +24344,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4022.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "73a2225b104b5c3f1b91aa16ac418b39e0ff1af4",
+          "message": "Merge pull request #6792 from matrix-org/t3chguy/fix/19005\n\nFix automatic field population in space create menu not validating",
+          "timestamp": "2021-09-14T09:06:49+01:00",
+          "tree_id": "51479b815e4673b7cce14847dfc2775a309a3189",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/73a2225b104b5c3f1b91aa16ac418b39e0ff1af4"
+        },
+        "date": 1631607120101,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4123.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 921.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1580.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4190,
             "unit": "ms",
             "extra": "type: measure"
           }
