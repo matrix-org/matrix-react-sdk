@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631646745467,
+  "lastUpdate": 1631646927040,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24992,6 +24992,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4076.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "18d406421befb98910acd48b666a6e0fcc489dd5",
+          "message": "Merge pull request #6806 from SimonBrandner/task/remove-message_send_failed\n\nRemove `message_send_failed` dispatch",
+          "timestamp": "2021-09-14T13:10:07-06:00",
+          "tree_id": "b7141786da1b6e781a4c15a12809d5c7b183b01c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/18d406421befb98910acd48b666a6e0fcc489dd5"
+        },
+        "date": 1631646925335,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4296.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 831.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
