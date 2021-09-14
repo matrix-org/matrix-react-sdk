@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631648792620,
+  "lastUpdate": 1631652367592,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25268,6 +25268,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4773.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1f1693cb094fed350232521241df5679b6ea852c",
+          "message": "Merge pull request #6781 from SimonBrandner/feature/media-handling\n\nImprove `MatrixCall` media handling",
+          "timestamp": "2021-09-14T14:40:57-06:00",
+          "tree_id": "eb7f52e297625b17aec2f27f23967cba545582b0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1f1693cb094fed350232521241df5679b6ea852c"
+        },
+        "date": 1631652366018,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5355.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 859.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 3987.5,
             "unit": "ms",
             "extra": "type: measure"
           }
