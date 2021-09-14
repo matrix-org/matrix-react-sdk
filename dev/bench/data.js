@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631640823580,
+  "lastUpdate": 1631641953058,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24896,6 +24896,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4318.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "distinct": true,
+          "id": "f6b0b12c601938b4e29c8edc27a847c6f4bc57f3",
+          "message": "fix lockfile",
+          "timestamp": "2021-09-14T18:47:01+01:00",
+          "tree_id": "1a293e02bbd5f722e2566b7d93e9f3845e9684fa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f6b0b12c601938b4e29c8edc27a847c6f4bc57f3"
+        },
+        "date": 1631641951413,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4095.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 870.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1616.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4360.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
