@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631624359789,
+  "lastUpdate": 1631624522221,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24524,6 +24524,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1100.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "74e4cc96803c3647aef1a04eb47b9bd2d6ee9833",
+          "message": "Merge pull request #6793 from matrix-org/palid/fix/19012\n\nFix emoji picker and stickerpicker not appearing correctly when opened",
+          "timestamp": "2021-09-14T14:56:49+02:00",
+          "tree_id": "e3366bc95346e4ef75db1a9014e4e4c640e84457",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/74e4cc96803c3647aef1a04eb47b9bd2d6ee9833"
+        },
+        "date": 1631624519947,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4274.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 827.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1624,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4183.5,
             "unit": "ms",
             "extra": "type: measure"
           }
