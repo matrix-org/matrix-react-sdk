@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631647846061,
+  "lastUpdate": 1631647892853,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25076,6 +25076,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4228,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fdb004b4e815983bdfd97b216beed3b69db220d0",
+          "message": "Merge pull request #6785 from robintown/message-bubble-misc\n\nFix various message bubble alignment issues",
+          "timestamp": "2021-09-14T13:26:03-06:00",
+          "tree_id": "189caac99d57f3a780d489f72e29948821d7cb3f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fdb004b4e815983bdfd97b216beed3b69db220d0"
+        },
+        "date": 1631647891271,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4769.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 985.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1638.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4231,
             "unit": "ms",
             "extra": "type: measure"
           }
