@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631607121806,
+  "lastUpdate": 1631607208620,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24392,6 +24392,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4190,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "be58a5e623412d1813865cf9fe241dd82bcb710f",
+          "message": "Merge pull request #6790 from matrix-org/t3chguy/fix/19007\n\nHide mute/unmute button in UserInfo for Spaces as it makes no sense",
+          "timestamp": "2021-09-14T09:07:37+01:00",
+          "tree_id": "62dcf75d81d3fb138ed08feda34a2b98d044fdc6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/be58a5e623412d1813865cf9fe241dd82bcb710f"
+        },
+        "date": 1631607206892,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4794.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 914.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1656.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4378.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
