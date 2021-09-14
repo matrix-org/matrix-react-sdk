@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631646927040,
+  "lastUpdate": 1631647846061,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25028,6 +25028,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 831.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c3ad978941f18d5e712e3dd0704bcfe41156eb81",
+          "message": "Merge pull request #6795 from robintown/message-bubble-font-size\n\nMake message bubble font size consistent",
+          "timestamp": "2021-09-14T13:25:28-06:00",
+          "tree_id": "d2cd6597454e78d9f1c5ada97cf137e9232b3d47",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c3ad978941f18d5e712e3dd0704bcfe41156eb81"
+        },
+        "date": 1631647843943,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4242.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 848.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1743.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4228,
             "unit": "ms",
             "extra": "type: measure"
           }
