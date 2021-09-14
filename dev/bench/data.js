@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631632080197,
+  "lastUpdate": 1631640823580,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24848,6 +24848,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4301.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fddc20dd8961b762afc8faaa7edb3c7cfe3e4f75",
+          "message": "Remove replies from hidden events when shown with `messages.ViewSourceEvent` (#6796)\n\nAs discovered in https://github.com/vector-im/element-web/issues/10391#is\r\n\r\nPreviously, if you turned on the `showHiddenEventsInTimeline` labs flag, edit (`m.replace`) events\r\nthat also have a `m.in_reply_to` field, will show the reply in the timeline.\r\n\r\nex.\r\n```\r\n{\r\n  \"type\": \"m.room.message\",\r\n  \"content\": {\r\n    \"body\": \" * foo\",\r\n    \"msgtype\": \"m.text\",\r\n    \"m.new_content\": {\r\n      \"body\": \"foo\",\r\n      \"msgtype\": \"m.text\"\r\n    },\r\n    \"m.relates_to\": {\r\n      \"rel_type\": \"m.replace\",\r\n      \"event_id\": \"$yvuev9bF2nLRf8fscG55njpVjY3FHJzWgZ4BKI9_0eg\",\r\n      \"m.in_reply_to\": {\r\n        \"event_id\": \"$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```",
+          "timestamp": "2021-09-14T12:28:28-05:00",
+          "tree_id": "5aa571b162889b3154006f022c375171bbf89aab",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fddc20dd8961b762afc8faaa7edb3c7cfe3e4f75"
+        },
+        "date": 1631640821507,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5067.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 894.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1801.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4318.5,
             "unit": "ms",
             "extra": "type: measure"
           }
