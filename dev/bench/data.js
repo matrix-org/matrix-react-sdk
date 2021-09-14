@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631648323488,
+  "lastUpdate": 1631648563334,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25172,6 +25172,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4170,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "34ce61862d96b312ecfd106ca99a00e934222cfe",
+          "message": "Merge pull request #6782 from SimonBrandner/fix/screensharing-dialog\n\nDon't show screensharing dialog on web",
+          "timestamp": "2021-09-14T13:36:35-06:00",
+          "tree_id": "8f3ff5f145e45fe9cbc9f845f44afc3f083809f5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/34ce61862d96b312ecfd106ca99a00e934222cfe"
+        },
+        "date": 1631648561092,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4314.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 966.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1714.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4520.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
