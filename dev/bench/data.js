@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631616821338,
+  "lastUpdate": 1631624359789,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24488,6 +24488,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3970.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "42a1048fdec285d320db9a9218a55a2c3940c497",
+          "message": "Merge pull request #6794 from matrix-org/palid/fix/18997\n\nFix autocomplete not having y-scroll",
+          "timestamp": "2021-09-14T14:53:06+02:00",
+          "tree_id": "2875bedaf540fea0fd0454d71b431994b4326f7a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/42a1048fdec285d320db9a9218a55a2c3940c497"
+        },
+        "date": 1631624357452,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4220,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1100.5,
             "unit": "ms",
             "extra": "type: measure"
           }
