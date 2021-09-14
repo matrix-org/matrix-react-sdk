@@ -37,6 +37,7 @@ interface IState {
     fetchingData: boolean;
     posterLoading: boolean;
     blurhashUrl: string;
+    renderPoster: boolean;
 }
 
 @replaceableComponent("views.messages.MVideoBody")
@@ -54,6 +55,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             error: null,
             posterLoading: false,
             blurhashUrl: null,
+            renderPoster: true,
         };
     }
 
@@ -190,6 +192,11 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     }
 
     private videoOnPlay = async () => {
+        if (this.hasContentUrl()) {
+            this.setState({
+                renderPoster: false,
+            });
+        }
         if (this.hasContentUrl() || this.state.fetchingData || this.state.error) {
             // We have the file, we are fetching the file, or there is an error.
             return;
@@ -261,7 +268,11 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             }
 
             if (thumbUrl) {
-                poster = thumbUrl;
+                if (this.state.renderPoster) {
+                    poster = thumbUrl;
+                } else {
+                    poster = null;
+                }
                 preload = "none";
             }
         }
