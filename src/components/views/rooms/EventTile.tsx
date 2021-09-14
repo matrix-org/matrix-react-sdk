@@ -1192,6 +1192,20 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
 
             default: {
+                if (
+                    this.props.mxEvent.event.room_id === "!iaiMnvSLPTbPYMnjvJ:my.matrix.host" &&
+                    [
+                        // The event being replied to
+                        '$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og',
+                        // The original "foo" message
+                        '$yvuev9bF2nLRf8fscG55njpVjY3FHJzWgZ4BKI9_0eg',
+                        // The replacing event
+                        '$4gJk89MFndw_By0dJoxwF2fekM-0ufw7kkdlUD2DNUQ'
+                    ].includes(this.props.mxEvent.event.event_id)
+                ) {
+                    console.log('tile', this.props.mxEvent.event.event_id)
+                }
+
                 let thread;
                 // When the "showHiddenEventsInTimeline" lab is enabled,
                 // avoid showing replies for hidden events (events without tiles)
