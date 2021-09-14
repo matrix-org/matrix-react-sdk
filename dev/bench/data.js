@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631625204050,
+  "lastUpdate": 1631631495688,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24620,6 +24620,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4379.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4a4c68b71c86f69c980f1d4973688b5c66c5a55c",
+          "message": "Merge pull request #6803 from matrix-org/t3chguy/fix/19034\n\nStop spinner on space preview if the join fails",
+          "timestamp": "2021-09-14T15:52:37+01:00",
+          "tree_id": "abbd6ae798b0df9e77a66479c43c66b3fb59e393",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4a4c68b71c86f69c980f1d4973688b5c66c5a55c"
+        },
+        "date": 1631631493986,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4414,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 870.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1656.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4317.5,
             "unit": "ms",
             "extra": "type: measure"
           }
