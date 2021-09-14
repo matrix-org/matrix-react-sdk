@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631553669994,
+  "lastUpdate": 1631588565196,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24296,6 +24296,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4801.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "298fb490175fda2324da6fffe3fa5e1d864d3632",
+          "message": "Merge pull request #6783 from matrix-org/madlittlemods/12876-optimize-input-field-transition\n\nOptimize input label transition on focus",
+          "timestamp": "2021-09-13T20:57:41-06:00",
+          "tree_id": "cb0e005a7eb3c7403eeb7fe4be2b251675e56f39",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/298fb490175fda2324da6fffe3fa5e1d864d3632"
+        },
+        "date": 1631588563153,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3889.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 829.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1679.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4022.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
