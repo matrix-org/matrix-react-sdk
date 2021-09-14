@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631641953058,
+  "lastUpdate": 1631646745467,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24944,6 +24944,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4360.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "333418232ded176cd5f7e58c2bb27c6b95d76030",
+          "message": "Merge pull request #6808 from SimonBrandner/task/context_menus-ts\n\nConvert `/context_menus` and `/avatars` to TS",
+          "timestamp": "2021-09-14T13:07:15-06:00",
+          "tree_id": "7e8995e6c869364f46fcb82d2208f59ccdfee7b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/333418232ded176cd5f7e58c2bb27c6b95d76030"
+        },
+        "date": 1631646743970,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4197.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1047.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1631.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4076.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
