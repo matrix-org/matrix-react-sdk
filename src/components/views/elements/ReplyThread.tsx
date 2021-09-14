@@ -88,22 +88,10 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         // could be used here for replies as well... However, the helper
         // currently assumes the relation has a `rel_type`, which older replies
         // do not, so this block is left as-is for now.
+        //
+        // We're using ev.getContent() over ev.getWireContent() to make sure
+        // we grab the latest edit with potentially new relations.
         const mRelatesTo = ev.getContent()['m.relates_to'];
-        
-        if (
-            ev.event.room_id === "!iaiMnvSLPTbPYMnjvJ:my.matrix.host" &&
-            [
-                // The event being replied to
-                '$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og',
-                // The original "foo" message
-                '$yvuev9bF2nLRf8fscG55njpVjY3FHJzWgZ4BKI9_0eg',
-                // The replacing event
-                '$4gJk89MFndw_By0dJoxwF2fekM-0ufw7kkdlUD2DNUQ'
-            ].includes(ev.event.event_id)
-        ) {
-            console.log('getParentEventId', ev.event.event_id, `mRelatesTo=${mRelatesTo}`)
-        }
-
         if (mRelatesTo && mRelatesTo['m.in_reply_to']) {
             const mInReplyTo = mRelatesTo['m.in_reply_to'];
             if (mInReplyTo && mInReplyTo['event_id']) return mInReplyTo['event_id'];
@@ -254,20 +242,6 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         layout: Layout,
         alwaysShowTimestamps: boolean,
     ): JSX.Element {
-        if (
-            parentEv.event.room_id === "!iaiMnvSLPTbPYMnjvJ:my.matrix.host" &&
-            [
-                // The event being replied to
-                '$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og',
-                // The original "foo" message
-                '$yvuev9bF2nLRf8fscG55njpVjY3FHJzWgZ4BKI9_0eg',
-                // The replacing event
-                '$4gJk89MFndw_By0dJoxwF2fekM-0ufw7kkdlUD2DNUQ'
-            ].includes(parentEv.event.event_id)
-        ) {
-            console.log('parentEv', parentEv.event.event_id);
-        }
-
         if (!ReplyThread.getParentEventId(parentEv)) return null;
         return <ReplyThread
             parentEv={parentEv}
@@ -376,7 +350,6 @@ export default class ReplyThread extends React.Component<IProps, IState> {
             </blockquote>;
         } else if (this.state.loadedEv) {
             const ev = this.state.loadedEv;
-            
             const room = this.context.getRoom(ev.getRoomId());
             header = <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(ev)}`}>
                 {
@@ -396,8 +369,6 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         } else if (this.state.loading) {
             header = <Spinner w={16} h={16} />;
         }
-
-        console.log('ReplyThread', 'this.props.parentEv', this.props.parentEv.event.event_id, 'this.state.loadedEv', this.state.loadedEv, 'this.state.events', this.state.events)
 
         const evTiles = this.state.events.map((ev) => {
             return <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(ev)}`} key={ev.getId()}>
