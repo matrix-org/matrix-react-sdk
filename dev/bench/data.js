@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631631500347,
+  "lastUpdate": 1631631678029,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -24716,6 +24716,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4280.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1298fddebfbe250da9a929c6d65a4ef6cc40ab6c",
+          "message": "Merge pull request #6800 from matrix-org/t3chguy/fix/18694\n\nSimplify Space Panel layout and fix some edge cases",
+          "timestamp": "2021-09-14T15:55:44+01:00",
+          "tree_id": "c850be7451221d5ddec293556d1815d81e532fbe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1298fddebfbe250da9a929c6d65a4ef6cc40ab6c"
+        },
+        "date": 1631631676733,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4071.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 983.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
