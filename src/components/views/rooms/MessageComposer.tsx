@@ -382,12 +382,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 null,
         ];
 
-        let menuPosition: AboveLeftOf | undefined;
-        if (this.ref.current) {
-            const contentRect = this.ref.current.getBoundingClientRect();
-            menuPosition = aboveLeftOf(contentRect);
-        }
-
         if (!this.state.tombstone && this.state.canSendMessages) {
             controls.push(
                 <SendMessageComposer
