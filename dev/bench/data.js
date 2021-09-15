@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631718010043,
+  "lastUpdate": 1631719605968,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25412,6 +25412,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4004.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5c2467df7eafe6e7893e51836a0bd7be6757dbb1",
+          "message": "Merge pull request #6810 from matrix-org/redact-all-rooms\n\nRedact all room data in tracking",
+          "timestamp": "2021-09-15T16:20:45+01:00",
+          "tree_id": "89b908b7c485879600203dca03fd29824675d867",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5c2467df7eafe6e7893e51836a0bd7be6757dbb1"
+        },
+        "date": 1631719604211,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5019.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 939.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1805.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4664.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
