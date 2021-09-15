@@ -37,6 +37,8 @@ import ReplyTile from "../rooms/ReplyTile";
 import Pill from './Pill';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
+const SHOW_EXPAND_THREADS_ON_THAT_MANY_PIXELS = 60;
+
 interface IProps {
     // the latest event in this chain of replies
     parentEv?: MatrixEvent;
@@ -258,7 +260,9 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
             const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
             if (el) {
-                const isElipsisShown = el.offsetHeight > 60;
+                const code: HTMLElement | null = el.querySelector('code');
+                const isCodeEllipsisShown = code ? code.offsetHeight >= SHOW_EXPAND_THREADS_ON_THAT_MANY_PIXELS : false;
+                const isElipsisShown = el.offsetHeight >= SHOW_EXPAND_THREADS_ON_THAT_MANY_PIXELS || isCodeEllipsisShown;
                 if (isElipsisShown) {
                     this.props.setThreadExpandable();
                 }

@@ -914,7 +914,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
-    private setThreadExpanded = (expanded?: boolean) => {
+    private setQuoteExpanded = (expanded?: boolean) => {
         this.setState({
             isQuoteExpanded: expanded,
         });
@@ -1062,7 +1062,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             getReplyThread={this.getReplyThread}
             onFocusChange={this.onActionBarFocusChange}
             isQuoteExpanded={this.state.isQuoteExpanded}
-            toggleThreadExpanded={() => this.setThreadExpanded(!this.state.isQuoteExpanded)}
+            toggleThreadExpanded={() => this.setQuoteExpanded(!this.state.isQuoteExpanded)}
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs()
@@ -1210,7 +1210,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         layout={this.props.layout}
                         alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
                         isQuoteExpanded={this.state.isQuoteExpanded}
-                        setThreadExpandable={() => this.setThreadExpanded(false)}
+                        setThreadExpandable={() => this.setQuoteExpanded(false)}
                     />) : null;
                 const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
 
