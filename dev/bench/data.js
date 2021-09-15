@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631725125355,
+  "lastUpdate": 1631738457436,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25592,6 +25592,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4269.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "53041ba4b87652cda59cbca073979638b5ed1035",
+          "message": "Merge pull request #6816 from matrix-org/revert-6809-madlittlemods/10391-show-relations-in-new-edit-content\n\nRevert \"Show updated relation reply from edited message\"",
+          "timestamp": "2021-09-15T14:35:05-06:00",
+          "tree_id": "c3cfd423cf46f322fcfde0fc1e771128d53f5928",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/53041ba4b87652cda59cbca073979638b5ed1035"
+        },
+        "date": 1631738455130,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4945.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 914.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1656,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4552.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
