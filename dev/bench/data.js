@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631706986935,
+  "lastUpdate": 1631718010043,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25364,6 +25364,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4275.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b09ebca6881f818ec401ec14db9c7951fb68b7f2",
+          "message": "Merge pull request #6812 from matrix-org/dbkr/fix_roomlist_prompt\n\nFix checks to show prompt to start new chats",
+          "timestamp": "2021-09-15T15:54:53+01:00",
+          "tree_id": "111384fd1b89050830387d3180df80a2baf0665a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b09ebca6881f818ec401ec14db9c7951fb68b7f2"
+        },
+        "date": 1631718007855,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4123.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 848.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1769.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4004.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
