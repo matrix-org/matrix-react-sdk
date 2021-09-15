@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631719668504,
+  "lastUpdate": 1631724893805,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25496,6 +25496,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1028.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eaab8e15701da82fbc93f54ab34bacb2e3ab1361",
+          "message": "Show updated relation reply from edited message (#6809)\n\nPart of https://github.com/vector-im/element-web/issues/10391#issuecomment-906131724\r\n\r\nWhen `m.relates_to` -> `m.in_reply_to` is provided in `m.new_content`\r\nfor an edited message, use the updated reply.\r\n\r\nex.\r\n\r\n```json\r\n{\r\n  \"type\": \"m.room.message\",\r\n  \"content\": {\r\n    \"body\": \" * foo bar\",\r\n    \"msgtype\": \"m.text\",\r\n    \"m.new_content\": {\r\n      \"body\": \"foo bar\",\r\n      \"msgtype\": \"m.text\",\r\n      \"m.relates_to\": {\r\n        \"m.in_reply_to\": {\r\n          \"event_id\": \"$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og\"\r\n        }\r\n      }\r\n    },\r\n    \"m.relates_to\": {\r\n      \"rel_type\": \"m.replace\",\r\n      \"event_id\": \"$lX9MRe9ZTFOOvnU8PRVbvr1wqGtYvNQ1rSot-iUTN5k\"\r\n    }\r\n  }\r\n}\r\n```",
+          "timestamp": "2021-09-15T11:49:04-05:00",
+          "tree_id": "0d0b9ad9b896187ae8474c5c377b74d392e8eb55",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eaab8e15701da82fbc93f54ab34bacb2e3ab1361"
+        },
+        "date": 1631724891728,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4229.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 943.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1807,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4638.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
