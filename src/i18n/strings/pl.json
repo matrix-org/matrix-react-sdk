@@ -567,6 +567,8 @@
     "Logs sent": "Zapis rozmów wysłany",
     "Back": "Powrót",
     "Reply": "Odpowiedz",
+    "Collapse quote | ⇧+click": "Skurcz cytat | ⇧+click",
+    "Expand quote | ⇧+click": "Rozszerz cytat | ⇧+click",
     "Show message in desktop notification": "Pokaż wiadomość w notyfikacji na pulpicie",
     "Debug logs contain application usage data including your username, the IDs or aliases of the rooms or groups you have visited and the usernames of other users. They do not contain messages.": "Dziennik błędów zawiera dane użytkowania aplikacji, w tym: twoją nazwę użytkownika, numery ID, aliasy pokojów i grup które odwiedzałeś i loginy innych użytkowników. Nie zawiera wiadomości.",
     "Unhide Preview": "Odkryj podgląd",
