@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631652367592,
+  "lastUpdate": 1631706986935,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25316,6 +25316,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3987.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1aabe4b5353955fb55dc02ea11306bc13c53c206",
+          "message": "Merge pull request #6807 from matrix-org/pseudonymous-analytics-id\n\nReplace Posthog user hash-based tracking with a UUID stored in account_data",
+          "timestamp": "2021-09-15T12:50:59+01:00",
+          "tree_id": "0bdfa7e5decf037b520374c81d1e47746be0d8d6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1aabe4b5353955fb55dc02ea11306bc13c53c206"
+        },
+        "date": 1631706985119,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4530.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1065.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1642.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4275.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
