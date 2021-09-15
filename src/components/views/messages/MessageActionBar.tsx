@@ -336,7 +336,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 });
                 toolbarOpts.push(<RovingAccessibleTooltipButton
                     className={expandClassName}
-                    title={this.props.isQuoteExpanded ? _t("Collapse") : _t("Expand")}
+                    title={this.props.isQuoteExpanded ? _t("Collapse quote | ⇧+click") : _t("Expand quote | ⇧+click")}
                     onClick={this.props.toggleThreadExpanded}
                     key="expand"
                 />);

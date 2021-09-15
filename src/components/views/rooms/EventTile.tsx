@@ -914,12 +914,11 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
-    private setQuoteExpanded = (expanded?: boolean) => {
+    private setQuoteExpanded = (expanded: boolean) => {
         this.setState({
             isQuoteExpanded: expanded,
         });
     };
-
     render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
@@ -929,6 +928,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             isInfoMessage,
             isLeftAlignedBubbleMessage,
         } = getEventDisplayInfo(this.props.mxEvent);
+        const { isQuoteExpanded } = this.state;
 
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
@@ -1061,8 +1061,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             getTile={this.getTile}
             getReplyThread={this.getReplyThread}
             onFocusChange={this.onActionBarFocusChange}
-            isQuoteExpanded={this.state.isQuoteExpanded}
-            toggleThreadExpanded={() => this.setQuoteExpanded(!this.state.isQuoteExpanded)}
+            isQuoteExpanded={isQuoteExpanded}
+            toggleThreadExpanded={() => this.setQuoteExpanded(!isQuoteExpanded)}
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs()
@@ -1209,8 +1209,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator}
                         layout={this.props.layout}
                         alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
-                        isQuoteExpanded={this.state.isQuoteExpanded}
-                        setThreadExpandable={() => this.setQuoteExpanded(false)}
+                        isQuoteExpanded={isQuoteExpanded}
+                        setQuoteExpanded={this.setQuoteExpanded}
                     />) : null;
                 const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
 

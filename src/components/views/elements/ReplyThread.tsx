@@ -37,7 +37,7 @@ import ReplyTile from "../rooms/ReplyTile";
 import Pill from './Pill';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
-const SHOW_EXPAND_THREADS_ON_THAT_MANY_PIXELS = 60;
+const SHOW_EXPAND_QUOTE_PIXELS = 60;
 
 interface IProps {
     // the latest event in this chain of replies
@@ -50,7 +50,7 @@ interface IProps {
     // Whether to always show a timestamp
     alwaysShowTimestamps?: boolean;
     isQuoteExpanded?: boolean;
-    setThreadExpandable: () => void;
+    setQuoteExpanded: (isExpanded: boolean) => void;
 }
 
 interface IState {
@@ -244,27 +244,27 @@ export default class ReplyThread extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.initialize();
-        this.updateExpandStatus();
+        this.setQuotedExpandable();
     }
 
     componentDidUpdate() {
         this.props.onHeightChanged();
-        this.updateExpandStatus();
+        this.setQuotedExpandable();
     }
 
     componentWillUnmount() {
         this.unmounted = true;
     }
 
-    private updateExpandStatus() {
+    private setQuotedExpandable() {
         if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
             const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
             if (el) {
                 const code: HTMLElement | null = el.querySelector('code');
-                const isCodeEllipsisShown = code ? code.offsetHeight >= SHOW_EXPAND_THREADS_ON_THAT_MANY_PIXELS : false;
-                const isElipsisShown = el.offsetHeight >= SHOW_EXPAND_THREADS_ON_THAT_MANY_PIXELS || isCodeEllipsisShown;
+                const isCodeEllipsisShown = code ? code.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS : false;
+                const isElipsisShown = el.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS || isCodeEllipsisShown;
                 if (isElipsisShown) {
-                    this.props.setThreadExpandable();
+                    this.props.setQuoteExpanded(false);
                 }
             }
         }
@@ -323,7 +323,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         this.initialize();
     };
 
-    private onQuoteClick = async (): Promise<void> => {
+    private onQuoteClick = async (event): Promise<void> => {
         const events = [this.state.loadedEv, ...this.state.events];
 
         let loadedEv = null;
@@ -391,6 +391,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
                         mxEvent={ev}
                         onHeightChanged={this.props.onHeightChanged}
                         permalinkCreator={this.props.permalinkCreator}
+                        toggleExpandedQuote={() => this.props.setQuoteExpanded(!this.props.isQuoteExpanded)}
                     />
                 </blockquote>
             );
