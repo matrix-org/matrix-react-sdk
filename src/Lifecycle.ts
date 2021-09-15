@@ -578,7 +578,7 @@ async function doSetLoggedIn(
 
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
+    PosthogAnalytics.instance.updateAnonymityFromSettings();
 
     const client = MatrixClientPeg.get();
 

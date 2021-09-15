@@ -206,20 +206,11 @@ export class PosthogAnalytics {
 
     private static getAnonymityFromSettings(): Anonymity {
         // determine the current anonymity level based on current user settings
-
-        // "Send anonymous usage data which helps us improve Element. This will use a cookie."
-        const analyticsOptIn = SettingsStore.getValue("analyticsOptIn", null, true);
-
-        // (proposed wording) "Send pseudonymous usage data which helps us improve Element. This will use a cookie."
-        //
-        // TODO: Currently, this is only a labs flag, for testing purposes.
-        const pseudonumousOptIn = SettingsStore.getValue("feature_pseudonymous_analytics_opt_in", null, true);
+        const pseudonumousOptIn = SettingsStore.getValue("pseudonymousAnalyticsOptIn", null, true);
 
         let anonymity;
         if (pseudonumousOptIn) {
             anonymity = Anonymity.Pseudonymous;
-        } else if (analyticsOptIn) {
-            anonymity = Anonymity.Anonymous;
         } else {
             anonymity = Anonymity.Disabled;
         }
@@ -370,11 +361,10 @@ export class PosthogAnalytics {
         this.registerSuperProperties(this.platformSuperProperties);
     }
 
-    public async updateAnonymityFromSettings(userId?: string): Promise<void> {
+    public async updateAnonymityFromSettings(): Promise<void> {
         // Update this.anonymity based on the user's analytics opt-in settings
-        // Identify the user (via hashed user ID) to posthog if anonymity is pseudonmyous
         this.setAnonymity(PosthogAnalytics.getAnonymityFromSettings());
-        if (userId && this.getAnonymity() == Anonymity.Pseudonymous) {
+        if (this.getAnonymity() == Anonymity.Pseudonymous) {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
         }
     }

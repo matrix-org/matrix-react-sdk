@@ -49,7 +49,7 @@ export const showToast = (policyUrl?: string) => {
         title: _t("Help us improve %(brand)s", { brand }),
         props: {
             description: _t(
-                "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. " +
+                "Send <UsageDataLink>analytics data</UsageDataLink> which helps us improve %(brand)s. " +
                 "This will use a <PolicyLink>cookie</PolicyLink>.",
                 {
                     brand,

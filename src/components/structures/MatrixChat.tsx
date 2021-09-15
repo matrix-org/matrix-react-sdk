@@ -386,7 +386,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         }
 
-        if (SettingsStore.getValue("analyticsOptIn")) {
+        // continue to enable deprecated old analytics, for now, based on the new flag
+        if (SettingsStore.getValue("pseudonymousAnalyticsOptIn")) {
             Analytics.enable();
         }
 
@@ -504,8 +505,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 } else {
                     dis.dispatch({ action: "view_welcome_page" });
                 }
-            } else if (SettingsStore.getValue("analyticsOptIn")) {
-                CountlyAnalytics.instance.enable(/* anonymous = */ false);
             }
         });
         // Note we don't catch errors from this: we catch everything within
@@ -822,8 +821,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 });
                 break;
             case 'accept_cookies':
-                SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, true);
-                SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
+                SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, true);
+                SettingsStore.setValue("showPseudonymousAnalyticsPrompt", null, SettingLevel.ACCOUNT, false);
                 hideAnalyticsToast();
                 if (Analytics.canEnable()) {
                     Analytics.enable();
@@ -831,10 +830,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (CountlyAnalytics.instance.canEnable()) {
                     CountlyAnalytics.instance.enable(/* anonymous = */ false);
                 }
+                PosthogAnalytics.instance.updateAnonymityFromSettings();
                 break;
             case 'reject_cookies':
-                SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, false);
-                SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
+                SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, false);
+                SettingsStore.setValue("showPseudonymousAnalyticsPrompt", null, SettingLevel.ACCOUNT, false);
+                PosthogAnalytics.instance.updateAnonymityFromSettings();
                 hideAnalyticsToast();
                 break;
         }
@@ -1320,8 +1321,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // defer the following actions by 30 seconds to not throw them at the user immediately
         await sleep(30);
-        if (SettingsStore.getValue("showCookieBar") &&
-            (Analytics.canEnable() || CountlyAnalytics.instance.canEnable())
+        if (SettingsStore.getValue("showPseudonymousAnalyticsPrompt") &&
+            PosthogAnalytics.instance.isEnabled()
         ) {
             showAnalyticsToast(this.props.config.piwik?.policyUrl);
         }

@@ -278,13 +278,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_pseudonymous_analytics_opt_in": {
-        isFeature: true,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td('Send pseudonymous analytics data'),
-        default: false,
-        controller: new PseudonymousAnalyticsController(),
-    },
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,
@@ -561,13 +554,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevelsAreOrdered: true,
         default: {}, // none allowed
     },
-    "analyticsOptIn": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+    "pseudonymousAnalyticsOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
         default: false,
     },
-    "showCookieBar": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+    "showPseudonymousAnalyticsPrompt": {
+        supportedLevels: [SettingLevel.ACCOUNT],
         default: true,
     },
     "autocompleteDelay": {

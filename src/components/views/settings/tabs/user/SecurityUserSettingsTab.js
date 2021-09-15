@@ -107,7 +107,7 @@ export default class SecurityUserSettingsTab extends React.Component {
     _updateAnalytics = (checked) => {
         checked ? Analytics.enable() : Analytics.disable();
         CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
-        PosthogAnalytics.instance.updateAnonymityFromSettings(MatrixClientPeg.get().getUserId());
+        PosthogAnalytics.instance.updateAnonymityFromSettings();
     };
 
     _onExportE2eKeysClicked = () => {
@@ -365,7 +365,7 @@ export default class SecurityUserSettingsTab extends React.Component {
                             { _t("Learn more about how we use analytics.") }
                         </AccessibleButton>
                     </div>
-                    <SettingsFlag name="analyticsOptIn" level={SettingLevel.DEVICE} onChange={this._updateAnalytics} />
+                    <SettingsFlag name="pseudonymousAnalyticsOptIn" level={SettingLevel.DEVICE} onChange={this._updateAnalytics} />
                 </div>
             </React.Fragment>;
         }
