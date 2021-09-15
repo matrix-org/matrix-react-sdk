@@ -355,7 +355,7 @@ export default class SecurityUserSettingsTab extends React.Component {
                     <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
                     <div className="mx_SettingsTab_subsectionText">
                         { _t(
-                            "%(brand)s collects anonymous analytics to allow us to improve the application.",
+                            "%(brand)s collects analytics to allow us to improve the application.",
                             { brand },
                         ) }
                         &nbsp;
