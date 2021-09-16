@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631788722409,
+  "lastUpdate": 1631799291150,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25916,6 +25916,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4380.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d026dce723c15d03a98eff17cb271a38e8676d0c",
+          "message": "Merge pull request #6820 from matrix-org/palid/fix/invalid-property-ts\n\nFix invalid accessor for  method.",
+          "timestamp": "2021-09-16T15:29:21+02:00",
+          "tree_id": "7010e5cf7f48fd1e5175e55e36568f25f89dd666",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d026dce723c15d03a98eff17cb271a38e8676d0c"
+        },
+        "date": 1631799289818,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4639.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 955.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1634.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4374.5,
             "unit": "ms",
             "extra": "type: measure"
           }
