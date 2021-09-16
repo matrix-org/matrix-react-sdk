@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631784100309,
+  "lastUpdate": 1631785851734,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25772,6 +25772,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4103.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3b39ba6590c2aac66e4d799c00cf5debfd5afd31",
+          "message": "Merge pull request #6787 from SimonBrandner/task/structures-ts",
+          "timestamp": "2021-09-16T10:45:12+01:00",
+          "tree_id": "596f02f63b8601f597e5ca3a4dd7372eed7e8303",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3b39ba6590c2aac66e4d799c00cf5debfd5afd31"
+        },
+        "date": 1631785850027,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4466.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 935.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1817.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4352.5,
             "unit": "ms",
             "extra": "type: measure"
           }
