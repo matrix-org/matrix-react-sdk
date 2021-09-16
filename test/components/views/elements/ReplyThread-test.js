@@ -1,4 +1,4 @@
-
+import "../../../skinned-sdk";
 import * as testUtils from '../../../test-utils';
 import ReplyThread from '../../../../src/components/views/elements/ReplyThread';
 
