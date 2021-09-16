@@ -23,6 +23,7 @@ import Analytics from "../Analytics";
 import AccessibleButton from "../components/views/elements/AccessibleButton";
 import GenericToast from "../components/views/toasts/GenericToast";
 import ToastStore from "../stores/ToastStore";
+import SettingsStore from "../settings/SettingsStore";
 
 const onAccept = () => {
     dis.dispatch({
@@ -44,26 +45,55 @@ const TOAST_KEY = "analytics";
 
 export const showToast = (policyUrl?: string) => {
     const brand = SdkConfig.get().brand;
+    const usageDataLink = (sub) => (
+        <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
+    );
+
+    let description;
+    const analyticsOptIn = SettingsStore.getValue("analyticsOptIn", null, true);
+    if (analyticsOptIn) {
+        // The user previously opted into our old analytics system - let them know things have changed and ask
+        // them to opt in again
+        description = _t(`To allow us to understand how people use multiple devices with Element,
+we’ve enhanced our <UsageDataLink>analytics data</UsageDataLink> to include a randomly generated identifier associated
+with your account that will be shared across your devices.` + "<Linebreak/><Linebreak/>" +
+            `We care about privacy, so we still don’t record any personal or identifiable data, and the identifier
+isn’t shared with any third parties.` + "<Linebreak/><Linebreak/>" +
+            "You previously agreed to send us anonymous usage data - is this still okay?",
+        {
+            brand,
+        },
+        {
+            "UsageDataLink": usageDataLink,
+            "Linebreak": (sub) => <br />,
+        });
+    } else if (analyticsOptIn === null || analyticsOptIn === undefined) {
+        // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
+        // explaining any change.
+        description = _t(
+            "Send <UsageDataLink>analytics data</UsageDataLink> which helps us improve %(brand)s. " +
+            "This will use a <PolicyLink>cookie</PolicyLink>.",
+            {
+                brand,
+            },
+            {
+                "UsageDataLink": usageDataLink,
+                // XXX: We need to link to the page that explains our cookies
+                "PolicyLink": (sub) => policyUrl ? (
+                    <a target="_blank" href={policyUrl}>{ sub }</a>
+                ) : sub,
+            },
+        );
+    } else { // false
+        // The user previously opted out of analytics, don't ask again
+        return;
+    }
+
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
         title: _t("Help us improve %(brand)s", { brand }),
         props: {
-            description: _t(
-                "Send <UsageDataLink>analytics data</UsageDataLink> which helps us improve %(brand)s. " +
-                "This will use a <PolicyLink>cookie</PolicyLink>.",
-                {
-                    brand,
-                },
-                {
-                    "UsageDataLink": (sub) => (
-                        <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
-                    ),
-                    // XXX: We need to link to the page that explains our cookies
-                    "PolicyLink": (sub) => policyUrl ? (
-                        <a target="_blank" href={policyUrl}>{ sub }</a>
-                    ) : sub,
-                },
-            ),
+            description: description,
             acceptLabel: _t("Yes"),
             onAccept,
             rejectLabel: _t("No"),
