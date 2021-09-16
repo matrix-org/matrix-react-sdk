@@ -1,5 +1,4 @@
 
-
 import * as testUtils from '../../../test-utils';
 import ReplyThread from '../../../../src/components/views/elements/ReplyThread';
 
@@ -10,18 +9,18 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n foo",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n foo",
                     "m.relates_to": {
                         "m.in_reply_to": {
-                            "event_id": "$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og"
-                        }
-                    }
+                            "event_id": "$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og",
+                        },
+                    },
                 },
                 user: "some_other_user",
                 room: "room_id",
             });
-            
+
             expect(ReplyThread.getParentEventId(originalEventWithRelation))
                 .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
         });
@@ -31,13 +30,13 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n foo",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n foo",
                     "m.relates_to": {
                         "m.in_reply_to": {
-                            "event_id": "$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og"
-                        }
-                    }
+                            "event_id": "$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og",
+                        },
+                    },
                 },
                 user: "some_other_user",
                 room: "room_id",
@@ -47,15 +46,15 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n * foo bar",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n * foo bar",
                     "m.new_content": {
                         "msgtype": "m.text",
-                        "body": "foo bar"
+                        "body": "foo bar",
                     },
                     "m.relates_to": {
                         "rel_type": "m.replace",
-                        "event_id": originalEventWithRelation.event_id
+                        "event_id": originalEventWithRelation.event_id,
                     },
                 },
                 user: "some_other_user",
@@ -64,7 +63,7 @@ describe("ReplyThread", () => {
 
             // The edit replaces the original event
             originalEventWithRelation.makeReplaced(editEvent);
-            
+
             // The relation should be pulled from the original event
             expect(ReplyThread.getParentEventId(originalEventWithRelation))
                 .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
@@ -86,20 +85,20 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n * foo bar",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n * foo bar",
                     "m.new_content": {
                         "msgtype": "m.text",
                         "body": "foo bar",
                         "m.relates_to": {
                             "m.in_reply_to": {
-                                "event_id": "$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og"
-                            }
-                        }
+                                "event_id": "$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og",
+                            },
+                        },
                     },
                     "m.relates_to": {
                         "rel_type": "m.replace",
-                        "event_id": originalEvent.event_id
+                        "event_id": originalEvent.event_id,
                     },
                 },
                 user: "some_other_user",
@@ -108,7 +107,7 @@ describe("ReplyThread", () => {
 
             // The edit replaces the original event
             originalEvent.makeReplaced(editEvent);
-            
+
             // The relation should be pulled from the edit event
             expect(ReplyThread.getParentEventId(originalEvent))
                 .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
@@ -119,13 +118,13 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n foo",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n foo",
                     "m.relates_to": {
                         "m.in_reply_to": {
-                            "event_id": "$111"
-                        }
-                    }
+                            "event_id": "$111",
+                        },
+                    },
                 },
                 user: "some_other_user",
                 room: "room_id",
@@ -135,20 +134,20 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n * foo bar",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n * foo bar",
                     "m.new_content": {
                         "msgtype": "m.text",
                         "body": "foo bar",
                         "m.relates_to": {
                             "m.in_reply_to": {
-                                "event_id": "$999"
-                            }
-                        }
+                                "event_id": "$999",
+                            },
+                        },
                     },
                     "m.relates_to": {
                         "rel_type": "m.replace",
-                        "event_id": originalEventWithRelation.event_id
+                        "event_id": originalEventWithRelation.event_id,
                     },
                 },
                 user: "some_other_user",
@@ -157,7 +156,7 @@ describe("ReplyThread", () => {
 
             // The edit replaces the original event
             originalEventWithRelation.makeReplaced(editEvent);
-            
+
             // The relation should be pulled from the edit event
             expect(ReplyThread.getParentEventId(originalEventWithRelation)).toStrictEqual('$999');
         });
@@ -167,13 +166,13 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n foo",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n foo",
                     "m.relates_to": {
                         "m.in_reply_to": {
-                            "event_id": "$111"
-                        }
-                    }
+                            "event_id": "$111",
+                        },
+                    },
                 },
                 user: "some_other_user",
                 room: "room_id",
@@ -183,17 +182,17 @@ describe("ReplyThread", () => {
                 event: true,
                 type: "m.room.message",
                 content: {
-                    msgtype: "m.text",
-                    body: "> Reply to this message\n\n * foo bar",
+                    "msgtype": "m.text",
+                    "body": "> Reply to this message\n\n * foo bar",
                     "m.new_content": {
                         "msgtype": "m.text",
                         "body": "foo bar",
                         // Clear the relation from the original event
-                        "m.relates_to": {}
+                        "m.relates_to": {},
                     },
                     "m.relates_to": {
                         "rel_type": "m.replace",
-                        "event_id": originalEventWithRelation.event_id
+                        "event_id": originalEventWithRelation.event_id,
                     },
                 },
                 user: "some_other_user",
@@ -206,5 +205,5 @@ describe("ReplyThread", () => {
             // The relation should be pulled from the edit event
             expect(ReplyThread.getParentEventId(originalEventWithRelation)).toStrictEqual(undefined);
         });
-    })
-})
+    });
+});
