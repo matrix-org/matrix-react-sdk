@@ -1201,17 +1201,18 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
 
             default: {
-                const thread = ReplyThread.hasThreadReply(this.props.mxEvent) ? (
-                    <ReplyThread
-                        parentEv={this.props.mxEvent}
-                        onHeightChanged={this.props.onHeightChanged}
-                        ref={this.replyThread}
-                        permalinkCreator={this.props.permalinkCreator}
-                        layout={this.props.layout}
-                        alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
-                        isQuoteExpanded={isQuoteExpanded}
-                        setQuoteExpanded={this.setQuoteExpanded}
-                    />) : null;
+                const thread = haveTileForEvent(this.props.mxEvent) &&
+                    ReplyThread.hasThreadReply(this.props.mxEvent) ? (
+                        <ReplyThread
+                            parentEv={this.props.mxEvent}
+                            onHeightChanged={this.props.onHeightChanged}
+                            ref={this.replyThread}
+                            permalinkCreator={this.props.permalinkCreator}
+                            layout={this.props.layout}
+                            alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
+                            isQuoteExpanded={isQuoteExpanded}
+                            setQuoteExpanded={this.setQuoteExpanded}
+                        />) : null;
                 const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
 
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
