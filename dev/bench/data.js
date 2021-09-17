@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631878419577,
+  "lastUpdate": 1631897098150,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26156,6 +26156,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4836.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "05971e04926c612ddbcb47996ff3a5a5beb429c2",
+          "message": "Merge pull request #6823 from SimonBrandner/fix/emoji-dupe/19073\n\nFix last character duplication with `Automatically replace plain text emoji` on",
+          "timestamp": "2021-09-17T10:39:47-06:00",
+          "tree_id": "9661a16012cb1fd207159d91e6b0e404bb49a39d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/05971e04926c612ddbcb47996ff3a5a5beb429c2"
+        },
+        "date": 1631897096630,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4321.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 862.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1578.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4097.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
