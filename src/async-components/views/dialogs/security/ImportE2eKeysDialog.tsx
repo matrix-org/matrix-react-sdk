@@ -33,9 +33,9 @@ function readFileAsArrayBuffer(file: File): Promise<string | ArrayBuffer> {
     });
 }
 
-export enum ImportE2EKeysPhase {
-    Edit = 1,
-    Importing = 2,
+enum ImportE2EKeysPhase {
+    Edit,
+    Importing,
 }
 
 interface IProps {
@@ -51,8 +51,8 @@ interface IState {
 
 export default class ImportE2eKeysDialog extends React.Component<IProps, IState> {
     private unmounted = false;
-    private file: React.RefObject<HTMLInputElement> = createRef();
-    private passphrase: React.RefObject<HTMLInputElement> = createRef();
+    private file = createRef<HTMLInputElement>();
+    private passphrase = createRef<HTMLInputElement>();
 
     constructor(props: IProps) {
         super(props);

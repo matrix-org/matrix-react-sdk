@@ -30,14 +30,14 @@ import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
 import Spinner from '../../../../components/views/elements/Spinner';
 
-enum CreateKeyBackupPhases {
-    Passphrase = 0,
-    PassphraseConfirm = 1,
-    ShowKey = 2,
-    KeepItSafe = 3,
-    BackingUp = 4,
-    Done = 5,
-    OptOutConfirm = 6,
+enum CreateKeyBackupPhase {
+    Passphrase,
+    PassphraseConfirm,
+    ShowKey,
+    KeepItSafe,
+    BackingUp,
+    Done,
+    OptOutConfirm,
 }
 
 const PASSWORD_MIN_SCORE = 4; // So secure, many characters, much complex, wow, etc, etc.
@@ -48,7 +48,7 @@ interface IProps {
 
 interface IState {
     secureSecretStorage: boolean;
-    phase: CreateKeyBackupPhases;
+    phase: CreateKeyBackupPhase;
     passPhrase: string;
     passPhraseValid: boolean;
     passPhraseConfirm: string;
@@ -62,8 +62,8 @@ interface IState {
  * on the server.
  */
 export default class CreateKeyBackupDialog extends React.PureComponent<IProps, IState> {
-    private recoveryKeyNode: HTMLElement = null;
-    private passphraseField: React.RefObject<Field> = createRef();
+    private recoveryKeyRef = createRef<HTMLElement>();
+    private passphraseField = createRef<Field>();
     private keyBackupInfo: Pick<IPreparedKeyBackupVersion, "algorithm" | "auth_data" | "recovery_key"> = null;
 
     constructor(props: IProps) {
@@ -71,7 +71,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
 
         this.state = {
             secureSecretStorage: null,
-            phase: CreateKeyBackupPhases.Passphrase,
+            phase: CreateKeyBackupPhase.Passphrase,
             passPhrase: '',
             passPhraseValid: false,
             passPhraseConfirm: '',
@@ -88,21 +88,17 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         // If we're using secret storage, skip ahead to the backing up step, as
         // `accessSecretStorage` will handle passphrases as needed.
         if (secureSecretStorage) {
-            this.setState({ phase: CreateKeyBackupPhases.BackingUp });
+            this.setState({ phase: CreateKeyBackupPhase.BackingUp });
             this.createBackup();
         }
     }
 
-    private collectRecoveryKeyNode = (n: HTMLElement): void => {
-        this.recoveryKeyNode = n;
-    };
-
     private onCopyClick = (): void => {
-        const successful = copyNode(this.recoveryKeyNode);
+        const successful = copyNode(this.recoveryKeyRef.current);
         if (successful) {
             this.setState({
                 copied: true,
-                phase: CreateKeyBackupPhases.KeepItSafe,
+                phase: CreateKeyBackupPhase.KeepItSafe,
             });
         }
     };
@@ -115,14 +111,14 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
 
         this.setState({
             downloaded: true,
-            phase: CreateKeyBackupPhases.KeepItSafe,
+            phase: CreateKeyBackupPhase.KeepItSafe,
         });
     };
 
     private createBackup = async (): Promise<void> => {
         const { secureSecretStorage } = this.state;
         this.setState({
-            phase: CreateKeyBackupPhases.BackingUp,
+            phase: CreateKeyBackupPhase.BackingUp,
             error: null,
         });
         let info;
@@ -142,7 +138,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             }
             await MatrixClientPeg.get().scheduleAllGroupSessionsForBackup();
             this.setState({
-                phase: CreateKeyBackupPhases.Done,
+                phase: CreateKeyBackupPhase.Done,
             });
         } catch (e) {
             console.error("Error creating key backup", e);
@@ -168,11 +164,11 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     };
 
     private onOptOutClick = (): void => {
-        this.setState({ phase: CreateKeyBackupPhases.OptOutConfirm });
+        this.setState({ phase: CreateKeyBackupPhase.OptOutConfirm });
     };
 
     private onSetUpClick = (): void => {
-        this.setState({ phase: CreateKeyBackupPhases.Passphrase });
+        this.setState({ phase: CreateKeyBackupPhase.Passphrase });
     };
 
     private onSkipPassPhraseClick = async () => {
@@ -180,7 +176,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         this.setState({
             copied: false,
             downloaded: false,
-            phase: CreateKeyBackupPhases.ShowKey,
+            phase: CreateKeyBackupPhase.ShowKey,
         });
     };
 
@@ -195,7 +191,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             return;
         }
 
-        this.setState({ phase: CreateKeyBackupPhases.PassphraseConfirm });
+        this.setState({ phase: CreateKeyBackupPhase.PassphraseConfirm });
     };
 
     private onPassPhraseConfirmNextClick = async (e: React.MouseEvent | React.FormEvent): Promise<void> => {
@@ -207,7 +203,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         this.setState({
             copied: false,
             downloaded: false,
-            phase: CreateKeyBackupPhases.ShowKey,
+            phase: CreateKeyBackupPhase.ShowKey,
         });
     };
 
@@ -216,13 +212,13 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             passPhrase: '',
             passPhraseValid: false,
             passPhraseConfirm: '',
-            phase: CreateKeyBackupPhases.Passphrase,
+            phase: CreateKeyBackupPhase.Passphrase,
         });
     };
 
     private onKeepItSafeBackClick = (): void => {
         this.setState({
-            phase: CreateKeyBackupPhases.ShowKey,
+            phase: CreateKeyBackupPhase.ShowKey,
         });
     };
 
@@ -361,7 +357,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                 </div>
                 <div className="mx_CreateKeyBackupDialog_recoveryKeyContainer">
                     <div className="mx_CreateKeyBackupDialog_recoveryKey">
-                        <code ref={this.collectRecoveryKeyNode}>{ this.keyBackupInfo.recovery_key }</code>
+                        <code ref={this.recoveryKeyRef}>{ this.keyBackupInfo.recovery_key }</code>
                     </div>
                     <div className="mx_CreateKeyBackupDialog_recoveryKeyButtons">
                         <button className="mx_Dialog_primary" onClick={this.onCopyClick}>
@@ -437,20 +433,20 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         </div>;
     }
 
-    private titleForPhase(phase: CreateKeyBackupPhases): string {
+    private titleForPhase(phase: CreateKeyBackupPhase): string {
         switch (phase) {
-            case CreateKeyBackupPhases.Passphrase:
+            case CreateKeyBackupPhase.Passphrase:
                 return _t('Secure your backup with a Security Phrase');
-            case CreateKeyBackupPhases.PassphraseConfirm:
+            case CreateKeyBackupPhase.PassphraseConfirm:
                 return _t('Confirm your Security Phrase');
-            case CreateKeyBackupPhases.OptOutConfirm:
+            case CreateKeyBackupPhase.OptOutConfirm:
                 return _t('Warning!');
-            case CreateKeyBackupPhases.ShowKey:
-            case CreateKeyBackupPhases.KeepItSafe:
+            case CreateKeyBackupPhase.ShowKey:
+            case CreateKeyBackupPhase.KeepItSafe:
                 return _t('Make a copy of your Security Key');
-            case CreateKeyBackupPhases.BackingUp:
+            case CreateKeyBackupPhase.BackingUp:
                 return _t('Starting backup...');
-            case CreateKeyBackupPhases.Done:
+            case CreateKeyBackupPhase.Done:
                 return _t('Success!');
             default:
                 return _t("Create key backup");
@@ -472,25 +468,25 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             </div>;
         } else {
             switch (this.state.phase) {
-                case CreateKeyBackupPhases.Passphrase:
+                case CreateKeyBackupPhase.Passphrase:
                     content = this.renderPhasePassPhrase();
                     break;
-                case CreateKeyBackupPhases.PassphraseConfirm:
+                case CreateKeyBackupPhase.PassphraseConfirm:
                     content = this.renderPhasePassPhraseConfirm();
                     break;
-                case CreateKeyBackupPhases.ShowKey:
+                case CreateKeyBackupPhase.ShowKey:
                     content = this.renderPhaseShowKey();
                     break;
-                case CreateKeyBackupPhases.KeepItSafe:
+                case CreateKeyBackupPhase.KeepItSafe:
                     content = this.renderPhaseKeepItSafe();
                     break;
-                case CreateKeyBackupPhases.BackingUp:
+                case CreateKeyBackupPhase.BackingUp:
                     content = this.renderBusyPhase();
                     break;
-                case CreateKeyBackupPhases.Done:
+                case CreateKeyBackupPhase.Done:
                     content = this.renderPhaseDone();
                     break;
-                case CreateKeyBackupPhases.OptOutConfirm:
+                case CreateKeyBackupPhase.OptOutConfirm:
                     content = this.renderPhaseOptOutConfirm();
                     break;
             }
@@ -500,7 +496,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             <BaseDialog className='mx_CreateKeyBackupDialog'
                 onFinished={this.props.onFinished}
                 title={this.titleForPhase(this.state.phase)}
-                hasCancel={[CreateKeyBackupPhases.Passphrase, CreateKeyBackupPhases.Done].includes(this.state.phase)}
+                hasCancel={[CreateKeyBackupPhase.Passphrase, CreateKeyBackupPhase.Done].includes(this.state.phase)}
             >
                 <div>
                     { content }

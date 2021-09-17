@@ -45,15 +45,15 @@ import Spinner from '../../../../components/views/elements/Spinner';
 import InteractiveAuthDialog from '../../../../components/views/dialogs/InteractiveAuthDialog';
 
 enum CreateSecretStoragePhases {
-    Loading = 0,
-    LoadError = 1,
-    ChooseKeyPassphrase = 2,
-    Migrate = 3,
-    Passphrase = 4,
-    PassphraseConfirm = 5,
-    ShowKey = 6,
-    Storing = 8,
-    ConfirmSkip = 10,
+    Loading,
+    LoadError,
+    ChooseKeyPassphrase,
+    Migrate,
+    Passphrase,
+    PassphraseConfirm,
+    ShowKey,
+    Storing,
+    ConfirmSkip,
 }
 
 const PASSWORD_MIN_SCORE = 4; // So secure, many characters, much complex, wow, etc, etc.
@@ -96,10 +96,10 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private recoveryKey: IRecoveryKey = null;
-    private recoveryKeyNode: HTMLElement = null;
+    private recoveryKeyRef = createRef<HTMLElement>();
     private backupKey: Uint8Array = null;
 
-    private passphraseField: React.RefObject<Field> = createRef();
+    private passphraseField = createRef<Field>();
 
     constructor(props: IProps) {
         super(props);
@@ -223,10 +223,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         });
     };
 
-    private collectRecoveryKeyNode = (n: HTMLElement) => {
-        this.recoveryKeyNode = n;
-    };
-
     private onChooseKeyPassphraseFormSubmit = async (): Promise<void> => {
         if (this.state.passPhraseKeySelected === SecureBackupSetupMethod.Key) {
             this.recoveryKey =
@@ -256,7 +252,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private onCopyClick = (): void => {
-        const successful = copyNode(this.recoveryKeyNode);
+        const successful = copyNode(this.recoveryKeyRef.current);
         if (successful) {
             this.setState({
                 copied: true,
@@ -275,7 +271,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         });
     };
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => {}): Promise<void> => {
+    private doBootstrapUIAuth = async (makeRequest: (authData: any) => {}): Promise<void> => { // TODO: types
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
                 type: 'm.login.password',
@@ -730,7 +726,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             <div className="mx_CreateSecretStorageDialog_primaryContainer">
                 <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                     <div className="mx_CreateSecretStorageDialog_recoveryKey">
-                        <code ref={this.collectRecoveryKeyNode}>{ this.recoveryKey.encodedPrivateKey }</code>
+                        <code ref={this.recoveryKeyRef}>{ this.recoveryKey.encodedPrivateKey }</code>
                     </div>
                     <div className="mx_CreateSecretStorageDialog_recoveryKeyButtons">
                         <AccessibleButton kind='primary'

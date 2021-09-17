@@ -22,9 +22,9 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryption';
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 
-export enum ExportE2EKeysPhase {
-    Edit = 1,
-    Exporting = 2,
+enum ExportE2EKeysPhase {
+    Edit,
+    Exporting,
 }
 
 interface IProps {
@@ -39,8 +39,8 @@ interface IState {
 
 export default class ExportE2eKeysDialog extends React.Component<IProps, IState> {
     private unmounted = false;
-    private passphrase1: React.RefObject<HTMLInputElement> = createRef();
-    private passphrase2: React.RefObject<HTMLInputElement> = createRef();
+    private passphrase1 = createRef<HTMLInputElement>();
+    private passphrase2 = createRef<HTMLInputElement>();
 
     constructor(props: IProps) {
         super(props);
