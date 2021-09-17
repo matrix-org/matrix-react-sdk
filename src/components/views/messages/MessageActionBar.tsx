@@ -45,7 +45,8 @@ import ReplyThread from '../elements/ReplyThread';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
-    getTile: () => any | null; // TODO: FIXME, haven't figured out what the return type is here
+    // TODO: Types
+    getTile: () => any | null;
     getReplyThread: () => ReplyThread;
     permalinkCreator: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
@@ -131,7 +132,7 @@ interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
     reactions?: Relations;
     // TODO: Types
-    getTile: () => unknown;
+    getTile: () => any | null;
     getReplyThread: () => ReplyThread | undefined;
     permalinkCreator?: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
