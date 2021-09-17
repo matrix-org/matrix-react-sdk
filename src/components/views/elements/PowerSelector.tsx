@@ -15,34 +15,39 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import * as Roles from '../../../Roles';
 import { _t } from '../../../languageHandler';
 import Field from "./Field";
 import { Key } from "../../../Keyboard";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+interface IProps {
+    value: string | number;
+    // The maximum value that can be set with the power selector
+    maxValue: number;
+    // Default user power level for the room
+    usersDefault: number;
+    // should the user be able to change the value? false by default.
+    disabled?: boolean;
+    onChange?: (value: string | number, powerLevel: string) => void;
+    // Optional key to pass as the second argument to `onChange`
+    powerLevelKey?: string;
+    // The name to annotate the selector with
+    label?: string;
+}
+
+interface IState {
+    levelRoleMap: any; // TODO: typings in Roles.ts
+    // List of power levels to show in the drop-down
+    options: any[]; // TODO: Typings in Roles.ts
+    custom?: boolean;
+    customLevel?: string | number;
+    customValue: string | number;
+    selectValue: string | number;
+}
+
 @replaceableComponent("views.elements.PowerSelector")
-export default class PowerSelector extends React.Component {
-    static propTypes = {
-        value: PropTypes.number.isRequired,
-        // The maximum value that can be set with the power selector
-        maxValue: PropTypes.number.isRequired,
-
-        // Default user power level for the room
-        usersDefault: PropTypes.number.isRequired,
-
-        // should the user be able to change the value? false by default.
-        disabled: PropTypes.bool,
-        onChange: PropTypes.func,
-
-        // Optional key to pass as the second argument to `onChange`
-        powerLevelKey: PropTypes.string,
-
-        // The name to annotate the selector with
-        label: PropTypes.string,
-    }
-
+export default class PowerSelector extends React.Component<IProps, IState> {
     static defaultProps = {
         maxValue: Infinity,
         usersDefault: 0,
@@ -62,24 +67,25 @@ export default class PowerSelector extends React.Component {
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillMount() {
-        this._initStateFromProps(this.props);
+    // eslint-disable-next-line
+    public UNSAFE_componentWillMount(): void {
+        this.initStateFromProps(this.props);
     }
 
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillReceiveProps(newProps) {
-        this._initStateFromProps(newProps);
+    // eslint-disable-next-line
+    public UNSAFE_componentWillReceiveProps(newProps: IProps): void {
+        this.initStateFromProps(newProps);
     }
 
-    _initStateFromProps(newProps) {
+    private initStateFromProps(newProps: IProps): void {
         // This needs to be done now because levelRoleMap has translated strings
         const levelRoleMap = Roles.levelRoleMap(newProps.usersDefault);
         const options = Object.keys(levelRoleMap).filter(level => {
+            const levelNumber = parseInt(level, 10);
             return (
-                level === undefined ||
-                level <= newProps.maxValue ||
-                level == newProps.value
+                levelNumber === undefined ||
+                levelNumber <= newProps.maxValue ||
+                levelNumber == newProps.value
             );
         });
 
@@ -94,7 +100,7 @@ export default class PowerSelector extends React.Component {
         });
     }
 
-    onSelectChange = event => {
+    private onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         const isCustom = event.target.value === "SELECT_VALUE_CUSTOM";
         if (isCustom) {
             this.setState({ custom: true });
@@ -104,18 +110,19 @@ export default class PowerSelector extends React.Component {
         }
     };
 
-    onCustomChange = event => {
+    private onCustomChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         this.setState({ customValue: event.target.value });
     };
 
-    onCustomBlur = event => {
+    private onCustomBlur = (event: React.FocusEvent<HTMLSelectElement>): void => {
         event.preventDefault();
         event.stopPropagation();
 
-        this.props.onChange(parseInt(this.state.customValue), this.props.powerLevelKey);
+        const value = this.state.customValue.toString();
+        this.props.onChange(parseInt(value, 10), this.props.powerLevelKey);
     };
 
-    onCustomKeyDown = event => {
+    private onCustomKeyDown = (event: React.KeyboardEvent<HTMLSelectElement>): void => {
         if (event.key === Key.ENTER) {
             event.preventDefault();
             event.stopPropagation();
@@ -125,11 +132,11 @@ export default class PowerSelector extends React.Component {
             // raising a dialog which causes a blur which causes a dialog which causes a blur and
             // so on. By not causing the onChange to be called here, we avoid the loop because we
             // handle the onBlur safely.
-            event.target.blur();
+            event.currentTarget.blur();
         }
     };
 
-    render() {
+    public render(): JSX.Element {
         let picker;
         const label = typeof this.props.label === "undefined" ? _t("Power level") : this.props.label;
         if (this.state.custom) {
@@ -147,7 +154,7 @@ export default class PowerSelector extends React.Component {
             );
         } else {
             // Each level must have a definition in this.state.levelRoleMap
-            let options = this.state.options.map((level) => {
+            let options: any = this.state.options.map((level) => {
                 return {
                     value: level,
                     text: Roles.textualPowerLevel(level, this.props.usersDefault),
