@@ -43,6 +43,8 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import AccessibleButton from '../elements/AccessibleButton';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
     if (!html) {
@@ -307,7 +309,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                 description: errText,
             });
         } else {
-            console.log("Command success.");
+            logger.log("Command success.");
             if (messageContent) return messageContent;
         }
     }

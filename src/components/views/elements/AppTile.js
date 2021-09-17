@@ -40,6 +40,8 @@ import RoomWidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 @replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component {
     constructor(props) {
@@ -52,7 +54,7 @@ export default class AppTile extends React.Component {
             this._sgWidget.on("preparing", this._onWidgetPrepared);
             this._sgWidget.on("ready", this._onWidgetReady);
         } catch (e) {
-            console.log("Failed to construct widget", e);
+            logger.log("Failed to construct widget", e);
             this._sgWidget = null;
         }
         this.iframe = null; // ref to the iframe (callback style)
@@ -157,7 +159,7 @@ export default class AppTile extends React.Component {
             this._sgWidget.on("ready", this._onWidgetReady);
             this._startWidget();
         } catch (e) {
-            console.log("Failed to construct widget", e);
+            logger.log("Failed to construct widget", e);
             this._sgWidget = null;
         }
     }

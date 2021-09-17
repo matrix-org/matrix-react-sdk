@@ -15,7 +15,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 // This module contains all the code needed to log the console, persist it to
 // disk and submit bug reports. Rationale is as follows:
 //  - Monkey-patching the console is preferable to having a log library because
@@ -36,8 +35,9 @@ limitations under the License.
 //    starting with the most recent, which we know because the "ID"s are
 //    actually timestamps. We then purge the remaining logs. We also do this
 //    purge on startup to prevent logs from accumulating.
-
 // the frequency with which we flush to indexeddb
+import { logger } from "matrix-js-sdk/src/logger";
+
 const FLUSH_RATE_MS = 30 * 1000;
 
 // the length of log data we keep in indexeddb (and include in the reports)
@@ -375,11 +375,11 @@ class IndexedDBLogStore {
             }
         }
         if (removeLogIds.length > 0) {
-            console.log("Removing logs: ", removeLogIds);
+            logger.log("Removing logs: ", removeLogIds);
             // Don't await this because it's non-fatal if we can't clean up
             // logs.
             Promise.all(removeLogIds.map((id) => deleteLogs(id))).then(() => {
-                console.log(`Removed ${removeLogIds.length} old logs.`);
+                logger.log(`Removed ${removeLogIds.length} old logs.`);
             }, (err) => {
                 console.error(err);
             });
@@ -465,7 +465,7 @@ export function tryInitStorage() {
         return global.mx_rage_initStoragePromise;
     }
 
-    console.log("Configuring rageshake persistence...");
+    logger.log("Configuring rageshake persistence...");
 
     // just *accessing* indexedDB throws an exception in firefox with
     // indexeddb disabled.
