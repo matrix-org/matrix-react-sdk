@@ -322,6 +322,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
         let shouldSend = true;
 
         if (newContent?.body === '') {
+            this.cancelPreviousPendingEdit();
             createRedactEventDialog({
                 mxEvent: editedEvent,
             });
