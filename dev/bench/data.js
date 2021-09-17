@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631799291150,
+  "lastUpdate": 1631867098190,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -25964,6 +25964,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4374.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "58ffa5138b89575073512dd14664f6ac9cb2c9f2",
+          "message": "Merge pull request #6822 from matrix-org/palid/thread-typescriptify\n\nTranscriptify thread events a bit",
+          "timestamp": "2021-09-17T10:19:20+02:00",
+          "tree_id": "5a92e015371494e48411acd85bbe9a2b927793a4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/58ffa5138b89575073512dd14664f6ac9cb2c9f2"
+        },
+        "date": 1631867096426,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4470.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 895.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1710.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4681.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
