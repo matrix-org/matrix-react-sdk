@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import PropTypes from 'prop-types';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import FlairStore from "../../../stores/FlairStore";
 import { getPrimaryPermalinkEntity, parseAppLocalLink } from "../../../utils/permalinks/Permalinks";
@@ -28,38 +28,67 @@ import { Action } from "../../../dispatcher/actions";
 import { mediaFromMxc } from "../../../customisations/Media";
 import Tooltip from './Tooltip';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { MatrixEvent } from 'matrix-js-sdk';
+
+interface IProps {
+    // The Type of this Pill. If url is given, this is auto-detected.
+    type?: string;
+    // The URL to pillify (no validation is done)
+    url?: string;
+    // Whether the pill is in a message
+    inMessage?: boolean;
+    // The room in which this pill is being rendered
+    room?: Room;
+    // Whether to include an avatar in the pill
+    shouldShowPillAvatar?: boolean;
+    // Whether to render this pill as if it were highlit by a selection
+    isSelected?: boolean;
+
+    yOffset?: number;
+}
+
+interface IState {
+    // ID/alias of the room/user
+    resourceId: string;
+    // Type of pill
+    pillType: null;
+
+    // The member related to the user pill
+    member: RoomMember;
+    // The group related to the group pill
+    group: any; // TODO: Remove after communities are deprecated
+    // The room related to the room pill
+    room: Room;
+    // Is the user hovering the pill
+    hover: boolean;
+}
+
+export enum PillType {
+    UserMention = "TYPE_USER_MENTION",
+    RoomMention = "TYPE_ROOM_MENTION",
+    GroupMention = "TYPE_GROUP_MENTION",
+    AtRoomMention = "TYPE_AT_ROOM_MENTION", // '@room' mention
+}
 
 @replaceableComponent("views.elements.Pill")
-class Pill extends React.Component {
-    static roomNotifPos(text) {
+class Pill extends React.Component<IProps, IState> {
+    public static roomNotifPos(text: string): number {
         return text.indexOf("@room");
     }
 
-    static roomNotifLen() {
+    public static roomNotifLen(): number {
         return "@room".length;
     }
 
-    static TYPE_USER_MENTION = 'TYPE_USER_MENTION';
-    static TYPE_ROOM_MENTION = 'TYPE_ROOM_MENTION';
-    static TYPE_GROUP_MENTION = 'TYPE_GROUP_MENTION';
-    static TYPE_AT_ROOM_MENTION = 'TYPE_AT_ROOM_MENTION'; // '@room' mention
+    public static readonly TYPE_USER_MENTION = PillType.UserMention;
+    public static readonly TYPE_ROOM_MENTION = PillType.RoomMention;
+    public static readonly TYPE_GROUP_MENTION = PillType.GroupMention;
+    public static readonly TYPE_AT_ROOM_MENTION = PillType.AtRoomMention; // '@room' mention
 
-    static propTypes = {
-        // The Type of this Pill. If url is given, this is auto-detected.
-        type: PropTypes.string,
-        // The URL to pillify (no validation is done)
-        url: PropTypes.string,
-        // Whether the pill is in a message
-        inMessage: PropTypes.bool,
-        // The room in which this pill is being rendered
-        room: PropTypes.instanceOf(Room),
-        // Whether to include an avatar in the pill
-        shouldShowPillAvatar: PropTypes.bool,
-        // Whether to render this pill as if it were highlit by a selection
-        isSelected: PropTypes.bool,
-    };
+    private unmounted = false;
+    private matrixClient: MatrixClient = null;
 
-    state = {
+    public state: IState = {
         // ID/alias of the room/user
         resourceId: null,
         // Type of pill
@@ -76,8 +105,8 @@ class Pill extends React.Component {
     };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase
-    async UNSAFE_componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line
+    public async UNSAFE_componentWillReceiveProps(nextProps: IProps): Promise<void> {
         let resourceId;
         let prefix;
 
@@ -147,33 +176,33 @@ class Pill extends React.Component {
         this.setState({ resourceId, pillType, member, group, room });
     }
 
-    componentDidMount() {
-        this._unmounted = false;
-        this._matrixClient = MatrixClientPeg.get();
+    public componentDidMount(): void {
+        this.unmounted = false;
+        this.matrixClient = MatrixClientPeg.get();
 
         // eslint-disable-next-line new-cap
         this.UNSAFE_componentWillReceiveProps(this.props); // HACK: We shouldn't be calling lifecycle functions ourselves.
     }
 
-    componentWillUnmount() {
-        this._unmounted = true;
+    public componentWillUnmount(): void {
+        this.unmounted = true;
     }
 
-    onMouseOver = () => {
+    private onMouseOver = (): void => {
         this.setState({
             hover: true,
         });
     };
 
-    onMouseLeave = () => {
+    private onMouseLeave = (): void => {
         this.setState({
             hover: false,
         });
     };
 
-    doProfileLookup(userId, member) {
+    private doProfileLookup(userId: string, member: RoomMember): void {
         MatrixClientPeg.get().getProfileInfo(userId).then((resp) => {
-            if (this._unmounted) {
+            if (this.unmounted) {
                 return;
             }
             member.name = resp.displayname;
@@ -185,14 +214,14 @@ class Pill extends React.Component {
                 getDirectionalContent: function() {
                     return this.getContent();
                 },
-            };
+            } as MatrixEvent;
             this.setState({ member });
         }).catch((err) => {
             console.error('Could not retrieve profile data for ' + userId + ':', err);
         });
     }
 
-    onUserPillClicked = (e) => {
+    private onUserPillClicked = (e: React.MouseEvent): void => {
         e.preventDefault();
         dis.dispatch({
             action: Action.ViewUser,
@@ -200,7 +229,7 @@ class Pill extends React.Component {
         });
     };
 
-    render() {
+    public render(): JSX.Element {
         const BaseAvatar = sdk.getComponent('views.avatars.BaseAvatar');
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
@@ -284,13 +313,12 @@ class Pill extends React.Component {
                 tip = <Tooltip label={resource} yOffset={yOffset} />;
             }
 
-            return <MatrixClientContext.Provider value={this._matrixClient}>
+            return <MatrixClientContext.Provider value={this.matrixClient}>
                 { this.props.inMessage ?
                     <a
                         className={classes}
                         href={href}
                         onClick={onClick}
-                        data-offset-key={this.props.offsetKey}
                         onMouseOver={this.onMouseOver}
                         onMouseLeave={this.onMouseLeave}
                     >
@@ -300,7 +328,6 @@ class Pill extends React.Component {
                     </a> :
                     <span
                         className={classes}
-                        data-offset-key={this.props.offsetKey}
                         onMouseOver={this.onMouseOver}
                         onMouseLeave={this.onMouseLeave}
                     >
