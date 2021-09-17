@@ -42,6 +42,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import AccessibleButton from '../elements/AccessibleButton';
+import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -319,6 +320,13 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
         const newContent = editContent["m.new_content"];
 
         let shouldSend = true;
+
+        if (newContent?.body === '') {
+            createRedactEventDialog({
+                mxEvent: editedEvent,
+            });
+            return;
+        }
 
         // If content is modified then send an updated event into the room
         if (this.isContentModified(newContent)) {
