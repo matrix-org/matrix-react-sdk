@@ -330,6 +330,7 @@ interface IState {
 export default class EventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
+    // TODO: Types
     private tile = React.createRef<unknown>();
     private replyThread = React.createRef<ReplyThread>();
 
@@ -888,7 +889,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             actionBarFocused: focused,
         });
     };
-
+    // TODO: Types
     getTile: () => unknown = () => this.tile.current;
 
     getReplyThread = () => this.replyThread.current;

@@ -130,8 +130,8 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
     reactions?: Relations;
-
-    getTile: () => any | null;
+    // TODO: Types
+    getTile: () => unknown;
     getReplyThread: () => ReplyThread | undefined;
     permalinkCreator?: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;

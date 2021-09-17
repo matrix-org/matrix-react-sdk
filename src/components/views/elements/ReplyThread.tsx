@@ -37,6 +37,10 @@ import ReplyTile from "../rooms/ReplyTile";
 import Pill from './Pill';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
+/**
+ * This number is based on the previous behavior - if we have message of height
+ * over 60px then we want to show button that will allow to expand it.
+ */
 const SHOW_EXPAND_QUOTE_PIXELS = 60;
 
 interface IProps {
@@ -244,19 +248,19 @@ export default class ReplyThread extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.initialize();
-        this.setQuotedExpandable();
+        this.trySetExpandableQuotes();
     }
 
     componentDidUpdate() {
         this.props.onHeightChanged();
-        this.setQuotedExpandable();
+        this.trySetExpandableQuotes();
     }
 
     componentWillUnmount() {
         this.unmounted = true;
     }
 
-    private setQuotedExpandable() {
+    private trySetExpandableQuotes() {
         if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
             const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
             if (el) {
@@ -323,7 +327,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         this.initialize();
     };
 
-    private onQuoteClick = async (event): Promise<void> => {
+    private onQuoteClick = async (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): Promise<void> => {
         const events = [this.state.loadedEv, ...this.state.events];
 
         let loadedEv = null;
