@@ -58,7 +58,6 @@ describe('editor/serialize', function() {
         const model3 = new EditorModel([pc.plain("2021.")]);
         const html3 = htmlSerializeIfNeeded(model3, {});
         expect(html3).toBe(undefined);
-
     });
     it('lists with a single non-empty item are still markdown', function() {
         const pc = createPartCreator();

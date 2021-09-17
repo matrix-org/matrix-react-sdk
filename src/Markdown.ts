@@ -80,9 +80,9 @@ export default class Markdown {
     isPlainText(): boolean {
         const walker = this.parsed.walker();
 
-        let emptyItemWithNoSiblings = (node: commonmark.Node) => {
-            return !node.prev && !node.next && !node.firstChild
-        }
+        const emptyItemWithNoSiblings = (node: commonmark.Node) => {
+            return !node.prev && !node.next && !node.firstChild;
+        };
 
         let ev: commonmark.NodeWalkingStep;
         while ( (ev = walker.next()) ) {
