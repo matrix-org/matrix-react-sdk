@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631871288076,
+  "lastUpdate": 1631878419577,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26108,6 +26108,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4133.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b91ece1bcfbbb037a4f8c1824cd9698272dab173",
+          "message": "Merge pull request #6828 from matrix-org/t3chguy/fix/a11y-label",
+          "timestamp": "2021-09-17T12:27:28+01:00",
+          "tree_id": "0efceb784fe7d1fa9bcac73dbdd5aef80b1ac9d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b91ece1bcfbbb037a4f8c1824cd9698272dab173"
+        },
+        "date": 1631878417909,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5084.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 996.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4836.5,
             "unit": "ms",
             "extra": "type: measure"
           }
