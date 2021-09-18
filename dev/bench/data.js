@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631910276667,
+  "lastUpdate": 1631947904021,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26252,6 +26252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4614.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "45058dfde994347a96aeb20481a7d6d8b2fd266f",
+          "message": "Merge pull request #6832 from SimonBrandner/fix/ff-esr-pills\n\nFix pill deletion on Firefox 78",
+          "timestamp": "2021-09-18T00:46:51-06:00",
+          "tree_id": "774645f911a4f8e8971f740deefae17a232fde98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/45058dfde994347a96aeb20481a7d6d8b2fd266f"
+        },
+        "date": 1631947902482,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3865.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 777.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1660.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4113.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
