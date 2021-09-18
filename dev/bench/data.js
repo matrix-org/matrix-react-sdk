@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631947981673,
+  "lastUpdate": 1632004398290,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26348,6 +26348,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4557.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9ef517331234bde780f1c41d8cb669e5bbb9bf87",
+          "message": "Merge pull request #6836 from SimonBrandner/fix/ci\n\nPass `PR_NUMBER` to builds",
+          "timestamp": "2021-09-18T16:28:14-06:00",
+          "tree_id": "e3ba54941c4e5a2246b77301e66cc468e5b1249e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9ef517331234bde780f1c41d8cb669e5bbb9bf87"
+        },
+        "date": 1632004396631,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4140.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 790.5,
             "unit": "ms",
             "extra": "type: measure"
           }
