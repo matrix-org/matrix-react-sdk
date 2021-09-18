@@ -71,7 +71,7 @@ export interface ISuggestedRoom extends IHierarchyRoom {
 const MAX_SUGGESTED_ROOMS = 20;
 
 // This setting causes the page to reload and can be costly if read frequently, so read it here only
-const spacesEnabled = SettingsStore.getValue("feature_spaces");
+const spacesEnabled = !SettingsStore.getValue("showCommunitiesInsteadOfSpaces");
 
 const getSpaceContextKey = (space?: Room) => `mx_space_context_${space?.roomId || "HOME_SPACE"}`;
 
@@ -257,7 +257,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                                     "go to that room's Security & Privacy settings.") }</p>
 
                                 { /* Reuses classes from TabbedView for simplicity, non-interactive */ }
-                                <div style={{ width: "190px" }}>
+                                <div className="mx_TabbedView_tabsOnLeft" style={{ width: "190px", position: "relative" }}>
                                     <div className="mx_TabbedView_tabLabel">
                                         <span className="mx_TabbedView_maskedIcon mx_RoomSettingsDialog_settingsIcon" />
                                         <span className="mx_TabbedView_tabLabel_text">{ _t("General") }</span>
@@ -366,16 +366,22 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     public getParents(roomId: string, canonicalOnly = false): Room[] {
+        const userId = this.matrixClient?.getUserId();
         const room = this.matrixClient?.getRoom(roomId);
         return room?.currentState.getStateEvents(EventType.SpaceParent)
-            .filter(ev => {
+            .map(ev => {
                 const content = ev.getContent();
-                if (!content?.via?.length) return false;
-                // TODO apply permissions check to verify that the parent mapping is valid
-                if (canonicalOnly && !content?.canonical) return false;
-                return true;
+                if (Array.isArray(content?.via) && (!canonicalOnly || content?.canonical)) {
+                    const parent = this.matrixClient.getRoom(ev.getStateKey());
+                    // only respect the relationship if the sender has sufficient permissions in the parent to set
+                    // child relations, as per MSC1772.
+                    // https://github.com/matrix-org/matrix-doc/blob/main/proposals/1772-groups-as-rooms.md#relationship-between-rooms-and-spaces
+                    if (parent?.currentState.maySendStateEvent(EventType.SpaceChild, userId)) {
+                        return parent;
+                    }
+                }
+                // else implicit undefined which causes this element to be filtered out
             })
-            .map(ev => this.matrixClient.getRoom(ev.getStateKey()))
             .filter(Boolean) || [];
     }
 
@@ -530,6 +536,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             });
         }
 
+        const hiddenChildren = new EnhancedMap<string, Set<string>>();
+        visibleRooms.forEach(room => {
+            if (room.getMyMembership() !== "join") return;
+            this.getParents(room.roomId).forEach(parent => {
+                hiddenChildren.getOrCreate(parent.roomId, new Set()).add(room.roomId);
+            });
+        });
+
         this.rootSpaces.forEach(s => {
             // traverse each space tree in DFS to build up the supersets as you go up,
             // reusing results from like subtrees.
@@ -558,6 +572,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     fn(childSpace.roomId, newPath)?.forEach(roomId => {
                         roomIds.add(roomId);
                     });
+                });
+                hiddenChildren.get(spaceId)?.forEach(roomId => {
+                    roomIds.add(roomId);
                 });
                 this.spaceFilteredRooms.set(spaceId, roomIds);
                 return roomIds;
@@ -612,11 +629,18 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     };
 
     private onRoom = (room: Room, newMembership?: string, oldMembership?: string) => {
-        const membership = newMembership || room.getMyMembership();
+        const roomMembership = room.getMyMembership();
+        if (!roomMembership) {
+            // room is still being baked in the js-sdk, we'll process it at Room.myMembership instead
+            return;
+        }
+        const membership = newMembership || roomMembership;
 
         if (!room.isSpaceRoom()) {
             // this.onRoomUpdate(room);
-            this.onRoomsUpdate();
+            // this.onRoomsUpdate();
+            // ideally we only need onRoomsUpdate here but it doesn't rebuild parentMap so always adds new rooms to Home
+            this.rebuild();
 
             if (membership === "join") {
                 // the user just joined a room, remove it from the suggested list if it was there
@@ -689,6 +713,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     this.onRoomUpdate(room);
                 }
                 this.emit(room.roomId);
+                break;
+
+            case EventType.RoomPowerLevels:
+                if (room.isSpaceRoom()) {
+                    this.onRoomsUpdate();
+                }
                 break;
         }
     };
@@ -822,10 +852,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 break;
 
             case Action.SwitchSpace:
-                if (payload.num === 0) {
+                // 1 is Home, 2-9 are the spaces after Home
+                if (payload.num === 1) {
                     this.setActiveSpace(null);
                 } else if (this.spacePanelSpaces.length >= payload.num) {
-                    this.setActiveSpace(this.spacePanelSpaces[payload.num - 1]);
+                    this.setActiveSpace(this.spacePanelSpaces[payload.num - 2]);
                 }
                 break;
 

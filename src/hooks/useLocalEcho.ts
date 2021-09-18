@@ -14,7 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// This needs to be executed before the SpaceStore gets imported but due to ES6 import hoisting we have to do this here.
-// SpaceStore reads the SettingsStore which needs the localStorage values set at init time.
+import { useState } from "react";
 
-localStorage.setItem("mx_labs_feature_feature_spaces", "true");
+export const useLocalEcho = <T extends any>(
+    currentFactory: () => T,
+    setterFn: (value: T) => Promise<unknown>,
+    errorFn: (error: Error) => void,
+): [value: T, handler: (value: T) => void] => {
+    const [value, setValue] = useState(currentFactory);
+    const handler = async (value: T) => {
+        setValue(value);
+        try {
+            await setterFn(value);
+        } catch (e) {
+            setValue(currentFactory());
+            errorFn(e);
+        }
+    };
+
+    return [value, handler];
+};

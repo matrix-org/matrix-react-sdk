@@ -48,6 +48,7 @@ import SpaceStore, { ISuggestedRoom, SUGGESTED_ROOMS } from "../../../stores/Spa
 import { showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent) => void;
@@ -522,20 +523,23 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             } else if (
                 this.props.activeSpace?.canInvite(userId) || this.props.activeSpace?.getMyMembership() === "join"
             ) {
+                const spaceName = this.props.activeSpace.name;
                 explorePrompt = <div className="mx_RoomList_explorePrompt">
                     <div>{ _t("Quick actions") }</div>
-                    { this.props.activeSpace.canInvite(userId) && <AccessibleButton
+                    { this.props.activeSpace.canInvite(userId) && <AccessibleTooltipButton
                         className="mx_RoomList_explorePrompt_spaceInvite"
                         onClick={this.onSpaceInviteClick}
+                        title={_t("Invite to %(spaceName)s", { spaceName })}
                     >
                         { _t("Invite people") }
-                    </AccessibleButton> }
-                    { this.props.activeSpace.getMyMembership() === "join" && <AccessibleButton
+                    </AccessibleTooltipButton> }
+                    { this.props.activeSpace.getMyMembership() === "join" && <AccessibleTooltipButton
                         className="mx_RoomList_explorePrompt_spaceExplore"
                         onClick={this.onExplore}
+                        title={_t("Explore %(spaceName)s", { spaceName })}
                     >
                         { _t("Explore rooms") }
-                    </AccessibleButton> }
+                    </AccessibleTooltipButton> }
                 </div>;
             } else if (Object.values(this.state.sublists).some(list => list.length > 0)) {
                 const unfilteredLists = RoomListStore.instance.unfilteredLists;
@@ -543,7 +547,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 const unfilteredHistorical = unfilteredLists[DefaultTagID.Archived] || [];
                 const unfilteredFavourite = unfilteredLists[DefaultTagID.Favourite] || [];
                 // show a prompt to join/create rooms if the user is in 0 rooms and no historical
-                if (unfilteredRooms.length < 1 && unfilteredHistorical < 1 && unfilteredFavourite < 1) {
+                if (unfilteredRooms.length < 1 && unfilteredHistorical.length < 1 && unfilteredFavourite.length < 1) {
                     explorePrompt = <div className="mx_RoomList_explorePrompt">
                         <div>{ _t("Use the + to make a new room or explore existing ones below") }</div>
                         <AccessibleButton
