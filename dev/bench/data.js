@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1631947904021,
+  "lastUpdate": 1631947981673,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26300,6 +26300,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4113.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb0859c4a68e62c83315fc105dce3a92f92bce83",
+          "message": "Merge pull request #6831 from SimonBrandner/fix/end-of-line-emoji-edit/19084\n\nConvert end-of-line emoji when editing",
+          "timestamp": "2021-09-18T00:47:06-06:00",
+          "tree_id": "7b37d9f303efc8c1087a19ddbcb08a2300796851",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb0859c4a68e62c83315fc105dce3a92f92bce83"
+        },
+        "date": 1631947979813,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4145.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 973.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1836.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4557.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
