@@ -22,6 +22,8 @@ import dis from '../../../dispatcher/dispatcher';
 import { Resizable } from "re-resizable";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { GroupCall } from 'matrix-js-sdk/src/webrtc/groupCall';
+import { GroupCallView } from "./GroupCallView";
 
 interface IProps {
     // What room we should display the call for
@@ -34,7 +36,7 @@ interface IProps {
 }
 
 interface IState {
-    call: MatrixCall;
+    call: MatrixCall | GroupCall;
 }
 
 /*
@@ -64,6 +66,7 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
 
     private onAction = (payload) => {
         switch (payload.action) {
+            case 'group_calls_changed':
             case 'call_state': {
                 this.updateCall();
                 break;
@@ -73,16 +76,20 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
 
     private updateCall = () => {
         const newCall = this.getCall();
+
         if (newCall !== this.state.call) {
             this.setState({ call: newCall });
         }
     };
 
-    private getCall(): MatrixCall {
+    private getCall(): MatrixCall | GroupCall {
         const call = CallHandler.sharedInstance().getCallForRoom(this.props.roomId);
 
-        if (call && [CallState.Ended, CallState.Ringing].includes(call.state)) return null;
-        return call;
+        if (call) {
+            return call.state !== CallState.Ended && call.state !== CallState.Ringing ? call : null;
+        } else {
+            return CallHandler.sharedInstance().getGroupCallForRoom(this.props.roomId);
+        }
     }
 
     private onResizeStart = () => {
@@ -123,10 +130,15 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
                     className="mx_CallViewForRoom_ResizeWrapper"
                     handleClasses={{ bottom: "mx_CallViewForRoom_ResizeHandle" }}
                 >
-                    <CallView
-                        call={this.state.call}
-                        pipMode={false}
-                    />
+                    { this.state.call instanceof MatrixCall ? (
+                        <CallView
+                            call={this.state.call}
+                            pipMode={false}
+                        />) :
+                        (<GroupCallView
+                            groupCall={this.state.call}
+                            pipMode={false} />)
+                    }
                 </Resizable>
             </div>
         );

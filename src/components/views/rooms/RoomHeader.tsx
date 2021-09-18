@@ -51,6 +51,7 @@ interface IProps {
     onSearchClick: () => void;
     onForgetClick: () => void;
     onCallPlaced: (type: PlaceCallType) => void;
+    onCreateGroupCall: (type: PlaceCallType) => void;
     onAppsClick: () => void;
     e2eStatus: E2EStatus;
     appsShown: boolean;
@@ -186,7 +187,19 @@ export default class RoomHeader extends React.Component<IProps> {
 
         let voiceCallButton;
         let videoCallButton;
+        let groupVoiceCallButton;
+        let groupVideoCallButton;
         if (this.props.inRoom && SettingsStore.getValue("showCallButtonsInComposer")) {
+            groupVoiceCallButton =
+                <AccessibleTooltipButton
+                    className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
+                    onClick={() => this.props.onCreateGroupCall(PlaceCallType.Voice)}
+                    title={_t("Group Voice call")} />;
+            groupVideoCallButton =
+                <AccessibleTooltipButton
+                    className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
+                    onClick={() => this.props.onCreateGroupCall(PlaceCallType.Video)}
+                    title={_t("Group Video call")} />;
             voiceCallButton =
                 <AccessibleTooltipButton
                     className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
@@ -202,6 +215,8 @@ export default class RoomHeader extends React.Component<IProps> {
 
         const rightRow =
             <div className="mx_RoomHeader_buttons">
+                { groupVideoCallButton }
+                { groupVoiceCallButton }
                 { videoCallButton }
                 { voiceCallButton }
                 { forgetButton }

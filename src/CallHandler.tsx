@@ -92,6 +92,7 @@ import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
+import { GroupCall } from '../../matrix-js-sdk/src/webrtc/groupCall';
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -146,6 +147,7 @@ export enum CallHandlerEvent {
 
 export default class CallHandler extends EventEmitter {
     private calls = new Map<string, MatrixCall>(); // roomId -> call
+    private groupCalls = new Map<string, GroupCall>(); // roomId -> group call
     // Calls started as an attended transfer, ie. with the intention of transferring another
     // call with a different party to this one.
     private transferees = new Map<string, MatrixCall>(); // callId (target) -> call (transferee)
@@ -349,6 +351,27 @@ export default class CallHandler extends EventEmitter {
         return this.calls.get(roomId) || null;
     }
 
+    getGroupCallForRoom(roomId: string): GroupCall | undefined {
+        return this.groupCalls.get(roomId);
+    }
+
+    getGroupCallType(roomId: string): PlaceCallType {
+        const stateEvents = MatrixClientPeg.get().getRoom(roomId)
+            .currentState.getStateEvents("me.robertlong.conf");
+
+        if (stateEvents.length === 0) {
+            return null;
+        }
+
+        const content = stateEvents[0].getContent();
+
+        if (content.callType === "voice") {
+            return PlaceCallType.Voice;
+        }
+
+        return PlaceCallType.Video;
+    }
+
     getAnyActiveCall() {
         for (const call of this.calls.values()) {
             if (call.state !== CallState.Ended) {
@@ -527,6 +550,10 @@ export default class CallHandler extends EventEmitter {
         });
     }
 
+    private setGroupCallListeners(groupCall: GroupCall) {
+        console.log("group call loaded", groupCall);
+    }
+
     private onCallStateChanged = (newState: CallState, oldState: CallState, call: MatrixCall): void => {
         if (!this.matchesCallForThisRoom(call)) return;
 
@@ -556,8 +583,10 @@ export default class CallHandler extends EventEmitter {
                     action.set_tweak === TweakName.Sound &&
                     action.value === "ring"
                 ));
+                const isGroupCall = MatrixClientPeg.get()
+                    .getRoom(call.roomId).currentState.getStateEvents("me.robertlong.conf").length > 0;
 
-                if (pushRuleEnabled && tweakSetToRing) {
+                if (pushRuleEnabled && tweakSetToRing && !isGroupCall) {
                     this.play(AudioID.Ring);
                 } else {
                     this.silenceCall(call.callId);
@@ -565,7 +594,12 @@ export default class CallHandler extends EventEmitter {
                 break;
             }
             case CallState.InviteSent: {
-                this.play(AudioID.Ringback);
+                const isGroupCall = MatrixClientPeg.get()
+                    .getRoom(call.roomId).currentState.getStateEvents("me.robertlong.conf").length > 0;
+
+                if (!isGroupCall) {
+                    this.play(AudioID.Ringback);
+                }
                 break;
             }
             case CallState.Ended: {
@@ -781,8 +815,31 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
+    private async createGroupCall(roomId: string, type: PlaceCallType) {
+        // TODO: Add analytics
+        const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
+        console.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
+        const groupCall = MatrixClientPeg.get()
+            .createGroupCall(roomId, type === PlaceCallType.Video ? CallType.Video : CallType.Voice);
+
+        try {
+            this.addGroupCallForRoom(roomId, groupCall);
+        } catch (e) {
+            Modal.createTrackedDialog('Call Handler', 'Existing Call with user', ErrorDialog, {
+                title: _t('Already in group call'),
+                description: _t("You're already in a group call."),
+            });
+            return;
+        }
+
+        this.setGroupCallListeners(groupCall);
+
+        groupCall.enter();
+    }
+
     private onAction = (payload: ActionPayload) => {
         switch (payload.action) {
+            case 'create_group_call':
             case 'place_call':
                 {
                     // We might be using managed hybrid widgets
@@ -812,6 +869,11 @@ export default class CallHandler extends EventEmitter {
                     const room = MatrixClientPeg.get().getRoom(payload.room_id);
                     if (!room) {
                         console.error(`Room ${payload.room_id} does not exist.`);
+                        return;
+                    }
+
+                    if (payload.action === "create_group_call") {
+                        this.createGroupCall(payload.room_id, payload.type);
                         return;
                     }
 
@@ -860,6 +922,13 @@ export default class CallHandler extends EventEmitter {
 
                     const call = payload.call as MatrixCall;
 
+                    const cli = MatrixClientPeg.get();
+                    const room = cli.getRoom(call.roomId);
+
+                    if (room.currentState.getStateEvents("me.robertlong.conf").length > 0) {
+                        return;
+                    }
+
                     const mappedRoomId = CallHandler.sharedInstance().roomIdForCall(call);
                     if (this.getCallForRoom(mappedRoomId)) {
                         console.log(
@@ -879,8 +948,7 @@ export default class CallHandler extends EventEmitter {
                     // get ready to send encrypted events in the room, so if the user does answer
                     // the call, we'll be ready to send. NB. This is the protocol-level room ID not
                     // the mapped one: that's where we'll send the events.
-                    const cli = MatrixClientPeg.get();
-                    cli.prepareToEncrypt(cli.getRoom(call.roomId));
+                    cli.prepareToEncrypt(room);
                 }
                 break;
             case 'hangup':
@@ -1050,6 +1118,10 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
+    private roomHasCallOrGroupCall(roomId: string): boolean {
+        return this.calls.has(roomId) || this.groupCalls.has(roomId);
+    }
+
     private async startCallApp(roomId: string, type: string) {
         dis.dispatch({
             action: 'appsDrawer',
@@ -1151,12 +1223,20 @@ export default class CallHandler extends EventEmitter {
     }
 
     private addCallForRoom(roomId: string, call: MatrixCall, changedRooms = false): void {
-        if (this.calls.has(roomId)) {
+        if (this.roomHasCallOrGroupCall(roomId)) {
             console.log(`Couldn't add call to room ${roomId}: already have a call for this room`);
             throw new Error("Already have a call for room " + roomId);
         }
 
         console.log("setting call for room " + roomId);
+
+        const isGroupCall = MatrixClientPeg.get()
+            .getRoom(call.roomId).currentState.getStateEvents("me.robertlong.conf").length > 0;
+
+        if (isGroupCall) {
+            return;
+        }
+
         this.calls.set(roomId, call);
 
         // Should we always emit CallsChanged too?
@@ -1165,5 +1245,16 @@ export default class CallHandler extends EventEmitter {
         } else {
             this.emit(CallHandlerEvent.CallsChanged, this.calls);
         }
+    }
+
+    private addGroupCallForRoom(roomId: string, groupCall: GroupCall) {
+        if (this.roomHasCallOrGroupCall(roomId)) {
+            console.log(`Couldn't add call to room ${roomId}: already have a call for this room`);
+            throw new Error("Already have a call for room " + roomId);
+        }
+
+        this.groupCalls.set(roomId, groupCall);
+
+        dis.dispatch({ action: "group_calls_changed" });
     }
 }

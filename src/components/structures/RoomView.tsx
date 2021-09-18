@@ -90,6 +90,7 @@ import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/SpaceStore";
+import { GroupCall } from '../../../../matrix-js-sdk/src/webrtc/groupCall';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -137,7 +138,7 @@ export interface IState {
     searchResults?: XOR<{}, ISearchResults>;
     searchHighlights?: string[];
     searchInProgress?: boolean;
-    callState?: CallState;
+    callInProgress?: boolean;
     guestsCanJoin: boolean;
     canPeek: boolean;
     showApps: boolean;
@@ -220,7 +221,6 @@ export default class RoomView extends React.Component<IProps, IState> {
             draggingFile: false,
             searching: false,
             searchResults: null,
-            callState: null,
             guestsCanJoin: false,
             canPeek: false,
             showApps: false,
@@ -556,12 +556,6 @@ export default class RoomView extends React.Component<IProps, IState> {
     componentDidMount() {
         this.onRoomViewStoreUpdate(true);
 
-        const call = this.getCallForRoom();
-        const callState = call ? call.state : null;
-        this.setState({
-            callState: callState,
-        });
-
         window.addEventListener('beforeunload', this.onPageUnload);
         if (this.props.resizeNotifier) {
             this.props.resizeNotifier.on("middlePanelResized", this.onResize);
@@ -707,7 +701,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         if (ContentMessages.sharedInstance().getCurrentUploads().length > 0) {
             return event.returnValue =
                 _t("You seem to be uploading files, are you sure you want to quit?");
-        } else if (this.getCallForRoom() && this.state.callState !== 'ended') {
+        } else if (this.state.callInProgress) {
             return event.returnValue =
                 _t("You seem to be in a call, are you sure you want to quit?");
         }
@@ -768,10 +762,25 @@ export default class RoomView extends React.Component<IProps, IState> {
                     return;
                 }
 
-                const call = this.getCallForRoom();
+                const call = CallHandler.sharedInstance().getCallForRoom(this.state.room.roomId);
 
                 this.setState({
-                    callState: call ? call.state : null,
+                    callInProgress:
+                        call &&
+                        call.state !== CallState.Ringing &&
+                        call.state !== CallState.Ended,
+                });
+                break;
+            }
+            case 'group_calls_changed': {
+                if (payload.room_id !== this.state.room.roomId) {
+                    return;
+                }
+
+                const groupCall = CallHandler.sharedInstance().getGroupCallForRoom(this.state.room.roomId);
+
+                this.setState({
+                    callInProgress: !!groupCall,
                 });
                 break;
             }
@@ -939,7 +948,38 @@ export default class RoomView extends React.Component<IProps, IState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
+        this.setupCall(room);
     };
+
+    private setupCall(room: Room): void {
+        if (room) {
+            let callInProgress = false;
+            let call: MatrixCall | GroupCall = CallHandler.sharedInstance().getCallForRoom(room.roomId);
+
+            if (call) {
+                callInProgress = call.state !== CallState.Ringing && call.state !== CallState.Ended;
+            } else {
+                call = CallHandler.sharedInstance().getGroupCallForRoom(room.roomId);
+
+                if (call) {
+                    callInProgress = true;
+                } else {
+                    const type = CallHandler.sharedInstance().getGroupCallType(room.roomId);
+                    if (type) {
+                        dis.dispatch({
+                            action: 'create_group_call',
+                            type: type,
+                            room_id: room.roomId,
+                        });
+                    }
+                }
+            }
+
+            this.setState({
+                callInProgress,
+            });
+        }
+    }
 
     private async calculateRecommendedVersion(room: Room) {
         const upgradeRecommendation = await room.getRecommendedVersion();
@@ -1440,6 +1480,14 @@ export default class RoomView extends React.Component<IProps, IState> {
         });
     };
 
+    private onCreateGroupCall= (type: PlaceCallType) => {
+        dis.dispatch({
+            action: 'create_group_call',
+            type: type,
+            room_id: this.state.room.roomId,
+        });
+    };
+
     private onSettingsClick = () => {
         dis.dispatch({ action: "open_room_settings" });
     };
@@ -1668,16 +1716,6 @@ export default class RoomView extends React.Component<IProps, IState> {
         }
     };
 
-    /**
-     * get any current call for this room
-     */
-    private getCallForRoom(): MatrixCall {
-        if (!this.state.room) {
-            return null;
-        }
-        return CallHandler.sharedInstance().getCallForRoom(this.state.room.roomId);
-    }
-
     // this has to be a proper method rather than an unnamed function,
     // otherwise react calls it with null on each update.
     private gatherTimelinePanelRef = r => {
@@ -1818,15 +1856,6 @@ export default class RoomView extends React.Component<IProps, IState> {
 
         // We have successfully loaded this room, and are not previewing.
         // Display the "normal" room view.
-
-        let activeCall = null;
-        {
-            // New block because this variable doesn't need to hang around for the rest of the function
-            const call = this.getCallForRoom();
-            if (call && (this.state.callState !== 'ended' && this.state.callState !== 'ringing')) {
-                activeCall = call;
-            }
-        }
 
         const scrollheaderClasses = classNames({
             mx_RoomView_scrollheader: true,
@@ -2072,7 +2101,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         });
 
         const mainClasses = classNames("mx_RoomView", {
-            mx_RoomView_inCall: Boolean(activeCall),
+            mx_RoomView_inCall: this.state.callInProgress,
         });
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');
@@ -2096,6 +2125,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                             onAppsClick={this.state.hasPinnedWidgets ? this.onAppsClick : null}
                             appsShown={this.state.showApps}
                             onCallPlaced={this.onCallPlaced}
+                            onCreateGroupCall={this.onCreateGroupCall}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className="mx_RoomView_body">
