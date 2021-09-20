@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632148833255,
+  "lastUpdate": 1632153985465,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26528,6 +26528,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4418.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a1a488287a255cf5452cda204d1c9c8a0612db5",
+          "message": "Merge pull request #6844 from SimonBrandner/fix/firefox-revert\n\nRevert Firefox composer deletion hacks",
+          "timestamp": "2021-09-20T17:00:22+01:00",
+          "tree_id": "37664f7cb89571118957597ce4154d31131df686",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a1a488287a255cf5452cda204d1c9c8a0612db5"
+        },
+        "date": 1632153983057,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4190.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1059.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
