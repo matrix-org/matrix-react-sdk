@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632004398290,
+  "lastUpdate": 1632141866595,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26384,6 +26384,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 790.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b69f3f2dff97de4cc4c21d41fd6e6d6f01f2b690",
+          "message": "Merge pull request #6830 from matrix-org/t3chguy/fix/npe2\n\nFix accessing field on oobData which may be undefined",
+          "timestamp": "2021-09-20T13:38:20+01:00",
+          "tree_id": "37d99cb03f4aee5ef480f7d4309e274362f97513",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b69f3f2dff97de4cc4c21d41fd6e6d6f01f2b690"
+        },
+        "date": 1632141864838,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4971,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1052,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1688.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4641.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
