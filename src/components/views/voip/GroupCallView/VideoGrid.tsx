@@ -20,7 +20,7 @@ import { useSprings, animated } from "@react-spring/web";
 import classNames from "classnames";
 import useMeasure from "react-use-measure";
 import moveArrItem from "lodash-move";
-import { GroupCallParticipant } from "../../../../../../matrix-js-sdk/src/webrtc/groupCallParticipant";
+import { GroupCallParticipant } from "matrix-js-sdk/src/webrtc/groupCallParticipant";
 
 function useIsMounted() {
     const isMountedRef = useRef(false);

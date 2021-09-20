@@ -40,27 +40,27 @@ const TOOLTIP_Y_OFFSET = -24;
 const CONTROLS_HIDE_DELAY = 2000;
 
 interface IProps {
-    call: MatrixCall;
+    call?: MatrixCall;
     pipMode: boolean;
     handlers: {
-        onHangupClick: () => void;
-        onScreenshareClick: () => void;
-        onToggleSidebarClick: () => void;
-        onMicMuteClick: () => void;
-        onVidMuteClick: () => void;
+        onHangupClick?: () => void;
+        onScreenshareClick?: () => void;
+        onToggleSidebarClick?: () => void;
+        onMicMuteClick?: () => void;
+        onVidMuteClick?: () => void;
     };
     buttonsState: {
-        micMuted: boolean;
-        vidMuted: boolean;
-        sidebarShown: boolean;
-        screensharing: boolean;
+        micMuted?: boolean;
+        vidMuted?: boolean;
+        sidebarShown?: boolean;
+        screensharing?: boolean;
     };
     buttonsVisibility: {
-        screensharing: boolean;
-        vidMute: boolean;
-        sidebar: boolean;
-        dialpad: boolean;
-        contextMenu: boolean;
+        screensharing?: boolean;
+        vidMute?: boolean;
+        sidebar?: boolean;
+        dialpad?: boolean;
+        contextMenu?: boolean;
     };
 }
 
