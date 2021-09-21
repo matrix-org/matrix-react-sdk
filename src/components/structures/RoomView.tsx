@@ -90,7 +90,7 @@ import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/SpaceStore";
-import { GroupCall } from '../../../../matrix-js-sdk/src/webrtc/groupCall';
+import { GroupCall } from 'matrix-js-sdk/src/webrtc/groupCall';
 
 import { logger } from "matrix-js-sdk/src/logger";
 

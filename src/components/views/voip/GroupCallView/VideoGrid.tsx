@@ -16,11 +16,11 @@ limitations under the License.
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDrag } from "react-use-gesture";
-import { useSprings, animated } from "@react-spring/web";
-import classNames from "classnames";
+import { useSprings } from "@react-spring/web";
 import useMeasure from "react-use-measure";
 import moveArrItem from "lodash-move";
 import { GroupCallParticipant } from "matrix-js-sdk/src/webrtc/groupCallParticipant";
+import ParticipantTile from "./ParticipantTile";
 
 function useIsMounted() {
     const isMountedRef = useRef(false);
@@ -731,51 +731,3 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
 VideoGrid.defaultProps = {
     layout: "gallery",
 };
-
-interface IParticipantTileProps {
-    style: any;
-    participant: GroupCallParticipant;
-    remove: boolean;
-    presenter: boolean;
-}
-
-function ParticipantTile({ style, participant, remove, presenter, ...rest }: IParticipantTileProps) {
-    const videoRef = useRef<HTMLVideoElement>();
-
-    useEffect(() => {
-        if (participant.usermediaStream) {
-            if (!participant.call) {
-                videoRef.current.muted = true;
-            }
-
-            videoRef.current.srcObject = participant.usermediaStream;
-            videoRef.current.play();
-        } else {
-            videoRef.current.srcObject = null;
-        }
-    }, [participant.usermediaStream, participant.call]);
-
-    // Firefox doesn't respect the disablePictureInPicture attribute
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=1611831
-
-    return (
-        <animated.div className="mx_participantTile" style={style} {...rest}>
-            <div
-                className={classNames("mx_participantName", {
-                    "mx_speaking": participant.usermediaFeed?.isSpeaking(),
-                })}
-            >
-                { participant.usermediaFeed?.isSpeaking() ? (
-                    <i />
-                ) : participant.isAudioMuted() ? (
-                    <i className="mx_muteMicIcon" />
-                ) : null }
-                <span>{ participant.member.rawDisplayName }</span>
-            </div>
-            { participant.isVideoMuted() && (
-                <i className="mx_videoMuted" />
-            ) }
-            <video ref={videoRef} playsInline disablePictureInPicture />
-        </animated.div>
-    );
-}

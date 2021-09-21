@@ -1,6 +1,6 @@
 import React, { useState, useCallback, memo, useRef, useEffect } from "react";
 import { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
-import { useGroupCall } from "./GroupCallView/useGroupCall";
+import { useGroupCall } from "../../../hooks/useGroupCall";
 import VideoGrid from "./GroupCallView/VideoGrid";
 import CallViewButtons from "./CallView/CallViewButtons";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
@@ -30,12 +30,17 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
         localVideoMuted,
         enter,
         leave,
+        entered,
     } = useGroupCall(groupCall);
     const [layout] = useRoomLayout();
 
     useEffect(() => {
         enter();
     }, [enter]);
+
+    useEffect(() => {
+        (window as unknown as any).groupCall = groupCall;
+    }, [groupCall]);
 
     const onMouseMove = useCallback(() => {
         callViewButtonsRef.current?.showControls();
@@ -48,7 +53,7 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
                 ref={callViewButtonsRef}
                 pipMode={pipMode}
                 handlers={{
-                    onHangupClick: leave,
+                    onHangupClick: entered ? leave : enter,
                     onMicMuteClick: toggleMicrophoneMuted,
                     onVidMuteClick: toggleLocalVideoMuted,
                 }}

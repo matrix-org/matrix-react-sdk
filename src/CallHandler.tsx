@@ -92,7 +92,7 @@ import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
-import { GroupCall } from '../../matrix-js-sdk/src/webrtc/groupCall';
+import { GroupCall } from 'matrix-js-sdk/src/webrtc/groupCall';
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
