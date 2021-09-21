@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632237616249,
+  "lastUpdate": 1632237896886,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26852,6 +26852,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4614.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a548d4c9c969796dc35fd99ada5beb3f33c1477",
+          "message": "Merge pull request #6547 from SimonBrandner/feature/call-upgrades\n\nUpdate muting in calls to work with the js-sdk call upgrade changes",
+          "timestamp": "2021-09-21T09:18:54-06:00",
+          "tree_id": "73a51824ca82f3f51a8a2c5bf6daf80853702813",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a548d4c9c969796dc35fd99ada5beb3f33c1477"
+        },
+        "date": 1632237895020,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4536.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 976.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1632.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4551.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
