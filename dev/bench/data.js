@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632239629991,
+  "lastUpdate": 1632240691945,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26948,6 +26948,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4495.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7bd3535b9f7e0b96e39107b15ad819c5be9d2e2c",
+          "message": "Merge pull request #6454 from SimonBrandner/feature/image-view-load-anim/18186\n\n* Give lightbox a background load animation\r\n* Extends IMediaEventContent by thumbnail info\r\n* Give image view panel a loading animation\r\n* Initial implementation of loading animation\r\n* Take panel height into account\r\n* Update animation speed\r\n* Add some null guards\r\n* Fix animation issues\r\n* Move animations into _animations\r\n* Where does that magic number come from?\r\n* Remove awaiting setState()\r\n* Use CSS var in JS\r\n* Handle prefers-reduced-motion\r\n* More prefers-reduced-motion friendliness\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-09-21T18:05:13+02:00",
+          "tree_id": "4024e5ba1d48494f3c93adbf59513fb5577e1db5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7bd3535b9f7e0b96e39107b15ad819c5be9d2e2c"
+        },
+        "date": 1632240689323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4442.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987,
             "unit": "ms",
             "extra": "type: measure"
           }
