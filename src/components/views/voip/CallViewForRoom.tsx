@@ -23,7 +23,7 @@ import { Resizable } from "re-resizable";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { GroupCall } from 'matrix-js-sdk/src/webrtc/groupCall';
-import { GroupCallView } from "./GroupCallView";
+import GroupCallView from "./GroupCallView";
 
 interface IProps {
     // What room we should display the call for

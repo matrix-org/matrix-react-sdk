@@ -831,10 +831,6 @@ export default class CallHandler extends EventEmitter {
             });
             return;
         }
-
-        this.setGroupCallListeners(groupCall);
-
-        groupCall.enter();
     }
 
     private onAction = (payload: ActionPayload) => {

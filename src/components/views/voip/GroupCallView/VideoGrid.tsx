@@ -420,7 +420,7 @@ interface IVideoGridProps {
     layout: string;
 }
 
-export function VideoGrid({ participants, layout }: IVideoGridProps) {
+export default function VideoGrid({ participants, layout }: IVideoGridProps) {
     const [{ tiles, tilePositions }, setTileState] = useState({
         tiles: [],
         tilePositions: [],
@@ -753,7 +753,7 @@ function ParticipantTile({ style, participant, remove, presenter, ...rest }: IPa
         } else {
             videoRef.current.srcObject = null;
         }
-    }, [participant]);
+    }, [participant.usermediaStream, participant.call]);
 
     // Firefox doesn't respect the disablePictureInPicture attribute
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1611831
