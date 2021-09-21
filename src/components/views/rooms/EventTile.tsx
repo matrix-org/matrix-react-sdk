@@ -1269,6 +1269,17 @@ export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean) {
     // No tile for replacement events since they update the original tile
     if (e.isRelation("m.replace")) return false;
 
+    const type = e.getType();
+
+    if (type.startsWith("m.call.")) {
+        const roomId = e.getRoomId();
+        const room = MatrixClientPeg.get().getRoom(roomId);
+
+        if (room && room.currentState.getStateEvents("me.robertlong.conf").length > 0) {
+            return false;
+        }
+    }
+
     const handler = getHandlerTile(e);
     if (handler === undefined) return false;
     if (handler === 'messages.TextualEvent') {
