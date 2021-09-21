@@ -890,7 +890,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
     // TODO: Types
-    getTile: () => unknown = () => this.tile.current;
+    getTile: () => any | null = () => this.tile.current;
 
     getReplyThread = () => this.replyThread.current;
 
