@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632215947149,
+  "lastUpdate": 1632221367722,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26708,6 +26708,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3965.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7071092fa4796ffd47e0b9b4443ca4bc0227cc55",
+          "message": "Merge pull request #5555 from 2580ayush2580/ayush25802\n\nImprove room directory UX for mobile devices",
+          "timestamp": "2021-09-21T11:44:07+01:00",
+          "tree_id": "8f1751f3205f1e1084dbc044785453d2d81668b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7071092fa4796ffd47e0b9b4443ca4bc0227cc55"
+        },
+        "date": 1632221365586,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4474.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 865,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1670.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4216.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
