@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632237896886,
+  "lastUpdate": 1632239629991,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26900,6 +26900,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4551.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2d1d42b90e8418017348cae1bd17a8a92340fdfb",
+          "message": "Globally replace all console.logs via codemod (#6827)\n\nThis commit replaces all the `console.log` to `logger.log` via an automated script.\r\nRelated: vector-im/element-web#18425",
+          "timestamp": "2021-09-21T09:48:09-06:00",
+          "tree_id": "a458438c00847a07f7d721026cc9024997209415",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2d1d42b90e8418017348cae1bd17a8a92340fdfb"
+        },
+        "date": 1632239628135,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4715.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 975.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4495.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
