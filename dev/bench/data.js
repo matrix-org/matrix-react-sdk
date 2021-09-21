@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632211936533,
+  "lastUpdate": 1632213587123,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -26612,6 +26612,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4410.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ekaterinag@element.io",
+            "name": "Kat Gerasimova",
+            "username": "kittykat"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c632e438c0718b02dc0d6b80af59fa9d630d5d2a",
+          "message": "Improve string for leaving space in leave dialog\n\nImprove string for leaving space in leave dialog",
+          "timestamp": "2021-09-21T01:33:17-07:00",
+          "tree_id": "51e1b634adccf233dee71ee1ec78637ad51aa3e2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c632e438c0718b02dc0d6b80af59fa9d630d5d2a"
+        },
+        "date": 1632213585091,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4764.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1096.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1742.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4810.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
