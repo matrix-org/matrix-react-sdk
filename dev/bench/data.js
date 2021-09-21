@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632245089322,
+  "lastUpdate": 1632245303964,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27032,6 +27032,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4895.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "distinct": true,
+          "id": "b78e0ba1660ea05dbdd7e39b8b8bb819b4649234",
+          "message": "Merge remote-tracking branch 'kittykat/develop' into develop",
+          "timestamp": "2021-09-21T11:21:50-06:00",
+          "tree_id": "0978b755b05e913356672b3913b8c6c2a34e79f4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b78e0ba1660ea05dbdd7e39b8b8bb819b4649234"
+        },
+        "date": 1632245302014,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4690,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 986,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1726.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4641.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
