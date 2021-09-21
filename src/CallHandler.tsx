@@ -550,10 +550,6 @@ export default class CallHandler extends EventEmitter {
         });
     }
 
-    private setGroupCallListeners(groupCall: GroupCall) {
-        console.log("group call loaded", groupCall);
-    }
-
     private onCallStateChanged = (newState: CallState, oldState: CallState, call: MatrixCall): void => {
         if (!this.matchesCallForThisRoom(call)) return;
 
@@ -815,22 +811,20 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    private async createGroupCall(roomId: string, type: PlaceCallType) {
+    private createGroupCall(roomId: string, type: PlaceCallType) {
+        if (this.roomHasCallOrGroupCall(roomId)) {
+            return;
+        }
+
         // TODO: Add analytics
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
-        console.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
+        logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
+
         const groupCall = MatrixClientPeg.get()
             .createGroupCall(roomId, type === PlaceCallType.Video ? CallType.Video : CallType.Voice);
 
-        try {
-            this.addGroupCallForRoom(roomId, groupCall);
-        } catch (e) {
-            Modal.createTrackedDialog('Call Handler', 'Existing Call with user', ErrorDialog, {
-                title: _t('Already in group call'),
-                description: _t("You're already in a group call."),
-            });
-            return;
-        }
+        this.groupCalls.set(roomId, groupCall);
+        dis.dispatch({ action: "group_calls_changed" });
     }
 
     private onAction = (payload: ActionPayload) => {
@@ -1241,16 +1235,5 @@ export default class CallHandler extends EventEmitter {
         } else {
             this.emit(CallHandlerEvent.CallsChanged, this.calls);
         }
-    }
-
-    private addGroupCallForRoom(roomId: string, groupCall: GroupCall) {
-        if (this.roomHasCallOrGroupCall(roomId)) {
-            console.log(`Couldn't add call to room ${roomId}: already have a call for this room`);
-            throw new Error("Already have a call for room " + roomId);
-        }
-
-        this.groupCalls.set(roomId, groupCall);
-
-        dis.dispatch({ action: "group_calls_changed" });
     }
 }

@@ -967,6 +967,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                     callInProgress = true;
                 } else {
                     const type = CallHandler.sharedInstance().getGroupCallType(room.roomId);
+
                     if (type) {
                         dis.dispatch({
                             action: 'create_group_call',
