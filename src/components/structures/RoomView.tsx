@@ -1484,11 +1484,18 @@ export default class RoomView extends React.Component<IProps, IState> {
     };
 
     private onCreateGroupCall= (type: PlaceCallType) => {
-        dis.dispatch({
-            action: 'create_group_call',
-            type: type,
-            room_id: this.state.room.roomId,
-        });
+        if (CallHandler.sharedInstance().getGroupCallForRoom(this.state.room.roomId)) {
+            dis.dispatch({
+                action: 'end_group_call',
+                room_id: this.state.room.roomId,
+            });
+        } else {
+            dis.dispatch({
+                action: 'create_group_call',
+                type: type,
+                room_id: this.state.room.roomId,
+            });
+        }
     };
 
     private onSettingsClick = () => {

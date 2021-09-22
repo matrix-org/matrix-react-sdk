@@ -93,6 +93,7 @@ import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
 import { GroupCall } from 'matrix-js-sdk/src/webrtc/groupCall';
+import { MatrixEvent, RoomState } from 'matrix-js-sdk';
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -212,6 +213,7 @@ export default class CallHandler extends EventEmitter {
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
             MatrixClientPeg.get().on('Call.incoming', this.onCallIncoming);
+            MatrixClientPeg.get().on('RoomState.events', this.onRoomStateChanged);
         }
 
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
@@ -221,6 +223,7 @@ export default class CallHandler extends EventEmitter {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener('Call.incoming', this.onCallIncoming);
+            cli.removeListener('RoomState.events', this.onRoomStateChanged);
         }
         if (this.dispatcherRef !== null) {
             dis.unregister(this.dispatcherRef);
@@ -338,6 +341,31 @@ export default class CallHandler extends EventEmitter {
             action: 'incoming_call',
             call: call,
         }, true);
+    };
+
+    private onRoomStateChanged = (_event: MatrixEvent, state: RoomState, _prevEvent: MatrixEvent) => {
+        const groupCall = this.getGroupCallForRoom(state.roomId);
+        const confEvents = state.getStateEvents("me.robertlong.conf");
+        const confEvent = confEvents.length > 0 ? confEvents[0] : null;
+
+        console.log("onRoomStateChanged", groupCall, confEvent);
+
+        if (groupCall && !confEvent) {
+            groupCall.leave();
+            this.groupCalls.delete(state.roomId);
+        } else if (!groupCall && confEvent) {
+            const content = confEvent.getContent();
+
+            let callType: PlaceCallType;
+
+            if (content.callType === "voice") {
+                callType = PlaceCallType.Voice;
+            } else {
+                callType = PlaceCallType.Video;
+            }
+
+            this.createGroupCall(state.roomId, callType);
+        }
     };
 
     public getCallById(callId: string): MatrixCall {
@@ -827,6 +855,19 @@ export default class CallHandler extends EventEmitter {
         dis.dispatch({ action: "group_calls_changed" });
     }
 
+    private endGroupCall(roomId: string) {
+        const groupCall = this.getGroupCallForRoom(roomId);
+
+        if (!groupCall) {
+            return;
+        }
+
+        groupCall.leave();
+        groupCall.endCall();
+        this.groupCalls.delete(roomId);
+        dis.dispatch({ action: "group_calls_changed" });
+    }
+
     private onAction = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'create_group_call':
@@ -902,6 +943,9 @@ export default class CallHandler extends EventEmitter {
             case 'hangup_conference':
                 console.info("Leaving conference call in "+ payload.room_id);
                 this.hangupCallApp(payload.room_id);
+                break;
+            case 'end_group_call':
+                this.endGroupCall(payload.room_id);
                 break;
             case 'incoming_call':
                 {
