@@ -950,7 +950,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
-        this.setupCall(room);
+        //this.setupCall(room);
     };
 
     private setupCall(room: Room): void {

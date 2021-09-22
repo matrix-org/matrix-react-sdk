@@ -1,9 +1,9 @@
 
 import { useCallback, useEffect, useState } from "react";
-import { GroupCallEvent } from "matrix-js-sdk/src/webrtc/groupCall";
+import { GroupCall, GroupCallEvent } from "matrix-js-sdk/src/webrtc/groupCall";
 import { usePageUnload } from "./usePageUnload";
 
-export function useGroupCall(groupCall) {
+export function useGroupCall(groupCall: GroupCall) {
     const [
         {
             loading,
