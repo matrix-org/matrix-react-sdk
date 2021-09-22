@@ -4,6 +4,8 @@ import { useGroupCall } from "../../../hooks/useGroupCall";
 import VideoGrid from "./GroupCallView/VideoGrid";
 import CallViewButtons from "./CallView/CallViewButtons";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import AccessibleButton from "../elements/AccessibleButton";
+import { _t } from "../../../languageHandler";
 
 interface IProps {
     groupCall: GroupCall;
@@ -31,13 +33,13 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
         enter,
         leave,
         entered,
+        entering,
     } = useGroupCall(groupCall);
     const [layout] = useRoomLayout();
 
     useEffect(() => {
         enter();
     }, [enter]);
-
     useEffect(() => {
         (window as unknown as any).groupCall = groupCall;
     }, [groupCall]);
@@ -47,25 +49,31 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
     }, []);
 
     return (
-        <div className="mx_GroupCallView" onMouseMove={onMouseMove}>
-            <VideoGrid participants={participants} layout={layout} />
-            <CallViewButtons
-                ref={callViewButtonsRef}
-                pipMode={pipMode}
-                handlers={{
-                    onHangupClick: entered ? leave : enter,
-                    onMicMuteClick: toggleMicrophoneMuted,
-                    onVidMuteClick: toggleLocalVideoMuted,
-                }}
-                buttonsState={{
-                    micMuted: microphoneMuted,
-                    vidMuted: localVideoMuted,
-                }}
-                buttonsVisibility={{
-                    vidMute: groupCall.type === CallType.Video,
-                }}
-            />
-        </div>
+        <div className="mx_GroupCallView" onMouseMove={onMouseMove}> {
+            (entered || entering)
+                ? <React.Fragment>
+                    <VideoGrid participants={participants} layout={layout} />
+                    <CallViewButtons
+                        ref={callViewButtonsRef}
+                        pipMode={pipMode}
+                        handlers={{
+                            onHangupClick: leave,
+                            onMicMuteClick: toggleMicrophoneMuted,
+                            onVidMuteClick: toggleLocalVideoMuted,
+                        }}
+                        buttonsState={{
+                            micMuted: microphoneMuted,
+                            vidMuted: localVideoMuted,
+                        }}
+                        buttonsVisibility={{
+                            vidMute: groupCall.type === CallType.Video,
+                        }}
+                    />
+                </React.Fragment>
+                : <AccessibleButton kind="primary" onClick={enter}>
+                    { _t("Enter conference ") }
+                </AccessibleButton>
+        } </div>
     );
 });
 
