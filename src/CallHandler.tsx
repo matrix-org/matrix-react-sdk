@@ -243,9 +243,9 @@ export default class CallHandler extends EventEmitter {
             dis.dispatch({ action: Action.VirtualRoomSupportUpdated });
         } catch (e) {
             if (maxTries === 1) {
-                console.log("Failed to check for protocol support and no retries remain: assuming no support", e);
+                logger.log("Failed to check for protocol support and no retries remain: assuming no support", e);
             } else {
-                console.log("Failed to check for protocol support: will retry", e);
+                logger.log("Failed to check for protocol support: will retry", e);
                 this.pstnSupportCheckTimer = setTimeout(() => {
                     this.checkProtocols(maxTries - 1);
                 }, 10000);
@@ -293,7 +293,7 @@ export default class CallHandler extends EventEmitter {
 
         const mappedRoomId = CallHandler.instance.roomIdForCall(call);
         if (this.getCallForRoom(mappedRoomId)) {
-            console.log(
+            logger.log(
                 "Got incoming call for room " + mappedRoomId +
                 " but there's already a call for this room: ignoring",
             );
@@ -374,7 +374,7 @@ export default class CallHandler extends EventEmitter {
                     // or chrome doesn't think so and is denying the request. Not sure what
                     // we can really do here...
                     // https://github.com/vector-im/element-web/issues/7657
-                    console.log("Unable to play audio clip", e);
+                    logger.log("Unable to play audio clip", e);
                 }
             };
             if (this.audioPromises.has(audioId)) {
@@ -419,7 +419,7 @@ export default class CallHandler extends EventEmitter {
             if (!this.matchesCallForThisRoom(call)) return;
 
             Analytics.trackEvent('voip', 'callError', 'error', err.toString());
-            console.error("Call error:", err);
+            logger.error("Call error:", err);
 
             if (err.code === CallErrorCode.NoUserMedia) {
                 this.showMediaCaptureError(call);
@@ -452,7 +452,7 @@ export default class CallHandler extends EventEmitter {
         call.on(CallEvent.Replaced, (newCall: MatrixCall) => {
             if (!this.matchesCallForThisRoom(call)) return;
 
-            console.log(`Call ID ${call.callId} is being replaced by call ID ${newCall.callId}`);
+            logger.log(`Call ID ${call.callId} is being replaced by call ID ${newCall.callId}`);
 
             if (call.state === CallState.Ringing) {
                 this.pause(AudioID.Ring);
@@ -468,7 +468,7 @@ export default class CallHandler extends EventEmitter {
         call.on(CallEvent.AssertedIdentityChanged, async () => {
             if (!this.matchesCallForThisRoom(call)) return;
 
-            console.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
+            logger.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
 
             const newAssertedIdentity = call.getRemoteAssertedIdentity().id;
             let newNativeAssertedIdentity = newAssertedIdentity;
@@ -478,7 +478,7 @@ export default class CallHandler extends EventEmitter {
                     newNativeAssertedIdentity = response[0].userid;
                 }
             }
-            console.log(`Asserted identity ${newAssertedIdentity} mapped to ${newNativeAssertedIdentity}`);
+            logger.log(`Asserted identity ${newAssertedIdentity} mapped to ${newNativeAssertedIdentity}`);
 
             if (newNativeAssertedIdentity) {
                 this.assertedIdentityNativeUsers[call.callId] = newNativeAssertedIdentity;
@@ -491,11 +491,11 @@ export default class CallHandler extends EventEmitter {
                 await ensureDMExists(MatrixClientPeg.get(), newNativeAssertedIdentity);
 
                 const newMappedRoomId = this.roomIdForCall(call);
-                console.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
+                logger.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
                 if (newMappedRoomId !== mappedRoomId) {
                     this.removeCallForRoom(mappedRoomId);
                     mappedRoomId = newMappedRoomId;
-                    console.log("Moving call to room " + mappedRoomId);
+                    logger.log("Moving call to room " + mappedRoomId);
                     this.addCallForRoom(mappedRoomId, call, true);
                 }
             }
@@ -636,7 +636,7 @@ export default class CallHandler extends EventEmitter {
     private setCallState(call: MatrixCall, status: CallState): void {
         const mappedRoomId = CallHandler.instance.roomIdForCall(call);
 
-        console.log(
+        logger.log(
             `Call state in ${mappedRoomId} changed to ${status}`,
         );
 
@@ -657,7 +657,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private removeCallForRoom(roomId: string): void {
-        console.log("Removing call for room ", roomId);
+        logger.log("Removing call for room ", roomId);
         this.calls.delete(roomId);
         this.emit(CallHandlerEvent.CallsChanged, this.calls);
     }
@@ -728,7 +728,7 @@ export default class CallHandler extends EventEmitter {
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
 
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
-        console.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
+        logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
         const call = MatrixClientPeg.get().createCall(mappedRoomId);
 
         try {
@@ -753,7 +753,7 @@ export default class CallHandler extends EventEmitter {
         } else if (type === 'video') {
             call.placeVideoCall();
         } else {
-            console.error("Unknown conf call type: " + type);
+            logger.error("Unknown conf call type: " + type);
         }
     }
 
@@ -784,7 +784,7 @@ export default class CallHandler extends EventEmitter {
 
         const room = MatrixClientPeg.get().getRoom(roomId);
         if (!room) {
-            console.error(`Room ${roomId} does not exist.`);
+            logger.error(`Room ${roomId} does not exist.`);
             return;
         }
 
@@ -797,7 +797,7 @@ export default class CallHandler extends EventEmitter {
                 description: _t('You cannot place a call with yourself.'),
             });
         } else if (members.length === 2) {
-            console.info(`Place ${type} call in ${roomId}`);
+            logger.info(`Place ${type} call in ${roomId}`);
 
             this.placeMatrixCall(roomId, type, transferee);
         } else { // > 2
@@ -878,7 +878,7 @@ export default class CallHandler extends EventEmitter {
             const nativeLookupResults = await this.sipNativeLookup(userId);
             const lookupSuccess = nativeLookupResults.length > 0 && nativeLookupResults[0].fields.lookup_success;
             nativeUserId = lookupSuccess ? nativeLookupResults[0].userid : userId;
-            console.log("Looked up " + number + " to " + userId + " and mapped to native user " + nativeUserId);
+            logger.log("Looked up " + number + " to " + userId + " and mapped to native user " + nativeUserId);
         } else {
             nativeUserId = userId;
         }
@@ -925,7 +925,7 @@ export default class CallHandler extends EventEmitter {
             try {
                 await call.transfer(destination);
             } catch (e) {
-                console.log("Failed to transfer call", e);
+                logger.log("Failed to transfer call", e);
                 Modal.createTrackedDialog('Failed to transfer call', '', ErrorDialog, {
                     title: _t('Transfer Failed'),
                     description: _t('Failed to transfer call'),
@@ -962,7 +962,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private async placeJitsiCall(roomId: string, type: string): Promise<void> {
-        console.info("Place conference call in " + roomId);
+        logger.info("Place conference call in " + roomId);
         Analytics.trackEvent('voip', 'placeConferenceCall');
         CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, true);
 
@@ -1019,7 +1019,7 @@ export default class CallHandler extends EventEmitter {
         );
 
         WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl, 'Jitsi', widgetData).then(() => {
-            console.log('Jitsi widget added');
+            logger.log('Jitsi widget added');
         }).catch((e) => {
             if (e.errcode === 'M_FORBIDDEN') {
                 Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
@@ -1027,12 +1027,12 @@ export default class CallHandler extends EventEmitter {
                     description: _t("You do not have permission to start a conference call in this room"),
                 });
             }
-            console.error(e);
+            logger.error(e);
         });
     }
 
     public terminateCallApp(roomId: string): void {
-        console.info("Terminating conference call in " + roomId);
+        logger.info("Terminating conference call in " + roomId);
 
         Modal.createTrackedDialog('Confirm Jitsi Terminate', '', QuestionDialog, {
             hasCancelButton: true,
@@ -1055,7 +1055,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     public hangupCallApp(roomId: string): void {
-        console.info("Leaving conference call in " + roomId);
+        logger.info("Leaving conference call in " + roomId);
 
         const roomInfo = WidgetStore.instance.getRoom(roomId);
         if (!roomInfo) return; // "should never happen" clauses go here
@@ -1071,11 +1071,11 @@ export default class CallHandler extends EventEmitter {
 
     private addCallForRoom(roomId: string, call: MatrixCall, changedRooms = false): void {
         if (this.calls.has(roomId)) {
-            console.log(`Couldn't add call to room ${roomId}: already have a call for this room`);
+            logger.log(`Couldn't add call to room ${roomId}: already have a call for this room`);
             throw new Error("Already have a call for room " + roomId);
         }
 
-        console.log("setting call for room " + roomId);
+        logger.log("setting call for room " + roomId);
         this.calls.set(roomId, call);
 
         // Should we always emit CallsChanged too?
