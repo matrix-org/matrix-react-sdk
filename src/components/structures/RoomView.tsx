@@ -52,7 +52,7 @@ import RoomContext from "../../contexts/RoomContext";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { E2EStatus, shieldStatusForRoom } from '../../utils/ShieldUtils';
 import { Action } from "../../dispatcher/actions";
-import { IMatrixClientCreds } from "../../MatrixClientPeg";
+import { IMatrixClientCreds, MatrixClientPeg } from "../../MatrixClientPeg";
 import ScrollPanel from "./ScrollPanel";
 import TimelinePanel from "./TimelinePanel";
 import ErrorBoundary from "../views/elements/ErrorBoundary";
@@ -66,7 +66,7 @@ import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
-import { CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import { CallState } from "matrix-js-sdk/src/webrtc/call";
 import WidgetStore from "../../stores/WidgetStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
@@ -90,7 +90,6 @@ import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/SpaceStore";
-import { GroupCall } from 'matrix-js-sdk/src/webrtc/groupCall';
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -764,25 +763,20 @@ export default class RoomView extends React.Component<IProps, IState> {
                     return;
                 }
 
-                const call = CallHandler.sharedInstance().getCallForRoom(this.state.room.roomId);
-
                 this.setState({
-                    callInProgress:
-                        call &&
-                        call.state !== CallState.Ringing &&
-                        call.state !== CallState.Ended,
+                    callInProgress: !!CallHandler.sharedInstance().getActiveCallForRoom(payload.room_id),
                 });
                 break;
             }
             case 'group_calls_changed': {
-                if (payload.room_id !== this.state.room.roomId) {
+                const roomId = this.state.room.roomId;
+
+                if (payload.room_id !== roomId) {
                     return;
                 }
 
-                const groupCall = CallHandler.sharedInstance().getGroupCallForRoom(this.state.room.roomId);
-
                 this.setState({
-                    callInProgress: !!groupCall,
+                    callInProgress: !!CallHandler.sharedInstance().getActiveCallForRoom(payload.room_id),
                 });
                 break;
             }
@@ -950,39 +944,11 @@ export default class RoomView extends React.Component<IProps, IState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
-        //this.setupCall(room);
+
+        this.setState({
+            callInProgress: !!CallHandler.sharedInstance().getActiveCallForRoom(room.roomId),
+        });
     };
-
-    private setupCall(room: Room): void {
-        if (room) {
-            let callInProgress = false;
-            let call: MatrixCall | GroupCall = CallHandler.sharedInstance().getCallForRoom(room.roomId);
-
-            if (call) {
-                callInProgress = call.state !== CallState.Ringing && call.state !== CallState.Ended;
-            } else {
-                call = CallHandler.sharedInstance().getGroupCallForRoom(room.roomId);
-
-                if (call) {
-                    callInProgress = true;
-                } else {
-                    const type = CallHandler.sharedInstance().getGroupCallType(room.roomId);
-
-                    if (type) {
-                        dis.dispatch({
-                            action: 'create_group_call',
-                            type: type,
-                            room_id: room.roomId,
-                        });
-                    }
-                }
-            }
-
-            this.setState({
-                callInProgress,
-            });
-        }
-    }
 
     private async calculateRecommendedVersion(room: Room) {
         const upgradeRecommendation = await room.getRecommendedVersion();
@@ -1483,17 +1449,19 @@ export default class RoomView extends React.Component<IProps, IState> {
         });
     };
 
-    private onCreateGroupCall= (type: PlaceCallType) => {
-        if (CallHandler.sharedInstance().getGroupCallForRoom(this.state.room.roomId)) {
+    private onCreateGroupCall = (type: PlaceCallType) => {
+        const roomId = this.state.room.roomId;
+
+        if (MatrixClientPeg.get().getGroupCallForRoom(roomId)) {
             dis.dispatch({
                 action: 'end_group_call',
-                room_id: this.state.room.roomId,
+                room_id: roomId,
             });
         } else {
             dis.dispatch({
                 action: 'create_group_call',
                 type: type,
-                room_id: this.state.room.roomId,
+                room_id: roomId,
             });
         }
     };
