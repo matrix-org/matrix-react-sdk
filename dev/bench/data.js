@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632319328386,
+  "lastUpdate": 1632328098750,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27320,6 +27320,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4689.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7cd7cf87e3aa7b6a4df21077228b82e0edcb7013",
+          "message": "Merge pull request #6853 from videogame-hacker/patch/undefined-3pids\n\nFix Notifications settings view when threepids is undefined",
+          "timestamp": "2021-09-22T10:22:58-06:00",
+          "tree_id": "811f3b2fbe055098b1430c7704b8fb0057e15247",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7cd7cf87e3aa7b6a4df21077228b82e0edcb7013"
+        },
+        "date": 1632328096355,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4066.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 983.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
