@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632328098750,
+  "lastUpdate": 1632328130358,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27356,6 +27356,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 983.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2cd5b731bfb544003734fd343f60ddd896854d50",
+          "message": "Merge pull request #6851 from matrix-org/gsouquet/timeline-rendering-18719",
+          "timestamp": "2021-09-22T17:23:07+01:00",
+          "tree_id": "d85488f00b787de8a04a4d7b1a1b08103975f5d7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2cd5b731bfb544003734fd343f60ddd896854d50"
+        },
+        "date": 1632328128477,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4657.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1132.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1629.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4600.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
