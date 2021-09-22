@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632291740017,
+  "lastUpdate": 1632297192194,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27176,6 +27176,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4255,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f0bf39a09a88d1e19e87605ed0fbb6251bdb50af",
+          "message": "Merge pull request #6850 from SimonBrandner/fix/resizer\n\nFix resizers not letting go",
+          "timestamp": "2021-09-22T08:47:27+01:00",
+          "tree_id": "011c6af7228e2ab391fe1d10e7adf280572e87c1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f0bf39a09a88d1e19e87605ed0fbb6251bdb50af"
+        },
+        "date": 1632297189965,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4697,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1177.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1625.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4403.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
