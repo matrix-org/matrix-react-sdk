@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632245303964,
+  "lastUpdate": 1632287981770,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27080,6 +27080,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4641.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "502022ca7e988f19223965332b7228931fa00c4b",
+          "message": "Merge pull request #6849 from matrix-org/dependabot/npm_and_yarn/nth-check-2.0.1\n\nBump nth-check from 2.0.0 to 2.0.1",
+          "timestamp": "2021-09-21T23:14:26-06:00",
+          "tree_id": "f45082c983420c9c1a3e606d854617b18e812221",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/502022ca7e988f19223965332b7228931fa00c4b"
+        },
+        "date": 1632287980145,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4371.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 834.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1740.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4289.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
