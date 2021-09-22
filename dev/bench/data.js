@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632304181718,
+  "lastUpdate": 1632319328386,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27272,6 +27272,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4524.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f69854b27480d239ca36b9de414f16f5a8dae682",
+          "message": "Merge pull request #6856 from SimonBrandner/fix/soft-crash\n\nFix `AppsDrawer` soft crash",
+          "timestamp": "2021-09-22T14:56:00+01:00",
+          "tree_id": "695d69bb00a46fa4ca037637d2a578df00d8cf9a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f69854b27480d239ca36b9de414f16f5a8dae682"
+        },
+        "date": 1632319325980,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4773.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1029.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1694.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4689.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
