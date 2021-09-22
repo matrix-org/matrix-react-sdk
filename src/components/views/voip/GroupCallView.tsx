@@ -38,9 +38,6 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
     const [layout] = useRoomLayout();
 
     useEffect(() => {
-        enter();
-    }, [enter]);
-    useEffect(() => {
         (window as unknown as any).groupCall = groupCall;
     }, [groupCall]);
 
