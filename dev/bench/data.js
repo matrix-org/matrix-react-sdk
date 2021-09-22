@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632297192194,
+  "lastUpdate": 1632304181718,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27224,6 +27224,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4403.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b13fdb698c018ac08299664f706d92570838f9d0",
+          "message": "Merge pull request #6743 from SimonBrandner/task/dialogs-ts",
+          "timestamp": "2021-09-22T10:43:19+01:00",
+          "tree_id": "b26323fd2bf05bba70782c211cf609153aadffc7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b13fdb698c018ac08299664f706d92570838f9d0"
+        },
+        "date": 1632304179861,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4650.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1085.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1691.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4524.5,
             "unit": "ms",
             "extra": "type: measure"
           }
