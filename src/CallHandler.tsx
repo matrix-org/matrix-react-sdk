@@ -147,7 +147,6 @@ export enum CallHandlerEvent {
 
 export default class CallHandler extends EventEmitter {
     private calls = new Map<string, MatrixCall>(); // roomId -> call
-    private groupCalls = new Map<string, GroupCall>(); // roomId -> group call
     // Calls started as an attended transfer, ie. with the intention of transferring another
     // call with a different party to this one.
     private transferees = new Map<string, MatrixCall>(); // callId (target) -> call (transferee)
@@ -212,6 +211,8 @@ export default class CallHandler extends EventEmitter {
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
             MatrixClientPeg.get().on('Call.incoming', this.onCallIncoming);
+            MatrixClientPeg.get().on('GroupCall.incoming', this.onGroupCallsChanged);
+            MatrixClientPeg.get().on('GroupCall.ended', this.onGroupCallsChanged);
         }
 
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
@@ -221,6 +222,8 @@ export default class CallHandler extends EventEmitter {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener('Call.incoming', this.onCallIncoming);
+            cli.removeListener('GroupCall.incoming', this.onGroupCallsChanged);
+            cli.removeListener('GroupCall.ended', this.onGroupCallsChanged);
         }
         if (this.dispatcherRef !== null) {
             dis.unregister(this.dispatcherRef);
@@ -340,6 +343,10 @@ export default class CallHandler extends EventEmitter {
         }, true);
     };
 
+    private onGroupCallsChanged = () => {
+        dis.dispatch({ action: "group_calls_changed" });
+    };
+
     public getCallById(callId: string): MatrixCall {
         for (const call of this.calls.values()) {
             if (call.callId === callId) return call;
@@ -351,25 +358,14 @@ export default class CallHandler extends EventEmitter {
         return this.calls.get(roomId) || null;
     }
 
-    getGroupCallForRoom(roomId: string): GroupCall | undefined {
-        return this.groupCalls.get(roomId);
-    }
+    public getActiveCallForRoom(roomId: string): MatrixCall | GroupCall | null {
+        const call = this.calls.get(roomId);
 
-    getGroupCallType(roomId: string): PlaceCallType {
-        const stateEvents = MatrixClientPeg.get().getRoom(roomId)
-            .currentState.getStateEvents("me.robertlong.conf");
-
-        if (stateEvents.length === 0) {
-            return null;
+        if (call && call.state !== CallState.Ended && call.state !== CallState.Ringing) {
+            return call;
         }
 
-        const content = stateEvents[0].getContent();
-
-        if (content.callType === "voice") {
-            return PlaceCallType.Voice;
-        }
-
-        return PlaceCallType.Video;
+        return MatrixClientPeg.get().getGroupCallForRoom(roomId);
     }
 
     getAnyActiveCall() {
@@ -811,7 +807,7 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    private createGroupCall(roomId: string, type: PlaceCallType) {
+    private async createGroupCall(roomId: string, type: PlaceCallType) {
         if (this.roomHasCallOrGroupCall(roomId)) {
             return;
         }
@@ -820,10 +816,22 @@ export default class CallHandler extends EventEmitter {
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
         logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
 
-        const groupCall = MatrixClientPeg.get()
+        // TODO: Handle errors
+        await MatrixClientPeg.get()
             .createGroupCall(roomId, type === PlaceCallType.Video ? CallType.Video : CallType.Voice);
 
-        this.groupCalls.set(roomId, groupCall);
+        dis.dispatch({ action: "group_calls_changed" });
+    }
+
+    private endGroupCall(roomId: string) {
+        const groupCall = MatrixClientPeg.get().getGroupCallForRoom(roomId);
+
+        if (!groupCall) {
+            return;
+        }
+
+        groupCall.endCall();
+
         dis.dispatch({ action: "group_calls_changed" });
     }
 
@@ -902,6 +910,9 @@ export default class CallHandler extends EventEmitter {
             case 'hangup_conference':
                 console.info("Leaving conference call in "+ payload.room_id);
                 this.hangupCallApp(payload.room_id);
+                break;
+            case 'end_group_call':
+                this.endGroupCall(payload.room_id);
                 break;
             case 'incoming_call':
                 {
@@ -1109,7 +1120,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private roomHasCallOrGroupCall(roomId: string): boolean {
-        return this.calls.has(roomId) || this.groupCalls.has(roomId);
+        return this.calls.has(roomId) || !!MatrixClientPeg.get().getGroupCallForRoom(roomId);
     }
 
     private async startCallApp(roomId: string, type: string) {

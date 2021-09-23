@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React from 'react';
 import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
 import CallView from './CallView';
@@ -50,7 +50,7 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            call: this.getCall(),
+            call: CallHandler.sharedInstance().getActiveCallForRoom(props.roomId),
         };
     }
 
@@ -75,22 +75,12 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     };
 
     private updateCall = () => {
-        const newCall = this.getCall();
+        const newCall = CallHandler.sharedInstance().getActiveCallForRoom(this.props.roomId);
 
         if (newCall !== this.state.call) {
             this.setState({ call: newCall });
         }
     };
-
-    private getCall(): MatrixCall | GroupCall {
-        const call = CallHandler.sharedInstance().getCallForRoom(this.props.roomId);
-
-        if (call) {
-            return call.state !== CallState.Ended && call.state !== CallState.Ringing ? call : null;
-        } else {
-            return CallHandler.sharedInstance().getGroupCallForRoom(this.props.roomId);
-        }
-    }
 
     private onResizeStart = () => {
         this.props.resizeNotifier.startResizing();
