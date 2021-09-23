@@ -1,9 +1,9 @@
 
 import { useCallback, useEffect, useState } from "react";
-import { GroupCallEvent } from "matrix-js-sdk/src/webrtc/groupCall";
+import { GroupCallEvent, GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { usePageUnload } from "./usePageUnload";
 
-export function useGroupCall(groupCall) {
+export function useGroupCall(groupCall: GroupCall) {
     const [
         {
             loading,
@@ -14,7 +14,6 @@ export function useGroupCall(groupCall) {
             error,
             microphoneMuted,
             localVideoMuted,
-            callDebugger,
         },
         setState,
     ] = useState({
@@ -26,7 +25,6 @@ export function useGroupCall(groupCall) {
         error: null,
         microphoneMuted: false,
         localVideoMuted: false,
-        callDebugger: null,
     });
 
     const updateState = (state) =>
@@ -122,7 +120,6 @@ export function useGroupCall(groupCall) {
         roomName: room ? room.name : null,
         participants,
         groupCall: groupCall,
-        callDebugger: callDebugger,
         microphoneMuted,
         localVideoMuted,
         error,
