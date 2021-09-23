@@ -19,8 +19,9 @@ import { useDrag } from "react-use-gesture";
 import { useSprings } from "@react-spring/web";
 import useMeasure from "react-use-measure";
 import moveArrItem from "lodash-move";
-import { GroupCallParticipant } from "matrix-js-sdk/src/webrtc/groupCallParticipant";
-import ParticipantTile from "./ParticipantTile";
+import VideoTile from "./VideoTile";
+import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { RoomMember } from "matrix-js-sdk";
 
 function useIsMounted() {
     const isMountedRef = useRef(false);
@@ -49,7 +50,12 @@ function isInside([x, y]: number[], targetTile: { x: number, y: number, height: 
     return true;
 }
 
-function getTilePositions(tileCount: number, presenterTileCount: number, gridWidth: number, gridHeight: number) {
+function getTilePositions(
+    tileCount: number,
+    presenterTileCount: number,
+    gridWidth: number,
+    gridHeight: number,
+): ITilePosition[] {
     if (tileCount === 0) {
         return [];
     }
@@ -60,33 +66,33 @@ function getTilePositions(tileCount: number, presenterTileCount: number, gridWid
 
     const gap = 8;
 
-    const { layoutDirection, participantGridRatio } = getGridLayout(
+    const { layoutDirection, itemGridRatio } = getGridLayout(
         tileCount,
         presenterTileCount,
         gridWidth,
         gridHeight,
     );
 
-    let participantGridWidth: number;
-    let participantGridHeight: number;
+    let itemGridWidth: number;
+    let itemGridHeight: number;
 
     if (layoutDirection === "vertical") {
-        participantGridWidth = gridWidth;
-        participantGridHeight = Math.round(gridHeight * participantGridRatio);
+        itemGridWidth = gridWidth;
+        itemGridHeight = Math.round(gridHeight * itemGridRatio);
     } else {
-        participantGridWidth = Math.round(gridWidth * participantGridRatio);
-        participantGridHeight = gridHeight;
+        itemGridWidth = Math.round(gridWidth * itemGridRatio);
+        itemGridHeight = gridHeight;
     }
 
-    const participantTileCount = tileCount - presenterTileCount;
+    const itemTileCount = tileCount - presenterTileCount;
 
-    const participantGridPositions = getSubGridPositions(
-        participantTileCount,
-        participantGridWidth,
-        participantGridHeight,
+    const itemGridPositions = getSubGridPositions(
+        itemTileCount,
+        itemGridWidth,
+        itemGridHeight,
         gap,
     );
-    const participantGridBounds = getSubGridBoundingBox(participantGridPositions);
+    const itemGridBounds = getSubGridBoundingBox(itemGridPositions);
 
     let presenterGridWidth: number;
     let presenterGridHeight: number;
@@ -98,11 +104,11 @@ function getTilePositions(tileCount: number, presenterTileCount: number, gridWid
         presenterGridWidth = gridWidth;
         presenterGridHeight =
             gridHeight -
-            (participantGridBounds.height + (participantTileCount ? gap * 2 : 0));
+            (itemGridBounds.height + (itemTileCount ? gap * 2 : 0));
     } else {
         presenterGridWidth =
             gridWidth -
-            (participantGridBounds.width + (participantTileCount ? gap * 2 : 0));
+            (itemGridBounds.width + (itemTileCount ? gap * 2 : 0));
         presenterGridHeight = gridHeight;
     }
 
@@ -115,7 +121,7 @@ function getTilePositions(tileCount: number, presenterTileCount: number, gridWid
 
     const tilePositions = [
         ...presenterGridPositions,
-        ...participantGridPositions,
+        ...itemGridPositions,
     ];
 
     centerTiles(
@@ -128,7 +134,7 @@ function getTilePositions(tileCount: number, presenterTileCount: number, gridWid
 
     if (layoutDirection === "vertical") {
         centerTiles(
-            participantGridPositions,
+            itemGridPositions,
             gridWidth,
             gridHeight - presenterGridHeight,
             0,
@@ -136,7 +142,7 @@ function getTilePositions(tileCount: number, presenterTileCount: number, gridWid
         );
     } else {
         centerTiles(
-            participantGridPositions,
+            itemGridPositions,
             gridWidth - presenterGridWidth,
             gridHeight,
             presenterGridWidth,
@@ -147,7 +153,7 @@ function getTilePositions(tileCount: number, presenterTileCount: number, gridWid
     return tilePositions;
 }
 
-function getSubGridBoundingBox(positions) {
+function getSubGridBoundingBox(positions: ITilePosition[]) {
     let left = 0;
     let right = 0;
     let top = 0;
@@ -192,26 +198,32 @@ function getSubGridBoundingBox(positions) {
 
 function getGridLayout(tileCount: number, presenterTileCount: number, gridWidth: number, gridHeight: number) {
     let layoutDirection = "horizontal";
-    let participantGridRatio = 1;
+    let itemGridRatio = 1;
 
     if (presenterTileCount === 0) {
-        return { participantGridRatio, layoutDirection };
+        return { itemGridRatio, layoutDirection };
     }
 
     const gridAspectRatio = gridWidth / gridHeight;
 
     if (gridAspectRatio < 1) {
         layoutDirection = "vertical";
-        participantGridRatio = 1 / 3;
+        itemGridRatio = 1 / 3;
     } else {
         layoutDirection = "horizontal";
-        participantGridRatio = 1 / 3;
+        itemGridRatio = 1 / 3;
     }
 
-    return { participantGridRatio, layoutDirection };
+    return { itemGridRatio, layoutDirection };
 }
 
-function centerTiles(positions, gridWidth, gridHeight, offsetLeft, offsetTop) {
+function centerTiles(
+    positions: ITilePosition[],
+    gridWidth: number,
+    gridHeight: number,
+    offsetLeft: number,
+    offsetTop: number,
+): ITilePosition[] {
     const bounds = getSubGridBoundingBox(positions);
 
     const leftOffset = Math.round((gridWidth - bounds.width) / 2) + offsetLeft;
@@ -222,7 +234,7 @@ function centerTiles(positions, gridWidth, gridHeight, offsetLeft, offsetTop) {
     return positions;
 }
 
-function applyTileOffsets(positions, leftOffset, topOffset) {
+function applyTileOffsets(positions: ITilePosition[], leftOffset: number, topOffset: number): ITilePosition[] {
     for (const position of positions) {
         position.x += leftOffset;
         position.y += topOffset;
@@ -231,7 +243,7 @@ function applyTileOffsets(positions, leftOffset, topOffset) {
     return positions;
 }
 
-function getSubGridLayout(tileCount, gridWidth, gridHeight) {
+function getSubGridLayout(tileCount: number, gridWidth: number, gridHeight: number) {
     const gridAspectRatio = gridWidth / gridHeight;
 
     let columnCount: number;
@@ -341,7 +353,14 @@ function getSubGridLayout(tileCount, gridWidth, gridHeight) {
     return { columnCount, rowCount, tileAspectRatio };
 }
 
-function getSubGridPositions(tileCount, gridWidth, gridHeight, gap) {
+interface ITilePosition {
+    width: number;
+    height: number;
+    x: number;
+    y: number;
+}
+
+function getSubGridPositions(tileCount: number, gridWidth: number, gridHeight: number, gap: number): ITilePosition[] {
     if (tileCount === 0) {
         return [];
     }
@@ -415,18 +434,44 @@ function getSubGridPositions(tileCount, gridWidth, gridHeight, gap) {
     return newTilePositions;
 }
 
+interface IVideoGridItem {
+    callFeed: CallFeed;
+    member: RoomMember;
+    isActiveSpeaker: boolean;
+}
+
+interface IVideoGridTile {
+    key: string;
+    item: IVideoGridItem;
+    remove: boolean;
+    presenter: boolean;
+}
+
+interface IVideoGridState {
+    tiles: IVideoGridTile[];
+    tilePositions: ITilePosition[];
+}
+
 interface IVideoGridProps {
-    participants: GroupCallParticipant[];
+    items: IVideoGridItem[];
     layout: string;
 }
 
-export default function VideoGrid({ participants, layout }: IVideoGridProps) {
-    const [{ tiles, tilePositions }, setTileState] = useState({
+interface IDraggingTile {
+    key: string;
+    offsetX: number;
+    offsetY: number;
+    x: number;
+    y: number;
+}
+
+export default function VideoGrid({ items, layout }: IVideoGridProps) {
+    const [{ tiles, tilePositions }, setTileState] = useState<IVideoGridState>({
         tiles: [],
         tilePositions: [],
     });
-    const draggingTileRef = useRef(null);
-    const lastTappedRef = useRef({});
+    const draggingTileRef = useRef<IDraggingTile | null>(null);
+    const lastTappedRef = useRef<{ [userId: string]: number }>({});
     const lastLayoutRef = useRef(layout);
     const isMounted = useIsMounted();
 
@@ -438,45 +483,45 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
             const removedTileKeys = [];
 
             for (const tile of tiles) {
-                let participant = participants.find(
-                    (participant) => participant.member.userId === tile.key,
+                let item = items.find(
+                    (item) => item.member.userId === tile.key,
                 );
 
                 let remove = false;
 
-                if (!participant) {
+                if (!item) {
                     remove = true;
-                    participant = tile.participant;
+                    item = tile.item;
                     removedTileKeys.push(tile.key);
                 }
 
                 let presenter;
 
                 if (layout === "spotlight") {
-                    presenter = participant.isActiveSpeaker();
+                    presenter = item.isActiveSpeaker;
                 } else {
                     presenter = layout === lastLayoutRef.current ? tile.presenter : false;
                 }
 
                 newTiles.push({
-                    key: participant.member.userId,
-                    participant,
+                    key: item.member.userId,
+                    item,
                     remove,
                     presenter,
                 });
             }
 
-            for (const participant of participants) {
-                if (newTiles.some(({ key }) => participant.member.userId === key)) {
+            for (const item of items) {
+                if (newTiles.some(({ key }) => item.member.userId === key)) {
                     continue;
                 }
 
                 // Added tiles
                 newTiles.push({
-                    key: participant.member.userId,
-                    participant,
+                    key: item.member.userId,
+                    item,
                     remove: false,
-                    presenter: layout === "spotlight" && participant.isActiveSpeaker(),
+                    presenter: layout === "spotlight" && item.isActiveSpeaker,
                 });
             }
 
@@ -528,7 +573,7 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                 ),
             };
         });
-    }, [participants, gridBounds, layout, isMounted]);
+    }, [items, gridBounds, layout, isMounted]);
 
     const animate = useCallback(
         (tiles) => (tileIndex) => {
@@ -550,6 +595,7 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                     shadow: 15,
                     immediate: (key) => key === "zIndex" || key === "x" || key === "y",
                     from: {
+                        shadow: 0,
                         scale: 0,
                         opacity: 0,
                     },
@@ -563,6 +609,7 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                     zIndex: 0,
                     shadow: 1,
                     from: {
+                        shadow: 1,
                         scale: 0,
                         opacity: 0,
                     },
@@ -596,7 +643,7 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                 return;
             }
 
-            const participant = tile.participant;
+            const item = tile.item;
 
             setTileState((state) => {
                 let presenterTileCount = 0;
@@ -604,7 +651,7 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                 const newTiles = state.tiles.map((tile) => {
                     let newTile = tile;
 
-                    if (tile.participant === participant) {
+                    if (tile.item === item) {
                         newTile = { ...tile, presenter: !tile.presenter };
                     }
 
@@ -691,11 +738,13 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                         key: dragTile.key,
                         offsetX: dragTilePosition.x,
                         offsetY: dragTilePosition.y,
+                        x: movement[0],
+                        y: movement[1],
                     };
+                } else {
+                    draggingTileRef.current.x = movement[0];
+                    draggingTileRef.current.y = movement[1];
                 }
-
-                draggingTileRef.current.x = movement[0];
-                draggingTileRef.current.y = movement[1];
             } else {
                 draggingTileRef.current = null;
             }
@@ -711,7 +760,7 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                 const tile = tiles[i];
 
                 return (
-                    <ParticipantTile
+                    <VideoTile
                         {...bind(tile.key)}
                         key={tile.key}
                         style={{
@@ -720,7 +769,8 @@ export default function VideoGrid({ participants, layout }: IVideoGridProps) {
                             ),
                             ...style,
                         }}
-                        {...tile}
+                        member={tile.item.member}
+                        callFeed={tile.item.callFeed}
                     />
                 );
             }) }

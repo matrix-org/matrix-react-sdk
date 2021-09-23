@@ -1,30 +1,35 @@
 import React from "react";
 import { animated } from "@react-spring/web";
 import classNames from "classnames";
-import { GroupCallParticipant } from "matrix-js-sdk/src/webrtc/groupCallParticipant";
-import { useGroupCallParticipant } from "../../../../hooks/useGroupCallParticipant";
 import { useCallFeed } from "../../../../hooks/useCallFeed";
 import { useMediaStream } from "../../../../hooks/useMediaStream";
+import { useRoomMemberName } from "../../../../hooks/useRoomMemberName";
+import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { RoomMember } from "matrix-js-sdk";
 
-interface IParticipantTileProps {
+interface IVideoTileProps {
     style: any;
-    participant: GroupCallParticipant;
-    remove: boolean;
-    presenter: boolean;
+    member: RoomMember;
+    callFeed: CallFeed;
 }
 
-export default function ParticipantTile({ style, participant, remove, presenter, ...rest }: IParticipantTileProps) {
-    const { displayName, usermediaFeed } = useGroupCallParticipant(participant);
-    const { isLocal, audioMuted, videoMuted, speaking, stream } = useCallFeed(usermediaFeed);
+export default function VideoTile({
+    style,
+    member,
+    callFeed,
+    ...rest
+}: IVideoTileProps) {
+    const name = useRoomMemberName(member);
+    const { isLocal, audioMuted, videoMuted, speaking, stream } = useCallFeed(callFeed);
     const mediaRef = useMediaStream<HTMLVideoElement>(stream, isLocal);
 
     // Firefox doesn't respect the disablePictureInPicture attribute
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1611831
 
     return (
-        <animated.div className="mx_participantTile" style={style} {...rest}>
+        <animated.div className="mx_videoTile" style={style} {...rest}>
             <div
-                className={classNames("mx_participantName", {
+                className={classNames("mx_memberName", {
                     "mx_speaking": speaking,
                 })}
             >
@@ -33,7 +38,7 @@ export default function ParticipantTile({ style, participant, remove, presenter,
                 ) : audioMuted ? (
                     <i className="mx_muteMicIcon" />
                 ) : null }
-                <span>{ displayName }</span>
+                <span>{ name }</span>
             </div>
             { videoMuted && (
                 <i className="mx_videoMuted" />

@@ -19,7 +19,7 @@ limitations under the License.
     overflow: hidden;
     flex: 1;
 
-    .mx_participantTile {
+    .mx_videoTile {
         position: absolute;
         will-change: transform, width, height, opacity, box-shadow;
         border-radius: 24px;
@@ -39,7 +39,7 @@ limitations under the License.
             object-fit: cover;
         }
 
-        .mx_participantName {
+        .mx_memberName {
             position: absolute;
             bottom: 16px;
             left: 16px;
@@ -79,7 +79,7 @@ limitations under the License.
             transform: translate(-50%, -50%);
         }
 
-        .mx_participantTile:hover .mx_participantName, .mx_participantName.speaking {
+        .mx_videoTile:hover .mx_memberName, .mx_memberName.speaking {
             display: flex;
         }
     }

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo, useRef, useEffect } from "react";
+import React, { useState, useCallback, memo, useRef, useEffect, useMemo } from "react";
 import { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { useGroupCall } from "../../../hooks/useGroupCall";
 import VideoGrid from "./GroupCallView/VideoGrid";
@@ -37,6 +37,12 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
     } = useGroupCall(groupCall);
     const [layout] = useRoomLayout();
 
+    const items = useMemo(() => participants.map((participant) => ({
+        callFeed: participant.usermediaFeed,
+        member: participant.member,
+        isActiveSpeaker: participant.isActiveSpeaker(),
+    })), [participants]);
+
     useEffect(() => {
         (window as unknown as any).groupCall = groupCall;
     }, [groupCall]);
@@ -49,7 +55,7 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
         <div className="mx_GroupCallView" onMouseMove={onMouseMove}> {
             (entered || entering)
                 ? <React.Fragment>
-                    <VideoGrid participants={participants} layout={layout} />
+                    <VideoGrid items={items} layout={layout} />
                     <CallViewButtons
                         ref={callViewButtonsRef}
                         pipMode={pipMode}

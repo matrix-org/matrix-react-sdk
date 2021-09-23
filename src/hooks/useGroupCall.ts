@@ -2,8 +2,38 @@
 import { useCallback, useEffect, useState } from "react";
 import { GroupCallEvent, GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { usePageUnload } from "./usePageUnload";
+import { GroupCallParticipant, GroupCallParticipantEvent } from "matrix-js-sdk/src/webrtc/groupCallParticipant";
+import { Room } from "matrix-js-sdk";
 
-export function useGroupCall(groupCall: GroupCall) {
+interface IGroupCallState {
+    loading: boolean;
+    entered: boolean;
+    entering: boolean;
+    room: Room;
+    participants: GroupCallParticipant[];
+    error: Error | null;
+    microphoneMuted: boolean;
+    localVideoMuted: boolean;
+}
+
+interface IGroupCallReturn {
+    loading: boolean;
+    entered: boolean;
+    entering: boolean;
+    roomName: string;
+    participants: GroupCallParticipant[];
+    groupCall: GroupCall;
+    microphoneMuted: boolean;
+    localVideoMuted: boolean;
+    error: Error | null;
+    initLocalParticipant: () => Promise<GroupCallParticipant>;
+    enter: () => void;
+    leave: () => void;
+    toggleLocalVideoMuted: () => void;
+    toggleMicrophoneMuted: () => void;
+}
+
+export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
     const [
         {
             loading,
@@ -16,7 +46,7 @@ export function useGroupCall(groupCall: GroupCall) {
             localVideoMuted,
         },
         setState,
-    ] = useState({
+    ] = useState<IGroupCallState>({
         loading: true,
         entered: false,
         entering: false,
@@ -50,6 +80,7 @@ export function useGroupCall(groupCall: GroupCall) {
         groupCall.on(GroupCallEvent.ParticipantsChanged, onParticipantsChanged);
         groupCall.on(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
         groupCall.on(GroupCallEvent.ActiveSpeakerChanged, onParticipantsChanged);
+        groupCall.on(GroupCallParticipantEvent.CallFeedsChanged, onParticipantsChanged);
         groupCall.on(GroupCallEvent.Left, onParticipantsChanged);
 
         updateState({
@@ -63,6 +94,7 @@ export function useGroupCall(groupCall: GroupCall) {
             groupCall.removeListener(GroupCallEvent.ParticipantsChanged, onParticipantsChanged);
             groupCall.removeListener(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
             groupCall.removeListener(GroupCallEvent.ActiveSpeakerChanged, onParticipantsChanged);
+            groupCall.removeListener(GroupCallParticipantEvent.CallFeedsChanged, onParticipantsChanged);
             groupCall.removeListener(GroupCallEvent.Left, onParticipantsChanged);
             groupCall.leave();
         };
