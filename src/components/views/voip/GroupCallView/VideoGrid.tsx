@@ -21,7 +21,6 @@ import useMeasure from "react-use-measure";
 import moveArrItem from "lodash-move";
 import VideoTile from "./VideoTile";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
-import { RoomMember } from "matrix-js-sdk";
 
 function useIsMounted() {
     const isMountedRef = useRef(false);
@@ -435,8 +434,8 @@ function getSubGridPositions(tileCount: number, gridWidth: number, gridHeight: n
 }
 
 interface IVideoGridItem {
+    id: string;
     callFeed: CallFeed;
-    member: RoomMember;
     isActiveSpeaker: boolean;
 }
 
@@ -484,7 +483,7 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
 
             for (const tile of tiles) {
                 let item = items.find(
-                    (item) => item.member.userId === tile.key,
+                    (item) => item.id=== tile.key,
                 );
 
                 let remove = false;
@@ -504,7 +503,7 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
                 }
 
                 newTiles.push({
-                    key: item.member.userId,
+                    key: item.id,
                     item,
                     remove,
                     presenter,
@@ -512,13 +511,13 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
             }
 
             for (const item of items) {
-                if (newTiles.some(({ key }) => item.member.userId === key)) {
+                if (newTiles.some(({ key }) => item.id === key)) {
                     continue;
                 }
 
                 // Added tiles
                 newTiles.push({
-                    key: item.member.userId,
+                    key: item.id,
                     item,
                     remove: false,
                     presenter: layout === "spotlight" && item.isActiveSpeaker,
@@ -769,7 +768,6 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
                             ),
                             ...style,
                         }}
-                        member={tile.item.member}
                         callFeed={tile.item.callFeed}
                     />
                 );

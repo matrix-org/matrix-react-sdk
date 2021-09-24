@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { CallFeed, CallFeedEvent } from "matrix-js-sdk/src/webrtc/callFeed";
+import { RoomMember } from "matrix-js-sdk";
 
 interface ICallFeedState {
+    member?: RoomMember;
     isLocal: boolean;
     speaking: boolean;
     videoMuted: boolean;
@@ -9,20 +11,19 @@ interface ICallFeedState {
     stream?: MediaStream;
 }
 
-export function useCallFeed(callFeed?: CallFeed) {
-    const [{
-        isLocal,
-        speaking,
-        videoMuted,
-        audioMuted,
-        stream,
-    }, setState] = useState<ICallFeedState>(() => ({
+function getCallFeedState(callFeed?: CallFeed) {
+    return {
+        member: callFeed ? callFeed.getMember() : null,
         isLocal: callFeed ? callFeed.isLocal() : false,
         speaking: callFeed ? callFeed.isSpeaking() : false,
         videoMuted: callFeed ? callFeed.isVideoMuted() : true,
         audioMuted: callFeed ? callFeed.isAudioMuted() : true,
         stream: callFeed ? callFeed.stream : undefined,
-    }));
+    };
+}
+
+export function useCallFeed(callFeed?: CallFeed): ICallFeedState {
+    const [state, setState] = useState<ICallFeedState>(() => getCallFeedState(callFeed));
 
     useEffect(() => {
         function onSpeaking(speaking: boolean) {
@@ -34,22 +35,16 @@ export function useCallFeed(callFeed?: CallFeed) {
         }
 
         function onUpdateCallFeed() {
-            setState({
-                isLocal: callFeed.isLocal(),
-                speaking: callFeed.isSpeaking(),
-                videoMuted: callFeed.isVideoMuted(),
-                audioMuted: callFeed.isAudioMuted(),
-                stream: callFeed.stream,
-            });
+            setState(getCallFeedState(callFeed));
         }
 
         if (callFeed) {
             callFeed.on(CallFeedEvent.Speaking, onSpeaking);
             callFeed.on(CallFeedEvent.MuteStateChanged, onMuteStateChanged);
             callFeed.on(CallFeedEvent.NewStream, onUpdateCallFeed);
-
-            onUpdateCallFeed();
         }
+
+        onUpdateCallFeed();
 
         return () => {
             if (callFeed) {
@@ -60,11 +55,5 @@ export function useCallFeed(callFeed?: CallFeed) {
         };
     }, [callFeed]);
 
-    return {
-        isLocal,
-        speaking,
-        videoMuted,
-        audioMuted,
-        stream,
-    };
+    return state;
 }

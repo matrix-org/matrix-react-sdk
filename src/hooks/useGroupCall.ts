@@ -1,32 +1,23 @@
 
 import { useCallback, useEffect, useState } from "react";
-import { GroupCallEvent, GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
+import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import { GroupCallEvent, GroupCall, GroupCallState } from "matrix-js-sdk/src/webrtc/groupCall";
 import { usePageUnload } from "./usePageUnload";
-import { GroupCallParticipant, GroupCallParticipantEvent } from "matrix-js-sdk/src/webrtc/groupCallParticipant";
-import { Room } from "matrix-js-sdk";
 
 interface IGroupCallState {
-    loading: boolean;
-    entered: boolean;
-    entering: boolean;
-    room: Room;
-    participants: GroupCallParticipant[];
+    state: GroupCallState;
+    localCallFeed: CallFeed | null;
+    activeSpeaker: string | null;
+    calls: MatrixCall[];
+    userMediaFeeds: CallFeed[];
     error: Error | null;
     microphoneMuted: boolean;
     localVideoMuted: boolean;
 }
 
-interface IGroupCallReturn {
-    loading: boolean;
-    entered: boolean;
-    entering: boolean;
-    roomName: string;
-    participants: GroupCallParticipant[];
-    groupCall: GroupCall;
-    microphoneMuted: boolean;
-    localVideoMuted: boolean;
-    error: Error | null;
-    initLocalParticipant: () => Promise<GroupCallParticipant>;
+interface IGroupCallReturn extends IGroupCallState {
+    initLocalCallFeed: () => Promise<CallFeed>;
     enter: () => void;
     leave: () => void;
     toggleLocalVideoMuted: () => void;
@@ -36,66 +27,91 @@ interface IGroupCallReturn {
 export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
     const [
         {
-            loading,
-            entered,
-            entering,
-            room,
-            participants,
+            state,
+            calls,
+            localCallFeed,
+            activeSpeaker,
+            userMediaFeeds,
             error,
             microphoneMuted,
             localVideoMuted,
         },
         setState,
     ] = useState<IGroupCallState>({
-        loading: true,
-        entered: false,
-        entering: false,
-        room: null,
-        participants: [],
+        state: GroupCallState.LocalCallFeedUninitialized,
+        calls: [],
+        localCallFeed: null,
+        activeSpeaker: null,
+        userMediaFeeds: [],
         error: null,
         microphoneMuted: false,
         localVideoMuted: false,
     });
 
-    const updateState = (state) =>
-        setState((prevState) => ({ ...prevState, ...state }));
+    const updateState = (state: Partial<IGroupCallState>) =>
+        setState((prevState: IGroupCallState) => ({ ...prevState, ...state }));
 
     useEffect(() => {
-        function onParticipantsChanged() {
+        function onGroupCallStateChanged() {
             updateState({
-                loading: !groupCall.entered,
-                entered: groupCall.entered,
-                participants: [...groupCall.participants],
+                state: groupCall.state,
+                calls: [...groupCall.calls],
+                localCallFeed: groupCall.localCallFeed,
+                activeSpeaker: groupCall.activeSpeaker,
+                userMediaFeeds: [...groupCall.userMediaFeeds],
+                microphoneMuted: groupCall.isMicrophoneMuted(),
+                localVideoMuted: groupCall.isLocalVideoMuted(),
             });
         }
 
-        function onLocalMuteStateChanged(microphoneMuted, localVideoMuted) {
+        function onUserMediaFeedsChanged(userMediaFeeds: CallFeed[]) {
+            updateState({
+                userMediaFeeds: [...userMediaFeeds],
+            });
+        }
+
+        function onActiveSpeakerChanged(activeSpeaker: string) {
+            updateState({
+                activeSpeaker: activeSpeaker,
+            });
+        }
+
+        function onLocalMuteStateChanged(microphoneMuted: boolean, localVideoMuted: boolean) {
             updateState({
                 microphoneMuted,
                 localVideoMuted,
             });
         }
 
-        groupCall.on(GroupCallEvent.Entered, onParticipantsChanged);
-        groupCall.on(GroupCallEvent.ParticipantsChanged, onParticipantsChanged);
+        function onCallsChanged(calls: MatrixCall[]) {
+            updateState({
+                calls: [...calls],
+            });
+        }
+
+        groupCall.on(GroupCallEvent.GroupCallStateChanged, onGroupCallStateChanged);
+        groupCall.on(GroupCallEvent.UserMediaFeedsChanged, onUserMediaFeedsChanged);
+        groupCall.on(GroupCallEvent.ActiveSpeakerChanged, onActiveSpeakerChanged);
         groupCall.on(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
-        groupCall.on(GroupCallEvent.ActiveSpeakerChanged, onParticipantsChanged);
-        groupCall.on(GroupCallParticipantEvent.CallFeedsChanged, onParticipantsChanged);
-        groupCall.on(GroupCallEvent.Left, onParticipantsChanged);
+        groupCall.on(GroupCallEvent.CallsChanged, onCallsChanged);
 
         updateState({
-            loading: !groupCall.entered,
-            entered: groupCall.entered,
-            participants: [...groupCall.participants],
+            error: null,
+            state: groupCall.state,
+            calls: [...groupCall.calls],
+            localCallFeed: groupCall.localCallFeed,
+            activeSpeaker: groupCall.activeSpeaker,
+            userMediaFeeds: [...groupCall.userMediaFeeds],
+            microphoneMuted: groupCall.isMicrophoneMuted(),
+            localVideoMuted: groupCall.isLocalVideoMuted(),
         });
 
         return () => {
-            groupCall.removeListener(GroupCallEvent.Entered, onParticipantsChanged);
-            groupCall.removeListener(GroupCallEvent.ParticipantsChanged, onParticipantsChanged);
+            groupCall.removeListener(GroupCallEvent.GroupCallStateChanged, onGroupCallStateChanged);
+            groupCall.removeListener(GroupCallEvent.UserMediaFeedsChanged, onUserMediaFeedsChanged);
+            groupCall.removeListener(GroupCallEvent.ActiveSpeakerChanged, onActiveSpeakerChanged);
             groupCall.removeListener(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
-            groupCall.removeListener(GroupCallEvent.ActiveSpeakerChanged, onParticipantsChanged);
-            groupCall.removeListener(GroupCallParticipantEvent.CallFeedsChanged, onParticipantsChanged);
-            groupCall.removeListener(GroupCallEvent.Left, onParticipantsChanged);
+            groupCall.removeListener(GroupCallEvent.CallsChanged, onCallsChanged);
             groupCall.leave();
         };
     }, [groupCall]);
@@ -104,34 +120,23 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         groupCall.leave();
     });
 
-    const initLocalParticipant = useCallback(() => groupCall.initLocalParticipant(), [groupCall]);
+    const initLocalCallFeed = useCallback(() => groupCall.initLocalCallFeed(), [groupCall]);
 
     const enter = useCallback(() => {
-        updateState({ entering: true });
+        if (groupCall.state !== GroupCallState.LocalCallFeedUninitialized
+            && groupCall.state !== GroupCallState.LocalCallFeedInitialized) {
+            return;
+        }
 
         groupCall
             .enter()
-            .then(() => {
-                updateState({
-                    entered: true,
-                    entering: false,
-                    participants: [...groupCall.participants],
-                });
-            })
             .catch((error) => {
-                updateState({ error, entering: false });
+                console.error(error);
+                updateState({ error });
             });
     }, [groupCall]);
 
-    const leave = useCallback(() => {
-        groupCall.leave();
-        updateState({
-            entered: false,
-            participants: [],
-            microphoneMuted: false,
-            localVideoMuted: false,
-        });
-    }, [groupCall]);
+    const leave = useCallback(() => groupCall.leave(), [groupCall]);
 
     const toggleLocalVideoMuted = useCallback(() => {
         groupCall.setLocalVideoMuted(
@@ -146,16 +151,15 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
     }, [groupCall]);
 
     return {
-        loading,
-        entered,
-        entering,
-        roomName: room ? room.name : null,
-        participants,
-        groupCall: groupCall,
+        state,
+        calls,
+        localCallFeed,
+        activeSpeaker,
+        userMediaFeeds,
         microphoneMuted,
         localVideoMuted,
         error,
-        initLocalParticipant,
+        initLocalCallFeed,
         enter,
         leave,
         toggleLocalVideoMuted,

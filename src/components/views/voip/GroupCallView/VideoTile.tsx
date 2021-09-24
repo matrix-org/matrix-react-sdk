@@ -5,22 +5,18 @@ import { useCallFeed } from "../../../../hooks/useCallFeed";
 import { useMediaStream } from "../../../../hooks/useMediaStream";
 import { useRoomMemberName } from "../../../../hooks/useRoomMemberName";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
-import { RoomMember } from "matrix-js-sdk";
-
 interface IVideoTileProps {
     style: any;
-    member: RoomMember;
     callFeed: CallFeed;
 }
 
 export default function VideoTile({
     style,
-    member,
     callFeed,
     ...rest
 }: IVideoTileProps) {
+    const { isLocal, audioMuted, videoMuted, speaking, stream, member } = useCallFeed(callFeed);
     const name = useRoomMemberName(member);
-    const { isLocal, audioMuted, videoMuted, speaking, stream } = useCallFeed(callFeed);
     const mediaRef = useMediaStream<HTMLVideoElement>(stream, isLocal);
 
     // Firefox doesn't respect the disablePictureInPicture attribute
