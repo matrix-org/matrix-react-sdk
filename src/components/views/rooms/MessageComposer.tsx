@@ -602,6 +602,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     ) }
                     <div className="mx_MessageComposer_row">
                         { controls }
+                        { this.renderButtons(menuPosition) }
                         { showSendButton && (
                             <SendButton
                                 key="controls_send"
