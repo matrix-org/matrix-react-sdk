@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632757466845,
+  "lastUpdate": 1632759711848,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28064,6 +28064,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4414.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "77ad0a91424c059c395f0febf35f2c25512fe45d",
+          "message": "Merge pull request #6699 from SimonBrandner/fix/improve-aux-panel/18787\n\nImprove AUX panel behaviour",
+          "timestamp": "2021-09-27T10:16:05-06:00",
+          "tree_id": "d409b79ce55dce115e7d60819866950a860121bf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/77ad0a91424c059c395f0febf35f2c25512fe45d"
+        },
+        "date": 1632759708926,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4655.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 971.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1657.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4323.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
