@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632733783361,
+  "lastUpdate": 1632738389962,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27836,6 +27836,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4738.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0cfa2a58c7867eec05d5611c342da3cfc8e0fc8e",
+          "message": "Add ability to expand and collapse long quoted messages (#6701)\n\nIn case where we had a very long message the experience of going between \r\nmessages to see the full quote isn't very nice on desktop, therefore this commit\r\nadds a button with additional hotkey to normalize the experience a bit.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/18884",
+          "timestamp": "2021-09-27T12:20:37+02:00",
+          "tree_id": "1aec54921bab73457e05c340dac5f3f268b5b1fe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0cfa2a58c7867eec05d5611c342da3cfc8e0fc8e"
+        },
+        "date": 1632738387596,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4936.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1099.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1769.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4474.5,
             "unit": "ms",
             "extra": "type: measure"
           }
