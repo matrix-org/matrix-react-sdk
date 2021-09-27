@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632728434256,
+  "lastUpdate": 1632731478352,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27692,6 +27692,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4463.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3e34f7237808d9cc22991ff6192010a4762279e4",
+          "message": "Merge pull request #6864 from SimonBrandner/task/rageshake-ts",
+          "timestamp": "2021-09-27T09:25:05+01:00",
+          "tree_id": "1e90e989de3a249eea065f5234fadb01923436fa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3e34f7237808d9cc22991ff6192010a4762279e4"
+        },
+        "date": 1632731476611,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4641.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1813.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4754,
             "unit": "ms",
             "extra": "type: measure"
           }
