@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632731478352,
+  "lastUpdate": 1632731504407,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27740,6 +27740,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4754,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4fa4ff23c3d20df0fd523264ed731c15342b0948",
+          "message": "Merge pull request #6863 from SimonBrandner/task/utils-ts",
+          "timestamp": "2021-09-27T09:26:04+01:00",
+          "tree_id": "6d02c9227195bc33e605a8cc2e4fa30299d43735",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4fa4ff23c3d20df0fd523264ed731c15342b0948"
+        },
+        "date": 1632731502133,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4454.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1152.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1705.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4746.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
