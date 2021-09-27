@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632749991797,
+  "lastUpdate": 1632757466845,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28016,6 +28016,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4802.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8c9cd0d2f490a79244b834ff75ff405585970624",
+          "message": "Merge pull request #6865 from robintown/cut-off-pills",
+          "timestamp": "2021-09-27T16:39:04+01:00",
+          "tree_id": "2a15eb4ae69d215ff35e1b0d40df551265bdc0bb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8c9cd0d2f490a79244b834ff75ff405585970624"
+        },
+        "date": 1632757465371,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5270.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 916.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1658.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4414.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
