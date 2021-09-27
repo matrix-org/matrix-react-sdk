@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632634153043,
+  "lastUpdate": 1632728434256,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -27644,6 +27644,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4209.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a4e5397d8a534e6b27f1ff7031d9610cbdfa48ef",
+          "message": "Merge pull request #6866 from SimonBrandner/task/stores-ts",
+          "timestamp": "2021-09-27T08:34:40+01:00",
+          "tree_id": "adb8ea73023fa6255ac05d877fe41e1346f34f22",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a4e5397d8a534e6b27f1ff7031d9610cbdfa48ef"
+        },
+        "date": 1632728432318,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4728.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1020.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1948.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4463.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
