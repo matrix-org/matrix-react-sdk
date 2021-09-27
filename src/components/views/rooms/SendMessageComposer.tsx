@@ -207,7 +207,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
                         // We're selecting history, so prevent the key event from doing anything else
                         event.preventDefault();
                         dis.dispatch({
-                            action: 'edit_event',
+                            action: Action.EditEvent,
                             event: editEvent,
                         });
                     }

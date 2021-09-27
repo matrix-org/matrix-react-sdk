@@ -205,4 +205,9 @@ export enum Action {
      * Should be used with SettingUpdatedPayload.
      */
     SettingUpdated = "setting_updated",
+
+    /**
+     * Fires when a user starts to edit event (e.g. up arrow in compositor)
+     */
+    EditEvent = "edit_event",
 }

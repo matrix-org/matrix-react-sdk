@@ -49,6 +49,7 @@ import TileErrorBoundary from '../views/messages/TileErrorBoundary';
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { logger } from 'matrix-js-sdk/src/logger';
+import { Action } from '../../dispatcher/actions';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -292,7 +293,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const pendingEditItem = this.pendingEditItem;
         if (!this.props.editState && this.props.room && pendingEditItem) {
             defaultDispatcher.dispatch({
-                action: "edit_event",
+                action: Action.EditEvent,
                 event: this.props.room.findEventById(pendingEditItem),
             });
         }

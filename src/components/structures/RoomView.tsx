@@ -808,7 +808,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                 this.onSearchClick();
                 break;
 
-            case "edit_event": {
+            case Action.EditEvent: {
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
                 this.setState({ editState }, () => {
                     if (payload.event) {

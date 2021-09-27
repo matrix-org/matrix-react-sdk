@@ -165,7 +165,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                 const previousEvent = findEditableEvent(this.getRoom(), false,
                     this.props.editState.getEvent().getId());
                 if (previousEvent) {
-                    dis.dispatch({ action: 'edit_event', event: previousEvent });
+                    dis.dispatch({ action: Action.EditEvent, event: previousEvent });
                     event.preventDefault();
                 }
                 break;
@@ -176,10 +176,10 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                 }
                 const nextEvent = findEditableEvent(this.getRoom(), true, this.props.editState.getEvent().getId());
                 if (nextEvent) {
-                    dis.dispatch({ action: 'edit_event', event: nextEvent });
+                    dis.dispatch({ action: Action.EditEvent, event: nextEvent });
                 } else {
                     this.clearStoredEditorState();
-                    dis.dispatch({ action: 'edit_event', event: null });
+                    dis.dispatch({ action: Action.EditEvent, event: null });
                     dis.fire(Action.FocusSendMessageComposer);
                 }
                 event.preventDefault();
@@ -198,7 +198,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
 
     private cancelEdit = (): void => {
         this.clearStoredEditorState();
-        dis.dispatch({ action: "edit_event", event: null });
+        dis.dispatch({ action: Action.EditEvent, event: null });
         dis.fire(Action.FocusSendMessageComposer);
     };
 
@@ -389,7 +389,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
         }
 
         // close the event editing and focus composer
-        dis.dispatch({ action: "edit_event", event: null });
+        dis.dispatch({ action: Action.EditEvent, event: null });
         dis.fire(Action.FocusSendMessageComposer);
     };
 

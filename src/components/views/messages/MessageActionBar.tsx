@@ -217,7 +217,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     private onEditClick = (ev: React.MouseEvent): void => {
         dis.dispatch({
-            action: 'edit_event',
+            action: Action.EditEvent,
             event: this.props.mxEvent,
         });
     };
