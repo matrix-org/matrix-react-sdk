@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632759711848,
+  "lastUpdate": 1632772045437,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28112,6 +28112,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4323.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8e497f8c56a49c24f14de89f9f6af379b33e5a89",
+          "message": "Merge pull request #6871 from psrpinto/fix/close-url-preview-button\n\nFix issue with preview panel close button not appearing for certain messages containing a URL",
+          "timestamp": "2021-09-27T13:42:11-06:00",
+          "tree_id": "6870e1c17a7a3d848844c7cb455f4782ce63a0a9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8e497f8c56a49c24f14de89f9f6af379b33e5a89"
+        },
+        "date": 1632772043728,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4091.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 943.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
