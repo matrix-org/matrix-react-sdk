@@ -29,9 +29,6 @@ interface IProps {
     // What room we should display the call for
     roomId: string;
 
-    // maxHeight style attribute for the video panel
-    maxVideoHeight?: number;
-
     resizeNotifier: ResizeNotifier;
 }
 
@@ -96,14 +93,12 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
 
     public render() {
         if (!this.state.call) return null;
-        // We subtract 8 as it the margin-bottom of the mx_CallViewForRoom_ResizeWrapper
-        const maxHeight = this.props.maxVideoHeight - 8;
 
         return (
             <div className="mx_CallViewForRoom">
                 <Resizable
                     minHeight={380}
-                    maxHeight={maxHeight}
+                    maxHeight="80vh"
                     enable={{
                         top: false,
                         right: false,
