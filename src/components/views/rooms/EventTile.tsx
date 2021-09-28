@@ -1178,6 +1178,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             showUrlPreview={this.props.showUrlPreview}
                             onHeightChanged={this.props.onHeightChanged}
                             tileShape={this.props.tileShape}
+                            editState={this.props.editState}
                         />
                     </div>,
                 ]);
@@ -1211,6 +1212,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             showUrlPreview={this.props.showUrlPreview}
                             onHeightChanged={this.props.onHeightChanged}
                             tileShape={this.props.tileShape}
+                            editState={this.props.editState}
                         />
                         { actionBar }
                     </div>,
@@ -1231,6 +1233,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             showUrlPreview={this.props.showUrlPreview}
                             tileShape={this.props.tileShape}
                             onHeightChanged={this.props.onHeightChanged}
+                            editState={this.props.editState}
                         />
                     </div>,
                     <a

@@ -91,6 +91,7 @@ import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/SpaceStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import MatrixRenderingContext from '../../contexts/MatrixRenderingContext';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -809,6 +810,8 @@ export default class RoomView extends React.Component<IProps, IState> {
                 break;
 
             case Action.EditEvent: {
+                // Quit early if we're trying to edit event in threads
+                if (payload.thread) return;
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
                 this.setState({ editState }, () => {
                     if (payload.event) {
@@ -1927,6 +1930,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             messageComposer =
                 <MessageComposer
                     room={this.state.room}
+                    liveTimeline={this.state.room.getLiveTimeline()}
                     e2eStatus={this.state.e2eStatus}
                     resizeNotifier={this.props.resizeNotifier}
                     replyToEvent={this.state.replyToEvent}
@@ -2067,17 +2071,24 @@ export default class RoomView extends React.Component<IProps, IState> {
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className="mx_RoomView_body">
-                                { auxPanel }
-                                <div className={timelineClasses}>
-                                    { fileDropTarget }
-                                    { topUnreadMessagesBar }
-                                    { jumpToBottom }
-                                    { messagePanel }
-                                    { searchResultsPanel }
-                                </div>
-                                { statusBarArea }
-                                { previewBar }
-                                { messageComposer }
+                                <MatrixRenderingContext.Provider value={{
+                                    client: this.context,
+                                    rendering: {
+                                        liveTimeline: this.state.room.getUnfilteredTimelineSet().getLiveTimeline(),
+                                    },
+                                }}>
+                                    { auxPanel }
+                                    <div className={timelineClasses}>
+                                        { fileDropTarget }
+                                        { topUnreadMessagesBar }
+                                        { jumpToBottom }
+                                        { messagePanel }
+                                        { searchResultsPanel }
+                                    </div>
+                                    { statusBarArea }
+                                    { previewBar }
+                                    { messageComposer }
+                                </MatrixRenderingContext.Provider>
                             </div>
                         </MainSplit>
                     </ErrorBoundary>

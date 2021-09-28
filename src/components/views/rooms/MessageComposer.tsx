@@ -52,6 +52,7 @@ import EditorModel from "../../../editor/model";
 import EmojiPicker from '../emojipicker/EmojiPicker';
 import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
+import type { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -195,6 +196,8 @@ class UploadButton extends React.Component<IUploadButtonProps> {
 
 interface IProps {
     room: Room;
+    // TODO: This should be provided via some sensible global context instead.
+    liveTimeline: EventTimeline;
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
@@ -530,6 +533,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     replyToEvent={this.props.replyToEvent}
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
+                    liveTimeline={this.props.liveTimeline}
                 />,
             );
 

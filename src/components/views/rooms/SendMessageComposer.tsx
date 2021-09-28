@@ -57,6 +57,7 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import type { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 function addReplyToMessageContent(
     content: IContent,
@@ -132,6 +133,7 @@ export function isQuickReaction(model: EditorModel): boolean {
 
 interface IProps {
     room: Room;
+    liveTimeline: EventTimeline;
     placeholder?: string;
     permalinkCreator: RoomPermalinkCreator;
     replyInThread?: boolean;
@@ -202,13 +204,18 @@ export default class SendMessageComposer extends React.Component<IProps> {
             case MessageComposerAction.EditPrevMessage:
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
-                    const editEvent = findEditableEvent(this.props.room, false);
+                    const editEvent = findEditableEvent({
+                        liveTimeline: this.props.liveTimeline,
+                        pendingEvents: this.props.room.getPendingEvents(),
+                        isForward: false,
+                    });
                     if (editEvent) {
                         // We're selecting history, so prevent the key event from doing anything else
                         event.preventDefault();
                         dis.dispatch({
                             action: Action.EditEvent,
                             event: editEvent,
+                            thread: !!this.props.replyInThread,
                         });
                     }
                 }

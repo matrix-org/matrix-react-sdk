@@ -22,6 +22,7 @@ import shouldHideEvent from "../shouldHideEvent";
 import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
@@ -73,9 +74,18 @@ export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
 }
 
 const MAX_JUMP_DISTANCE = 100;
-export function findEditableEvent(room: Room, isForward: boolean, fromEventId: string = undefined): MatrixEvent {
-    const liveTimeline = room.getLiveTimeline();
-    const events = liveTimeline.getEvents().concat(room.getPendingEvents());
+export function findEditableEvent({
+    liveTimeline,
+    isForward,
+    pendingEvents = [],
+    fromEventId,
+}: {
+    liveTimeline: EventTimeline;
+    pendingEvents: MatrixEvent[];
+    isForward: boolean;
+    fromEventId?: string;
+}): MatrixEvent {
+    const events = liveTimeline.getEvents().concat(pendingEvents);
     const maxIdx = events.length - 1;
     const inc = isForward ? 1 : -1;
     const beginIdx = isForward ? 0 : maxIdx;
