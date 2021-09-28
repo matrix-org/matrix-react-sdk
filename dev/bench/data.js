@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632834075457,
+  "lastUpdate": 1632834086811,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28196,6 +28196,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4335.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "540593e75d24097c6f3da0c8913ca4937c1473c7",
+          "message": "Merge pull request #6874 from matrix-org/t3chguy/spaces-null-guard-client",
+          "timestamp": "2021-09-28T13:55:39+01:00",
+          "tree_id": "bddcc5e4b9daf2925f9080affe632c6d18bad50b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/540593e75d24097c6f3da0c8913ca4937c1473c7"
+        },
+        "date": 1632834084780,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4741.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 957.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1696,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4452.5,
             "unit": "ms",
             "extra": "type: measure"
           }
