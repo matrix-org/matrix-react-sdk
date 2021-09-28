@@ -92,7 +92,7 @@ import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
-import { GroupCall } from 'matrix-js-sdk/src/webrtc/groupCall';
+import { GroupCall, GroupCallIntent, GroupCallType } from 'matrix-js-sdk/src/webrtc/groupCall';
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -807,7 +807,7 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    private async createGroupCall(roomId: string, type: PlaceCallType) {
+    private async createGroupCall(roomId: string, type: GroupCallType, intent: GroupCallIntent) {
         if (this.roomHasCallOrGroupCall(roomId)) {
             return;
         }
@@ -817,8 +817,7 @@ export default class CallHandler extends EventEmitter {
         logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
 
         // TODO: Handle errors
-        await MatrixClientPeg.get()
-            .createGroupCall(roomId, type === PlaceCallType.Video ? CallType.Video : CallType.Voice);
+        await MatrixClientPeg.get().createGroupCall(roomId, type, intent);
 
         dis.dispatch({ action: "group_calls_changed" });
     }
@@ -830,7 +829,7 @@ export default class CallHandler extends EventEmitter {
             return;
         }
 
-        groupCall.endCall();
+        groupCall.terminate();
 
         dis.dispatch({ action: "group_calls_changed" });
     }
@@ -871,7 +870,7 @@ export default class CallHandler extends EventEmitter {
                     }
 
                     if (payload.action === "create_group_call") {
-                        this.createGroupCall(payload.room_id, payload.type);
+                        this.createGroupCall(payload.room_id, payload.type, payload.intent);
                         return;
                     }
 

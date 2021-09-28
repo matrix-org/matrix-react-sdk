@@ -24,6 +24,7 @@ limitations under the License.
 import React, { createRef } from 'react';
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { GroupCallIntent, GroupCallType } from 'matrix-js-sdk/src/webrtc/groupCall';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventSubscription } from "fbemitter";
 import { ISearchResults } from 'matrix-js-sdk/src/@types/search';
@@ -1450,7 +1451,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         } else {
             dis.dispatch({
                 action: 'create_group_call',
-                type: type,
+                type: type === PlaceCallType.Video ? GroupCallType.Video : GroupCallType.Voice,
+                intent: GroupCallIntent.Room,
                 room_id: roomId,
             });
         }
