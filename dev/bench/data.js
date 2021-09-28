@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632834086811,
+  "lastUpdate": 1632838286695,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28244,6 +28244,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4452.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8331d4c7b725c4312b6e86a4d3037f09796f871f",
+          "message": "Happily handle empty text messages (#6825)\n\nThis commig refactors the message-deletion modal and reuses it for case of removing\r\nthe entire message and trying to send it, which should trigger removal flow instead.\r\n\r\nFix vector-im/element-web#18873",
+          "timestamp": "2021-09-28T15:04:25+01:00",
+          "tree_id": "fb27b954a2035980ebd737fce4e2877ceb6c4b19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8331d4c7b725c4312b6e86a4d3037f09796f871f"
+        },
+        "date": 1632838283749,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5733.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1182.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1827.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5342.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
