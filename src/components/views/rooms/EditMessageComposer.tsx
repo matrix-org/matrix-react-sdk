@@ -45,7 +45,7 @@ import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import SettingsStore from "../../../settings/SettingsStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { withMatrixClientHOC, WithMatrixClientHOCProps } from '../../../contexts/MatrixClientContext';
+import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
 import RoomContext from '../../../contexts/RoomContext';
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
@@ -109,17 +109,16 @@ function createEditContent(model: EditorModel, editedEvent: MatrixEvent): IConte
     }, contentBody);
 }
 
-type IProps = WithMatrixClientHOCProps<{
+interface IEditMessageComposerProps extends MatrixClientProps {
     editState: EditorStateTransfer;
     className?: string;
-}>;
-
+}
 interface IState {
     saveDisabled: boolean;
 }
 
 @replaceableComponent("views.rooms.EditMessageComposer")
-class EditMessageComposer extends React.Component<IProps, IState> {
+class EditMessageComposer extends React.Component<IEditMessageComposerProps, IState> {
     static contextType = RoomContext;
     context!: React.ContextType<typeof RoomContext>;
 
@@ -127,7 +126,7 @@ class EditMessageComposer extends React.Component<IProps, IState> {
     private readonly dispatcherRef: string;
     private model: EditorModel = null;
 
-    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
+    constructor(props: IEditMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
         this.context = context; // otherwise React will only set it prior to render due to type def above
 
@@ -463,7 +462,7 @@ class EditMessageComposer extends React.Component<IProps, IState> {
     private createEditorModel(): boolean {
         const { editState } = this.props;
         const room = this.getRoom();
-        const partCreator = new CommandPartCreator(room, this.context.client);
+        const partCreator = new CommandPartCreator(room, this.props.mxClient);
 
         let parts;
         let isRestored = false;
@@ -530,5 +529,5 @@ class EditMessageComposer extends React.Component<IProps, IState> {
     }
 }
 
-const WrapperEditMessageComposer = withMatrixClientHOC(EditMessageComposer);
-export default WrapperEditMessageComposer;
+const EditMessageComposerWithMatrixClient = withMatrixClientHOC(EditMessageComposer);
+export default EditMessageComposerWithMatrixClient;

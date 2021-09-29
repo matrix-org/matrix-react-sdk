@@ -49,7 +49,7 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import RightPanelStore from "../../stores/RightPanelStore";
 import { haveTileForEvent } from "../views/rooms/EventTile";
 import RoomContext, { AppRenderingContext } from "../../contexts/RoomContext";
-import MatrixClientContext, { WithMatrixClientHOCProps } from "../../contexts/MatrixClientContext";
+import MatrixClientContext, { withMatrixClientHOC, MatrixClientProps } from "../../contexts/MatrixClientContext";
 import { E2EStatus, shieldStatusForRoom } from '../../utils/ShieldUtils';
 import { Action } from "../../dispatcher/actions";
 import { IMatrixClientCreds } from "../../MatrixClientPeg";
@@ -103,7 +103,7 @@ if (DEBUG) {
     debuglog = logger.log.bind(console);
 }
 
-type IProps = WithMatrixClientHOCProps<{
+interface IRoomProps extends MatrixClientProps {
     threepidInvite: IThreepidInvite;
     oobData?: IOOBData;
 
@@ -112,7 +112,7 @@ type IProps = WithMatrixClientHOCProps<{
 
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;
-}>;
+}
 
 export interface IRoomState {
     room?: Room;
@@ -193,7 +193,7 @@ export interface IRoomState {
 }
 
 @replaceableComponent("structures.RoomView")
-export default class RoomView extends React.Component<IProps, IRoomState> {
+class RoomView extends React.Component<IRoomProps, IRoomState> {
     private readonly dispatcherRef: string;
     private readonly roomStoreToken: EventSubscription;
     private readonly rightPanelStoreToken: EventSubscription;
@@ -2098,3 +2098,6 @@ export default class RoomView extends React.Component<IProps, IRoomState> {
         );
     }
 }
+
+const RoomViewWithMatrixClient = withMatrixClientHOC(RoomView);
+export default RoomViewWithMatrixClient;

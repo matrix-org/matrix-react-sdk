@@ -40,7 +40,7 @@ import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
 import Modal from '../../../Modal';
 import { _t, _td } from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
-import { withMatrixClientHOC, WithMatrixClientHOCProps } from "../../../contexts/MatrixClientContext";
+import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from '../../../effects';
@@ -132,7 +132,7 @@ export function isQuickReaction(model: EditorModel): boolean {
     return false;
 }
 
-type IProps = WithMatrixClientHOCProps<{
+interface ISendMessageComposerProps extends MatrixClientProps {
     room: Room;
     liveTimeline: EventTimeline;
     placeholder?: string;
@@ -141,10 +141,10 @@ type IProps = WithMatrixClientHOCProps<{
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
     onChange?(model: EditorModel): void;
-}>;
+}
 
 @replaceableComponent("views.rooms.SendMessageComposer")
-class SendMessageComposer extends React.Component<IProps> {
+class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     static contextType = RoomContext;
     context!: React.ContextType<typeof RoomContext>;
 
@@ -155,7 +155,7 @@ class SendMessageComposer extends React.Component<IProps> {
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
 
-    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
+    constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
         this.context = context; // otherwise React will only set it prior to render due to type def above
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
@@ -167,7 +167,7 @@ class SendMessageComposer extends React.Component<IProps> {
         window.addEventListener("beforeunload", this.saveStoredEditorState);
     }
 
-    public componentDidUpdate(prevProps: IProps): void {
+    public componentDidUpdate(prevProps: ISendMessageComposerProps): void {
         const replyToEventChanged = this.props.replyInThread && (this.props.replyToEvent !== prevProps.replyToEvent);
         if (replyToEventChanged) {
             this.model.reset([]);

@@ -14,55 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component, ComponentClass, createContext, forwardRef, Ref } from "react";
+import React, { ComponentClass, createContext, forwardRef, useContext } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 const MatrixClientContext = createContext<MatrixClient>(undefined);
 MatrixClientContext.displayName = "MatrixClientContext";
 export default MatrixClientContext;
 
-export type WithMatrixClientHOCProps<P extends object> = {
+export interface MatrixClientProps {
     mxClient: MatrixClient;
-} & P;
+}
 
-export const withMatrixClientHOC = <ComposedComponentProps extends {}>(
+const matrixHOC = <ComposedComponentProps extends {}>(
     ComposedComponent: ComponentClass<ComposedComponentProps>,
 ) => {
-  type ComposedComponentInstance = InstanceType<typeof ComposedComponent>;
+    type ComposedComponentInstance = InstanceType<typeof ComposedComponent>;
 
-  type WrapperComponentProps = ComposedComponentProps;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
 
-  type WrapperComponentPropsWithForwardedRef = WrapperComponentProps & {
-      forwardedRef: Ref<ComposedComponentInstance>;
-  };
+    const TypedComponent = ComposedComponent;
 
-  class WrapperComponent extends Component<
-  WrapperComponentPropsWithForwardedRef,
-  {}
-  > {
-      static contextType = MatrixClientContext;
-      context!: React.ContextType<typeof MatrixClientContext>;
+    return forwardRef<ComposedComponentInstance, Omit<ComposedComponentProps, 'mxClient'>>(
+        (props, ref) => {
+            const client = useContext(MatrixClientContext);
 
-      render() {
-          const {
-              forwardedRef,
-              ...composedComponentProps
-          } = this.props;
-
-          return (
-              <ComposedComponent
-                  ref={forwardedRef}
-                  // We need a cast because:
-                  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32355
-                  // https://github.com/Microsoft/TypeScript/issues/28938#issuecomment-450636046
-                  {...composedComponentProps as ComposedComponentProps}
-                  mxClient={this.context}
-              />
-          );
-      }
-  }
-
-  return forwardRef<ComposedComponentInstance, WrapperComponentProps>(
-      (props, ref) => <WrapperComponent forwardedRef={ref} {...props} />,
-  );
+            // @ts-ignore
+            return <TypedComponent forwardedRef={ref} {...props} mxClient={client} />;
+        },
+    );
 };
+export const withMatrixClientHOC = matrixHOC;
