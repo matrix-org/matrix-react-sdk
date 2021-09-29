@@ -222,6 +222,7 @@ interface IState {
 @replaceableComponent("views.rooms.MessageComposer")
 export default class MessageComposer extends React.Component<IProps, IState> {
     private dispatcherRef: string;
+    // @ts-ignore
     private messageComposerInput: SendMessageComposer;
     private voiceRecordingButton: VoiceRecordComposerTile;
     private ref: React.RefObject<HTMLDivElement> = createRef();
