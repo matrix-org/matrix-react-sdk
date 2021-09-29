@@ -1,9 +1,8 @@
 import React, { useCallback, memo, useRef, useEffect, useMemo } from "react";
-import { GroupCall, GroupCallState } from "matrix-js-sdk/src/webrtc/groupCall";
+import { GroupCall, GroupCallState, GroupCallType } from "matrix-js-sdk/src/webrtc/groupCall";
 import { useGroupCall } from "../../../hooks/useGroupCall";
 import VideoGrid, { useVideoGridLayout } from "./GroupCallView/VideoGrid";
 import CallViewButtons from "./CallView/CallViewButtons";
-import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from "../../../languageHandler";
 
@@ -59,7 +58,7 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
                             vidMuted: localVideoMuted,
                         }}
                         buttonsVisibility={{
-                            vidMute: groupCall.type === CallType.Video,
+                            vidMute: groupCall.type === GroupCallType.Video,
                         }}
                     />
                 </React.Fragment>
