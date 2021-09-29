@@ -40,7 +40,7 @@ import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
 import Modal from '../../../Modal';
 import { _t, _td } from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { withMatrixClientHOC, WithMatrixClientHOCProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from '../../../effects';
@@ -58,6 +58,7 @@ import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTime
 
 import { logger } from "matrix-js-sdk/src/logger";
 import type { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
+import RoomContext from '../../../contexts/RoomContext';
 
 function addReplyToMessageContent(
     content: IContent,
@@ -131,7 +132,7 @@ export function isQuickReaction(model: EditorModel): boolean {
     return false;
 }
 
-interface IProps {
+type IProps = WithMatrixClientHOCProps<{
     room: Room;
     liveTimeline: EventTimeline;
     placeholder?: string;
@@ -140,12 +141,12 @@ interface IProps {
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
     onChange?(model: EditorModel): void;
-}
+}>;
 
 @replaceableComponent("views.rooms.SendMessageComposer")
-export default class SendMessageComposer extends React.Component<IProps> {
-    static contextType = MatrixClientContext;
-    context!: React.ContextType<typeof MatrixClientContext>;
+class SendMessageComposer extends React.Component<IProps> {
+    static contextType = RoomContext;
+    context!: React.ContextType<typeof RoomContext>;
 
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
@@ -154,12 +155,12 @@ export default class SendMessageComposer extends React.Component<IProps> {
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
 
-    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
         this.context = context; // otherwise React will only set it prior to render due to type def above
-        if (this.context.isCryptoEnabled() && this.context.isRoomEncrypted(this.props.room.roomId)) {
+        if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(() => {
-                this.context.prepareToEncrypt(this.props.room);
+                this.props.mxClient.prepareToEncrypt(this.props.room);
             }, 60000, { leading: true, trailing: false });
         }
 
@@ -173,7 +174,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
         }
 
         if (this.props.replyInThread && this.props.replyToEvent && (!prevProps.replyToEvent || replyToEventChanged)) {
-            const partCreator = new CommandPartCreator(this.props.room, this.context);
+            const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
             const parts = this.restoreStoredEditorState(partCreator) || [];
             this.model.reset(parts);
             this.editorRef.current?.focus();
@@ -456,7 +457,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
                 decorateStartSendingTime(content);
             }
 
-            const prom = this.context.sendMessage(roomId, content);
+            const prom = this.props.mxClient.sendMessage(roomId, content);
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
@@ -473,7 +474,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
             });
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 prom.then(resp => {
-                    sendRoundTripMetric(this.context, roomId, resp.event_id);
+                    sendRoundTripMetric(this.props.mxClient, roomId, resp.event_id);
                 });
             }
             CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, !!replyToEvent, content);
@@ -498,7 +499,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
 
     // TODO: [REACT-WARNING] Move this to constructor
     UNSAFE_componentWillMount() { // eslint-disable-line
-        const partCreator = new CommandPartCreator(this.props.room, this.context);
+        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
         const parts = this.restoreStoredEditorState(partCreator) || [];
         this.model = new EditorModel(parts, partCreator);
         this.dispatcherRef = dis.register(this.onAction);
@@ -585,7 +586,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.context,
+                Array.from(clipboardData.files), this.props.room.roomId, this.props.mxClient,
             );
             return true; // to skip internal onPaste handler
         }
@@ -616,3 +617,6 @@ export default class SendMessageComposer extends React.Component<IProps> {
         );
     }
 }
+
+const SendMessageComposerWithMatrixClient = withMatrixClientHOC(SendMessageComposer);
+export default SendMessageComposerWithMatrixClient;

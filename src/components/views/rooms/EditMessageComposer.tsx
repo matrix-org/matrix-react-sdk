@@ -45,7 +45,8 @@ import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import SettingsStore from "../../../settings/SettingsStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import MatrixRenderingContext from '../../../contexts/MatrixRenderingContext';
+import { withMatrixClientHOC, WithMatrixClientHOCProps } from '../../../contexts/MatrixClientContext';
+import RoomContext from '../../../contexts/RoomContext';
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -108,25 +109,25 @@ function createEditContent(model: EditorModel, editedEvent: MatrixEvent): IConte
     }, contentBody);
 }
 
-interface IProps {
+type IProps = WithMatrixClientHOCProps<{
     editState: EditorStateTransfer;
     className?: string;
-}
+}>;
 
 interface IState {
     saveDisabled: boolean;
 }
 
 @replaceableComponent("views.rooms.EditMessageComposer")
-export default class EditMessageComposer extends React.Component<IProps, IState> {
-    static contextType = MatrixRenderingContext;
-    context!: React.ContextType<typeof MatrixRenderingContext>;
+class EditMessageComposer extends React.Component<IProps, IState> {
+    static contextType = RoomContext;
+    context!: React.ContextType<typeof RoomContext>;
 
     private readonly editorRef = createRef<BasicMessageComposer>();
     private readonly dispatcherRef: string;
     private model: EditorModel = null;
 
-    constructor(props: IProps, context: React.ContextType<typeof MatrixRenderingContext>) {
+    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
         this.context = context; // otherwise React will only set it prior to render due to type def above
 
@@ -141,7 +142,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
     }
 
     private getRoom(): Room {
-        return this.context.client.getRoom(this.props.editState.getEvent().getRoomId());
+        return this.props.mxClient.getRoom(this.props.editState.getEvent().getRoomId());
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -401,7 +402,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
             }
             if (shouldSend) {
                 this.cancelPreviousPendingEdit();
-                const prom = this.context.client.sendMessage(roomId, editContent);
+                const prom = this.props.mxClient.sendMessage(roomId, editContent);
                 this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
                 CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, true, false, editContent);
@@ -420,7 +421,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
             previousEdit.status === EventStatus.QUEUED ||
             previousEdit.status === EventStatus.NOT_SENT
         )) {
-            this.context.client.cancelPendingEvent(previousEdit);
+            this.props.mxClient.cancelPendingEvent(previousEdit);
         }
     }
 
@@ -514,3 +515,6 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
         </div>);
     }
 }
+
+const WrapperEditMessageComposer = withMatrixClientHOC(EditMessageComposer);
+export default WrapperEditMessageComposer;
