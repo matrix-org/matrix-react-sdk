@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632906700017,
+  "lastUpdate": 1632913116455,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28388,6 +28388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4654.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a811df4786dd5be6424d144ab964e0c774cdc84e",
+          "message": "Merge pull request #6882 from andybalaam/remove-extra-word",
+          "timestamp": "2021-09-29T11:53:09+01:00",
+          "tree_id": "2976d5405e11f6de339bc941e6719d64971fbc05",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a811df4786dd5be6424d144ab964e0c774cdc84e"
+        },
+        "date": 1632913115043,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4243.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 979,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1766.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4589.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
