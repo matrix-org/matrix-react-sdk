@@ -172,6 +172,7 @@ class EditMessageComposer extends React.Component<IProps, IState> {
                     dis.dispatch({
                         action: Action.EditEvent,
                         event: previousEvent,
+                        renderingContext: this.context.renderingContext,
                     });
                     event.preventDefault();
                 }
@@ -190,10 +191,15 @@ class EditMessageComposer extends React.Component<IProps, IState> {
                     dis.dispatch({
                         action: Action.EditEvent,
                         event: nextEvent,
+                        renderingContext: this.context.renderingContext,
                     });
                 } else {
                     this.clearStoredEditorState();
-                    dis.dispatch({ action: Action.EditEvent, event: null });
+                    dis.dispatch({
+                        action: Action.EditEvent,
+                        event: null,
+                        renderingContext: this.context.renderingContext,
+                    });
                     dis.fire(Action.FocusSendMessageComposer);
                 }
                 event.preventDefault();
@@ -203,7 +209,7 @@ class EditMessageComposer extends React.Component<IProps, IState> {
     };
 
     private get editorRoomKey(): string {
-        return `mx_edit_room_${this.getRoom().roomId}`;
+        return `mx_edit_room_${this.getRoom().roomId}_${this.context.renderingContext}`;
     }
 
     private get editorStateKey(): string {
@@ -211,7 +217,7 @@ class EditMessageComposer extends React.Component<IProps, IState> {
     }
 
     private get events(): MatrixEvent[] {
-        const liveTimelineEvents = this.context.rendering.liveTimeline.getEvents();
+        const liveTimelineEvents = this.context.liveTimeline.getEvents();
         const pendingEvents = this.getRoom().getPendingEvents();
         const isInThread = Boolean(this.props.editState.getEvent().getThread());
         return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
@@ -219,7 +225,11 @@ class EditMessageComposer extends React.Component<IProps, IState> {
 
     private cancelEdit = (): void => {
         this.clearStoredEditorState();
-        dis.dispatch({ action: Action.EditEvent, event: null });
+        dis.dispatch({
+            action: Action.EditEvent,
+            event: null,
+            renderingContext: this.context.renderingContext,
+        });
         dis.fire(Action.FocusSendMessageComposer);
     };
 
@@ -410,7 +420,11 @@ class EditMessageComposer extends React.Component<IProps, IState> {
         }
 
         // close the event editing and focus composer
-        dis.dispatch({ action: Action.EditEvent, event: null });
+        dis.dispatch({
+            action: Action.EditEvent,
+            event: null,
+            renderingContext: this.context.renderingContext,
+        });
         dis.fire(Action.FocusSendMessageComposer);
     };
 

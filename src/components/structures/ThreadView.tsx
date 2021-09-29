@@ -35,8 +35,7 @@ import { Action } from '../../dispatcher/actions';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
-import MatrixClientContext from '../../contexts/MatrixClientContext';
-import MatrixRenderingContext from '../../contexts/MatrixRenderingContext';
+import RoomContext, { AppRenderingContext } from '../../contexts/RoomContext';
 
 interface IProps {
     room: Room;
@@ -56,7 +55,7 @@ interface IState {
 
 @replaceableComponent("structures.ThreadView")
 export default class ThreadView extends React.Component<IProps, IState> {
-    static contextType = MatrixClientContext;
+    static contextType = RoomContext;
 
     private dispatcherRef: string;
     private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
@@ -99,6 +98,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
         switch (payload.action) {
             case Action.EditEvent: {
+                // Quit early if it's not a thread context
+                if (payload.renderingContext !== AppRenderingContext.Thread) return;
+                // Quit early if that's not a thread event
                 if (payload.event && !payload.event.getThread()) return;
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
                 this.setState({ editState }, () => {
@@ -145,12 +147,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     public render(): JSX.Element {
         return (
-            <MatrixRenderingContext.Provider value={{
-                client: this.context,
-                rendering: {
-                    liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),
-                },
+            <RoomContext.Provider value={{
+                ...this.context,
+                renderingContext: AppRenderingContext.Thread,
+                liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),
             }}>
+
                 <BaseCard
                     className="mx_ThreadView"
                     onClose={this.props.onClose}
@@ -192,7 +194,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                         compact={true}
                     />) }
                 </BaseCard>
-            </MatrixRenderingContext.Provider>
+            </RoomContext.Provider>
         );
     }
 }

@@ -295,6 +295,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             defaultDispatcher.dispatch({
                 action: Action.EditEvent,
                 event: this.props.room.findEventById(pendingEditItem),
+                renderingContext: this.context.renderingContext,
             });
         }
     }
@@ -562,7 +563,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     private get pendingEditItem(): string | undefined {
         try {
-            return localStorage.getItem(`mx_edit_room_${this.props.room.roomId}`);
+            return localStorage.getItem(`mx_edit_room_${this.props.room.roomId}_${this.context.renderingContext}`);
         } catch (err) {
             logger.error(err);
             return undefined;
