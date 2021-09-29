@@ -30,7 +30,7 @@
   "matrix_lib_main": "./lib/index.js",
   "matrix_lib_typings": "./lib/index.d.ts",
   "scripts": {
-    "prepare": "yarn build",
+    "prepack": "yarn build",
     "i18n": "matrix-gen-i18n",
     "prunei18n": "matrix-prune-i18n",
     "diff-i18n": "cp src/i18n/strings/en_EN.json src/i18n/strings/en_EN_orig.json && matrix-gen-i18n && matrix-compare-i18n-files src/i18n/strings/en_EN_orig.json src/i18n/strings/en_EN.json",
