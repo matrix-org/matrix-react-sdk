@@ -292,9 +292,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         const pendingEditItem = this.pendingEditItem;
         if (!this.props.editState && this.props.room && pendingEditItem) {
+            const event = this.props.room.findEventById(pendingEditItem);
             defaultDispatcher.dispatch({
                 action: Action.EditEvent,
-                event: this.props.room.findEventById(pendingEditItem),
+                event,
+                thread: Boolean(event.getThread()),
             });
         }
     }

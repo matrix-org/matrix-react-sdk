@@ -75,17 +75,14 @@ export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
 
 const MAX_JUMP_DISTANCE = 100;
 export function findEditableEvent({
-    liveTimeline,
+    events,
     isForward,
-    pendingEvents = [],
     fromEventId,
 }: {
-    liveTimeline: EventTimeline;
-    pendingEvents: MatrixEvent[];
+    events: MatrixEvent[];
     isForward: boolean;
     fromEventId?: string;
 }): MatrixEvent {
-    const events = liveTimeline.getEvents().concat(pendingEvents);
     const maxIdx = events.length - 1;
     const inc = isForward ? 1 : -1;
     const beginIdx = isForward ? 0 : maxIdx;

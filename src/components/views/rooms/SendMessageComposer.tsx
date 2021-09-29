@@ -204,9 +204,11 @@ export default class SendMessageComposer extends React.Component<IProps> {
             case MessageComposerAction.EditPrevMessage:
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
+                    const events =
+                        this.props.liveTimeline.getEvents()
+                            .concat(this.props.replyInThread ? [] : this.props.room.getPendingEvents());
                     const editEvent = findEditableEvent({
-                        liveTimeline: this.props.liveTimeline,
-                        pendingEvents: this.props.room.getPendingEvents(),
+                        events,
                         isForward: false,
                     });
                     if (editEvent) {

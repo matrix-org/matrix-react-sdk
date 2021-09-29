@@ -163,13 +163,13 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                     return;
                 }
                 const previousEvent = findEditableEvent({
-                    liveTimeline: this.context.rendering.liveTimeline,
-                    pendingEvents: this.getRoom().getPendingEvents(),
+                    events: this.events,
                     isForward: false,
                     fromEventId: this.props.editState.getEvent().getId(),
                 });
                 if (previousEvent) {
                     console.log(previousEvent);
+                    console.log(previousEvent.getId());
                     dis.dispatch({ action: Action.EditEvent, event: previousEvent });
                     event.preventDefault();
                 }
@@ -180,8 +180,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                     return;
                 }
                 const nextEvent = findEditableEvent({
-                    liveTimeline: this.context.rendering.liveTimeline,
-                    pendingEvents: this.getRoom().getPendingEvents(),
+                    events: this.events,
                     isForward: true,
                     fromEventId: this.props.editState.getEvent().getId(),
                 });
@@ -204,6 +203,13 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
 
     private get editorStateKey(): string {
         return `mx_edit_state_${this.props.editState.getEvent().getId()}`;
+    }
+
+    private get events(): MatrixEvent[] {
+        const liveTimelineEvents = this.context.rendering.liveTimeline.getEvents();
+        const pendingEvents = this.getRoom().getPendingEvents();
+        const isInThread = Boolean(this.props.editState.getEvent().getThread());
+        return liveTimelineEvents.concat(isInThread ? [] : pendingEvents);
     }
 
     private cancelEdit = (): void => {
@@ -493,6 +499,7 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                 onChange={this.onChange}
             />
             <div className="mx_EditMessageComposer_buttons">
+                { this.props.editState.getEvent().getId() }
                 <AccessibleButton kind="secondary" onClick={this.cancelEdit}>
                     { _t("Cancel") }
                 </AccessibleButton>
