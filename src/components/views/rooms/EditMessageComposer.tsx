@@ -168,9 +168,10 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                     fromEventId: this.props.editState.getEvent().getId(),
                 });
                 if (previousEvent) {
-                    console.log(previousEvent);
-                    console.log(previousEvent.getId());
-                    dis.dispatch({ action: Action.EditEvent, event: previousEvent });
+                    dis.dispatch({
+                        action: Action.EditEvent,
+                        event: previousEvent,
+                    });
                     event.preventDefault();
                 }
                 break;
@@ -185,7 +186,10 @@ export default class EditMessageComposer extends React.Component<IProps, IState>
                     fromEventId: this.props.editState.getEvent().getId(),
                 });
                 if (nextEvent) {
-                    dis.dispatch({ action: Action.EditEvent, event: nextEvent });
+                    dis.dispatch({
+                        action: Action.EditEvent,
+                        event: nextEvent,
+                    });
                 } else {
                     this.clearStoredEditorState();
                     dis.dispatch({ action: Action.EditEvent, event: null });

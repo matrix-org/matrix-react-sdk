@@ -99,7 +99,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
         switch (payload.action) {
             case Action.EditEvent: {
-                if (!payload.thread) return;
+                if (payload.event && !payload.event.getThread()) return;
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
                 this.setState({ editState }, () => {
                     if (payload.event) {

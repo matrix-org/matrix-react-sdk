@@ -811,7 +811,7 @@ export default class RoomView extends React.Component<IProps, IState> {
 
             case Action.EditEvent: {
                 // Quit early if we're trying to edit event in threads
-                if (payload.thread) return;
+                if (payload.event && payload.event.getThread()) return;
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
                 this.setState({ editState }, () => {
                     if (payload.event) {

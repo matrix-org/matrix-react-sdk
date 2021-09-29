@@ -217,7 +217,6 @@ export default class SendMessageComposer extends React.Component<IProps> {
                         dis.dispatch({
                             action: Action.EditEvent,
                             event: editEvent,
-                            thread: !!this.props.replyInThread,
                         });
                     }
                 }
