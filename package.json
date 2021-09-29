@@ -84,7 +84,7 @@
     "linkifyjs": "^2.1.9",
     "lodash": "^4.17.20",
     "lodash-move": "^1.1.1",
-    "matrix-js-sdk": "github:matrix-org/matrix-js-sdk#group-call",
+    "matrix-js-sdk": "github:matrix-org/matrix-js-sdk#robertlong/group-call",
     "matrix-widget-api": "^0.1.0-beta.16",
     "minimist": "^1.2.5",
     "opus-recorder": "^8.0.3",
