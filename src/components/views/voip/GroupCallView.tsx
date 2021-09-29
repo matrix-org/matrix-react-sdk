@@ -1,7 +1,7 @@
-import React, { useState, useCallback, memo, useRef, useEffect, useMemo } from "react";
+import React, { useCallback, memo, useRef, useEffect, useMemo } from "react";
 import { GroupCall, GroupCallState } from "matrix-js-sdk/src/webrtc/groupCall";
 import { useGroupCall } from "../../../hooks/useGroupCall";
-import VideoGrid from "./GroupCallView/VideoGrid";
+import VideoGrid, { useVideoGridLayout } from "./GroupCallView/VideoGrid";
 import CallViewButtons from "./CallView/CallViewButtons";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -10,16 +10,6 @@ import { _t } from "../../../languageHandler";
 interface IProps {
     groupCall: GroupCall;
     pipMode: boolean;
-}
-
-function useRoomLayout(): [string, () => void] {
-    const [layout, setLayout] = useState("gallery");
-
-    const toggleLayout = useCallback(() => {
-        setLayout(layout === "spotlight" ? "gallery" : "spotlight");
-    }, [layout]);
-
-    return [layout, toggleLayout];
 }
 
 const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
@@ -35,7 +25,7 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
         toggleLocalVideoMuted,
         toggleMicrophoneMuted,
     } = useGroupCall(groupCall);
-    const [layout] = useRoomLayout();
+    const [layout] = useVideoGridLayout();
 
     const items = useMemo(() => userMediaFeeds.map((callFeed) => ({
         id: callFeed.userId,
