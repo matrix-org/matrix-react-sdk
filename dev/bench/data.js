@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632913116455,
+  "lastUpdate": 1632915323493,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28436,6 +28436,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4589.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c3bac33b9d4c3cdf27bf9bd19b91df8a520f2cd1",
+          "message": "Merge pull request #6880 from matrix-org/rav/fix_autoscroll",
+          "timestamp": "2021-09-29T12:29:17+01:00",
+          "tree_id": "5506928056f1b7aacbf9e001afa2cea39957a925",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c3bac33b9d4c3cdf27bf9bd19b91df8a520f2cd1"
+        },
+        "date": 1632915321092,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4235.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1119.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4528,
             "unit": "ms",
             "extra": "type: measure"
           }
