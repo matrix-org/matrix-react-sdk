@@ -30,14 +30,14 @@ export default function VideoTile({
                 })}
             >
                 { speaking ? (
-                    <i />
+                    <i className="mx_speakingIcon" />
                 ) : audioMuted ? (
                     <i className="mx_muteMicIcon" />
                 ) : null }
                 <span>{ name }</span>
             </div>
             { videoMuted && (
-                <i className="mx_videoMuted" />
+                <i className="mx_videoMutedIcon" />
             ) }
             <video ref={mediaRef} playsInline disablePictureInPicture />
         </animated.div>

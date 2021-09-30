@@ -68,18 +68,39 @@ limitations under the License.
             }
         }
 
-        .mx_muteMicIcon * {
-            fill: #FF5B55;
+        .mx_muteMicIcon, .mx_speakingIcon, .mx_videoMutedIcon {
+            mask-repeat: no-repeat;
+            mask-size: contain;
+            mask-position: center;
         }
 
-        .mx_videoMuted {
+        .mx_muteMicIcon, .mx_speakingIcon {
+            height: 16px;
+            width: 16px;
+        }
+
+        .mx_speakingIcon{
+            background-color: #8D99A5;
+            mask-image: url('$(res)/img/voip/silence.svg');
+        }
+
+        .mx_muteMicIcon {
+            background-color: #FF5B55;
+            mask-image: url('$(res)/img/voip/mic-muted.svg');
+        }
+
+        .mx_videoMutedIcon {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            height: 25%;
+            width: 25%;
+            background-color: #8D99A5;
+            mask-image: url('$(res)/img/voip/declined-video.svg');
         }
 
-        .mx_videoTile:hover .mx_memberName, .mx_memberName.speaking {
+        &:hover .mx_memberName, .mx_memberName.mx_speaking {
             display: flex;
         }
     }
