@@ -5,15 +5,21 @@ import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { GroupCallEvent, GroupCall, GroupCallState } from "matrix-js-sdk/src/webrtc/groupCall";
 import { usePageUnload } from "./usePageUnload";
 
+console.log(GroupCallEvent);
+
 interface IGroupCallState {
     state: GroupCallState;
-    localCallFeed: CallFeed | null;
-    activeSpeaker: string | null;
+    localCallFeed?: CallFeed;
+    activeSpeaker?: string;
     calls: MatrixCall[];
     userMediaFeeds: CallFeed[];
-    error: Error | null;
+    error?: Error;
     microphoneMuted: boolean;
     localVideoMuted: boolean;
+    localScreenshareFeed?: CallFeed;
+    localDesktopCapturerSourceId?: string;
+    screenshareFeeds: CallFeed[];
+    isScreensharing: boolean;
 }
 
 interface IGroupCallReturn extends IGroupCallState {
@@ -22,6 +28,7 @@ interface IGroupCallReturn extends IGroupCallState {
     leave: () => void;
     toggleLocalVideoMuted: () => void;
     toggleMicrophoneMuted: () => void;
+    toggleScreensharing: () => void;
 }
 
 export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
@@ -35,17 +42,20 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             error,
             microphoneMuted,
             localVideoMuted,
+            isScreensharing,
+            screenshareFeeds,
+            localScreenshareFeed,
+            localDesktopCapturerSourceId,
         },
         setState,
     ] = useState<IGroupCallState>({
         state: GroupCallState.LocalCallFeedUninitialized,
         calls: [],
-        localCallFeed: null,
-        activeSpeaker: null,
         userMediaFeeds: [],
-        error: null,
         microphoneMuted: false,
         localVideoMuted: false,
+        screenshareFeeds: [],
+        isScreensharing: false,
     });
 
     const updateState = (state: Partial<IGroupCallState>) =>
@@ -61,12 +71,23 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
                 userMediaFeeds: [...groupCall.userMediaFeeds],
                 microphoneMuted: groupCall.isMicrophoneMuted(),
                 localVideoMuted: groupCall.isLocalVideoMuted(),
+                isScreensharing: groupCall.isScreensharing(),
+                localScreenshareFeed: groupCall.localScreenshareFeed,
+                localDesktopCapturerSourceId: groupCall.localDesktopCapturerSourceId,
+                screenshareFeeds: [...groupCall.screenshareFeeds],
             });
         }
 
         function onUserMediaFeedsChanged(userMediaFeeds: CallFeed[]) {
             updateState({
                 userMediaFeeds: [...userMediaFeeds],
+            });
+        }
+
+        function onScreenshareFeedsChanged(screenshareFeeds: CallFeed[]) {
+            console.log("screensharing feeds changed", screenshareFeeds);
+            updateState({
+                screenshareFeeds: [...screenshareFeeds],
             });
         }
 
@@ -83,6 +104,18 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             });
         }
 
+        function onLocalScreenshareStateChanged(
+            isScreensharing: boolean,
+            localScreenshareFeed?: CallFeed,
+            localDesktopCapturerSourceId?: string,
+        ) {
+            updateState({
+                isScreensharing,
+                localScreenshareFeed,
+                localDesktopCapturerSourceId,
+            });
+        }
+
         function onCallsChanged(calls: MatrixCall[]) {
             updateState({
                 calls: [...calls],
@@ -91,8 +124,10 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
 
         groupCall.on(GroupCallEvent.GroupCallStateChanged, onGroupCallStateChanged);
         groupCall.on(GroupCallEvent.UserMediaFeedsChanged, onUserMediaFeedsChanged);
+        groupCall.on(GroupCallEvent.ScreenshareFeedsChanged, onScreenshareFeedsChanged);
         groupCall.on(GroupCallEvent.ActiveSpeakerChanged, onActiveSpeakerChanged);
         groupCall.on(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
+        groupCall.on(GroupCallEvent.LocalScreenshareStateChanged, onLocalScreenshareStateChanged);
         groupCall.on(GroupCallEvent.CallsChanged, onCallsChanged);
 
         updateState({
@@ -104,13 +139,19 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             userMediaFeeds: [...groupCall.userMediaFeeds],
             microphoneMuted: groupCall.isMicrophoneMuted(),
             localVideoMuted: groupCall.isLocalVideoMuted(),
+            isScreensharing: groupCall.isScreensharing(),
+            localScreenshareFeed: groupCall.localScreenshareFeed,
+            localDesktopCapturerSourceId: groupCall.localDesktopCapturerSourceId,
+            screenshareFeeds: [...groupCall.screenshareFeeds],
         });
 
         return () => {
             groupCall.removeListener(GroupCallEvent.GroupCallStateChanged, onGroupCallStateChanged);
             groupCall.removeListener(GroupCallEvent.UserMediaFeedsChanged, onUserMediaFeedsChanged);
+            groupCall.removeListener(GroupCallEvent.ScreenshareFeedsChanged, onScreenshareFeedsChanged);
             groupCall.removeListener(GroupCallEvent.ActiveSpeakerChanged, onActiveSpeakerChanged);
             groupCall.removeListener(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
+            groupCall.removeListener(GroupCallEvent.LocalScreenshareStateChanged, onLocalScreenshareStateChanged);
             groupCall.removeListener(GroupCallEvent.CallsChanged, onCallsChanged);
             groupCall.leave();
         };
@@ -150,6 +191,12 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         );
     }, [groupCall]);
 
+    const toggleScreensharing = useCallback(() => {
+        groupCall.setScreensharingEnabled(
+            !groupCall.isScreensharing(),
+        );
+    }, [groupCall]);
+
     return {
         state,
         calls,
@@ -164,5 +211,10 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         leave,
         toggleLocalVideoMuted,
         toggleMicrophoneMuted,
+        toggleScreensharing,
+        isScreensharing,
+        screenshareFeeds,
+        localScreenshareFeed,
+        localDesktopCapturerSourceId,
     };
 }
