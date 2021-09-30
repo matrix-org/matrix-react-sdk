@@ -209,6 +209,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         dis.dispatch({
             action: Action.EditEvent,
             event: this.props.mxEvent,
+            renderingContext: this.context.renderingContext,
         });
     };
 
