@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633002911398,
+  "lastUpdate": 1633016367836,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28760,6 +28760,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4451.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e146018587bd6934873e8f3e915d14e711791a2",
+          "message": "Merge pull request #6889 from jaiwanth-v/colour-variable-export",
+          "timestamp": "2021-09-30T16:34:11+01:00",
+          "tree_id": "e8fd6108467cdead2f022f151a3f3410629a7d53",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e146018587bd6934873e8f3e915d14e711791a2"
+        },
+        "date": 1633016366146,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4400.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 880.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4441.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
