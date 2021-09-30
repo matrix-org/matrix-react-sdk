@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633016367836,
+  "lastUpdate": 1633019092656,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28808,6 +28808,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4441.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "88ebbabbd575c18d3036a0a9e14f7b026dab5e56",
+          "message": "Merge pull request #6867 from SimonBrandner/task/custom-compound",
+          "timestamp": "2021-09-30T17:19:33+01:00",
+          "tree_id": "1b4a35b76cebd79f0f24fba3842955c9b6ffac25",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/88ebbabbd575c18d3036a0a9e14f7b026dab5e56"
+        },
+        "date": 1633019090824,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5047.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 928.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4451.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
