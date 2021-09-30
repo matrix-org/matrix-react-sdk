@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633019092656,
+  "lastUpdate": 1633028080246,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28856,6 +28856,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4451.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe0a68b71ea81230bb662be0c8b89a56c97542bc",
+          "message": "Merge pull request #6869 from SimonBrandner/task/src-ts\n\nConvert `/src` to TS",
+          "timestamp": "2021-09-30T12:48:23-06:00",
+          "tree_id": "eee7163eac144eca201aa9c049c0cad03d65ebf3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe0a68b71ea81230bb662be0c8b89a56c97542bc"
+        },
+        "date": 1633028078086,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4654.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1102.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1724.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4775.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
