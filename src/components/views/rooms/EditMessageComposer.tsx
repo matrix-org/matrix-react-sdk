@@ -517,7 +517,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 onChange={this.onChange}
             />
             <div className="mx_EditMessageComposer_buttons">
-                { this.props.editState.getEvent().getId() }
                 <AccessibleButton kind="secondary" onClick={this.cancelEdit}>
                     { _t("Cancel") }
                 </AccessibleButton>
