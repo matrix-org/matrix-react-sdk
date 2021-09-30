@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632928415618,
+  "lastUpdate": 1633002911398,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28712,6 +28712,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4520.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5eaf0e7e258bbc54e641ffd2679456b5605c158a",
+          "message": "Merge pull request #6081 from jaiwanth-v/export-conversations",
+          "timestamp": "2021-09-30T12:49:24+01:00",
+          "tree_id": "a456b3a437ab1a8a3901f780671ea9565fd1102a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5eaf0e7e258bbc54e641ffd2679456b5605c158a"
+        },
+        "date": 1633002909599,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4763.89999999851,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1414.1000000014901,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1665.7000000029802,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4451.5,
             "unit": "ms",
             "extra": "type: measure"
           }
