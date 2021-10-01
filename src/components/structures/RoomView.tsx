@@ -1938,7 +1938,6 @@ class RoomView extends React.Component<IRoomProps, IRoomState> {
             messageComposer =
                 <MessageComposer
                     room={this.state.room}
-                    liveTimeline={this.state.room.getLiveTimeline()}
                     e2eStatus={this.state.e2eStatus}
                     resizeNotifier={this.props.resizeNotifier}
                     replyToEvent={this.state.replyToEvent}

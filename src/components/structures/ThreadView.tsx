@@ -184,7 +184,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
                     { this.state?.thread?.timelineSet && (<MessageComposer
                         room={this.props.room}
-                        liveTimeline={this.state.thread.timelineSet.getLiveTimeline()}
                         resizeNotifier={this.props.resizeNotifier}
                         replyInThread={true}
                         replyToEvent={this.state?.thread?.replyToEvent}
