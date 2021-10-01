@@ -97,13 +97,13 @@ const LeaveRoomsPicker = ({ space, spaceChildren, roomsToLeave, setRoomsToLeave 
             definitions={[
                 {
                     value: RoomsToLeave.None,
-                    label: _t("Don't leave any"),
+                    label: _t("Don't leave any rooms"),
                 }, {
                     value: RoomsToLeave.All,
-                    label: _t("Leave all rooms and spaces"),
+                    label: _t("Leave all rooms"),
                 }, {
                     value: RoomsToLeave.Specific,
-                    label: _t("Leave specific rooms and spaces"),
+                    label: _t("Leave some rooms"),
                 },
             ]}
         />
@@ -131,8 +131,13 @@ interface IProps {
 }
 
 const isOnlyAdmin = (room: Room): boolean => {
-    return !room.getJoinedMembers().some(member => {
-        return member.userId !== room.client.credentials.userId && member.powerLevelNorm === 100;
+    const userId = room.client.getUserId();
+    if (room.getMember(userId).powerLevelNorm !== 100) {
+        return false; // user is not an admin
+    }
+    return room.getJoinedMembers().every(member => {
+        // return true if every other member has a lower power level (we are highest)
+        return member.userId === userId || member.powerLevelNorm < 100;
     });
 };
 
@@ -166,11 +171,13 @@ const LeaveSpaceDialog: React.FC<IProps> = ({ space, onFinished }) => {
     >
         <div className="mx_Dialog_content" id="mx_LeaveSpaceDialog">
             <p>
-                { _t("Are you sure you want to leave <spaceName/>?", {}, {
+                { _t("You are about to leave <spaceName/>.", {}, {
                     spaceName: () => <b>{ space.name }</b>,
                 }) }
                 &nbsp;
                 { rejoinWarning }
+                { rejoinWarning && (<>&nbsp;</>) }
+                { spaceChildren.length > 0 && _t("Would you like to leave the rooms in this space?") }
             </p>
 
             { spaceChildren.length > 0 && <LeaveRoomsPicker

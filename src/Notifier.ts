@@ -39,6 +39,8 @@ import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import { stripReply } from "./effects/utils";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 /*
  * Dispatches:
  * {
@@ -167,7 +169,7 @@ export const Notifier = {
 
     _playAudioNotification: async function(ev: MatrixEvent, room: Room) {
         const sound = this.getSoundForRoom(room.roomId);
-        console.log(`Got sound ${sound && sound.name || "default"} for ${room.roomId}`);
+        logger.log(`Got sound ${sound && sound.name || "default"} for ${room.roomId}`);
 
         try {
             const selector =
