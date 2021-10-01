@@ -39,7 +39,7 @@ const matrixHOC = <ComposedComponentProps extends {}>(
             const client = useContext(MatrixClientContext);
 
             // @ts-ignore
-            return <TypedComponent forwardedRef={ref} {...props} mxClient={client} />;
+            return <TypedComponent ref={ref} {...props} mxClient={client} />;
         },
     );
 };
