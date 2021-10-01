@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633088089400,
+  "lastUpdate": 1633095673623,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29132,6 +29132,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4555.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1331e960fa497ee8e920b00fe155a4fdf71806ef",
+          "message": "Add ability to properly edit messages in Threads. (#6877)\n\n* Fix infinite rerender loop when editing message\r\n\r\n* Refactor \"edit_event\" to Action.EditEvent\r\n\r\n* Make up-arrow edit working in Threads\r\n\r\n* Properly handle timeline events edit state\r\n\r\n* Properly traverse messages to be edited\r\n\r\n* Add MatrixClientContextHOC\r\n\r\n* Refactor RoomContext to use AppRenderingContext\r\n\r\n* Typescriptify test\r\n\r\nCo-authored-by: Germain <germains@element.io>",
+          "timestamp": "2021-10-01T15:35:54+02:00",
+          "tree_id": "1ece25e69fb6bedef17b2175ddabcf78fd575297",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1331e960fa497ee8e920b00fe155a4fdf71806ef"
+        },
+        "date": 1633095672187,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4147.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 903.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1692.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4278.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
