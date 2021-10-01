@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633075641454,
+  "lastUpdate": 1633079382063,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28952,6 +28952,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4414,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "17f59131d8b6b12444902bef249e56165cc8f4b6",
+          "message": "Merge pull request #6868 from SimonBrandner/task/colors-3-mk2\n\nColor clean-up #3 mk2",
+          "timestamp": "2021-10-01T11:04:15+02:00",
+          "tree_id": "fed3ea9a0a71b1655c97f8fcc1a1c54822684f19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/17f59131d8b6b12444902bef249e56165cc8f4b6"
+        },
+        "date": 1633079380634,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4252.1999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 995.5,
             "unit": "ms",
             "extra": "type: measure"
           }
