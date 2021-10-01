@@ -24,6 +24,7 @@ import { sleep } from "matrix-js-sdk/src/utils";
 import SendMessageComposer, {
     createMessageContent,
     isQuickReaction,
+    SendMessageComposer as SendMessageComposerClass
 } from "../../../../src/components/views/rooms/SendMessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
@@ -142,7 +143,7 @@ describe('<SendMessageComposer/>', () => {
 
     describe("functions correctly mounted", () => {
         const mockClient = MatrixClientPeg.matrixClient = createTestClient();
-        const mockRoom = mkStubRoom() as any;
+        const mockRoom = mkStubRoom('myfakeroom') as any;
         const mockEvent = mkEvent({
             type: "m.room.message",
             room: 'myfakeroom',
@@ -200,7 +201,7 @@ describe('<SendMessageComposer/>', () => {
                 wrapper.update();
             });
 
-            const key = wrapper.find(SendMessageComposer).instance().editorStateKey;
+            const key = wrapper.find(SendMessageComposerClass).instance().editorStateKey;
 
             expect(wrapper.text()).toBe("Test Text");
             expect(localStorage.getItem(key)).toBeNull();
@@ -244,7 +245,7 @@ describe('<SendMessageComposer/>', () => {
                 wrapper.update();
             });
 
-            const key = wrapper.find(SendMessageComposer).instance().editorStateKey;
+            const key = wrapper.find(SendMessageComposerClass).instance().editorStateKey;
 
             expect(wrapper.text()).toBe("Hello World");
             expect(localStorage.getItem(key)).toBeNull();
@@ -287,6 +288,32 @@ describe('<SendMessageComposer/>', () => {
                 parts: [{ "type": "plain", "text": "This is a message" }],
                 replyEventId: mockEvent.getId(),
             });
+        });
+
+        it('correctly sets the editorStateKey for threads', () => {
+            const mockThread ={
+                getThread: () => {
+                    return {
+                        id: 'myFakeThreadId',
+                    };
+                },
+            } as any;
+            const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={roomContext}>
+
+                    <SendMessageComposer
+                        room={mockRoom as any}
+                        placeholder=""
+                        permalinkCreator={new SpecPermalinkConstructor() as any}
+                        replyToEvent={mockThread}
+                    />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>);
+
+            const instance = wrapper.find(SendMessageComposerClass).instance();
+            const key = instance.editorStateKey;
+
+            expect(key).toEqual('mx_cider_state_myfakeroom_myFakeThreadId');
         });
     });
 
