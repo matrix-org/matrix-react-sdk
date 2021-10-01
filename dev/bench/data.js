@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633028080246,
+  "lastUpdate": 1633075641454,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28904,6 +28904,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4775.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2c429464098f9b0c9f8196bb288d1a5e30246e1f",
+          "message": "Merge pull request #6876 from matrix-org/t3chguy/fix/space-hierarchy-filter",
+          "timestamp": "2021-10-01T09:01:14+01:00",
+          "tree_id": "0377d75a29468cb2c697c0f2927b6aa6d1ec177a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c429464098f9b0c9f8196bb288d1a5e30246e1f"
+        },
+        "date": 1633075639531,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4263.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1667.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4414,
             "unit": "ms",
             "extra": "type: measure"
           }
