@@ -171,7 +171,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     dis.dispatch({
                         action: Action.EditEvent,
                         event: previousEvent,
-                        renderingContext: this.context.renderingContext,
+                        timelineRenderingType: this.context.timelineRenderingType,
                     });
                     event.preventDefault();
                 }
@@ -190,14 +190,14 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     dis.dispatch({
                         action: Action.EditEvent,
                         event: nextEvent,
-                        renderingContext: this.context.renderingContext,
+                        timelineRenderingType: this.context.timelineRenderingType,
                     });
                 } else {
                     this.clearStoredEditorState();
                     dis.dispatch({
                         action: Action.EditEvent,
                         event: null,
-                        renderingContext: this.context.renderingContext,
+                        timelineRenderingType: this.context.timelineRenderingType,
                     });
                     dis.fire(Action.FocusSendMessageComposer);
                 }
@@ -208,7 +208,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     };
 
     private get editorRoomKey(): string {
-        return `mx_edit_room_${this.getRoom().roomId}_${this.context.renderingContext}`;
+        return `mx_edit_room_${this.getRoom().roomId}_${this.context.timelineRenderingType}`;
     }
 
     private get editorStateKey(): string {
@@ -227,7 +227,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         dis.dispatch({
             action: Action.EditEvent,
             event: null,
-            renderingContext: this.context.renderingContext,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
         dis.fire(Action.FocusSendMessageComposer);
     };
@@ -422,7 +422,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         dis.dispatch({
             action: Action.EditEvent,
             event: null,
-            renderingContext: this.context.renderingContext,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
         dis.fire(Action.FocusSendMessageComposer);
     };

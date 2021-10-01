@@ -27,7 +27,7 @@ import { Action } from '../../../dispatcher/actions';
 import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
-import RoomContext, { AppRenderingContext } from "../../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -209,7 +209,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         dis.dispatch({
             action: Action.EditEvent,
             event: this.props.mxEvent,
-            renderingContext: this.context.renderingContext,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
     };
 
@@ -289,7 +289,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // Like the resend button, the react and reply buttons need to appear before the edit.
                 // The only catch is we do the reply button first so that we can make sure the react
                 // button is the very first button without having to do length checks for `splice()`.
-                if (this.context.canReply && this.context.renderingContext === AppRenderingContext.Room) {
+                if (this.context.canReply && this.context.timelineRenderingType === TimelineRenderingType.Room) {
                     toolbarOpts.splice(0, 0, <>
                         <RovingAccessibleTooltipButton
                             className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"

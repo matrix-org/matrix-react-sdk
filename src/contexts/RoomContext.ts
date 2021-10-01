@@ -19,7 +19,7 @@ import { createContext } from "react";
 import { IRoomState } from "../components/structures/RoomView";
 import { Layout } from "../settings/Layout";
 
-export enum AppRenderingContext {
+export enum TimelineRenderingType {
     Room,
     Thread
 }
@@ -58,7 +58,7 @@ const RoomContext = createContext<IRoomState>({
     showDisplaynameChanges: true,
     matrixClientIsReady: false,
     dragCounter: 0,
-    renderingContext: AppRenderingContext.Room,
+    timelineRenderingType: TimelineRenderingType.Room,
     liveTimeline: undefined,
 });
 RoomContext.displayName = "RoomContext";

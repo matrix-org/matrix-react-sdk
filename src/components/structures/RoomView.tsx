@@ -48,7 +48,7 @@ import { Layout } from "../../settings/Layout";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import RightPanelStore from "../../stores/RightPanelStore";
 import { haveTileForEvent } from "../views/rooms/EventTile";
-import RoomContext, { AppRenderingContext } from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import MatrixClientContext, { withMatrixClientHOC, MatrixClientProps } from "../../contexts/MatrixClientContext";
 import { E2EStatus, shieldStatusForRoom } from '../../utils/ShieldUtils';
 import { Action } from "../../dispatcher/actions";
@@ -188,7 +188,7 @@ export interface IRoomState {
     // if it did we don't want the room to be marked as read as soon as it is loaded.
     wasContextSwitch?: boolean;
     editState?: EditorStateTransfer;
-    renderingContext: AppRenderingContext;
+    timelineRenderingType: TimelineRenderingType;
     liveTimeline?: EventTimeline;
 }
 
@@ -250,7 +250,7 @@ class RoomView extends React.Component<IRoomProps, IRoomState> {
             showDisplaynameChanges: true,
             matrixClientIsReady: this.context && this.context.isInitialSyncComplete(),
             dragCounter: 0,
-            renderingContext: AppRenderingContext.Room,
+            timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
         };
 
@@ -815,7 +815,7 @@ class RoomView extends React.Component<IRoomProps, IRoomState> {
 
             case Action.EditEvent: {
                 // Quit early if we're trying to edit events in wrong rendering context
-                if (payload.renderingContext !== this.state.renderingContext) return;
+                if (payload.timelineRenderingType !== this.state.timelineRenderingType) return;
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
                 this.setState({ editState }, () => {
                     if (payload.event) {

@@ -19,6 +19,7 @@ import EMOJI_REGEX from 'emojibase-regex';
 import { IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { DebouncedFunc, throttle } from 'lodash';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
@@ -55,9 +56,6 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import type { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import RoomContext from '../../../contexts/RoomContext';
 
 function addReplyToMessageContent(
@@ -134,7 +132,6 @@ export function isQuickReaction(model: EditorModel): boolean {
 
 interface ISendMessageComposerProps extends MatrixClientProps {
     room: Room;
-    liveTimeline: EventTimeline;
     placeholder?: string;
     permalinkCreator: RoomPermalinkCreator;
     replyInThread?: boolean;
@@ -146,8 +143,6 @@ interface ISendMessageComposerProps extends MatrixClientProps {
 @replaceableComponent("views.rooms.SendMessageComposer")
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     static contextType = RoomContext;
-    context!: React.ContextType<typeof RoomContext>;
-
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
     private model: EditorModel = null;
@@ -157,7 +152,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(() => {
                 this.props.mxClient.prepareToEncrypt(this.props.room);
@@ -206,7 +200,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
                     const events =
-                        this.props.liveTimeline.getEvents()
+                        this.context.liveTimeline.getEvents()
                             .concat(this.props.replyInThread ? [] : this.props.room.getPendingEvents());
                     const editEvent = findEditableEvent({
                         events,
@@ -218,7 +212,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         dis.dispatch({
                             action: Action.EditEvent,
                             event: editEvent,
-                            renderingContext: this.context.renderingContext,
+                            timelineRenderingType: this.context.timelineRenderingType,
                         });
                     }
                 }
@@ -285,7 +279,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private sendQuickReaction(): void {
-        const timeline = this.props.room.getLiveTimeline();
+        const timeline = this.context.liveTimeline();
         const events = timeline.getEvents();
         const reaction = this.model.parts[1].text;
         for (let i = events.length - 1; i >= 0; i--) {

@@ -35,7 +35,7 @@ import { Action } from '../../dispatcher/actions';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
-import RoomContext, { AppRenderingContext } from '../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 
 interface IProps {
     room: Room;
@@ -99,7 +99,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         switch (payload.action) {
             case Action.EditEvent: {
                 // Quit early if it's not a thread context
-                if (payload.renderingContext !== AppRenderingContext.Thread) return;
+                if (payload.timelineRenderingType !== TimelineRenderingType.Thread) return;
                 // Quit early if that's not a thread event
                 if (payload.event && !payload.event.getThread()) return;
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
@@ -149,7 +149,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         return (
             <RoomContext.Provider value={{
                 ...this.context,
-                renderingContext: AppRenderingContext.Thread,
+                timelineRenderingType: TimelineRenderingType.Thread,
                 liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),
             }}>
 
