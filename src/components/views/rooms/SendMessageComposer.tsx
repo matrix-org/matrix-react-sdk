@@ -144,7 +144,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
 }
 
 @replaceableComponent("views.rooms.SendMessageComposer")
-class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
+export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     static contextType = RoomContext;
     context!: React.ContextType<typeof RoomContext>;
 

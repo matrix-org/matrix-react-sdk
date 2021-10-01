@@ -45,14 +45,13 @@ import { RecordingState } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { E2EStatus } from '../../../utils/ShieldUtils';
-import SendMessageComposer from "./SendMessageComposer";
+import SendMessageComposer, { SendMessageComposer as SendMessageComposerClass } from "./SendMessageComposer";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
 import EmojiPicker from '../emojipicker/EmojiPicker';
 import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
-import type { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -196,8 +195,6 @@ class UploadButton extends React.Component<IUploadButtonProps> {
 
 interface IProps {
     room: Room;
-    // TODO: This should be provided via some sensible global context instead.
-    liveTimeline: EventTimeline;
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
@@ -222,9 +219,8 @@ interface IState {
 @replaceableComponent("views.rooms.MessageComposer")
 export default class MessageComposer extends React.Component<IProps, IState> {
     private dispatcherRef: string;
-    // @ts-ignore
-    private messageComposerInput: SendMessageComposer;
-    private voiceRecordingButton: VoiceRecordComposerTile;
+    private messageComposerInput = createRef<SendMessageComposerClass>();
+    private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
@@ -382,14 +378,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     }
 
     private sendMessage = async () => {
-        if (this.state.haveRecording && this.voiceRecordingButton) {
+        if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
             // just send out the voice recording.
-            await this.voiceRecordingButton.send();
+            await this.voiceRecordingButton.current?.send();
             return;
         }
 
-        this.messageComposerInput.sendMessage();
+        this.messageComposerInput.current?.sendMessage();
     };
 
     private onChange = (model: EditorModel) => {
@@ -464,7 +460,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             buttons.push(
                 <AccessibleTooltipButton
                     className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
-                    onClick={() => this.voiceRecordingButton?.onRecordStartEndClick()}
+                    onClick={() => this.voiceRecordingButton.current?.onRecordStartEndClick()}
                     title={_t("Send voice message")}
                 />,
             );
@@ -525,7 +521,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         if (!this.state.tombstone && this.state.canSendMessages) {
             controls.push(
                 <SendMessageComposer
-                    ref={(c) => this.messageComposerInput = c}
+                    ref={this.messageComposerInput}
                     key="controls_input"
                     room={this.props.room}
                     placeholder={this.renderPlaceholderText()}
@@ -534,13 +530,12 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     replyToEvent={this.props.replyToEvent}
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
-                    liveTimeline={this.props.liveTimeline}
                 />,
             );
 
             controls.push(<VoiceRecordComposerTile
                 key="controls_voice_record"
-                ref={c => this.voiceRecordingButton = c}
+                ref={this.voiceRecordingButton}
                 room={this.props.room} />);
         } else if (this.state.tombstone) {
             const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
