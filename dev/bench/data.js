@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633079382063,
+  "lastUpdate": 1633082320153,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -28988,6 +28988,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 995.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b86d646fa7e17fef83bc19367481f1e28d699525",
+          "message": "Merge pull request #6893 from jaiwanth-v/voice-export",
+          "timestamp": "2021-10-01T10:52:41+01:00",
+          "tree_id": "f75467b74485b5740ba1e99d1a95cacf0f3badbd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b86d646fa7e17fef83bc19367481f1e28d699525"
+        },
+        "date": 1633082317562,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4977.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1142.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1741.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4482.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
