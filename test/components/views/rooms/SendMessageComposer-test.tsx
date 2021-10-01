@@ -24,7 +24,7 @@ import { sleep } from "matrix-js-sdk/src/utils";
 import SendMessageComposer, {
     createMessageContent,
     isQuickReaction,
-    SendMessageComposer as SendMessageComposerClass
+    SendMessageComposer as SendMessageComposerClass,
 } from "../../../../src/components/views/rooms/SendMessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";

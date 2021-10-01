@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent, EventStatus } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -22,7 +21,6 @@ import shouldHideEvent from "../shouldHideEvent";
 import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
