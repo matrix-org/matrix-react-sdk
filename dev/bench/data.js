@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633082320153,
+  "lastUpdate": 1633087938775,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29036,6 +29036,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4482.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "616dfaebc0a0b87afabf7ecf3b911e09893a38d2",
+          "message": "Merge pull request #6892 from matrix-org/t3chguy/ctx-menu-propagation",
+          "timestamp": "2021-10-01T12:26:53+01:00",
+          "tree_id": "01c2371bbf323e3b89ec5ab6e7941850c3678be9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/616dfaebc0a0b87afabf7ecf3b911e09893a38d2"
+        },
+        "date": 1633087936416,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4283.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1209.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1648.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4344.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
