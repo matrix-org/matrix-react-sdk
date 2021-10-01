@@ -26,6 +26,7 @@ import SendMessageComposer, {
     isQuickReaction,
 } from "../../../../src/components/views/rooms/SendMessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import RoomContext from "../../../../src/contexts/RoomContext";
 import EditorModel from "../../../../src/editor/model";
 import { createPartCreator, createRenderer } from "../../../editor/mock";
 import { createTestClient, mkEvent, mkStubRoom } from "../../../test-utils";
@@ -116,11 +117,13 @@ describe('<SendMessageComposer/>', () => {
 
         it("renders text and placeholder correctly", () => {
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
-                <SendMessageComposer
-                    room={mockRoom}
-                    placeholder="placeholder string"
-                    permalinkCreator={new SpecPermalinkConstructor()}
-                />
+                <RoomContext.Provider>
+                    <SendMessageComposer
+                        room={mockRoom}
+                        placeholder="placeholder string"
+                        permalinkCreator={new SpecPermalinkConstructor()}
+                    />
+                </RoomContext.Provider>
             </MatrixClientContext.Provider>);
 
             expect(wrapper.find('[aria-label="placeholder string"]')).toHaveLength(1);
@@ -135,12 +138,14 @@ describe('<SendMessageComposer/>', () => {
 
         it("correctly persists state to and from localStorage", () => {
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
-                <SendMessageComposer
-                    room={mockRoom}
-                    placeholder=""
-                    permalinkCreator={new SpecPermalinkConstructor()}
-                    replyToEvent={mockEvent}
-                />
+                <RoomContext.Provider>
+                    <SendMessageComposer
+                        room={mockRoom}
+                        placeholder=""
+                        permalinkCreator={new SpecPermalinkConstructor()}
+                        replyToEvent={mockEvent}
+                    />
+                </RoomContext.Provider>
             </MatrixClientContext.Provider>);
 
             act(() => {
@@ -177,11 +182,13 @@ describe('<SendMessageComposer/>', () => {
 
         it("persists state correctly without replyToEvent onbeforeunload", () => {
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
-                <SendMessageComposer
-                    room={mockRoom}
-                    placeholder=""
-                    permalinkCreator={new SpecPermalinkConstructor()}
-                />
+                <RoomContext.Provider>
+                    <SendMessageComposer
+                        room={mockRoom}
+                        placeholder=""
+                        permalinkCreator={new SpecPermalinkConstructor()}
+                    />
+                </RoomContext.Provider>
             </MatrixClientContext.Provider>);
 
             act(() => {
@@ -203,12 +210,14 @@ describe('<SendMessageComposer/>', () => {
 
         it("persists to session history upon sending", async () => {
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
-                <SendMessageComposer
-                    room={mockRoom}
-                    placeholder="placeholder"
-                    permalinkCreator={new SpecPermalinkConstructor()}
-                    replyToEvent={mockEvent}
-                />
+                <RoomContext.Provider>
+                    <SendMessageComposer
+                        room={mockRoom}
+                        placeholder="placeholder"
+                        permalinkCreator={new SpecPermalinkConstructor()}
+                        replyToEvent={mockEvent}
+                    />
+                </RoomContext.Provider>
             </MatrixClientContext.Provider>);
 
             act(() => {
