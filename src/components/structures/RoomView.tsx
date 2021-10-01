@@ -193,7 +193,7 @@ export interface IRoomState {
 }
 
 @replaceableComponent("structures.RoomView")
-class RoomView extends React.Component<IRoomProps, IRoomState> {
+export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private readonly dispatcherRef: string;
     private readonly roomStoreToken: EventSubscription;
     private readonly rightPanelStoreToken: EventSubscription;
