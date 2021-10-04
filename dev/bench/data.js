@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633100571196,
+  "lastUpdate": 1633344456513,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29276,6 +29276,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4916.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0afbc192fc391002b4313e26c80d19f405c34238",
+          "message": "Merge pull request #6900 from ColonisationCaptain/patch-1",
+          "timestamp": "2021-10-04T11:42:13+01:00",
+          "tree_id": "859e15c515b187f05cfbaae9ff802f81c29a8b20",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0afbc192fc391002b4313e26c80d19f405c34238"
+        },
+        "date": 1633344454878,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3953.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 922.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1861.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4480.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
