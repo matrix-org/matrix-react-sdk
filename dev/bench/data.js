@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633344456513,
+  "lastUpdate": 1633344580594,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29324,6 +29324,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4480.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b45cd4f59a0ee00fee5e1a9d1a86be5fb20f04e6",
+          "message": "Merge pull request #6901 from AndrewFerr/guest_register_toggle",
+          "timestamp": "2021-10-04T11:43:48+01:00",
+          "tree_id": "813ac116852ea03f4e3a94dd7f17f8cbc21e16fb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b45cd4f59a0ee00fee5e1a9d1a86be5fb20f04e6"
+        },
+        "date": 1633344577951,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4250.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1234.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1751.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4648.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
