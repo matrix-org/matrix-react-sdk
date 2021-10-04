@@ -325,6 +325,19 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     />);
                 }
             }
+            // Show thread icon even for deleted messages, but only within main timeline
+            if (this.context.timelineRenderingType === TimelineRenderingType.Room &&
+                SettingsStore.getValue("feature_thread") &&
+                this.props.mxEvent.getThread() &&
+                !isContentActionable(this.props.mxEvent)
+            ) {
+                toolbarOpts.unshift(<RovingAccessibleTooltipButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                    title={_t("Thread")}
+                    onClick={this.onThreadClick}
+                    key="thread"
+                />);
+            }
 
             if (allowCancel) {
                 toolbarOpts.push(cancelSendingButton);
