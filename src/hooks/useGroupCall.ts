@@ -4,6 +4,7 @@ import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { GroupCallEvent, GroupCall, GroupCallState } from "matrix-js-sdk/src/webrtc/groupCall";
 import { usePageUnload } from "./usePageUnload";
+import { RoomMember } from "matrix-js-sdk";
 
 console.log(GroupCallEvent);
 
@@ -20,6 +21,7 @@ interface IGroupCallState {
     localDesktopCapturerSourceId?: string;
     screenshareFeeds: CallFeed[];
     isScreensharing: boolean;
+    participants: RoomMember[];
 }
 
 interface IGroupCallReturn extends IGroupCallState {
@@ -46,6 +48,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             screenshareFeeds,
             localScreenshareFeed,
             localDesktopCapturerSourceId,
+            participants,
         },
         setState,
     ] = useState<IGroupCallState>({
@@ -56,6 +59,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         localVideoMuted: false,
         screenshareFeeds: [],
         isScreensharing: false,
+        participants: [],
     });
 
     const updateState = (state: Partial<IGroupCallState>) =>
@@ -75,6 +79,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
                 localScreenshareFeed: groupCall.localScreenshareFeed,
                 localDesktopCapturerSourceId: groupCall.localDesktopCapturerSourceId,
                 screenshareFeeds: [...groupCall.screenshareFeeds],
+                participants: [...groupCall.participants],
             });
         }
 
@@ -122,6 +127,12 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             });
         }
 
+        function onParticipantsChanged(participants: RoomMember[]) {
+            updateState({
+                participants: [...participants],
+            });
+        }
+
         groupCall.on(GroupCallEvent.GroupCallStateChanged, onGroupCallStateChanged);
         groupCall.on(GroupCallEvent.UserMediaFeedsChanged, onUserMediaFeedsChanged);
         groupCall.on(GroupCallEvent.ScreenshareFeedsChanged, onScreenshareFeedsChanged);
@@ -129,6 +140,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         groupCall.on(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
         groupCall.on(GroupCallEvent.LocalScreenshareStateChanged, onLocalScreenshareStateChanged);
         groupCall.on(GroupCallEvent.CallsChanged, onCallsChanged);
+        groupCall.on(GroupCallEvent.ParticipantsChanged, onParticipantsChanged);
 
         updateState({
             error: null,
@@ -143,6 +155,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             localScreenshareFeed: groupCall.localScreenshareFeed,
             localDesktopCapturerSourceId: groupCall.localDesktopCapturerSourceId,
             screenshareFeeds: [...groupCall.screenshareFeeds],
+            participants: [...groupCall.participants],
         });
 
         return () => {
@@ -153,6 +166,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             groupCall.removeListener(GroupCallEvent.LocalMuteStateChanged, onLocalMuteStateChanged);
             groupCall.removeListener(GroupCallEvent.LocalScreenshareStateChanged, onLocalScreenshareStateChanged);
             groupCall.removeListener(GroupCallEvent.CallsChanged, onCallsChanged);
+            groupCall.removeListener(GroupCallEvent.ParticipantsChanged, onParticipantsChanged);
             groupCall.leave();
         };
     }, [groupCall]);
@@ -216,5 +230,6 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         screenshareFeeds,
         localScreenshareFeed,
         localDesktopCapturerSourceId,
+        participants,
     };
 }
