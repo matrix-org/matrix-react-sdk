@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633439520762,
+  "lastUpdate": 1633447332701,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29516,6 +29516,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4512.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "48b38b287aada5e2069fff1b3bcaf686424578b7",
+          "message": "Merge pull request #6895 from andybalaam/simon-auto-avatars\n\nUse fallback avatar only for DMs with 2 people",
+          "timestamp": "2021-10-05T15:49:27+01:00",
+          "tree_id": "34ace0ca60470ae1ad0ddf6c40acf1700af2d97a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/48b38b287aada5e2069fff1b3bcaf686424578b7"
+        },
+        "date": 1633447330046,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4788,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1051.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1813.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4357.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
