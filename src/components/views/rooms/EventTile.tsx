@@ -56,9 +56,9 @@ import ReadReceiptMarker from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import SettingsStore from "../../../settings/SettingsStore";
 import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
+import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -541,13 +541,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             <div
                 className="mx_ThreadInfo"
                 onClick={() => {
-                    dis.dispatch({
-                        action: Action.SetRightPanelPhase,
-                        phase: RightPanelPhases.ThreadView,
-                        refireParams: {
-                            event: this.props.mxEvent,
-                        },
-                    });
+                    dispatchShowThreadEvent(this.props.mxEvent);
                 }}
             >
                 <span className="mx_EventListSummary_avatars">
