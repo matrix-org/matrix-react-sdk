@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633347374020,
+  "lastUpdate": 1633439520762,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29468,6 +29468,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4530.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "duxovni@duxovni.org",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "418043488b6a7275a9c55ce35f5d3e55e62f6a67",
+          "message": "Merge pull request #6811 from matrix-org/fayed/fix-verification-dialog\n\nMake cross-signing dialog clearer and more context-aware",
+          "timestamp": "2021-10-05T09:06:33-04:00",
+          "tree_id": "7fd793db3f21b75259adea69f5edf35b8067e9cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/418043488b6a7275a9c55ce35f5d3e55e62f6a67"
+        },
+        "date": 1633439518831,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4420.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1124,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1647.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4512.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
