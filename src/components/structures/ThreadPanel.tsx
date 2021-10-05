@@ -21,12 +21,12 @@ import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import { MatrixClientPeg } from '../../MatrixClientPeg';
 
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import EventTile from '../views/rooms/EventTile';
+import { MatrixClientProps, withMatrixClientHOC } from '../../contexts/MatrixClientContext';
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     roomId: string;
     onClose: () => void;
     resizeNotifier: ResizeNotifier;
@@ -37,12 +37,12 @@ interface IState {
 }
 
 @replaceableComponent("structures.ThreadView")
-export default class ThreadPanel extends React.Component<IProps, IState> {
+export class ThreadPanel extends React.Component<IProps, IState> {
     private room: Room;
 
     constructor(props: IProps) {
         super(props);
-        this.room = MatrixClientPeg.get().getRoom(this.props.roomId);
+        this.room = this.props.mxClient.getRoom(this.props.roomId);
     }
 
     public componentDidMount(): void {
@@ -91,3 +91,6 @@ export default class ThreadPanel extends React.Component<IProps, IState> {
         );
     }
 }
+
+const ThreadPanelWithClient = withMatrixClientHOC(ThreadPanel);
+export default ThreadPanelWithClient;
