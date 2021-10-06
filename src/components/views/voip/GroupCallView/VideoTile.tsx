@@ -23,12 +23,12 @@ export default function VideoTile({
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1611831
 
     return (
-        <animated.div className="mx_videoTile" style={style} {...rest}>
-            <div
-                className={classNames("mx_memberName", {
-                    "mx_speaking": speaking,
-                })}
-            >
+        <animated.div
+            className={classNames("mx_videoTile", { "mx_speaking": speaking, "mx_muted": audioMuted })}
+            style={style}
+            {...rest}
+        >
+            <div className="mx_memberName">
                 { speaking ? (
                     <i className="mx_speakingIcon" />
                 ) : audioMuted ? (
