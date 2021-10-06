@@ -22,6 +22,7 @@ import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 
 interface IProps {
 
