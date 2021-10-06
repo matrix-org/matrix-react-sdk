@@ -33,7 +33,7 @@ export type HeartOptions = {
      * The maximum amount of tilt to apply to the heart. Each heart varies.
      */
     maxRot: number;
-}
+};
 
 type Heart = {
     x: number;
@@ -43,8 +43,8 @@ type Heart = {
     maximumDrift: number;
     maximumRot: number;
     gravity: number;
-    color: string,
-}
+    color: string;
+};
 
 export const DefaultOptions: HeartOptions = {
     maxCount: 120,
@@ -97,11 +97,11 @@ export default class Hearts implements ICanvasEffect {
         if (timeout) {
             window.setTimeout(this.stop, timeout);
         }
-    }
+    };
 
     public stop = async () => {
         this.isRunning = false;
-    }
+    };
 
     private resetParticle = (particle: Heart, width: number, height: number): Heart => {
         particle.color = this.colours[(Math.random() * this.colours.length) | 0];
@@ -113,7 +113,7 @@ export default class Hearts implements ICanvasEffect {
         particle.maximumRot = (Math.random() * this.options.maxRot) + 3.5;
         particle.gravity = this.options.gravity + (Math.random() * 4.8);
         return particle;
-    }
+    };
 
     private renderLoop = (): void => {
         if (!this.context || !this.context.canvas) {
