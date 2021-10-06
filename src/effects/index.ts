@@ -84,5 +84,5 @@ export const CHAT_EFFECTS: Array<Effect<{ [key: string]: any }>> = [
             maxCount: 120,
             gravity: 3.2,
         },
-    } as Effect<SpaceInvadersOptions>,
+    } as Effect<HeartOptions>,
 ];
