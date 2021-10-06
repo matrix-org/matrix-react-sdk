@@ -19,12 +19,13 @@ import React from 'react';
 import classNames from 'classnames';
 
 import AccessibleButton from "./AccessibleButton";
-import Tooltip, {Alignment} from './Tooltip';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Tooltip, { Alignment } from './Tooltip';
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface ITooltipProps extends React.ComponentProps<typeof AccessibleButton> {
     title: string;
     tooltip?: React.ReactNode;
+    label?: React.ReactNode;
     tooltipClassName?: string;
     forceHide?: boolean;
     yOffset?: number;
@@ -67,7 +68,7 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
 
     render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {title, tooltip, children, tooltipClassName, forceHide, yOffset, alignment, ...props} = this.props;
+        const { title, tooltip, children, tooltipClassName, forceHide, yOffset, alignment, ...props } = this.props;
 
         const tip = this.state.hover ? <Tooltip
             className="mx_AccessibleTooltipButton_container"
@@ -84,7 +85,8 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
                 aria-label={title}
             >
                 { children }
-                { tip }
+                { this.props.label }
+                { (tooltip || title) && tip }
             </AccessibleButton>
         );
     }
