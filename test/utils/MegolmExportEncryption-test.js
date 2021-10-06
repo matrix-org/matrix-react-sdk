@@ -143,7 +143,7 @@ cissyYBxjsfsAn
 
             const password = 'my super secret passphrase';
 
-            return MegolmExportEncryption.encryptMegolmKeyFile(
+            MegolmExportEncryption.encryptMegolmKeyFile(
                 input, password, { kdf_rounds: 1000 },
             ).then((ciphertext) => {
                 return MegolmExportEncryption.decryptMegolmKeyFile(

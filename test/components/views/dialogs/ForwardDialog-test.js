@@ -54,7 +54,7 @@ describe("ForwardDialog", () => {
                 />,
             );
             // Wait one tick for our profile data to load so the state update happens within act
-            await new Promise(resolve => setImmediate(resolve));
+            await new Promise(resolve => process.nextTick(resolve));
         });
 
         return wrapper;
@@ -109,7 +109,7 @@ describe("ForwardDialog", () => {
         await act(async () => {
             cancelSend();
             // Wait one tick for the button to realize the send failed
-            await new Promise(resolve => setImmediate(resolve));
+            await new Promise(resolve => process.nextTick(resolve));
         });
         expect(firstButton.render().is(".mx_ForwardList_sendFailed")).toBe(true);
 
@@ -122,7 +122,7 @@ describe("ForwardDialog", () => {
         await act(async () => {
             finishSend();
             // Wait one tick for the button to realize the send succeeded
-            await new Promise(resolve => setImmediate(resolve));
+            await new Promise(resolve => process.nextTick(resolve));
         });
         expect(secondButton.render().is(".mx_ForwardList_sent")).toBe(true);
     });
