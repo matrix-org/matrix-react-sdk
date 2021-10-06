@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633536326281,
+  "lastUpdate": 1633537529664,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29708,6 +29708,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4481.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0f212b2607071d97b1e08f0ca1729529b622cf34",
+          "message": "Merge pull request #6912 from matrix-org/hs/ignore-greater-pl-scalar\n\nScalar messaging: No-op setBotPower if the current PL is greater than the requested PL.",
+          "timestamp": "2021-10-06T10:19:14-06:00",
+          "tree_id": "ce3fad822fda6e3a1dd73682b7a41f402c2b35db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0f212b2607071d97b1e08f0ca1729529b622cf34"
+        },
+        "date": 1633537527686,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4577.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1159.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1737.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4840.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
