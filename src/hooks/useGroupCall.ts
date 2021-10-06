@@ -5,8 +5,6 @@ import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { GroupCallEvent, GroupCall, GroupCallState } from "matrix-js-sdk/src/webrtc/groupCall";
 import { usePageUnload } from "./usePageUnload";
 
-console.log(GroupCallEvent);
-
 interface IGroupCallState {
     state: GroupCallState;
     localCallFeed?: CallFeed;
@@ -85,7 +83,6 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         }
 
         function onScreenshareFeedsChanged(screenshareFeeds: CallFeed[]) {
-            console.log("screensharing feeds changed", screenshareFeeds);
             updateState({
                 screenshareFeeds: [...screenshareFeeds],
             });
