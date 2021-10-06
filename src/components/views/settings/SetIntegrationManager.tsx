@@ -81,9 +81,9 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
                     <span className="mx_SettingsTab_subheading">{ managerName }</span>
                 </div>
                 <LabelledToggleSwitch
-                        value={this.state.provisioningEnabled}
-                        onChange={this.onProvisioningToggled}
-                        label={bodyText}
+                    value={this.state.provisioningEnabled}
+                    onChange={this.onProvisioningToggled}
+                    label={bodyText}
                 />
                 <span className="mx_SettingsTab_subsectionText">
                     { _t(
