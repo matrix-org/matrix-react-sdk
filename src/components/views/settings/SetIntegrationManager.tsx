@@ -79,12 +79,12 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
                 <div className="mx_SettingsTab_heading">
                     <span>{ _t("Manage integrations") }</span>
                     <span className="mx_SettingsTab_subheading">{ managerName }</span>
-                    <LabelledToggleSwitch
+                </div>
+                <LabelledToggleSwitch
                         value={this.state.provisioningEnabled}
                         onChange={this.onProvisioningToggled}
                         label={bodyText}
-                    />
-                </div>
+                />
                 <span className="mx_SettingsTab_subsectionText">
                     { _t(
                         "Integration managers receive configuration data, and can modify widgets, " +
