@@ -22,6 +22,7 @@ import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import ToggleSwitch from "../elements/ToggleSwitch";
 
 interface IProps {
 
@@ -57,8 +58,6 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
     };
 
     public render(): React.ReactNode {
-        const LabelledToggleSwitch = sdk.getComponent("views.elements.LabelledToggleSwitch");
-
         const currentManager = this.state.currentManager;
         let managerName;
         let bodyText;
@@ -79,13 +78,12 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
                 <div className="mx_SettingsTab_heading">
                     <span>{ _t("Manage integrations") }</span>
                     <span className="mx_SettingsTab_subheading">{ managerName }</span>
+                    <ToggleSwitch checked={this.state.provisioningEnabled} onChange={this.onProvisioningToggled} />
                 </div>
-                <LabelledToggleSwitch
-                    value={this.state.provisioningEnabled}
-                    onChange={this.onProvisioningToggled}
-                    label={bodyText}
-                />
                 <span className="mx_SettingsTab_subsectionText">
+                    { bodyText }
+                    <br />
+                    <br />
                     { _t(
                         "Integration managers receive configuration data, and can modify widgets, " +
                         "send room invites, and set power levels on your behalf.",
