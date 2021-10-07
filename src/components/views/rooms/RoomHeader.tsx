@@ -36,7 +36,6 @@ import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
-import { dispatchShowThreadsPanelEvent } from '../../../dispatcher/dispatch-actions/threads';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -200,15 +199,6 @@ export default class RoomHeader extends React.Component<IProps> {
                 title={_t("Search")}
             />;
             buttons.push(searchButton);
-        }
-
-        if (this.props.room.threads.size > 0) {
-            const threadsButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_threadsButton"
-                onClick={dispatchShowThreadsPanelEvent}
-                title={_t("Threads")}
-            />;
-            buttons.push(threadsButton);
         }
 
         const rightRow =
