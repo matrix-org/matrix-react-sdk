@@ -762,10 +762,9 @@ $hover-select-border: 4px;
         flex-direction: column;
         flex: 1;
         padding-bottom: 28px;
-        border-bottom: 1px solid $quaternary-content;
+        border-bottom: 1px solid $message-action-bar-border-color;
         margin-right: 24px;
         padding-top: 0;
-        // margin-bottom: 6px;
         margin-bottom: 0;
 
         a {
