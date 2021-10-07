@@ -59,6 +59,7 @@ import { getEventDisplayInfo } from '../../../utils/EventUtils';
 import SettingsStore from "../../../settings/SettingsStore";
 import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
 import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
+import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -193,6 +194,7 @@ export enum TileShape {
     FileGrid = "file_grid",
     Pinned = "pinned",
     Thread = "thread",
+    ThreadList = "thread_list"
 }
 
 interface IProps {
@@ -1207,6 +1209,45 @@ export default class EventTile extends React.Component<IProps, IState> {
                         />
                         { actionBar }
                     </div>,
+                ]);
+            }
+            case TileShape.ThreadList: {
+                return React.createElement(this.props.as || "li", {
+                    "className": classes,
+                    "aria-live": ariaLive,
+                    "aria-atomic": true,
+                    "data-scroll-tokens": scrollToken,
+                }, [
+                    <>
+                        <AccessibleTooltipButton
+                            aria-selected={false}
+                            role="button"
+                            title="test"
+                            className="mx_RightPanel_headerButton mx_EventTile_ThreadList--notify-button"
+                            onClick={() => alert('aa')}
+                        />
+                        { avatar }
+                        <div className="mx_EventTile_senderDetails">
+                            <a href={permalink} onClick={this.onPermalinkClicked}>
+                                { sender }
+                                { timestamp }
+                            </a>
+                            <div className="mx_EventTile_line">
+                                <EventTileType ref={this.tile}
+                                    mxEvent={this.props.mxEvent}
+                                    highlights={this.props.highlights}
+                                    highlightLink={this.props.highlightLink}
+                                    showUrlPreview={this.props.showUrlPreview}
+                                    onHeightChanged={this.props.onHeightChanged}
+                                    tileShape={this.props.tileShape}
+                                    editState={this.props.editState}
+                                    replacingEventId={this.props.replacingEventId}
+                                />
+                                { this.renderThreadInfo() }
+                            </div>
+                            { actionBar }
+                        </div>
+                    </>,
                 ]);
             }
             case TileShape.FileGrid: {
