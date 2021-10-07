@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633618120638,
+  "lastUpdate": 1633623937901,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29936,6 +29936,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4408.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1a1b178b5b8ed518a400736da07552bc1f835596",
+          "message": "Merge pull request #6916 from psrpinto/fix/settings-dialog-update-room-name\n\nUpdate room settings dialog title when room name changes",
+          "timestamp": "2021-10-07T10:20:05-06:00",
+          "tree_id": "1e41a22831b58c195cf4ef72598ff0bbf12f394f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1a1b178b5b8ed518a400736da07552bc1f835596"
+        },
+        "date": 1633623935611,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4396.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 941.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1625.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4409.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
