@@ -164,7 +164,7 @@ export default class SettingsStore {
 
         const localizedCallback = (changedInRoomId, atLevel, newValAtLevel) => {
             const newValue = SettingsStore.getValue(originalSettingName);
-            const newValueAtLevel = SettingsStore.getValueAt(atLevel, originalSettingName);
+            const newValueAtLevel = SettingsStore.getValueAt(atLevel, originalSettingName) ?? newValAtLevel;
             callbackFn(originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue);
         };
 
