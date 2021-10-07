@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633610028036,
+  "lastUpdate": 1633618120638,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -29888,6 +29888,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 971.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "paulo.pinto@automattic.com",
+            "name": "Paulo Pinto",
+            "username": "psrpinto"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1b334e47aae6959d2c6d5949701f0f5bd8431013",
+          "message": "Fix issue that caused the value of certain settings to be inverted (#6896)\n\nWhen using the SettingsStore.watchSetting() method for settings which have an\r\ninvertedSettingName, the newValueAt argument passed to the callback function,\r\nwould erroneously contain the inverted value.\r\n\r\nThis was making it so that such settings appeared to be disabled when they\r\nshould in fact be enabled, or vice-versa. This was however only the case for\r\ncode which took in account the newValueAt argument. Code using the newValue\r\nargument was not affected.\r\n\r\nThe settings which have an invertedSettingName, and were thus potentially\r\nimpacted are:\r\n\r\n- MessageComposerInput.dontSuggestEmoji\r\n- hideRedactions\r\n- hideJoinLeaves\r\n- hideAvatarChanges\r\n- hideDisplaynameChanges\r\n- hideReadReceipts\r\n- Pill.shouldHidePillAvatar\r\n- TextualBody.disableBigEmoji\r\n- dontSendTypingNotifications\r\n- TagPanel.disableTagPanel\r\n- webRtcForceTURN\r\n\r\nSigned-off-by: Paulo Pinto <paulo.pinto@automattic.com>",
+          "timestamp": "2021-10-07T16:42:23+02:00",
+          "tree_id": "6274ad3a639c24109e1842dcba2fd556b7e1f360",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1b334e47aae6959d2c6d5949701f0f5bd8431013"
+        },
+        "date": 1633618118483,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4685.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1784.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4408.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
