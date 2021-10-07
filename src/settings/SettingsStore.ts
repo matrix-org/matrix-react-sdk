@@ -164,8 +164,8 @@ export default class SettingsStore {
 
         const localizedCallback = (changedInRoomId, atLevel, newValAtLevel) => {
             const newValue = SettingsStore.getValue(originalSettingName);
-            newValAtLevel = SettingsStore.getValueAt(atLevel, originalSettingName);
-            callbackFn(originalSettingName, changedInRoomId, atLevel, newValAtLevel, newValue);
+            const newValueAtLevel = SettingsStore.getValueAt(atLevel, originalSettingName);
+            callbackFn(originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue);
         };
 
         SettingsStore.watchers.set(watcherId, localizedCallback);
