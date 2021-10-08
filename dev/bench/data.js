@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633686130291,
+  "lastUpdate": 1633694439503,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30128,6 +30128,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4437.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e1c1d2dc0f22aa6629e97ca3fb30542ff164f569",
+          "message": "Merge pull request #6840 from wlach/make-placeholder-for-field-grey-no-input\n\nMake placeholder more grey when no input",
+          "timestamp": "2021-10-08T12:54:57+01:00",
+          "tree_id": "2aea622a4c354e9863322645c9db771609a9fe83",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e1c1d2dc0f22aa6629e97ca3fb30542ff164f569"
+        },
+        "date": 1633694437593,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4708.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1671.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4341.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
