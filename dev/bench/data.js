@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633624918895,
+  "lastUpdate": 1633684550190,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30032,6 +30032,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4384.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5af72d8d1dfc47a78bcd17f84553e8c2c3eda393",
+          "message": "Merge pull request #6917 from LoganArnett/bug/update-save-enabled-by-field",
+          "timestamp": "2021-10-08T10:09:54+01:00",
+          "tree_id": "705699de11766d2478aaa2684a4b0e0abe7ba7b8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5af72d8d1dfc47a78bcd17f84553e8c2c3eda393"
+        },
+        "date": 1633684548519,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4864.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 979.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1695.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4844.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
