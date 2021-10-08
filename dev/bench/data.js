@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633694439503,
+  "lastUpdate": 1633699145639,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30176,6 +30176,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4341.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe79a957313abe888931e2948422ff077354a41b",
+          "message": "Merge pull request #6918 from VFermat/fix-19316\n\nValidate that the phone number verification field is filled before allowing user to submit",
+          "timestamp": "2021-10-08T14:12:28+01:00",
+          "tree_id": "2dd63cbfb34585f87377efa6dd8d9ab1b4edfecd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe79a957313abe888931e2948422ff077354a41b"
+        },
+        "date": 1633699143574,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4825.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1171.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1823.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4934.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
