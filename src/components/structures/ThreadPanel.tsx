@@ -38,7 +38,7 @@ export const ThreadPanelItem: React.FC<{event: MatrixEvent}> = ({ event }) => {
             enableFlair={false}
             showReadReceipts={false}
             as="div"
-            tileShape={TileShape.ThreadList}
+            tileShape={TileShape.ThreadPanel}
             alwaysShowTimestamps={true}
         />
     </>;
@@ -54,12 +54,14 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
             onClose={onClose}
             previousPhase={RightPanelPhases.RoomSummary}
         >
+            <div className="mx_ThreadPanel--wrapper">
             { threads.map((thread: Thread) => {
                 if (thread.ready) {
                     const event = thread.rootEvent;
                     return <ThreadPanelItem key={event.getId()} event={event} />;
                 }
             }) }
+            </div>
         </BaseCard>
     );
 };

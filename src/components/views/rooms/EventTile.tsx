@@ -194,7 +194,7 @@ export enum TileShape {
     FileGrid = "file_grid",
     Pinned = "pinned",
     Thread = "thread",
-    ThreadList = "thread_list"
+    ThreadPanel = "thread_list"
 }
 
 interface IProps {
@@ -1211,7 +1211,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     </div>,
                 ]);
             }
-            case TileShape.ThreadList: {
+            case TileShape.ThreadPanel: {
                 return React.createElement(this.props.as || "li", {
                     "className": classes,
                     "aria-live": ariaLive,
