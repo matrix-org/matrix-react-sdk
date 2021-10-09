@@ -752,7 +752,9 @@ $hover-select-border: 4px;
         background-color: $background;
         border-radius: 8px;
         padding-top: 8px;
-        height: 100%;
+        padding-bottom: 12px;
+        display: flex;
+        flex-direction: column;
     }
 
     .mx_ScrollPanel {
