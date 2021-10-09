@@ -1212,6 +1212,15 @@ export default class EventTile extends React.Component<IProps, IState> {
                 ]);
             }
             case TileShape.ThreadPanel: {
+                // TODO: Follow threads feature
+                // const followButton = <AccessibleTooltipButton
+                //     aria-selected={false}
+                //     role="button"
+                //     title="test"
+                //     className="mx_RightPanel_headerButton mx_EventTile_ThreadList__notify-button"
+                //     onClick={() => alert('aa')}
+                // />
+                const followButton = null;
                 return React.createElement(this.props.as || "li", {
                     "className": classes,
                     "aria-live": ariaLive,
@@ -1225,13 +1234,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 <a href={permalink} onClick={this.onPermalinkClicked}>
                                     { sender }
                                     { timestamp }
-                                    <AccessibleTooltipButton
-                                        aria-selected={false}
-                                        role="button"
-                                        title="test"
-                                        className="mx_RightPanel_headerButton mx_EventTile_ThreadList__notify-button"
-                                        onClick={() => alert('aa')}
-                                    />
+                                    { followButton }
                                 </a>
                                 <div className="mx_EventTile_line">
                                     <EventTileType ref={this.tile}
