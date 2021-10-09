@@ -46,7 +46,6 @@ export default class HeaderButton extends React.Component<IProps> {
         this.props.onClick();
     };
 
-
     public render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { isHighlighted, onClick, analytics, name, title, ...props } = this.props;
