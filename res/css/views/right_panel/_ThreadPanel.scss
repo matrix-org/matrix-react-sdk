@@ -61,9 +61,27 @@ limitations under the License.
             overflow: visible;
             width: 100%;
             padding: 20px;
+            padding-left: 30px;
+            position: relative;
 
             &:hover {
                 background-color: $event-selected-color;
+            }
+            &[aria-selected="true"] {
+                &::before {
+                    content: "";
+                    width: 12px;
+                    height: 12px;
+                    grid-column: 1;
+                    grid-row: 1;
+                    mask-image: url("$(res)/img/feather-customised/check.svg");
+                    mask-size: 100%;
+                    mask-repeat: no-repeat;
+                    position: absolute;
+                    top: 22px;
+                    left: 10px;
+                    background-color: $primary-content;
+                }
             }
         }
     }

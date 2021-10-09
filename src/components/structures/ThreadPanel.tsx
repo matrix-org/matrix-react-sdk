@@ -30,6 +30,7 @@ import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuB
 import ContextMenu, { useContextMenu } from './ContextMenu';
 import { logger } from 'matrix-js-sdk/src/logger';
 
+// TODO: Tests
 interface IProps {
     roomId: string;
     onClose: () => void;
@@ -87,10 +88,17 @@ const useFilteredThreadsList = (threads: Set<Thread>, option: ThreadFilterType) 
     return filteredThreads;
 };
 
-export const ThreadPanelHeaderFilterOptionItem = ({ label, description, onClick }: ThreadPanelHeaderOption & {
+export const ThreadPanelHeaderFilterOptionItem = ({
+    label,
+    description,
+    onClick,
+    isSelected,
+}: ThreadPanelHeaderOption & {
     onClick: () => void;
+    isSelected: boolean;
 }) => {
-    return <div className="mx_ThreadPanel_Header_FilterOptionItem" onClick={onClick}>
+    // TODO: Use AccessibleButton here
+    return <div className="mx_ThreadPanel_Header_FilterOptionItem" aria-selected={isSelected} onClick={onClick}>
         <span>{ label }</span>
         <span>{ description }</span>
     </div>;
@@ -127,6 +135,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
             setFilterOption(opt.key);
             closeMenu();
         }}
+        isSelected={opt === value}
     />);
     const contextMenu = menuDisplayed ? <ContextMenu {...position} onFinished={closeMenu} managed={false}>
         { contextMenuOptions }
