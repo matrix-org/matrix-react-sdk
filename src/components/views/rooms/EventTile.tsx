@@ -1219,34 +1219,36 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "data-scroll-tokens": scrollToken,
                 }, [
                     <>
-                        <AccessibleTooltipButton
-                            aria-selected={false}
-                            role="button"
-                            title="test"
-                            className="mx_RightPanel_headerButton mx_EventTile_ThreadList--notify-button"
-                            onClick={() => alert('aa')}
-                        />
-                        { avatar }
-                        <div className="mx_EventTile_senderDetails">
-                            <a href={permalink} onClick={this.onPermalinkClicked}>
-                                { sender }
-                                { timestamp }
-                            </a>
-                            <div className="mx_EventTile_line">
-                                <EventTileType ref={this.tile}
-                                    mxEvent={this.props.mxEvent}
-                                    highlights={this.props.highlights}
-                                    highlightLink={this.props.highlightLink}
-                                    showUrlPreview={this.props.showUrlPreview}
-                                    onHeightChanged={this.props.onHeightChanged}
-                                    tileShape={this.props.tileShape}
-                                    editState={this.props.editState}
-                                    replacingEventId={this.props.replacingEventId}
-                                />
-                                { this.renderThreadInfo() }
+                        <div className="mx_EventTile__content">
+                            { avatar }
+                            <div className="mx_EventTile_senderDetails">
+                                <a href={permalink} onClick={this.onPermalinkClicked}>
+                                    { sender }
+                                    { timestamp }
+                                    <AccessibleTooltipButton
+                                        aria-selected={false}
+                                        role="button"
+                                        title="test"
+                                        className="mx_RightPanel_headerButton mx_EventTile_ThreadList__notify-button"
+                                        onClick={() => alert('aa')}
+                                    />
+                                </a>
+                                <div className="mx_EventTile_line">
+                                    <EventTileType ref={this.tile}
+                                        mxEvent={this.props.mxEvent}
+                                        highlights={this.props.highlights}
+                                        highlightLink={this.props.highlightLink}
+                                        showUrlPreview={this.props.showUrlPreview}
+                                        onHeightChanged={this.props.onHeightChanged}
+                                        tileShape={this.props.tileShape}
+                                        editState={this.props.editState}
+                                        replacingEventId={this.props.replacingEventId}
+                                    />
+                                    { this.renderThreadInfo() }
+                                </div>
                             </div>
-                            { actionBar }
                         </div>
+                        { actionBar }
                     </>,
                 ]);
             }

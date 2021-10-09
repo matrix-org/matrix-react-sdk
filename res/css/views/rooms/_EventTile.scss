@@ -748,6 +748,13 @@ $hover-select-border: 4px;
     display: flex;
     flex-direction: column;
 
+    &--wrapper {
+        background-color: $background;
+        border-radius: 8px;
+        padding: 24px 12px;
+        height: 100%;
+    }
+
     .mx_ScrollPanel {
         margin-top: 20px;
 
@@ -794,18 +801,27 @@ $hover-select-border: 4px;
         order: 10 !important;
     }
 
+    .mx_BaseCard_header {
+        height: 20px;
+    }
+
     .mx_EventTile {
-        display: grid;
-        grid-template-columns: auto auto 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: ". . .";
-        // flex: 1;
-        gap: 12px;
         width: 100%;
-        // display: flex;
-        // flex-direction: row;
         margin: 0;
-        padding-top: 28px;
+        padding-top: 0;
+        padding-bottom: 12px;
+
+        &__content {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-template-rows: 1fr;
+            grid-template-areas: ". . .";
+        }
+
+        &_avatar {
+            padding-left: 8px;
+            padding-right: 12px;
+        }
 
         .mx_MessageTimestamp {
             margin-left: auto;
@@ -821,27 +837,32 @@ $hover-select-border: 4px;
     }
 
     .mx_AutoHideScrollbar {
-        padding-top: 28px;
+        padding-top: 4px;
     }
 
-    .mx_EventTile_ThreadList--notify-button {
-        width: 20px;
-        height: 20px;
+    .mx_EventTile_ThreadList__notify-button {
         margin: 0;
         padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: -8px;
+        height: 24px;
+        width: 24px;
 
 
         &::before {
             content: '';
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             margin: 0 auto;
             mask-image: url('$(res)/img/element-icons/notifications.svg');
             mask-position: center;
         }
+    }
+
+    .mx_EventTile_line, .mx_EventTile_reply {
+        padding-top: 1px;
+        padding-bottom: 3px;
+        line-height: $font-22px;
     }
 }
