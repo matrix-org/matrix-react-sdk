@@ -19,11 +19,62 @@ limitations under the License.
     display: flex;
     flex-direction: column;
 
+    .mx_AccessibleButton.mx_BaseCard_back {
+        display: none;
+    }
+
     &__header {
         width: calc(100% - 40px);
         display: flex;
         flex: 1;
         justify-content: space-between;
+
+        span:first-of-type {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 18px;
+            color: $secondary-content;
+        }
+
+        .mx_AccessibleButton {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 15px;
+            color: $secondary-content;
+        }
+
+        .mx_ContextualMenu {
+            position: initial;
+            span:first-of-type {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 15px;
+                color: $primary-content;
+            }
+
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 15px;
+            color: $secondary-content;
+        }
+
+        .mx_ThreadPanel_Header_FilterOptionItem {
+            display: flex;
+            flex-grow: 1;
+            justify-content: space-between;
+            flex-direction: column;
+            overflow: visible;
+            width: 100%;
+            padding: 20px;
+        }
     }
 
     &--wrapper {
@@ -168,16 +219,5 @@ limitations under the License.
         padding-top: 1px;
         padding-bottom: 3px;
         line-height: $font-22px;
-    }
-
-    .mx_AccessibleButton.mx_BaseCard_back {
-        display: none;
-    }
-
-    .mx_Dropdown {
-        width: 150px;
-        & > div {
-            border: none;
-        }
     }
 }

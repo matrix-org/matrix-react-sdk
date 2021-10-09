@@ -25,8 +25,10 @@ import ResizeNotifier from '../../utils/ResizeNotifier';
 import EventTile, { TileShape } from '../views/rooms/EventTile';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
 import { _t } from '../../languageHandler';
-import Dropdown from '../views/elements/Dropdown';
 import { getStoredSessionOwner } from '../../Lifecycle';
+import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuButton';
+import ContextMenu, { useContextMenu } from './ContextMenu';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 interface IProps {
     roomId: string;
@@ -35,16 +37,15 @@ interface IProps {
 }
 
 export const ThreadPanelItem: React.FC<{event: MatrixEvent}> = ({ event }) => {
-    return <>
-        <EventTile
-            mxEvent={event}
-            enableFlair={false}
-            showReadReceipts={false}
-            as="div"
-            tileShape={TileShape.ThreadPanel}
-            alwaysShowTimestamps={true}
-        />
-    </>;
+    return <EventTile
+        key={event.getId()}
+        mxEvent={event}
+        enableFlair={false}
+        showReadReceipts={false}
+        as="div"
+        tileShape={TileShape.ThreadPanel}
+        alwaysShowTimestamps={true}
+    />;
 };
 
 enum ThreadFilterType {
@@ -58,19 +59,6 @@ type ThreadPanelHeaderOption = {
     key: ThreadFilterType;
 };
 
-const options: readonly ThreadPanelHeaderOption[] = [
-    {
-        label: _t("My threads"),
-        description: _t("Shows all threads you’ve participated in"),
-        key: ThreadFilterType.My,
-    },
-    {
-        label: _t("All threads"),
-        description: _t('Shows all threads from current room'),
-        key: ThreadFilterType.All,
-    },
-];
-
 const useFilteredThreadsList = (threads: Set<Thread>, option: ThreadFilterType) => {
     const [iterableThreads] = useState(Array.from(threads));
     const [currentUserData, setCurrentUserData] = useState<[null | string, boolean | null]>([null, null]);
@@ -80,7 +68,7 @@ const useFilteredThreadsList = (threads: Set<Thread>, option: ThreadFilterType) 
         getStoredSessionOwner().then((session) => {
             setCurrentUserData(session);
         }).catch((error) => {
-            console.error(error);
+            logger.error(error);
         });
     }, []);
 
@@ -88,7 +76,7 @@ const useFilteredThreadsList = (threads: Set<Thread>, option: ThreadFilterType) 
         if (!currentUserData) return;
         if (option === ThreadFilterType.My) {
             const myThreads = iterableThreads.filter(thread => {
-                return thread.events[0]?.getSender() === currentUserData[0];
+                return thread.rootEvent.getSender() === currentUserData[0];
             });
             setFiltereredThreads(myThreads);
         } else if (option === ThreadFilterType.All) {
@@ -99,32 +87,56 @@ const useFilteredThreadsList = (threads: Set<Thread>, option: ThreadFilterType) 
     return filteredThreads;
 };
 
-export const ThreadPanelHeaderFilterOptionItem = ({ label, description }: ThreadPanelHeaderOption) => {
-    return <div>
+export const ThreadPanelHeaderFilterOptionItem = ({ label, description, onClick }: ThreadPanelHeaderOption & {
+    onClick: () => void;
+}) => {
+    return <div className="mx_ThreadPanel_Header_FilterOptionItem" onClick={onClick}>
         <span>{ label }</span>
         <span>{ description }</span>
     </div>;
 };
 
-export const ThreadPanelHeader = ({ setFilterOption }: {
+export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
+    filterOption: ThreadFilterType;
     setFilterOption: (filterOption: ThreadFilterType) => void;
 }) => {
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
+    const options: readonly ThreadPanelHeaderOption[] = [
+        {
+            label: _t("My threads"),
+            description: _t("Shows all threads you’ve participated in"),
+            key: ThreadFilterType.My,
+        },
+        {
+            label: _t("All threads"),
+            description: _t('Shows all threads from current room'),
+            key: ThreadFilterType.All,
+        },
+    ];
+
+    const value = options.find(option => option.key === filterOption);
+    const position = {
+        top: 43,
+        right: 25,
+    };
+    const contextMenuOptions = options.map(opt => <ThreadPanelHeaderFilterOptionItem
+        key={opt.key}
+        label={opt.label}
+        description={opt.description}
+        onClick={() => {
+            setFilterOption(opt.key);
+            closeMenu();
+        }}
+    />);
+    const contextMenu = menuDisplayed ? <ContextMenu {...position} onFinished={closeMenu} managed={false}>
+        { contextMenuOptions }
+    </ContextMenu> : null;
     return <div className="mx_ThreadPanel__header">
         <span>{ _t("Threads") }</span>
-        <Dropdown
-            id="lolwhat"
-            onOptionChange={(option) => {
-                console.log(option);
-                console.log(typeof option);
-                setFilterOption(parseInt(option, 10));
-            }}
-            label={_t("Show: All threads")}>
-            { options.map(opt => <ThreadPanelHeaderFilterOptionItem
-                key={opt.key}
-                label={opt.label}
-                description={opt.description}
-            />) }
-        </Dropdown>
+        <ContextMenuButton inputRef={button} label="potato" isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
+            { `${ _t('Show:') } ${ value.label }` }
+        </ContextMenuButton>
+        { contextMenu }
     </div>;
 };
 
@@ -135,7 +147,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
     const filteredThreads = useFilteredThreadsList(room.threads, filterOption);
     return (
         <BaseCard
-            header={<ThreadPanelHeader setFilterOption={setFilterOption} />}
+            header={<ThreadPanelHeader filterOption={filterOption} setFilterOption={setFilterOption} />}
             className="mx_ThreadPanel"
             onClose={onClose}
             previousPhase={RightPanelPhases.RoomSummary}

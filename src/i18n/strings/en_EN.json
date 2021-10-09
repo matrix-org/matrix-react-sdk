@@ -2965,7 +2965,7 @@
     "Shows all threads you’ve participated in": "Shows all threads you’ve participated in",
     "All threads": "All threads",
     "Shows all threads from current room": "Shows all threads from current room",
-    "Show: All threads": "Show: All threads",
+    "Show:": "Show:",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tried to load a specific point in this room's timeline, but was unable to find it.",
     "Failed to load timeline position": "Failed to load timeline position",
