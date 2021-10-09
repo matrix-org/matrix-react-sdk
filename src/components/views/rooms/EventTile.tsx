@@ -59,7 +59,6 @@ import { getEventDisplayInfo } from '../../../utils/EventUtils';
 import SettingsStore from "../../../settings/SettingsStore";
 import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
 import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
-import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
