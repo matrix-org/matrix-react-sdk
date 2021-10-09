@@ -289,7 +289,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // Like the resend button, the react and reply buttons need to appear before the edit.
                 // The only catch is we do the reply button first so that we can make sure the react
                 // button is the very first button without having to do length checks for `splice()`.
-                if (this.context.canReply && this.context.timelineRenderingType === TimelineRenderingType.Room) {
+                if (this.context.canReply && this.context.timelineRenderingType !== TimelineRenderingType.Thread) {
                     toolbarOpts.splice(0, 0, <>
                         <RovingAccessibleTooltipButton
                             className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
