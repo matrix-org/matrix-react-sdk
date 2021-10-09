@@ -111,6 +111,9 @@ limitations under the License.
 
     .mx_BaseCard_header {
         height: 24px;
+        display: flex;
+        align-items: center;
+        margin-right: 40px;
     }
 
     .mx_EventTile {
