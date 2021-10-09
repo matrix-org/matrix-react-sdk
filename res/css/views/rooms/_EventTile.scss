@@ -751,7 +751,7 @@ $hover-select-border: 4px;
     &--wrapper {
         background-color: $background;
         border-radius: 8px;
-        padding: 24px 12px;
+        padding-top: 8px;
         height: 100%;
     }
 
@@ -763,29 +763,6 @@ $hover-select-border: 4px;
         }
     }
 
-    .mx_EventTile_senderDetails {
-        display: flex;
-        gap: 6px;
-        flex-direction: column;
-        flex: 1;
-        padding-bottom: 28px;
-        border-bottom: 1px solid $message-action-bar-border-color;
-        margin-right: 24px;
-        padding-top: 0;
-        margin-bottom: 0;
-
-        a {
-            flex: 1;
-            min-width: none;
-            max-width: 100%;
-            display: flex;
-            align-items: center;
-
-            .mx_SenderProfile {
-                flex: 1;
-            }
-        }
-    }
 
     .mx_ThreadView_List {
         flex: 1;
@@ -802,20 +779,23 @@ $hover-select-border: 4px;
     }
 
     .mx_BaseCard_header {
-        height: 20px;
+        height: 8px;
     }
 
     .mx_EventTile {
-        width: 100%;
-        margin: 0;
+        // Account for scrollbar when hovering
+        width: calc(100% - 2px);
         padding-top: 0;
-        padding-bottom: 12px;
+        margin: 0 2px;
+        margin-top: 24px;
 
         &__content {
             display: grid;
             grid-template-columns: auto 1fr;
             grid-template-rows: 1fr;
             grid-template-areas: ". . .";
+            padding-top: 16px;
+            margin-top: 16px;
         }
 
         &_avatar {
@@ -826,6 +806,47 @@ $hover-select-border: 4px;
         .mx_MessageTimestamp {
             margin-left: auto;
         }
+
+        &:hover {
+            background-color: $event-selected-color;
+            border-radius: 8px;
+        }
+
+
+        &_senderDetails {
+            display: flex;
+            gap: 6px;
+            flex-direction: column;
+            flex: 1;
+            margin-right: 24px;
+            padding-top: 0;
+            margin-bottom: 0;
+            position: relative;
+            padding-bottom: 8px;
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                bottom: -16px;
+                height: 1px;
+                width: 100%;
+                border-bottom: 1px solid $message-action-bar-border-color;
+            }
+
+            a {
+                flex: 1;
+                min-width: none;
+                max-width: 100%;
+                display: flex;
+                align-items: center;
+
+                .mx_SenderProfile {
+                    flex: 1;
+                }
+            }
+        }
     }
 
     .mx_MessageComposer_sendMessage {
@@ -833,11 +854,7 @@ $hover-select-border: 4px;
     }
 
     .mx_MessageActionBar {
-        top: 0;
-    }
-
-    .mx_AutoHideScrollbar {
-        padding-top: 4px;
+        top: -24px;
     }
 
     .mx_EventTile_ThreadList__notify-button {
