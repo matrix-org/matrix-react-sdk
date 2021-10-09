@@ -162,4 +162,8 @@ limitations under the License.
         padding-bottom: 3px;
         line-height: $font-22px;
     }
+
+    .mx_AccessibleButton.mx_BaseCard_back {
+        display: none;
+    }
 }

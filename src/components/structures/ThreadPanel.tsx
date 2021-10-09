@@ -24,6 +24,7 @@ import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import EventTile, { TileShape } from '../views/rooms/EventTile';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
+import { _t } from '../../languageHandler';
 
 interface IProps {
     roomId: string;
@@ -50,6 +51,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
     const threads = Array.from(room.threads);
     return (
         <BaseCard
+            header={_t("Threads")}
             className="mx_ThreadPanel"
             onClose={onClose}
             previousPhase={RightPanelPhases.RoomSummary}
