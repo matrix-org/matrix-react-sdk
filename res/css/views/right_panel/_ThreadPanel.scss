@@ -30,8 +30,6 @@ limitations under the License.
         justify-content: space-between;
 
         span:first-of-type {
-            font-family: 'Inter';
-            font-style: normal;
             font-weight: 600;
             font-size: 15px;
             line-height: 18px;
@@ -39,30 +37,19 @@ limitations under the License.
         }
 
         .mx_AccessibleButton {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: normal;
             font-size: 12px;
-            line-height: 15px;
             color: $secondary-content;
         }
 
         .mx_ContextualMenu {
             position: initial;
             span:first-of-type {
-                font-family: 'Inter';
-                font-style: normal;
                 font-weight: 600;
                 font-size: 12px;
-                line-height: 15px;
                 color: $primary-content;
             }
 
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: normal;
             font-size: 12px;
-            line-height: 15px;
             color: $secondary-content;
         }
 
