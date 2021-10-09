@@ -15,8 +15,13 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect, useState } from 'react';
+import {
+    CSSTransition,
+    TransitionGroup,
+} from 'react-transition-group';
 import { MatrixEvent } from 'matrix-js-sdk/src';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
@@ -28,7 +33,6 @@ import { _t } from '../../languageHandler';
 import { getStoredSessionOwner } from '../../Lifecycle';
 import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuButton';
 import ContextMenu, { useContextMenu } from './ContextMenu';
-import { logger } from 'matrix-js-sdk/src/logger';
 
 // TODO: Tests
 interface IProps {
@@ -161,14 +165,21 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
             onClose={onClose}
             previousPhase={RightPanelPhases.RoomSummary}
         >
-            <div className="mx_ThreadPanel--wrapper">
+            <TransitionGroup className="mx_ThreadPanel--wrapper ">
                 { filteredThreads.map((thread: Thread) => {
                     if (thread.ready) {
                         const event = thread.rootEvent;
-                        return <ThreadPanelItem key={event.getId()} event={event} />;
+                        const id = event.getId();
+                        return (
+                            <CSSTransition key={id} classNames="mx_rtg--fade" timeout={300}>
+                                <>
+                                    <ThreadPanelItem key={id} event={event} />
+                                </>
+                            </CSSTransition>
+                        );
                     }
                 }) }
-            </div>
+            </TransitionGroup>
         </BaseCard>
     );
 };
