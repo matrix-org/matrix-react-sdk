@@ -19,6 +19,13 @@ limitations under the License.
     display: flex;
     flex-direction: column;
 
+    &__header {
+        width: calc(100% - 40px);
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+    }
+
     &--wrapper {
         background-color: $background;
         border-radius: 8px;
@@ -165,5 +172,12 @@ limitations under the License.
 
     .mx_AccessibleButton.mx_BaseCard_back {
         display: none;
+    }
+
+    .mx_Dropdown {
+        width: 150px;
+        & > div {
+            border: none;
+        }
     }
 }
