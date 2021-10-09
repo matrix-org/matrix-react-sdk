@@ -1,4 +1,4 @@
-import { MatrixEvent } from "matrix-js-sdk";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import { Action } from "../actions";
 import dis from '../dispatcher';
