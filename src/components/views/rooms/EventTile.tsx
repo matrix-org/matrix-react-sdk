@@ -1227,7 +1227,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                 }, [
-                    <>
+                    <React.Fragment key="content">
                         <div className="mx_EventTile__content">
                             { avatar }
                             <div className="mx_EventTile_senderDetails">
@@ -1252,7 +1252,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             </div>
                         </div>
                         { actionBar }
-                    </>,
+                    </React.Fragment>,
                 ]);
             }
             case TileShape.FileGrid: {
