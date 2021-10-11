@@ -223,8 +223,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             </span>;
         }
 
-        const showDownloadLink = this.props.tileShape !== TileShape.ThreadPanel &&
-            (this.props.tileShape || !this.props.showGenericPlaceholder);
+        const showDownloadLink = this.props.tileShape || !this.props.showGenericPlaceholder;
 
         if (isEncrypted) {
             if (!this.state.decryptedBlob) {
