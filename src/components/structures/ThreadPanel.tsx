@@ -19,7 +19,7 @@ import {
     CSSTransition,
     TransitionGroup,
 } from 'react-transition-group';
-import { MatrixEvent } from 'matrix-js-sdk/src';
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { logger } from 'matrix-js-sdk/src/logger';
 
