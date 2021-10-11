@@ -65,29 +65,20 @@ type ThreadPanelHeaderOption = {
 };
 
 const useFilteredThreadsList = (threads: Set<Thread>, option: ThreadFilterType) => {
+    const mxClient = useContext(MatrixClientContext);
     const [iterableThreads] = useState(Array.from(threads));
-    const [currentUserData, setCurrentUserData] = useState<[null | string, boolean | null]>([null, null]);
     const [filteredThreads, setFiltereredThreads] = useState(iterableThreads);
 
     useEffect(() => {
-        getStoredSessionOwner().then((session) => {
-            setCurrentUserData(session);
-        }).catch((error) => {
-            logger.error(error);
-        });
-    }, []);
-
-    useEffect(() => {
-        if (!currentUserData) return;
         if (option === ThreadFilterType.My) {
             const myThreads = iterableThreads.filter(thread => {
-                return thread.rootEvent.getSender() === currentUserData[0];
+                return thread.rootEvent.getSender() === mxClient.getUserId();
             });
             setFiltereredThreads(myThreads);
         } else if (option === ThreadFilterType.All) {
             setFiltereredThreads(iterableThreads);
         }
-    }, [iterableThreads, option, currentUserData]);
+    }, [iterableThreads, option, mxClient]);
 
     return filteredThreads;
 };
