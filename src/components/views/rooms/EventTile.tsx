@@ -1214,50 +1214,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                     </div>,
                 ]);
             }
-            case TileShape.ThreadPanel: {
-                // TODO: Follow threads feature
-                // const followButton = <AccessibleTooltipButton
-                //     aria-selected={false}
-                //     role="button"
-                //     title="test"
-                //     className="mx_RightPanel_headerButton mx_EventTile_ThreadList__notify-button"
-                //     onClick={() => alert('aa')}
-                // />
-                const followButton = null;
-                return React.createElement(this.props.as || "li", {
-                    "className": classes,
-                    "aria-live": ariaLive,
-                    "aria-atomic": true,
-                    "data-scroll-tokens": scrollToken,
-                }, [
-                    <React.Fragment key="content">
-                        <div className="mx_EventTile__content">
-                            { avatar }
-                            <div className="mx_EventTile_senderDetails">
-                                <a href={permalink} onClick={this.onPermalinkClicked}>
-                                    { sender }
-                                    { timestamp }
-                                    { followButton }
-                                </a>
-                                <div className="mx_EventTile_line">
-                                    <EventTileType ref={this.tile}
-                                        mxEvent={this.props.mxEvent}
-                                        highlights={this.props.highlights}
-                                        highlightLink={this.props.highlightLink}
-                                        showUrlPreview={this.props.showUrlPreview}
-                                        onHeightChanged={this.props.onHeightChanged}
-                                        tileShape={this.props.tileShape}
-                                        editState={this.props.editState}
-                                        replacingEventId={this.props.replacingEventId}
-                                    />
-                                    { this.renderThreadInfo() }
-                                </div>
-                            </div>
-                        </div>
-                        { actionBar }
-                    </React.Fragment>,
-                ]);
-            }
             case TileShape.FileGrid: {
                 return React.createElement(this.props.as || "li", {
                     "className": classes,
