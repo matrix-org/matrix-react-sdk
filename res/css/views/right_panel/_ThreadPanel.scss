@@ -19,6 +19,14 @@ limitations under the License.
     display: flex;
     flex-direction: column;
 
+    .mx_BaseCard_header {
+        padding: 6px 0;
+
+        .mx_BaseCard_close {
+            margin-top: 15px;
+        }
+    }
+
     .mx_AccessibleButton.mx_BaseCard_back {
         display: none;
     }
@@ -39,6 +47,12 @@ limitations under the License.
         .mx_AccessibleButton {
             font-size: 12px;
             color: $secondary-content;
+        }
+
+        .mx_ContextualMenu_wrapper {
+            // It's added here due to some weird error if I pass it directly in the style, even though it's a numeric value, so it's being passed 0 instead.
+            // The error: react_devtools_backend.js:2526 Warning: `NaN` is an invalid value for the `top` css style property.
+            top: 43px;
         }
 
         .mx_ContextualMenu {
@@ -86,86 +100,42 @@ limitations under the License.
         }
     }
 
-    &--wrapper {
+    .mx_RoomView_messageListWrapper {
         background-color: $background;
         border-radius: 8px;
         padding-top: 8px;
         padding-bottom: 12px;
-        display: flex;
-        flex-direction: column;
+    }
+
+    .mx_RoomView_MessageList {
+        justify-content: flex-start;
     }
 
     .mx_ScrollPanel {
-        margin-top: 20px;
-
         .mx_RoomView_MessageList {
             padding: 0;
         }
     }
 
-
-    .mx_ThreadView_List {
-        flex: 1;
-        overflow: scroll;
-    }
-
-    .mx_EventTile_roomName {
-        display: none;
-    }
-
-    .mx_EventTile_line {
-        padding-left: 0 !important;
-        order: 10 !important;
-    }
-
-    .mx_BaseCard_header {
-        height: 24px;
-        display: flex;
-        align-items: center;
-        margin-right: 40px;
-    }
-
-    .mx_EventTile {
+    .mx_EventTile, .mx_EventListSummary {
         // Account for scrollbar when hovering
         width: calc(100% - 3px);
-        padding-top: 0 !important;
         margin: 0 2px;
-        margin-top: 32px;
 
-        &__content {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-template-rows: 1fr;
-            grid-template-areas: ". . .";
-            padding-top: 8px;
-            margin-top: 16px;
+        .mx_MessageTimestamp.mx_MessageTimestamp {
+            left: unset;
+            right: 0;
+            top: 16px;
+            // margin-left: auto;
         }
 
-        &_avatar {
-            padding-left: 8px;
-            padding-right: 12px;
+        .mx_EventTile_line.mx_EventTile_line {
+            position: unset;
         }
 
-        .mx_MessageTimestamp {
-            margin-left: auto;
-        }
-
-        &:hover {
-            background-color: $event-selected-color;
-        }
-
-
-        &_senderDetails {
-            display: flex;
-            gap: 6px;
-            flex-direction: column;
-            flex: 1;
-            margin-right: 24px;
-            padding-top: 0;
-            margin-bottom: 0;
+        .mx_ThreadInfo {
             position: relative;
-            padding-bottom: 8px;
-
+            padding-right: 11px;
             &::after {
                 content: '';
                 display: block;
@@ -176,59 +146,10 @@ limitations under the License.
                 width: 100%;
                 border-bottom: 1px solid $message-action-bar-border-color;
             }
-
-            a {
-                flex: 1;
-                min-width: none;
-                max-width: 100%;
-                display: flex;
-                align-items: center;
-
-                .mx_SenderProfile {
-                    flex: 1;
-                }
-            }
         }
 
-        &:first-of-type {
-            margin-top: 0;
-            .mx_EventTile__content {
-                margin-top: 0;
-            }
+        .mx_DateSeparator {
+            display: none;
         }
-    }
-
-    .mx_MessageComposer_sendMessage {
-        margin-right: 0;
-    }
-
-    .mx_MessageActionBar {
-        top: 0;
-    }
-
-    .mx_EventTile_ThreadList__notify-button {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 24px;
-        width: 24px;
-
-
-        &::before {
-            content: '';
-            width: 16px;
-            height: 16px;
-            margin: 0 auto;
-            mask-image: url('$(res)/img/element-icons/notifications.svg');
-            mask-position: center;
-        }
-    }
-
-    .mx_EventTile_line, .mx_EventTile_reply {
-        padding-top: 1px;
-        padding-bottom: 3px;
-        line-height: $font-22px;
     }
 }

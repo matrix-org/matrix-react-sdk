@@ -14,14 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useEffect, useState } from 'react';
-import {
-    CSSTransition,
-    TransitionGroup,
-} from 'react-transition-group';
+import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
-import { logger } from 'matrix-js-sdk/src/logger';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
@@ -30,9 +25,13 @@ import ResizeNotifier from '../../utils/ResizeNotifier';
 import EventTile, { TileShape } from '../views/rooms/EventTile';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
 import { _t } from '../../languageHandler';
-import { getStoredSessionOwner } from '../../Lifecycle';
 import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuButton';
 import ContextMenu, { useContextMenu } from './ContextMenu';
+import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
+import TimelinePanel from './TimelinePanel';
+import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { Layout } from '../../settings/Layout';
 
 // TODO: Tests
 interface IProps {
@@ -48,7 +47,7 @@ export const ThreadPanelItem: React.FC<{event: MatrixEvent}> = ({ event }) => {
         enableFlair={false}
         showReadReceipts={false}
         as="div"
-        tileShape={TileShape.ThreadPanel}
+        tileShape={TileShape.Thread}
         alwaysShowTimestamps={true}
     />;
 };
@@ -64,23 +63,42 @@ type ThreadPanelHeaderOption = {
     key: ThreadFilterType;
 };
 
-const useFilteredThreadsList = (threads: Set<Thread>, option: ThreadFilterType) => {
-    const mxClient = useContext(MatrixClientContext);
+const useFilteredThreadsTimelinePanel = ({
+    threads,
+    room,
+    filterOption,
+    userId,
+}: {
+    threads: Set<Thread>;
+    room: Room;
+    userId: string;
+    filterOption: ThreadFilterType;
+}) => {
     const [iterableThreads] = useState(Array.from(threads));
-    const [filteredThreads, setFiltereredThreads] = useState(iterableThreads);
+    const timelineSet = useMemo(() => new EventTimelineSet(room, {
+        unstableClientRelationAggregation: true,
+        timelineSupport: true,
+    }), [room]);
 
     useEffect(() => {
-        if (option === ThreadFilterType.My) {
-            const myThreads = iterableThreads.filter(thread => {
-                return thread.rootEvent.getSender() === mxClient.getUserId();
+        let filteredThreads = iterableThreads;
+        if (filterOption === ThreadFilterType.My) {
+            filteredThreads = iterableThreads.filter(thread => {
+                return thread.rootEvent.getSender() === userId;
             });
-            setFiltereredThreads(myThreads);
-        } else if (option === ThreadFilterType.All) {
-            setFiltereredThreads(iterableThreads);
         }
-    }, [iterableThreads, option, mxClient]);
+        filteredThreads.forEach(thread => {
+            const event = thread.rootEvent;
+            if (timelineSet.findEventById(event.getId()) || event.status !== null) return;
+            timelineSet.addEventToTimeline(
+                event,
+                timelineSet.getLiveTimeline(),
+                true,
+            );
+        });
+    }, [filterOption, iterableThreads, userId, timelineSet]);
 
-    return filteredThreads;
+    return timelineSet;
 };
 
 export const ThreadPanelHeaderFilterOptionItem = ({
@@ -118,10 +136,6 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     ];
 
     const value = options.find(option => option.key === filterOption);
-    const position = {
-        top: 43,
-        right: 25,
-    };
     const contextMenuOptions = options.map(opt => <ThreadPanelHeaderFilterOptionItem
         key={opt.key}
         label={opt.label}
@@ -132,7 +146,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
         }}
         isSelected={opt === value}
     />);
-    const contextMenu = menuDisplayed ? <ContextMenu {...position} onFinished={closeMenu} managed={false}>
+    const contextMenu = menuDisplayed ? <ContextMenu top={0} right={25} onFinished={closeMenu} managed={false}>
         { contextMenuOptions }
     </ContextMenu> : null;
     return <div className="mx_ThreadPanel__header">
@@ -146,32 +160,55 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
 
 const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
     const mxClient = useContext(MatrixClientContext);
+    const roomContext = useContext(RoomContext);
     const room = mxClient.getRoom(roomId);
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
-    const filteredThreads = useFilteredThreadsList(room.threads, filterOption);
+    const threads = room.threads;
+
+    const filteredTimelineSet = useFilteredThreadsTimelinePanel({
+        threads,
+        room,
+        filterOption,
+        userId: mxClient.getUserId(),
+    });
+
+    const ref = useRef <TimelinePanel>();
+
+    useLayoutEffect(() => {
+        ref.current?.refreshTimeline();
+    });
     return (
-        <BaseCard
-            header={<ThreadPanelHeader filterOption={filterOption} setFilterOption={setFilterOption} />}
-            className="mx_ThreadPanel"
-            onClose={onClose}
-            previousPhase={RightPanelPhases.RoomSummary}
-        >
-            <TransitionGroup className="mx_ThreadPanel--wrapper ">
-                { filteredThreads.map((thread: Thread) => {
-                    if (thread.ready) {
-                        const event = thread.rootEvent;
-                        const id = event.getId();
-                        return (
-                            <CSSTransition key={id} classNames="mx_rtg--fade" timeout={300}>
-                                <>
-                                    <ThreadPanelItem key={id} event={event} />
-                                </>
-                            </CSSTransition>
-                        );
-                    }
-                }) }
-            </TransitionGroup>
-        </BaseCard>
+        <RoomContext.Provider value={{
+            ...roomContext,
+            timelineRenderingType: TimelineRenderingType.Thread,
+            liveTimeline: filteredTimelineSet.getLiveTimeline(),
+            showHiddenEventsInTimeline: true,
+        }}>
+            <BaseCard
+                header={<ThreadPanelHeader filterOption={filterOption} setFilterOption={setFilterOption} />}
+                className="mx_ThreadPanel"
+                onClose={onClose}
+                previousPhase={RightPanelPhases.RoomSummary}
+            >
+                <TimelinePanel
+                    ref={ref}
+                    showReadReceipts={false} // No RR support in thread's MVP
+                    manageReadReceipts={false} // No RR support in thread's MVP
+                    manageReadMarkers={false} // No RM support in thread's MVP
+                    sendReadReceiptOnLoad={false} // No RR support in thread's MVP
+                    timelineSet={filteredTimelineSet}
+                    showUrlPreview={true}
+                    empty={<div>empty</div>}
+                    alwaysShowTimestamps={true}
+                    layout={Layout.Group}
+                    hideThreadedMessages={false}
+                    hidden={false}
+                    showReactions={true}
+                    className="mx_RoomView_messagePanel mx_GroupLayout"
+                    membersLoaded={true}
+                />
+            </BaseCard>
+        </RoomContext.Provider>
     );
 };
 export default ThreadPanel;
