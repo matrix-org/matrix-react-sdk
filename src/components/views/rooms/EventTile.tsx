@@ -512,6 +512,10 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
         }
+        if (SettingsStore.getValue("feature_thread")) {
+            this.props.mxEvent.off(ThreadEvent.Ready, this.updateThread);
+            this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
