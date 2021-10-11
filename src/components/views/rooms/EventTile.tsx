@@ -471,16 +471,19 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         if (SettingsStore.getValue("feature_thread")) {
-            this.props.mxEvent.once(ThreadEvent.Ready, this.updateThread);
-            this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
+            const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+            room.once(ThreadEvent.Ready, this.updateThread);
+            room.on(ThreadEvent.Update, this.updateThread);
         }
     }
 
-    private updateThread = (thread) => {
-        this.setState({
-            thread,
-        });
-        this.forceUpdate();
+    private updateThread = (thread: Thread) => {
+        if (thread === this.props.mxEvent.getThread()) {
+            this.setState({
+                thread,
+            });
+            this.forceUpdate();
+        }
     };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -510,6 +513,11 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
+        }
+        if (SettingsStore.getValue("feature_thread")) {
+            const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+            room.off(ThreadEvent.Ready, this.updateThread);
+            room.off(ThreadEvent.Update, this.updateThread);
         }
     }
 
