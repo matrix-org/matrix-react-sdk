@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633939493422,
+  "lastUpdate": 1633944737505,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30272,6 +30272,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4450,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "414b20f17e8b7a2baf0d20ee499709cbf8959d1d",
+          "message": "Make thread button always visible (#6903)\n\nFix https://github.com/vector-im/element-web/issues/18956",
+          "timestamp": "2021-10-11T10:26:05+01:00",
+          "tree_id": "89bec42e785b57aa46e9f94115215995993eadc5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/414b20f17e8b7a2baf0d20ee499709cbf8959d1d"
+        },
+        "date": 1633944735624,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4539.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1111.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4660.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
