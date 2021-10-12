@@ -53,7 +53,7 @@ export const ThreadPanelItem: React.FC<{event: MatrixEvent}> = ({ event }) => {
     />;
 };
 
-enum ThreadFilterType {
+export enum ThreadFilterType {
     "My",
     "All"
 }
