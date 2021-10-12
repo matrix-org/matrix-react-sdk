@@ -21,7 +21,8 @@ import { Layout } from "../settings/Layout";
 
 export enum TimelineRenderingType {
     Room,
-    Thread
+    Thread,
+    ThreadsList
 }
 
 const RoomContext = createContext<IRoomState>({

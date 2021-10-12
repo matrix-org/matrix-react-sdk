@@ -107,10 +107,6 @@ limitations under the License.
         padding-bottom: 12px;
     }
 
-    .mx_RoomView_MessageList {
-        justify-content: flex-start;
-    }
-
     .mx_ScrollPanel {
         .mx_RoomView_MessageList {
             padding: 0;
@@ -126,7 +122,6 @@ limitations under the License.
             left: unset;
             right: 0;
             top: 16px;
-            // margin-left: auto;
         }
 
         .mx_EventTile_line.mx_EventTile_line {
