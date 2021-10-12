@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633961415862,
+  "lastUpdate": 1634022728606,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30416,6 +30416,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4844.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "52efbc4a617f8fafafee23d432db2a49b2346389",
+          "message": "Merge pull request #6930 from robintown/remove-semicolon",
+          "timestamp": "2021-10-12T08:06:47+01:00",
+          "tree_id": "a7027a008843b4b456389bf68ab9f3f63ea51446",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/52efbc4a617f8fafafee23d432db2a49b2346389"
+        },
+        "date": 1634022726725,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4427.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 850.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1754.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4094.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
