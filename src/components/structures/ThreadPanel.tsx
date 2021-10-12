@@ -109,7 +109,10 @@ const useFilteredThreadsTimelinePanel = ({
             timelineSet.findEventById(event.getId()) ||
             event.status !== null
         ) return;
-        // TODO: Get rid of the event if root changed
+        if (event !== thread.events[thread.events.length - 1]) {
+            timelineSet.removeEvent(thread.events[thread.events.length - 1]);
+            timelineSet.removeEvent(event);
+        }
         timelineSet.addEventToTimeline(
             event,
             timelineSet.getLiveTimeline(),

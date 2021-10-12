@@ -66,7 +66,7 @@ export function shouldFormContinuation(
     prevEvent: MatrixEvent,
     mxEvent: MatrixEvent,
     showHiddenEvents: boolean,
-    timelineRenderingType: TimelineRenderingType,
+    timelineRenderingType?: TimelineRenderingType,
 ): boolean {
     if (timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
     // sanity check inputs
