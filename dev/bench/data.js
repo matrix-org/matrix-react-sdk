@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634026809776,
+  "lastUpdate": 1634031557450,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30560,6 +30560,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4829.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "34b61ad71cd91a7e413ed1709eb29c74086cb99f",
+          "message": "Merge pull request #6872 from AndrewFerr/develop\n\nIf public room creation fails, retry without publishing it",
+          "timestamp": "2021-10-12T10:32:43+01:00",
+          "tree_id": "1108aedfe4cdea2b2d94ee1bbd8e025a1556b314",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/34b61ad71cd91a7e413ed1709eb29c74086cb99f"
+        },
+        "date": 1634031555344,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4618,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1183.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1823.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4826.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
