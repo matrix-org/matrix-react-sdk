@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634057845938,
+  "lastUpdate": 1634057869408,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30704,6 +30704,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4546.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3417c03f41bb59ecce951c0d17a078e5fb013808",
+          "message": "Merge pull request #6931 from matrix-org/t3chguy/fix/19350",
+          "timestamp": "2021-10-12T17:51:55+01:00",
+          "tree_id": "58d591499ed20f90d9dc4ae09bbd76a3420de4e8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3417c03f41bb59ecce951c0d17a078e5fb013808"
+        },
+        "date": 1634057866998,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4398.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1127.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
