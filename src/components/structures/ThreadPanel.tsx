@@ -35,7 +35,6 @@ import { Layout } from '../../settings/Layout';
 import { useEventEmitter } from '../../hooks/useEventEmitter';
 import AccessibleButton from '../views/elements/AccessibleButton';
 
-// TODO: Tests
 interface IProps {
     roomId: string;
     onClose: () => void;
