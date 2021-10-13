@@ -838,7 +838,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         if (CountlyAnalytics.instance.canEnable()) {
                             CountlyAnalytics.instance.enable(/* anonymous = */ false);
                         }
-                        PosthogAnalytics.instance.updateAnonymityFromSettings();
                     });
                 break;
             case 'reject_cookies':
@@ -852,10 +851,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         "showPseudonymousAnalyticsPrompt",
                         null,
                         SettingLevel.ACCOUNT,
-                        false))
-                    .then(() => {
-                        PosthogAnalytics.instance.updateAnonymityFromSettings();
-                    });
+                        false));
                 break;
         }
     };
@@ -1338,18 +1334,25 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        // defer the following actions by 10 seconds to not throw them at the user immediately
-        await sleep(10000);
-        if (SettingsStore.getValue("showPseudonymousAnalyticsPrompt") &&
-            PosthogAnalytics.instance.isEnabled()
-        ) {
-            showAnalyticsToast(this.props.config.piwik?.policyUrl);
-        }
+        this.listenToSettingsForAnalyticsToast();
+
         if (SdkConfig.get().mobileGuideToast) {
             // The toast contains further logic to detect mobile platforms,
             // check if it has been dismissed before, etc.
             showMobileGuideToast();
         }
+    }
+
+    private listenToSettingsForAnalyticsToast() {
+        // Wait for settings sync from the home server so we can decide whether we need to show the analytics toast
+        const onAccountData = (event: MatrixEvent) => {
+            if (event.getType() === "im.vector.web.settings" && (
+                event.getContent().showPseudonymousAnalyticsPrompt !== false)) {
+                showAnalyticsToast(this.props.config.piwik?.policyUrl);
+                MatrixClientPeg.get().off('accountData', onAccountData);
+            }
+        };
+        MatrixClientPeg.get().on('accountData', onAccountData);
     }
 
     private showScreenAfterLogin() {

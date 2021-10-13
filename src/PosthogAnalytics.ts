@@ -23,6 +23,8 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { objectKeyChanges } from "./utils/objects";
+import { MatrixEvent } from "../../matrix-js-sdk";
+import { showToast as showAnalyticsToast } from "./toasts/AnalyticsToast";
 
 /* Posthog analytics tracking.
  *
@@ -342,7 +344,15 @@ export class PosthogAnalytics {
     }
 
     private onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent) => {
+        // Listen to account data changes from sync so we can observe changes to relevant flags and update.
+        // This is called -
+        //  * On page load, when the account data is first received by sync
+        //  * On login
+        //  * When another device changes account data
+        //  * When the user changes their preferences on this device
         if (event.getType() === "im.vector.web.settings") {
+            // Note that for new accounts, pseudonymousAnalyticsOptIn won't be set, so updateAnonymityFromSettings
+            // won't be called (i.e. this.anonymity will be left as the default, until the setting changes)
             const prevContent = prevEvent ? prevEvent.getContent() : {};
             const changedSettings = objectKeyChanges<Record<string, any>>(prevContent, event.getContent());
             for (const settingName of changedSettings) {
@@ -354,8 +364,6 @@ export class PosthogAnalytics {
     };
 
     public startListeningToSettingsChanges(client: MatrixClient): void {
-        // Listen to account data changes from sync so we can observe changes to the pseudonumousOptIn flag -
-        // both from this device's settings panel changing the UI, and other clients changing it
         client.on('accountData', this.onAccountData);
     }
 }
