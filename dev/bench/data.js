@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634120189884,
+  "lastUpdate": 1634133236170,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30788,6 +30788,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4959.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a539eada699cb5ca54ddb66816614d14aaa729cc",
+          "message": "Merge pull request #6933 from matrix-org/travis/upstream/fix-imports\n\nFix bad imports to js-sdk",
+          "timestamp": "2021-10-13T07:47:36-06:00",
+          "tree_id": "adb961e649fee4a8b90247f2dcbf91c114bb27ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a539eada699cb5ca54ddb66816614d14aaa729cc"
+        },
+        "date": 1634133234100,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4825.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1106.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1778,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4725.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
