@@ -369,7 +369,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                             { _t("Learn more about how we use analytics.") }
                         </AccessibleButton>
                     </div>
-                    <SettingsFlag name="pseudonymousAnalyticsOptIn" level={SettingLevel.DEVICE} onChange={this.updateAnalytics} />
+                    <SettingsFlag name="pseudonymousAnalyticsOptIn" level={SettingLevel.ACCOUNT} onChange={this.updateAnalytics} />
                 </div>
             </React.Fragment>;
         }
