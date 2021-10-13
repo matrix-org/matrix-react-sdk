@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634140473183,
+  "lastUpdate": 1634146281325,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30980,6 +30980,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4715.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3643359c15d9fc1d990cb8e9cdbcdc900879d044",
+          "message": "Merge pull request #6922 from matrix-org/travis/hide-buttons-customisation\n\nAdd customisation point for visibility of invites and room creation",
+          "timestamp": "2021-10-13T11:25:52-06:00",
+          "tree_id": "3f6e8678b2eaad2bfb6663c2af05dd229983751b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3643359c15d9fc1d990cb8e9cdbcdc900879d044"
+        },
+        "date": 1634146279093,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4333.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 880.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1829.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4249.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
