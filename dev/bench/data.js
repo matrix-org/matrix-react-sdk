@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634137028398,
+  "lastUpdate": 1634140473183,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30932,6 +30932,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4645.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e40413fa99afe701006a9cf03b3743c0a3d9d3e2",
+          "message": "Merge pull request #6940 from andybalaam/devicespanel-css-in-devicespanel\n\nMove the required CSS for DevicesPanel into its own scss file",
+          "timestamp": "2021-10-13T16:48:10+01:00",
+          "tree_id": "ad15a1fdd83b6c7c95540f6f34f516aab776844b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e40413fa99afe701006a9cf03b3743c0a3d9d3e2"
+        },
+        "date": 1634140471119,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4672.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1056.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1825.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4715.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
