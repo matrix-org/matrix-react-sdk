@@ -48,9 +48,9 @@ export function useCallFeed(callFeed?: CallFeed): ICallFeedState {
 
         return () => {
             if (callFeed) {
-                callFeed.on(CallFeedEvent.Speaking, onSpeaking);
-                callFeed.on(CallFeedEvent.MuteStateChanged, onMuteStateChanged);
-                callFeed.on(CallFeedEvent.NewStream, onUpdateCallFeed);
+                callFeed.removeListener(CallFeedEvent.Speaking, onSpeaking);
+                callFeed.removeListener(CallFeedEvent.MuteStateChanged, onMuteStateChanged);
+                callFeed.removeListener(CallFeedEvent.NewStream, onUpdateCallFeed);
             }
         };
     }, [callFeed]);
