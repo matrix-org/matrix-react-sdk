@@ -5,6 +5,7 @@ package-lock.json
 /coverage
 /node_modules
 /lib
+/test/end-to-end-tests/screenshots/
 
 # version file and tarball created by `npm pack` / `yarn pack`
 /git-revision.txt
