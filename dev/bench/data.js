@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634057869408,
+  "lastUpdate": 1634120189884,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30740,6 +30740,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1127.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bc336abf475dca54ab000ea23f3911482d7b8f6d",
+          "message": "Fix missing snapshot serializer&enzyme init (#6932)",
+          "timestamp": "2021-10-13T11:09:43+01:00",
+          "tree_id": "6a30762c068288e86cc66d57cc1ce9d4d7ca0ea9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bc336abf475dca54ab000ea23f3911482d7b8f6d"
+        },
+        "date": 1634120187261,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4686.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1062.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1733.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4959.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
