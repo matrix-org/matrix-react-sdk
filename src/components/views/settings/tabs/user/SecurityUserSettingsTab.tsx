@@ -77,6 +77,7 @@ interface IState {
     waitingUnignored: string[];
     managingInvites: boolean;
     invitedRoomAmt: number;
+    canDisableReadReceipts: boolean;
 }
 
 @replaceableComponent("views.settings.tabs.user.SecurityUserSettingsTab")
@@ -89,10 +90,15 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         // Get number of rooms we're invited to
         const invitedRooms = this.getInvitedRooms();
 
+        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285").then((canDisableReadReceipts) => {
+            this.setState({ canDisableReadReceipts });
+        });
+
         this.state = {
             ignoredUserIds: MatrixClientPeg.get().getIgnoredUsers(),
             waitingUnignored: [],
             managingInvites: false,
+            canDisableReadReceipts: false,
             invitedRoomAmt: invitedRooms.length,
         };
     }
@@ -282,26 +288,23 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             </div>;
         }
 
-        let privacySection;
+        let analytics;
         if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
-            privacySection = <React.Fragment>
-                <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
-                    <div className="mx_SettingsTab_subsectionText">
-                        { _t(
-                            "%(brand)s collects anonymous analytics to allow us to improve the application.",
-                            { brand },
-                        ) }
+            analytics = <React.Fragment>
+                <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
+                <div className="mx_SettingsTab_subsectionText">
+                    { _t(
+                        "%(brand)s collects anonymous analytics to allow us to improve the application.",
+                        { brand },
+                    ) }
                         &nbsp;
-                        { _t("Privacy is important to us, so we don't collect any personal or " +
+                    { _t("Privacy is important to us, so we don't collect any personal or " +
                             "identifiable data for our analytics.") }
-                        <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
-                            { _t("Learn more about how we use analytics.") }
-                        </AccessibleButton>
-                    </div>
-                    <SettingsFlag name="analyticsOptIn" level={SettingLevel.DEVICE} onChange={this.updateAnalytics} />
+                    <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
+                        { _t("Learn more about how we use analytics.") }
+                    </AccessibleButton>
                 </div>
+                <SettingsFlag name="analyticsOptIn" level={SettingLevel.DEVICE} onChange={this.updateAnalytics} />
             </React.Fragment>;
         }
 
@@ -351,7 +354,17 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     { crossSigning }
                     <CryptographyPanel />
                 </div>
-                { privacySection }
+                <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
+                <div className="mx_SettingsTab_section">
+                    { analytics }
+                    <span className="mx_SettingsTab_subheading">{ _t("Presence") }</span>
+                    <SettingsFlag
+                        disabled={!this.state.canDisableReadReceipts}
+                        disabledTooltip={_t("You server doesn't support disabling sending read receipts")}
+                        name="sendReadReceipts"
+                        level={SettingLevel.ACCOUNT}
+                    />
+                </div>
                 { advancedSection }
             </div>
         );

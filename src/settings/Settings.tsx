@@ -281,12 +281,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
-    "feature_hidden_read_receipts": {
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td(
-            "Don't send read receipts",
-        ),
-        default: false,
+    "sendReadReceipts": {
+        supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
+        displayName: _td("Send read receipts"),
+        default: true,
     },
     "baseFontSize": {
         displayName: _td("Font size"),
