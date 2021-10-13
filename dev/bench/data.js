@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634146281325,
+  "lastUpdate": 1634146476324,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31028,6 +31028,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4249.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ea7257698c1a5e805e975e9b7a1f16a496304698",
+          "message": "Merge pull request #6934 from matrix-org/travis/labs/polls\n\nAdd feature flag for polls and placeholder dialog",
+          "timestamp": "2021-10-13T11:28:53-06:00",
+          "tree_id": "b955586e2ac0c46d640034a526bb08e66cbac26c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ea7257698c1a5e805e975e9b7a1f16a496304698"
+        },
+        "date": 1634146474112,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4643.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 979.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1703.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4615.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
