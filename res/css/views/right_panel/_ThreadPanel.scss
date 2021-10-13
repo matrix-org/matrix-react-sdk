@@ -118,9 +118,11 @@ limitations under the License.
         width: calc(100% - 3px);
         margin: 0 2px;
 
-        .mx_MessageTimestamp.mx_MessageTimestamp {
-            left: unset;
-            right: 0;
+        .mx_MessageTimestamp {
+            // We need to add !important here due to some enormous selectors overriding it anyways
+            // See: _EventTile.scss:241
+            left: unset !important;
+            right: 0 !important;
             top: 16px;
         }
 
