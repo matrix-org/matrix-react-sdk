@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634136506430,
+  "lastUpdate": 1634137028398,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -30884,6 +30884,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4145.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed9d006615d1cd5457b8f7f9b9f9d819a39bd082",
+          "message": "Merge pull request #6939 from matrix-org/dbkr/fix_room_list_on_unsent_message\n\nFix bug where room list would get stuck showing no rooms",
+          "timestamp": "2021-10-13T15:50:31+01:00",
+          "tree_id": "4a34857819f38d1b6ffd19f9e09e9b41cc030f2e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ed9d006615d1cd5457b8f7f9b9f9d819a39bd082"
+        },
+        "date": 1634137026258,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4408.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1186,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1728.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4645.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
