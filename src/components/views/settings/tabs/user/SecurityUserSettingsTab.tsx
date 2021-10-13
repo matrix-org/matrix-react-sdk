@@ -119,7 +119,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     private updateAnalytics = (checked: boolean): void => {
         checked ? Analytics.enable() : Analytics.disable();
         CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
-        PosthogAnalytics.instance.updateAnonymityFromSettings();
     };
 
     private onExportE2eKeysClicked = (): void => {

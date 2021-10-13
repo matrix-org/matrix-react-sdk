@@ -22,6 +22,7 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { objectKeyChanges } from "./utils/objects";
 
 /* Posthog analytics tracking.
  *
@@ -196,20 +197,6 @@ export class PosthogAnalytics {
         return properties;
     };
 
-    private static getAnonymityFromSettings(): Anonymity {
-        // determine the current anonymity level based on current user settings
-        const pseudonumousOptIn = SettingsStore.getValue("pseudonymousAnalyticsOptIn", null, true);
-
-        let anonymity;
-        if (pseudonumousOptIn) {
-            anonymity = Anonymity.Pseudonymous;
-        } else {
-            anonymity = Anonymity.Disabled;
-        }
-
-        return anonymity;
-    }
-
     private registerSuperProperties(properties: posthog.Properties) {
         if (this.enabled) {
             this.posthog.register(properties);
@@ -341,11 +328,34 @@ export class PosthogAnalytics {
         this.registerSuperProperties(this.platformSuperProperties);
     }
 
-    public async updateAnonymityFromSettings(): Promise<void> {
+    public async updateAnonymityFromSettings(pseudonumousOptIn: bool): Promise<void> {
         // Update this.anonymity based on the user's analytics opt-in settings
-        this.setAnonymity(PosthogAnalytics.getAnonymityFromSettings());
-        if (this.getAnonymity() == Anonymity.Pseudonymous) {
+        const anonymity = pseudonumousOptIn ? Anonymity.Pseudonymous : Anonymity.Disabled;
+        this.setAnonymity(anonymity);
+        if (anonymity == Anonymity.Pseudonymous) {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
         }
+
+        if (anonymity != Anonymity.Disabled) {
+            await PosthogAnalytics.instance.updatePlatformSuperProperties();
+        }
+    }
+
+    private onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent) => {
+        if (event.getType() === "im.vector.web.settings") {
+            const prevContent = prevEvent ? prevEvent.getContent() : {};
+            const changedSettings = objectKeyChanges<Record<string, any>>(prevContent, event.getContent());
+            for (const settingName of changedSettings) {
+                if (settingName === "pseudonymousAnalyticsOptIn") {
+                    this.updateAnonymityFromSettings(event.getContent().pseudonymousAnalyticsOptIn);
+                }
+            }
+        }
+    };
+
+    public startListeningToSettingsChanges(client: MatrixClient): void {
+        // Listen to account data changes from sync so we can observe changes to the pseudonumousOptIn flag -
+        // both from this device's settings panel changing the UI, and other clients changing it
+        client.on('accountData', this.onAccountData);
     }
 }

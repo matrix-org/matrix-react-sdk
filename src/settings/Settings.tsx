@@ -41,7 +41,6 @@ import { Layout } from "./Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
 import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
-import PseudonymousAnalyticsController from "./controllers/PseudonymousAnalyticsController";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -525,7 +524,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
         default: false,
-        controller: new PseudonymousAnalyticsController(),
     },
     "showPseudonymousAnalyticsPrompt": {
         supportedLevels: [SettingLevel.ACCOUNT],

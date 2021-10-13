@@ -393,9 +393,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             Analytics.enable();
         }
 
-        PosthogAnalytics.instance.updateAnonymityFromSettings();
-        PosthogAnalytics.instance.updatePlatformSuperProperties();
-
         CountlyAnalytics.instance.enable(/* anonymous = */ true);
 
         initSentry(SdkConfig.get()["sentry"]);

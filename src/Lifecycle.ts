@@ -580,9 +580,9 @@ async function doSetLoggedIn(
 
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    PosthogAnalytics.instance.updateAnonymityFromSettings();
-
     const client = MatrixClientPeg.get();
+
+    PosthogAnalytics.instance.startListeningToSettingsChanges(client);
 
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
