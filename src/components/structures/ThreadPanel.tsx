@@ -17,6 +17,8 @@ limitations under the License.
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
+import { Room } from 'matrix-js-sdk/src/models/room';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
@@ -29,8 +31,6 @@ import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuB
 import ContextMenu, { useContextMenu } from './ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import TimelinePanel from './TimelinePanel';
-import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { Room } from 'matrix-js-sdk/src/models/room';
 import { Layout } from '../../settings/Layout';
 import { useEventEmitter } from '../../hooks/useEventEmitter';
 import AccessibleButton from '../views/elements/AccessibleButton';
