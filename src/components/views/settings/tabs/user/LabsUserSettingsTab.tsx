@@ -23,7 +23,6 @@ import { replaceableComponent } from "../../../../../utils/replaceableComponent"
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
 import SettingsFlag from '../../../elements/SettingsFlag';
-import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
 
 interface ILabsSettingToggleProps {
     featureId: string;
@@ -43,22 +42,10 @@ export class LabsSettingToggle extends React.Component<ILabsSettingToggleProps> 
     }
 }
 
-interface IState {
-    showHiddenReadReceipts: boolean;
-}
-
 @replaceableComponent("views.settings.tabs.user.LabsUserSettingsTab")
-export default class LabsUserSettingsTab extends React.Component<{}, IState> {
+export default class LabsUserSettingsTab extends React.Component {
     constructor(props: {}) {
         super(props);
-
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2285").then((showHiddenReadReceipts) => {
-            this.setState({ showHiddenReadReceipts });
-        });
-
-        this.state = {
-            showHiddenReadReceipts: false,
-        };
     }
 
     public render(): JSX.Element {
@@ -79,20 +66,12 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
         if (SdkConfig.get()['showLabsSettings']) {
             const flags = labs.map(f => <LabsSettingToggle featureId={f} key={f} />);
 
-            let hiddenReadReceipts;
-            if (this.state.showHiddenReadReceipts) {
-                hiddenReadReceipts = (
-                    <SettingsFlag name="feature_hidden_read_receipts" level={SettingLevel.DEVICE} />
-                );
-            }
-
             labsSection = <div className="mx_SettingsTab_section">
                 <SettingsFlag name="developerMode" level={SettingLevel.ACCOUNT} />
                 { flags }
                 <SettingsFlag name="enableWidgetScreenshots" level={SettingLevel.ACCOUNT} />
                 <SettingsFlag name="showHiddenEventsInTimeline" level={SettingLevel.DEVICE} />
                 <SettingsFlag name="lowBandwidth" level={SettingLevel.DEVICE} />
-                { hiddenReadReceipts }
             </div>;
         }
 
