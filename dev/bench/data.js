@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634215554554,
+  "lastUpdate": 1634218380882,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31388,6 +31388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4427.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "562a880c7df27b93a660c2453ba1388befce105b",
+          "message": "Create room threads list view  (#6904)\n\nImplement https://github.com/vector-im/element-web/issues/18957 following requirements:\r\n* Create a new right panel view to list all the threads in a given room.\r\n* Change ThreadView previous phase to be ThreadPanel rather than RoomSummary\r\n* Implement local filters for My and All threads\r\n\r\nIn addition: \r\n* Create a new TileShape for proper rendering requirements (hiding typing indicator)\r\n* Create new timelineRenderingType for proper rendering requirements",
+          "timestamp": "2021-10-14T15:27:35+02:00",
+          "tree_id": "2fcb67415827d0eec72a16568c3454c5435d2d8f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/562a880c7df27b93a660c2453ba1388befce105b"
+        },
+        "date": 1634218378387,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4317.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 883.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1611.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4308.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
