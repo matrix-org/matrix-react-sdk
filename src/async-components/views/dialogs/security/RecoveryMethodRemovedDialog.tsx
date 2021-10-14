@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentType } from "react";
 import dis from "../../../../dispatcher/dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
@@ -35,7 +35,7 @@ export default class RecoveryMethodRemovedDialog extends React.PureComponent<IPr
     private onSetupClick = (): void => {
         this.props.onFinished();
         Modal.createTrackedDialogAsync("Key Backup", "Key Backup",
-            import("./CreateKeyBackupDialog"),
+            import("./CreateKeyBackupDialog") as unknown as Promise<ComponentType<{}>>,
             null, null, /* priority = */ false, /* static = */ true,
         );
     };

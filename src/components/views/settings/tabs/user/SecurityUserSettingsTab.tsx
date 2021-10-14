@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ComponentType } from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
 
 import { _t } from "../../../../../languageHandler";
@@ -124,14 +124,18 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     private onExportE2eKeysClicked = (): void => {
         Modal.createTrackedDialogAsync('Export E2E Keys', '',
-            import('../../../../../async-components/views/dialogs/security/ExportE2eKeysDialog'),
+            import(
+                '../../../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             { matrixClient: MatrixClientPeg.get() },
         );
     };
 
     private onImportE2eKeysClicked = (): void => {
         Modal.createTrackedDialogAsync('Import E2E Keys', '',
-            import('../../../../../async-components/views/dialogs/security/ImportE2eKeysDialog'),
+            import(
+                '../../../../../async-components/views/dialogs/security/ImportE2eKeysDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             { matrixClient: MatrixClientPeg.get() },
         );
     };
