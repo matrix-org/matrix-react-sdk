@@ -111,6 +111,7 @@ import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { objectClone } from "../../utils/objects";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -821,40 +822,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case 'accept_cookies':
                 hideAnalyticsToast();
-                SettingsStore.setValue(
-                    "pseudonymousAnalyticsOptIn",
-                    null,
-                    SettingLevel.ACCOUNT,
-                    true)
-                    .then(() => SettingsStore.setValue(
-                        "showPseudonymousAnalyticsPrompt",
-                        null,
-                        SettingLevel.ACCOUNT,
-                        false))
-                    .then(() => {
-                        if (Analytics.canEnable()) {
-                            Analytics.enable();
-                        }
-                        if (CountlyAnalytics.instance.canEnable()) {
-                            CountlyAnalytics.instance.enable(/* anonymous = */ false);
-                        }
-                    });
+                this.setCookieAccountData(true);
                 break;
             case 'reject_cookies':
                 hideAnalyticsToast();
-                SettingsStore.setValue(
-                    "pseudonymousAnalyticsOptIn",
-                    null,
-                    SettingLevel.ACCOUNT,
-                    false)
-                    .then(() => SettingsStore.setValue(
-                        "showPseudonymousAnalyticsPrompt",
-                        null,
-                        SettingLevel.ACCOUNT,
-                        false));
+                this.setCookieAccountData(false);
                 break;
         }
     };
+
+    private async setCookieAccountData(accept: bool): Promise<{}> {
+        const cli = MatrixClientPeg.get();
+        const event = cli.getAccountData("im.vector.web.settings");
+        const content = event.getContent();
+        content.showPseudonymousAnalyticsPrompt = false;
+        content.pseudonymousAnalyticsOptIn = accept;
+        return cli.setAccountData("im.vector.web.settings", content);
+    }
 
     private setPage(pageType: PageType) {
         this.setState({
@@ -1345,11 +1329,19 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private listenToSettingsForAnalyticsToast() {
         // Wait for settings sync from the home server so we can decide whether we need to show the analytics toast
-        const onAccountData = (event: MatrixEvent) => {
-            if (event.getType() === "im.vector.web.settings" && (
-                event.getContent().showPseudonymousAnalyticsPrompt !== false)) {
-                showAnalyticsToast(this.props.config.piwik?.policyUrl);
-                MatrixClientPeg.get().off('accountData', onAccountData);
+        const onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent) => {
+            if (event.getType() !== "im.vector.web.settings") {
+                return;
+            }
+            const newShowPrompt = event.getContent().showPseudonymousAnalyticsPrompt;
+            if (newShowPrompt !== false) {
+                // The flag is unset or true, indicating the user hasn't answered the prompt yet.
+                // Check if this is a change from the last time we received settings; we don't want to show
+                // the prompt more than once.
+                const oldShowPrompt = prevEvent.getContent().showPseudonymousAnalyticsPrompt;
+                if (newShowPrompt !== oldShowPrompt) {
+                    showAnalyticsToast(this.props.config.piwik?.policyUrl);
+                }
             }
         };
         MatrixClientPeg.get().on('accountData', onAccountData);
