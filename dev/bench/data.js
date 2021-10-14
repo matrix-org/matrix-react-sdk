@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634218380882,
+  "lastUpdate": 1634222901492,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31436,6 +31436,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4308.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c31bd8c647493ab2fc349b7abc3d80c5d1a30258",
+          "message": "Remove unnecessary adapter in ThreadPanel-test.tsx (#6946)",
+          "timestamp": "2021-10-14T15:42:54+01:00",
+          "tree_id": "7f4731a5370fd098f21bd0c2ff2d5bbb25468730",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c31bd8c647493ab2fc349b7abc3d80c5d1a30258"
+        },
+        "date": 1634222898532,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4407.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 835.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1671,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4303,
             "unit": "ms",
             "extra": "type: measure"
           }
