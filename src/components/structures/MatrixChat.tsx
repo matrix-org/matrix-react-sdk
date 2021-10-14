@@ -1346,7 +1346,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // Show the analytics toast if necessary
         if (SettingsStore.getValue("showPseudonymousAnalyticsPrompt") !== false) {
             showAnalyticsToast(this.props.config.piwik?.policyUrl,
-                SettingsStore.getValue("analyticsOptIn", null, true));
+                SettingsStore.getValue("analyticsOptIn", null, true),
+                PosthogAnalytics.instance.analyticsOwner);
         }
 
         // Listen to changes in settings and show the toast if appropriate - this is necessary because account
@@ -1359,7 +1360,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
             if (event.getContent().showPseudonymousAnalyticsPrompt !== false) {
                 showAnalyticsToast(this.props.config.piwik?.policyUrl,
-                    SettingsStore.getValue("analyticsOptIn", null, true));
+                    SettingsStore.getValue("analyticsOptIn", null, true),
+                    PosthogAnalytics.instance.analyticsOwner);
                 // Disable listener to avoid ever showing the toast twice in one session
                 client.off('accountData', onAccountData);
             } else {

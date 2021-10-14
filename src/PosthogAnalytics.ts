@@ -133,10 +133,11 @@ export class PosthogAnalytics {
 
     private anonymity = Anonymity.Disabled;
     // set true during the constructor if posthog config is present, otherwise false
-    private enabled = false;
+    readonly enabled = false;
     private static _instance = null;
     private platformSuperProperties = {};
     private static ANALYTICS_ID_EVENT_TYPE = "im.vector.web.analytics_id";
+    public readonly analyticsOwner: string;
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -162,6 +163,7 @@ export class PosthogAnalytics {
                 sanitize_properties: this.sanitizeProperties,
                 respect_dnt: true,
             });
+            this.analyticsOwner = posthogConfig.analyticsOwner ?? posthogConfig.apiHost;
             this.enabled = true;
         } else {
             this.enabled = false;
