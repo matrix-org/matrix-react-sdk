@@ -1340,8 +1340,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 SettingsStore.getValue("analyticsOptIn", null, true));
         }
 
-        // Listen to changes in settings and show the toast if appropriate - this is necessary because settings can
-        // still be changing at this point in app init (due to the initial sync being cached, then
+        // Listen to changes in settings and show the toast if appropriate - this is necessary because account
+        // settings can still be changing at this point in app init (due to the initial sync being cached, then
         // subsequent syncs being received from the server)
         const client = MatrixClientPeg.get();
         const onAccountData = (event: MatrixEvent) => {
