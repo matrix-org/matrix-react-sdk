@@ -838,6 +838,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private async setCookieAccountData(accept: bool): Promise<{}> {
         const cli = MatrixClientPeg.get();
+        // Update two settings at once - call setAccountData directly as this is really awkward to do via the Settings
+        // abstractions
         const event = cli.getAccountData("im.vector.web.settings");
         const content = event.getContent();
         content.showPseudonymousAnalyticsPrompt = false;
