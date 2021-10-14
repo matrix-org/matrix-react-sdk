@@ -138,7 +138,7 @@ const customVariables: Record<string, IVariable> = {
     },
     'Analytics ID': {
         id: 11,
-        expl: _td("A randomly generated identifier stored on your home server and shared between your devices"),
+        expl: _td("A randomly generated identifier stored on your homeserver and shared between your devices"),
         example: '54173cc56c7212b08999c53411b6c35',
     },
 };
