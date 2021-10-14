@@ -1324,7 +1324,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        this.listenToSettingsForAnalyticsToast();
+        this.initAnalyticsToast();
 
         if (SdkConfig.get().mobileGuideToast) {
             // The toast contains further logic to detect mobile platforms,
@@ -1333,20 +1333,30 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private listenToSettingsForAnalyticsToast() {
-        // Wait for settings to sync from the home server so we can decide whether we need to show the analytics toast
+    private initAnalyticsToast() {
+        // Show the analytics toast if necessary
+        if (SettingsStore.getValue("showPseudonymousAnalyticsPrompt") !== false) {
+            showAnalyticsToast(this.props.config.piwik?.policyUrl,
+                SettingsStore.getValue("analyticsOptIn", null, true));
+        }
+
+        // Listen to changes in settings and show the toast if appropriate - this is necessary because settings can
+        // still be changing at this point in app init (due to the initial sync being cached, then
+        // subsequent syncs being received from the server)
         const client = MatrixClientPeg.get();
         const onAccountData = (event: MatrixEvent) => {
             if (event.getType() !== "im.vector.web.settings") {
                 return;
             }
             if (event.getContent().showPseudonymousAnalyticsPrompt !== false) {
-                showAnalyticsToast(this.props.config.piwik?.policyUrl, event.getContent().analyticsOptIn);
+                showAnalyticsToast(this.props.config.piwik?.policyUrl,
+                    SettingsStore.getValue("analyticsOptIn", null, true));
                 // Disable listener to avoid ever showing the toast twice in one session
                 client.off('accountData', onAccountData);
             } else {
                 // It's possible for the value to change if a cached sync loads at page load, but then network
-                // sync contains a new value of the flag with it set to false; so hide the toast.
+                // sync contains a new value of the flag with it set to false (e.g. another device set it since last
+                // loading the page); so hide the toast.
                 // (this flipping usually happens before first render so the user won't notice it; anyway flicker on/off
                 // is probably better than showing the toast again when the user already dismissed it)
                 hideAnalyticsToast();
