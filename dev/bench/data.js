@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634146476324,
+  "lastUpdate": 1634200641161,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31076,6 +31076,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4615.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1f7d07ab6c8d2aa75d33125e0f37902a3355f9e3",
+          "message": "Merge pull request #6942 from SimonBrandner/fix/autoplay-setting\n\nDon't `setValue()` if that would lead to setting a `null`/`undefined`",
+          "timestamp": "2021-10-14T09:30:43+01:00",
+          "tree_id": "cca88c6db6ec59db15ae39c52faa5758c71c9e57",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1f7d07ab6c8d2aa75d33125e0f37902a3355f9e3"
+        },
+        "date": 1634200638943,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4337.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1221.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
