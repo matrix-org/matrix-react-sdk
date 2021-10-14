@@ -143,7 +143,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
 @replaceableComponent("views.rooms.SendMessageComposer")
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     static contextType = RoomContext;
-    private context!: React.ContextType<typeof RoomContext>;
+    public context!: React.ContextType<typeof RoomContext>;
 
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
