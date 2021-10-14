@@ -1334,23 +1334,25 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private listenToSettingsForAnalyticsToast() {
-        // Wait for settings sync from the home server so we can decide whether we need to show the analytics toast
-        const onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent) => {
+        // Wait for settings to sync from the home server so we can decide whether we need to show the analytics toast
+        const client = MatrixClientPeg.get();
+        const onAccountData = (event: MatrixEvent) => {
             if (event.getType() !== "im.vector.web.settings") {
                 return;
             }
-            const newShowPrompt = event.getContent().showPseudonymousAnalyticsPrompt;
-            if (newShowPrompt !== false) {
-                // The flag is unset or true, indicating the user hasn't answered the prompt yet.
-                // Check if this is a change from the last time we received settings; we don't want to show
-                // the prompt more than once.
-                const oldShowPrompt = prevEvent.getContent().showPseudonymousAnalyticsPrompt;
-                if (newShowPrompt !== oldShowPrompt) {
-                    showAnalyticsToast(this.props.config.piwik?.policyUrl);
-                }
+            if (event.getContent().showPseudonymousAnalyticsPrompt !== false) {
+                showAnalyticsToast(this.props.config.piwik?.policyUrl);
+                // Disable listener to avoid ever showing the toast twice in one session
+                client.off('accountData', onAccountData);
+            } else {
+                // It's possible for the value to change if a cached sync loads at page load, but then network
+                // sync contains a new value of the flag with it set to false; so hide the toast.
+                // (this flipping usually happens before first render so the user won't notice it; anyway flicker on/off
+                // is probably better than showing the toast again when the user already dismissed it)
+                hideAnalyticsToast();
             }
         };
-        MatrixClientPeg.get().on('accountData', onAccountData);
+        client.on('accountData', onAccountData);
     }
 
     private showScreenAfterLogin() {
