@@ -1333,7 +1333,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         if (PosthogAnalytics.instance.isEnabled() || Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
             this.initAnalyticsToast();
-        }t;
+        }
 
         if (SdkConfig.get().mobileGuideToast) {
             // The toast contains further logic to detect mobile platforms,
@@ -1362,8 +1362,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 showAnalyticsToast(this.props.config.piwik?.policyUrl,
                     SettingsStore.getValue("analyticsOptIn", null, true),
                     PosthogAnalytics.instance.analyticsOwner);
-                // Disable listener to avoid ever showing the toast twice in one session
-                client.off('accountData', onAccountData);
             } else {
                 // It's possible for the value to change if a cached sync loads at page load, but then network
                 // sync contains a new value of the flag with it set to false (e.g. another device set it since last
