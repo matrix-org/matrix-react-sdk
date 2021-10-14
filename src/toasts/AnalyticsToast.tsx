@@ -43,14 +43,13 @@ const onUsageDataClicked = () => {
 
 const TOAST_KEY = "analytics";
 
-export const showToast = (policyUrl?: string) => {
+export const showToast = (policyUrl?: string, analyticsOptIn: boolean) => {
     const brand = SdkConfig.get().brand;
     const usageDataLink = (sub) => (
         <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
     );
 
     let description;
-    const analyticsOptIn = SettingsStore.getValue("analyticsOptIn", null, true);
     if (analyticsOptIn) {
         // The user previously opted into our old analytics system - let them know things have changed and ask
         // them to opt in again

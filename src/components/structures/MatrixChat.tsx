@@ -1341,7 +1341,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 return;
             }
             if (event.getContent().showPseudonymousAnalyticsPrompt !== false) {
-                showAnalyticsToast(this.props.config.piwik?.policyUrl);
+                showAnalyticsToast(this.props.config.piwik?.policyUrl, event.getContent().analyticsOptIn);
                 // Disable listener to avoid ever showing the toast twice in one session
                 client.off('accountData', onAccountData);
             } else {
