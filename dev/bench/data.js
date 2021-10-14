@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634222901492,
+  "lastUpdate": 1634226268568,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31484,6 +31484,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4303,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2dd6dddc676d6d1dd32ef6909443b1da1e212ae2",
+          "message": "Fix incorrect liveTimeline reference (#6948)\n\nFixes https://github.com/vector-im/element-web/issues/19400",
+          "timestamp": "2021-10-14T15:37:56Z",
+          "tree_id": "137c7c8cc66ff31bc30c610d239f73f17c2f2064",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2dd6dddc676d6d1dd32ef6909443b1da1e212ae2"
+        },
+        "date": 1634226266392,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4754.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1115.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1734.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4929.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
