@@ -389,7 +389,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         }
 
-        if (SettingsStore.getValue("analyticsOptIn")) {
+        if (SettingsStore.getValue("pseudonymousAnalyticsOptIn")) {
             Analytics.enable();
         }
 
@@ -828,6 +828,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'accept_cookies':
                 hideAnalyticsToast();
                 this.setCookieAccountData(true);
+                if (Analytics.canEnable()) {
+                    Analytics.enable();
+                }
+                if (CountlyAnalytics.instance.canEnable()) {
+                    CountlyAnalytics.instance.enable(/* anonymous = */ false);
+                }
                 break;
             case 'reject_cookies':
                 hideAnalyticsToast();
@@ -1325,7 +1331,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        this.initAnalyticsToast();
+        if (PosthogAnalytics.instance.isEnabled() || Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
+            this.initAnalyticsToast();
+        }t;
 
         if (SdkConfig.get().mobileGuideToast) {
             // The toast contains further logic to detect mobile platforms,
