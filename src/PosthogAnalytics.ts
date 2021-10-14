@@ -133,7 +133,7 @@ export class PosthogAnalytics {
 
     private anonymity = Anonymity.Disabled;
     // set true during the constructor if posthog config is present, otherwise false
-    readonly enabled = false;
+    readonly enabled: boolean = false;
     private static _instance = null;
     private platformSuperProperties = {};
     private static ANALYTICS_ID_EVENT_TYPE = "im.vector.web.analytics_id";
