@@ -23,7 +23,6 @@ import Analytics from "../Analytics";
 import AccessibleButton from "../components/views/elements/AccessibleButton";
 import GenericToast from "../components/views/toasts/GenericToast";
 import ToastStore from "../stores/ToastStore";
-import SettingsStore from "../settings/SettingsStore";
 
 const onAccept = () => {
     dis.dispatch({
@@ -43,7 +42,7 @@ const onUsageDataClicked = () => {
 
 const TOAST_KEY = "analytics";
 
-export const showToast = (policyUrl?: string, analyticsOptIn: boolean) => {
+export const showToast = (policyUrl: string, analyticsOptIn: boolean) => {
     const brand = SdkConfig.get().brand;
     const usageDataLink = (sub) => (
         <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>

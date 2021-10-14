@@ -17,14 +17,12 @@ limitations under the License.
 import posthog, { PostHog } from 'posthog-js';
 import PlatformPeg from './PlatformPeg';
 import SdkConfig from './SdkConfig';
-import SettingsStore from './settings/SettingsStore';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { objectKeyChanges } from "./utils/objects";
 import { MatrixEvent } from "../../matrix-js-sdk";
-import { showToast as showAnalyticsToast } from "./toasts/AnalyticsToast";
 
 /* Posthog analytics tracking.
  *
@@ -330,7 +328,7 @@ export class PosthogAnalytics {
         this.registerSuperProperties(this.platformSuperProperties);
     }
 
-    public async updateAnonymityFromSettings(pseudonumousOptIn: bool): Promise<void> {
+    public async updateAnonymityFromSettings(pseudonumousOptIn: boolean): Promise<void> {
         // Update this.anonymity based on the user's analytics opt-in settings
         const anonymity = pseudonumousOptIn ? Anonymity.Pseudonymous : Anonymity.Disabled;
         this.setAnonymity(anonymity);

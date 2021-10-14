@@ -34,7 +34,6 @@ import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
 import CountlyAnalytics from "../../../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
-import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import { Room } from "matrix-js-sdk/src/models/room";
 import DevicesPanel from "../../DevicesPanel";

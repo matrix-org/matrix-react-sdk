@@ -19,7 +19,7 @@ import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { sleep, defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
+import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -836,7 +836,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private async setCookieAccountData(accept: bool): Promise<{}> {
+    private async setCookieAccountData(accept: boolean): Promise<{}> {
         const cli = MatrixClientPeg.get();
         // Update two settings at once - call setAccountData directly as this is really awkward to do via the Settings
         // abstractions
