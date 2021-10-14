@@ -778,6 +778,7 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
                             ),
                             ...style,
                         }}
+                        disableSpeakingHighlight={springs.length < 3}
                         callFeed={tile.item.callFeed}
                     />
                 );

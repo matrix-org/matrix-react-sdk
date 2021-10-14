@@ -8,11 +8,13 @@ import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 interface IVideoTileProps {
     style: any;
     callFeed: CallFeed;
+    disableSpeakingHighlight: boolean;
 }
 
 export default function VideoTile({
     style,
     callFeed,
+    disableSpeakingHighlight,
     ...rest
 }: IVideoTileProps) {
     const { isLocal, audioMuted, videoMuted, speaking, stream, member } = useCallFeed(callFeed);
@@ -24,7 +26,10 @@ export default function VideoTile({
 
     return (
         <animated.div
-            className={classNames("mx_videoTile", { "mx_speaking": speaking, "mx_muted": audioMuted })}
+            className={classNames("mx_videoTile", {
+                "mx_speaking": speaking && !disableSpeakingHighlight,
+                "mx_muted": audioMuted,
+            })}
             style={style}
             {...rest}
         >
