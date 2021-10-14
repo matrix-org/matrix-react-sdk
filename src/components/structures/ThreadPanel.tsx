@@ -41,7 +41,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
 }
 
-export const ThreadPanelItem: React.FC<{event: MatrixEvent}> = ({ event }) => {
+export const ThreadPanelItem: React.FC<{ event: MatrixEvent }> = ({ event }) => {
     return <EventTile
         key={event.getId()}
         mxEvent={event}
@@ -89,7 +89,9 @@ const useFilteredThreadsTimelinePanel = ({
                 return thread.rootEvent.getSender() === userId;
             });
         }
-        filteredThreads.forEach(thread => {
+        // NOTE: Temporarily reverse the list until https://github.com/vector-im/element-web/issues/19393 gets properly resolved
+        // The proper list order should be top-to-bottom, like in social-media newsfeeds.
+        filteredThreads.reverse().forEach(thread => {
             const event = thread.rootEvent;
             if (timelineSet.findEventById(event.getId()) || event.status !== null) return;
             timelineSet.addEventToTimeline(
@@ -98,7 +100,7 @@ const useFilteredThreadsTimelinePanel = ({
                 true,
             );
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [room, timelineSet]);
 
     useEventEmitter(room, ThreadEvent.Update, (thread) => {
@@ -116,7 +118,7 @@ const useFilteredThreadsTimelinePanel = ({
         timelineSet.addEventToTimeline(
             event,
             timelineSet.getLiveTimeline(),
-            true,
+            false,
         );
         updateTimeline();
     });
@@ -178,7 +180,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     return <div className="mx_ThreadPanel__header">
         <span>{ _t("Threads") }</span>
         <ContextMenuButton inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
-            { `${ _t('Show:') } ${ value.label }` }
+            { `${_t('Show:')} ${value.label}` }
         </ContextMenuButton>
         { contextMenu }
     </div>;
