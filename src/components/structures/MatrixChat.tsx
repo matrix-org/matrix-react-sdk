@@ -1347,7 +1347,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (SettingsStore.getValue("showPseudonymousAnalyticsPrompt") !== false) {
             showAnalyticsToast(this.props.config.piwik?.policyUrl,
                 SettingsStore.getValue("analyticsOptIn", null, true),
-                PosthogAnalytics.instance.analyticsOwner);
+                SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
         }
 
         // Listen to changes in settings and show the toast if appropriate - this is necessary because account
@@ -1361,7 +1361,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (event.getContent().showPseudonymousAnalyticsPrompt !== false) {
                 showAnalyticsToast(this.props.config.piwik?.policyUrl,
                     SettingsStore.getValue("analyticsOptIn", null, true),
-                    PosthogAnalytics.instance.analyticsOwner);
+                    SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
             } else {
                 // It's possible for the value to change if a cached sync loads at page load, but then network
                 // sync contains a new value of the flag with it set to false (e.g. another device set it since last

@@ -1408,7 +1408,7 @@
     "Cross-signing": "Cross-signing",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
     "Privacy": "Privacy",
-    "%(brand)s collects analytics to allow us to improve the application.": "%(brand)s collects analytics to allow us to improve the application.",
+    "%(analytics_owner)s collects analytics to allow us to improve the application.": "%(analytics_owner)s collects analytics to allow us to improve the application.",
     "Privacy is important to us, so we don't collect any personal or identifiable data for our analytics.": "Privacy is important to us, so we don't collect any personal or identifiable data for our analytics.",
     "Learn more about how we use analytics.": "Learn more about how we use analytics.",
     "Where you’re logged in": "Where you’re logged in",
