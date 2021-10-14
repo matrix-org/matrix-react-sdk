@@ -389,8 +389,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         }
 
-        // continue to enable deprecated old analytics, for now, based on the new flag
-        if (SettingsStore.getValue("pseudonymousAnalyticsOptIn")) {
+        if (SettingsStore.getValue("analyticsOptIn")) {
             Analytics.enable();
         }
 
