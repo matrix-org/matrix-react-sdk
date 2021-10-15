@@ -78,7 +78,7 @@ isn’t shared with any third parties.` + "<Linebreak/><Linebreak/>" +
                 "UsageDataLink": usageDataLink,
                 // XXX: We need to link to the page that explains our cookies
                 "PolicyLink": (sub) => policyUrl ? (
-                    <a target="_blank" href={policyUrl}>{ sub }</a>
+                    <a target="_blank" href={policyUrl} rel="noreferrer noopener">{ sub }</a>
                 ) : sub,
             },
         );
