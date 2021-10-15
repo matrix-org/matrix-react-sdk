@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634285099508,
+  "lastUpdate": 1634290452064,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31580,6 +31580,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4674.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af55ac7b8c9dcb33326b84dd3d4b9f1f81f8a9a6",
+          "message": "Merge pull request #6950 from matrix-org/gsouquet/threads-replies-compat\n\nAdd 'm.thread' relation to replies when replying to a threaded event",
+          "timestamp": "2021-10-15T10:27:40+01:00",
+          "tree_id": "171414001f0bd34942070f96db72424f19613c9a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af55ac7b8c9dcb33326b84dd3d4b9f1f81f8a9a6"
+        },
+        "date": 1634290449803,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5032.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1082.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1756.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4906.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
