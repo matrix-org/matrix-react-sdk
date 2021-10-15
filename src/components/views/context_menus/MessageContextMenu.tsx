@@ -236,6 +236,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
         });
+        this.closeMenu();
     };
 
     render() {
