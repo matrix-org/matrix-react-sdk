@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634295801571,
+  "lastUpdate": 1634304144955,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31676,6 +31676,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4537.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9c753765d5acaf7dbb01c882c7a8032f4b272dbd",
+          "message": "Merge pull request #6955 from andybalaam/table-for-devicespanel\n\nSwitch DevicesPanel to use table (for screen readers)",
+          "timestamp": "2021-10-15T14:16:45+01:00",
+          "tree_id": "6f238eb2a90c1f345c720a7175852e4bdc3aad95",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9c753765d5acaf7dbb01c882c7a8032f4b272dbd"
+        },
+        "date": 1634304142318,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4506.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 980.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
