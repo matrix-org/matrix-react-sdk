@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634304917669,
+  "lastUpdate": 1634306746358,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31748,6 +31748,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 899.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cee0d6894fb9dc98142e048e799138926c11ee56",
+          "message": "Merge pull request #6951 from matrix-org/gsouquet/fix-thread-root-hidden",
+          "timestamp": "2021-10-15T15:00:17+01:00",
+          "tree_id": "e9b4bfa279559c03a08884c9d5d09d6b67ae4841",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cee0d6894fb9dc98142e048e799138926c11ee56"
+        },
+        "date": 1634306743939,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4268.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 936.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1755.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4388.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
