@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634309429717,
+  "lastUpdate": 1634310769799,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31880,6 +31880,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 828,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4fb0d021aee5cbf5b637f3aa5d6f8882be202409",
+          "message": "Merge pull request #6897 from SimonBrandner/task/colors-4\n\nColor de-duplication #4",
+          "timestamp": "2021-10-15T16:07:07+01:00",
+          "tree_id": "5cccbb9cfc29e4d4b715398e597a0bc264de14cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4fb0d021aee5cbf5b637f3aa5d6f8882be202409"
+        },
+        "date": 1634310767499,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4175.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 570.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
