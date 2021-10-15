@@ -237,6 +237,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
                 break;
             default:
@@ -268,6 +269,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         dis.dispatch({
             action: 'reply_to_event',
             event: replyEventId ? this.props.room.findEventById(replyEventId) : null,
+            context: this.context.timelineRenderingType,
         });
         if (parts) {
             this.model.reset(parts);
@@ -475,6 +477,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
             }
             dis.dispatch({ action: "message_sent" });
@@ -545,6 +548,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     dis.dispatch({
                         action: 'reply_to_event',
                         event: this.props.room.findEventById(replyEventId),
+                        context: this.context.timelineRenderingType,
                     });
                 }
                 return parts;
@@ -576,7 +580,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         switch (payload.action) {
             case 'reply_to_event':
             case Action.FocusSendMessageComposer:
-                this.editorRef.current?.focus();
+                if (payload.context === this.context.timelineRenderingType) {
+                    this.editorRef.current?.focus();
+                }
                 break;
             case "send_composer_insert":
                 if (payload.userId) {
