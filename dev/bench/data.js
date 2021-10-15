@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634290452064,
+  "lastUpdate": 1634295801571,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31628,6 +31628,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4906.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f0ff3a26cc206d311d826efb992f885c855615ae",
+          "message": "Merge pull request #6954 from aaronraimist/download-tooltip",
+          "timestamp": "2021-10-15T11:57:39+01:00",
+          "tree_id": "3ee39d95eb94f7835b2b2a322f9bde8ca0f0a389",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f0ff3a26cc206d311d826efb992f885c855615ae"
+        },
+        "date": 1634295799297,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4746.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1649.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4537.5,
             "unit": "ms",
             "extra": "type: measure"
           }
