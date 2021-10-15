@@ -464,6 +464,7 @@ interface IVideoGridState {
 interface IVideoGridProps {
     items: IVideoGridItem[];
     layout: string;
+    onFocusTile?: (tiles: IVideoGridTile[], item: IVideoGridTile) => IVideoGridTile[];
 }
 
 interface IDraggingTile {
@@ -474,7 +475,7 @@ interface IDraggingTile {
     y: number;
 }
 
-export default function VideoGrid({ items, layout }: IVideoGridProps) {
+export default function VideoGrid({ items, layout, onFocusTile }: IVideoGridProps) {
     const [{ tiles, tilePositions }, setTileState] = useState<IVideoGridState>({
         tiles: [],
         tilePositions: [],
@@ -657,23 +658,33 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
             setTileState((state) => {
                 let presenterTileCount = 0;
 
-                const newTiles = state.tiles.map((tile) => {
-                    let newTile = tile;
+                let newTiles: IVideoGridTile[];
 
-                    if (tile.item === item) {
-                        newTile = { ...tile, presenter: !tile.presenter };
+                if (onFocusTile) {
+                    newTiles = onFocusTile(state.tiles, tile);
+
+                    for (const tile of newTiles) {
+                        if (tile.presenter) {
+                            presenterTileCount++;
+                        }
                     }
+                } else {
+                    newTiles = state.tiles.map((tile) => {
+                        let newTile = tile;
 
-                    if (newTile.presenter) {
-                        presenterTileCount++;
-                    }
+                        if (tile.item === item) {
+                            newTile = { ...tile, presenter: !tile.presenter };
+                        }
 
-                    return newTile;
-                });
+                        if (newTile.presenter) {
+                            presenterTileCount++;
+                        }
+
+                        return newTile;
+                    });
+                }
 
                 newTiles.sort((a, b) => (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0));
-
-                presenterTileCount;
 
                 return {
                     ...state,
@@ -687,7 +698,7 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
                 };
             });
         },
-        [tiles, gridBounds],
+        [tiles, gridBounds, onFocusTile],
     );
 
     const bind = useDrag(
@@ -696,6 +707,10 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
 
             if (tap) {
                 onTap(key);
+                return;
+            }
+
+            if (layout !== "gallery") {
                 return;
             }
 
@@ -760,7 +775,7 @@ export default function VideoGrid({ items, layout }: IVideoGridProps) {
 
             api.start(animate(newTiles));
         },
-        { filterTaps: true, enabled: layout === "gallery" },
+        { filterTaps: true },
     );
 
     return (
