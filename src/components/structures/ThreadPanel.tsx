@@ -218,7 +218,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
                     showReactions={true}
                     className="mx_RoomView_messagePanel mx_GroupLayout"
                     membersLoaded={true}
-                    tileShape={TileShape.ThreadPanel}
+                    tileShape={TileShape.Thread}
                 />
             </BaseCard>
         </RoomContext.Provider>

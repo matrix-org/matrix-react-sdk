@@ -1212,12 +1212,26 @@ export default class EventTile extends React.Component<IProps, IState> {
                 ]);
             }
             case TileShape.Thread: {
+                const thread = haveTileForEvent(this.props.mxEvent) &&
+                    ReplyThread.hasThreadReply(this.props.mxEvent) ? (
+                        <ReplyThread
+                            parentEv={this.props.mxEvent}
+                            onHeightChanged={this.props.onHeightChanged}
+                            ref={this.replyThread}
+                            forExport={this.props.forExport}
+                            permalinkCreator={this.props.permalinkCreator}
+                            layout={this.props.layout}
+                            alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
+                            isQuoteExpanded={isQuoteExpanded}
+                            setQuoteExpanded={this.setQuoteExpanded}
+                        />) : null;
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
                     "className": classes,
                     "aria-live": ariaLive,
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
+                    "data-has-reply": !!thread,
                 }, [
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
                         <RoomAvatar room={room} width={28} height={28} />
@@ -1233,6 +1247,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         </a>
                     </div>,
                     <div className="mx_EventTile_line" key="mx_EventTile_line">
+                        { thread }
                         <EventTileType ref={this.tile}
                             mxEvent={this.props.mxEvent}
                             highlights={this.props.highlights}
