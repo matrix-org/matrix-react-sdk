@@ -355,8 +355,8 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
                     <div className="mx_SettingsTab_subsectionText">
                         { _t(
-                            "%(analytics_owner)s collects analytics to allow us to improve the application.",
-                            { analytics_owner: SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand },
+                            "%(analyticsOwner)s collects analytics to allow us to improve the application.",
+                            { analyticsOwner: SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand },
                         ) }
                         &nbsp;
                         { _t("Privacy is important to us, so we don't collect any personal or " +
