@@ -351,7 +351,7 @@ export class PosthogAnalytics {
         // won't be called (i.e. this.anonymity will be left as the default, until the setting changes)
         SettingsStore.watchSetting("pseudonymousAnalyticsOptIn", null,
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
-            this.updateAnonymityFromSettings(newValue);
-        })
+                this.updateAnonymityFromSettings(newValue);
+            });
     }
 }

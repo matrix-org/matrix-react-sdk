@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { _t } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
@@ -42,51 +42,76 @@ const onUsageDataClicked = () => {
 
 const TOAST_KEY = "analytics";
 
-export const showToast = (policyUrl: string, analyticsOptIn: boolean, analyticsOwner: string) => {
-    const brand = SdkConfig.get().brand;
+type IDescriptions = {
+    reOptInDescription: ReactNode;
+    optInDescription: ReactNode;
+};
+
+const getPseudonymousDescriptions = (policyUrl: string, analyticsOwner: string): IDescriptions => {
+    // Get toast descriptions for a user when pseudonymous tracking is enabled (i.e. the new scheme used by posthog).
     const usageDataLink = (sub) => (
         <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
     );
 
-    let description;
-    if (analyticsOptIn) {
-        // The user previously opted into our old analytics system - let them know things have changed and ask
-        // them to opt in again
-        description = _t(`To allow us to understand how people use multiple devices,
+    // The user previously opted into our old analytics system - let them know things have changed and ask
+    // them to opt in again.
+    const reOptInDescription = _t(`To allow us to understand how people use multiple devices,
 we’ve enhanced our <UsageDataLink>analytics data</UsageDataLink> to include a randomly generated identifier associated
 with your account that will be shared across your devices.` + "<Linebreak/><Linebreak/>" +
-            `We care about privacy, so we still don’t record any personal or identifiable data, and the identifier
+    `We care about privacy, so we still don’t record any personal or identifiable data, and the identifier
 isn’t shared with any third parties.` + "<Linebreak/><Linebreak/>" +
-            "You previously agreed to send anonymous usage data to %(analytics_owner)s - is this still okay?",
+    "You previously agreed to send anonymous usage data to %(analytics_owner)s - is this still okay?",
+    {
+        analytics_owner: analyticsOwner,
+    },
+    {
+        "UsageDataLink": usageDataLink,
+        "Linebreak": (sub) => <br />,
+    });
+
+    // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
+    // explaining any change.
+    const optInDescription = _t(
+        "Send <UsageDataLink>analytics data</UsageDataLink> to %(analytics_owner)s to help improve the app. " +
+        "This will use a <PolicyLink>cookie</PolicyLink>.",
         {
             analytics_owner: analyticsOwner,
         },
         {
             "UsageDataLink": usageDataLink,
-            "Linebreak": (sub) => <br />,
-        });
-    } else if (analyticsOptIn === null || analyticsOptIn === undefined) {
-        // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
-        // explaining any change.
-        description = _t(
-            "Send <UsageDataLink>analytics data</UsageDataLink> to %(analytics_owner)s to help improve the app. " +
-            "This will use a <PolicyLink>cookie</PolicyLink>.",
-            {
-                analytics_owner: analyticsOwner,
-            },
-            {
-                "UsageDataLink": usageDataLink,
-                // XXX: We need to link to the page that explains our cookies
-                "PolicyLink": (sub) => policyUrl ? (
-                    <a target="_blank" href={policyUrl} rel="noreferrer noopener">{ sub }</a>
-                ) : sub,
-            },
-        );
-    } else { // false
-        // The user previously opted out of analytics, don't ask again
-        return;
-    }
+            // XXX: We need to link to the page that explains our cookies
+            "PolicyLink": (sub) => policyUrl ? (
+                <a target="_blank" href={policyUrl} rel="noreferrer noopener">{ sub }</a>
+            ) : sub,
+        },
+    );
 
+    return { reOptInDescription, optInDescription };
+};
+
+const getAnonymousDescription = (policyUrl): ReactNode => {
+    // get toast description for anonymous tracking (the previous scheme pre-posthog)
+    const brand = SdkConfig.get().brand;
+    return _t(
+        "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. " +
+        "This will use a <PolicyLink>cookie</PolicyLink>.",
+        {
+            brand,
+        },
+        {
+            "UsageDataLink": (sub) => (
+                <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
+            ),
+            // XXX: We need to link to the page that explains our cookies
+            "PolicyLink": (sub) => policyUrl ? (
+                <a target="_blank" href={policyUrl}>{ sub }</a>
+            ) : sub,
+        },
+    );
+};
+
+const showToast = (description: ReactNode) => {
+    const brand = SdkConfig.get().brand;
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
         title: _t("Help us improve %(brand)s", { brand }),
@@ -101,6 +126,25 @@ isn’t shared with any third parties.` + "<Linebreak/><Linebreak/>" +
         className: "mx_AnalyticsToast",
         priority: 10,
     });
+};
+
+export const showPseudonymousAnalyticsOptInToast = (policyUrl: string, analyticsOptIn: boolean,
+    analyticsOwner: string): void => {
+    let description;
+    const descriptions = getPseudonymousDescriptions(policyUrl, analyticsOwner);
+    if (analyticsOptIn) {
+        description = descriptions.reOptInDescription;
+    } else if (analyticsOptIn === null || analyticsOptIn === undefined) {
+        description = descriptions.optInDescription;
+    } else { // false
+        // The user previously opted out of analytics, don't ask again
+        return;
+    }
+    showToast(description);
+};
+
+export const showAnonymousAnalyticsOptInToast = (policyUrl: string): void => {
+    showToast(getAnonymousDescription(policyUrl));
 };
 
 export const hideToast = () => {

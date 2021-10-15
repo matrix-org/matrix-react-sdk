@@ -62,8 +62,9 @@ import type LoggedInViewType from "./LoggedInView";
 import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
 import {
-    showToast as showAnalyticsToast,
     hideToast as hideAnalyticsToast,
+    showAnonymousAnalyticsOptInToast,
+    showPseudonymousAnalyticsOptInToast,
 } from "../../toasts/AnalyticsToast";
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
@@ -1344,8 +1345,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        if (PosthogAnalytics.instance.isEnabled() || Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
-            this.initAnalyticsToast();
+        if (PosthogAnalytics.instance.isEnabled()) {
+            this.initPosthogAnalyticsToast();
+        } else if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
+            if (SettingsStore.getValue("showCookieBar") &&
+                (Analytics.canEnable() || CountlyAnalytics.instance.canEnable())
+            ) {
+                showAnonymousAnalyticsOptInToast(this.props.config.piwik?.policyUrl);
+            }
         }
 
         if (SdkConfig.get().mobileGuideToast) {
@@ -1355,12 +1362,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private initAnalyticsToast() {
+    private showPosthogToast(analyticsOptIn: boolean) {
+        showPseudonymousAnalyticsOptInToast(this.props.config.piwik?.policyUrl, analyticsOptIn,
+            SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
+    }
+
+    private initPosthogAnalyticsToast() {
         // Show the analytics toast if necessary
         if (SettingsStore.getValue("showPseudonymousAnalyticsPrompt") !== false) {
-            showAnalyticsToast(this.props.config.piwik?.policyUrl,
-                SettingsStore.getValue("analyticsOptIn", null, true),
-                SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
+            this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
         }
 
         // Listen to changes in settings and show the toast if appropriate - this is necessary because account
@@ -1372,9 +1382,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 return;
             }
             if (event.getContent().showPseudonymousAnalyticsPrompt !== false) {
-                showAnalyticsToast(this.props.config.piwik?.policyUrl,
-                    SettingsStore.getValue("analyticsOptIn", null, true),
-                    SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
+                this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
             } else {
                 // It's possible for the value to change if a cached sync loads at page load, but then network
                 // sync contains a new value of the flag with it set to false (e.g. another device set it since last
