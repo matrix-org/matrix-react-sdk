@@ -843,14 +843,27 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     };
 
     private async setCookieAccountData(accept: boolean): Promise<{}> {
-        const cli = MatrixClientPeg.get();
-        // Update two settings at once - call setAccountData directly as this is really awkward to do via the Settings
-        // abstractions
-        const event = cli.getAccountData("im.vector.web.settings");
-        const content = event.getContent();
-        content.showPseudonymousAnalyticsPrompt = false;
-        content.pseudonymousAnalyticsOptIn = accept;
-        return cli.setAccountData("im.vector.web.settings", content);
+        // Update showPseudonymousAnalyticsPrompt and then pseudonymousAnalyticsOptIn.
+        //
+        // SettingsStore.setValue doesn't wait until the local copy of settings has been reflected in accountData,
+        // so calling it twice in succession clobbers the first value as it passes that full local copy on each set.
+        //
+        // To get around that, watch showPseudonymousAnalyticsPrompt until its observed to change, and only then
+        // update pseudonymousAnalyticsOptIn.
+        return new Promise((resolve) => {
+            const watcher = SettingsStore.watchSetting("showPseudonymousAnalyticsPrompt", null,
+                (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+                    if (newValue === false) {
+                        SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, accept);
+                        SettingsStore.unwatchSetting(watcher);
+                        resolve({});
+                    }
+                },
+            );
+
+            SettingsStore.setValue("showPseudonymousAnalyticsPrompt", null, SettingLevel.ACCOUNT,
+                false);
+        });
     }
 
     private setPage(pageType: PageType) {
