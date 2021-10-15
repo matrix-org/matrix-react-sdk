@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634306746358,
+  "lastUpdate": 1634308873188,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31796,6 +31796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4388.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1b7277b8f02e6957efc26941780f8c2e135255e9",
+          "message": "Merge pull request #6943 from matrix-org/fayed/emoji-compare-buttons\n\nUpdate the button styling on the emoji comparison dialog during cross-signing",
+          "timestamp": "2021-10-15T10:34:25-04:00",
+          "tree_id": "789a382f5f5889b41cb79687baa136fc15b54346",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1b7277b8f02e6957efc26941780f8c2e135255e9"
+        },
+        "date": 1634308870505,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4100.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 976.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1773.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4455.5,
             "unit": "ms",
             "extra": "type: measure"
           }
