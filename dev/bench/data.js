@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634308873188,
+  "lastUpdate": 1634309429717,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31844,6 +31844,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4455.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "495f824f0f1d125348d56b4b6a259f381dbb5e62",
+          "message": "Merge pull request #6957 from matrix-org/gsouquet/fix-appearance-settings",
+          "timestamp": "2021-10-15T15:45:05+01:00",
+          "tree_id": "607027028ac47c807cf4b5e576512e9904bbc33a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/495f824f0f1d125348d56b4b6a259f381dbb5e62"
+        },
+        "date": 1634309427600,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4197.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 828,
             "unit": "ms",
             "extra": "type: measure"
           }
