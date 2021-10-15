@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634304144955,
+  "lastUpdate": 1634304917669,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -31712,6 +31712,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 980.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f8c516d927ec7dd2b5f82bce5a334839ba7b0227",
+          "message": "Add new thread message preview (#18958) (#6953)\n\nCloses https://github.com/vector-im/element-web/issues/18958",
+          "timestamp": "2021-10-15T14:29:17+01:00",
+          "tree_id": "f7e3844f368115a1f5766b11065fe496a51ff3b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f8c516d927ec7dd2b5f82bce5a334839ba7b0227"
+        },
+        "date": 1634304915525,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4743.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 899.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
