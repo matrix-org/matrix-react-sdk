@@ -41,18 +41,6 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
 }
 
-export const ThreadPanelItem: React.FC<{ event: MatrixEvent }> = ({ event }) => {
-    return <EventTile
-        key={event.getId()}
-        mxEvent={event}
-        enableFlair={false}
-        showReadReceipts={false}
-        as="div"
-        tileShape={TileShape.Thread}
-        alwaysShowTimestamps={true}
-    />;
-};
-
 export enum ThreadFilterType {
     "My",
     "All"
