@@ -21,8 +21,7 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { objectKeyChanges } from "./utils/objects";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import SettingsStore from "./settings/SettingsStore";
 
 /* Posthog analytics tracking.
  *
@@ -341,27 +340,18 @@ export class PosthogAnalytics {
         }
     }
 
-    private onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent) => {
+    public startListeningToSettingsChanges(client: MatrixClient): void {
         // Listen to account data changes from sync so we can observe changes to relevant flags and update.
         // This is called -
         //  * On page load, when the account data is first received by sync
         //  * On login
         //  * When another device changes account data
         //  * When the user changes their preferences on this device
-        if (event.getType() === "im.vector.web.settings") {
-            // Note that for new accounts, pseudonymousAnalyticsOptIn won't be set, so updateAnonymityFromSettings
-            // won't be called (i.e. this.anonymity will be left as the default, until the setting changes)
-            const prevContent = prevEvent ? prevEvent.getContent() : {};
-            const changedSettings = objectKeyChanges<Record<string, any>>(prevContent, event.getContent());
-            for (const settingName of changedSettings) {
-                if (settingName === "pseudonymousAnalyticsOptIn") {
-                    this.updateAnonymityFromSettings(event.getContent().pseudonymousAnalyticsOptIn);
-                }
-            }
-        }
-    };
-
-    public startListeningToSettingsChanges(client: MatrixClient): void {
-        client.on('accountData', this.onAccountData);
+        // Note that for new accounts, pseudonymousAnalyticsOptIn won't be set, so updateAnonymityFromSettings
+        // won't be called (i.e. this.anonymity will be left as the default, until the setting changes)
+        SettingsStore.watchSetting("pseudonymousAnalyticsOptIn", null,
+            (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+            this.updateAnonymityFromSettings(newValue);
+        })
     }
 }
