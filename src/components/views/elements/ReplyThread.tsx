@@ -370,7 +370,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
             header = (
                 <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(this.state.loadedEv)}`}>
                     <a className="mx_ReplyThread_show" onClick={this.onQuoteClick}>
-                        { _t("Expand thread") }
+                        { _t("Expand replies") }
                     </a>
                 </blockquote>
             );
@@ -378,7 +378,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
             const eventId = ReplyThread.getParentEventId(this.props.parentEv);
             header = <p className="mx_ReplyThread_Export">
                 <a className="mx_reply_anchor" href={`#${eventId}`} scroll-to={eventId}>
-                    { _t("Expand thread") }
+                    { _t("Expand replies") }
                 </a>
             </p>;
         } else if (this.state.loading) {
