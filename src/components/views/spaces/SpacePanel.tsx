@@ -14,7 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
+import React, {
+    ComponentProps,
+    Dispatch,
+    ReactNode,
+    SetStateAction,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -43,6 +52,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
+import UIStore from "../../../stores/UIStore";
 
 const useSpaces = (): [Room[], Room[], Room | null] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -100,9 +110,12 @@ const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
         return SpaceStore.instance.allRoomsInHome;
     });
 
-    return <li className={classNames("mx_SpaceItem", {
-        "collapsed": isPanelCollapsed,
-    })}>
+    return <li
+        className={classNames("mx_SpaceItem", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
         <SpaceButton
             className="mx_SpaceButton_home"
             onClick={() => SpaceStore.instance.setActiveSpace(null)}
@@ -138,13 +151,23 @@ const CreateSpaceButton = ({
     }
 
     const onNewClick = menuDisplayed ? closeMenu : () => {
+        // persist that the user has interacted with this, use it to dismiss the beta dot
+        localStorage.setItem("mx_seenSpaces", "1");
         if (!isPanelCollapsed) setPanelCollapsed(true);
         openMenu();
     };
 
-    return <li className={classNames("mx_SpaceItem", {
-        "collapsed": isPanelCollapsed,
-    })}>
+    let betaDot: JSX.Element;
+    if (!localStorage.getItem("mx_seenSpaces") && !SpaceStore.instance.spacePanelSpaces.length) {
+        betaDot = <div className="mx_BetaDot" />;
+    }
+
+    return <li
+        className={classNames("mx_SpaceItem mx_SpaceItem_new", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
         <SpaceButton
             className={classNames("mx_SpaceButton_new", {
                 mx_SpaceButton_newCancel: menuDisplayed,
@@ -153,6 +176,7 @@ const CreateSpaceButton = ({
             onClick={onNewClick}
             isNarrow={isPanelCollapsed}
         />
+        { betaDot }
 
         { contextMenu }
     </li>;
@@ -179,12 +203,10 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
                 { (provided, snapshot) => (
                     <SpaceItem
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                        dragHandleProps={provided.dragHandleProps}
                         key={s.roomId}
                         innerRef={provided.innerRef}
-                        className={snapshot.isDragging
-                            ? "mx_SpaceItem_dragging"
-                            : undefined}
+                        className={snapshot.isDragging ? "mx_SpaceItem_dragging" : undefined}
                         space={s}
                         activeSpaces={activeSpaces}
                         isPanelCollapsed={isPanelCollapsed}
@@ -200,8 +222,15 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
 
 const SpacePanel = () => {
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
+    const ref = useRef<HTMLUListElement>();
+    useLayoutEffect(() => {
+        UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
+        return () => UIStore.instance.stopTrackingElementDimensions("SpacePanel");
+    }, []);
 
     const onKeyDown = (ev: React.KeyboardEvent) => {
+        if (ev.defaultPrevented) return;
+
         let handled = true;
 
         switch (ev.key) {
@@ -272,6 +301,9 @@ const SpacePanel = () => {
                     <ul
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
                         onKeyDown={onKeyDownHandler}
+                        role="tree"
+                        aria-label={_t("Spaces")}
+                        ref={ref}
                     >
                         <Droppable droppableId="top-level-spaces">
                             { (provided, snapshot) => (

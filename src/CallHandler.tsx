@@ -86,7 +86,7 @@ import { randomUppercaseString, randomLowercaseString } from "matrix-js-sdk/src/
 import EventEmitter from 'events';
 import SdkConfig from './SdkConfig';
 import { ensureDMExists, findDMForUser } from './createRoom';
-import { IPushRule, RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
+import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore';
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
@@ -250,7 +250,15 @@ export default class CallHandler extends EventEmitter {
      * @returns {boolean}
      */
     private areAnyCallsUnsilenced(): boolean {
-        return this.calls.size > this.silencedCalls.size;
+        for (const call of this.calls.values()) {
+            if (
+                call.state === CallState.Ringing &&
+                !this.isCallSilenced(call.callId)
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private async checkProtocols(maxTries) {
@@ -278,9 +286,9 @@ export default class CallHandler extends EventEmitter {
             dis.dispatch({ action: Action.VirtualRoomSupportUpdated });
         } catch (e) {
             if (maxTries === 1) {
-                console.log("Failed to check for protocol support and no retries remain: assuming no support", e);
+                logger.log("Failed to check for protocol support and no retries remain: assuming no support", e);
             } else {
-                console.log("Failed to check for protocol support: will retry", e);
+                logger.log("Failed to check for protocol support: will retry", e);
                 this.pstnSupportCheckTimer = setTimeout(() => {
                     this.checkProtocols(maxTries - 1);
                 }, 10000);
@@ -391,7 +399,7 @@ export default class CallHandler extends EventEmitter {
                     // or chrome doesn't think so and is denying the request. Not sure what
                     // we can really do here...
                     // https://github.com/vector-im/element-web/issues/7657
-                    console.log("Unable to play audio clip", e);
+                    logger.log("Unable to play audio clip", e);
                 }
             };
             if (this.audioPromises.has(audioId)) {
@@ -464,86 +472,12 @@ export default class CallHandler extends EventEmitter {
             this.removeCallForRoom(mappedRoomId);
         });
         call.on(CallEvent.State, (newState: CallState, oldState: CallState) => {
-            if (!this.matchesCallForThisRoom(call)) return;
-
-            this.setCallState(call, newState);
-
-            switch (oldState) {
-                case CallState.Ringing:
-                    this.pause(AudioID.Ring);
-                    break;
-                case CallState.InviteSent:
-                    this.pause(AudioID.Ringback);
-                    break;
-            }
-
-            if (newState !== CallState.Ringing) {
-                this.silencedCalls.delete(call.callId);
-            }
-
-            switch (newState) {
-                case CallState.Ringing: {
-                    const incomingCallPushRule = (
-                        new PushProcessor(MatrixClientPeg.get()).getPushRuleById(RuleId.IncomingCall) as IPushRule
-                    );
-                    const pushRuleEnabled = incomingCallPushRule?.enabled;
-                    const tweakSetToRing = incomingCallPushRule?.actions.some((action: Tweaks) => (
-                        action.set_tweak === TweakName.Sound &&
-                        action.value === "ring"
-                    ));
-
-                    if (pushRuleEnabled && tweakSetToRing) {
-                        this.play(AudioID.Ring);
-                    } else {
-                        this.silenceCall(call.callId);
-                    }
-                    break;
-                }
-                case CallState.InviteSent: {
-                    this.play(AudioID.Ringback);
-                    break;
-                }
-                case CallState.Ended: {
-                    const hangupReason = call.hangupReason;
-                    Analytics.trackEvent('voip', 'callEnded', 'hangupReason', hangupReason);
-                    this.removeCallForRoom(mappedRoomId);
-                    if (oldState === CallState.InviteSent && call.hangupParty === CallParty.Remote) {
-                        this.play(AudioID.Busy);
-                        let title;
-                        let description;
-                        // TODO: We should either do away with these or figure out a copy for each code (expect user_hangup...)
-                        if (call.hangupReason === CallErrorCode.UserBusy) {
-                            title = _t("User Busy");
-                            description = _t("The user you called is busy.");
-                        } else if (hangupReason && ![CallErrorCode.UserHangup, "user hangup"].includes(hangupReason)) {
-                            title = _t("Call Failed");
-                            description = _t("The call could not be established");
-                        }
-
-                        Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
-                            title, description,
-                        });
-                    } else if (
-                        hangupReason === CallErrorCode.AnsweredElsewhere && oldState === CallState.Connecting
-                    ) {
-                        Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
-                            title: _t("Answered Elsewhere"),
-                            description: _t("The call was answered on another device."),
-                        });
-                    } else if (oldState !== CallState.Fledgling && oldState !== CallState.Ringing) {
-                        // don't play the end-call sound for calls that never got off the ground
-                        this.play(AudioID.CallEnd);
-                    }
-
-                    this.logCallStats(call, mappedRoomId);
-                    break;
-                }
-            }
+            this.onCallStateChanged(newState, oldState, call);
         });
         call.on(CallEvent.Replaced, (newCall: MatrixCall) => {
             if (!this.matchesCallForThisRoom(call)) return;
 
-            console.log(`Call ID ${call.callId} is being replaced by call ID ${newCall.callId}`);
+            logger.log(`Call ID ${call.callId} is being replaced by call ID ${newCall.callId}`);
 
             if (call.state === CallState.Ringing) {
                 this.pause(AudioID.Ring);
@@ -551,15 +485,15 @@ export default class CallHandler extends EventEmitter {
                 this.pause(AudioID.Ringback);
             }
 
-            this.calls.set(mappedRoomId, newCall);
-            this.emit(CallHandlerEvent.CallsChanged, this.calls);
+            this.removeCallForRoom(mappedRoomId);
+            this.addCallForRoom(mappedRoomId, newCall);
             this.setCallListeners(newCall);
             this.setCallState(newCall, newCall.state);
         });
         call.on(CallEvent.AssertedIdentityChanged, async () => {
             if (!this.matchesCallForThisRoom(call)) return;
 
-            console.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
+            logger.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
 
             const newAssertedIdentity = call.getRemoteAssertedIdentity().id;
             let newNativeAssertedIdentity = newAssertedIdentity;
@@ -569,7 +503,7 @@ export default class CallHandler extends EventEmitter {
                     newNativeAssertedIdentity = response[0].userid;
                 }
             }
-            console.log(`Asserted identity ${newAssertedIdentity} mapped to ${newNativeAssertedIdentity}`);
+            logger.log(`Asserted identity ${newAssertedIdentity} mapped to ${newNativeAssertedIdentity}`);
 
             if (newNativeAssertedIdentity) {
                 this.assertedIdentityNativeUsers[call.callId] = newNativeAssertedIdentity;
@@ -582,17 +516,99 @@ export default class CallHandler extends EventEmitter {
                 await ensureDMExists(MatrixClientPeg.get(), newNativeAssertedIdentity);
 
                 const newMappedRoomId = this.roomIdForCall(call);
-                console.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
+                logger.log(`Old room ID: ${mappedRoomId}, new room ID: ${newMappedRoomId}`);
                 if (newMappedRoomId !== mappedRoomId) {
                     this.removeCallForRoom(mappedRoomId);
                     mappedRoomId = newMappedRoomId;
-                    console.log("Moving call to room " + mappedRoomId);
-                    this.calls.set(mappedRoomId, call);
-                    this.emit(CallHandlerEvent.CallChangeRoom, call);
+                    logger.log("Moving call to room " + mappedRoomId);
+                    this.addCallForRoom(mappedRoomId, call, true);
                 }
             }
         });
     }
+
+    private onCallStateChanged = (newState: CallState, oldState: CallState, call: MatrixCall): void => {
+        if (!this.matchesCallForThisRoom(call)) return;
+
+        const mappedRoomId = this.roomIdForCall(call);
+        this.setCallState(call, newState);
+
+        switch (oldState) {
+            case CallState.Ringing:
+                this.pause(AudioID.Ring);
+                break;
+            case CallState.InviteSent:
+                this.pause(AudioID.Ringback);
+                break;
+        }
+
+        if (newState !== CallState.Ringing) {
+            this.silencedCalls.delete(call.callId);
+        }
+
+        switch (newState) {
+            case CallState.Ringing: {
+                const incomingCallPushRule = (
+                    new PushProcessor(MatrixClientPeg.get()).getPushRuleById(RuleId.IncomingCall)
+                );
+                const pushRuleEnabled = incomingCallPushRule?.enabled;
+                const tweakSetToRing = incomingCallPushRule?.actions.some((action: Tweaks) => (
+                    action.set_tweak === TweakName.Sound &&
+                    action.value === "ring"
+                ));
+
+                if (pushRuleEnabled && tweakSetToRing) {
+                    this.play(AudioID.Ring);
+                } else {
+                    this.silenceCall(call.callId);
+                }
+                break;
+            }
+            case CallState.InviteSent: {
+                this.play(AudioID.Ringback);
+                break;
+            }
+            case CallState.Ended: {
+                const hangupReason = call.hangupReason;
+                Analytics.trackEvent('voip', 'callEnded', 'hangupReason', hangupReason);
+                this.removeCallForRoom(mappedRoomId);
+                if (oldState === CallState.InviteSent && call.hangupParty === CallParty.Remote) {
+                    this.play(AudioID.Busy);
+
+                    // Don't show a modal when we got rejected/the call was hung up
+                    if (!hangupReason || [CallErrorCode.UserHangup, "user hangup"].includes(hangupReason)) break;
+
+                    let title;
+                    let description;
+                    // TODO: We should either do away with these or figure out a copy for each code (expect user_hangup...)
+                    if (call.hangupReason === CallErrorCode.UserBusy) {
+                        title = _t("User Busy");
+                        description = _t("The user you called is busy.");
+                    } else {
+                        title = _t("Call Failed");
+                        description = _t("The call could not be established");
+                    }
+
+                    Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
+                        title, description,
+                    });
+                } else if (
+                    hangupReason === CallErrorCode.AnsweredElsewhere && oldState === CallState.Connecting
+                ) {
+                    Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
+                        title: _t("Answered Elsewhere"),
+                        description: _t("The call was answered on another device."),
+                    });
+                } else if (oldState !== CallState.Fledgling && oldState !== CallState.Ringing) {
+                    // don't play the end-call sound for calls that never got off the ground
+                    this.play(AudioID.CallEnd);
+                }
+
+                this.logCallStats(call, mappedRoomId);
+                break;
+            }
+        }
+    };
 
     private async logCallStats(call: MatrixCall, mappedRoomId: string) {
         const stats = await call.getCurrentCallStats();
@@ -640,7 +656,7 @@ export default class CallHandler extends EventEmitter {
     private setCallState(call: MatrixCall, status: CallState) {
         const mappedRoomId = CallHandler.sharedInstance().roomIdForCall(call);
 
-        console.log(
+        logger.log(
             `Call state in ${mappedRoomId} changed to ${status}`,
         );
 
@@ -665,7 +681,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private removeCallForRoom(roomId: string) {
-        console.log("Removing call for room ", roomId);
+        logger.log("Removing call for room ", roomId);
         this.calls.delete(roomId);
         this.emit(CallHandlerEvent.CallsChanged, this.calls);
     }
@@ -736,12 +752,18 @@ export default class CallHandler extends EventEmitter {
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
 
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
-        console.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
+        logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
         const call = MatrixClientPeg.get().createCall(mappedRoomId);
 
-        console.log("Adding call for room ", roomId);
-        this.calls.set(roomId, call);
-        this.emit(CallHandlerEvent.CallsChanged, this.calls);
+        try {
+            this.addCallForRoom(roomId, call);
+        } catch (e) {
+            Modal.createTrackedDialog('Call Handler', 'Existing Call with user', ErrorDialog, {
+                title: _t('Already in call'),
+                description: _t("You're already in a call with this person."),
+            });
+            return;
+        }
         if (transferee) {
             this.transferees[call.callId] = transferee;
         }
@@ -793,13 +815,8 @@ export default class CallHandler extends EventEmitter {
                         return;
                     }
 
-                    if (this.getCallForRoom(room.roomId)) {
-                        Modal.createTrackedDialog('Call Handler', 'Existing Call with user', ErrorDialog, {
-                            title: _t('Already in call'),
-                            description: _t("You're already in a call with this person."),
-                        });
-                        return;
-                    }
+                    // We leave the check for whether there's already a call in this room until later,
+                    // otherwise it can race.
 
                     const members = room.getJoinedMembers();
                     if (members.length <= 1) {
@@ -845,7 +862,7 @@ export default class CallHandler extends EventEmitter {
 
                     const mappedRoomId = CallHandler.sharedInstance().roomIdForCall(call);
                     if (this.getCallForRoom(mappedRoomId)) {
-                        console.log(
+                        logger.log(
                             "Got incoming call for room " + mappedRoomId +
                             " but there's already a call for this room: ignoring",
                         );
@@ -853,10 +870,11 @@ export default class CallHandler extends EventEmitter {
                     }
 
                     Analytics.trackEvent('voip', 'receiveCall', 'type', call.type);
-                    console.log("Adding call for room ", mappedRoomId);
-                    this.calls.set(mappedRoomId, call);
-                    this.emit(CallHandlerEvent.CallsChanged, this.calls);
+
+                    this.addCallForRoom(mappedRoomId, call);
                     this.setCallListeners(call);
+                    // Explicitly handle first state change
+                    this.onCallStateChanged(call.state, null, call);
 
                     // get ready to send encrypted events in the room, so if the user does answer
                     // the call, we'll be ready to send. NB. This is the protocol-level room ID not
@@ -867,6 +885,8 @@ export default class CallHandler extends EventEmitter {
                 break;
             case 'hangup':
             case 'reject':
+                this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);
+
                 if (!this.calls.get(payload.room_id)) {
                     return; // no call to hangup
                 }
@@ -879,11 +899,15 @@ export default class CallHandler extends EventEmitter {
                 // the hangup event away)
                 break;
             case 'hangup_all':
+                this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);
+
                 for (const call of this.calls.values()) {
                     call.hangup(CallErrorCode.UserHangup, false);
                 }
                 break;
             case 'answer': {
+                this.stopRingingIfPossible(this.calls.get(payload.room_id).callId);
+
                 if (!this.calls.has(payload.room_id)) {
                     return; // no call to answer
                 }
@@ -918,6 +942,12 @@ export default class CallHandler extends EventEmitter {
         }
     };
 
+    private stopRingingIfPossible(callId: string): void {
+        this.silencedCalls.delete(callId);
+        if (this.areAnyCallsUnsilenced()) return;
+        this.pause(AudioID.Ring);
+    }
+
     private async dialNumber(number: string) {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
@@ -936,7 +966,7 @@ export default class CallHandler extends EventEmitter {
             const nativeLookupResults = await this.sipNativeLookup(userId);
             const lookupSuccess = nativeLookupResults.length > 0 && nativeLookupResults[0].fields.lookup_success;
             nativeUserId = lookupSuccess ? nativeLookupResults[0].userid : userId;
-            console.log("Looked up " + number + " to " + userId + " and mapped to native user " + nativeUserId);
+            logger.log("Looked up " + number + " to " + userId + " and mapped to native user " + nativeUserId);
         } else {
             nativeUserId = userId;
         }
@@ -984,7 +1014,7 @@ export default class CallHandler extends EventEmitter {
             try {
                 await call.transfer(destination);
             } catch (e) {
-                console.log("Failed to transfer call", e);
+                logger.log("Failed to transfer call", e);
                 Modal.createTrackedDialog('Failed to transfer call', '', ErrorDialog, {
                     title: _t('Transfer Failed'),
                     description: _t('Failed to transfer call'),
@@ -1074,7 +1104,7 @@ export default class CallHandler extends EventEmitter {
         );
 
         WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl, 'Jitsi', widgetData).then(() => {
-            console.log('Jitsi widget added');
+            logger.log('Jitsi widget added');
         }).catch((e) => {
             if (e.errcode === 'M_FORBIDDEN') {
                 Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
@@ -1118,5 +1148,22 @@ export default class CallHandler extends EventEmitter {
 
             messaging.transport.send(ElementWidgetActions.HangupCall, {});
         });
+    }
+
+    private addCallForRoom(roomId: string, call: MatrixCall, changedRooms = false): void {
+        if (this.calls.has(roomId)) {
+            logger.log(`Couldn't add call to room ${roomId}: already have a call for this room`);
+            throw new Error("Already have a call for room " + roomId);
+        }
+
+        logger.log("setting call for room " + roomId);
+        this.calls.set(roomId, call);
+
+        // Should we always emit CallsChanged too?
+        if (changedRooms) {
+            this.emit(CallHandlerEvent.CallChangeRoom, call);
+        } else {
+            this.emit(CallHandlerEvent.CallsChanged, this.calls);
+        }
     }
 }

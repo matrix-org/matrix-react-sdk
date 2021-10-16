@@ -49,6 +49,9 @@ import PerformanceMonitor from "../performance";
 import UIStore from "../stores/UIStore";
 import { SetupEncryptionStore } from "../stores/SetupEncryptionStore";
 import { RoomScrollStateStore } from "../stores/RoomScrollStateStore";
+import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
+import ActiveWidgetStore from "../stores/ActiveWidgetStore";
+import { Skinner } from "../Skinner";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -92,7 +95,29 @@ declare global {
         mxUIStore: UIStore;
         mxSetupEncryptionStore?: SetupEncryptionStore;
         mxRoomScrollStateStore?: RoomScrollStateStore;
+        mxActiveWidgetStore?: ActiveWidgetStore;
+        mxSkinner?: Skinner;
         mxOnRecaptchaLoaded?: () => void;
+        electron?: Electron;
+    }
+
+    interface DesktopCapturerSource {
+        id: string;
+        name: string;
+        thumbnailURL: string;
+    }
+
+    interface GetSourcesOptions {
+        types: Array<string>;
+        thumbnailSize?: {
+            height: number;
+            width: number;
+        };
+        fetchWindowIcons?: boolean;
+    }
+
+    interface Electron {
+        getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>>;
     }
 
     interface Document {
@@ -132,6 +157,10 @@ declare global {
         // sinkId & setSinkId are experimental and typescript doesn't know about them
         sinkId: string;
         setSinkId(outputId: string);
+    }
+
+    interface HTMLStyleElement {
+        disabled?: boolean;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour
@@ -203,6 +232,15 @@ declare global {
               ) => string;
               isReady: () => boolean;
           };
+
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_logger: ConsoleLogger;
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_initPromise: Promise<void>;
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_initStoragePromise: Promise<void>;
+    // eslint-disable-next-line no-var, camelcase
+    var mx_rage_store: IndexedDBLogStore;
 }
 
 /* eslint-enable @typescript-eslint/naming-convention */
