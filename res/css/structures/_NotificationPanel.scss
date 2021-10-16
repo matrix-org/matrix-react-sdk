@@ -79,7 +79,7 @@ limitations under the License.
                     font-size: $font-14px;
                     display: flex;
                     align-items: center;
-                    color: $primary-fg-color;
+                    color: $primary-content;
                     cursor: pointer;
 
                     > .mx_BaseAvatar {
@@ -114,7 +114,7 @@ limitations under the License.
                     .mx_EventTile_footer_timestamp {
                         font-size: inherit;
                         line-height: inherit;
-                        color: $secondary-fg-color;
+                        color: $secondary-content;
                     }
 
                     .mx_AccessibleButton_kind_link {
