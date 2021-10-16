@@ -232,10 +232,18 @@ limitations under the License.
     mask-image: url('$(res)/img/element-icons/room/files.svg');
 }
 
+.mx_RoomSummaryCard_icon_threads::before {
+    mask-image: url('$(res)/img/element-icons/message/thread.svg');
+}
+
 .mx_RoomSummaryCard_icon_share::before {
     mask-image: url('$(res)/img/element-icons/room/share.svg');
 }
 
 .mx_RoomSummaryCard_icon_settings::before {
     mask-image: url('$(res)/img/element-icons/settings.svg');
+}
+
+.mx_RoomSummaryCard_icon_export::before {
+    mask-image: url('$(res)/img/element-icons/export.svg');
 }
