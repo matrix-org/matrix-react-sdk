@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
@@ -33,6 +35,13 @@ import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
 import Pill from './Pill';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { RelationType } from 'matrix-js-sdk/src/@types/event';
+
+/**
+ * This number is based on the previous behavior - if we have message of height
+ * over 60px then we want to show button that will allow to expand it.
+ */
+const SHOW_EXPAND_QUOTE_PIXELS = 60;
 
 interface IProps {
     // the latest event in this chain of replies
@@ -44,6 +53,9 @@ interface IProps {
     layout?: Layout;
     // Whether to always show a timestamp
     alwaysShowTimestamps?: boolean;
+    forExport?: boolean;
+    isQuoteExpanded?: boolean;
+    setQuoteExpanded: (isExpanded: boolean) => void;
 }
 
 interface IState {
@@ -65,6 +77,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
     static contextType = MatrixClientContext;
     private unmounted = false;
     private room: Room;
+    private blockquoteRef = React.createRef<HTMLElement>();
 
     constructor(props, context) {
         super(props, context);
@@ -79,7 +92,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         this.room = this.context.getRoom(this.props.parentEv.getRoomId());
     }
 
-    public static getParentEventId(ev: MatrixEvent): string {
+    public static getParentEventId(ev: MatrixEvent): string | undefined {
         if (!ev || ev.isRedacted()) return;
 
         // XXX: For newer relations (annotations, replacements, etc.), we now
@@ -87,7 +100,13 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         // could be used here for replies as well... However, the helper
         // currently assumes the relation has a `rel_type`, which older replies
         // do not, so this block is left as-is for now.
-        const mRelatesTo = ev.getWireContent()['m.relates_to'];
+        //
+        // We're prefer ev.getContent() over ev.getWireContent() to make sure
+        // we grab the latest edit with potentially new relations. But we also
+        // can't just rely on ev.getContent() by itself because historically we
+        // still show the reply from the original message even though the edit
+        // event does not include the relation reply.
+        const mRelatesTo = ev.getContent()['m.relates_to'] || ev.getWireContent()['m.relates_to'];
         if (mRelatesTo && mRelatesTo['m.in_reply_to']) {
             const mInReplyTo = mRelatesTo['m.in_reply_to'];
             if (mInReplyTo && mInReplyTo['event_id']) return mInReplyTo['event_id'];
@@ -130,7 +149,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
     public static getNestedReplyText(
         ev: MatrixEvent,
         permalinkCreator: RoomPermalinkCreator,
-    ): { body: string, html: string } {
+    ): { body: string, html: string } | null {
         if (!ev) return null;
 
         let { body, formatted_body: html } = ev.getContent();
@@ -208,44 +227,62 @@ export default class ReplyThread extends React.Component<IProps, IState> {
 
     public static makeReplyMixIn(ev: MatrixEvent) {
         if (!ev) return {};
-        return {
+
+        const mixin: any = {
             'm.relates_to': {
                 'm.in_reply_to': {
                     'event_id': ev.getId(),
                 },
             },
         };
+
+        /**
+         * If the event replied is part of a thread
+         * Add the `m.thread` relation so that clients
+         * that know how to handle that relation will
+         * be able to render them more accurately
+         */
+        if (ev.isThreadRelation) {
+            mixin['m.relates_to'] = {
+                ...mixin['m.relates_to'],
+                rel_type: RelationType.Thread,
+                event_id: ev.threadRootId,
+            };
+        }
+
+        return mixin;
     }
 
-    public static makeThread(
-        parentEv: MatrixEvent,
-        onHeightChanged: () => void,
-        permalinkCreator: RoomPermalinkCreator,
-        ref: React.RefObject<ReplyThread>,
-        layout: Layout,
-        alwaysShowTimestamps: boolean,
-    ): JSX.Element {
-        if (!ReplyThread.getParentEventId(parentEv)) return null;
-        return <ReplyThread
-            parentEv={parentEv}
-            onHeightChanged={onHeightChanged}
-            ref={ref}
-            permalinkCreator={permalinkCreator}
-            layout={layout}
-            alwaysShowTimestamps={alwaysShowTimestamps}
-        />;
+    public static hasThreadReply(event: MatrixEvent) {
+        return Boolean(ReplyThread.getParentEventId(event));
     }
 
     componentDidMount() {
         this.initialize();
+        this.trySetExpandableQuotes();
     }
 
     componentDidUpdate() {
         this.props.onHeightChanged();
+        this.trySetExpandableQuotes();
     }
 
     componentWillUnmount() {
         this.unmounted = true;
+    }
+
+    private trySetExpandableQuotes() {
+        if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
+            const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
+            if (el) {
+                const code: HTMLElement | null = el.querySelector('code');
+                const isCodeEllipsisShown = code ? code.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS : false;
+                const isElipsisShown = el.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS || isCodeEllipsisShown;
+                if (isElipsisShown) {
+                    this.props.setQuoteExpanded(false);
+                }
+            }
+        }
     }
 
     private async initialize(): Promise<void> {
@@ -301,7 +338,7 @@ export default class ReplyThread extends React.Component<IProps, IState> {
         this.initialize();
     };
 
-    private onQuoteClick = async (): Promise<void> => {
+    private onQuoteClick = async (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): Promise<void> => {
         const events = [this.state.loadedEv, ...this.state.events];
 
         let loadedEv = null;
@@ -349,18 +386,41 @@ export default class ReplyThread extends React.Component<IProps, IState> {
                     })
                 }
             </blockquote>;
+        } else if (this.props.forExport) {
+            const eventId = ReplyThread.getParentEventId(this.props.parentEv);
+            header = <p className="mx_ReplyThread_Export">
+                { _t("In reply to <a>this message</a>",
+                    {},
+                    { a: (sub) => (
+                        <a className="mx_reply_anchor" href={`#${eventId}`} scroll-to={eventId}> { sub } </a>
+                    ),
+                    })
+                }
+            </p>;
         } else if (this.state.loading) {
             header = <Spinner w={16} h={16} />;
         }
 
+        const { isQuoteExpanded } = this.props;
         const evTiles = this.state.events.map((ev) => {
-            return <blockquote className={`mx_ReplyThread ${this.getReplyThreadColorClass(ev)}`} key={ev.getId()}>
-                <ReplyTile
-                    mxEvent={ev}
-                    onHeightChanged={this.props.onHeightChanged}
-                    permalinkCreator={this.props.permalinkCreator}
-                />
-            </blockquote>;
+            const classname = classNames({
+                'mx_ReplyThread': true,
+                [this.getReplyThreadColorClass(ev)]: true,
+                // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
+                'mx_ReplyThread--expanded': isQuoteExpanded === true,
+                // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
+                'mx_ReplyThread--collapsed': isQuoteExpanded === false,
+            });
+            return (
+                <blockquote ref={this.blockquoteRef} className={classname} key={ev.getId()}>
+                    <ReplyTile
+                        mxEvent={ev}
+                        onHeightChanged={this.props.onHeightChanged}
+                        permalinkCreator={this.props.permalinkCreator}
+                        toggleExpandedQuote={() => this.props.setQuoteExpanded(!this.props.isQuoteExpanded)}
+                    />
+                </blockquote>
+            );
         });
 
         return <div className="mx_ReplyThread_wrapper">

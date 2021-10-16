@@ -136,6 +136,18 @@ export function formatCallTime(delta: Date): string {
     return output;
 }
 
+export function formatSeconds(inSeconds: number): string {
+    const hours = Math.floor(inSeconds / (60 * 60)).toFixed(0).padStart(2, '0');
+    const minutes = Math.floor((inSeconds % (60 * 60)) / 60).toFixed(0).padStart(2, '0');
+    const seconds = Math.floor(((inSeconds % (60 * 60)) % 60)).toFixed(0).padStart(2, '0');
+
+    let output = "";
+    if (hours !== "00") output += `${hours}:`;
+    output += `${minutes}:${seconds}`;
+
+    return output;
+}
+
 const MILLIS_IN_DAY = 86400000;
 export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): boolean {
     if (!nextEventDate || !prevEventDate) {
@@ -148,4 +160,21 @@ export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): bo
 
     // Compare weekdays
     return prevEventDate.getDay() !== nextEventDate.getDay();
+}
+
+export function formatFullDateNoDay(date: Date) {
+    return _t("%(date)s at %(time)s", {
+        date: date.toLocaleDateString().replace(/\//g, '-'),
+        time: date.toLocaleTimeString().replace(/:/g, '-'),
+    });
+}
+
+export function formatFullDateNoDayNoTime(date: Date) {
+    return (
+        date.getFullYear() +
+        "/" +
+        pad(date.getMonth() + 1) +
+        "/" +
+        pad(date.getDate())
+    );
 }

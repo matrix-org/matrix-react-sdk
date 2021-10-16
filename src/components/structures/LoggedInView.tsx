@@ -69,6 +69,7 @@ import classNames from 'classnames';
 import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
+import LegacyCommunityPreview from "./LegacyCommunityPreview";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -151,7 +152,8 @@ class LoggedInView extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     protected readonly _matrixClient: MatrixClient;
     protected readonly _roomView: React.RefObject<any>;
-    protected readonly _resizeContainer: React.RefObject<ResizeHandle>;
+    protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
+    protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
     protected compactLayoutWatcherRef: string;
     protected backgroundImageWatcherRef: string;
     protected resizer: Resizer;
@@ -176,6 +178,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         this._roomView = React.createRef();
         this._resizeContainer = React.createRef();
+        this.resizeHandler = React.createRef();
     }
 
     componentDidMount() {
@@ -280,6 +283,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             isItemCollapsed: domNode => {
                 return domNode.classList.contains("mx_LeftPanel_minimized");
             },
+            handler: this.resizeHandler.current,
         };
         const resizer = new Resizer(this._resizeContainer.current, CollapseDistributor, collapseConfig);
         resizer.setClassNames({
@@ -626,11 +630,15 @@ class LoggedInView extends React.Component<IProps, IState> {
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
                 break;
             case PageTypes.GroupView:
-                pageElement = <GroupView
-                    groupId={this.props.currentGroupId}
-                    isNew={this.props.currentGroupIsNew}
-                    resizeNotifier={this.props.resizeNotifier}
-                />;
+                if (SpaceStore.spacesEnabled) {
+                    pageElement = <LegacyCommunityPreview groupId={this.props.currentGroupId} />;
+                } else {
+                    pageElement = <GroupView
+                        groupId={this.props.currentGroupId}
+                        isNew={this.props.currentGroupIsNew}
+                        resizeNotifier={this.props.resizeNotifier}
+                    />;
+                }
                 break;
         }
 
@@ -681,16 +689,17 @@ class LoggedInView extends React.Component<IProps, IState> {
                                 backgroundImage={this.state.backgroundImage}
                             />
                             <div
-                                ref={this._resizeContainer}
                                 className="mx_LeftPanel_wrapper--user"
+                                ref={this._resizeContainer}
+                                data-collapsed={this.props.collapseLhs ? true : undefined}
                             >
                                 <LeftPanel
                                     isMinimized={this.props.collapseLhs || false}
                                     resizeNotifier={this.props.resizeNotifier}
                                 />
-                                <ResizeHandle id="lp-resizer" />
                             </div>
                         </div>
+                        <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
                         <div className="mx_RoomView_wrapper">
                             { pageElement }
                         </div>
