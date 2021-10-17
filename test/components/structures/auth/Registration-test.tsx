@@ -48,13 +48,13 @@ describe('Registration', function() {
         />, parentDiv);
     }
 
-    it('should show server picker', function() {
+    it.skip('should show server picker', function() {
         const root = render();
         const selector = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_ServerPicker");
         expect(selector).toBeTruthy();
     });
 
-    it('should show form when custom URLs disabled', function() {
+    it.skip('should show form when custom URLs disabled', function() {
         jest.spyOn(SdkConfig, "get").mockReturnValue({
             disable_custom_urls: true,
         });
@@ -77,7 +77,7 @@ describe('Registration', function() {
         expect(form).toBeTruthy();
     });
 
-    it("should show SSO options if those are available", () => {
+    it.skip("should show SSO options if those are available", () => {
         jest.spyOn(SdkConfig, "get").mockReturnValue({
             disable_custom_urls: true,
         });
