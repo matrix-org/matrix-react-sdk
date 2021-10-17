@@ -48,25 +48,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
 import RoomContext from '../../../contexts/RoomContext';
 
-function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
-    const html = mxEvent.getContent().formatted_body;
-    if (!html) {
-        return "";
-    }
-    const rootNode = new DOMParser().parseFromString(html, "text/html").body;
-    const mxReply = rootNode.querySelector("mx-reply");
-    return (mxReply && mxReply.outerHTML) || "";
-}
-
-function getTextReplyFallback(mxEvent: MatrixEvent): string {
-    const body = mxEvent.getContent().body;
-    const lines = body.split("\n").map(l => l.trim());
-    if (lines.length > 2 && lines[0].startsWith("> ") && lines[1].length === 0) {
-        return `${lines[0]}\n\n`;
-    }
-    return "";
-}
-
 function createEditContent(
     model: EditorModel,
     editedEvent: MatrixEvent,
@@ -75,7 +56,6 @@ function createEditContent(
     if (isEmote) {
         model = stripEmoteCommand(model);
     }
-    const isReply = !!editedEvent.replyEventId;
 
     const body = textSerialize(model);
 
