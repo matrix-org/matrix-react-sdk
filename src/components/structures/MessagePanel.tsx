@@ -26,7 +26,7 @@ import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import SettingsStore from '../../settings/SettingsStore';
-import RoomContext from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/Layout";
 import { _t } from "../../languageHandler";
 import EventTile, { haveTileForEvent, IReadReceiptProps, TileShape } from "../views/rooms/EventTile";
@@ -48,18 +48,27 @@ import Spinner from "../views/elements/Spinner";
 import TileErrorBoundary from '../views/messages/TileErrorBoundary';
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
+import { logger } from 'matrix-js-sdk/src/logger';
+import { Action } from '../../dispatcher/actions';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
-const membershipTypes = [EventType.RoomMember, EventType.RoomThirdPartyInvite, EventType.RoomServerAcl];
+const groupedEvents = [
+    EventType.RoomMember,
+    EventType.RoomThirdPartyInvite,
+    EventType.RoomServerAcl,
+    EventType.RoomPinnedEvents,
+];
 
 // check if there is a previous event and it has the same sender as this event
 // and the types are the same/is in continuedTypes and the time between them is <= CONTINUATION_MAX_INTERVAL
-function shouldFormContinuation(
+export function shouldFormContinuation(
     prevEvent: MatrixEvent,
     mxEvent: MatrixEvent,
     showHiddenEvents: boolean,
+    timelineRenderingType?: TimelineRenderingType,
 ): boolean {
+    if (timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
     // sanity check inputs
     if (!prevEvent || !prevEvent.sender || !mxEvent.sender) return false;
     // check if within the max continuation period
@@ -168,6 +177,8 @@ interface IProps {
     onUnfillRequest?(backwards: boolean, scrollToken: string): void;
 
     getRelationsForEvent?(eventId: string, relationType: string, eventType: string): Relations;
+
+    hideThreadedMessages?: boolean;
 }
 
 interface IState {
@@ -275,6 +286,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             ghostReadMarkers.push(prevProps.readMarkerEventId);
             this.setState({
                 ghostReadMarkers,
+            });
+        }
+
+        const pendingEditItem = this.pendingEditItem;
+        if (!this.props.editState && this.props.room && pendingEditItem) {
+            defaultDispatcher.dispatch({
+                action: Action.EditEvent,
+                event: this.props.room.findEventById(pendingEditItem),
+                timelineRenderingType: this.context.timelineRenderingType,
             });
         }
     }
@@ -438,6 +458,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Always show highlighted event
         if (this.props.highlightedEventId === mxEv.getId()) return true;
 
+        // Checking if the message has a "parentEventId" as we do not
+        // want to hide the root event of the thread
+        if (mxEv.isThreadRelation && this.props.hideThreadedMessages
+                && SettingsStore.getValue("feature_thread")) {
+            return false;
+        }
+
         return !shouldHideEvent(mxEv, this.context);
     }
 
@@ -532,10 +559,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return { nextEvent, nextTile };
     }
 
-    private get roomHasPendingEdit(): string {
-        return this.props.room && localStorage.getItem(`mx_edit_room_${this.props.room.roomId}`);
+    private get pendingEditItem(): string | undefined {
+        try {
+            return localStorage.getItem(`mx_edit_room_${this.props.room.roomId}_${this.context.timelineRenderingType}`);
+        } catch (err) {
+            logger.error(err);
+            return undefined;
+        }
     }
-
     private getEventTiles(): ReactNode[] {
         this.eventNodes = {};
 
@@ -645,13 +676,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             }
         }
 
-        if (!this.props.editState && this.roomHasPendingEdit) {
-            defaultDispatcher.dispatch({
-                action: "edit_event",
-                event: this.props.room.findEventById(this.roomHasPendingEdit),
-            });
-        }
-
         if (grouper) {
             ret.push(...grouper.getTiles());
         }
@@ -689,14 +713,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         let willWantDateSeparator = false;
         let lastInSection = true;
-        if (nextEvent) {
-            willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEvent.getDate() || new Date());
-            lastInSection = willWantDateSeparator || mxEv.getSender() !== nextEvent.getSender();
+        if (nextEventWithTile) {
+            willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEventWithTile.getDate() || new Date());
+            lastInSection = willWantDateSeparator || mxEv.getSender() !== nextEventWithTile.getSender();
         }
 
         // is this a continuation of the previous message?
         const continuation = !wantsDateSeparator &&
-            shouldFormContinuation(prevEvent, mxEv, this.showHiddenEvents);
+            shouldFormContinuation(prevEvent, mxEv, this.showHiddenEvents, this.context.timelineRenderingType);
 
         const eventId = mxEv.getId();
         const highlight = (eventId === this.props.highlightedEventId);
@@ -768,6 +792,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public wantsDateSeparator(prevEvent: MatrixEvent, nextEventDate: Date): boolean {
+        if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+            return false;
+        }
         if (prevEvent == null) {
             // first event in the panel: depends if we could back-paginate from
             // here.
@@ -1234,7 +1261,7 @@ class RedactionGrouper extends BaseGrouper {
 // Wrap consecutive member events in a ListSummary, ignore if redacted
 class MemberGrouper extends BaseGrouper {
     static canStartGroup = function(panel: MessagePanel, ev: MatrixEvent): boolean {
-        return panel.shouldShowEvent(ev) && membershipTypes.includes(ev.getType() as EventType);
+        return panel.shouldShowEvent(ev) && groupedEvents.includes(ev.getType() as EventType);
     };
 
     constructor(
@@ -1252,7 +1279,7 @@ class MemberGrouper extends BaseGrouper {
         if (this.panel.wantsDateSeparator(this.events[0], ev.getDate())) {
             return false;
         }
-        return membershipTypes.includes(ev.getType() as EventType);
+        return groupedEvents.includes(ev.getType() as EventType);
     }
 
     public add(ev: MatrixEvent, showHiddenEvents?: boolean): void {

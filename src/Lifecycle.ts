@@ -48,6 +48,7 @@ import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
 import CountlyAnalytics from "./CountlyAnalytics";
+import { PosthogAnalytics } from "./PosthogAnalytics";
 import CallHandler from './CallHandler';
 import LifecycleCustomisations from "./customisations/Lifecycle";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
@@ -56,6 +57,8 @@ import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyn
 import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -117,7 +120,7 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
             fragmentQueryParams.guest_user_id &&
             fragmentQueryParams.guest_access_token
         ) {
-            console.log("Using guest access credentials");
+            logger.log("Using guest access credentials");
             return doSetLoggedIn({
                 userId: fragmentQueryParams.guest_user_id as string,
                 accessToken: fragmentQueryParams.guest_access_token as string,
@@ -203,7 +206,7 @@ export function attemptTokenLogin(
             initial_device_display_name: defaultDeviceDisplayName,
         },
     ).then(function(creds) {
-        console.log("Logged in with token");
+        logger.log("Logged in with token");
         return clearStorage().then(async () => {
             await persistCredentials(creds);
             // remember that we just logged in
@@ -272,7 +275,7 @@ function registerAsGuest(
     isUrl: string,
     defaultDeviceDisplayName: string,
 ): Promise<boolean> {
-    console.log(`Doing guest login on ${hsUrl}`);
+    logger.log(`Doing guest login on ${hsUrl}`);
 
     // create a temporary MatrixClient to do the login
     const client = createClient({
@@ -284,7 +287,7 @@ function registerAsGuest(
             initial_device_display_name: defaultDeviceDisplayName,
         },
     }).then((creds) => {
-        console.log(`Registered as guest: ${creds.user_id}`);
+        logger.log(`Registered as guest: ${creds.user_id}`);
         return doSetLoggedIn({
             userId: creds.user_id,
             deviceId: creds.device_id,
@@ -410,27 +413,27 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
 
     if (accessToken && userId && hsUrl) {
         if (ignoreGuest && isGuest) {
-            console.log("Ignoring stored guest account: " + userId);
+            logger.log("Ignoring stored guest account: " + userId);
             return false;
         }
 
         let decryptedAccessToken = accessToken;
         const pickleKey = await PlatformPeg.get().getPickleKey(userId, deviceId);
         if (pickleKey) {
-            console.log("Got pickle key");
+            logger.log("Got pickle key");
             if (typeof accessToken !== "string") {
                 const encrKey = await pickleKeyToAesKey(pickleKey);
                 decryptedAccessToken = await decryptAES(accessToken, encrKey, "access_token");
                 encrKey.fill(0);
             }
         } else {
-            console.log("No pickle key available");
+            logger.log("No pickle key available");
         }
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
 
-        console.log(`Restoring session for ${userId}`);
+        logger.log(`Restoring session for ${userId}`);
         await doSetLoggedIn({
             userId: userId,
             deviceId: deviceId,
@@ -443,7 +446,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         }, false);
         return true;
     } else {
-        console.log("No previous session found.");
+        logger.log("No previous session found.");
         return false;
     }
 }
@@ -487,9 +490,9 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
         : null;
 
     if (pickleKey) {
-        console.log("Created pickle key");
+        logger.log("Created pickle key");
     } else {
-        console.log("Pickle key not created");
+        logger.log("Pickle key not created");
     }
 
     return doSetLoggedIn(Object.assign({}, credentials, { pickleKey }), true);
@@ -543,7 +546,7 @@ async function doSetLoggedIn(
 
     const softLogout = isSoftLogout();
 
-    console.log(
+    logger.log(
         "setLoggedIn: mxid: " + credentials.userId +
         " deviceId: " + credentials.deviceId +
         " guest: " + credentials.guest +
@@ -576,6 +579,9 @@ async function doSetLoggedIn(
     Analytics.setLoggedIn(credentials.guest, credentials.homeserverUrl);
 
     MatrixClientPeg.replaceUsingCreds(credentials);
+
+    PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
+
     const client = MatrixClientPeg.get();
 
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
@@ -685,7 +691,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
 
     SecurityCustomisations.persistCredentials?.(credentials);
 
-    console.log(`Session persisted for ${credentials.userId}`);
+    logger.log(`Session persisted for ${credentials.userId}`);
 }
 
 let _isLoggingOut = false;
@@ -699,6 +705,8 @@ export function logout(): void {
         // user has logged out, fall back to anonymous
         CountlyAnalytics.instance.enable(/* anonymous = */ true);
     }
+
+    PosthogAnalytics.instance.logout();
 
     if (MatrixClientPeg.get().isGuest()) {
         // logout doesn't work for guest sessions
@@ -720,7 +728,7 @@ export function logout(): void {
             // token still valid, but we should fix this by having access
             // tokens expire (and if you really think you've been compromised,
             // change your password).
-            console.log("Failed to call logout API: token will not be invalidated");
+            logger.log("Failed to call logout API: token will not be invalidated");
             onLoggedOut();
         },
     );
@@ -736,7 +744,7 @@ export function softLogout(): void {
 
     // Dev note: please keep this log line around. It can be useful for track down
     // random clients stopping in the middle of the logs.
-    console.log("Soft logout initiated");
+    logger.log("Soft logout initiated");
     _isLoggingOut = true; // to avoid repeated flags
     // Ensure that we dispatch a view change **before** stopping the client so
     // so that React components unmount first. This avoids React soft crashes
@@ -762,7 +770,7 @@ export function isLoggingOut(): boolean {
  * syncing the client.
  */
 async function startMatrixClient(startSyncing = true): Promise<void> {
-    console.log(`Lifecycle: Starting MatrixClient`);
+    logger.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
     // to add listeners for the 'sync' event so otherwise we'd have
@@ -778,7 +786,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     UserActivity.sharedInstance().start();
     DMRoomMap.makeShared().start();
     IntegrationManagers.sharedInstance().startWatching();
-    ActiveWidgetStore.start();
+    ActiveWidgetStore.instance.start();
     CallHandler.sharedInstance().start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
@@ -884,7 +892,7 @@ export function stopMatrixClient(unsetClient = true): void {
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();
     Presence.stop();
-    ActiveWidgetStore.stop();
+    ActiveWidgetStore.instance.stop();
     IntegrationManagers.sharedInstance().stopWatching();
     Mjolnir.sharedInstance().stop();
     DeviceListener.sharedInstance().stop();

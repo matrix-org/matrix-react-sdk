@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { calculateRoomVia } from "./permalinks/Permalinks";
 import Modal from "../Modal";
@@ -37,6 +38,7 @@ import { leaveRoomBehaviour } from "./membership";
 import Spinner from "../components/views/elements/Spinner";
 import dis from "../dispatcher/dispatcher";
 import LeaveSpaceDialog from "../components/views/dialogs/LeaveSpaceDialog";
+import CreateSpaceFromCommunityDialog from "../components/views/dialogs/CreateSpaceFromCommunityDialog";
 
 export const shouldShowSpaceSettings = (space: Room) => {
     const userId = space.client.getUserId();
@@ -153,18 +155,28 @@ export const showCreateNewSubspace = (space: Room): void => {
     );
 };
 
+export const bulkSpaceBehaviour = async (
+    space: Room,
+    children: Room[],
+    fn: (room: Room) => Promise<unknown>,
+): Promise<void> => {
+    const modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
+    try {
+        for (const room of children) {
+            await fn(room);
+        }
+        await fn(space);
+    } finally {
+        modal.close();
+    }
+};
+
 export const leaveSpace = (space: Room) => {
     Modal.createTrackedDialog("Leave Space", "", LeaveSpaceDialog, {
         space,
         onFinished: async (leave: boolean, rooms: Room[]) => {
             if (!leave) return;
-            const modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
-            try {
-                await Promise.all(rooms.map(r => leaveRoomBehaviour(r.roomId)));
-                await leaveRoomBehaviour(space.roomId);
-            } finally {
-                modal.close();
-            }
+            await bulkSpaceBehaviour(space, rooms, room => leaveRoomBehaviour(room.roomId));
 
             dis.dispatch({
                 action: "after_leave_room",
@@ -172,4 +184,11 @@ export const leaveSpace = (space: Room) => {
             });
         },
     }, "mx_LeaveSpaceDialog_wrapper");
+};
+
+export const createSpaceFromCommunity = (cli: MatrixClient, groupId: string): Promise<[string?]> => {
+    return Modal.createTrackedDialog('Create Space', 'from community', CreateSpaceFromCommunityDialog, {
+        matrixClient: cli,
+        groupId,
+    }, "mx_CreateSpaceFromCommunityDialog_wrapper").finished as Promise<[string?]>;
 };

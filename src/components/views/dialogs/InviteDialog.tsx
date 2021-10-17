@@ -55,7 +55,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { getAddressType } from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { compare } from '../../../utils/strings';
 import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -72,6 +72,8 @@ import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/SpaceStore";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -394,6 +396,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private closeCopiedTooltip: () => void;
     private debounceTimer: number = null; // actually number because we're in the browser
     private editorRef = createRef<HTMLInputElement>();
+    private numberEntryFieldRef: React.RefObject<Field> = createRef();
     private unmounted = false;
 
     constructor(props) {
@@ -774,7 +777,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                             invitedUsers.push(addr);
                         }
                     }
-                    console.log("Sharing history with", invitedUsers);
+                    logger.log("Sharing history with", invitedUsers);
                     cli.sendSharedHistoryKeys(
                         this.props.roomId, invitedUsers,
                     );
@@ -1283,13 +1286,27 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.setState({ dialPadValue: ev.currentTarget.value });
     };
 
-    private onDigitPress = digit => {
+    private onDigitPress = (digit: string, ev: ButtonEvent) => {
         this.setState({ dialPadValue: this.state.dialPadValue + digit });
+
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
-    private onDeletePress = () => {
+    private onDeletePress = (ev: ButtonEvent) => {
         if (this.state.dialPadValue.length === 0) return;
         this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
+
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
     private onTabChange = (tabId: TabId) => {
@@ -1543,6 +1560,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             let dialPadField;
             if (this.state.dialPadValue.length !== 0) {
                 dialPadField = <Field
+                    ref={this.numberEntryFieldRef}
                     className="mx_InviteDialog_dialPadField"
                     id="dialpad_number"
                     value={this.state.dialPadValue}
@@ -1552,6 +1570,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 />;
             } else {
                 dialPadField = <Field
+                    ref={this.numberEntryFieldRef}
                     className="mx_InviteDialog_dialPadField"
                     id="dialpad_number"
                     value={this.state.dialPadValue}

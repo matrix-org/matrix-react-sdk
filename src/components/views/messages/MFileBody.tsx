@@ -29,6 +29,8 @@ import { IBodyProps } from "./IBodyProps";
 import { FileDownloader } from "../../../utils/FileDownloader";
 import TextWithTooltip from "../elements/TextWithTooltip";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 export let DOWNLOAD_ICON_URL; // cached copy of the download.svg asset for the sandboxed iframe later on
 
 async function cacheDownloadIcon() {
@@ -121,6 +123,11 @@ export default class MFileBody extends React.Component<IProps, IState> {
         this.state = {};
     }
 
+    private getContentUrl(): string | null {
+        if (this.props.forExport) return null;
+        const media = mediaFromContent(this.props.mxEvent.getContent());
+        return media.srcHttp;
+    }
     private get content(): IMediaEventContent {
         return this.props.mxEvent.getContent<IMediaEventContent>();
     }
@@ -145,11 +152,6 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 textContent: _t("Download %(text)s", { text }),
             },
         });
-    }
-
-    private getContentUrl(): string {
-        const media = mediaFromContent(this.props.mxEvent.getContent());
-        return media.srcHttp;
     }
 
     public componentDidUpdate(prevProps, prevState) {
@@ -178,7 +180,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
 
     private onPlaceholderClick = async () => {
         const mediaHelper = this.props.mediaEventHelper;
-        if (mediaHelper.media.isEncrypted) {
+        if (mediaHelper?.media.isEncrypted) {
             await this.decryptFile();
             this.downloadFile(this.fileName, this.linkText);
         } else {
@@ -192,7 +194,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
     };
 
     public render() {
-        const isEncrypted = this.props.mediaEventHelper.media.isEncrypted;
+        const isEncrypted = this.props.mediaEventHelper?.media.isEncrypted;
         const contentUrl = this.getContentUrl();
         const fileSize = this.content.info ? this.content.info.size : null;
         const fileType = this.content.info ? this.content.info.mimetype : "application/octet-stream";
@@ -209,6 +211,16 @@ export default class MFileBody extends React.Component<IProps, IState> {
                     </TextWithTooltip>
                 </AccessibleButton>
             );
+        }
+
+        if (this.props.forExport) {
+            const content = this.props.mxEvent.getContent();
+            // During export, the content url will point to the MSC, which will later point to a local url
+            return <span className="mx_MFileBody">
+                <a href={content.file?.url || content.url}>
+                    { placeholder }
+                </a>
+            </span>;
         }
 
         const showDownloadLink = this.props.tileShape || !this.props.showGenericPlaceholder;
@@ -283,7 +295,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             if (["application/pdf"].includes(fileType) && !fileTooBig) {
                 // We want to force a download on this type, so use an onClick handler.
                 downloadProps["onClick"] = (e) => {
-                    console.log(`Downloading ${fileType} as blob (unencrypted)`);
+                    logger.log(`Downloading ${fileType} as blob (unencrypted)`);
 
                     // Avoid letting the <a> do its thing
                     e.preventDefault();

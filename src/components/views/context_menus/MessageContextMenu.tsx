@@ -40,9 +40,9 @@ import ReactionPicker from '../emojipicker/ReactionPicker';
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import ReportEventDialog from '../dialogs/ReportEventDialog';
 import ViewSource from '../../structures/ViewSource';
-import ConfirmRedactDialog from '../dialogs/ConfirmRedactDialog';
-import ErrorDialog from '../dialogs/ErrorDialog';
+import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import ShareDialog from '../dialogs/ShareDialog';
+import { IPosition, ChevronFace } from '../../structures/ContextMenu';
 
 export function canCancel(eventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -57,8 +57,9 @@ export interface IOperableEventTile {
     getEventTileOps(): IEventTileOps;
 }
 
-interface IProps {
-    // The MatrixEvent associated with the context menu
+interface IProps extends IPosition {
+    chevronFace: ChevronFace;
+    /* the MatrixEvent associated with the context menu */
     mxEvent: MatrixEvent;
     // An optional EventTileOps implementation that can be used to unhide preview widgets
     eventTileOps?: IEventTileOps;
@@ -160,34 +161,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onRedactClick = (): void => {
-        Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
-            onFinished: async (proceed: boolean, reason?: string) => {
-                if (!proceed) return;
-
-                const cli = MatrixClientPeg.get();
-                try {
-                    this.props.onCloseDialog?.();
-                    await cli.redactEvent(
-                        this.props.mxEvent.getRoomId(),
-                        this.props.mxEvent.getId(),
-                        undefined,
-                        reason ? { reason } : {},
-                    );
-                } catch (e) {
-                    const code = e.errcode || e.statusCode;
-                    // only show the dialog if failing for something other than a network error
-                    // (e.g. no errcode or statusCode) as in that case the redactions end up in the
-                    // detached queue and we show the room status bar to allow retry
-                    if (typeof code !== "undefined") {
-                        // display error message stating you couldn't delete this.
-                        Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
-                            title: _t('Error'),
-                            description: _t('You cannot delete this message. (%(code)s)', { code }),
-                        });
-                    }
-                }
-            },
-        }, 'mx_Dialog_confirmredact');
+        const { mxEvent, onCloseDialog } = this.props;
+        createRedactEventDialog({
+            mxEvent,
+            onCloseDialog,
+        });
         this.closeMenu();
     };
 

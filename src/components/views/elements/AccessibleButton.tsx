@@ -19,7 +19,7 @@ import React, { ReactHTML } from 'react';
 import { Key } from '../../../Keyboard';
 import classnames from 'classnames';
 
-export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element>;
+export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element> | React.FormEvent<Element>;
 
 /**
  * children: React's magic prop. Represents all children given to the element.
@@ -40,7 +40,7 @@ interface IProps extends React.AllHTMLAttributes<Element> {
     disabled?: boolean;
     className?: string;
     triggerOnMouseDown?: boolean;
-    onClick(e?: ButtonEvent): void;
+    onClick(e?: ButtonEvent): void | Promise<void>;
 }
 
 interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
@@ -69,7 +69,9 @@ export default function AccessibleButton({
     ...restProps
 }: IProps) {
     const newProps: IAccessibleButtonProps = restProps;
-    if (!disabled) {
+    if (disabled) {
+        newProps["aria-disabled"] = true;
+    } else {
         if (triggerOnMouseDown) {
             newProps.onMouseDown = onClick;
         } else {
@@ -124,7 +126,7 @@ export default function AccessibleButton({
     );
 
     // React.createElement expects InputHTMLAttributes
-    return React.createElement(element, restProps, children);
+    return React.createElement(element, newProps, children);
 }
 
 AccessibleButton.defaultProps = {
