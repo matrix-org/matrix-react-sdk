@@ -76,13 +76,6 @@ function createEditContent(
         model = stripEmoteCommand(model);
     }
     const isReply = !!editedEvent.replyEventId;
-    let plainPrefix = "";
-    let htmlPrefix = "";
-
-    if (isReply) {
-        plainPrefix = getTextReplyFallback(editedEvent);
-        htmlPrefix = getHtmlReplyFallback(editedEvent);
-    }
 
     const body = textSerialize(model);
 
@@ -91,16 +84,16 @@ function createEditContent(
         "body": body,
     };
     const contentBody: IContent = {
-        msgtype: newContent.msgtype,
-        body: `${plainPrefix} * ${body}`,
+        "msgtype": newContent.msgtype,
+        "body": body,
     };
 
-    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: isReply });
+    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: false });
     if (formattedBody) {
         newContent.format = "org.matrix.custom.html";
         newContent.formatted_body = formattedBody;
         contentBody.format = newContent.format;
-        contentBody.formatted_body = `${htmlPrefix} * ${formattedBody}`;
+        contentBody.formatted_body = formattedBody;
     }
 
     const relation = {

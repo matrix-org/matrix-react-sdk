@@ -67,16 +67,6 @@ function addReplyToMessageContent(
     const replyContent = ReplyThread.makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
 
-    // Part of Replies fallback support - prepend the text we're sending
-    // with the text we're replying to
-    const nestedReply = ReplyThread.getNestedReplyText(replyToEvent, permalinkCreator);
-    if (nestedReply) {
-        if (content.formatted_body) {
-            content.formatted_body = nestedReply.html + content.formatted_body;
-        }
-        content.body = nestedReply.body + content.body;
-    }
-
     if (relation) {
         content['m.relates_to'] = {
             ...relation, // the composer can have a default
@@ -106,7 +96,8 @@ export function createMessageContent(
         msgtype: isEmote ? "m.emote" : "m.text",
         body: body,
     };
-    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: !!replyToEvent });
+
+    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: false });
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
