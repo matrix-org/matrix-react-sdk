@@ -1376,23 +1376,19 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // Listen to changes in settings and show the toast if appropriate - this is necessary because account
         // settings can still be changing at this point in app init (due to the initial sync being cached, then
         // subsequent syncs being received from the server)
-        const client = MatrixClientPeg.get();
-        const onAccountData = (event: MatrixEvent) => {
-            if (event.getType() !== "im.vector.web.settings") {
-                return;
-            }
-            if (event.getContent().showPseudonymousAnalyticsPrompt !== false) {
-                this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
-            } else {
-                // It's possible for the value to change if a cached sync loads at page load, but then network
-                // sync contains a new value of the flag with it set to false (e.g. another device set it since last
-                // loading the page); so hide the toast.
-                // (this flipping usually happens before first render so the user won't notice it; anyway flicker on/off
-                // is probably better than showing the toast again when the user already dismissed it)
-                hideAnalyticsToast();
-            }
-        };
-        client.on('accountData', onAccountData);
+        SettingsStore.watchSetting("showPseudonymousAnalyticsPrompt", null,
+            (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+                if (newValue !== false) {
+                    this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
+                } else {
+                    // It's possible for the value to change if a cached sync loads at page load, but then network
+                    // sync contains a new value of the flag with it set to false (e.g. another device set it since last
+                    // loading the page); so hide the toast.
+                    // (this flipping usually happens before first render so the user won't notice it; anyway flicker
+                    // on/off is probably better than showing the toast again when the user already dismissed it)
+                    hideAnalyticsToast();
+                }
+            });
     }
 
     private showScreenAfterLogin() {
