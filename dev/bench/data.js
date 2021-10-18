@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634546484674,
+  "lastUpdate": 1634559300631,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32096,6 +32096,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5004.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dariuszn@element.io",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "distinct": true,
+          "id": "2c66403b3c7ec64b79c653347d0abf0d9ed9a414",
+          "message": "Replace console.info with logger.info\n\nRelated https://github.com/vector-im/element-web/issues/18425",
+          "timestamp": "2021-10-18T14:08:23+02:00",
+          "tree_id": "bccc32e52d2be3f19c664be531a4974d1f87ce04",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c66403b3c7ec64b79c653347d0abf0d9ed9a414"
+        },
+        "date": 1634559298595,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4393.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1075.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1651.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4439.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
