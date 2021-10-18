@@ -100,23 +100,13 @@ const customVariables: Record<string, IVariable> = {
         expl: _td('Your language of choice'),
         example: 'en',
     },
-    'Instance': {
-        id: 5,
-        expl: _td('Which officially provided instance you are using, if any'),
-        example: 'app',
-    },
-    'RTE: Uses Richtext Mode': {
-        id: 6,
-        expl: _td('Whether or not you\'re using the Richtext mode of the Rich Text Editor'),
-        example: 'off',
-    },
     'Homeserver URL': {
-        id: 7,
+        id: 5,
         expl: _td('Your homeserver\'s URL'),
         example: 'https://matrix.org',
     },
     'Touch Input': {
-        id: 8,
+        id: 6,
         expl: _td("Whether you're using %(brand)s on a device where touch is the primary input mechanism"),
         getTextVariables: () => ({
             brand: SdkConfig.get().brand,
@@ -124,20 +114,12 @@ const customVariables: Record<string, IVariable> = {
         example: 'false',
     },
     'Breadcrumbs': {
-        id: 9,
+        id: 7,
         expl: _td("Whether or not you're using the 'breadcrumbs' feature (avatars above the room list)"),
         example: 'disabled',
     },
-    'Installed PWA': {
-        id: 10,
-        expl: _td("Whether you're using %(brand)s as an installed Progressive Web App"),
-        getTextVariables: () => ({
-            brand: SdkConfig.get().brand,
-        }),
-        example: 'false',
-    },
     'Analytics ID': {
-        id: 11,
+        id: 8,
         expl: _td("A randomly generated identifier stored on your homeserver and shared between your devices"),
         example: '54173cc56c7212b08999c53411b6c35',
     },
@@ -396,11 +378,18 @@ export class Analytics {
         ];
 
         // FIXME: Using an import will result in test failures
+        const cookiePolicyUrl = SdkConfig.get().piwik?.policyUrl;
         const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
         Modal.createTrackedDialog('Analytics Details', '', ErrorDialog, {
             title: _t('Analytics'),
             description: <div className="mx_AnalyticsModal">
-                <div>{ _t('The information being sent to us to help make %(brand)s better includes:', {
+                { cookiePolicyUrl &&
+                <p>
+                    Our complete cookie policy can be found
+                    <a href={cookiePolicyUrl} target="_blank" rel="noreferrer noopener">here</a>.
+                </p>
+                }
+                <div>{ _t('Some examples of the information being sent to us to help make %(brand)s better includes:', {
                     brand: SdkConfig.get().brand,
                 }) }</div>
                 <table>

@@ -72,17 +72,18 @@ isn’t shared with any third parties.` + "<Linebreak/><Linebreak/>" +
     // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
     // explaining any change.
     const optInDescription = _t(
-        "Send <UsageDataLink>analytics data</UsageDataLink> to %(analytics_owner)s to help improve the app. " +
-        "This will use a <PolicyLink>cookie</PolicyLink>.",
+        `Would you like to send analytics data to %(analytics_owner)s to help us
+improve the app? ` +
+        "<Linebreak/><Linebreak/>" +
+            `We care about privacy, so we don’t record any personal or identifiable data,
+and we don't share anything with any third parties.` + "<Linebreak/><Linebreak/>" +
+        "<UsageDataLink>More information</UsageDataLink>",
         {
             analytics_owner: analyticsOwner,
         },
         {
             "UsageDataLink": usageDataLink,
-            // XXX: We need to link to the page that explains our cookies
-            "PolicyLink": (sub) => policyUrl ? (
-                <a target="_blank" href={policyUrl} rel="noreferrer noopener">{ sub }</a>
-            ) : sub,
+            "Linebreak": (sub) => <br />,
         },
     );
 
@@ -93,8 +94,7 @@ const getAnonymousDescription = (policyUrl): ReactNode => {
     // get toast description for anonymous tracking (the previous scheme pre-posthog)
     const brand = SdkConfig.get().brand;
     return _t(
-        "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. " +
-        "This will use a <PolicyLink>cookie</PolicyLink>.",
+        "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. ",
         {
             brand,
         },
@@ -102,10 +102,6 @@ const getAnonymousDescription = (policyUrl): ReactNode => {
             "UsageDataLink": (sub) => (
                 <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
             ),
-            // XXX: We need to link to the page that explains our cookies
-            "PolicyLink": (sub) => policyUrl ? (
-                <a target="_blank" href={policyUrl}>{ sub }</a>
-            ) : sub,
         },
     );
 };
