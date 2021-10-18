@@ -313,9 +313,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 // child relations, as per MSC1772.
                 // https://github.com/matrix-org/matrix-doc/blob/main/proposals/1772-groups-as-rooms.md#relationship-between-rooms-and-spaces
                 const parent = this.matrixClient.getRoom(ev.getStateKey());
+                const relation = parent.currentState.getStateEvents(EventType.SpaceChild, roomId);
                 if (!parent?.currentState.maySendStateEvent(EventType.SpaceChild, userId) ||
                     // also skip this relation if the parent had this child added but then since removed it
-                    !Array.isArray(parent.currentState.getStateEvents(EventType.SpaceChild, roomId)?.getContent().via)
+                    (relation && !Array.isArray(relation.getContent().via))
                 ) {
                     return; // skip
                 }
