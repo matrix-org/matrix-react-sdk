@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634573709262,
+  "lastUpdate": 1634573877086,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32384,6 +32384,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4386.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "77e6e1c0ab807d6985c50bb5e90d9ff849d93eab",
+          "message": "Merge pull request #6960 from matrix-org/gsouquet/rename-replythread",
+          "timestamp": "2021-10-18T17:11:31+01:00",
+          "tree_id": "4fd1aab434c8150be32a93872f503f611491f176",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/77e6e1c0ab807d6985c50bb5e90d9ff849d93eab"
+        },
+        "date": 1634573874898,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4564.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1202.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1750.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4929.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
