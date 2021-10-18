@@ -23,6 +23,8 @@ import SdkConfig from './SdkConfig';
 import Modal from './Modal';
 import * as sdk from './index';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const hashRegex = /#\/(groups?|room|user|settings|register|login|forgot_password|home|directory)/;
 const hashVarRegex = /#\/(group|room|user)\/.*$/;
 
@@ -31,7 +33,7 @@ function getRedactedHash(hash: string): string {
     // Don't leak URLs we aren't expecting - they could contain tokens/PII
     const match = hashRegex.exec(hash);
     if (!match) {
-        console.warn(`Unexpected hash location "${hash}"`);
+        logger.warn(`Unexpected hash location "${hash}"`);
         return '#/<unexpected hash location>';
     }
 
@@ -143,7 +145,7 @@ function getUid(): string {
         }
         return data;
     } catch (e) {
-        console.error("Analytics error: ", e);
+        logger.error("Analytics error: ", e);
         return "";
     }
 }
@@ -286,7 +288,7 @@ export class Analytics {
                 redirect: "follow",
             });
         } catch (e) {
-            console.error("Analytics error: ", e);
+            logger.error("Analytics error: ", e);
         }
     }
 
@@ -307,7 +309,7 @@ export class Analytics {
         }
 
         if (typeof generationTimeMs !== 'number') {
-            console.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
+            logger.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
             // But continue anyway because we still want to track the change
         }
 

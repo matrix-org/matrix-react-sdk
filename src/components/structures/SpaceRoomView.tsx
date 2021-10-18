@@ -80,6 +80,7 @@ import { useAsyncMemo } from "../../hooks/useAsyncMemo";
 import Spinner from "../views/elements/Spinner";
 import GroupAvatar from "../views/avatars/GroupAvatar";
 import { useDispatcher } from "../../hooks/useDispatcher";
+import { useRoomState } from "../../hooks/useRoomState";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
@@ -127,7 +128,7 @@ const useMyRoomMembership = (room: Room) => {
 };
 
 const SpaceInfo = ({ space }) => {
-    const joinRule = space.getJoinRule();
+    const joinRule = useRoomState(space, state => state.getJoinRule());
 
     let visibilitySection;
     if (joinRule === "public") {
@@ -207,8 +208,9 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
 
     const spacesEnabled = SpaceStore.spacesEnabled;
 
+    const joinRule = useRoomState(space, state => state.getJoinRule());
     const cannotJoin = getEffectiveMembership(myMembership) === EffectiveMembership.Leave
-        && space.getJoinRule() !== JoinRule.Public;
+        && joinRule !== JoinRule.Public;
 
     let inviterSection;
     let joinButtons;
@@ -534,7 +536,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
             }));
             onFinished(roomIds[0]);
         } catch (e) {
-            console.error("Failed to create initial space rooms", e);
+            logger.error("Failed to create initial space rooms", e);
             setError(_t("Failed to create initial space rooms"));
         }
         setBusy(false);
@@ -711,7 +713,7 @@ const SpaceSetupPrivateInvite = ({ space, onFinished }) => {
                 onFinished();
             }
         } catch (err) {
-            console.error("Failed to invite users to space: ", err);
+            logger.error("Failed to invite users to space: ", err);
             setError(_t("We couldn't invite those users. Please check the users you want to invite and try again."));
         }
         setBusy(false);

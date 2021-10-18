@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
@@ -47,10 +48,8 @@ interface IProps {
 }
 
 interface IState {
-    replyToEvent?: MatrixEvent;
     thread?: Thread;
     editState?: EditorStateTransfer;
-
 }
 
 @replaceableComponent("structures.ThreadView")
@@ -68,11 +67,16 @@ export default class ThreadView extends React.Component<IProps, IState> {
     public componentDidMount(): void {
         this.setupThread(this.props.mxEvent);
         this.dispatcherRef = dis.register(this.onAction);
+
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        room.on(ThreadEvent.New, this.onNewThread);
     }
 
     public componentWillUnmount(): void {
         this.teardownThread();
         dis.unregister(this.dispatcherRef);
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        room.on(ThreadEvent.New, this.onNewThread);
     }
 
     public componentDidUpdate(prevProps) {
@@ -134,11 +138,17 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private onNewThread = (thread: Thread) => {
+        if (thread.id === this.props.mxEvent.getId()) {
+            this.teardownThread();
+            this.setupThread(this.props.mxEvent);
+        }
+    };
+
     private updateThread = (thread?: Thread) => {
         if (thread) {
             this.setState({
                 thread,
-                replyToEvent: thread.replyToEvent,
             });
         }
 
@@ -156,7 +166,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 <BaseCard
                     className="mx_ThreadView"
                     onClose={this.props.onClose}
-                    previousPhase={RightPanelPhases.RoomSummary}
+                    previousPhase={RightPanelPhases.ThreadPanel}
                     withoutScrollContainer={true}
                 >
                     { this.state.thread && (
@@ -185,8 +195,10 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     { this.state?.thread?.timelineSet && (<MessageComposer
                         room={this.props.room}
                         resizeNotifier={this.props.resizeNotifier}
-                        replyInThread={true}
-                        replyToEvent={this.state?.thread?.replyToEvent}
+                        relation={{
+                            rel_type: RelationType.Thread,
+                            event_id: this.state.thread.id,
+                        }}
                         showReplyPreview={false}
                         permalinkCreator={this.props.permalinkCreator}
                         e2eStatus={this.props.e2eStatus}

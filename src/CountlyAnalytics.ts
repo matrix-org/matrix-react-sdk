@@ -25,6 +25,8 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import RoomViewStore from "./stores/RoomViewStore";
 import { Action } from "./dispatcher/actions";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const INACTIVITY_TIME = 20; // seconds
 const HEARTBEAT_INTERVAL = 5_000; // ms
 const SESSION_UPDATE_INTERVAL = 60; // seconds
@@ -427,7 +429,7 @@ export default class CountlyAnalytics {
         try {
             this.appVersion = await platform.getAppVersion();
         } catch (e) {
-            console.warn("Failed to get app version, using 'unknown'");
+            logger.warn("Failed to get app version, using 'unknown'");
         }
 
         // start heartbeat
@@ -651,7 +653,7 @@ export default class CountlyAnalytics {
                 body: params,
             });
         } catch (e) {
-            console.error("Analytics error: ", e);
+            logger.error("Analytics error: ", e);
         }
     }
 
