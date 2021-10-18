@@ -15,8 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+export interface ISsoRedirectOptions {
+    immediate?: boolean;
+    on_welcome_page?: boolean;
+}
+
 export interface ConfigOptions {
     [key: string]: any;
+
+    sso_immediate_redirect?: boolean; // deprecated
+    sso_redirect_options?: ISsoRedirectOptions;
 }
 
 export const DEFAULTS: ConfigOptions = {
@@ -73,4 +81,15 @@ export default class SdkConfig {
         const newConfig = Object.assign({}, liveConfig, cfg);
         SdkConfig.put(newConfig);
     }
+}
+
+export function parseSsoRedirectOptions(config: ConfigOptions): ISsoRedirectOptions {
+    // Ignore deprecated options if the config is using new ones
+    if (config.sso_redirect_options) return config.sso_redirect_options;
+
+    // We can cheat here because the default is false anyways
+    if (config.sso_immediate_redirect) return {immediate: true};
+
+    // Default: do nothing
+    return {};
 }
