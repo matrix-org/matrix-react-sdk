@@ -975,9 +975,9 @@ export default class EventTile extends React.Component<IProps, IState> {
         let contextMenu = null;
         if (this.state.contextMenu) {
             const tile = this.getTile();
-            const replyThread = this.getReplyChain();
+            const replyChain = this.getReplyChain();
             const eventTileOps = tile?.getEventTileOps ? tile.getEventTileOps() : undefined;
-            const collapseReplyThread = replyThread?.canCollapse() ? replyThread.collapse : undefined;
+            const collapseReplyChain = replyChain?.canCollapse() ? replyChain.collapse : undefined;
 
             contextMenu = (
                 <MessageContextMenu
@@ -985,7 +985,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     mxEvent={this.props.mxEvent}
                     permalinkCreator={this.props.permalinkCreator}
                     eventTileOps={eventTileOps}
-                    collapseReplyThread={collapseReplyThread}
+                    collapseReplyChain={collapseReplyChain}
                     onFinished={this.onCloseMenu}
                     rightClick={true}
                     reactions={this.state.reactions}
