@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634583511635,
+  "lastUpdate": 1634586929003,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32516,6 +32516,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1022.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f8b6f13105a6af49509e6f42ddcc88237823bfec",
+          "message": "Fix timeline scrolling when sending threads (#6974)\n\nFix https://github.com/vector-im/element-web/issues/19412",
+          "timestamp": "2021-10-18T20:50:06+01:00",
+          "tree_id": "f9f16efbeed63b53abe17e3de5b31d7801508743",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f8b6f13105a6af49509e6f42ddcc88237823bfec"
+        },
+        "date": 1634586927210,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4437.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 897.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1643.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4221.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
