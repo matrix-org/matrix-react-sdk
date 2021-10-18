@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634573971158,
+  "lastUpdate": 1634583511635,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32480,6 +32480,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4761.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "98ba3fd6e6209336c8270a03f3e7a82717ac3302",
+          "message": "Merge pull request #6973 from matrix-org/dbkr/upgrade_highlightjs\n\nUpgrade highlight.js",
+          "timestamp": "2021-10-18T19:52:34+01:00",
+          "tree_id": "6c1871495dd6bfde3128e2536a954fef023d02a1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/98ba3fd6e6209336c8270a03f3e7a82717ac3302"
+        },
+        "date": 1634583509483,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4807.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022.5,
             "unit": "ms",
             "extra": "type: measure"
           }
