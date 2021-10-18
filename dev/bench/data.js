@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634567607118,
+  "lastUpdate": 1634568426515,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32288,6 +32288,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4423.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a2bc09060721f3a56a6f92e61f43a64cd3260352",
+          "message": "Fix threads with bubbles rendering (#6971)\n\nFixes https://github.com/vector-im/element-web/issues/18958",
+          "timestamp": "2021-10-18T15:41:05+01:00",
+          "tree_id": "eda61a3f76baaa74e6fdfebe4f6c025888e99411",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a2bc09060721f3a56a6f92e61f43a64cd3260352"
+        },
+        "date": 1634568422680,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4654.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1085.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1778.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4613.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
