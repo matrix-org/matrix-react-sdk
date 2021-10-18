@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634568426515,
+  "lastUpdate": 1634573709262,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32336,6 +32336,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4613.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e0027895e7e449ad3d68aabe470f4278ef81bc92",
+          "message": "Merge pull request #6963 from SimonBrandner/task/colors-5\n\nColor clean-up numero cinco",
+          "timestamp": "2021-10-18T17:09:39+01:00",
+          "tree_id": "963ff0d6a726dc9eea7b8ea94764f5575a430c9a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e0027895e7e449ad3d68aabe470f4278ef81bc92"
+        },
+        "date": 1634573706813,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4143.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 928.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1649,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4386.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
