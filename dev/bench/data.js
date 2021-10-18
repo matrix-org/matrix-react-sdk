@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634543580009,
+  "lastUpdate": 1634545388653,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32000,6 +32000,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4125.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4d63e1239bb9c10156c0c1084bfc3d1db1398f77",
+          "message": "Merge pull request #6962 from CicadaCinema/patch-3",
+          "timestamp": "2021-10-18T09:17:40+01:00",
+          "tree_id": "fdd4ebe05502255bb0469d4e69fa5d83034cecc0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4d63e1239bb9c10156c0c1084bfc3d1db1398f77"
+        },
+        "date": 1634545386462,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4183.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 926.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1729.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4275.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
