@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634545388653,
+  "lastUpdate": 1634546484674,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32048,6 +32048,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4275.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f05e35bd94fe31d6808fee813fc9de4c2e1ffb07",
+          "message": "Merge pull request #6958 from andybalaam/separate-cryptography-setting-component\n\nBreak 'Cryptography' settings into a separate component",
+          "timestamp": "2021-10-18T09:34:55+01:00",
+          "tree_id": "d9d52a611635088af1223f36550c93540afe5597",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f05e35bd94fe31d6808fee813fc9de4c2e1ffb07"
+        },
+        "date": 1634546482497,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4135.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1048.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1893.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5004.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
