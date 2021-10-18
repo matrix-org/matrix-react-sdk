@@ -23,7 +23,7 @@ import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 
-import ReplyThread from "../elements/ReplyThread";
+import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
 import { hasText } from "../../../TextForEvent";
 import * as sdk from "../../../index";
@@ -63,6 +63,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
 import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -350,7 +352,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     private tile = React.createRef<IEventTileType>();
-    private replyThread = React.createRef<ReplyThread>();
+    private replyChain = React.createRef<ReplyChain>();
 
     public readonly ref = createRef<HTMLElement>();
 
@@ -946,7 +948,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     getTile = (): IEventTileType => this.tile.current;
 
-    getReplyThread = (): ReplyThread => this.replyThread.current;
+    getReplyChain = (): ReplyChain => this.replyChain;
 
     getReactions = () => {
         if (
@@ -973,7 +975,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         let contextMenu = null;
         if (this.state.contextMenu) {
             const tile = this.getTile();
-            const replyThread = this.getReplyThread();
+            const replyThread = this.getReplyChain();
             const eventTileOps = tile?.getEventTileOps ? tile.getEventTileOps() : undefined;
             const collapseReplyThread = replyThread?.canCollapse() ? replyThread.collapse : undefined;
 
@@ -1057,7 +1059,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         // before trying to instantiate us
         if (!tileHandler) {
             const { mxEvent } = this.props;
-            console.warn(`Event type not supported: type:${eventType} isState:${mxEvent.isState()}`);
+            logger.warn(`Event type not supported: type:${eventType} isState:${mxEvent.isState()}`);
             return <div className="mx_EventTile mx_EventTile_info mx_MNoticeBody">
                 <div className="mx_EventTile_line">
                     { _t('This event could not be displayed') }
@@ -1183,7 +1185,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             reactions={this.state.reactions}
             permalinkCreator={this.props.permalinkCreator}
             getTile={this.getTile}
-            getReplyThread={this.getReplyThread}
+            getReplyChain={this.getReplyChain}
             onFocusChange={this.onActionBarFocusChange}
             isQuoteExpanded={isQuoteExpanded}
             toggleThreadExpanded={() => this.setQuoteExpanded(!isQuoteExpanded)}
@@ -1378,11 +1380,11 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             default: {
                 const thread = haveTileForEvent(this.props.mxEvent) &&
-                    ReplyThread.hasThreadReply(this.props.mxEvent) ? (
-                        <ReplyThread
+                    ReplyChain.hasReply(this.props.mxEvent) ? (
+                        <ReplyChain
                             parentEv={this.props.mxEvent}
                             onHeightChanged={this.props.onHeightChanged}
-                            ref={this.replyThread}
+                            ref={this.replyChain}
                             forExport={this.props.forExport}
                             permalinkCreator={this.props.permalinkCreator}
                             layout={this.props.layout}
@@ -1431,9 +1433,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { keyRequestInfo }
                             { actionBar }
                             { this.props.layout === Layout.IRC && (reactionsRow) }
-                            { this.renderThreadInfo() }
                         </div>
                         { this.props.layout !== Layout.IRC && (reactionsRow) }
+                        { this.renderThreadInfo() }
                         { msgOption }
                     </>)
                 );

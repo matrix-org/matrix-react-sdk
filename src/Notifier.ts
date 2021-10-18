@@ -141,12 +141,12 @@ export const Notifier = {
         }
 
         if (!content.url) {
-            console.warn(`${roomId} has custom notification sound event, but no url key`);
+            logger.warn(`${roomId} has custom notification sound event, but no url key`);
             return null;
         }
 
         if (!content.url.startsWith("mxc://")) {
-            console.warn(`${roomId} has custom notification sound event, but url is not a mxc url`);
+            logger.warn(`${roomId} has custom notification sound event, but url is not a mxc url`);
             return null;
         }
 
@@ -170,7 +170,7 @@ export const Notifier = {
             let audioElement = selector;
             if (!selector) {
                 if (!sound) {
-                    console.error("No audio element or sound to play for notification");
+                    logger.error("No audio element or sound to play for notification");
                     return;
                 }
                 audioElement = new Audio(sound.url);
@@ -181,7 +181,7 @@ export const Notifier = {
             }
             await audioElement.play();
         } catch (ex) {
-            console.warn("Caught error when trying to fetch room notification sound:", ex);
+            logger.warn("Caught error when trying to fetch room notification sound:", ex);
         }
     },
 
