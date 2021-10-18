@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634559312862,
+  "lastUpdate": 1634560304753,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32192,6 +32192,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4814,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4f3d761984181bf9008a1d9e6b57b3284a4f479e",
+          "message": "Merge pull request #6968 from andybalaam/cryptographypanel-table\n\nConvert CryptographyPanel to a table",
+          "timestamp": "2021-10-18T13:26:16+01:00",
+          "tree_id": "4e6d09e8bb535cf84444a5c9a4c4895f188a8678",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4f3d761984181bf9008a1d9e6b57b3284a4f479e"
+        },
+        "date": 1634560302840,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4481.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 915.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1742.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4238.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
