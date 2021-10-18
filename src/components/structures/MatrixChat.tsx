@@ -846,7 +846,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private async setCookieAccountData(accept: boolean): Promise<{}> {
         // Update showPseudonymousAnalyticsPrompt and then pseudonymousAnalyticsOptIn.
         //
-        // SettingsStore.setValue doesn't wait until the local copy of settings has been reflected in accountData,
+        // XXX: SettingsStore.setValue doesn't wait until the local copy of settings has been reflected in accountData,
         // so calling it twice in succession clobbers the first value as it passes that full local copy on each set.
         //
         // To get around that, watch showPseudonymousAnalyticsPrompt until its observed to change, and only then
