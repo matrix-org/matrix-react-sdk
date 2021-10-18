@@ -55,29 +55,28 @@ const getPseudonymousDescriptions = (policyUrl: string, analyticsOwner: string):
 
     // The user previously opted into our old analytics system - let them know things have changed and ask
     // them to opt in again.
-    const reOptInDescription = _t(`To allow us to understand how people use multiple devices,
-we’ve enhanced our <UsageDataLink>analytics data</UsageDataLink> to include a randomly generated identifier associated
-with your account that will be shared across your devices.` + "<Linebreak/><Linebreak/>" +
-    `We care about privacy, so we still don’t record any personal or identifiable data, and the identifier
-isn’t shared with any third parties.` + "<Linebreak/><Linebreak/>" +
-    "You previously agreed to send anonymous usage data to %(analytics_owner)s - is this still okay?",
-    {
-        analytics_owner: analyticsOwner,
-    },
-    {
-        "UsageDataLink": usageDataLink,
-        "Linebreak": (sub) => <br />,
-    });
+    const reOptInDescription = _t(
+        "To allow us to understand how people use multiple devices, we’ve enhanced our " +
+        "<UsageDataLink>analytics data</UsageDataLink> to include a randomly generated identifier associated " +
+        "with your account that will be shared across your devices." + "<Linebreak/><Linebreak/>" +
+        "We care about privacy, so we still don’t record any personal or identifiable data, and the identifier " +
+        "isn’t shared with any third parties." + "<Linebreak/><Linebreak/>" +
+        "You previously agreed to send anonymous usage data to %(analytics_owner)s - is this still okay?",
+        {
+            analytics_owner: analyticsOwner,
+        },
+        {
+            "UsageDataLink": usageDataLink,
+            "Linebreak": (sub) => <br />,
+        });
 
     // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
     // explaining any change.
     const optInDescription = _t(
-        `Would you like to send analytics data to %(analytics_owner)s to help us
-improve the app? ` +
+        "Would you like to send analytics data to %(analytics_owner)s to help us improve the app? " +
         "<Linebreak/><Linebreak/>" +
-            `We care about privacy, so we don’t record any personal or identifiable data,
-and we don't share anything with any third parties.` + "<Linebreak/><Linebreak/>" +
-        "<UsageDataLink>More information</UsageDataLink>",
+        "We care about privacy, so we don’t record any personal or identifiable data, and we don't share anything " +
+        "with any third parties." + "<Linebreak/><Linebreak/>" + "<UsageDataLink>More information</UsageDataLink>",
         {
             analytics_owner: analyticsOwner,
         },

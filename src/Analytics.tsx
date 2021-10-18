@@ -387,8 +387,9 @@ export class Analytics {
             description: <div className="mx_AnalyticsModal">
                 { cookiePolicyUrl &&
                 <p>
-                    Our complete cookie policy can be found
-                    <a href={cookiePolicyUrl} target="_blank" rel="noreferrer noopener">here</a>.
+                    Our complete cookie policy can be found <a href={cookiePolicyUrl}
+                        target="_blank"
+                        rel="noreferrer noopener">here</a>.
                 </p>
                 }
                 <div>{ _t('Some examples of the information being sent to us to help make %(brand)s better includes:', {
