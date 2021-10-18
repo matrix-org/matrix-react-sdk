@@ -948,7 +948,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     getTile = (): IEventTileType => this.tile.current;
 
-    getReplyChain = (): ReplyChain => this.replyChain;
+    getReplyChain = (): ReplyChain => this.replyChain.current;
 
     getReactions = () => {
         if (
