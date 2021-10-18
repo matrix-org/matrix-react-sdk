@@ -34,7 +34,7 @@ import {
 } from '../../../editor/serialize';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from '../../../editor/parts';
-import ReplyThread from "../elements/ReplyThread";
+import ReplyChain from "../elements/ReplyChain";
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
@@ -57,6 +57,7 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
 import RoomContext from '../../../contexts/RoomContext';
+import DocumentPosition from "../../../editor/position";
 
 function addReplyToMessageContent(
     content: IContent,
@@ -64,12 +65,12 @@ function addReplyToMessageContent(
     permalinkCreator: RoomPermalinkCreator,
     relation?: IEventRelation,
 ): void {
-    const replyContent = ReplyThread.makeReplyMixIn(replyToEvent);
+    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
 
     // Part of Replies fallback support - prepend the text we're sending
     // with the text we're replying to
-    const nestedReply = ReplyThread.getNestedReplyText(replyToEvent, permalinkCreator);
+    const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, permalinkCreator);
     if (nestedReply) {
         if (content.formatted_body) {
             content.formatted_body = nestedReply.html + content.formatted_body;
@@ -358,7 +359,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             }
         }
         if (error) {
-            console.error("Command failure: %s", error);
+            logger.error("Command failure: %s", error);
             // assume the error is a server error when the command is async
             const isServerError = !!result.promise;
             const title = isServerError ? _td("Server error") : _td("Command error");
@@ -391,9 +392,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-            const caret = this.editorRef.current?.getCaret();
-            const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-            this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
+            const indexOfLastPart = model.parts.length - 1;
+            const positionInLastPart = model.parts[indexOfLastPart].text.length;
+            this.editorRef.current?.replaceEmoticon(
+                new DocumentPosition(indexOfLastPart, positionInLastPart),
+                REGEX_EMOTICON,
+            );
         }
 
         const replyToEvent = this.props.replyToEvent;
@@ -549,7 +553,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 }
                 return parts;
             } catch (e) {
-                console.error(e);
+                logger.error(e);
             }
         }
     }

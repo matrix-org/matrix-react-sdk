@@ -50,6 +50,8 @@ import InlineTermsAgreement from "../../../terms/InlineTermsAgreement";
 import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     closeSettingsFn: () => void;
 }
@@ -166,11 +168,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             threepids = await getThreepidsWithBindStatus(cli);
         } catch (e) {
             const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
                 `for 3PIDs bindings in Settings`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
         this.setState({
             emails: threepids.filter((a) => a.medium === 'email'),
@@ -216,11 +218,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 },
             });
         } catch (e) {
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
                 `for terms in Settings`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
     }
 
@@ -253,7 +255,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         } else if (!errMsg) {
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
-        console.error("Failed to change password: " + errMsg);
+        logger.error("Failed to change password: " + errMsg);
         Modal.createTrackedDialog('Failed to change password', '', ErrorDialog, {
             title: _t("Error"),
             description: errMsg,
