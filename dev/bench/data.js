@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634573877086,
+  "lastUpdate": 1634573971158,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32432,6 +32432,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4929.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "df5f4409adbe93fa60109aba719234fae66016b0",
+          "message": "Merge pull request #6965 from SimonBrandner/feature/end-of-line-emoji\n\nConvert emoticon to emoji at the end of a line on send even if the cursor isn't there",
+          "timestamp": "2021-10-18T17:12:41+01:00",
+          "tree_id": "e505bf69232a8efc4647819d3a9afdc780c6006a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/df5f4409adbe93fa60109aba719234fae66016b0"
+        },
+        "date": 1634573968919,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5140.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1131.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1827.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4761.5,
             "unit": "ms",
             "extra": "type: measure"
           }
