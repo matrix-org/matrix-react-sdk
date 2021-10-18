@@ -521,10 +521,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: {}, // none allowed
     },
     "analyticsOptIn": {
-        // deprecated and hidden; still present because we need to read it to determine whether we need to explain
-        // to the user that we want to update to pseudonymousAnalyticsOptIn
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td('Send analytics data'),
         default: false,
+    },
+    "showCookieBar": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: true,
     },
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],

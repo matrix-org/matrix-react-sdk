@@ -41,6 +41,7 @@ import SettingsFlag from "../../../elements/SettingsFlag";
 import CrossSigningPanel from "../../CrossSigningPanel";
 import EventIndexPanel from "../../EventIndexPanel";
 import InlineSpinner from "../../../elements/InlineSpinner";
+import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -348,7 +349,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         let privacySection;
-        if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
+        if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable() || PosthogAnalytics.instance.isEnabled()) {
             privacySection = <React.Fragment>
                 <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
                 <div className="mx_SettingsTab_section">
@@ -365,7 +366,15 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                             { _t("Learn more about how we use analytics.") }
                         </AccessibleButton>
                     </div>
-                    <SettingsFlag name="pseudonymousAnalyticsOptIn" level={SettingLevel.ACCOUNT} onChange={this.updateAnalytics} />
+                    {
+                        PosthogAnalytics.instance.isEnabled() ?
+                            <SettingsFlag name="pseudonymousAnalyticsOptIn"
+                                level={SettingLevel.ACCOUNT}
+                                onChange={this.updateAnalytics} /> :
+                            <SettingsFlag name="analyticsOptIn"
+                                level={SettingLevel.DEVICE}
+                                onChange={this.updateAnalytics} />
+                    }
                 </div>
             </React.Fragment>;
         }
