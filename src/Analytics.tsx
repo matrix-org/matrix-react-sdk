@@ -382,16 +382,18 @@ export class Analytics {
         // FIXME: Using an import will result in test failures
         const cookiePolicyUrl = SdkConfig.get().piwik?.policyUrl;
         const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
+        const cookiePolicyLink = _t(
+            "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.",
+            {},
+            {
+                "CookiePolicyLink": (sub) => {
+                    return <a href={cookiePolicyUrl} target="_blank" rel="noreferrer noopener">{ sub }</a>;
+                },
+            });
         Modal.createTrackedDialog('Analytics Details', '', ErrorDialog, {
             title: _t('Analytics'),
             description: <div className="mx_AnalyticsModal">
-                { cookiePolicyUrl &&
-                <p>
-                    Our complete cookie policy can be found <a href={cookiePolicyUrl}
-                        target="_blank"
-                        rel="noreferrer noopener">here</a>.
-                </p>
-                }
+                { cookiePolicyUrl && <p>{ cookiePolicyLink }</p> }
                 <div>{ _t('Some examples of the information being sent to us to help make %(brand)s better includes:', {
                     brand: SdkConfig.get().brand,
                 }) }</div>
