@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634559300631,
+  "lastUpdate": 1634559312862,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32144,6 +32144,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4439.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1d6c9fa8dac2be158b82e385037a17d988648050",
+          "message": "Add threads ViewInRoom context button (#18955) (#6947)",
+          "timestamp": "2021-10-18T12:09:01Z",
+          "tree_id": "5437d1237ecd4b191b0f067ee8a077ebe12c3587",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1d6c9fa8dac2be158b82e385037a17d988648050"
+        },
+        "date": 1634559309928,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5151.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1062.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1751.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4814,
             "unit": "ms",
             "extra": "type: measure"
           }
