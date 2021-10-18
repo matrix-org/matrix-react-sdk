@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634560304753,
+  "lastUpdate": 1634567607118,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32240,6 +32240,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4238.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ekaterinag@element.io",
+            "name": "Ekaterina Gerasimova",
+            "username": "kittykat"
+          },
+          "committer": {
+            "email": "bagira00@hotmail.com",
+            "name": "Kat Gerasimova",
+            "username": "kittykat"
+          },
+          "distinct": true,
+          "id": "695e110794e62d8c9f605fba6c5c0e59e3df4468",
+          "message": "Improve capitalisation in string\n\nRemove random mid-sentence capitalisation in Security Phrase dialog. The\ndialog will change at some point but for now lets make it more human\nreadable.\n\nFixes #19429",
+          "timestamp": "2021-10-18T15:28:07+01:00",
+          "tree_id": "42173b89183108f722aec401931bd55972979318",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/695e110794e62d8c9f605fba6c5c0e59e3df4468"
+        },
+        "date": 1634567605038,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4706.1999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 833.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1596.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4423.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
