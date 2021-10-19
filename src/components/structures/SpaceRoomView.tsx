@@ -275,8 +275,11 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
             <AccessibleButton
                 kind="primary"
                 onClick={() => {
-                    setBusy(true);
                     onJoinButtonClicked();
+                    if (!cli.isGuest()) {
+                        // user will be shown a modal that won't fire a room join error
+                        setBusy(true);
+                    }
                 }}
                 disabled={!spacesEnabled || cannotJoin}
             >
@@ -536,7 +539,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
             }));
             onFinished(roomIds[0]);
         } catch (e) {
-            console.error("Failed to create initial space rooms", e);
+            logger.error("Failed to create initial space rooms", e);
             setError(_t("Failed to create initial space rooms"));
         }
         setBusy(false);
@@ -713,7 +716,7 @@ const SpaceSetupPrivateInvite = ({ space, onFinished }) => {
                 onFinished();
             }
         } catch (err) {
-            console.error("Failed to invite users to space: ", err);
+            logger.error("Failed to invite users to space: ", err);
             setError(_t("We couldn't invite those users. Please check the users you want to invite and try again."));
         }
         setBusy(false);
@@ -906,21 +909,21 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
                     space={this.props.space}
                     justCreatedOpts={this.props.justCreatedOpts}
                     onFinished={(invite: boolean) => {
-                        this.setState({ phase: invite ? Phase.PrivateInvite : Phase.PrivateExistingRooms });
+                        this.setState({ phase: invite ? Phase.PrivateCreateRooms : Phase.PrivateExistingRooms });
                     }}
                 />;
             case Phase.PrivateInvite:
                 return <SpaceSetupPrivateInvite
                     space={this.props.space}
-                    onFinished={() => this.setState({ phase: Phase.PrivateCreateRooms })}
+                    onFinished={() => this.setState({ phase: Phase.Landing })}
                 />;
             case Phase.PrivateCreateRooms:
                 return <SpaceSetupFirstRooms
                     space={this.props.space}
-                    title={_t("What projects are you working on?")}
+                    title={_t("What projects are your team working on?")}
                     description={_t("We'll create rooms for each of them. " +
                         "You can add more later too, including already existing ones.")}
-                    onFinished={(firstRoomId: string) => this.setState({ phase: Phase.Landing, firstRoomId })}
+                    onFinished={(firstRoomId: string) => this.setState({ phase: Phase.PrivateInvite, firstRoomId })}
                 />;
             case Phase.PrivateExistingRooms:
                 return <SpaceAddExistingRooms

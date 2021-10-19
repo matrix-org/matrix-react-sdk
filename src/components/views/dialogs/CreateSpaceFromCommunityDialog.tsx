@@ -42,6 +42,8 @@ import TagOrderActions from "../../../actions/TagOrderActions";
 import { inviteUsersToRoom } from "../../../RoomInvite";
 import ProgressBar from "../elements/ProgressBar";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     matrixClient: MatrixClient;
     groupId: string;
@@ -174,7 +176,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                         const { servers } = await cli.getRoomIdForAlias(canonicalAlias);
                         viaMap.set(roomId, servers);
                     } catch (e) {
-                        console.warn("Failed to resolve alias during community migration", e);
+                        logger.warn("Failed to resolve alias during community migration", e);
                     }
                 }
 
@@ -219,7 +221,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                     _t("This community has been upgraded into a Space") + `</h1></a><br />`
                     + groupSummary.profile.long_description,
             } as IGroupSummary["profile"]).catch(e => {
-                console.warn("Failed to update community profile during migration", e);
+                logger.warn("Failed to update community profile during migration", e);
             });
 
             onFinished(roomId);
@@ -271,7 +273,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                 },
             }, "mx_CreateSpaceFromCommunityDialog_SuccessInfoDialog");
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             setError(e);
         }
 
