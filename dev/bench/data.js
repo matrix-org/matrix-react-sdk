@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634657847280,
+  "lastUpdate": 1634660183746,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33224,6 +33224,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4599.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "427afc83aa85a8bf8c985c867c7d6ad12df3d071",
+          "message": "Fix couple of Spaces regressions (#6989)",
+          "timestamp": "2021-10-19T10:10:34-06:00",
+          "tree_id": "87aae2f0c21a07a3ed8b02225b48404feaf3e37f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/427afc83aa85a8bf8c985c867c7d6ad12df3d071"
+        },
+        "date": 1634660181653,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4990.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 974.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1685.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4508.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
