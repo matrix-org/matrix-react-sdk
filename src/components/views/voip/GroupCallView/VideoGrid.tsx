@@ -21,6 +21,7 @@ import useMeasure from "react-use-measure";
 import moveArrItem from "lodash-move";
 import VideoTile from "./VideoTile";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { logger } from "../../../../../../matrix-js-sdk/src/logger";
 
 export function useVideoGridLayout(): [string, () => void] {
     const [layout, setLayout] = useState("gallery");
@@ -494,7 +495,7 @@ export default function VideoGrid({ items, layout, onFocusTile }: IVideoGridProp
 
             for (const tile of tiles) {
                 let item = items.find(
-                    (item) => item.id=== tile.key,
+                    (item) => item.id === tile.key,
                 );
 
                 let remove = false;
@@ -522,17 +523,28 @@ export default function VideoGrid({ items, layout, onFocusTile }: IVideoGridProp
             }
 
             for (const item of items) {
-                if (newTiles.some(({ key }) => item.id === key)) {
+                const existingTileIndex = newTiles.findIndex(({ key }) => item.id === key);
+
+                const existingTile = newTiles[existingTileIndex];
+
+                if (existingTile && !existingTile.remove) {
                     continue;
                 }
 
-                // Added tiles
-                newTiles.push({
+                const newTile = {
                     key: item.id,
                     item,
                     remove: false,
                     presenter: layout === "spotlight" && item.isActiveSpeaker,
-                });
+                };
+
+                if (existingTile) {
+                    // Replace an existing tile
+                    newTiles.splice(existingTileIndex, 1, newTile);
+                } else {
+                    // Added tiles
+                    newTiles.push(newTile);
+                }
             }
 
             newTiles.sort((a, b) => (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0));
