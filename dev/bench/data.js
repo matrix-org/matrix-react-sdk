@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634665776470,
+  "lastUpdate": 1634679283449,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33368,6 +33368,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4515.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "52425971+CicadaCinema@users.noreply.github.com",
+            "name": "CicadaCinema",
+            "username": "CicadaCinema"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "23295718e3aabfe2c8d14c9b7918e140f98bf5b3",
+          "message": "Position toggle switch more clearly (#6914)\n\n* Position toggle switch more clearly\r\n\r\n* attempt to revert changes, align switch to title instead\r\n\r\n* remove unused import, add missing property\r\n\r\nCo-authored-by: ColonisationCaptain <52425971+ColonisationCaptain@users.noreply.github.com>",
+          "timestamp": "2021-10-19T15:28:11-06:00",
+          "tree_id": "2bb231345197bbf5f0df59d05893bccc898276b2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/23295718e3aabfe2c8d14c9b7918e140f98bf5b3"
+        },
+        "date": 1634679281290,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4760.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1207.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1817.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4818.5,
             "unit": "ms",
             "extra": "type: measure"
           }
