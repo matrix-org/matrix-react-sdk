@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634656298010,
+  "lastUpdate": 1634656729126,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33032,6 +33032,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1057.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "974f45930c4f8d3e6576ed5e3b46d3413e84a7de",
+          "message": "Simplify Space Panel notification badge layout (#6977)",
+          "timestamp": "2021-10-19T16:11:53+01:00",
+          "tree_id": "0d72a95b3c7cdaa8374e6952158b71804f973efc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/974f45930c4f8d3e6576ed5e3b46d3413e84a7de"
+        },
+        "date": 1634656726087,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4856.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1166.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1735,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4610.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
