@@ -211,6 +211,16 @@ function textForJoinRulesEvent(ev: MatrixEvent): () => string | null {
             return () => _t('%(senderDisplayName)s made the room invite only.', {
                 senderDisplayName,
             });
+        case JoinRule.Restricted:
+            if (ev.getPrevContent().join_rule === JoinRule.Restricted) {
+                return () => _t('%(senderDisplayName)s changed the spaces from which users can join this room.', {
+                    senderDisplayName,
+                });
+            } else {
+                return () => _t('%(senderDisplayName)s made the room accessible to members of some spaces.', {
+                    senderDisplayName,
+                });
+            }
         default:
             // The spec supports "knock" and "private", however nothing implements these.
             return () => _t('%(senderDisplayName)s changed the join rule to %(rule)s', {
