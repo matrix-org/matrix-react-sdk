@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634638862979,
+  "lastUpdate": 1634650929782,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32852,6 +32852,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4792,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c0c564118117f055049948232728ae240aafa84b",
+          "message": "Merge pull request #6975 from matrix-org/travis/runtime-errors\n\nFix runtime react errors for various parts of the app",
+          "timestamp": "2021-10-19T07:35:15-06:00",
+          "tree_id": "78223d99d3e4b3208e52dd55373fb01a10af9216",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c0c564118117f055049948232728ae240aafa84b"
+        },
+        "date": 1634650926540,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4996.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1251.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1756.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5078.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
