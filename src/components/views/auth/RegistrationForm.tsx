@@ -31,6 +31,7 @@ import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CountryDropdown from "./CountryDropdown";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -367,7 +368,11 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private validateUsernameRules = withValidation({
-        description: () => _t("Use lowercase letters, numbers, dashes and underscores only"),
+        description: (_, results) => {
+            // omit the description if the only failing result is the `available` one as it makes no sense for it.
+            if (results.every(({ key, valid }) => key === "available" || valid)) return;
+            return _t("Use lowercase letters, numbers, dashes and underscores only");
+        },
         hideDescriptionIfValid: true,
         rules: [
             {
@@ -379,6 +384,24 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 key: "safeLocalpart",
                 test: ({ value }) => !value || SAFE_LOCALPART_REGEX.test(value),
                 invalid: () => _t("Some characters not allowed"),
+            },
+            {
+                key: "available",
+                final: true,
+                test: async ({ value }) => {
+                    if (!value) {
+                        return true;
+                    }
+
+                    try {
+                        await MatrixClientPeg.get().isUsernameAvailable(value);
+                        return true;
+                    } catch (err) {
+                        return false;
+                    }
+                },
+                invalid: () => _t("That username already exists, please try another. " +
+                    "If it belongs to you then click 'Sign in here' below"),
             },
         ],
     });

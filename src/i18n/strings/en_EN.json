@@ -2768,6 +2768,7 @@
     "Other users can invite you to rooms using your contact details": "Other users can invite you to rooms using your contact details",
     "Enter phone number (required on this homeserver)": "Enter phone number (required on this homeserver)",
     "Use lowercase letters, numbers, dashes and underscores only": "Use lowercase letters, numbers, dashes and underscores only",
+    "That username already exists, please try another. If it belongs to you then click 'Sign in here' below": "That username already exists, please try another. If it belongs to you then click 'Sign in here' below",
     "Phone (optional)": "Phone (optional)",
     "Register": "Register",
     "Add an email to be able to reset your password.": "Add an email to be able to reset your password.",
