@@ -1302,7 +1302,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         <ReplyChain
                             parentEv={this.props.mxEvent}
                             onHeightChanged={this.props.onHeightChanged}
-                            ref={this.replyThread}
+                            ref={this.replyChain}
                             forExport={this.props.forExport}
                             permalinkCreator={this.props.permalinkCreator}
                             layout={this.props.layout}
