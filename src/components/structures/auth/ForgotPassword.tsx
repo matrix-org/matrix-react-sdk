@@ -29,8 +29,8 @@ import ServerPicker from "../../views/elements/ServerPicker";
 import PassphraseField from '../../views/auth/PassphraseField';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
-
-import { IValidationResult } from "../../views/elements/Validation";
+import withValidation, { IValidationResult } from "../../views/elements/Validation";
+import * as Email from "../../../email";
 import InlineSpinner from '../../views/elements/InlineSpinner';
 
 import { logger } from "matrix-js-sdk/src/logger";
@@ -68,6 +68,7 @@ interface IState {
     serverErrorIsFatal: boolean;
     serverDeadError: string;
 
+    emailFieldValid: boolean;
     passwordFieldValid: boolean;
     currentHttpRequest?: Promise<any>;
 }
@@ -90,6 +91,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         serverIsAlive: true,
         serverErrorIsFatal: false,
         serverDeadError: "",
+        emailFieldValid: false,
         passwordFieldValid: false,
     };
 
@@ -222,6 +224,32 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         });
     }
 
+    private validateEmailRules = withValidation({
+        rules: [
+            {
+                key: "required",
+                test({ value, allowEmpty }) {
+                    return allowEmpty || !!value;
+                },
+                invalid: () => _t("Enter email address"),
+            }, {
+                key: "email",
+                test: ({ value }) => !value || Email.looksValid(value),
+                invalid: () => _t("Doesn't look like a valid email address"),
+            },
+        ],
+    });
+
+    private onEmailValidate = async (fieldState) => {
+        const result = await this.validateEmailRules(fieldState);
+
+        this.setState({
+            emailFieldValid: result.valid,
+        });
+
+        return result;
+    };
+
     private onPasswordValidate(result: IValidationResult) {
         this.setState({
             passwordFieldValid: result.valid,
@@ -278,6 +306,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         value={this.state.email}
                         onChange={this.onInputChanged.bind(this, "email")}
                         autoFocus
+                        onValidate={this.onEmailValidate}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_blur")}
                     />
