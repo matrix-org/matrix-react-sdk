@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634650929782,
+  "lastUpdate": 1634651959726,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32900,6 +32900,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5078.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain Souquet",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "germains@element.io",
+            "name": "Germain Souquet",
+            "username": "gsouquet"
+          },
+          "distinct": true,
+          "id": "493de82774fd82099e31ccc12cd099ec80d4ce0d",
+          "message": "Upgrade yarn dependencies",
+          "timestamp": "2021-10-19T14:53:44+01:00",
+          "tree_id": "920b7536bbeefe2fd6032783075c04996adb7c2e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/493de82774fd82099e31ccc12cd099ec80d4ce0d"
+        },
+        "date": 1634651957868,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4610.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 939,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1668.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4313.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
