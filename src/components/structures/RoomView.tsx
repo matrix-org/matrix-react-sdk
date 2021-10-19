@@ -779,7 +779,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 });
                 break;
             case 'reply_to_event':
-                if (this.state.searchResults && payload.event.getRoomId() === this.state.roomId && !this.unmounted) {
+                if (this.state.searchResults
+                        && payload.event.getRoomId() === this.state.roomId
+                        && !this.unmounted
+                        && payload.context === TimelineRenderingType.Room) {
                     this.onCancelSearchClick();
                 }
                 break;
@@ -841,7 +844,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             case "scroll_to_bottom":
-                this.messagePanel?.jumpToLiveTimeline();
+                if (payload.timelineRenderingType === this.context.timelineRenderingType) {
+                    this.messagePanel?.jumpToLiveTimeline();
+                }
                 break;
         }
     };
