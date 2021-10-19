@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import sdk from '../../../skinned-sdk';
@@ -39,12 +39,18 @@ describe('Login', function() {
     });
 
     function render() {
-        return ReactDOM.render(<Login
+
+        const ref = React.createRef<Component>();
+
+        ReactDOM.render(<Login
+            ref={ref}
             serverConfig={mkServerConfig("https://matrix.org", "https://vector.im")}
             onLoggedIn={() => {}}
             onRegisterClick={() => {}}
             onServerConfigChange={() => {}}
         />, parentDiv);
+
+        return ref.current;
     }
 
     it('should show form with change server link', function() {
