@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634657001538,
+  "lastUpdate": 1634657305443,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33128,6 +33128,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4701.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "paulo.pinto@automattic.com",
+            "name": "Paulo Pinto",
+            "username": "psrpinto"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9c786717b8fd6a300e54b77af6b5877f9b54c664",
+          "message": "Validate email address in forgot password dialog (#6983)",
+          "timestamp": "2021-10-19T16:22:27+01:00",
+          "tree_id": "2ae4e6b6bbbe86fcda895bb824f7c642cb4cc84a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9c786717b8fd6a300e54b77af6b5877f9b54c664"
+        },
+        "date": 1634657303168,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4423.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1119.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1826.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4567.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
