@@ -21,7 +21,6 @@ import useMeasure from "react-use-measure";
 import moveArrItem from "lodash-move";
 import VideoTile from "./VideoTile";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
-import { logger } from "../../../../../../matrix-js-sdk/src/logger";
 
 export function useVideoGridLayout(): [string, () => void] {
     const [layout, setLayout] = useState("gallery");
