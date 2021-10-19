@@ -339,7 +339,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     private isListeningForReceipts: boolean;
     // TODO: Types
     private tile = React.createRef<unknown>();
-    private replyThread = React.createRef<ReplyChain>();
+    private replyChain = React.createRef<ReplyChain>();
 
     public readonly ref = createRef<HTMLElement>();
 
@@ -933,7 +933,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     // TODO: Types
     getTile: () => any | null = () => this.tile.current;
 
-    getReplyChain = () => this.replyThread.current;
+    getReplyChain = () => this.replyChain.current;
 
     getReactions = () => {
         if (
@@ -1215,11 +1215,11 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
             case TileShape.Thread: {
                 const thread = haveTileForEvent(this.props.mxEvent) &&
-                    ReplyThread.hasThreadReply(this.props.mxEvent) ? (
-                        <ReplyThread
+                    ReplyChain.hasReply(this.props.mxEvent) ? (
+                        <ReplyChain
                             parentEv={this.props.mxEvent}
                             onHeightChanged={this.props.onHeightChanged}
-                            ref={this.replyThread}
+                            ref={this.replyChain}
                             forExport={this.props.forExport}
                             permalinkCreator={this.props.permalinkCreator}
                             layout={this.props.layout}

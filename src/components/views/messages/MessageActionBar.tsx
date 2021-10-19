@@ -63,7 +63,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> =
         let contextMenu;
         if (menuDisplayed) {
             const tile = getTile && getTile();
-            const replyThread = getReplyChain && getReplyChain();
+            const replyChain = getReplyChain && getReplyChain();
 
             const buttonRect = button.current.getBoundingClientRect();
             contextMenu = <MessageContextMenu
@@ -71,7 +71,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> =
                 mxEvent={mxEvent}
                 permalinkCreator={permalinkCreator}
                 eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
-                collapseReplyChain={replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined}
+                collapseReplyChain={replyChain && replyChain.canCollapse() ? replyChain.collapse : undefined}
                 onFinished={closeMenu}
             />;
         }

@@ -32,6 +32,7 @@ import TimelinePanel from './TimelinePanel';
 import { Layout } from '../../settings/Layout';
 import { useEventEmitter } from '../../hooks/useEventEmitter';
 import AccessibleButton from '../views/elements/AccessibleButton';
+import { TileShape } from '../views/rooms/EventTile';
 
 interface IProps {
     roomId: string;
