@@ -81,68 +81,59 @@ const reducer = (state: IState, action: IAction) => {
         case Type.Register: {
             if (state.refs.length === 0) {
                 // Our list of refs was empty, set activeRef to this first item
-                return {
-                    ...state,
-                    activeRef: action.payload.ref,
-                    refs: [action.payload.ref],
-                };
+                state.activeRef = action.payload.ref;
+                state.refs = [action.payload.ref];
+                return { ...state };
             }
 
-            if (state.refs.includes(action.payload.ref)) {
-                return state; // already in refs, this should not happen
-            }
+            let left = 0;
+            let right = state.refs.length - 1;
+            let index = state.refs.length; // by default append to the end
+            // do a binary search to find the right slot whilst also breaking if we find ourselves to inline the scan
+            while (left <= right) {
+                index = Math.floor((left + right) / 2);
+                const elem = state.refs[index].current;
 
-            // find the index of the first ref which is not preceding this one in DOM order
-            let newIndex = state.refs.findIndex(ref => {
-                return ref.current.compareDocumentPosition(action.payload.ref.current) & DOCUMENT_POSITION_PRECEDING;
-            });
+                if (elem === action.payload.ref.current) {
+                    return state; // already in refs, this should not happen
+                }
 
-            if (newIndex < 0) {
-                newIndex = state.refs.length; // append to the end
+                if (action.payload.ref.current.compareDocumentPosition(elem) & DOCUMENT_POSITION_PRECEDING) {
+                    left = index + 1;
+                } else {
+                    right = index - 1;
+                }
             }
 
             // update the refs list
-            return {
-                ...state,
-                refs: [
-                    ...state.refs.slice(0, newIndex),
-                    action.payload.ref,
-                    ...state.refs.slice(newIndex),
-                ],
-            };
+            state.refs.splice(index, 0, action.payload.ref);
+            return { ...state };
         }
-        case Type.Unregister: {
-            // filter out the ref which we are removing
-            const refs = state.refs.filter(r => r !== action.payload.ref);
 
-            if (refs.length === state.refs.length) {
+        case Type.Unregister: {
+            const oldIndex = state.refs.findIndex(r => r === action.payload.ref);
+
+            if (oldIndex === -1) {
                 return state; // already removed, this should not happen
             }
 
-            if (state.activeRef === action.payload.ref) {
+            if (state.refs.splice(oldIndex, 1)[0] === state.activeRef) {
                 // we just removed the active ref, need to replace it
                 // pick the ref which is now in the index the old ref was in
-                const oldIndex = state.refs.findIndex(r => r === action.payload.ref);
-                return {
-                    ...state,
-                    activeRef: oldIndex >= refs.length ? refs[refs.length - 1] : refs[oldIndex],
-                    refs,
-                };
+                const len = state.refs.length;
+                state.activeRef = oldIndex >= len ? state.refs[len - 1] : state.refs[oldIndex];
             }
 
             // update the refs list
-            return {
-                ...state,
-                refs,
-            };
+            return { ...state };
         }
+
         case Type.SetFocus: {
             // update active ref
-            return {
-                ...state,
-                activeRef: action.payload.ref,
-            };
+            state.activeRef = action.payload.ref;
+            return { ...state };
         }
+
         default:
             return state;
     }
