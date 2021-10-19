@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634657305443,
+  "lastUpdate": 1634657847280,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33176,6 +33176,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4567.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a9c27e22b5a3a1050988be21bdc5ef45774628c7",
+          "message": "Handle and i18n M_THREEPID_IN_USE during registration (#6986)",
+          "timestamp": "2021-10-19T15:31:07Z",
+          "tree_id": "147331e8e872b5ce392827c725eb5217d79b9b3e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a9c27e22b5a3a1050988be21bdc5ef45774628c7"
+        },
+        "date": 1634657845068,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4782.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1066.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1712.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4599.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
