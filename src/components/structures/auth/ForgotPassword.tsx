@@ -171,10 +171,13 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         // refresh the server errors, just in case the server came back online
         await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
 
+        await this['email_field'].validate({ allowEmpty: false });
         await this['password_field'].validate({ allowEmpty: false });
 
         if (!this.state.email) {
             this.showErrorDialog(_t('The email address linked to your account must be entered.'));
+        } else if (!this.state.emailFieldValid) {
+            this.showErrorDialog(_t("The email address doesn't appear to be valid."));
         } else if (!this.state.password || !this.state.password2) {
             this.showErrorDialog(_t('A new password must be entered.'));
         } else if (!this.state.passwordFieldValid) {
@@ -305,6 +308,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         label={_t('Email')}
                         value={this.state.email}
                         onChange={this.onInputChanged.bind(this, "email")}
+                        ref={field => this['email_field'] = field}
                         autoFocus
                         onValidate={this.onEmailValidate}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
