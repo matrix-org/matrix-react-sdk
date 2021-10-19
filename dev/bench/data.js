@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634664464619,
+  "lastUpdate": 1634665776470,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33320,6 +33320,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4378.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "01c4d3eede9853da080afe9601dfd82fca715f52",
+          "message": "Fix conflicting CSS on syntax highlighted blocks (#6991)\n\nFixes https://github.com/vector-im/element-web/issues/19445",
+          "timestamp": "2021-10-19T18:43:29+01:00",
+          "tree_id": "c25bb0ef5194161fd7f2d934c910c36ebecaba40",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/01c4d3eede9853da080afe9601dfd82fca715f52"
+        },
+        "date": 1634665774130,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4609.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1046.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1710.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4515.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
