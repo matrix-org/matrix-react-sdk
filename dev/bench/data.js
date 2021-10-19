@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634651959726,
+  "lastUpdate": 1634655408756,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -32948,6 +32948,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4313.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d39002338d066f50f453e6f11cb52a838b019729",
+          "message": "Merge pull request #6985 from andybalaam/break-out-font-scaling-panel\n\nBreak out font size settings to a separate component",
+          "timestamp": "2021-10-19T15:51:09+01:00",
+          "tree_id": "5543a1f57533190b02f7c9a2023ecea5686c6dc5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d39002338d066f50f453e6f11cb52a838b019729"
+        },
+        "date": 1634655407103,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4569.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 995.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1687.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4436.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
