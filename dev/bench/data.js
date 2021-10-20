@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634734843543,
+  "lastUpdate": 1634742237337,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33596,6 +33596,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4301.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4b903b9fbdd32f53402f1e9c18337bab1785d4ec",
+          "message": "Break ThemeChoicePanel into a separate component (#6998)\n\n* Break ThemeChoicePanel into a separate component\r\n\r\n* Tests for ThemeChoicePanel\r\n\r\n* i18n fixes\r\n\r\n* Fix copyright for ThemeChoicePanel",
+          "timestamp": "2021-10-20T14:58:27Z",
+          "tree_id": "c805ce1f78e3c2bd88cca667c66562a039e8f571",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4b903b9fbdd32f53402f1e9c18337bab1785d4ec"
+        },
+        "date": 1634742234908,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4286.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 859,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4300,
             "unit": "ms",
             "extra": "type: measure"
           }
