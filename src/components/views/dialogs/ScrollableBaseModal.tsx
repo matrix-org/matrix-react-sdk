@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { FormEvent } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Key } from "../../../Keyboard";
@@ -56,7 +56,10 @@ export abstract class ScrollableBaseModal<TProps extends IDialogProps, TState ex
         this.cancel();
     };
 
-    private onSubmit = () => {
+    private onSubmit = (e: MouseEvent | FormEvent) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (!this.state.canSubmit) return; // pretend the submit button was disabled
         this.submit();
     };
 
@@ -87,17 +90,26 @@ export abstract class ScrollableBaseModal<TProps extends IDialogProps, TState ex
                             aria-label={_t("Close dialog")}
                         />
                     </div>
-                    <div className="mx_CompoundDialog_content">
-                        { this.renderContent() }
-                    </div>
-                    <div className="mx_CompoundDialog_footer">
-                        <AccessibleButton onClick={this.onCancel} kind="primary_outline">
-                            { _t("Cancel") }
-                        </AccessibleButton>
-                        <AccessibleButton onClick={this.onSubmit} kind="primary" disabled={!this.state.canSubmit}>
-                            { this.state.actionLabel }
-                        </AccessibleButton>
-                    </div>
+                    <form onSubmit={this.onSubmit}>
+                        <div className="mx_CompoundDialog_content">
+                            { this.renderContent() }
+                        </div>
+                        <div className="mx_CompoundDialog_footer">
+                            <AccessibleButton onClick={this.onCancel} kind="primary_outline">
+                                { _t("Cancel") }
+                            </AccessibleButton>
+                            <AccessibleButton
+                                onClick={this.onSubmit}
+                                kind="primary"
+                                disabled={!this.state.canSubmit}
+                                type="submit"
+                                element="button"
+                                className="mx_Dialog_nonDialogButton"
+                            >
+                                { this.state.actionLabel }
+                            </AccessibleButton>
+                        </div>
+                    </form>
                 </FocusLock>
             </MatrixClientContext.Provider>
         );
