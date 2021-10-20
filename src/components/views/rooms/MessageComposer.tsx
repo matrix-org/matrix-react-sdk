@@ -58,6 +58,7 @@ import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import RoomContext from '../../../contexts/RoomContext';
 import { POLL_START_EVENT_TYPE } from "../../../stores/polls/consts";
 import ErrorDialog from "../dialogs/ErrorDialog";
+import PollCreateDialog from "../elements/PollCreateDialog";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -203,7 +204,6 @@ interface IPollButtonProps {
     room: Room;
 }
 
-// TODO: [polls] Make this component actually do something
 class PollButton extends React.PureComponent<IPollButtonProps> {
     private onCreateClick = () => {
         const canSend = this.props.room.currentState.maySendEvent(
@@ -216,7 +216,9 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 description: _t("You do not have permission to start polls in this room."),
             });
         } else {
-            // start
+            Modal.createTrackedDialog('Polls', 'create', PollCreateDialog, {
+                room: this.props.room,
+            }, 'mx_CompoundDialog');
         }
     };
 
