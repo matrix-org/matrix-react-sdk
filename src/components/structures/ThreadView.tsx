@@ -48,10 +48,9 @@ interface IProps {
 }
 
 interface IState {
-    replyToEvent?: MatrixEvent;
     thread?: Thread;
     editState?: EditorStateTransfer;
-
+    replyToEvent?: MatrixEvent;
 }
 
 @replaceableComponent("structures.ThreadView")
@@ -69,11 +68,16 @@ export default class ThreadView extends React.Component<IProps, IState> {
     public componentDidMount(): void {
         this.setupThread(this.props.mxEvent);
         this.dispatcherRef = dis.register(this.onAction);
+
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        room.on(ThreadEvent.New, this.onNewThread);
     }
 
     public componentWillUnmount(): void {
         this.teardownThread();
         dis.unregister(this.dispatcherRef);
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        room.on(ThreadEvent.New, this.onNewThread);
     }
 
     public componentDidUpdate(prevProps) {
@@ -111,6 +115,13 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 });
                 break;
             }
+            case 'reply_to_event':
+                if (payload.context === TimelineRenderingType.Thread) {
+                    this.setState({
+                        replyToEvent: payload.event,
+                    });
+                }
+                break;
             default:
                 break;
         }
@@ -135,11 +146,17 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private onNewThread = (thread: Thread) => {
+        if (thread.id === this.props.mxEvent.getId()) {
+            this.teardownThread();
+            this.setupThread(this.props.mxEvent);
+        }
+    };
+
     private updateThread = (thread?: Thread) => {
         if (thread) {
             this.setState({
                 thread,
-                replyToEvent: thread.replyToEvent,
             });
         }
 
@@ -190,7 +207,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             rel_type: RelationType.Thread,
                             event_id: this.state.thread.id,
                         }}
-                        showReplyPreview={false}
+                        replyToEvent={this.state.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator}
                         e2eStatus={this.props.e2eStatus}
                         compact={true}
