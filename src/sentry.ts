@@ -208,7 +208,7 @@ export async function initSentry(sentryConfig: ISentryConfig): Promise<void> {
 
     Sentry.init({
         dsn: sentryConfig.dsn,
-        release: `${platform.getHumanReadableName()}@${appVersion}`,
+        release: process.env.RELEASE,
         environment: sentryConfig.environment,
         defaultIntegrations: false,
         autoSessionTracking: false,
