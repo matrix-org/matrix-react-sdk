@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634742237337,
+  "lastUpdate": 1634746422132,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33644,6 +33644,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4300,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "abc5db5715559c4517e17e4a755a4b95d3022689",
+          "message": "Fix colour variable references in composer format bar (#7000)",
+          "timestamp": "2021-10-20T16:07:31Z",
+          "tree_id": "8d630d75d5b91c03cd8d001e4000bcb46e6cc3b2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/abc5db5715559c4517e17e4a755a4b95d3022689"
+        },
+        "date": 1634746419618,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5410.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4790.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
