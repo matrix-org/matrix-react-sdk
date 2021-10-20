@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634746806296,
+  "lastUpdate": 1634747240355,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33740,6 +33740,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4385.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "115c6e8357eda157cbef1d22dc9aa82b7bdd26a4",
+          "message": "Sentry uses RELEASE from webpack to correspond with sourcemap uploader (#6996)\n\nuse RELEASE from webpack to correspond with sourcemap uploader",
+          "timestamp": "2021-10-20T16:20:50Z",
+          "tree_id": "55679f741acea9d99b3d8a0a17fc84373e13ee4b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/115c6e8357eda157cbef1d22dc9aa82b7bdd26a4"
+        },
+        "date": 1634747238068,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4452.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1240.1000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
