@@ -75,6 +75,8 @@ interface IState {
     groupRoomId?: string;
     groupId?: string;
     event: MatrixEvent;
+    initialEvent?: MatrixEvent;
+    initialEventHighlighted?: boolean;
 }
 
 @replaceableComponent("structures.RightPanel")
@@ -209,6 +211,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 groupId: payload.groupId,
                 member: payload.member,
                 event: payload.event,
+                initialEvent: payload.initialEvent,
+                initialEventHighlighted: payload.highlighted,
                 verificationRequest: payload.verificationRequest,
                 verificationRequestPromise: payload.verificationRequestPromise,
                 widgetId: payload.widgetId,
@@ -244,7 +248,15 @@ export default class RightPanel extends React.Component<IProps, IState> {
         }
     };
 
-    render() {
+    private resetHighlightedState = (): void => {
+        if (this.state.initialEventHighlighted) {
+            this.setState({
+                initialEventHighlighted: false,
+            });
+        }
+    };
+
+    public render(): JSX.Element {
         let panel = <div />;
         const roomId = this.props.room ? this.props.room.roomId : undefined;
 
@@ -327,6 +339,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     onClose={this.onClose}
                     mxEvent={this.state.event}
+                    initialEvent={this.state.initialEvent}
+                    initialEventHighlighted={this.state.initialEventHighlighted}
+                    onScroll={this.resetHighlightedState}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus} />;
                 break;

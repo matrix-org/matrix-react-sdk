@@ -45,6 +45,9 @@ interface IProps {
     mxEvent: MatrixEvent;
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
+    initialEvent?: MatrixEvent;
+    initialEventHighlighted?: boolean;
+    onScroll: () => void;
 }
 
 interface IState {
@@ -164,6 +167,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
+        const highlightedEventId = this.props.initialEventHighlighted
+            ? this.props.initialEvent.getId()
+            : null;
         return (
             <RoomContext.Provider value={{
                 ...this.context,
@@ -197,6 +203,10 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             permalinkCreator={this.props.permalinkCreator}
                             membersLoaded={true}
                             editState={this.state.editState}
+
+                            eventId={this.props.initialEvent.getId()}
+                            highlightedEventId={highlightedEventId}
+                            onScroll={this.props.onScroll}
                         />
                     ) }
 
