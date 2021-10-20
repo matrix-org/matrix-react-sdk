@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import * as Sentry from "@sentry/browser";
-import PlatformPeg from "./PlatformPeg";
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
