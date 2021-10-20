@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634746422132,
+  "lastUpdate": 1634746806296,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33692,6 +33692,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4790.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7c50cfeab82c713210cc8197441f6ad7f5a4d46c",
+          "message": "Fix direction override characters breaking member event text direction (#6999)\n\nStrip RLO & LRO chars from display names when rendering text for\r\nmember events.\r\n\r\nSee https://github.com/matrix-org/matrix-js-sdk/pull/1992 - also\r\nnecessary here because we use the display name in the event content\r\nrather than from the member object sanitised by the js-sdk.",
+          "timestamp": "2021-10-20T16:14:11Z",
+          "tree_id": "6d5fc9f7bf6de69d49806ca6da47a80c8f795fdd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7c50cfeab82c713210cc8197441f6ad7f5a4d46c"
+        },
+        "date": 1634746802936,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5071.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 989.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1672.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4385.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
