@@ -1262,6 +1262,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         />
                         { actionBar }
                     </div>,
+                    reactionsRow,
                 ]);
             }
             case TileShape.FileGrid: {
