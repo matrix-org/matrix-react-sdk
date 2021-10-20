@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { AuthType, IAuthData } from 'matrix-js-sdk/src/interactive-auth';
 
 import Analytics from '../../../Analytics';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -26,6 +27,8 @@ import { DEFAULT_PHASE, PasswordAuthEntry, SSOAuthEntry } from "../auth/Interact
 import StyledCheckbox from "../elements/StyledCheckbox";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -65,7 +68,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         this.initAuth(/* shouldErase= */false);
     }
 
-    private onStagePhaseChange = (stage: string, phase: string): void => {
+    private onStagePhaseChange = (stage: AuthType, phase: string): void => {
         const dialogAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
                 body: _t("Confirm your account deactivation by using Single Sign On to prove your identity."),
@@ -111,18 +114,21 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             return;
         }
 
-        console.error("Error during UI Auth:", { result });
+        logger.error("Error during UI Auth:", { result });
         this.setState({ errStr: _t("There was a problem communicating with the server. Please try again.") });
     };
 
-    private onUIAuthComplete = (auth: any): void => {
+    private onUIAuthComplete = (auth: IAuthData): void => {
+        // XXX: this should be returning a promise to maintain the state inside the state machine correct
+        // but given that a deactivation is followed by a local logout and all object instances being thrown away
+        // this isn't done.
         MatrixClientPeg.get().deactivateAccount(auth, this.state.shouldErase).then(r => {
             // Deactivation worked - logout & close this dialog
             Analytics.trackEvent('Account', 'Deactivate Account');
             Lifecycle.onLoggedOut();
             this.props.onFinished(true);
         }).catch(e => {
-            console.error(e);
+            logger.error(e);
             this.setState({ errStr: _t("There was a problem communicating with the server. Please try again.") });
         });
     };
@@ -152,7 +158,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             // Our application lifecycle will catch the error and do the logout bits.
             // We'll try to log something in an vain attempt to record what happened (storage
             // is also obliterated on logout).
-            console.warn("User's account got deactivated without confirmation: Server had no auth");
+            logger.warn("User's account got deactivated without confirmation: Server had no auth");
             this.setState({ errStr: _t("Server did not require any authentication") });
         }).catch(e => {
             if (e && e.httpStatus === 401 && e.data) {
@@ -172,15 +178,17 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             </div>;
         }
 
-        let auth = <div>{_t("Loading...")}</div>;
+        let auth = <div>{ _t("Loading...") }</div>;
         if (this.state.authData && this.state.authEnabled) {
             auth = (
                 <div>
-                    {this.state.bodyText}
+                    { this.state.bodyText }
                     <InteractiveAuth
                         matrixClient={MatrixClientPeg.get()}
                         authData={this.state.authData}
-                        makeRequest={this.onUIAuthComplete}
+                        // XXX: onUIAuthComplete breaches the expected method contract, it gets away with it because it
+                        // knows the entire app is about to die as a result of the account deactivation.
+                        makeRequest={this.onUIAuthComplete as any}
                         onAuthFinished={this.onUIAuthFinished}
                         onStagePhaseChange={this.onStagePhaseChange}
                         continueText={this.state.continueText}
@@ -230,18 +238,18 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
                                 checked={this.state.shouldErase}
                                 onChange={this.onEraseFieldChange}
                             >
-                                {_t(
+                                { _t(
                                     "Please forget all messages I have sent when my account is deactivated " +
                                     "(<b>Warning:</b> this will cause future users to see an incomplete view " +
                                     "of conversations)",
                                     {},
                                     { b: (sub) => <b>{ sub }</b> },
-                                )}
+                                ) }
                             </StyledCheckbox>
                         </p>
 
-                        {error}
-                        {auth}
+                        { error }
+                        { auth }
                     </div>
 
                 </div>

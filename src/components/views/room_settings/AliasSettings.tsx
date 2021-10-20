@@ -29,6 +29,8 @@ import RoomPublishSetting from "./RoomPublishSetting";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAliasField from "../elements/RoomAliasField";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IEditableAliasesListProps {
     domain?: string;
 }
@@ -171,7 +173,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
             eventContent, "").catch((err) => {
-            console.error(err);
+            logger.error(err);
             Modal.createTrackedDialog('Error updating main address', '', ErrorDialog, {
                 title: _t("Error updating main address"),
                 description: _t(
@@ -204,7 +206,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
             eventContent, "").catch((err) => {
-            console.error(err);
+            logger.error(err);
             Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
                 title: _t("Error updating main address"),
                 description: _t(
@@ -236,7 +238,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 this.changeCanonicalAlias(alias);
             }
         }).catch((err) => {
-            console.error(err);
+            logger.error(err);
             Modal.createTrackedDialog('Error creating address', '', ErrorDialog, {
                 title: _t("Error creating address"),
                 description: _t(
@@ -259,7 +261,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 this.changeCanonicalAlias(null);
             }
         }).catch((err) => {
-            console.error(err);
+            logger.error(err);
             let description;
             if (err.errcode === "M_FORBIDDEN") {
                 description = _t("You don't have permission to delete the address.");
@@ -348,7 +350,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 }
                 {
                     found || !this.state.canonicalAlias ? '' :
-                        <option value={ this.state.canonicalAlias } key='arbitrary'>
+                        <option value={this.state.canonicalAlias} key='arbitrary'>
                             { this.state.canonicalAlias }
                         </option>
                 }
@@ -378,11 +380,11 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         return (
             <div className='mx_AliasSettings'>
-                <span className='mx_SettingsTab_subheading'>{_t("Published Addresses")}</span>
+                <span className='mx_SettingsTab_subheading'>{ _t("Published Addresses") }</span>
                 <p>
                     { isSpaceRoom
                         ? _t("Published addresses can be used by anyone on any server to join your space.")
-                        : _t("Published addresses can be used by anyone on any server to join your room.")}
+                        : _t("Published addresses can be used by anyone on any server to join your room.") }
                     &nbsp;
                     { _t("To publish an address, it needs to be set as a local address first.") }
                 </p>
@@ -394,9 +396,9 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         canSetCanonicalAlias={this.props.canSetCanonicalAlias}
                     /> }
                 <datalist id="mx_AliasSettings_altRecommendations">
-                    {this.getLocalNonAltAliases().map(alias => {
+                    { this.getLocalNonAltAliases().map(alias => {
                         return <option value={alias} key={alias} />;
-                    })};
+                    }) };
                 </datalist>
                 <EditableAliasesList
                     id="roomAltAliases"
@@ -423,7 +425,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         "through your homeserver (%(localDomain)s)", { localDomain }) }
                 </p>
                 <details onToggle={this.onLocalAliasesToggled} open={this.state.detailsOpen}>
-                    <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more")}</summary>
+                    <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more") }</summary>
                     { localAliasesList }
                 </details>
             </div>

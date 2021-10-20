@@ -23,6 +23,8 @@ import SdkConfig from './SdkConfig';
 import Modal from './Modal';
 import * as sdk from './index';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const hashRegex = /#\/(groups?|room|user|settings|register|login|forgot_password|home|directory)/;
 const hashVarRegex = /#\/(group|room|user)\/.*$/;
 
@@ -31,7 +33,7 @@ function getRedactedHash(hash: string): string {
     // Don't leak URLs we aren't expecting - they could contain tokens/PII
     const match = hashRegex.exec(hash);
     if (!match) {
-        console.warn(`Unexpected hash location "${hash}"`);
+        logger.warn(`Unexpected hash location "${hash}"`);
         return '#/<unexpected hash location>';
     }
 
@@ -156,7 +158,7 @@ function getUid(): string {
         }
         return data;
     } catch (e) {
-        console.error("Analytics error: ", e);
+        logger.error("Analytics error: ", e);
         return "";
     }
 }
@@ -270,7 +272,7 @@ export class Analytics {
         localStorage.removeItem(LAST_VISIT_TS_KEY);
     }
 
-    private async _track(data: IData) {
+    private async track(data: IData) {
         if (this.disabled) return;
 
         const now = new Date();
@@ -299,12 +301,12 @@ export class Analytics {
                 redirect: "follow",
             });
         } catch (e) {
-            console.error("Analytics error: ", e);
+            logger.error("Analytics error: ", e);
         }
     }
 
     public ping() {
-        this._track({
+        this.track({
             ping: "1",
         });
         localStorage.setItem(LAST_VISIT_TS_KEY, String(new Date().getTime())); // update last visit ts
@@ -320,18 +322,18 @@ export class Analytics {
         }
 
         if (typeof generationTimeMs !== 'number') {
-            console.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
+            logger.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
             // But continue anyway because we still want to track the change
         }
 
-        this._track({
+        this.track({
             gt_ms: String(generationTimeMs),
         });
     }
 
     public trackEvent(category: string, action: string, name?: string, value?: string) {
         if (this.disabled) return;
-        this._track({
+        this.track({
             e_c: category,
             e_a: action,
             e_n: name,
@@ -395,17 +397,17 @@ export class Analytics {
         Modal.createTrackedDialog('Analytics Details', '', ErrorDialog, {
             title: _t('Analytics'),
             description: <div className="mx_AnalyticsModal">
-                <div>{_t('The information being sent to us to help make %(brand)s better includes:', {
+                <div>{ _t('The information being sent to us to help make %(brand)s better includes:', {
                     brand: SdkConfig.get().brand,
-                })}</div>
+                }) }</div>
                 <table>
                     { rows.map((row) => <tr key={row[0]}>
-                        <td>{_t(
+                        <td>{ _t(
                             customVariables[row[0]].expl,
                             customVariables[row[0]].getTextVariables ?
                                 customVariables[row[0]].getTextVariables() :
                                 null,
-                        )}</td>
+                        ) }</td>
                         { row[1] !== undefined && <td><code>{ row[1] }</code></td> }
                     </tr>) }
                     { otherVariables.map((item, index) =>

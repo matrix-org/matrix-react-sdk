@@ -28,6 +28,8 @@ import TextWithTooltip from "../elements/TextWithTooltip";
 import withValidation, { IFieldState } from "../elements/Validation";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     title?: string;
     serverConfig: ValidatedServerConfig;
@@ -93,7 +95,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     this.validatedConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(hsUrl, discoveryResult);
                     return {}; // we have a validated config, we don't need to try the other paths
                 } catch (e) {
-                    console.error(`Attempted ${hsUrl} as a server_name but it failed`, e);
+                    logger.error(`Attempted ${hsUrl} as a server_name but it failed`, e);
                 }
             }
 
@@ -107,7 +109,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                 this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl);
                 return {};
             } catch (e) {
-                console.error(e);
+                logger.error(e);
 
                 const stateForError = AutoDiscoveryUtils.authComponentStateForError(e);
                 if (stateForError.serverErrorIsFatal) {
@@ -123,7 +125,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, null, true);
                     return {};
                 } catch (e) {
-                    console.error(e);
+                    logger.error(e);
                     return { error: _t("Invalid URL") };
                 }
             }
@@ -172,7 +174,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         if (this.defaultServer.hsNameIsDifferent) {
             defaultServerName = (
                 <TextWithTooltip class="mx_Login_underlinedServerName" tooltip={this.defaultServer.hsUrl}>
-                    {this.defaultServer.hsName}
+                    { this.defaultServer.hsName }
                 </TextWithTooltip>
             );
         }
@@ -187,7 +189,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         >
             <form className="mx_Dialog_content" id="mx_ServerPickerDialog" onSubmit={this.onSubmit}>
                 <p>
-                    {_t("We call the places where you can host your account ‘homeservers’.")} {text}
+                    { _t("We call the places where you can host your account ‘homeservers’.") } { text }
                 </p>
 
                 <StyledRadioButton
@@ -196,7 +198,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     checked={this.state.defaultChosen}
                     onChange={this.onDefaultChosen}
                 >
-                    {defaultServerName}
+                    { defaultServerName }
                 </StyledRadioButton>
 
                 <StyledRadioButton
@@ -205,13 +207,14 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     className="mx_ServerPickerDialog_otherHomeserverRadio"
                     checked={!this.state.defaultChosen}
                     onChange={this.onOtherChosen}
+                    childrenInLabel={false}
                 >
                     <Field
                         type="text"
                         className="mx_ServerPickerDialog_otherHomeserver"
                         label={_t("Other homeserver")}
                         onChange={this.onHomeserverChange}
-                        onClick={this.onOtherChosen}
+                        onFocus={this.onOtherChosen}
                         ref={this.fieldRef}
                         onValidate={this.onHomeserverValidate}
                         value={this.state.otherHomeserver}
@@ -221,16 +224,16 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     />
                 </StyledRadioButton>
                 <p>
-                    {_t("Use your preferred Matrix homeserver if you have one, or host your own.")}
+                    { _t("Use your preferred Matrix homeserver if you have one, or host your own.") }
                 </p>
 
                 <AccessibleButton className="mx_ServerPickerDialog_continue" kind="primary" onClick={this.onSubmit}>
-                    {_t("Continue")}
+                    { _t("Continue") }
                 </AccessibleButton>
 
-                <h4>{_t("Learn more")}</h4>
+                <h4>{ _t("Learn more") }</h4>
                 <a href="https://matrix.org/faq/#what-is-a-homeserver%3F" target="_blank" rel="noreferrer noopener">
-                    {_t("About homeservers")}
+                    { _t("About homeservers") }
                 </a>
             </form>
         </BaseDialog>;

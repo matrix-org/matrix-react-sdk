@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent, EventStatus } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -73,9 +72,15 @@ export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
 }
 
 const MAX_JUMP_DISTANCE = 100;
-export function findEditableEvent(room: Room, isForward: boolean, fromEventId: string = undefined): MatrixEvent {
-    const liveTimeline = room.getLiveTimeline();
-    const events = liveTimeline.getEvents().concat(room.getPendingEvents());
+export function findEditableEvent({
+    events,
+    isForward,
+    fromEventId,
+}: {
+    events: MatrixEvent[];
+    isForward: boolean;
+    fromEventId?: string;
+}): MatrixEvent {
     const maxIdx = events.length - 1;
     const inc = isForward ? 1 : -1;
     const beginIdx = isForward ? 0 : maxIdx;
@@ -103,6 +108,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
     isInfoMessage: boolean;
     tileHandler: string;
     isBubbleMessage: boolean;
+    isLeftAlignedBubbleMessage: boolean;
 } {
     const content = mxEvent.getContent();
     const msgtype = content.msgtype;
@@ -111,14 +117,23 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
     let tileHandler = getHandlerTile(mxEvent);
 
     // Info messages are basically information about commands processed on a room
-    let isBubbleMessage = eventType.startsWith("m.key.verification") ||
-            (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
-            (eventType === EventType.RoomCreate) ||
-            (eventType === EventType.RoomEncryption) ||
-            (tileHandler === "messages.MJitsiWidgetEvent");
+    let isBubbleMessage = (
+        eventType.startsWith("m.key.verification") ||
+        (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
+        (eventType === EventType.RoomCreate) ||
+        (eventType === EventType.RoomEncryption) ||
+        (tileHandler === "messages.MJitsiWidgetEvent")
+    );
+    const isLeftAlignedBubbleMessage = (
+        !isBubbleMessage &&
+        eventType === EventType.CallInvite
+    );
     let isInfoMessage = (
-        !isBubbleMessage && eventType !== EventType.RoomMessage &&
-            eventType !== EventType.Sticker && eventType !== EventType.RoomCreate
+        !isBubbleMessage &&
+        !isLeftAlignedBubbleMessage &&
+        eventType !== EventType.RoomMessage &&
+        eventType !== EventType.Sticker &&
+        eventType !== EventType.RoomCreate
     );
 
     // If we're showing hidden events in the timeline, we should use the
@@ -132,5 +147,14 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
         isInfoMessage = true;
     }
 
-    return { tileHandler, isInfoMessage, isBubbleMessage };
+    return { tileHandler, isInfoMessage, isBubbleMessage, isLeftAlignedBubbleMessage };
+}
+
+export function isVoiceMessage(mxEvent: MatrixEvent): boolean {
+    const content = mxEvent.getContent();
+    // MSC2516 is a legacy identifier. See https://github.com/matrix-org/matrix-doc/pull/3245
+    return (
+        !!content['org.matrix.msc2516.voice'] ||
+        !!content['org.matrix.msc3245.voice']
+    );
 }

@@ -32,6 +32,8 @@ import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDia
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CountryDropdown from "./CountryDropdown";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 enum RegistrationField {
     Email = "field_email",
     PhoneNumber = "field_phone_number",
@@ -84,7 +86,7 @@ interface IState {
 @replaceableComponent("views.auth.RegistrationForm")
 export default class RegistrationForm extends React.PureComponent<IProps, IState> {
     static defaultProps = {
-        onValidationChange: console.error,
+        onValidationChange: logger.error,
         canSubmit: true,
     };
 
@@ -537,15 +539,15 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             <div>
                 <form onSubmit={this.onSubmit}>
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderUsername()}
+                        { this.renderUsername() }
                     </div>
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderPassword()}
-                        {this.renderPasswordConfirm()}
+                        { this.renderPassword() }
+                        { this.renderPasswordConfirm() }
                     </div>
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderEmail()}
-                        {this.renderPhoneNumber()}
+                        { this.renderEmail() }
+                        { this.renderPhoneNumber() }
                     </div>
                     { emailHelperText }
                     { registerButton }

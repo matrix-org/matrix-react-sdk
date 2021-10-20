@@ -33,6 +33,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 // A class for a child of GroupFilterPanel (possibly wrapped in a DNDTagTile) that represents
 // a thing to click on for the user to filter the visible rooms in the RoomList to:
 //  - Rooms that are part of the group
@@ -85,7 +87,7 @@ export default class TagTile extends React.Component {
             if (this.unmounted) return;
             this.setState({ profile });
         }).catch((err) => {
-            console.warn('Could not fetch group profile for ' + this.props.tag, err);
+            logger.warn('Could not fetch group profile for ' + this.props.tag, err);
         });
     };
 
@@ -152,7 +154,7 @@ export default class TagTile extends React.Component {
                 "mx_TagTile_badge": true,
                 "mx_TagTile_badgeHighlight": badge.highlight,
             });
-            badgeElement = (<div className={badgeClasses}>{FormattingUtils.formatCount(badge.count)}</div>);
+            badgeElement = (<div className={badgeClasses}>{ FormattingUtils.formatCount(badge.count) }</div>);
         }
 
         const contextButton = this.state.hover || this.props.menuDisplayed ?
@@ -161,7 +163,7 @@ export default class TagTile extends React.Component {
                 onClick={this.openMenu}
                 inputRef={this.props.contextMenuButtonRef}
             >
-                {"\u00B7\u00B7\u00B7"}
+                { "\u00B7\u00B7\u00B7" }
             </AccessibleButton> : <div ref={this.props.contextMenuButtonRef} />;
 
         const AccessibleTooltipButton = sdk.getComponent("elements.AccessibleTooltipButton");
@@ -184,8 +186,8 @@ export default class TagTile extends React.Component {
                     width={avatarSize}
                     height={avatarSize}
                 />
-                {contextButton}
-                {badgeElement}
+                { contextButton }
+                { badgeElement }
             </div>
         </AccessibleTooltipButton>;
     }

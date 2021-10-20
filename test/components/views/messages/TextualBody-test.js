@@ -15,19 +15,17 @@ limitations under the License.
 */
 
 import React from "react";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { configure, mount } from "enzyme";
+import { mount } from "enzyme";
 
 import sdk from "../../../skinned-sdk";
 import { mkEvent, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import * as languageHandler from "../../../../src/languageHandler";
 import * as TestUtils from "../../../test-utils";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
 
 const _TextualBody = sdk.getComponent("views.messages.TextualBody");
 const TextualBody = TestUtils.wrapInMatrixClientContext(_TextualBody);
-
-configure({ adapter: new Adapter() });
 
 describe("<TextualBody />", () => {
     afterEach(() => {
@@ -41,6 +39,7 @@ describe("<TextualBody />", () => {
             isGuest: () => false,
             mxcUrlToHttp: (s) => s,
         };
+        DMRoomMap.makeShared();
 
         const ev = mkEvent({
             type: "m.room.message",
@@ -66,6 +65,7 @@ describe("<TextualBody />", () => {
             isGuest: () => false,
             mxcUrlToHttp: (s) => s,
         };
+        DMRoomMap.makeShared();
 
         const ev = mkEvent({
             type: "m.room.message",
@@ -92,6 +92,7 @@ describe("<TextualBody />", () => {
                 isGuest: () => false,
                 mxcUrlToHttp: (s) => s,
             };
+            DMRoomMap.makeShared();
         });
 
         it("simple message renders as expected", () => {
@@ -146,6 +147,7 @@ describe("<TextualBody />", () => {
                 isGuest: () => false,
                 mxcUrlToHttp: (s) => s,
             };
+            DMRoomMap.makeShared();
         });
 
         it("italics, bold, underline and strikethrough render as expected", () => {
@@ -292,6 +294,7 @@ describe("<TextualBody />", () => {
             isGuest: () => false,
             mxcUrlToHttp: (s) => s,
         };
+        DMRoomMap.makeShared();
 
         const ev = mkEvent({
             type: "m.room.message",

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, KeyboardEventHandler } from "react";
 
 import { _t } from '../../../languageHandler';
 import withValidation from './Validation';
@@ -28,6 +28,7 @@ interface IProps {
     label?: string;
     placeholder?: string;
     disabled?: boolean;
+    onKeyDown?: KeyboardEventHandler;
     onChange?(value: string): void;
 }
 
@@ -55,7 +56,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
     render() {
         const poundSign = (<span>#</span>);
         const aliasPostfix = ":" + this.props.domain;
-        const domain = (<span title={aliasPostfix}>{aliasPostfix}</span>);
+        const domain = (<span title={aliasPostfix}>{ aliasPostfix }</span>);
         const maxlength = 255 - this.props.domain.length - 2;   // 2 for # and :
         return (
             <Field
@@ -70,6 +71,8 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                 value={this.props.value.substring(1, this.props.value.length - this.props.domain.length - 1)}
                 maxLength={maxlength}
                 disabled={this.props.disabled}
+                autoComplete="off"
+                onKeyDown={this.props.onKeyDown}
             />
         );
     }

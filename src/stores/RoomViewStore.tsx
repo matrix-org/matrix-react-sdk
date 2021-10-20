@@ -31,6 +31,9 @@ import { Action } from "../dispatcher/actions";
 import { retry } from "../utils/promise";
 import CountlyAnalytics from "../CountlyAnalytics";
 
+import { logger } from "matrix-js-sdk/src/logger";
+import { TimelineRenderingType } from "../contexts/RoomContext";
+
 const NUM_JOIN_RETRY = 5;
 
 const INITIAL_STATE = {
@@ -96,7 +99,7 @@ class RoomViewStore extends Store<ActionPayload> {
         this.__emitChange();
     }
 
-    __onDispatch(payload) {
+    __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // view_room:
             //      - room_alias:   '#somealias:matrix.org'
@@ -151,16 +154,19 @@ class RoomViewStore extends Store<ActionPayload> {
             case 'reply_to_event':
                 // If currently viewed room does not match the room in which we wish to reply then change rooms
                 // this can happen when performing a search across all rooms
-                if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
-                    dis.dispatch({
-                        action: 'view_room',
-                        room_id: payload.event.getRoomId(),
-                        replyingToEvent: payload.event,
-                    });
-                } else {
-                    this.setState({
-                        replyingToEvent: payload.event,
-                    });
+                if (payload.context === TimelineRenderingType.Room) {
+                    if (payload.event
+                        && payload.event.getRoomId() !== this.state.roomId) {
+                        dis.dispatch({
+                            action: 'view_room',
+                            room_id: payload.event.getRoomId(),
+                            replyingToEvent: payload.event,
+                        });
+                    } else {
+                        this.setState({
+                            replyingToEvent: payload.event,
+                        });
+                    }
                 }
                 break;
             case 'open_room_settings': {
@@ -233,7 +239,7 @@ class RoomViewStore extends Store<ActionPayload> {
                     storeRoomAliasInCache(payload.room_alias, result.room_id);
                     roomId = result.room_id;
                 } catch (err) {
-                    console.error("RVS failed to get room id for alias: ", err);
+                    logger.error("RVS failed to get room id for alias: ", err);
                     dis.dispatch({
                         action: 'view_room_error',
                         room_id: null,
@@ -319,14 +325,14 @@ class RoomViewStore extends Store<ActionPayload> {
         });
         const err = payload.err;
         let msg = err.message ? err.message : JSON.stringify(err);
-        console.log("Failed to join room:", msg);
+        logger.log("Failed to join room:", msg);
 
         if (err.name === "ConnectionError") {
             msg = _t("There was an error joining the room");
         } else if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {
             msg = <div>
-                {_t("Sorry, your homeserver is too old to participate in this room.")}<br />
-                {_t("Please contact your homeserver administrator.")}
+                { _t("Sorry, your homeserver is too old to participate in this room.") }<br />
+                { _t("Please contact your homeserver administrator.") }
             </div>;
         } else if (err.httpStatus === 404) {
             const invitingUserId = this.getInvitingUserId(this.state.roomId);
@@ -429,7 +435,7 @@ class RoomViewStore extends Store<ActionPayload> {
     }
 }
 
-let singletonRoomViewStore = null;
+let singletonRoomViewStore: RoomViewStore = null;
 if (!singletonRoomViewStore) {
     singletonRoomViewStore = new RoomViewStore();
 }

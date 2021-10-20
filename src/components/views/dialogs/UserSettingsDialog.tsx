@@ -33,6 +33,7 @@ import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab
 import { UIFeature } from "../../../settings/UIFeature";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
+import { IDialogProps } from "./IDialogProps";
 
 export enum UserTab {
     General = "USER_GENERAL_TAB",
@@ -47,8 +48,7 @@ export enum UserTab {
     Help = "USER_HELP_TAB",
 }
 
-interface IProps {
-    onFinished: (success: boolean) => void;
+interface IProps extends IDialogProps {
     initialTabId?: string;
 }
 
@@ -81,7 +81,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         this.setState({ mjolnirEnabled: newValue });
     };
 
-    _getTabs() {
+    private getTabs() {
         const tabs = [];
 
         tabs.push(new Tab(
@@ -114,7 +114,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             UserTab.Preferences,
             _td("Preferences"),
             "mx_UserSettingsDialog_preferencesIcon",
-            <PreferencesUserSettingsTab />,
+            <PreferencesUserSettingsTab closeSettingsFn={this.props.onFinished} />,
         ));
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
@@ -170,7 +170,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 title={_t("Settings")}
             >
                 <div className='mx_SettingsDialog_content'>
-                    <TabbedView tabs={this._getTabs()} initialTabId={this.props.initialTabId} />
+                    <TabbedView tabs={this.getTabs()} initialTabId={this.props.initialTabId} />
                 </div>
             </BaseDialog>
         );

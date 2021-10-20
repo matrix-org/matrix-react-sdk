@@ -38,6 +38,8 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
 _td("Invalid homeserver discovery response");
@@ -144,7 +146,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase
+    // eslint-disable-next-line
     UNSAFE_componentWillMount() {
         this.initLoginLogic(this.props.serverConfig);
     }
@@ -154,7 +156,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase
+    // eslint-disable-next-line
     UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
@@ -239,8 +241,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 );
                 errorText = (
                     <div>
-                        <div>{errorTop}</div>
-                        <div className="mx_Login_smallError">{errorDetail}</div>
+                        <div>{ errorTop }</div>
+                        <div className="mx_Login_smallError">{ errorDetail }</div>
                     </div>
                 );
             } else if (error.httpStatus === 401 || error.httpStatus === 403) {
@@ -251,10 +253,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         <div>
                             <div>{ _t('Incorrect username and/or password.') }</div>
                             <div className="mx_Login_smallError">
-                                {_t(
+                                { _t(
                                     'Please note you are logging into the %(hs)s server, not matrix.org.',
                                     { hs: this.props.serverConfig.hsName },
-                                )}
+                                ) }
                             </div>
                         </div>
                     );
@@ -307,7 +309,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     busy: false,
                 });
             } catch (e) {
-                console.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
+                logger.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
 
                 let message = _t("Failed to perform homeserver discovery");
                 if (e.translatedMessage) {
@@ -438,7 +440,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // technically the flow can have multiple steps, but no one does this
         // for login and loginLogic doesn't support it so we can ignore it.
         if (!this.stepRendererMap[flow.type]) {
-            console.log("Skipping flow", flow, "due to unsupported login type", flow.type);
+            logger.log("Skipping flow", flow, "due to unsupported login type", flow.type);
             return false;
         }
         return true;
@@ -463,7 +465,9 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         "Either use HTTPS or <a>enable unsafe scripts</a>.", {},
                     {
                         'a': (sub) => {
-                            return <a target="_blank" rel="noreferrer noopener"
+                            return <a
+                                target="_blank"
+                                rel="noreferrer noopener"
                                 href="https://www.google.com/search?&q=enable%20unsafe%20scripts"
                             >
                                 { sub }
@@ -565,7 +569,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             });
             serverDeadSection = (
                 <div className={classes}>
-                    {this.state.serverDeadError}
+                    { this.state.serverDeadError }
                 </div>
             );
         }
@@ -578,15 +582,15 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     { this.props.isSyncing ? _t("Syncing...") : _t("Signing In...") }
                 </div>
                 { this.props.isSyncing && <div className="mx_AuthBody_paddedFooter_subtitle">
-                    {_t("If you've joined lots of rooms, this might take a while")}
+                    { _t("If you've joined lots of rooms, this might take a while") }
                 </div> }
             </div>;
         } else if (SettingsStore.getValue(UIFeature.Registration)) {
             footer = (
                 <span className="mx_AuthBody_changeFlow">
-                    {_t("New? <a>Create account</a>", {}, {
+                    { _t("New? <a>Create account</a>", {}, {
                         a: sub => <a onClick={this.onTryRegisterClick} href="#">{ sub }</a>,
-                    })}
+                    }) }
                 </span>
             );
         }
@@ -596,8 +600,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h2>
-                        {_t('Sign in')}
-                        {loader}
+                        { _t('Sign in') }
+                        { loader }
                     </h2>
                     { errorTextSection }
                     { serverDeadSection }

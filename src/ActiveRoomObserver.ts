@@ -14,7 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { EventSubscription } from 'fbemitter';
 import RoomViewStore from './stores/RoomViewStore';
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 type Listener = (isActive: boolean) => void;
 
@@ -30,7 +33,7 @@ type Listener = (isActive: boolean) => void;
 export class ActiveRoomObserver {
     private listeners: {[key: string]: Listener[]} = {};
     private _activeRoomId = RoomViewStore.getRoomId();
-    private readonly roomStoreToken: string;
+    private readonly roomStoreToken: EventSubscription;
 
     constructor() {
         // TODO: We could self-destruct when the last listener goes away, or at least stop listening.
@@ -53,7 +56,7 @@ export class ActiveRoomObserver {
                 this.listeners[roomId].splice(i, 1);
             }
         } else {
-            console.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
+            logger.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
         }
     }
 

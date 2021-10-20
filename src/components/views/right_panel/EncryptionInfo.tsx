@@ -49,16 +49,18 @@ const EncryptionInfo: React.FC<IProps> = ({
     isSelfVerification,
 }: IProps) => {
     let content: JSX.Element;
-    if (waitingForOtherParty || waitingForNetwork) {
+    if (waitingForOtherParty && isSelfVerification) {
+        content = (
+            <div>
+                { _t("To proceed, please accept the verification request on your other login.") }
+            </div>
+        );
+    } else if (waitingForOtherParty || waitingForNetwork) {
         let text: string;
         if (waitingForOtherParty) {
-            if (isSelfVerification) {
-                text = _t("Accept on your other login…");
-            } else {
-                text = _t("Waiting for %(displayName)s to accept…", {
-                    displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
-                });
-            }
+            text = _t("Waiting for %(displayName)s to accept…", {
+                displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
+            });
         } else {
             text = _t("Accepting…");
         }
@@ -66,7 +68,7 @@ const EncryptionInfo: React.FC<IProps> = ({
     } else {
         content = (
             <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={onStartVerification}>
-                {_t("Start Verification")}
+                { _t("Start Verification") }
             </AccessibleButton>
         );
     }
@@ -75,17 +77,17 @@ const EncryptionInfo: React.FC<IProps> = ({
     if (isRoomEncrypted) {
         description = (
             <div>
-                <p>{_t("Messages in this room are end-to-end encrypted.")}</p>
-                <p>{_t("Your messages are secured and only you and the recipient have " +
-                    "the unique keys to unlock them.")}</p>
+                <p>{ _t("Messages in this room are end-to-end encrypted.") }</p>
+                <p>{ _t("Your messages are secured and only you and the recipient have " +
+                    "the unique keys to unlock them.") }</p>
             </div>
         );
     } else {
         description = (
             <div>
-                <p>{_t("Messages in this room are not end-to-end encrypted.")}</p>
-                <p>{_t("In encrypted rooms, your messages are secured and only you and the recipient have " +
-                    "the unique keys to unlock them.")}</p>
+                <p>{ _t("Messages in this room are not end-to-end encrypted.") }</p>
+                <p>{ _t("In encrypted rooms, your messages are secured and only you and the recipient have " +
+                    "the unique keys to unlock them.") }</p>
             </div>
         );
     }
@@ -96,14 +98,14 @@ const EncryptionInfo: React.FC<IProps> = ({
 
     return <React.Fragment>
         <div className="mx_UserInfo_container">
-            <h3>{_t("Encryption")}</h3>
+            <h3>{ _t("Encryption") }</h3>
             { description }
         </div>
         <div className="mx_UserInfo_container">
-            <h3>{_t("Verify User")}</h3>
+            <h3>{ _t("Verify User") }</h3>
             <div>
-                <p>{_t("For extra security, verify this user by checking a one-time code on both of your devices.")}</p>
-                <p>{_t("To be secure, do this in person or use a trusted way to communicate.")}</p>
+                <p>{ _t("For extra security, verify this user by checking a one-time code on both of your devices.") }</p>
+                <p>{ _t("To be secure, do this in person or use a trusted way to communicate.") }</p>
                 { content }
             </div>
         </div>

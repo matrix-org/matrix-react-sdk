@@ -26,10 +26,9 @@ import { SettingLevel } from "../../../../settings/SettingLevel";
 import Field from '../../../../components/views/elements/Field';
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
+import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 
-interface IProps {
-    onFinished: (confirmed: boolean) => void;
-}
+interface IProps extends IDialogProps {}
 
 interface IState {
     eventIndexSize: number;
@@ -134,8 +133,9 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
     }
 
     private onDisable = async () => {
-        Modal.createTrackedDialogAsync("Disable message search", "Disable message search",
-            import("./DisableEventIndexDialog"),
+        const DisableEventIndexDialog = (await import("./DisableEventIndexDialog")).default;
+        Modal.createTrackedDialog("Disable message search", "Disable message search",
+            DisableEventIndexDialog,
             null, null, /* priority = */ false, /* static = */ true,
         );
     };
@@ -161,19 +161,19 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
 
         const eventIndexingSettings = (
             <div>
-                {_t(
+                { _t(
                     "%(brand)s is securely caching encrypted messages locally for them " +
                     "to appear in search results:",
                     { brand },
-                )}
+                ) }
                 <div className='mx_SettingsTab_subsectionText'>
-                    {crawlerState}<br />
-                    {_t("Space used:")} {formatBytes(this.state.eventIndexSize, 0)}<br />
-                    {_t("Indexed messages:")} {formatCountLong(this.state.eventCount)}<br />
-                    {_t("Indexed rooms:")} {_t("%(doneRooms)s out of %(totalRooms)s", {
+                    { crawlerState }<br />
+                    { _t("Space used:") } { formatBytes(this.state.eventIndexSize, 0) }<br />
+                    { _t("Indexed messages:") } { formatCountLong(this.state.eventCount) }<br />
+                    { _t("Indexed rooms:") } { _t("%(doneRooms)s out of %(totalRooms)s", {
                         doneRooms: formatCountLong(doneRooms),
                         totalRooms: formatCountLong(this.state.roomCount),
-                    })} <br />
+                    }) } <br />
                     <Field
                         label={_t('Message downloading sleep time(ms)')}
                         type='number'
@@ -188,7 +188,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                 onFinished={this.props.onFinished}
                 title={_t("Message search")}
             >
-                {eventIndexingSettings}
+                { eventIndexingSettings }
                 <DialogButtons
                     primaryButton={_t("Done")}
                     onPrimaryButtonClick={this.props.onFinished}

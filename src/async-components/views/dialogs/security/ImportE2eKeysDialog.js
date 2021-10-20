@@ -22,6 +22,8 @@ import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryptio
 import * as sdk from '../../../../index';
 import { _t } from '../../../../languageHandler';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 function readFileAsArrayBuffer(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -91,7 +93,7 @@ export default class ImportE2eKeysDialog extends React.Component {
             // TODO: it would probably be nice to give some feedback about what we've imported here.
             this.props.onFinished(true);
         }).catch((e) => {
-            console.error("Error importing e2e keys:", e);
+            logger.error("Error importing e2e keys:", e);
             if (this._unmounted) {
                 return;
             }
@@ -174,7 +176,10 @@ export default class ImportE2eKeysDialog extends React.Component {
                         </div>
                     </div>
                     <div className='mx_Dialog_buttons'>
-                        <input className='mx_Dialog_primary' type='submit' value={_t('Import')}
+                        <input
+                            className='mx_Dialog_primary'
+                            type='submit'
+                            value={_t('Import')}
                             disabled={!this.state.enableSubmit || disableForm}
                         />
                         <button onClick={this._onCancelClick} disabled={disableForm}>

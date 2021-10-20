@@ -23,6 +23,8 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryption';
 import * as sdk from '../../../../index';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const PHASE_EDIT = 1;
 const PHASE_EXPORTING = 2;
 
@@ -83,7 +85,7 @@ export default class ExportE2eKeysDialog extends React.Component {
             FileSaver.saveAs(blob, 'element-keys.txt');
             this.props.onFinished(true);
         }).catch((e) => {
-            console.error("Error exporting e2e keys:", e);
+            logger.error("Error exporting e2e keys:", e);
             if (this._unmounted) {
                 return;
             }
@@ -148,8 +150,12 @@ export default class ExportE2eKeysDialog extends React.Component {
                                     </label>
                                 </div>
                                 <div className='mx_E2eKeysDialog_inputCell'>
-                                    <input ref={this._passphrase1} id='passphrase1'
-                                        autoFocus={true} size='64' type='password'
+                                    <input
+                                        ref={this._passphrase1}
+                                        id='passphrase1'
+                                        autoFocus={true}
+                                        size='64'
+                                        type='password'
                                         disabled={disableForm}
                                     />
                                 </div>
@@ -161,8 +167,10 @@ export default class ExportE2eKeysDialog extends React.Component {
                                     </label>
                                 </div>
                                 <div className='mx_E2eKeysDialog_inputCell'>
-                                    <input ref={this._passphrase2} id='passphrase2'
-                                        size='64' type='password'
+                                    <input ref={this._passphrase2}
+                                        id='passphrase2'
+                                        size='64'
+                                        type='password'
                                         disabled={disableForm}
                                     />
                                 </div>

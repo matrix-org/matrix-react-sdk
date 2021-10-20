@@ -26,6 +26,8 @@ import FlairStore from "../../../stores/FlairStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps extends IDialogProps {
     communityId: string;
 }
@@ -89,7 +91,7 @@ export default class EditCommunityPrototypeDialog extends React.PureComponent<IP
             // we did it, so close the dialog
             this.props.onFinished(true);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             this.setState({
                 busy: false,
                 error: _t("There was an error updating your community. The server is unable to process your request."),
@@ -144,23 +146,25 @@ export default class EditCommunityPrototypeDialog extends React.PureComponent<IP
                         </div>
                         <div className="mx_EditCommunityPrototypeDialog_rowAvatar">
                             <input
-                                type="file" style={{ display: "none" }}
-                                ref={this.avatarUploadRef} accept="image/*"
+                                type="file"
+                                style={{ display: "none" }}
+                                ref={this.avatarUploadRef}
+                                accept="image/*"
                                 onChange={this.onAvatarChanged}
                             />
                             <AccessibleButton
                                 onClick={this.onChangeAvatar}
                                 className="mx_EditCommunityPrototypeDialog_avatarContainer"
-                            >{preview}</AccessibleButton>
+                            >{ preview }</AccessibleButton>
                             <div className="mx_EditCommunityPrototypeDialog_tip">
-                                <b>{_t("Add image (optional)")}</b>
+                                <b>{ _t("Add image (optional)") }</b>
                                 <span>
-                                    {_t("An image will help people identify your community.")}
+                                    { _t("An image will help people identify your community.") }
                                 </span>
                             </div>
                         </div>
                         <AccessibleButton kind="primary" onClick={this.onSubmit} disabled={this.state.busy}>
-                            {_t("Save")}
+                            { _t("Save") }
                         </AccessibleButton>
                     </div>
                 </form>

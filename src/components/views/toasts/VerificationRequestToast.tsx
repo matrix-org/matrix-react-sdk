@@ -31,6 +31,8 @@ import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     toastKey: string;
     request: VerificationRequest;
@@ -60,14 +62,14 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                 this.setState({ counter });
             }, 1000);
         }
-        request.on("change", this._checkRequestIsPending);
+        request.on("change", this.checkRequestIsPending);
         // We should probably have a separate class managing the active verification toasts,
         // rather than monitoring this in the toast component itself, since we'll get problems
         // like the toasdt not going away when the verification is cancelled unless it's the
         // one on the top (ie. the one that's mounted).
         // As a quick & dirty fix, check the toast is still relevant when it mounts (this prevents
         // a toast hanging around after logging in if you did a verification as part of login).
-        this._checkRequestIsPending();
+        this.checkRequestIsPending();
 
         if (request.isSelfVerification) {
             const cli = MatrixClientPeg.get();
@@ -83,10 +85,10 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
     componentWillUnmount() {
         clearInterval(this.intervalHandle);
         const { request } = this.props;
-        request.off("change", this._checkRequestIsPending);
+        request.off("change", this.checkRequestIsPending);
     }
 
-    _checkRequestIsPending = () => {
+    private checkRequestIsPending = () => {
         const { request } = this.props;
         if (!request.canAccept) {
             ToastStore.sharedInstance().dismissToast(this.props.toastKey);
@@ -98,7 +100,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         try {
             this.props.request.cancel();
         } catch (err) {
-            console.error("Error while cancelling verification request", err);
+            logger.error("Error while cancelling verification request", err);
         }
     };
 
@@ -132,7 +134,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             }
             await request.accept();
         } catch (err) {
-            console.error(err.message);
+            logger.error(err.message);
         }
     };
 

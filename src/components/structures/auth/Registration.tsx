@@ -37,6 +37,8 @@ import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     serverConfig: ValidatedServerConfig;
     defaultDeviceDisplayName: string;
@@ -141,7 +143,7 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line camelcase
+    // eslint-disable-next-line
     UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
@@ -193,7 +195,7 @@ export default class Registration extends React.Component<IProps, IState> {
             const loginFlows = await this.loginLogic.getFlows();
             ssoFlow = loginFlows.find(f => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
         } catch (e) {
-            console.error("Failed to get login flows to check for SSO support", e);
+            logger.error("Failed to get login flows to check for SSO support", e);
         }
 
         this.setState({
@@ -215,7 +217,7 @@ export default class Registration extends React.Component<IProps, IState> {
             if (!this.state.doingUIAuth) {
                 await this.makeRegisterRequest(null);
                 // This should never succeed since we specified no auth object.
-                console.log("Expecting 401 from register request but got success!");
+                logger.log("Expecting 401 from register request but got success!");
             }
         } catch (e) {
             if (e.httpStatus === 401) {
@@ -239,7 +241,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     });
                 }
             } else {
-                console.log("Unable to query for supported registration methods.", e);
+                logger.log("Unable to query for supported registration methods.", e);
                 showGenericError(e);
             }
         }
@@ -270,7 +272,7 @@ export default class Registration extends React.Component<IProps, IState> {
 
     private onUIAuthFinished = async (success: boolean, response: any) => {
         if (!success) {
-            let msg = response.message || response.toString();
+            let errorText = response.message || response.toString();
             // can we give a better error message?
             if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
@@ -289,9 +291,9 @@ export default class Registration extends React.Component<IProps, IState> {
                         '': _td("Please <a>contact your service administrator</a> to continue using this service."),
                     },
                 );
-                msg = <div>
-                    <p>{errorTop}</p>
-                    <p>{errorDetail}</p>
+                errorText = <div>
+                    <p>{ errorTop }</p>
+                    <p>{ errorDetail }</p>
                 </div>;
             } else if (response.required_stages && response.required_stages.indexOf('m.login.msisdn') > -1) {
                 let msisdnAvailable = false;
@@ -299,15 +301,18 @@ export default class Registration extends React.Component<IProps, IState> {
                     msisdnAvailable = msisdnAvailable || flow.stages.includes('m.login.msisdn');
                 }
                 if (!msisdnAvailable) {
-                    msg = _t('This server does not support authentication with a phone number.');
+                    errorText = _t('This server does not support authentication with a phone number.');
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
-                msg = _t("That username already exists, please try another.");
+                errorText = _t("That username already exists, please try another.");
+            } else if (response.errcode === "M_THREEPID_IN_USE") {
+                errorText = _t("That e-mail address is already in use.");
             }
+
             this.setState({
                 busy: false,
                 doingUIAuth: false,
-                errorText: msg,
+                errorText,
             });
             return;
         }
@@ -330,7 +335,7 @@ export default class Registration extends React.Component<IProps, IState> {
         // the user had a separate guest session they didn't actually mean to replace.
         const [sessionOwner, sessionIsGuest] = await Lifecycle.getStoredSessionOwner();
         if (sessionOwner && !sessionIsGuest && sessionOwner !== response.userId) {
-            console.log(
+            logger.log(
                 `Found a session for ${sessionOwner} but ${response.userId} has just registered.`,
             );
             newState.differentLoggedInUserId = sessionOwner;
@@ -366,14 +371,14 @@ export default class Registration extends React.Component<IProps, IState> {
                     const emailPusher = pushers[i];
                     emailPusher.data = { brand: this.props.brand };
                     matrixClient.setPusher(emailPusher).then(() => {
-                        console.log("Set email branding to " + this.props.brand);
+                        logger.log("Set email branding to " + this.props.brand);
                     }, (error) => {
-                        console.error("Couldn't set email branding: " + error);
+                        logger.error("Couldn't set email branding: " + error);
                     });
                 }
             }
         }, (error) => {
-            console.error("Couldn't get pushers: " + error);
+            logger.error("Couldn't get pushers: " + error);
         });
     }
 
@@ -482,13 +487,13 @@ export default class Registration extends React.Component<IProps, IState> {
                         fragmentAfterLogin={this.props.fragmentAfterLogin}
                     />
                     <h3 className="mx_AuthBody_centered">
-                        {_t(
+                        { _t(
                             "%(ssoButtons)s Or %(usernamePassword)s",
                             {
                                 ssoButtons: "",
                                 usernamePassword: "",
                             },
-                        ).trim()}
+                        ).trim() }
                     </h3>
                 </React.Fragment>;
             }
@@ -526,15 +531,15 @@ export default class Registration extends React.Component<IProps, IState> {
             });
             serverDeadSection = (
                 <div className={classes}>
-                    {this.state.serverDeadError}
+                    { this.state.serverDeadError }
                 </div>
             );
         }
 
         const signIn = <span className="mx_AuthBody_changeFlow">
-            {_t("Already have an account? <a>Sign in here</a>", {}, {
+            { _t("Already have an account? <a>Sign in here</a>", {}, {
                 a: sub => <a onClick={this.onLoginClick} href="#">{ sub }</a>,
-            })}
+            }) }
         </span>;
 
         // Only show the 'go back' button if you're not looking at the form
@@ -550,43 +555,47 @@ export default class Registration extends React.Component<IProps, IState> {
             let regDoneText;
             if (this.state.differentLoggedInUserId) {
                 regDoneText = <div>
-                    <p>{_t(
+                    <p>{ _t(
                         "Your new account (%(newAccountId)s) is registered, but you're already " +
                         "logged into a different account (%(loggedInUserId)s).", {
                             newAccountId: this.state.registeredUsername,
                             loggedInUserId: this.state.differentLoggedInUserId,
                         },
-                    )}</p>
-                    <p><AccessibleButton element="span" className="mx_linkButton" onClick={async event => {
-                        const sessionLoaded = await this.onLoginClickWithCheck(event);
-                        if (sessionLoaded) {
-                            dis.dispatch({ action: "view_welcome_page" });
-                        }
-                    }}>
-                        {_t("Continue with previous account")}
+                    ) }</p>
+                    <p><AccessibleButton
+                        element="span"
+                        className="mx_linkButton"
+                        onClick={async event => {
+                            const sessionLoaded = await this.onLoginClickWithCheck(event);
+                            if (sessionLoaded) {
+                                dis.dispatch({ action: "view_welcome_page" });
+                            }
+                        }}
+                    >
+                        { _t("Continue with previous account") }
                     </AccessibleButton></p>
                 </div>;
             } else if (this.state.formVals.password) {
                 // We're the client that started the registration
-                regDoneText = <h3>{_t(
+                regDoneText = <h3>{ _t(
                     "<a>Log in</a> to your new account.", {},
                     {
-                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{sub}</a>,
+                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{ sub }</a>,
                     },
-                )}</h3>;
+                ) }</h3>;
             } else {
                 // We're not the original client: the user probably got to us by clicking the
                 // email validation link. We can't offer a 'go straight to your account' link
                 // as we don't have the original creds.
-                regDoneText = <h3>{_t(
+                regDoneText = <h3>{ _t(
                     "You can now close this window or <a>log in</a> to your new account.", {},
                     {
-                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{sub}</a>,
+                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{ sub }</a>,
                     },
-                )}</h3>;
+                ) }</h3>;
             }
             body = <div>
-                <h2>{_t("Registration Successful")}</h2>
+                <h2>{ _t("Registration Successful") }</h2>
                 { regDoneText }
             </div>;
         } else {

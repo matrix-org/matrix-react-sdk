@@ -34,28 +34,34 @@ import ForwardDialog from "../dialogs/ForwardDialog";
 import { Action } from "../../../dispatcher/actions";
 import ReportEventDialog from '../dialogs/ReportEventDialog';
 import ViewSource from '../../structures/ViewSource';
-import ConfirmRedactDialog from '../dialogs/ConfirmRedactDialog';
-import ErrorDialog from '../dialogs/ErrorDialog';
+import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { IPosition, ChevronFace } from '../../structures/ContextMenu';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 
 export function canCancel(eventStatus: EventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
 }
 
-interface IEventTileOps {
+export interface IEventTileOps {
     isWidgetHidden(): boolean;
     unhideWidget(): void;
 }
 
-interface IProps {
+export interface IOperableEventTile {
+    getEventTileOps(): IEventTileOps;
+}
+
+interface IProps extends IPosition {
+    chevronFace: ChevronFace;
     /* the MatrixEvent associated with the context menu */
     mxEvent: MatrixEvent;
     /* an optional EventTileOps implementation that can be used to unhide preview widgets */
     eventTileOps?: IEventTileOps;
     permalinkCreator?: RoomPermalinkCreator;
     /* an optional function to be called when the user clicks collapse thread, if not provided hide button */
-    collapseReplyThread?(): void;
+    collapseReplyChain?(): void;
     /* callback called when the menu is dismissed */
     onFinished(): void;
     /* if the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding) */
@@ -69,6 +75,8 @@ interface IState {
 
 @replaceableComponent("views.context_menus.MessageContextMenu")
 export default class MessageContextMenu extends React.Component<IProps, IState> {
+    static contextType = RoomContext;
+
     state = {
         canRedact: false,
         canPin: false,
@@ -134,34 +142,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onRedactClick = (): void => {
-        Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
-            onFinished: async (proceed: boolean, reason?: string) => {
-                if (!proceed) return;
-
-                const cli = MatrixClientPeg.get();
-                try {
-                    this.props.onCloseDialog?.();
-                    await cli.redactEvent(
-                        this.props.mxEvent.getRoomId(),
-                        this.props.mxEvent.getId(),
-                        undefined,
-                        reason ? { reason } : {},
-                    );
-                } catch (e) {
-                    const code = e.errcode || e.statusCode;
-                    // only show the dialog if failing for something other than a network error
-                    // (e.g. no errcode or statusCode) as in that case the redactions end up in the
-                    // detached queue and we show the room status bar to allow retry
-                    if (typeof code !== "undefined") {
-                        // display error message stating you couldn't delete this.
-                        Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
-                            title: _t('Error'),
-                            description: _t('You cannot delete this message. (%(code)s)', { code }),
-                        });
-                    }
-                }
-            },
-        }, 'mx_Dialog_confirmredact');
+        const { mxEvent, onCloseDialog } = this.props;
+        createRedactEventDialog({
+            mxEvent,
+            onCloseDialog,
+        });
         this.closeMenu();
     };
 
@@ -221,8 +206,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private onCollapseReplyThreadClick = (): void => {
-        this.props.collapseReplyThread();
+    private onCollapseReplyChainClick = (): void => {
+        this.props.collapseReplyChain();
         this.closeMenu();
     };
 
@@ -244,6 +229,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return this.getReactions(e => e.status === EventStatus.NOT_SENT);
     }
 
+    private viewInRoom = () => {
+        dis.dispatch({
+            action: 'view_room',
+            event_id: this.props.mxEvent.getId(),
+            highlighted: true,
+            room_id: this.props.mxEvent.getRoomId(),
+        });
+        this.closeMenu();
+    };
+
     render() {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
@@ -258,7 +253,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         let unhidePreviewButton: JSX.Element;
         let externalURLButton: JSX.Element;
         let quoteButton: JSX.Element;
-        let collapseReplyThread: JSX.Element;
+        let collapseReplyChain: JSX.Element;
         let redactItemList: JSX.Element;
 
         // status is SENT before remote-echo, null after
@@ -268,7 +263,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 resendReactionsButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconResend"
-                        label={ _t('Resend %(unsentCount)s reaction(s)', { unsentCount: unsentReactionsCount }) }
+                        label={_t('Resend %(unsentCount)s reaction(s)', { unsentCount: unsentReactionsCount })}
                         onClick={this.onResendReactionsClick}
                     />
                 );
@@ -298,7 +293,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 pinButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconPin"
-                        label={ this.isPinned() ? _t('Unpin') : _t('Pin') }
+                        label={this.isPinned() ? _t('Unpin') : _t('Pin')}
                         onClick={this.onPinClick}
                     />
                 );
@@ -333,7 +328,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             <IconizedContextMenuOption
                 iconClassName="mx_MessageContextMenu_iconPermalink"
                 onClick={this.onPermalinkClick}
-                label= {_t('Share')}
+                label={_t('Share')}
                 element="a"
                 {
                     // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
@@ -364,7 +359,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconLink"
                     onClick={this.closeMenu}
-                    label={ _t('Source URL') }
+                    label={_t('Source URL')}
                     element="a"
                     {
                         // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
@@ -378,12 +373,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (this.props.collapseReplyThread) {
-            collapseReplyThread = (
+        if (this.props.collapseReplyChain) {
+            collapseReplyChain = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCollapse"
                     label={_t("Collapse reply thread")}
-                    onClick={this.onCollapseReplyThreadClick}
+                    onClick={this.onCollapseReplyChainClick}
                 />
             );
         }
@@ -399,8 +394,20 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        const { timelineRenderingType } = this.context;
+        const isThread = (
+            timelineRenderingType === TimelineRenderingType.Thread ||
+            timelineRenderingType === TimelineRenderingType.ThreadsList
+        );
+        const isThreadRootEvent = isThread && this.props.mxEvent?.getThread()?.rootEvent === this.props.mxEvent;
+
         const commonItemsList = (
             <IconizedContextMenuOptionList>
+                { isThreadRootEvent && <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconViewInRoom"
+                    label={_t("View in room")}
+                    onClick={this.viewInRoom}
+                /> }
                 { quoteButton }
                 { forwardButton }
                 { pinButton }
@@ -410,7 +417,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { unhidePreviewButton }
                 { viewSourceButton }
                 { resendReactionsButton }
-                { collapseReplyThread }
+                { collapseReplyChain }
             </IconizedContextMenuOptionList>
         );
 
@@ -421,7 +428,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 </IconizedContextMenuOptionList>
             );
         }
-
         return (
             <IconizedContextMenu
                 {...this.props}
