@@ -168,9 +168,12 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({ children, handleHomeE
                 case Key.HOME:
                     if (handleHomeEnd) {
                         handled = true;
-                        // move focus to first item
-                        if (context.state.refs.length > 0) {
-                            context.state.refs[0].current.focus();
+                        // move focus to first (visible) item
+                        for (let i = 0; i < context.state.refs.length; i++) {
+                            if (context.state.refs[i].current.offsetParent !== null) {
+                                context.state.refs[i].current.focus();
+                                break;
+                            }
                         }
                     }
                     break;
@@ -178,9 +181,12 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({ children, handleHomeE
                 case Key.END:
                     if (handleHomeEnd) {
                         handled = true;
-                        // move focus to last item
-                        if (context.state.refs.length > 0) {
-                            context.state.refs[context.state.refs.length - 1].current.focus();
+                        // move focus to last (visible) item
+                        for (let i = context.state.refs.length - 1; i >= 0; i--) {
+                            if (context.state.refs[i].current.offsetParent !== null) {
+                                context.state.refs[i].current.focus();
+                                break;
+                            }
                         }
                     }
                     break;
