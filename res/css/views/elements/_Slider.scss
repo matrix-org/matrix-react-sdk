@@ -54,8 +54,8 @@ limitations under the License.
 
 .mx_Slider_selectionDot {
     position: absolute;
-    width: 2.39em;
-    height: 2.39em;
+    width: $slider-selection-dot-size;
+    height: $slider-selection-dot-size;
     background-color: $slider-selection-color;
     border-radius: 50%;
     box-shadow: 0 0 6px lightgrey;
@@ -77,8 +77,8 @@ limitations under the License.
 }
 
 .mx_Slider_dot {
-    height: 1em;
-    width: 1em;
+    height: $slider-dot-size;
+    width: $slider-dot-size;
     border-radius: 50%;
     background-color: $slider-background-color;
     z-index: 0;
