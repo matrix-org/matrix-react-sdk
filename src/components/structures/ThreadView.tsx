@@ -168,7 +168,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     public render(): JSX.Element {
         const highlightedEventId = this.props.initialEventHighlighted
-            ? this.props.initialEvent.getId()
+            ? this.props.initialEvent?.getId()
             : null;
         return (
             <RoomContext.Provider value={{
@@ -204,7 +204,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             membersLoaded={true}
                             editState={this.state.editState}
 
-                            eventId={this.props.initialEvent.getId()}
+                            eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
                             onScroll={this.props.onScroll}
                         />

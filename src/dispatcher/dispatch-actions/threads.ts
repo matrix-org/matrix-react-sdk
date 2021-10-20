@@ -21,8 +21,8 @@ import { SetRightPanelPhasePayload } from "../payloads/SetRightPanelPhasePayload
 
 export const dispatchShowThreadEvent = (
     rootEvent: MatrixEvent,
-    initialEvent: MatrixEvent,
-    highlighted: boolean,
+    initialEvent?: MatrixEvent,
+    highlighted?: boolean,
 ) => {
     dis.dispatch({
         action: Action.SetRightPanelPhase,
