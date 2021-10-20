@@ -198,7 +198,7 @@ describe("RovingTabIndex", () => {
             const ref3 = React.createRef<HTMLElement>();
             const ref4 = React.createRef<HTMLElement>();
 
-            const wrapper = mount(<React.Fragment>
+            mount(<React.Fragment>
                 <span ref={ref1} />
                 <span ref={ref2} />
                 <span ref={ref3} />
