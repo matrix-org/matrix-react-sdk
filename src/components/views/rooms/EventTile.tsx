@@ -565,7 +565,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             return null;
         }
 
-        const threadMessagePreview = MessagePreviewStore.instance.generateThreadPreview(this.state.thread);
+        const [lastEvent] = thread.events
+            .filter(event => event.isThreadRelation)
+            .slice(-1);
+        const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(lastEvent);
 
         return (
             <div
@@ -580,13 +583,13 @@ export default class EventTile extends React.Component<IProps, IState> {
                         count: thread.length,
                     }) }
                 </span>
-                { threadMessagePreview && <>
-                    { /* <MemberAvatar member={thread.replyToEvent.sender} width={24} height={24} />
+                { (threadMessagePreview && lastEvent.sender) && <>
+                    <MemberAvatar member={lastEvent.sender} width={24} height={24} />
                     <div className="mx_ThreadInfo_content">
                         <span className="mx_ThreadInfo_message-preview">
                             { threadMessagePreview }
                         </span>
-                    </div> */ }
+                    </div>
                 </> }
             </div>
         );
