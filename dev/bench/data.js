@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634728660025,
+  "lastUpdate": 1634734010402,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33500,6 +33500,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4357,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "96bd052ecf025c8dc3526ec9fba1d7fc5d175d05",
+          "message": "Improve visibility of font size chooser (#6988)\n\n* Improve visibility of font size chooser\r\n\r\n* Move slider dot sizes into variables\r\n\r\n* Use a standard font size instead of percentage in Slider\r\n\r\n* Use shorthand for padding in FontScalingPanel\r\n\r\n* Change Slider text pos to px to be consistent when font changes\r\n\r\n* Cleaner dot size for Slider selection",
+          "timestamp": "2021-10-20T13:41:27+01:00",
+          "tree_id": "1ffa75b050ca76dd5436f129397c7919fcc393f1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/96bd052ecf025c8dc3526ec9fba1d7fc5d175d05"
+        },
+        "date": 1634734008536,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4220.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1128.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1626.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4524.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
