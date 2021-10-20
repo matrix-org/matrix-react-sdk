@@ -25,6 +25,11 @@ $hover-select-border: 4px;
     font-size: $font-14px;
     position: relative;
 
+    .mx_ThreadInfo {
+        margin-right: 110px;
+        margin-left: 64px;
+    }
+
     &.mx_EventTile_info {
         padding-top: 1px;
     }
@@ -688,7 +693,7 @@ $hover-select-border: 4px;
     justify-content: flex-start;
     clear: both;
 
-    &:hover, &-active {
+    &:hover {
         cursor: pointer;
         border: 1px solid $quinary-content;
         padding-top: 7px;
