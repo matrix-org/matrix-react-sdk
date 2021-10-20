@@ -92,6 +92,7 @@ import SpaceStore from "../../stores/SpaceStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
+import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threads';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -347,8 +348,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             roomLoading: RoomViewStore.isRoomLoading(),
             roomLoadError: RoomViewStore.getRoomLoadError(),
             joining: RoomViewStore.isJoining(),
-            initialEventId: RoomViewStore.getInitialEventId(),
-            isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
             replyToEvent: RoomViewStore.getQuotingEvent(),
             // we should only peek once we have a ready client
             shouldPeek: this.state.matrixClientIsReady && RoomViewStore.shouldPeek(),
@@ -359,6 +358,18 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showDisplaynameChanges: SettingsStore.getValue("showDisplaynameChanges", roomId),
             wasContextSwitch: RoomViewStore.getWasContextSwitch(),
         };
+
+        const initialEventId = RoomViewStore.getInitialEventId();
+        if (initialEventId) {
+            const event = this.state.room.findEventById(initialEventId);
+            const thread = event?.getThread();
+            if (thread && !event?.isThreadRoot) {
+                dispatchShowThreadEvent(thread.rootEvent);
+            } else {
+                newState.initialEventId = initialEventId;
+                newState.isInitialEventHighlighted = RoomViewStore.isInitialEventHighlighted();
+            }
+        }
 
         // Add watchers for each of the settings we just looked up
         this.settingWatchers = this.settingWatchers.concat([
