@@ -561,7 +561,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             thread.addEvent(this.props.mxEvent, true);
         }
 
-        if (!thread || this.props.showThreadInfo === false || thread.length <= 1) {
+        if (!thread || this.props.showThreadInfo === false || thread.length) {
             return null;
         }
 
@@ -577,7 +577,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                 <span className="mx_ThreadInfo_thread-icon" />
                 <span className="mx_ThreadInfo_threads-amount">
                     { _t("%(count)s reply", {
-                        count: thread.length - 1,
+                        count: thread.length,
                     }) }
                 </span>
                 <MemberAvatar member={thread.replyToEvent.sender} width={24} height={24} />
