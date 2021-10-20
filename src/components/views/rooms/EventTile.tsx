@@ -580,14 +580,14 @@ export default class EventTile extends React.Component<IProps, IState> {
                         count: thread.length,
                     }) }
                 </span>
-                <MemberAvatar member={thread.replyToEvent.sender} width={24} height={24} />
-                { threadMessagePreview && (
+                { threadMessagePreview && <>
+                    { /* <MemberAvatar member={thread.replyToEvent.sender} width={24} height={24} />
                     <div className="mx_ThreadInfo_content">
                         <span className="mx_ThreadInfo_message-preview">
                             { threadMessagePreview }
                         </span>
-                    </div>
-                ) }
+                    </div> */ }
+                </> }
             </div>
         );
     }
