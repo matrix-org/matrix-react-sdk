@@ -64,10 +64,10 @@ const useFilteredThreadsTimelinePanel = ({
     filterOption: ThreadFilterType;
     updateTimeline: () => void;
 }) => {
-    const timelineSet = useMemo(() => new EventTimelineSet(room, {
-        unstableClientRelationAggregation: true,
+    const timelineSet = useMemo(() => new EventTimelineSet(null, {
         timelineSupport: true,
-    }), [room]);
+        unstableClientRelationAggregation: true,
+    }), []);
 
     useEffect(() => {
         let filteredThreads = Array.from(threads);
