@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634734010402,
+  "lastUpdate": 1634734843543,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33548,6 +33548,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4524.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d188d32423d7bd97a67c0d0eccf5b24d266050dd",
+          "message": "Add a developer mode flag and use it for accessing space timelines (#6994)\n\nFixes https://github.com/vector-im/element-web/issues/19416",
+          "timestamp": "2021-10-20T06:55:22-06:00",
+          "tree_id": "e7f3509e9a66c2ff71f206830aa68a17acf03079",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d188d32423d7bd97a67c0d0eccf5b24d266050dd"
+        },
+        "date": 1634734841645,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5108.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1088.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4301.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
