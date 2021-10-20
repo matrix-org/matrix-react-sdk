@@ -561,7 +561,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             thread.addEvent(this.props.mxEvent, true);
         }
 
-        if (!thread || this.props.showThreadInfo === false || thread.length) {
+        if (!thread || this.props.showThreadInfo === false || thread.length === 0) {
             return null;
         }
 
