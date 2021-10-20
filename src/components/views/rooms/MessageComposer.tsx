@@ -56,6 +56,8 @@ import Modal from "../../../Modal";
 import InfoDialog from "../dialogs/InfoDialog";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import RoomContext from '../../../contexts/RoomContext';
+import { POLL_START_EVENT_TYPE } from "../../../stores/polls/consts";
+import ErrorDialog from "../dialogs/ErrorDialog";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -197,18 +199,25 @@ class UploadButton extends React.Component<IUploadButtonProps> {
     }
 }
 
+interface IPollButtonProps {
+    room: Room;
+}
+
 // TODO: [polls] Make this component actually do something
-class PollButton extends React.PureComponent {
+class PollButton extends React.PureComponent<IPollButtonProps> {
     private onCreateClick = () => {
-        Modal.createTrackedDialog('Polls', 'Not Yet Implemented', InfoDialog, {
-            // XXX: Deliberately not translated given this dialog is meant to be replaced and we don't
-            // want to clutter the language files with short-lived strings.
-            title: "Polls are currently in development",
-            description: "" +
-                "Thanks for testing polls! We haven't quite gotten a chance to write the feature yet " +
-                "though. Check back later for updates.",
-            hasCloseButton: true,
-        });
+        const canSend = this.props.room.currentState.maySendEvent(
+            POLL_START_EVENT_TYPE.name,
+            MatrixClientPeg.get().getUserId(),
+        );
+        if (!canSend) {
+            Modal.createTrackedDialog('Polls', 'permissions error: cannot start', ErrorDialog, {
+                title: _t("Permission Required"),
+                description: _t("You do not have permission to start polls in this room."),
+            });
+        } else {
+            // start
+        }
     };
 
     render() {
@@ -463,7 +472,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         if (!this.state.haveRecording) {
             if (SettingsStore.getValue("feature_polls")) {
                 buttons.push(
-                    <PollButton key="polls" />,
+                    <PollButton key="polls" room={this.props.room} />,
                 );
             }
             buttons.push(
