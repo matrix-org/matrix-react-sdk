@@ -35,7 +35,6 @@ export interface IScrollableBaseState {
  */
 export abstract class ScrollableBaseModal<TProps extends IDialogProps, TState extends IScrollableBaseState>
     extends React.PureComponent<TProps, TState> {
-
     protected constructor(props: TProps) {
         super(props);
     }

@@ -48,7 +48,7 @@ export function makePollContent(question: string, answers: string[], kind: strin
             question: {
                 [TEXT_NODE_TYPE]: question,
             },
-            answers: answers.map((a, i) => ({id: `${i}-${a}`, [TEXT_NODE_TYPE]: a})),
+            answers: answers.map((a, i) => ({ id: `${i}-${a}`, [TEXT_NODE_TYPE]: a })),
         },
     };
 }
