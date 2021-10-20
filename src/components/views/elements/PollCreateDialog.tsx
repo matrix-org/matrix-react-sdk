@@ -19,6 +19,7 @@ import { IDialogProps } from "../dialogs/IDialogProps";
 import React, { ChangeEvent } from "react";
 import { _t } from "../../../languageHandler";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 
@@ -28,7 +29,12 @@ interface IProps extends IDialogProps {
 
 interface IState extends IScrollableBaseState {
     question: string;
+    options: string[];
 }
+
+const MIN_OPTIONS = 1;
+const MAX_OPTIONS = 20;
+const DEFAULT_NUM_OPTIONS = 2;
 
 export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState> {
     public constructor(props: IProps) {
@@ -40,18 +46,38 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
             canSubmit: false, // need to add a question and at least one option first
 
             question: "",
+            options: arraySeed("", DEFAULT_NUM_OPTIONS),
         };
     }
 
     private checkCanSubmit() {
         this.setState({
             canSubmit:
-                this.state.question.trim().length > 0,
+                this.state.question.trim().length > 0 &&
+                this.state.options.filter(op => op.trim().length > 0).length >= MIN_OPTIONS,
         });
     }
 
     private onQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({ question: e.target.value }, () => this.checkCanSubmit());
+    };
+
+    private onOptionChange = (i: number, e: ChangeEvent<HTMLInputElement>) => {
+        const newOptions = arrayFastClone(this.state.options);
+        newOptions[i] = e.target.value;
+        this.setState({ options: newOptions }, () => this.checkCanSubmit());
+    };
+
+    private onOptionRemove = (i: number) => {
+        const newOptions = arrayFastClone(this.state.options);
+        newOptions.splice(i, 1);
+        this.setState({ options: newOptions }, () => this.checkCanSubmit());
+    };
+
+    private onOptionAdd = () => {
+        const newOptions = arrayFastClone(this.state.options);
+        newOptions.push("");
+        this.setState({ options: newOptions });
     };
 
     protected submit(): void {
@@ -72,6 +98,28 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 placeholder={_t("Write something...")}
                 onChange={this.onQuestionChange}
             />
+            <h2>{ _t("Create options") }</h2>
+            {
+                this.state.options.map((op, i) => <div key={`option_${i}`} className="mx_PollCreateDialog_option">
+                    <Field
+                        value={op}
+                        label={_t("Option %(number)s", { number: i + 1 })}
+                        placeholder={_t("Write an option")}
+                        onChange={e => this.onOptionChange(i, e)}
+                    />
+                    <AccessibleButton
+                        onClick={() => this.onOptionRemove(i)}
+                        disabled={this.state.options.length <= MIN_OPTIONS}
+                        className="mx_PollCreateDialog_removeOption"
+                    />
+                </div>)
+            }
+            <AccessibleButton
+                onClick={this.onOptionAdd}
+                disabled={this.state.options.length >= MAX_OPTIONS}
+                kind="secondary"
+                className="mx_PollCreateDialog_addOption"
+            >{ _t("Add option") }</AccessibleButton>
         </div>;
     }
 }
