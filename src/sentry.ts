@@ -200,12 +200,6 @@ interface ISentryConfig {
 
 export async function initSentry(sentryConfig: ISentryConfig): Promise<void> {
     if (!sentryConfig) return;
-    const platform = PlatformPeg.get();
-    let appVersion = "unknown";
-    try {
-        appVersion = await platform.getAppVersion();
-    } catch (e) {}
-
     Sentry.init({
         dsn: sentryConfig.dsn,
         release: process.env.RELEASE,
