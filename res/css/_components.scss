@@ -148,7 +148,7 @@
 @import "./views/elements/_PowerSelector.scss";
 @import "./views/elements/_ProgressBar.scss";
 @import "./views/elements/_QRCode.scss";
-@import "./views/elements/_ReplyThread.scss";
+@import "./views/elements/_ReplyChain.scss";
 @import "./views/elements/_ResizeHandle.scss";
 @import "./views/elements/_RichText.scss";
 @import "./views/elements/_RoleButton.scss";
@@ -248,6 +248,7 @@
 @import "./views/settings/_DevicesPanel.scss";
 @import "./views/settings/_E2eAdvancedPanel.scss";
 @import "./views/settings/_EmailAddresses.scss";
+@import "./views/settings/_FontScalingPanel.scss";
 @import "./views/settings/_IntegrationManager.scss";
 @import "./views/settings/_JoinRuleSettings.scss";
 @import "./views/settings/_LayoutSwitcher.scss";
@@ -258,6 +259,7 @@
 @import "./views/settings/_SetIdServer.scss";
 @import "./views/settings/_SetIntegrationManager.scss";
 @import "./views/settings/_SpellCheckLanguages.scss";
+@import "./views/settings/_ThemeChoicePanel.scss";
 @import "./views/settings/_UpdateCheckButton.scss";
 @import "./views/settings/tabs/_SettingsTab.scss";
 @import "./views/settings/tabs/room/_GeneralRoomSettingsTab.scss";

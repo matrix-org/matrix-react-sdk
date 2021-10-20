@@ -176,6 +176,9 @@ interface IRoomInfo {
     threepid_invite?: IThreepidInvite;
 
     justCreatedOpts?: IOpts;
+
+    // Whether or not to override default behaviour to end up at a timeline
+    forceTimeline?: boolean;
 }
 /* eslint-enable camelcase */
 
@@ -238,6 +241,7 @@ interface IState {
     pendingInitialSync?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
+    forceTimeline?: boolean; // see props
 }
 
 @replaceableComponent("structures.MatrixChat")
@@ -872,6 +876,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 params.hs_url, params.is_url,
             );
 
+            // If the hs url matches then take the hs name we know locally as it is likely prettier
+            const defaultConfig = SdkConfig.get()["validated_server_config"] as ValidatedServerConfig;
+            if (defaultConfig && defaultConfig.hsUrl === newState.serverConfig.hsUrl) {
+                newState.serverConfig.hsName = defaultConfig.hsName;
+                newState.serverConfig.hsNameIsDifferent = defaultConfig.hsNameIsDifferent;
+                newState.serverConfig.isDefault = defaultConfig.isDefault;
+                newState.serverConfig.isNameResolvable = defaultConfig.isNameResolvable;
+            }
+
             newState.register_client_secret = params.client_secret;
             newState.register_session_id = params.session_id;
             newState.register_id_sid = params.sid;
@@ -959,6 +972,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 page_type: PageType.RoomView,
                 threepidInvite: roomInfo.threepid_invite,
                 roomOobData: roomInfo.oob_data,
+                forceTimeline: roomInfo.forceTimeline,
                 ready: true,
                 roomJustCreatedOpts: roomInfo.justCreatedOpts,
             }, () => {
