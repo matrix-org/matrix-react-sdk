@@ -102,19 +102,19 @@ export default class ThreadView extends React.Component<IProps, IState> {
             }
         }
         switch (payload.action) {
-            case Action.EditEvent: {
+            case Action.EditEvent:
                 // Quit early if it's not a thread context
                 if (payload.timelineRenderingType !== TimelineRenderingType.Thread) return;
                 // Quit early if that's not a thread event
                 if (payload.event && !payload.event.getThread()) return;
-                const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
-                this.setState({ editState }, () => {
+                this.setState({
+                    editState: payload.event ? new EditorStateTransfer(payload.event) : null,
+                }, () => {
                     if (payload.event) {
                         this.timelinePanelRef.current?.scrollToEventIfNeeded(payload.event.getId());
                     }
                 });
                 break;
-            }
             case 'reply_to_event':
                 if (payload.context === TimelineRenderingType.Thread) {
                     this.setState({
