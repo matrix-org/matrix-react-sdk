@@ -16,11 +16,14 @@ limitations under the License.
 
 import '../skinned-sdk'; // Must be first for skinning to work
 import * as React from "react";
-import { mount } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 
 import {
+    IState,
+    reducer,
     RovingTabIndexProvider,
     RovingTabIndexWrapper,
+    Type,
     useRovingTabIndex,
 } from "../../src/accessibility/RovingTabIndex";
 
@@ -29,7 +32,7 @@ const Button = (props) => {
     return <button {...props} onFocus={onFocus} tabIndex={isActive ? 0 : -1} ref={ref} />;
 };
 
-const checkTabIndexes = (buttons, expectations) => {
+const checkTabIndexes = (buttons: ReactWrapper, expectations: number[]) => {
     expect(buttons.length).toBe(expectations.length);
     for (let i = 0; i < buttons.length; i++) {
         expect(buttons.at(i).prop("tabIndex")).toBe(expectations[i]);
@@ -113,6 +116,226 @@ describe("RovingTabIndex", () => {
         wrapper.find("button").at(2).simulate("focus");
         wrapper.update();
         checkTabIndexes(wrapper.find("button"), [-1, -1, 0]);
+    });
+
+    describe("reducer functions as expected", () => {
+        it("SetFocus works as expected", () => {
+            const ref1 = React.createRef<HTMLElement>();
+            const ref2 = React.createRef<HTMLElement>();
+            expect(reducer({
+                activeRef: ref1,
+                refs: [ref1, ref2],
+            }, {
+                type: Type.SetFocus,
+                payload: {
+                    ref: ref2,
+                },
+            })).toStrictEqual({
+                activeRef: ref2,
+                refs: [ref1, ref2],
+            });
+        });
+
+        it("Unregister works as expected", () => {
+            const ref1 = React.createRef<HTMLElement>();
+            const ref2 = React.createRef<HTMLElement>();
+            const ref3 = React.createRef<HTMLElement>();
+            const ref4 = React.createRef<HTMLElement>();
+
+            let state: IState = {
+                activeRef: null,
+                refs: [ref1, ref2, ref3, ref4],
+            };
+
+            state = reducer(state, {
+                type: Type.Unregister,
+                payload: {
+                    ref: ref2,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: null,
+                refs: [ref1, ref3, ref4],
+            });
+
+            state = reducer(state, {
+                type: Type.Unregister,
+                payload: {
+                    ref: ref3,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: null,
+                refs: [ref1, ref4],
+            });
+
+            state = reducer(state, {
+                type: Type.Unregister,
+                payload: {
+                    ref: ref4,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: null,
+                refs: [ref1],
+            });
+
+            state = reducer(state, {
+                type: Type.Unregister,
+                payload: {
+                    ref: ref1,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: null,
+                refs: [],
+            });
+        });
+
+        it("Register works as expected", () => {
+            const ref1 = React.createRef<HTMLElement>();
+            const ref2 = React.createRef<HTMLElement>();
+            const ref3 = React.createRef<HTMLElement>();
+            const ref4 = React.createRef<HTMLElement>();
+
+            const wrapper = mount(<React.Fragment>
+                <span ref={ref1} />
+                <span ref={ref2} />
+                <span ref={ref3} />
+                <span ref={ref4} />
+            </React.Fragment>);
+
+            let state: IState = {
+                activeRef: null,
+                refs: [],
+            };
+
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref1,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref1,
+                refs: [ref1],
+            });
+
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref1,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref1,
+                refs: [ref1],
+            });
+
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref2,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref1,
+                refs: [ref1, ref2],
+            });
+
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref3,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref1,
+                refs: [ref1, ref2, ref3],
+            });
+
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref4,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref1,
+                refs: [ref1, ref2, ref3, ref4],
+            });
+
+            // test that the automatic focus switch works for unmounting
+            state = reducer(state, {
+                type: Type.SetFocus,
+                payload: {
+                    ref: ref2,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref2,
+                refs: [ref1, ref2, ref3, ref4],
+            });
+
+            state = reducer(state, {
+                type: Type.Unregister,
+                payload: {
+                    ref: ref2,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref3,
+                refs: [ref1, ref3, ref4],
+            });
+
+            // test that the insert into the middle works as expected
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref2,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref3,
+                refs: [ref1, ref2, ref3, ref4],
+            });
+
+            // test that insertion at the edges works
+            state = reducer(state, {
+                type: Type.Unregister,
+                payload: {
+                    ref: ref1,
+                },
+            });
+            state = reducer(state, {
+                type: Type.Unregister,
+                payload: {
+                    ref: ref4,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref3,
+                refs: [ref2, ref3],
+            });
+
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref1,
+                },
+            });
+
+            state = reducer(state, {
+                type: Type.Register,
+                payload: {
+                    ref: ref4,
+                },
+            });
+            expect(state).toStrictEqual({
+                activeRef: ref3,
+                refs: [ref1, ref2, ref3, ref4],
+            });
+        });
     });
 });
 

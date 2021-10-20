@@ -63,7 +63,7 @@ const RovingTabIndexContext = createContext<IContext>({
 });
 RovingTabIndexContext.displayName = "RovingTabIndexContext";
 
-enum Type {
+export enum Type {
     Register = "REGISTER",
     Unregister = "UNREGISTER",
     SetFocus = "SET_FOCUS",
@@ -76,37 +76,40 @@ interface IAction {
     };
 }
 
-const reducer = (state: IState, action: IAction) => {
+export const reducer = (state: IState, action: IAction) => {
     switch (action.type) {
         case Type.Register: {
-            if (state.refs.length === 0) {
-                // Our list of refs was empty, set activeRef to this first item
-                state.activeRef = action.payload.ref;
-                state.refs = [action.payload.ref];
-                return { ...state };
-            }
-
             let left = 0;
             let right = state.refs.length - 1;
             let index = state.refs.length; // by default append to the end
-            // do a binary search to find the right slot whilst also breaking if we find ourselves to inline the scan
+
+            // do a binary search to find the right slot
             while (left <= right) {
                 index = Math.floor((left + right) / 2);
-                const elem = state.refs[index].current;
+                const ref = state.refs[index];
 
-                if (elem === action.payload.ref.current) {
+                if (ref === action.payload.ref) {
                     return state; // already in refs, this should not happen
                 }
 
-                if (action.payload.ref.current.compareDocumentPosition(elem) & DOCUMENT_POSITION_PRECEDING) {
-                    left = index + 1;
+                if (action.payload.ref.current.compareDocumentPosition(ref.current) & DOCUMENT_POSITION_PRECEDING) {
+                    left = index++ + 1;
                 } else {
                     right = index - 1;
                 }
             }
 
+            if (!state.activeRef) {
+                // Our list of refs was empty, set activeRef to this first item
+                state.activeRef = action.payload.ref;
+            }
+
             // update the refs list
-            state.refs.splice(index, 0, action.payload.ref);
+            if (index < state.refs.length) {
+                state.refs.splice(index, 0, action.payload.ref);
+            } else {
+                state.refs.push(action.payload.ref);
+            }
             return { ...state };
         }
 
