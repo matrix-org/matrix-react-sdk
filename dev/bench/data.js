@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634704939908,
+  "lastUpdate": 1634728660025,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33452,6 +33452,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 986.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8b6d5d59c742b3e7b3a0140d80dafeeaa0e87a4a",
+          "message": "Fix space panel name overflowing (#6995)",
+          "timestamp": "2021-10-20T12:12:20+01:00",
+          "tree_id": "687aac8687ae277650acb93ba7060fda1510e094",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8b6d5d59c742b3e7b3a0140d80dafeeaa0e87a4a"
+        },
+        "date": 1634728657502,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4327.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 899.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1766.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4357,
             "unit": "ms",
             "extra": "type: measure"
           }
