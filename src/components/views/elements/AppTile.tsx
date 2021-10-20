@@ -84,6 +84,7 @@ interface IState {
     error: Error;
     menuDisplayed: boolean;
     widgetPageTitle: string;
+    noPopout: boolean;
 }
 
 import { logger } from "matrix-js-sdk/src/logger";
@@ -155,6 +156,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
+            noPopout: true,
         };
     }
 
@@ -295,6 +297,9 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (WidgetType.JITSI.matches(this.props.app.type)) {
             this.sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
         }
+        this.setState({
+            noPopout: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient)
+        });
     };
 
     private onAction = (payload): void => {
@@ -512,7 +517,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                             { this.props.showTitle && this.getTileTitle() }
                         </span>
                         <span className="mx_AppTileMenuBarWidgets">
-                            { this.props.showPopout && <AccessibleButton
+                            {(this.props.showPopout && !this.state.noPopout) && <AccessibleButton
                                 className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                                 title={_t('Popout widget')}
                                 onClick={this.onPopoutWidgetClick}

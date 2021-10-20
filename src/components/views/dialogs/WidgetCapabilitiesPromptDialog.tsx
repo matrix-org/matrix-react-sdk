@@ -106,6 +106,7 @@ export default class WidgetCapabilitiesPromptDialog extends React.PureComponent<
 
             return 0;
         });
+        // const filteredCapabilites = //TODO this would be where the NoPopout capability text can be hidden and approved by default
         const checkboxRows = orderedCapabilities.map(([cap, isChecked], i) => {
             const text = CapabilityText.for(cap, this.props.widgetKind);
             const byline = text.byline
