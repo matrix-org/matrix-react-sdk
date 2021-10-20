@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634679283449,
+  "lastUpdate": 1634704939908,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33416,6 +33416,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4818.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "8217676+RafaelGoncalves8@users.noreply.github.com",
+            "name": "Rafael Gonçalves",
+            "username": "RafaelGoncalves8"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1fa4c40db9e0558d77fe6ff5139ad50473d62259",
+          "message": "Remove redundant text in verification dialogs (#6993)\n\n* Remove redundant text\r\n\r\nSigned-off-by: Rafael Goncalves <rafaelgoncalves@riseup.net>\r\n\r\n* Run yarn i18n\r\n\r\nSigned-off-by: Rafael Goncalves <rafaelgoncalves@riseup.net>",
+          "timestamp": "2021-10-19T22:36:08-06:00",
+          "tree_id": "5b968e7f7285096304b4edccb02a946dd7b306ac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1fa4c40db9e0558d77fe6ff5139ad50473d62259"
+        },
+        "date": 1634704937791,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4258.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 986.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
