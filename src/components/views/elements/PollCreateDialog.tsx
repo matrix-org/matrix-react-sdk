@@ -22,6 +22,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
+import { makePollContent, POLL_KIND_DISCLOSED, POLL_START_EVENT_TYPE } from "../../../polls/consts";
 
 interface IProps extends IDialogProps {
     room: Room;
@@ -30,6 +31,7 @@ interface IProps extends IDialogProps {
 interface IState extends IScrollableBaseState {
     question: string;
     options: string[];
+    busy: boolean;
 }
 
 const MIN_OPTIONS = 2;
@@ -47,12 +49,14 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
 
             question: "",
             options: arraySeed("", DEFAULT_NUM_OPTIONS),
+            busy: false,
         };
     }
 
     private checkCanSubmit() {
         this.setState({
             canSubmit:
+                !this.state.busy &&
                 this.state.question.trim().length > 0 &&
                 this.state.options.filter(op => op.trim().length > 0).length >= MIN_OPTIONS,
         });
@@ -81,8 +85,15 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     };
 
     protected submit(): void {
-        console.log("@@ TODO");
-        this.props.onFinished(true);
+        this.setState({ busy: true, canSubmit: false });
+        this.matrixClient.sendEvent(
+            this.props.room.roomId,
+            POLL_START_EVENT_TYPE.name,
+            makePollContent(this.state.question, this.state.options, POLL_KIND_DISCLOSED.name),
+        ).then(() => this.props.onFinished(true)).catch(e => {
+            console.error("Failed to submit poll event:", e);
+            this.setState({ busy: false, canSubmit: false });
+        });
     }
 
     protected cancel(): void {
