@@ -93,7 +93,7 @@ export const reducer = (state: IState, action: IAction) => {
                 }
 
                 if (action.payload.ref.current.compareDocumentPosition(ref.current) & DOCUMENT_POSITION_PRECEDING) {
-                    left = index++ + 1;
+                    left = ++index;
                 } else {
                     right = index - 1;
                 }
