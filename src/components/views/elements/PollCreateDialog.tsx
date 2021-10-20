@@ -32,7 +32,7 @@ interface IState extends IScrollableBaseState {
     options: string[];
 }
 
-const MIN_OPTIONS = 1;
+const MIN_OPTIONS = 2;
 const MAX_OPTIONS = 20;
 const DEFAULT_NUM_OPTIONS = 2;
 
@@ -109,7 +109,6 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                     />
                     <AccessibleButton
                         onClick={() => this.onOptionRemove(i)}
-                        disabled={this.state.options.length <= MIN_OPTIONS}
                         className="mx_PollCreateDialog_removeOption"
                     />
                 </div>)
