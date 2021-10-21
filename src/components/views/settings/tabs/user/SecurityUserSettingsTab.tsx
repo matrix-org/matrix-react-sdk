@@ -399,19 +399,11 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 <div className="mx_SettingsTab_section">
                     <span>
                         { _t(
-                            "Manage the names of and sign out of your sessions below or " +
-                            "<a>verify them in your User Profile</a>.", {},
-                            {
-                                a: sub => <AccessibleButton kind="link" onClick={this.onGoToUserProfileClick}>
-                                    { sub }
-                                </AccessibleButton>,
-                            },
+                            "Manage your logged-in devices below. " +
+                            "A device's name is visible to people you communicate with.",
                         ) }
                     </span>
-                    <div className='mx_SettingsTab_subsectionText'>
-                        { _t("A session's public name is visible to people you communicate with") }
-                        <DevicesPanel />
-                    </div>
+                    <DevicesPanel />
                 </div>
                 <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
                 <div className="mx_SettingsTab_section">
