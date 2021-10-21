@@ -248,14 +248,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
         }
     };
 
-    private resetHighlightedState = (): void => {
-        if (this.state.initialEventHighlighted) {
-            this.setState({
-                initialEventHighlighted: false,
-            });
-        }
-    };
-
     public render(): JSX.Element {
         let panel = <div />;
         const roomId = this.props.room ? this.props.room.roomId : undefined;
@@ -341,7 +333,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     mxEvent={this.state.event}
                     initialEvent={this.state.initialEvent}
                     initialEventHighlighted={this.state.initialEventHighlighted}
-                    onScroll={this.resetHighlightedState}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus} />;
                 break;

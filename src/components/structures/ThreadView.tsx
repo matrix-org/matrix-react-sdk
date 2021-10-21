@@ -47,7 +47,6 @@ interface IProps {
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     initialEventHighlighted?: boolean;
-    onScroll: () => void;
 }
 
 interface IState {
@@ -166,6 +165,18 @@ export default class ThreadView extends React.Component<IProps, IState> {
         this.timelinePanelRef.current?.refreshTimeline();
     };
 
+    private onScroll = (): void => {
+        if (this.props.initialEvent && this.props.initialEventHighlighted) {
+            dis.dispatch({
+                action: 'view_room',
+                room_id: this.props.room.roomId,
+                event_id: this.props.initialEvent?.getId(),
+                highlighted: false,
+                replyingToEvent: this.state.replyToEvent,
+            });
+        }
+    };
+
     public render(): JSX.Element {
         const highlightedEventId = this.props.initialEventHighlighted
             ? this.props.initialEvent?.getId()
@@ -203,10 +214,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             permalinkCreator={this.props.permalinkCreator}
                             membersLoaded={true}
                             editState={this.state.editState}
-
                             eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
-                            onScroll={this.props.onScroll}
+                            onUserScroll={this.onScroll}
                         />
                     ) }
 
