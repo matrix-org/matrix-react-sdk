@@ -425,12 +425,12 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showEmail()) {
             return null;
         }
-        const emailPlaceholder = this.authStepIsRequired('m.login.email.identity') ?
+        const emailLabel = this.authStepIsRequired('m.login.email.identity') ?
             _t("Email") :
             _t("Email (optional)");
         return <EmailField
             fieldRef={field => this[RegistrationField.Email] = field}
-            label={emailPlaceholder}
+            label={emailLabel}
             value={this.state.email}
             validationRules={this.validateEmailRules.bind(this)}
             onChange={this.onEmailChange}
