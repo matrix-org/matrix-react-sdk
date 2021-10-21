@@ -1411,7 +1411,7 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
     "Privacy": "Privacy",
     "%(analyticsOwner)s collects analytics to allow us to improve the application.": "%(analyticsOwner)s collects analytics to allow us to improve the application.",
-    "Privacy is important to us, so we don't collect any personal or identifiable data for our analytics.": "Privacy is important to us, so we don't collect any personal or identifiable data for our analytics.",
+    "We don’t record or profile any personal data, and we don't share anything with any third parties.": "We don’t record or profile any personal data, and we don't share anything with any third parties.",
     "Learn more about how we use analytics.": "Learn more about how we use analytics.",
     "Where you’re logged in": "Where you’re logged in",
     "Manage the names of and sign out of your sessions below or <a>verify them in your User Profile</a>.": "Manage the names of and sign out of your sessions below or <a>verify them in your User Profile</a>.",

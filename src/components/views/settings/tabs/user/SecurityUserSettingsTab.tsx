@@ -286,16 +286,20 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
                     <div className="mx_SettingsTab_subsectionText">
-                        { _t(
-                            "%(analyticsOwner)s collects analytics to allow us to improve the application.",
-                            { analyticsOwner: SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand },
-                        ) }
-                        &nbsp;
-                        { _t("Privacy is important to us, so we don't collect any personal or " +
-                            "identifiable data for our analytics.") }
-                        <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
-                            { _t("Learn more about how we use analytics.") }
-                        </AccessibleButton>
+                        <p>
+                            { _t(
+                                "%(analyticsOwner)s collects analytics to allow us to improve the application.",
+                                { analyticsOwner: SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand },
+                            ) }
+                            &nbsp;
+                            { _t("We don’t record or profile any personal data, and we don't share anything with any " +
+                                "third parties.") }
+                        </p>
+                        <p>
+                            <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
+                                { _t("Learn more about how we use analytics.") }
+                            </AccessibleButton>
+                        </p>
                     </div>
                     {
                         PosthogAnalytics.instance.isEnabled() ?
