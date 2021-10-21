@@ -20,6 +20,7 @@ interface IGroupCallState {
     screenshareFeeds: CallFeed[];
     isScreensharing: boolean;
     participants: RoomMember[];
+    hasLocalParticipant: boolean;
 }
 
 interface IGroupCallReturn extends IGroupCallState {
@@ -47,6 +48,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             localScreenshareFeed,
             localDesktopCapturerSourceId,
             participants,
+            hasLocalParticipant,
         },
         setState,
     ] = useState<IGroupCallState>({
@@ -58,6 +60,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         screenshareFeeds: [],
         isScreensharing: false,
         participants: [],
+        hasLocalParticipant: false,
     });
 
     const updateState = (state: Partial<IGroupCallState>) =>
@@ -127,6 +130,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         function onParticipantsChanged(participants: RoomMember[]) {
             updateState({
                 participants: [...participants],
+                hasLocalParticipant: groupCall.hasLocalParticipant(),
             });
         }
 
@@ -153,6 +157,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             localDesktopCapturerSourceId: groupCall.localDesktopCapturerSourceId,
             screenshareFeeds: [...groupCall.screenshareFeeds],
             participants: [...groupCall.participants],
+            hasLocalParticipant: groupCall.hasLocalParticipant(),
         });
 
         return () => {
@@ -228,5 +233,6 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         localScreenshareFeed,
         localDesktopCapturerSourceId,
         participants,
+        hasLocalParticipant,
     };
 }
