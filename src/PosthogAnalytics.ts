@@ -283,7 +283,7 @@ export class PosthogAnalytics {
         if (this.enabled) {
             this.posthog.reset();
         }
-        this.setAnonymity(Anonymity.Anonymous);
+        this.setAnonymity(Anonymity.Disabled);
     }
 
     public async trackPseudonymousEvent<E extends IPseudonymousEvent>(
