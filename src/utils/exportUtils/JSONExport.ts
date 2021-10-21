@@ -23,6 +23,8 @@ import { ExportType } from "./exportUtils";
 import { IExportOptions } from "./exportUtils";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 export default class JSONExporter extends Exporter {
     protected totalSize = 0;
     protected messages: Record<string, any>[] = [];
@@ -67,7 +69,7 @@ export default class JSONExporter extends Exporter {
                     this.addFile(filePath, blob);
                 }
             } catch (err) {
-                console.log("Error fetching file: " + err);
+                logger.log("Error fetching file: " + err);
             }
         }
         const jsonEvent: any = mxEv.toJSON();
@@ -87,16 +89,16 @@ export default class JSONExporter extends Exporter {
     }
 
     public async export() {
-        console.info("Starting export process...");
-        console.info("Fetching events...");
+        logger.info("Starting export process...");
+        logger.info("Fetching events...");
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        console.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
+        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
 
-        console.info("Creating output...");
+        logger.info("Creating output...");
         const text = await this.createOutput(res);
 
         if (this.files.length) {
@@ -110,10 +112,10 @@ export default class JSONExporter extends Exporter {
         const exportEnd = performance.now();
 
         if (this.cancelled) {
-            console.info("Export cancelled successfully");
+            logger.info("Export cancelled successfully");
         } else {
-            console.info("Export successful!");
-            console.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            logger.info("Export successful!");
+            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
         }
 
         this.cleanUp();

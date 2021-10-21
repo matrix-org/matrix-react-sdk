@@ -24,6 +24,8 @@ import StyledCheckbox from '../elements/StyledCheckbox';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EditableTextContainer from "../elements/EditableTextContainer";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     device?: IMyDevice;
     onDeviceToggled?: (device: IMyDevice) => void;
@@ -41,7 +43,7 @@ export default class DevicesPanelEntry extends React.Component<IProps> {
         return MatrixClientPeg.get().setDeviceDetails(device.device_id, {
             display_name: value,
         }).catch((e) => {
-            console.error("Error setting session display name", e);
+            logger.error("Error setting session display name", e);
             throw new Error(_t("Failed to set display name"));
         });
     };
@@ -66,23 +68,23 @@ export default class DevicesPanelEntry extends React.Component<IProps> {
         }
 
         return (
-            <div className={"mx_DevicesPanel_device" + myDeviceClass}>
-                <div className="mx_DevicesPanel_deviceId">
+            <tr className={"mx_DevicesPanel_device" + myDeviceClass}>
+                <td className="mx_DevicesPanel_deviceId">
                     { device.device_id }
-                </div>
-                <div className="mx_DevicesPanel_deviceName">
+                </td>
+                <td className="mx_DevicesPanel_deviceName">
                     <EditableTextContainer initialValue={device.display_name}
                         onSubmit={this.onDisplayNameChanged}
                         placeholder={device.device_id}
                     />
-                </div>
-                <div className="mx_DevicesPanel_lastSeen">
+                </td>
+                <td className="mx_DevicesPanel_lastSeen">
                     { lastSeen }
-                </div>
-                <div className="mx_DevicesPanel_deviceButtons">
+                </td>
+                <td className="mx_DevicesPanel_deviceButtons">
                     <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
-                </div>
-            </div>
+                </td>
+            </tr>
         );
     }
 }

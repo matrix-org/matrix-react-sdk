@@ -44,6 +44,11 @@ import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
 import { throttle } from 'lodash';
 import SpaceStore from "../../../stores/SpaceStore";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 const getSearchQueryLSKey = (roomId: string) => `mx_MemberList_searchQuarry_${roomId}`;
 
@@ -169,7 +174,11 @@ export default class MemberList extends React.Component<IProps, IState> {
     private get canInvite(): boolean {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
-        return room && room.canInvite(cli.getUserId());
+
+        return (
+            room?.canInvite(cli.getUserId()) ||
+            (room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public)
+        );
     }
 
     private getMembersState(members: Array<RoomMember>): IState {
@@ -177,7 +186,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         try {
             searchQuery = window.localStorage.getItem(getSearchQueryLSKey(this.props.roomId));
         } catch (error) {
-            console.warn("Failed to get last the MemberList search query", error);
+            logger.warn("Failed to get last the MemberList search query", error);
         }
 
         // set the state after determining showPresence to make sure it's
@@ -426,7 +435,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         try {
             window.localStorage.setItem(getSearchQueryLSKey(this.props.roomId), searchQuery);
         } catch (error) {
-            console.warn("Failed to set the last MemberList search query", error);
+            logger.warn("Failed to set the last MemberList search query", error);
         }
 
         this.setState({
@@ -530,7 +539,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         const room = cli.getRoom(this.props.roomId);
         let inviteButton;
 
-        if (room && room.getMyMembership() === 'join') {
+        if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
             const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
             if (chat && chat.roomId === this.props.roomId) {
