@@ -23,7 +23,7 @@ import { getBlobSafeMimeType } from "./blobs";
 /**
  * Decrypt a file attached to a matrix event.
  * @param {IEncryptedFile} file The encrypted file information taken from the matrix event.
- *   This passed to [link]{@link https://github.com/matrix-org/browser-encrypt-attachments}
+ *   This passed to [link]{@link https://github.com/matrix-org/browser-encrypt-attachment}
  *   as the encryption info object, so will also have the those keys in addition to
  *   the keys below.
  * @param {IMediaEventInfo} info The info parameter taken from the matrix event.
