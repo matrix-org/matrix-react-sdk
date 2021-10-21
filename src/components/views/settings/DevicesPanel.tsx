@@ -29,6 +29,8 @@ import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     className?: string;
 }
@@ -80,7 +82,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                     // 404 probably means the HS doesn't yet support the API.
                     errtxt = _t("Your homeserver does not support device management.");
                 } else {
-                    console.error("Error loading sessions:", error);
+                    logger.error("Error loading sessions:", error);
                     errtxt = _t("Unable to load device list");
                 }
                 this.setState({ deviceLoadError: errtxt });
@@ -170,7 +172,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                 },
             });
         }).catch((e) => {
-            console.error("Error deleting sessions", e);
+            logger.error("Error deleting sessions", e);
             if (this.unmounted) { return; }
         }).finally(() => {
             this.setState({

@@ -110,6 +110,8 @@ interface IRoomProps extends MatrixClientProps {
     resizeNotifier: ResizeNotifier;
     justCreatedOpts?: IOpts;
 
+    forceTimeline?: boolean; // should we force access to the timeline, overriding (for eg) spaces
+
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;
 }
@@ -498,7 +500,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // making it impossible to indicate a newly joined room.
         if (!joining && roomId) {
             if (!room && shouldPeek) {
-                console.info("Attempting to peek into room %s", roomId);
+                logger.info("Attempting to peek into room %s", roomId);
                 this.setState({
                     peekLoading: true,
                     isPeeking: true, // this will change to false if peeking fails
@@ -779,7 +781,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 });
                 break;
             case 'reply_to_event':
-                if (this.state.searchResults && payload.event.getRoomId() === this.state.roomId && !this.unmounted) {
+                if (this.state.searchResults
+                        && payload.event.getRoomId() === this.state.roomId
+                        && !this.unmounted
+                        && payload.context === TimelineRenderingType.Room) {
                     this.onCancelSearchClick();
                 }
                 break;
@@ -841,7 +846,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             case "scroll_to_bottom":
-                this.messagePanel?.jumpToLiveTimeline();
+                if (payload.timelineRenderingType === this.context.timelineRenderingType) {
+                    this.messagePanel?.jumpToLiveTimeline();
+                }
                 break;
         }
     };
@@ -963,8 +970,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 } catch (err) {
                     const errorMessage = `Fetching room members for ${room.roomId} failed.` +
                         " Room members will appear incomplete.";
-                    console.error(errorMessage);
-                    console.error(err);
+                    logger.error(errorMessage);
+                    logger.error(err);
                 }
             }
         }
@@ -1315,7 +1322,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return searchPromise.then((results) => {
             debuglog("search complete");
             if (this.unmounted || !this.state.searching || this.searchId != localSearchId) {
-                console.error("Discarding stale search results");
+                logger.error("Discarding stale search results");
                 return false;
             }
 
@@ -1341,7 +1348,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 searchResults: results,
             });
         }, (error) => {
-            console.error("Search failed", error);
+            logger.error("Search failed", error);
             Modal.createTrackedDialog('Search failed', '', ErrorDialog, {
                 title: _t("Search failed"),
                 description: ((error && error.message) ? error.message :
@@ -1472,7 +1479,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 rejecting: false,
             });
         }, (error) => {
-            console.error("Failed to reject invite: %s", error);
+            logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
             Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
@@ -1505,7 +1512,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 rejecting: false,
             });
         } catch (error) {
-            console.error("Failed to reject invite: %s", error);
+            logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
             Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
@@ -1906,7 +1913,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
-        if (this.state.room?.isSpaceRoom()) {
+        if (this.state.room?.isSpaceRoom() && !this.props.forceTimeline) {
             return <SpaceRoomView
                 space={this.state.room}
                 justCreatedOpts={this.props.justCreatedOpts}

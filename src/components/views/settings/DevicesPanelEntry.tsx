@@ -28,6 +28,8 @@ import Modal from "../../../Modal";
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     device: IMyDevice;
     isOwnDevice: boolean;
@@ -67,7 +69,7 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
         await MatrixClientPeg.get().setDeviceDetails(this.props.device.device_id, {
             display_name: this.state.displayName,
         }).catch((e) => {
-            console.error("Error setting session display name", e);
+            logger.error("Error setting session display name", e);
             throw new Error(_t("Failed to set display name"));
         });
         this.props.onDeviceChange();

@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 .mx_DevicesPanel {
-    width: 880px;
+    width: auto;
+    max-width: 880px;
 }
 
 .mx_DevicesPanel_header {

@@ -32,6 +32,7 @@ import { retry } from "../utils/promise";
 import CountlyAnalytics from "../CountlyAnalytics";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { TimelineRenderingType } from "../contexts/RoomContext";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -153,16 +154,19 @@ class RoomViewStore extends Store<ActionPayload> {
             case 'reply_to_event':
                 // If currently viewed room does not match the room in which we wish to reply then change rooms
                 // this can happen when performing a search across all rooms
-                if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
-                    dis.dispatch({
-                        action: 'view_room',
-                        room_id: payload.event.getRoomId(),
-                        replyingToEvent: payload.event,
-                    });
-                } else {
-                    this.setState({
-                        replyingToEvent: payload.event,
-                    });
+                if (payload.context === TimelineRenderingType.Room) {
+                    if (payload.event
+                        && payload.event.getRoomId() !== this.state.roomId) {
+                        dis.dispatch({
+                            action: 'view_room',
+                            room_id: payload.event.getRoomId(),
+                            replyingToEvent: payload.event,
+                        });
+                    } else {
+                        this.setState({
+                            replyingToEvent: payload.event,
+                        });
+                    }
                 }
                 break;
             case 'open_room_settings': {
@@ -235,7 +239,7 @@ class RoomViewStore extends Store<ActionPayload> {
                     storeRoomAliasInCache(payload.room_alias, result.room_id);
                     roomId = result.room_id;
                 } catch (err) {
-                    console.error("RVS failed to get room id for alias: ", err);
+                    logger.error("RVS failed to get room id for alias: ", err);
                     dis.dispatch({
                         action: 'view_room_error',
                         room_id: null,

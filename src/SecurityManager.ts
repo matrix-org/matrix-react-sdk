@@ -283,7 +283,7 @@ async function onSecretRequested(
         }
         return key && encodeBase64(key);
     }
-    console.warn("onSecretRequested didn't recognise the secret named ", name);
+    logger.warn("onSecretRequested didn't recognise the secret named ", name);
 }
 
 export const crossSigningCallbacks: ICryptoCallbacks = {
@@ -388,7 +388,7 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
                 logger.log("Setting dehydration key");
                 await cli.setDehydrationKey(secretStorageKeys[keyId], dehydrationKeyInfo, "Backup device");
             } else if (!keyId) {
-                console.warn("Not setting dehydration key: no SSSS key found");
+                logger.warn("Not setting dehydration key: no SSSS key found");
             } else {
                 logger.log("Not setting dehydration key: feature disabled");
             }
@@ -399,7 +399,7 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
         return await func();
     } catch (e) {
         SecurityCustomisations.catchAccessSecretStorageError?.(e);
-        console.error(e);
+        logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
     } finally {

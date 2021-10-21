@@ -162,9 +162,10 @@ export default class SettingsStore {
 
         const watcherId = `${new Date().getTime()}_${SettingsStore.watcherCount++}_${settingName}_${roomId}`;
 
-        const localizedCallback = (changedInRoomId, atLevel, newValAtLevel) => {
+        const localizedCallback = (changedInRoomId: string | null, atLevel: SettingLevel, newValAtLevel: any) => {
             const newValue = SettingsStore.getValue(originalSettingName);
-            callbackFn(originalSettingName, changedInRoomId, atLevel, newValAtLevel, newValue);
+            const newValueAtLevel = SettingsStore.getValueAt(atLevel, originalSettingName) ?? newValAtLevel;
+            callbackFn(originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue);
         };
 
         SettingsStore.watchers.set(watcherId, localizedCallback);
@@ -181,7 +182,7 @@ export default class SettingsStore {
      */
     public static unwatchSetting(watcherReference: string) {
         if (!SettingsStore.watchers.has(watcherReference)) {
-            console.warn(`Ending non-existent watcher ID ${watcherReference}`);
+            logger.warn(`Ending non-existent watcher ID ${watcherReference}`);
             return;
         }
 
@@ -549,7 +550,7 @@ export default class SettingsStore {
                     logger.log(`---     ${handlerName}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
                 } catch (e) {
                     logger.log(`---     ${handler}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.error(e);
                 }
 
                 if (roomId) {
@@ -558,7 +559,7 @@ export default class SettingsStore {
                         logger.log(`---     ${handlerName}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
                         logger.log(`---     ${handler}@<no_room> THREW ERROR: ${e.message}`);
-                        console.error(e);
+                        logger.error(e);
                     }
                 }
             }
@@ -571,7 +572,7 @@ export default class SettingsStore {
                 logger.log(`---     SettingsStore#generic@${roomId || '<no_room>'}  = ${JSON.stringify(value)}`);
             } catch (e) {
                 logger.log(`---     SettingsStore#generic@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                console.error(e);
+                logger.error(e);
             }
 
             if (roomId) {
@@ -580,7 +581,7 @@ export default class SettingsStore {
                     logger.log(`---     SettingsStore#generic@<no_room>  = ${JSON.stringify(value)}`);
                 } catch (e) {
                     logger.log(`---     SettingsStore#generic@$<no_room> THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.error(e);
                 }
             }
 
@@ -590,7 +591,7 @@ export default class SettingsStore {
                     logger.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
                 } catch (e) {
                     logger.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.error(e);
                 }
 
                 if (roomId) {
@@ -599,7 +600,7 @@ export default class SettingsStore {
                         logger.log(`---     SettingsStore#${level}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
                         logger.log(`---     SettingsStore#${level}@$<no_room> THREW ERROR: ${e.message}`);
-                        console.error(e);
+                        logger.error(e);
                     }
                 }
             }

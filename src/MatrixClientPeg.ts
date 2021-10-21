@@ -173,12 +173,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 break;
             } catch (err) {
                 if (dbType === 'indexeddb') {
-                    console.error('Error starting matrixclient store - falling back to memory store', err);
+                    logger.error('Error starting matrixclient store - falling back to memory store', err);
                     this.matrixClient.store = new MemoryStore({
                         localStorage: localStorage,
                     });
                 } else {
-                    console.error('Failed to start memory store!', err);
+                    logger.error('Failed to start memory store!', err);
                     throw err;
                 }
             }
@@ -207,7 +207,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             }
             // this can happen for a number of reasons, the most likely being
             // that the olm library was missing. It's not fatal.
-            console.warn("Unable to initialise e2e", e);
+            logger.warn("Unable to initialise e2e", e);
         }
 
         const opts = utils.deepCopy(this.opts);
