@@ -31,6 +31,9 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     labelRequired?: string;
     labelInvalid?: string;
 
+    // When present, completely overrides the default validation rules.
+    validationRules?: (fieldState: IFieldState) => Promise<IValidationResult>;
+
     onChange(ev: React.FormEvent<HTMLElement>);
     onValidate(result: IValidationResult);
 }
@@ -59,7 +62,12 @@ class EmailField extends PureComponent<IProps> {
     });
 
     onValidate = async (fieldState: IFieldState) => {
-        const result = await this.validate(fieldState);
+        let validate = this.validate;
+        if (this.props.validationRules) {
+            validate = this.props.validationRules;
+        }
+
+        const result = await validate(fieldState);
         this.props.onValidate(result);
         return result;
     };
