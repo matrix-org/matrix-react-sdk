@@ -47,11 +47,11 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (email) {
-            const valid = await fieldRef.current.validate({ allowEmpty: false });
+            const valid = await fieldRef.current.validate({});
 
             if (!valid) {
                 fieldRef.current.focus();
-                fieldRef.current.validate({ allowEmpty: false, focused: true });
+                fieldRef.current.validate({ focused: true });
                 return;
             }
         }
