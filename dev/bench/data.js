@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634750435336,
+  "lastUpdate": 1634802318322,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33824,6 +33824,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4808.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "neerajsewanisrt8@gmail.com",
+            "name": "Neeraj Sewani",
+            "username": "neer17"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7ab075fdfd3181376db703ff0c5b6400be77c466",
+          "message": "Change the \"Security Phase\" color (#6870)",
+          "timestamp": "2021-10-21T08:39:01+01:00",
+          "tree_id": "7dbf1be5b474d789e7df6cc50a0b94b0d8319211",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7ab075fdfd3181376db703ff0c5b6400be77c466"
+        },
+        "date": 1634802315364,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4652.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1136.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1826.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4723.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
