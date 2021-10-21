@@ -1169,11 +1169,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         const timeline = this.props.timelineSet.getTimelineForEvent(eventId);
         if (timeline) {
+            console.log("THREADZ: event id in sync data");
+
             // This is a hot-path optimization by skipping a promise tick
             // by repeating a no-op sync branch in TimelineSet.getTimelineForEvent & MatrixClient.getEventTimeline
             this.timelineWindow.load(eventId, INITIAL_SIZE); // in this branch this method will happen in sync time
             onLoaded();
         } else {
+            console.log("THREADZ: event id in sync data");
             const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
             this.setState({
                 events: [],

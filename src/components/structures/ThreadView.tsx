@@ -133,7 +133,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         let thread = mxEv.getThread();
         if (!thread) {
             const client = MatrixClientPeg.get();
-            thread = new Thread([mxEv], this.props.room, client);
+            thread = new Thread([mxEv], client);
             mxEv.setThread(thread);
         }
         thread.on(ThreadEvent.Update, this.updateThread);

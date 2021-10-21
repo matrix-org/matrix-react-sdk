@@ -93,6 +93,7 @@ import SpaceStore from "../../stores/SpaceStore";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threads';
+import { fetchInitialEvent } from "../../utils/EventUtils";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -320,7 +321,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onRoomViewStoreUpdate = (initial?: boolean) => {
+    private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
         if (this.unmounted) {
             return;
         }
@@ -362,7 +363,23 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const initialEventId = RoomViewStore.getInitialEventId();
         if (initialEventId) {
             const room = this.context.getRoom(roomId);
-            const initialEvent = room?.findEventById(initialEventId);
+            let initialEvent = room?.findEventById(initialEventId);
+            // The event does not exist in the current sync data
+            // We need to fetch it to know whether to route this request
+            // to the main timeline or to a threaded one
+            // In the current state, if a thread does not exist in the sync data
+            // We will only display the event targeted by the `matrix.to` link
+            // and the root event.
+            // The rest will be lost for now, until the aggregation API on the server
+            // becomes available to fetch a whole thread
+            if (!initialEvent) {
+                initialEvent = await fetchInitialEvent(
+                    this.context,
+                    roomId,
+                    initialEventId,
+                );
+            }
+
             const thread = initialEvent?.getThread();
             if (thread && !initialEvent?.isThreadRoot) {
                 dispatchShowThreadEvent(
