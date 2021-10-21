@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634802318322,
+  "lastUpdate": 1634807159234,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33872,6 +33872,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4723.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c73127c35cb2ecb3e7720dbfb21c62edef3d3796",
+          "message": "Remove unused code left from extracting ThemeChoicePanel (#7002)",
+          "timestamp": "2021-10-21T09:59:34+01:00",
+          "tree_id": "bd75c717ac64d394a05078b41e5bfe49a20d3db2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c73127c35cb2ecb3e7720dbfb21c62edef3d3796"
+        },
+        "date": 1634807156460,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4646.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 999.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1796.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4797.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
