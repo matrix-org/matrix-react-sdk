@@ -417,7 +417,7 @@ export class Analytics {
                 }) }</div>
                 <table>
                     { rows.map((row) => <tr key={row[0]}>
-                        <td>{ _t(
+                        <td className="mx_AnalyticsModal_label">{ _t(
                             customVariables[row[0]].expl,
                             customVariables[row[0]].getTextVariables ?
                                 customVariables[row[0]].getTextVariables() :

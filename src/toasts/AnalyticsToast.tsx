@@ -57,10 +57,11 @@ const getPseudonymousDescriptions = (policyUrl: string, analyticsOwner: string):
     // them to opt in again.
     const reOptInDescription = _t(
         "To allow us to understand how people use multiple devices, we’ve enhanced our " +
-        "<UsageDataLink>analytics data</UsageDataLink> to include a randomly generated identifier associated " +
+        "analytics data to include a randomly generated identifier associated " +
         "with your account that will be shared across your devices." + "<Linebreak/><Linebreak/>" +
         "We don’t record or profile any personal data, and we don't share anything with any third " +
-        "parties." + "<Linebreak/><Linebreak/>" +
+        "parties." + "<Linebreak/><Linebreak/>" + "<UsageDataLink>More information</UsageDataLink>" +
+        "<Linebreak/><Linebreak/>" +
         "You previously agreed to send anonymous usage data to %(analyticsOwner)s - is this still okay?",
         {
             analyticsOwner: analyticsOwner,
