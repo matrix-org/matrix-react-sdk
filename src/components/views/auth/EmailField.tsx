@@ -35,7 +35,7 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     validationRules?: (fieldState: IFieldState) => Promise<IValidationResult>;
 
     onChange(ev: React.FormEvent<HTMLElement>);
-    onValidate(result: IValidationResult);
+    onValidate?(result: IValidationResult);
 }
 
 @replaceableComponent("views.auth.EmailField")
@@ -68,7 +68,10 @@ class EmailField extends PureComponent<IProps> {
         }
 
         const result = await validate(fieldState);
-        this.props.onValidate(result);
+        if (this.props.onValidate) {
+            this.props.onValidate(result);
+        }
+
         return result;
     };
 
