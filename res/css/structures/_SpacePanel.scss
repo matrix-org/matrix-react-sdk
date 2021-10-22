@@ -19,14 +19,17 @@ $nestedHeight: 24px;
 $gutterSize: 16px;
 $activeBorderTransparentGap: 1px;
 
-$activeBackgroundColor: $roomtile-selected-bg-color;
-$activeBorderColor: $secondary-fg-color;
+$activeBackgroundColor: $panel-actions;
+$activeBorderColor: $secondary-content;
 
 .mx_SpacePanel {
-    flex: 0 0 auto;
     background-color: $groupFilterPanel-bg-color;
+    flex: 0 0 auto;
     padding: 0;
     margin: 0;
+    position: relative;
+    // Fix for the blurred avatar-background
+    z-index: 1;
 
     // Create another flexbox so the Panel fills the container
     display: flex;
@@ -46,7 +49,7 @@ $activeBorderColor: $secondary-fg-color;
         mask-repeat: no-repeat;
         margin-left: $gutterSize;
         margin-bottom: 12px;
-        background-color: $roomlist-header-color;
+        background-color: $tertiary-content;
         mask-image: url('$(res)/img/element-icons/expand-space-panel.svg');
 
         &.expanded {
@@ -100,6 +103,16 @@ $activeBorderColor: $secondary-fg-color;
         }
     }
 
+    .mx_SpaceItem_new {
+        position: relative;
+
+        .mx_BetaDot {
+            position: absolute;
+            left: 33px;
+            top: -5px;
+        }
+    }
+
     .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton {
         margin-left: $gutterSize;
         min-width: 40px;
@@ -111,6 +124,7 @@ $activeBorderColor: $secondary-fg-color;
         align-items: center;
         padding: 4px 4px 4px 0;
         width: 100%;
+        cursor: pointer;
 
         &.mx_SpaceButton_active {
             &:not(.mx_SpaceButton_narrow) .mx_SpaceButton_selectionWrapper {
@@ -130,14 +144,7 @@ $activeBorderColor: $secondary-fg-color;
             align-items: center;
             border-radius: 12px;
             padding: 4px;
-        }
-
-        &:not(.mx_SpaceButton_narrow) {
-            .mx_SpaceButton_selectionWrapper {
-                width: 100%;
-                padding-right: 16px;
-                overflow: hidden;
-            }
+            width: 100%;
         }
 
         .mx_SpaceButton_name {
@@ -147,7 +154,6 @@ $activeBorderColor: $secondary-fg-color;
             display: block;
             text-overflow: ellipsis;
             overflow: hidden;
-            padding-right: 8px;
             font-size: $font-14px;
             line-height: $font-18px;
         }
@@ -158,7 +164,7 @@ $activeBorderColor: $secondary-fg-color;
             mask-position: center;
             mask-size: 20px;
             mask-repeat: no-repeat;
-            background-color: $roomlist-header-color;
+            background-color: $tertiary-content;
             mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
         }
 
@@ -192,22 +198,17 @@ $activeBorderColor: $secondary-fg-color;
         }
 
         &.mx_SpaceButton_new .mx_SpaceButton_icon {
-            background-color: $accent-color;
-            transition: all .1s ease-in-out; // TODO transition
+            background-color: $roomlist-button-bg-color;
 
             &::before {
-                background-color: #ffffff;
+                background-color: $primary-content;
                 mask-image: url('$(res)/img/element-icons/plus.svg');
                 transition: all .2s ease-in-out; // TODO transition
             }
         }
 
-        &.mx_SpaceButton_newCancel .mx_SpaceButton_icon {
-            background-color: $icon-button-color;
-
-            &::before {
-                transform: rotate(45deg);
-            }
+        &.mx_SpaceButton_newCancel .mx_SpaceButton_icon::before {
+            transform: rotate(45deg);
         }
 
         .mx_BaseAvatar_image {
@@ -220,9 +221,8 @@ $activeBorderColor: $secondary-fg-color;
             height: 20px;
             margin-top: auto;
             margin-bottom: auto;
-            display: none;
-            position: absolute;
-            right: 4px;
+            visibility: hidden;
+            position: relative;
 
             &::before {
                 top: 2px;
@@ -235,80 +235,50 @@ $activeBorderColor: $secondary-fg-color;
                 mask-size: contain;
                 mask-repeat: no-repeat;
                 mask-image: url('$(res)/img/element-icons/context-menu.svg');
-                background: $primary-fg-color;
+                background: $primary-content;
             }
         }
     }
 
-    .mx_SpacePanel_badgeContainer {
-        position: absolute;
+    .mx_SpaceButton_avatarWrapper {
+        position: relative;
+    }
 
+    .mx_SpacePanel_badgeContainer {
         // Create a flexbox to make aligning dot badges easier
         display: flex;
         align-items: center;
+        position: absolute;
+        right: -3px;
+        top: -3px;
 
         .mx_NotificationBadge {
             margin: 0 2px; // centering
+            background-clip: padding-box;
         }
 
         .mx_NotificationBadge_dot {
             // make the smaller dot occupy the same width for centering
-            margin: 0 7px;
+            margin: 0 -1px 0 0;
+            border: 3px solid $groupFilterPanel-bg-color;
+        }
+
+        .mx_NotificationBadge_2char,
+        .mx_NotificationBadge_3char {
+            margin: -5px -5px 0 0;
+            border: 2px solid $groupFilterPanel-bg-color;
         }
     }
 
-    &.collapsed {
-        .mx_SpaceButton {
-            .mx_SpacePanel_badgeContainer {
-                right: 0;
-                top: 0;
-
-                .mx_NotificationBadge {
-                    background-clip: padding-box;
-                }
-
-                .mx_NotificationBadge_dot {
-                    margin: 0 -1px 0 0;
-                    border: 3px solid $groupFilterPanel-bg-color;
-                }
-
-                .mx_NotificationBadge_2char,
-                .mx_NotificationBadge_3char {
-                    margin: -5px -5px 0 0;
-                    border: 2px solid $groupFilterPanel-bg-color;
-                }
-            }
-
-            &.mx_SpaceButton_active .mx_SpacePanel_badgeContainer {
-                // when we draw the selection border we move the relative bounds of our parent
-                // so update our position within the bounds of the parent to maintain position overall
-                right: -3px;
-                top: -3px;
-            }
-        }
+    .mx_SpaceButton_narrow .mx_SpaceButton_menuButton {
+        display: none;
     }
 
-    &:not(.collapsed) {
-        .mx_SpacePanel_badgeContainer {
-            position: absolute;
-            right: 4px;
-        }
-
-        .mx_SpaceButton:hover,
-        .mx_SpaceButton:focus-within,
-        .mx_SpaceButton_hasMenuOpen {
-            &:not(.mx_SpaceButton_home):not(.mx_SpaceButton_invite) {
-                // Hide the badge container on hover because it'll be a menu button
-                .mx_SpacePanel_badgeContainer {
-                    width: 0;
-                    height: 0;
-                    display: none;
-                }
-
-                .mx_SpaceButton_menuButton {
-                    display: block;
-                }
-            }
+    .mx_SpaceButton:hover,
+    .mx_SpaceButton:focus-within,
+    .mx_SpaceButton_hasMenuOpen {
+        &:not(.mx_SpaceButton_invite) .mx_SpaceButton_menuButton {
+            visibility: visible;
         }
     }
 
@@ -367,6 +337,14 @@ $activeBorderColor: $secondary-fg-color;
 
     .mx_SpacePanel_iconExplore::before {
         mask-image: url('$(res)/img/element-icons/roomlist/browse.svg');
+    }
+
+    .mx_SpacePanel_noIcon {
+        display: none;
+
+        & + .mx_IconizedContextMenu_label {
+            padding-left: 5px !important; // override default iconized label style to align with header
+        }
     }
 }
 

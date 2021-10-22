@@ -48,6 +48,8 @@ import Spinner from "../views/elements/Spinner";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { getDisplayAliasForAliasSet } from "../../Rooms";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const MAX_NAME_LENGTH = 80;
 const MAX_TOPIC_LENGTH = 800;
 
@@ -131,7 +133,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 }
                 this.setState({ protocolsLoading: false });
             }, (err) => {
-                console.warn(`error loading third party protocols: ${err}`);
+                logger.warn(`error loading third party protocols: ${err}`);
                 this.setState({ protocolsLoading: false });
                 if (MatrixClientPeg.get().isGuest()) {
                     // Guests currently aren't allowed to use this API, so
@@ -285,7 +287,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 return false;
             }
 
-            console.error("Failed to get publicRooms: %s", JSON.stringify(err));
+            logger.error("Failed to get publicRooms: %s", JSON.stringify(err));
             track('Failed to get public room list');
             const brand = SdkConfig.get().brand;
             this.setState({
@@ -335,7 +337,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 }, (err) => {
                     modal.close();
                     this.refreshRoomList();
-                    console.error("Failed to " + step + ": " + err);
+                    logger.error("Failed to " + step + ": " + err);
                     Modal.createTrackedDialog('Remove from Directory Error', '', ErrorDialog, {
                         title: _t('Error'),
                         description: (err && err.message)
@@ -347,7 +349,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
         });
     }
 
-    private onRoomClicked = (room: IPublicRoomsChunkRoom, ev: ButtonEvent) => {
+    private onRoomClicked = (room: IPublicRoomsChunkRoom, ev: React.MouseEvent) => {
         // If room was shift-clicked, remove it from the room directory
         if (ev.shiftKey && !this.state.selectedCommunityId) {
             ev.preventDefault();
@@ -833,6 +835,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
 // Similar to matrix-react-sdk's MatrixTools.getDisplayAliasForRoom
 // but works with the objects we get from the public room list
-function getDisplayAliasForRoom(room: IPublicRoomsChunkRoom) {
+export function getDisplayAliasForRoom(room: IPublicRoomsChunkRoom) {
     return getDisplayAliasForAliasSet(room.canonical_alias, room.aliases);
 }

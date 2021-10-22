@@ -18,13 +18,17 @@ limitations under the License.
 
 @import "./_font-sizes.scss";
 @import "./_font-weights.scss";
+@import "./_animations.scss";
 
 $hover-transition: 0.08s cubic-bezier(.46, .03, .52, .96); // quadratic
 
-$EventTile_e2e_state_indicator_width: 4px;
+$selected-message-border-width: 4px;
 
 $MessageTimestamp_width: 46px; /* 8 + 30 (avatar) + 8 */
-$MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $EventTile_e2e_state_indicator_width);
+$MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $selected-message-border-width);
+
+$slider-dot-size: 1em;
+$slider-selection-dot-size: 2.4em;
 
 :root {
     font-size: 10px;
@@ -52,8 +56,8 @@ html {
 body {
     font-family: $font-family;
     font-size: $font-15px;
-    background-color: $primary-bg-color;
-    color: $primary-fg-color;
+    background-color: $background;
+    color: $primary-content;
     border: 0px;
     margin: 0px;
 
@@ -88,7 +92,7 @@ b {
 }
 
 h2 {
-    color: $primary-fg-color;
+    color: $primary-content;
     font-weight: 400;
     font-size: $font-18px;
     margin-top: 16px;
@@ -104,8 +108,8 @@ a:visited {
 input[type=text],
 input[type=search],
 input[type=password] {
+    font-family: inherit;
     padding: 9px;
-    font-family: $font-family;
     font-size: $font-14px;
     font-weight: 600;
     min-width: 0;
@@ -137,17 +141,22 @@ input[type=search]::-webkit-search-results-decoration {
 input::placeholder,
 textarea::placeholder {
     opacity: initial;
+    font-weight: 400;
+}
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+    opacity: .6;
+    font-weight: 400;
 }
 
 input[type=text], input[type=password], textarea {
     background-color: transparent;
-    color: $primary-fg-color;
+    color: $primary-content;
 }
 
 /* Required by Firefox */
 textarea {
-    font-family: $font-family;
-    color: $primary-fg-color;
+    color: $primary-content;
 }
 
 input[type=text]:focus, input[type=password]:focus, textarea:focus {
@@ -168,12 +177,12 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 // it has the appearance of a text box so the controls
 // appear to be part of the input
 
-.mx_Dialog, .mx_MatrixChat {
+.mx_Dialog, .mx_MatrixChat_wrapper {
     .mx_textinput > input[type=text],
     .mx_textinput > input[type=search] {
         border: none;
         flex: 1;
-        color: $primary-fg-color;
+        color: $primary-content;
     }
 
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text],
@@ -184,7 +193,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
         background-color: transparent;
         color: $input-darker-fg-color;
         border-radius: 4px;
-        border: 1px solid rgba($primary-fg-color, .1);
+        border: 1px solid rgba($primary-content, .1);
         // these things should probably not be defined globally
         margin: 9px;
     }
@@ -209,7 +218,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=search],
     .mx_textinput {
         color: $input-darker-fg-color;
-        background-color: $primary-bg-color;
+        background-color: $background;
         border: none;
     }
 }
@@ -271,7 +280,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 .mx_Dialog {
-    background-color: $primary-bg-color;
+    background-color: $background;
     color: $light-fg-color;
     z-index: 4012;
     font-weight: 300;
@@ -318,6 +327,8 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 .mx_Dialog_lightbox .mx_Dialog_background {
     opacity: $lightbox-background-bg-opacity;
     background-color: $lightbox-background-bg-color;
+    animation-name: mx_Dialog_lightbox_background_keyframes;
+    animation-duration: 300ms;
 }
 
 .mx_Dialog_lightbox .mx_Dialog {
@@ -379,7 +390,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 .mx_Dialog_content {
     margin: 24px 0 68px;
     font-size: $font-14px;
-    color: $primary-fg-color;
+    color: $primary-content;
     word-wrap: break-word;
 }
 
@@ -488,8 +499,8 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     border-radius: 3px;
     border: 1px solid $input-border-color;
     padding: 9px;
-    color: $primary-fg-color;
-    background-color: $primary-bg-color;
+    color: $primary-content;
+    background-color: $background;
 }
 
 .mx_textButton {

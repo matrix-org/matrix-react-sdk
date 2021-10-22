@@ -23,6 +23,10 @@ import { replaceableComponent } from "../../utils/replaceableComponent";
 import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
 import { TileShape } from "../views/rooms/EventTile";
+import { Layout } from "../../settings/Layout";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     onClose(): void;
@@ -33,6 +37,7 @@ interface IProps {
  */
 @replaceableComponent("structures.NotificationPanel")
 export default class NotificationPanel extends React.PureComponent<IProps> {
+    static contextType = RoomContext;
     render() {
         const emptyState = (<div className="mx_RightPanel_empty mx_NotificationPanel_empty">
             <h2>{ _t('You’re all caught up') }</h2>
@@ -52,15 +57,21 @@ export default class NotificationPanel extends React.PureComponent<IProps> {
                     tileShape={TileShape.Notif}
                     empty={emptyState}
                     alwaysShowTimestamps={true}
+                    layout={Layout.Group}
                 />
             );
         } else {
-            console.error("No notifTimelineSet available!");
+            logger.error("No notifTimelineSet available!");
             content = <Spinner />;
         }
 
-        return <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
-            { content }
-        </BaseCard>;
+        return <RoomContext.Provider value={{
+            ...this.context,
+            timelineRenderingType: TimelineRenderingType.Notification,
+        }}>
+            <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
+                { content }
+            </BaseCard>
+        </RoomContext.Provider>;
     }
 }

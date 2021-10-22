@@ -29,6 +29,8 @@ import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     room: Room;
     onClose(): void;
@@ -107,8 +109,8 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
                     return event;
                 }
             } catch (err) {
-                console.error("Error looking up pinned event " + eventId + " in room " + room.roomId);
-                console.error(err);
+                logger.error("Error looking up pinned event " + eventId + " in room " + room.roomId);
+                logger.error(err);
             }
             return null;
         });
@@ -152,7 +154,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
                 <h2>{ _t("Nothing pinned, yet") }</h2>
                 { _t("If you have permissions, open the menu on any message and select " +
                     "<b>Pin</b> to stick them here.", {}, {
-                        b: sub => <b>{ sub }</b>,
+                    b: sub => <b>{ sub }</b>,
                 }) }
             </div>
         </div>;

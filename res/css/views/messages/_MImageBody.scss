@@ -16,24 +16,29 @@ limitations under the License.
 
 $timelineImageBorderRadius: 4px;
 
-.mx_MImageBody {
-    display: block;
+.mx_MImageBody_thumbnail--blurhash {
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .mx_MImageBody_thumbnail {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+    object-fit: contain;
     border-radius: $timelineImageBorderRadius;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
+    width: 100%;
 
-    > canvas {
+    .mx_Blurhash > canvas {
+        animation: mx--anim-pulse 1.75s infinite cubic-bezier(.4, 0, .6, 1);
         border-radius: $timelineImageBorderRadius;
+    }
+
+    .mx_no-image-placeholder {
+        background-color: $primary-content;
     }
 }
 
@@ -95,5 +100,5 @@ $timelineImageBorderRadius: 4px;
 }
 
 .mx_EventTile:hover .mx_HiddenImagePlaceholder {
-    background-color: $primary-bg-color;
+    background-color: $background;
 }

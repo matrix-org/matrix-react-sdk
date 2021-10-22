@@ -16,9 +16,10 @@ limitations under the License.
 
 import React, { ClipboardEvent, createRef, KeyboardEvent } from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
-import { IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { IContent, MatrixEvent, IEventRelation } from 'matrix-js-sdk/src/models/event';
 import { DebouncedFunc, throttle } from 'lodash';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
@@ -31,16 +32,16 @@ import {
     textSerialize,
     unescapeMessage,
 } from '../../../editor/serialize';
-import { CommandPartCreator, Part, PartCreator, SerializedPart } from '../../../editor/parts';
-import BasicMessageComposer from "./BasicMessageComposer";
-import ReplyThread from "../elements/ReplyThread";
+import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
+import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from '../../../editor/parts';
+import ReplyChain from "../elements/ReplyChain";
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
 import Modal from '../../../Modal';
 import { _t, _td } from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from '../../../effects';
@@ -54,31 +55,43 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
+import RoomContext from '../../../contexts/RoomContext';
+import DocumentPosition from "../../../editor/position";
 
 function addReplyToMessageContent(
     content: IContent,
-    repliedToEvent: MatrixEvent,
+    replyToEvent: MatrixEvent,
     permalinkCreator: RoomPermalinkCreator,
+    relation?: IEventRelation,
 ): void {
-    const replyContent = ReplyThread.makeReplyMixIn(repliedToEvent);
+    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
 
     // Part of Replies fallback support - prepend the text we're sending
     // with the text we're replying to
-    const nestedReply = ReplyThread.getNestedReplyText(repliedToEvent, permalinkCreator);
+    const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, permalinkCreator);
     if (nestedReply) {
         if (content.formatted_body) {
             content.formatted_body = nestedReply.html + content.formatted_body;
         }
         content.body = nestedReply.body + content.body;
     }
+
+    if (relation) {
+        content['m.relates_to'] = {
+            ...relation, // the composer can have a default
+            ...content['m.relates_to'],
+        };
+    }
 }
 
 // exported for tests
 export function createMessageContent(
     model: EditorModel,
-    permalinkCreator: RoomPermalinkCreator,
     replyToEvent: MatrixEvent,
+    relation: IEventRelation,
+    permalinkCreator: RoomPermalinkCreator,
 ): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
@@ -104,6 +117,13 @@ export function createMessageContent(
         addReplyToMessageContent(content, replyToEvent, permalinkCreator);
     }
 
+    if (relation) {
+        content['m.relates_to'] = {
+            ...relation,
+            ...content['m.relates_to'],
+        };
+    }
+
     return content;
 }
 
@@ -125,19 +145,20 @@ export function isQuickReaction(model: EditorModel): boolean {
     return false;
 }
 
-interface IProps {
+interface ISendMessageComposerProps extends MatrixClientProps {
     room: Room;
     placeholder?: string;
     permalinkCreator: RoomPermalinkCreator;
+    relation?: IEventRelation;
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
     onChange?(model: EditorModel): void;
 }
 
 @replaceableComponent("views.rooms.SendMessageComposer")
-export default class SendMessageComposer extends React.Component<IProps> {
-    static contextType = MatrixClientContext;
-    context!: React.ContextType<typeof MatrixClientContext>;
+export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
@@ -146,16 +167,28 @@ export default class SendMessageComposer extends React.Component<IProps> {
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
 
-    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
-        if (this.context.isCryptoEnabled() && this.context.isRoomEncrypted(this.props.room.roomId)) {
+        if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(() => {
-                this.context.prepareToEncrypt(this.props.room);
+                this.props.mxClient.prepareToEncrypt(this.props.room);
             }, 60000, { leading: true, trailing: false });
         }
 
         window.addEventListener("beforeunload", this.saveStoredEditorState);
+    }
+
+    public componentDidUpdate(prevProps: ISendMessageComposerProps): void {
+        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+        const differentEventTarget = this.props.relation?.event_id !== prevProps.relation?.event_id;
+
+        const threadChanged = replyingToThread && (differentEventTarget);
+        if (threadChanged) {
+            const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
+            const parts = this.restoreStoredEditorState(partCreator) || [];
+            this.model.reset(parts);
+            this.editorRef.current?.focus();
+        }
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -163,6 +196,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
         if (this.editorRef.current?.isComposing(event)) {
             return;
         }
+        const replyingToThread = this.props.relation?.key === RelationType.Thread;
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
             case MessageComposerAction.Send:
@@ -182,13 +216,20 @@ export default class SendMessageComposer extends React.Component<IProps> {
             case MessageComposerAction.EditPrevMessage:
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
-                    const editEvent = findEditableEvent(this.props.room, false);
+                    const events =
+                        this.context.liveTimeline.getEvents()
+                            .concat(replyingToThread ? [] : this.props.room.getPendingEvents());
+                    const editEvent = findEditableEvent({
+                        events,
+                        isForward: false,
+                    });
                     if (editEvent) {
                         // We're selecting history, so prevent the key event from doing anything else
                         event.preventDefault();
                         dis.dispatch({
-                            action: 'edit_event',
+                            action: Action.EditEvent,
                             event: editEvent,
+                            timelineRenderingType: this.context.timelineRenderingType,
                         });
                     }
                 }
@@ -197,6 +238,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
                 break;
             default:
@@ -228,6 +270,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
         dis.dispatch({
             action: 'reply_to_event',
             event: replyEventId ? this.props.room.findEventById(replyEventId) : null,
+            context: this.context.timelineRenderingType,
         });
         if (parts) {
             this.model.reset(parts);
@@ -240,14 +283,14 @@ export default class SendMessageComposer extends React.Component<IProps> {
         const parts = this.model.parts;
         const firstPart = parts[0];
         if (firstPart) {
-            if (firstPart.type === "command" && firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")) {
+            if (firstPart.type === Type.Command && firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")) {
                 return true;
             }
             // be extra resilient when somehow the AutocompleteWrapperModel or
             // CommandPartCreator fails to insert a command part, so we don't send
             // a command as a message
             if (firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")
-                && (firstPart.type === "plain" || firstPart.type === "pill-candidate")) {
+                && (firstPart.type === Type.Plain || firstPart.type === Type.PillCandidate)) {
                 return true;
             }
         }
@@ -255,7 +298,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
     }
 
     private sendQuickReaction(): void {
-        const timeline = this.props.room.getLiveTimeline();
+        const timeline = this.context.liveTimeline;
         const events = timeline.getEvents();
         const reaction = this.model.parts[1].text;
         for (let i = events.length - 1; i >= 0; i--) {
@@ -318,7 +361,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
             }
         }
         if (error) {
-            console.error("Command failure: %s", error);
+            logger.error("Command failure: %s", error);
             // assume the error is a server error when the command is async
             const isServerError = !!result.promise;
             const title = isServerError ? _td("Server error") : _td("Command error");
@@ -337,27 +380,44 @@ export default class SendMessageComposer extends React.Component<IProps> {
                 description: errText,
             });
         } else {
-            console.log("Command success.");
+            logger.log("Command success.");
             if (messageContent) return messageContent;
         }
     }
 
     public async sendMessage(): Promise<void> {
-        if (this.model.isEmpty) {
+        const model = this.model;
+
+        if (model.isEmpty) {
             return;
+        }
+
+        // Replace emoticon at the end of the message
+        if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
+            const indexOfLastPart = model.parts.length - 1;
+            const positionInLastPart = model.parts[indexOfLastPart].text.length;
+            this.editorRef.current?.replaceEmoticon(
+                new DocumentPosition(indexOfLastPart, positionInLastPart),
+                REGEX_EMOTICON,
+            );
         }
 
         const replyToEvent = this.props.replyToEvent;
         let shouldSend = true;
         let content;
 
-        if (!containsEmote(this.model) && this.isSlashCommand()) {
+        if (!containsEmote(model) && this.isSlashCommand()) {
             const [cmd, args, commandText] = this.getSlashCommand();
             if (cmd) {
                 if (cmd.category === CommandCategories.messages) {
                     content = await this.runSlashCommand(cmd, args);
                     if (replyToEvent) {
-                        addReplyToMessageContent(content, replyToEvent, this.props.permalinkCreator);
+                        addReplyToMessageContent(
+                            content,
+                            replyToEvent,
+                            this.props.permalinkCreator,
+                            this.props.relation,
+                        );
                     }
                 } else {
                     this.runSlashCommand(cmd, args);
@@ -391,7 +451,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
             }
         }
 
-        if (isQuickReaction(this.model)) {
+        if (isQuickReaction(model)) {
             shouldSend = false;
             this.sendQuickReaction();
         }
@@ -400,18 +460,28 @@ export default class SendMessageComposer extends React.Component<IProps> {
             const startTime = CountlyAnalytics.getTimestamp();
             const { roomId } = this.props.room;
             if (!content) {
-                content = createMessageContent(this.model, this.props.permalinkCreator, replyToEvent);
+                content = createMessageContent(
+                    model,
+                    replyToEvent,
+                    this.props.relation,
+                    this.props.permalinkCreator,
+                );
             }
             // don't bother sending an empty message
             if (!content.body.trim()) return;
 
-            const prom = this.context.sendMessage(roomId, content);
+            if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
+                decorateStartSendingTime(content);
+            }
+
+            const prom = this.props.mxClient.sendMessage(roomId, content);
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
             }
             dis.dispatch({ action: "message_sent" });
@@ -420,17 +490,25 @@ export default class SendMessageComposer extends React.Component<IProps> {
                     dis.dispatch({ action: `effects.${effect.command}` });
                 }
             });
+            if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
+                prom.then(resp => {
+                    sendRoundTripMetric(this.props.mxClient, roomId, resp.event_id);
+                });
+            }
             CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, !!replyToEvent, content);
         }
 
-        this.sendHistoryManager.save(this.model, replyToEvent);
+        this.sendHistoryManager.save(model, replyToEvent);
         // clear composer
-        this.model.reset([]);
+        model.reset([]);
         this.editorRef.current?.clearUndoHistory();
         this.editorRef.current?.focus();
         this.clearStoredEditorState();
         if (SettingsStore.getValue("scrollToBottomOnMessageSent")) {
-            dis.dispatch({ action: "scroll_to_bottom" });
+            dis.dispatch({
+                action: "scroll_to_bottom",
+                timelineRenderingType: this.context.timelineRenderingType,
+            });
         }
     }
 
@@ -442,7 +520,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
 
     // TODO: [REACT-WARNING] Move this to constructor
     UNSAFE_componentWillMount() { // eslint-disable-line
-        const partCreator = new CommandPartCreator(this.props.room, this.context);
+        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
         const parts = this.restoreStoredEditorState(partCreator) || [];
         this.model = new EditorModel(parts, partCreator);
         this.dispatcherRef = dis.register(this.onAction);
@@ -450,7 +528,12 @@ export default class SendMessageComposer extends React.Component<IProps> {
     }
 
     private get editorStateKey() {
-        return `mx_cider_state_${this.props.room.roomId}`;
+        let key = `mx_cider_state_${this.props.room.roomId}`;
+        const thread = this.props.replyToEvent?.getThread();
+        if (thread) {
+            key += `_${thread.id}`;
+        }
+        return key;
     }
 
     private clearStoredEditorState(): void {
@@ -458,6 +541,11 @@ export default class SendMessageComposer extends React.Component<IProps> {
     }
 
     private restoreStoredEditorState(partCreator: PartCreator): Part[] {
+        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+        if (replyingToThread) {
+            return null;
+        }
+
         const json = localStorage.getItem(this.editorStateKey);
         if (json) {
             try {
@@ -467,11 +555,12 @@ export default class SendMessageComposer extends React.Component<IProps> {
                     dis.dispatch({
                         action: 'reply_to_event',
                         event: this.props.room.findEventById(replyEventId),
+                        context: this.context.timelineRenderingType,
                     });
                 }
                 return parts;
             } catch (e) {
-                console.error(e);
+                logger.error(e);
             }
         }
     }
@@ -498,7 +587,9 @@ export default class SendMessageComposer extends React.Component<IProps> {
         switch (payload.action) {
             case 'reply_to_event':
             case Action.FocusSendMessageComposer:
-                this.editorRef.current?.focus();
+                if (payload.context === this.context.timelineRenderingType) {
+                    this.editorRef.current?.focus();
+                }
                 break;
             case "send_composer_insert":
                 if (payload.userId) {
@@ -514,15 +605,13 @@ export default class SendMessageComposer extends React.Component<IProps> {
 
     private onPaste = (event: ClipboardEvent<HTMLDivElement>): boolean => {
         const { clipboardData } = event;
-        // Prioritize text on the clipboard over files as Office on macOS puts a bitmap
-        // in the clipboard as well as the content being copied.
-        if (clipboardData.files.length && !clipboardData.types.some(t => t === "text/plain")) {
-            // This actually not so much for 'files' as such (at time of writing
-            // neither chrome nor firefox let you paste a plain file copied
-            // from Finder) but more images copied from a different website
-            // / word processor etc.
+        // Prioritize text on the clipboard over files if RTF is present as Office on macOS puts a bitmap
+        // in the clipboard as well as the content being copied. Modern versions of Office seem to not do this anymore.
+        // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
+        // it puts the filename in as text/plain which we want to ignore.
+        if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.context,
+                Array.from(clipboardData.files), this.props.room.roomId, this.props.mxClient,
             );
             return true; // to skip internal onPaste handler
         }
@@ -553,3 +642,6 @@ export default class SendMessageComposer extends React.Component<IProps> {
         );
     }
 }
+
+const SendMessageComposerWithMatrixClient = withMatrixClientHOC(SendMessageComposer);
+export default SendMessageComposerWithMatrixClient;

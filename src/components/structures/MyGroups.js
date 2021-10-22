@@ -25,7 +25,6 @@ import AccessibleButton from '../views/elements/AccessibleButton';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import BetaCard from "../views/beta/BetaCard";
 
 @replaceableComponent("structures.MyGroups")
 export default class MyGroups extends React.Component {
@@ -109,8 +108,7 @@ export default class MyGroups extends React.Component {
             <SimpleRoomHeader title={_t("Communities")} icon={require("../../../res/img/icons-groups.svg")} />
             <div className='mx_MyGroups_header'>
                 <div className="mx_MyGroups_headerCard">
-                    <AccessibleButton className='mx_MyGroups_headerCard_button' onClick={this._onCreateGroupClick}>
-                    </AccessibleButton>
+                    <AccessibleButton className='mx_MyGroups_headerCard_button' onClick={this._onCreateGroupClick} />
                     <div className="mx_MyGroups_headerCard_content">
                         <div className="mx_MyGroups_headerCard_header">
                             { _t('Create a new community') }
@@ -139,7 +137,6 @@ export default class MyGroups extends React.Component {
                     </div>
                 </div>*/ }
             </div>
-            <BetaCard featureId="feature_spaces" title={_t("Communities are changing to Spaces")} />
             <div className="mx_MyGroups_content">
                 { contentHeader }
                 { content }

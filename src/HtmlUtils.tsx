@@ -33,8 +33,8 @@ import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import linkifyMatrix from './linkify-matrix';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
-import { SHORTCODE_TO_EMOJI, getEmojiFromUnicode } from "./emoji";
-import ReplyThread from "./components/views/elements/ReplyThread";
+import { getEmojiFromUnicode } from "./emoji";
+import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
 
 linkifyMatrix(linkify);
@@ -57,7 +57,33 @@ const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
-export const PERMITTED_URL_SCHEMES = ['http', 'https', 'ftp', 'mailto', 'magnet'];
+export const PERMITTED_URL_SCHEMES = [
+    "bitcoin",
+    "ftp",
+    "geo",
+    "http",
+    "https",
+    "im",
+    "irc",
+    "ircs",
+    "magnet",
+    "mailto",
+    "matrix",
+    "mms",
+    "news",
+    "nntp",
+    "openpgp4fpr",
+    "sip",
+    "sftp",
+    "sms",
+    "smsto",
+    "ssh",
+    "tel",
+    "urn",
+    "webcal",
+    "wtai",
+    "xmpp",
+];
 
 const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)\/(.+?)(?:[?/]|$)/;
 
@@ -79,20 +105,8 @@ function mightContainEmoji(str: string): boolean {
  * @return {String} The shortcode (such as :thumbup:)
  */
 export function unicodeToShortcode(char: string): string {
-    const data = getEmojiFromUnicode(char);
-    return (data && data.shortcodes ? `:${data.shortcodes[0]}:` : '');
-}
-
-/**
- * Returns the unicode character for an emoji shortcode
- *
- * @param {String} shortcode The shortcode (such as :thumbup:)
- * @return {String} The emoji character; null if none exists
- */
-export function shortcodeToUnicode(shortcode: string): string {
-    shortcode = shortcode.slice(1, shortcode.length - 1);
-    const data = SHORTCODE_TO_EMOJI.get(shortcode);
-    return data ? data.unicode : null;
+    const shortcodes = getEmojiFromUnicode(char)?.shortcodes;
+    return shortcodes?.length ? `:${shortcodes[0]}:` : '';
 }
 
 export function processHtmlForSending(html: string): string {
@@ -432,8 +446,8 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
 
-        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
-        strippedBody = opts.stripReplyFallback ? ReplyThread.stripPlainReply(plainBody) : plainBody;
+        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyChain.stripHTMLReply(formattedBody);
+        strippedBody = opts.stripReplyFallback ? ReplyChain.stripPlainReply(plainBody) : plainBody;
 
         bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : plainBody);
 

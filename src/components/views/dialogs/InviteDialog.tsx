@@ -55,7 +55,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { getAddressType } from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { compare } from '../../../utils/strings';
 import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -72,6 +72,8 @@ import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/SpaceStore";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -196,7 +198,9 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
             ? <img
                 className='mx_InviteDialog_userTile_avatar mx_InviteDialog_userTile_threepidAvatar'
                 src={require("../../../../res/img/icon-email-pill-avatar.svg")}
-                width={avatarSize} height={avatarSize} />
+                width={avatarSize}
+                height={avatarSize}
+            />
             : <BaseAvatar
                 className='mx_InviteDialog_userTile_avatar'
                 url={this.props.member.getMxcAvatarUrl()
@@ -214,8 +218,11 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
                     className='mx_InviteDialog_userTile_remove'
                     onClick={this.onRemove}
                 >
-                    <img src={require("../../../../res/img/icon-pill-remove.svg")}
-                        alt={_t('Remove')} width={8} height={8}
+                    <img
+                        src={require("../../../../res/img/icon-pill-remove.svg")}
+                        alt={_t('Remove')}
+                        width={8}
+                        height={8}
                     />
                 </AccessibleButton>
             );
@@ -297,7 +304,9 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         const avatar = (this.props.member as ThreepidMember).isEmail
             ? <img
                 src={require("../../../../res/img/icon-email-pill-avatar.svg")}
-                width={avatarSize} height={avatarSize} />
+                width={avatarSize}
+                height={avatarSize}
+            />
             : <BaseAvatar
                 url={this.props.member.getMxcAvatarUrl()
                     ? mediaFromMxc(this.props.member.getMxcAvatarUrl()).getSquareThumbnailHttp(avatarSize)
@@ -387,6 +396,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private closeCopiedTooltip: () => void;
     private debounceTimer: number = null; // actually number because we're in the browser
     private editorRef = createRef<HTMLInputElement>();
+    private numberEntryFieldRef: React.RefObject<Field> = createRef();
     private unmounted = false;
 
     constructor(props) {
@@ -460,7 +470,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             for (const member of otherMembers) {
                 if (rooms[member.userId]) continue; // already have a room
 
-                console.warn(`Adding DM room for ${member.userId} as ${dmRoom.roomId} from tag, not DM map`);
+                logger.warn(`Adding DM room for ${member.userId} as ${dmRoom.roomId} from tag, not DM map`);
                 rooms[member.userId] = dmRoom;
             }
         }
@@ -469,7 +479,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         for (const userId in rooms) {
             // Filter out user IDs that are already in the room / should be excluded
             if (excludedTargetIds.has(userId)) {
-                console.warn(`[Invite:Recents] Excluding ${userId} from recents`);
+                logger.warn(`[Invite:Recents] Excluding ${userId} from recents`);
                 continue;
             }
 
@@ -477,7 +487,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             const member = room.getMember(userId);
             if (!member) {
                 // just skip people who don't have memberships for some reason
-                console.warn(`[Invite:Recents] ${userId} is missing a member object in their own DM (${room.roomId})`);
+                logger.warn(`[Invite:Recents] ${userId} is missing a member object in their own DM (${room.roomId})`);
                 continue;
             }
 
@@ -497,13 +507,13 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             }
             if (!lastEventTs) {
                 // something weird is going on with this room
-                console.warn(`[Invite:Recents] ${userId} (${room.roomId}) has a weird last timestamp: ${lastEventTs}`);
+                logger.warn(`[Invite:Recents] ${userId} (${room.roomId}) has a weird last timestamp: ${lastEventTs}`);
                 continue;
             }
 
             recents.push({ userId, user: member, lastActive: lastEventTs });
         }
-        if (!recents) console.warn("[Invite:Recents] No recents to suggest!");
+        if (!recents) logger.warn("[Invite:Recents] No recents to suggest!");
 
         // Sort the recents by last active to save us time later
         recents.sort((a, b) => b.lastActive - a.lastActive);
@@ -721,7 +731,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             await createRoom(createRoomOptions);
             this.props.onFinished();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             this.setState({
                 busy: false,
                 errorText: _t("We couldn't create your DM."),
@@ -739,7 +749,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
         if (!room) {
-            console.error("Failed to find the room to invite users to");
+            logger.error("Failed to find the room to invite users to");
             this.setState({
                 busy: false,
                 errorText: _t("Something went wrong trying to invite the users."),
@@ -767,14 +777,14 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                             invitedUsers.push(addr);
                         }
                     }
-                    console.log("Sharing history with", invitedUsers);
+                    logger.log("Sharing history with", invitedUsers);
                     cli.sendSharedHistoryKeys(
                         this.props.roomId, invitedUsers,
                     );
                 }
             }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             this.setState({
                 busy: false,
                 errorText: _t(
@@ -863,8 +873,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         });
                     }
                 } catch (e) {
-                    console.warn("Non-fatal error trying to make an invite for a user ID");
-                    console.warn(e);
+                    logger.warn("Non-fatal error trying to make an invite for a user ID");
+                    logger.warn(e);
 
                     // Add a result anyways, just without a profile. We stick it at the
                     // top so it is most obviously presented to the user.
@@ -883,8 +893,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 })),
             });
         }).catch(e => {
-            console.error("Error searching user directory:");
-            console.error(e);
+            logger.error("Error searching user directory:");
+            logger.error(e);
             this.setState({ serverResultsMixin: [] }); // clear results because it's moderately fatal
         });
 
@@ -938,8 +948,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     }],
                 });
             } catch (e) {
-                console.error("Error searching identity server:");
-                console.error(e);
+                logger.error("Error searching identity server:");
+                logger.error(e);
                 this.setState({ threepidResultsMixin: [] }); // clear results because it's moderately fatal
             }
         }
@@ -1052,8 +1062,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     avatar_url: avatarUrl,
                 }));
             } catch (e) {
-                console.error("Error looking up profile for " + address);
-                console.error(e);
+                logger.error("Error looking up profile for " + address);
+                logger.error(e);
                 failed.push(address);
             }
         }
@@ -1276,13 +1286,27 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.setState({ dialPadValue: ev.currentTarget.value });
     };
 
-    private onDigitPress = digit => {
+    private onDigitPress = (digit: string, ev: ButtonEvent) => {
         this.setState({ dialPadValue: this.state.dialPadValue + digit });
+
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
-    private onDeletePress = () => {
+    private onDeletePress = (ev: ButtonEvent) => {
         if (this.state.dialPadValue.length === 0) return;
         this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
+
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
     private onTabChange = (tabId: TabId) => {
@@ -1458,7 +1482,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         <p className='mx_InviteDialog_helpText'>
                             <img
                                 src={require("../../../../res/img/element-icons/info.svg")}
-                                width={14} height={14} />
+                                width={14}
+                                height={14} />
                             { " " + _t("Invited people will be able to read old messages.") }
                         </p>;
                 }
@@ -1488,7 +1513,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 </AccessibleButton>
             </div>;
         } else {
-            console.error("Unknown kind of InviteDialog: " + this.props.kind);
+            logger.error("Unknown kind of InviteDialog: " + this.props.kind);
         }
 
         const goButton = this.props.kind == KIND_CALL_TRANSFER ? null : <AccessibleButton
@@ -1534,14 +1559,20 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             // Only show the backspace button if the field has content
             let dialPadField;
             if (this.state.dialPadValue.length !== 0) {
-                dialPadField = <Field className="mx_InviteDialog_dialPadField" id="dialpad_number"
+                dialPadField = <Field
+                    ref={this.numberEntryFieldRef}
+                    className="mx_InviteDialog_dialPadField"
+                    id="dialpad_number"
                     value={this.state.dialPadValue}
                     autoFocus={true}
                     onChange={this.onDialChange}
                     postfixComponent={backspaceButton}
                 />;
             } else {
-                dialPadField = <Field className="mx_InviteDialog_dialPadField" id="dialpad_number"
+                dialPadField = <Field
+                    ref={this.numberEntryFieldRef}
+                    className="mx_InviteDialog_dialPadField"
+                    id="dialpad_number"
                     value={this.state.dialPadValue}
                     autoFocus={true}
                     onChange={this.onDialChange}
@@ -1552,14 +1583,19 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 <form onSubmit={this.onDialFormSubmit}>
                     { dialPadField }
                 </form>
-                <Dialpad hasDial={false}
-                    onDigitPress={this.onDigitPress} onDeletePress={this.onDeletePress}
+                <Dialpad
+                    hasDial={false}
+                    onDigitPress={this.onDigitPress}
+                    onDeletePress={this.onDeletePress}
                 />
             </div>;
             tabs.push(new Tab(TabId.DialPad, _td("Dial pad"), 'mx_InviteDialog_dialPadIcon', dialPadSection));
             dialogContent = <React.Fragment>
-                <TabbedView tabs={tabs} initialTabId={this.state.currentTabId}
-                    tabLocation={TabLocation.TOP} onChange={this.onTabChange}
+                <TabbedView
+                    tabs={tabs}
+                    initialTabId={this.state.currentTabId}
+                    tabLocation={TabLocation.TOP}
+                    onChange={this.onTabChange}
                 />
                 { consultConnectSection }
             </React.Fragment>;

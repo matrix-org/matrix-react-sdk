@@ -38,7 +38,6 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import SettingsStore from "../../../settings/SettingsStore";
 import CustomRoomTagStore from "../../../stores/CustomRoomTagStore";
 import { arrayFastClone, arrayHasDiff } from "../../../utils/arrays";
 import { objectShallowClone, objectWithOnly } from "../../../utils/objects";
@@ -49,6 +48,10 @@ import SpaceStore, { ISuggestedRoom, SUGGESTED_ROOMS } from "../../../stores/Spa
 import { showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent) => void;
@@ -68,7 +71,7 @@ interface IState {
     suggestedRooms: ISuggestedRoom[];
 }
 
-const TAG_ORDER: TagID[] = [
+export const TAG_ORDER: TagID[] = [
     DefaultTagID.Invite,
     DefaultTagID.Favourite,
     DefaultTagID.DM,
@@ -133,32 +136,38 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
                     MatrixClientPeg.get().getUserId());
 
                 return <IconizedContextMenuOptionList first>
-                    <IconizedContextMenuOption
-                        label={_t("Create new room")}
-                        iconClassName="mx_RoomList_iconPlus"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onFinished();
-                            showCreateNewRoom(MatrixClientPeg.get(), SpaceStore.instance.activeSpace);
-                        }}
-                        disabled={!canAddRooms}
-                        tooltip={canAddRooms ? undefined
-                            : _t("You do not have permissions to create new rooms in this space")}
-                    />
-                    <IconizedContextMenuOption
-                        label={_t("Add existing room")}
-                        iconClassName="mx_RoomList_iconHash"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onFinished();
-                            showAddExistingRooms(MatrixClientPeg.get(), SpaceStore.instance.activeSpace);
-                        }}
-                        disabled={!canAddRooms}
-                        tooltip={canAddRooms ? undefined
-                            : _t("You do not have permissions to add rooms to this space")}
-                    />
+                    {
+                        shouldShowComponent(UIComponent.CreateRooms)
+                            ? (<>
+                                <IconizedContextMenuOption
+                                    label={_t("Create new room")}
+                                    iconClassName="mx_RoomList_iconPlus"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        onFinished();
+                                        showCreateNewRoom(SpaceStore.instance.activeSpace);
+                                    }}
+                                    disabled={!canAddRooms}
+                                    tooltip={canAddRooms ? undefined
+                                        : _t("You do not have permissions to create new rooms in this space")}
+                                />
+                                <IconizedContextMenuOption
+                                    label={_t("Add existing room")}
+                                    iconClassName="mx_RoomList_iconHash"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        onFinished();
+                                        showAddExistingRooms(SpaceStore.instance.activeSpace);
+                                    }}
+                                    disabled={!canAddRooms}
+                                    tooltip={canAddRooms ? undefined
+                                        : _t("You do not have permissions to add rooms to this space")}
+                                />
+                            </>)
+                            : null
+                    }
                     <IconizedContextMenuOption
                         label={_t("Explore rooms")}
                         iconClassName="mx_RoomList_iconBrowse"
@@ -320,11 +329,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     private updateLists = () => {
         const newLists = RoomListStore.instance.orderedLists;
-        if (SettingsStore.getValue("advancedRoomListLogging")) {
-            // TODO: Remove debug: https://github.com/vector-im/element-web/issues/14602
-            console.log("new lists", newLists);
-        }
-
         const previousListIds = Object.keys(this.state.sublists);
         const newListIds = Object.keys(newLists).filter(t => {
             if (!isCustomTag(t)) return true; // always include non-custom tags
@@ -428,7 +432,9 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     groupId={g.groupId}
                     groupName={g.name}
                     groupAvatarUrl={g.avatarUrl}
-                    width={32} height={32} resizeMethod='crop'
+                    width={32}
+                    height={32}
+                    resizeMethod='crop'
                 />
             );
             const openGroup = () => {
@@ -452,8 +458,8 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     }
 
     private renderSublists(): React.ReactElement[] {
-        // show a skeleton UI if the user is in no rooms and they are not filtering
-        const showSkeleton = !this.state.isNameFiltering &&
+        // show a skeleton UI if the user is in no rooms and they are not filtering and have no suggested rooms
+        const showSkeleton = !this.state.isNameFiltering && !this.state.suggestedRooms?.length &&
             Object.values(RoomListStore.instance.unfilteredLists).every(list => !list?.length);
 
         return TAG_ORDER.reduce((tags, tagId) => {
@@ -524,22 +530,29 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     </AccessibleButton>
                 </div>;
             } else if (
-                this.props.activeSpace?.canInvite(userId) || this.props.activeSpace?.getMyMembership() === "join"
+                this.props.activeSpace?.canInvite(userId) ||
+                this.props.activeSpace?.getMyMembership() === "join" ||
+                this.props.activeSpace?.getJoinRule() === JoinRule.Public
             ) {
+                const spaceName = this.props.activeSpace.name;
+                const canInvite = this.props.activeSpace?.canInvite(userId) ||
+                    this.props.activeSpace?.getJoinRule() === JoinRule.Public;
                 explorePrompt = <div className="mx_RoomList_explorePrompt">
                     <div>{ _t("Quick actions") }</div>
-                    { this.props.activeSpace.canInvite(userId) && <AccessibleButton
+                    { canInvite && <AccessibleTooltipButton
                         className="mx_RoomList_explorePrompt_spaceInvite"
                         onClick={this.onSpaceInviteClick}
+                        title={_t("Invite to %(spaceName)s", { spaceName })}
                     >
                         { _t("Invite people") }
-                    </AccessibleButton> }
-                    { this.props.activeSpace.getMyMembership() === "join" && <AccessibleButton
+                    </AccessibleTooltipButton> }
+                    { this.props.activeSpace?.getMyMembership() === "join" && <AccessibleTooltipButton
                         className="mx_RoomList_explorePrompt_spaceExplore"
                         onClick={this.onExplore}
+                        title={_t("Explore %(spaceName)s", { spaceName })}
                     >
                         { _t("Explore rooms") }
-                    </AccessibleButton> }
+                    </AccessibleTooltipButton> }
                 </div>;
             } else if (Object.values(this.state.sublists).some(list => list.length > 0)) {
                 const unfilteredLists = RoomListStore.instance.unfilteredLists;
@@ -547,7 +560,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 const unfilteredHistorical = unfilteredLists[DefaultTagID.Archived] || [];
                 const unfilteredFavourite = unfilteredLists[DefaultTagID.Favourite] || [];
                 // show a prompt to join/create rooms if the user is in 0 rooms and no historical
-                if (unfilteredRooms.length < 1 && unfilteredHistorical < 1 && unfilteredFavourite < 1) {
+                if (unfilteredRooms.length < 1 && unfilteredHistorical.length < 1 && unfilteredFavourite.length < 1) {
                     explorePrompt = <div className="mx_RoomList_explorePrompt">
                         <div>{ _t("Use the + to make a new room or explore existing ones below") }</div>
                         <AccessibleButton
