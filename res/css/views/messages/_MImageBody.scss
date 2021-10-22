@@ -38,6 +38,12 @@ $timelineImageBorderRadius: 4px;
     color: #ffffff;
 }
 
+.mx_MImageBody_thumbnail--blurhash {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 .mx_MImageBody_thumbnail {
     object-fit: contain;
     border-radius: $timelineImageBorderRadius;
@@ -45,9 +51,16 @@ $timelineImageBorderRadius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
+    width: 100%;
 
-    > div > canvas {
+    .mx_Blurhash > canvas {
+        animation: mx--anim-pulse 1.75s infinite cubic-bezier(.4, 0, .6, 1);
         border-radius: $timelineImageBorderRadius;
+    }
+
+    .mx_no-image-placeholder {
+        background-color: $primary-content;
     }
 }
 
@@ -109,5 +122,5 @@ $timelineImageBorderRadius: 4px;
 }
 
 .mx_EventTile:hover .mx_HiddenImagePlaceholder {
-    background-color: $primary-bg-color;
+    background-color: $background;
 }

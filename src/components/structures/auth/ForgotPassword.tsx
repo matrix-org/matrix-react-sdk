@@ -29,8 +29,11 @@ import ServerPicker from "../../views/elements/ServerPicker";
 import PassphraseField from '../../views/auth/PassphraseField';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
+import withValidation, { IValidationResult } from "../../views/elements/Validation";
+import * as Email from "../../../email";
+import InlineSpinner from '../../views/elements/InlineSpinner';
 
-import { IValidationResult } from "../../views/elements/Validation";
+import { logger } from "matrix-js-sdk/src/logger";
 
 enum Phase {
     // Show the forgot password inputs
@@ -65,14 +68,16 @@ interface IState {
     serverErrorIsFatal: boolean;
     serverDeadError: string;
 
+    emailFieldValid: boolean;
     passwordFieldValid: boolean;
+    currentHttpRequest?: Promise<any>;
 }
 
 @replaceableComponent("structures.auth.ForgotPassword")
 export default class ForgotPassword extends React.Component<IProps, IState> {
     private reset: PasswordReset;
 
-    state = {
+    state: IState = {
         phase: Phase.Forgot,
         email: "",
         password: "",
@@ -86,6 +91,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         serverIsAlive: true,
         serverErrorIsFatal: false,
         serverDeadError: "",
+        emailFieldValid: false,
         passwordFieldValid: false,
     };
 
@@ -145,11 +151,13 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     private onVerify = async (ev: React.MouseEvent): Promise<void> => {
         ev.preventDefault();
         if (!this.reset) {
-            console.error("onVerify called before submitPasswordReset!");
+            logger.error("onVerify called before submitPasswordReset!");
             return;
         }
+        if (this.state.currentHttpRequest) return;
+
         try {
-            await this.reset.checkEmailLinkClicked();
+            await this.handleHttpRequest(this.reset.checkEmailLinkClicked());
             this.setState({ phase: Phase.Done });
         } catch (err) {
             this.showErrorDialog(err.message);
@@ -158,14 +166,18 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
 
     private onSubmitForm = async (ev: React.FormEvent): Promise<void> => {
         ev.preventDefault();
+        if (this.state.currentHttpRequest) return;
 
         // refresh the server errors, just in case the server came back online
-        await this.checkServerLiveliness(this.props.serverConfig);
+        await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
 
+        await this['email_field'].validate({ allowEmpty: false });
         await this['password_field'].validate({ allowEmpty: false });
 
         if (!this.state.email) {
             this.showErrorDialog(_t('The email address linked to your account must be entered.'));
+        } else if (!this.state.emailFieldValid) {
+            this.showErrorDialog(_t("The email address doesn't appear to be valid."));
         } else if (!this.state.password || !this.state.password2) {
             this.showErrorDialog(_t('A new password must be entered.'));
         } else if (!this.state.passwordFieldValid) {
@@ -215,9 +227,46 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         });
     }
 
+    private validateEmailRules = withValidation({
+        rules: [
+            {
+                key: "required",
+                test({ value, allowEmpty }) {
+                    return allowEmpty || !!value;
+                },
+                invalid: () => _t("Enter email address"),
+            }, {
+                key: "email",
+                test: ({ value }) => !value || Email.looksValid(value),
+                invalid: () => _t("Doesn't look like a valid email address"),
+            },
+        ],
+    });
+
+    private onEmailValidate = async (fieldState) => {
+        const result = await this.validateEmailRules(fieldState);
+
+        this.setState({
+            emailFieldValid: result.valid,
+        });
+
+        return result;
+    };
+
     private onPasswordValidate(result: IValidationResult) {
         this.setState({
             passwordFieldValid: result.valid,
+        });
+    }
+
+    private handleHttpRequest<T = unknown>(request: Promise<T>): Promise<T> {
+        this.setState({
+            currentHttpRequest: request,
+        });
+        return request.finally(() => {
+            this.setState({
+                currentHttpRequest: undefined,
+            });
         });
     }
 
@@ -259,7 +308,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         label={_t('Email')}
                         value={this.state.email}
                         onChange={this.onInputChanged.bind(this, "email")}
+                        ref={field => this['email_field'] = field}
                         autoFocus
+                        onValidate={this.onEmailValidate}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_blur")}
                     />
@@ -320,6 +371,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 type="button"
                 onClick={this.onVerify}
                 value={_t('I have verified my email address')} />
+            { this.state.currentHttpRequest && (
+                <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>)
+            }
         </div>;
     }
 
@@ -357,6 +411,8 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             case Phase.Done:
                 resetPasswordJsx = this.renderDone();
                 break;
+            default:
+                resetPasswordJsx = <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>;
         }
 
         return (

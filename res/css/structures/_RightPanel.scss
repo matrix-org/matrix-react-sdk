@@ -43,7 +43,7 @@ limitations under the License.
 .mx_RightPanel_headerButtonGroup {
     height: 100%;
     display: flex;
-    background-color: $primary-bg-color;
+    background-color: $background;
     padding: 0 9px;
     align-items: center;
 }
@@ -77,6 +77,10 @@ limitations under the License.
             background-color: $accent-color;
         }
     }
+}
+
+.mx_RightPanel_threadsButton::before {
+    mask-image: url('$(res)/img/element-icons/room/thread.svg');
 }
 
 .mx_RightPanel_notifsButton::before {

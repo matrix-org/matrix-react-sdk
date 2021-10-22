@@ -33,13 +33,21 @@ limitations under the License.
 
     > .mx_VideoFeed {
         width: 100%;
+        border-radius: 4px;
 
         &.mx_VideoFeed_voice {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
 
-            aspect-ratio: 16 / 9;
+        .mx_VideoFeed_video {
+            border-radius: 4px;
+        }
+
+        .mx_VideoFeed_mic {
+            left: 6px;
+            bottom: 6px;
         }
     }
 

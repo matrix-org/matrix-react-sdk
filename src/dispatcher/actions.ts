@@ -128,7 +128,7 @@ export enum Action {
      * Start a call transfer to a phone number
      * payload: TransferCallPayload
      */
-     TransferCallToPhoneNumber = "transfer_call_to_phone_number",
+    TransferCallToPhoneNumber = "transfer_call_to_phone_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support
@@ -198,4 +198,16 @@ export enum Action {
      * Signals to the visible space hierarchy that a change has occurred an that it should refresh.
      */
     UpdateSpaceHierarchy = "update_space_hierarchy",
+
+    /**
+     * Fires when a monitored setting is updated,
+     * see SettingsStore::monitorSetting for more details.
+     * Should be used with SettingUpdatedPayload.
+     */
+    SettingUpdated = "setting_updated",
+
+    /**
+     * Fires when a user starts to edit event (e.g. up arrow in compositor)
+     */
+    EditEvent = "edit_event",
 }

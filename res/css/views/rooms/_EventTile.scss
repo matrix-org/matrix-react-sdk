@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 $left-gutter: 64px;
-$hover-select-border: 4px;
 
 .mx_EventTile:not([data-layout=bubble]) {
     max-width: 100%;
@@ -24,6 +23,11 @@ $hover-select-border: 4px;
     padding-top: 18px;
     font-size: $font-14px;
     position: relative;
+
+    .mx_ThreadInfo {
+        margin-right: 110px;
+        margin-left: 64px;
+    }
 
     &.mx_EventTile_info {
         padding-top: 1px;
@@ -55,7 +59,7 @@ $hover-select-border: 4px;
     }
 
     .mx_SenderProfile {
-        color: $primary-fg-color;
+        color: $primary-content;
         font-size: $font-14px;
         display: inline-block; /* anti-zalgo, with overflow hidden */
         overflow: hidden;
@@ -110,15 +114,15 @@ $hover-select-border: 4px;
     }
 
     &.mx_EventTile_selected > div > a > .mx_MessageTimestamp {
-        left: calc(-$hover-select-border);
+        left: calc(-$selected-message-border-width);
     }
 
     /* this is used for the tile for the event which is selected via the URL.
      * TODO: ultimately we probably want some transition on here.
      */
     &.mx_EventTile_selected > .mx_EventTile_line {
-        border-left: $accent-color 4px solid;
-        padding-left: calc($left-gutter - $hover-select-border);
+        border-left: $accent-color $selected-message-border-width solid;
+        padding-left: calc($left-gutter - $selected-message-border-width);
         background-color: $event-selected-color;
     }
 
@@ -132,7 +136,7 @@ $hover-select-border: 4px;
     }
 
     &.mx_EventTile_selected.mx_EventTile_info .mx_EventTile_line {
-        padding-left: calc($left-gutter + 18px - $hover-select-border);
+        padding-left: calc($left-gutter + 18px - $selected-message-border-width);
     }
 
     &.mx_EventTile:hover .mx_EventTile_line,
@@ -161,7 +165,7 @@ $hover-select-border: 4px;
         // up with the other read receipts
 
         &::before {
-            background-color: $tertiary-fg-color;
+            background-color: $tertiary-content;
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: 14px;
@@ -208,28 +212,34 @@ $hover-select-border: 4px;
         overflow-y: hidden;
     }
 
+    &.mx_EventTile_selected .mx_EventTile_line,
+    &:hover .mx_EventTile_line {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
     &:hover.mx_EventTile_verified .mx_EventTile_line,
     &:hover.mx_EventTile_unverified .mx_EventTile_line,
     &:hover.mx_EventTile_unknown .mx_EventTile_line {
-        padding-left: calc($left-gutter - $hover-select-border);
+        padding-left: calc($left-gutter - $selected-message-border-width);
     }
 
     &:hover.mx_EventTile_verified .mx_EventTile_line {
-        border-left: $e2e-verified-color $EventTile_e2e_state_indicator_width solid;
+        border-left: $e2e-verified-color $selected-message-border-width solid;
     }
 
     &:hover.mx_EventTile_unverified .mx_EventTile_line {
-        border-left: $e2e-unverified-color $EventTile_e2e_state_indicator_width solid;
+        border-left: $e2e-unverified-color $selected-message-border-width solid;
     }
 
     &:hover.mx_EventTile_unknown .mx_EventTile_line {
-        border-left: $e2e-unknown-color $EventTile_e2e_state_indicator_width solid;
+        border-left: $e2e-unknown-color $selected-message-border-width solid;
     }
 
     &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
     &:hover.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
     &:hover.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-        padding-left: calc($left-gutter + 18px - $hover-select-border);
+        padding-left: calc($left-gutter + 18px - $selected-message-border-width);
     }
 
     /* End to end encryption stuff */
@@ -241,7 +251,7 @@ $hover-select-border: 4px;
     &:hover.mx_EventTile_verified .mx_EventTile_line > a > .mx_MessageTimestamp,
     &:hover.mx_EventTile_unverified .mx_EventTile_line > a > .mx_MessageTimestamp,
     &:hover.mx_EventTile_unknown .mx_EventTile_line > a > .mx_MessageTimestamp {
-        left: calc(-$hover-select-border);
+        left: calc(-$selected-message-border-width);
     }
 
     // Explicit relationships so that it doesn't apply to nested EventTile components (e.g in Replies)
@@ -310,14 +320,12 @@ $hover-select-border: 4px;
 }
 
 .mx_RoomView_timeline_rr_enabled {
-
-    .mx_EventTile:not([data-layout=bubble]) {
+    .mx_EventTile[data-layout=group] {
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
             margin-right: 110px;
         }
     }
-
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
 }
 
@@ -459,8 +467,14 @@ $hover-select-border: 4px;
 
 /* Various markdown overrides */
 
-.mx_EventTile_body pre {
-    border: 1px solid transparent;
+.mx_EventTile_body {
+    a:hover {
+        text-decoration: underline;
+    }
+
+    pre {
+        border: 1px solid transparent;
+    }
 }
 
 .mx_EventTile_content .markdown-body {
@@ -476,7 +490,7 @@ $hover-select-border: 4px;
     }
 
     pre code > * {
-        display: inline-block;
+        display: inline;
     }
 
     pre {
@@ -485,6 +499,10 @@ $hover-select-border: 4px;
         // https://github.com/vector-im/vector-web/issues/754
         overflow-x: overlay;
         overflow-y: visible;
+
+        &::-webkit-scrollbar-corner {
+            background: transparent;
+        }
     }
 }
 
@@ -492,12 +510,11 @@ $hover-select-border: 4px;
     float: left;
     margin: 0 0.5em 0 -1.5em;
     color: gray;
-}
-
-.mx_EventTile_lineNumber {
-    text-align: right;
-    display: block;
-    padding-left: 1em;
+    & span {
+        text-align: right;
+        display: block;
+        padding-left: 1em;
+    }
 }
 
 .mx_EventTile_collapsedCodeBlock {
@@ -506,7 +523,7 @@ $hover-select-border: 4px;
 
 .mx_EventTile:hover .mx_EventTile_body pre,
 .mx_EventTile.focus-visible:focus-within .mx_EventTile_body pre {
-    border: 1px solid #e5e5e5; // deliberate constant as we're behind an invert filter
+    border: 1px solid $tertiary-content;
 }
 
 .mx_EventTile_pre_container {
@@ -582,10 +599,6 @@ $hover-select-border: 4px;
     padding: 0 10px;
 }
 
-.mx_EventTile_content .markdown-body .hljs {
-    display: inline !important;
-}
-
 /*
 // actually, removing the Italic TTF provides
 // better results seemingly
@@ -610,7 +623,7 @@ $hover-select-border: 4px;
 }
 
 .mx_EventTile_keyRequestInfo_text a {
-    color: $primary-fg-color;
+    color: $primary-content;
     text-decoration: underline;
     cursor: pointer;
 }
@@ -635,6 +648,7 @@ $hover-select-border: 4px;
 
     // Remove some of the default tile padding so that the error is centered
     margin-right: 0;
+
     .mx_EventTile_line {
         padding-left: 0;
         margin-right: 0;
@@ -663,6 +677,128 @@ $hover-select-border: 4px;
     }
     .mx_EventTile_content {
         margin-top: 10px;
+        margin-right: 0;
+    }
+}
+
+.mx_ThreadInfo {
+    height: 35px;
+    position: relative;
+    background-color: $system;
+    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 12px;
+    color: $secondary-content;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    clear: both;
+
+    &:hover {
+        cursor: pointer;
+        border: 1px solid $quinary-content;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        padding-left: 11px;
+        padding-right: 15px;
+    }
+
+    .mx_ThreadInfo_content {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-left: 8px;
+    }
+
+    .mx_ThreadInfo_thread-icon {
+        mask-image: url('$(res)/img/element-icons/thread-summary.svg');
+        mask-position: center;
+        height: 16px;
+        min-width: 16px;
+        background-color: $secondary-content;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
+    .mx_ThreadInfo_threads-amount {
+        font-weight: 600;
+        position: relative;
+        padding: 0 8px;
+        white-space: nowrap;
+    }
+}
+
+
+
+.mx_ThreadView {
+    display: flex;
+    flex-direction: column;
+
+    .mx_ScrollPanel {
+        margin-top: 20px;
+
+        .mx_RoomView_MessageList {
+            padding: 0;
+        }
+    }
+
+    .mx_EventTile_senderDetails {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 6px;
+
+        a {
+            flex: 1;
+            min-width: none;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+
+            .mx_SenderProfile {
+                flex: 1;
+            }
+        }
+    }
+
+    .mx_ThreadView_List {
+        flex: 1;
+        overflow: scroll;
+    }
+
+    .mx_EventTile_roomName {
+        display: none;
+    }
+
+    .mx_EventTile_line {
+        padding-left: 0 !important;
+        order: 10 !important;
+    }
+
+    .mx_EventTile {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+
+        .mx_MessageTimestamp {
+            left: auto;
+            right: 0;
+        }
+
+        .mx_ReactionsRow {
+            order: 999;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .mx_MessageComposer_sendMessage {
         margin-right: 0;
     }
 }

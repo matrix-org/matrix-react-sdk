@@ -25,10 +25,46 @@ import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
 import { SetRightPanelPhasePayload } from './dispatcher/payloads/SetRightPanelPhasePayload';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixClientPeg } from "./MatrixClientPeg";
+
+import { logger } from "matrix-js-sdk/src/logger";
+import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
+
+function textForCallInviteEvent(event: MatrixEvent): () => string | null {
+    const getSenderName = () => event.sender ? event.sender.name : _t('Someone');
+    // FIXME: Find a better way to determine this from the event?
+    let isVoice = true;
+    if (event.getContent().offer && event.getContent().offer.sdp &&
+        event.getContent().offer.sdp.indexOf('m=video') !== -1) {
+        isVoice = false;
+    }
+    const isSupported = MatrixClientPeg.get().supportsVoip();
+
+    // This ladder could be reduced down to a couple string variables, however other languages
+    // can have a hard time translating those strings. In an effort to make translations easier
+    // and more accurate, we break out the string-based variables to a couple booleans.
+    if (isVoice && isSupported) {
+        return () => _t("%(senderName)s placed a voice call.", {
+            senderName: getSenderName(),
+        });
+    } else if (isVoice && !isSupported) {
+        return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
+            senderName: getSenderName(),
+        });
+    } else if (!isVoice && isSupported) {
+        return () => _t("%(senderName)s placed a video call.", {
+            senderName: getSenderName(),
+        });
+    } else if (!isVoice && !isSupported) {
+        return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
+            senderName: getSenderName(),
+        });
+    }
+}
 
 function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): () => string | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
@@ -62,18 +98,21 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
             if (prevContent && prevContent.membership === 'join') {
                 if (prevContent.displayname && content.displayname && prevContent.displayname !== content.displayname) {
                     return () => _t('%(oldDisplayName)s changed their display name to %(displayName)s', {
-                        oldDisplayName: prevContent.displayname,
-                        displayName: content.displayname,
+                        // We're taking the display namke directly from the event content here so we need
+                        // to strip direction override chars which the js-sdk would normally do when
+                        // calculating the display name
+                        oldDisplayName: removeDirectionOverrideChars(prevContent.displayname),
+                        displayName: removeDirectionOverrideChars(content.displayname),
                     });
                 } else if (!prevContent.displayname && content.displayname) {
                     return () => _t('%(senderName)s set their display name to %(displayName)s', {
                         senderName: ev.getSender(),
-                        displayName: content.displayname,
+                        displayName: removeDirectionOverrideChars(content.displayname),
                     });
                 } else if (prevContent.displayname && !content.displayname) {
                     return () => _t('%(senderName)s removed their display name (%(oldDisplayName)s)', {
                         senderName,
-                        oldDisplayName: prevContent.displayname,
+                        oldDisplayName: removeDirectionOverrideChars(prevContent.displayname),
                     });
                 } else if (prevContent.avatar_url && !content.avatar_url) {
                     return () => _t('%(senderName)s removed their profile picture', { senderName });
@@ -89,7 +128,7 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
                     return null;
                 }
             } else {
-                if (!ev.target) console.warn("Join message has no target! -- " + ev.getContent().state_key);
+                if (!ev.target) logger.warn("Join message has no target! -- " + ev.getContent().state_key);
                 return () => _t('%(targetName)s joined the room', { targetName });
             }
         case 'leave':
@@ -131,6 +170,11 @@ function textForTopicEvent(ev: MatrixEvent): () => string | null {
         senderDisplayName,
         topic: ev.getContent().topic,
     });
+}
+
+function textForRoomAvatarEvent(ev: MatrixEvent): () => string | null {
+    const senderDisplayName = ev?.sender?.name || ev.getSender();
+    return () => _t('%(senderDisplayName)s changed the room avatar.', { senderDisplayName });
 }
 
 function textForRoomNameEvent(ev: MatrixEvent): () => string | null {
@@ -256,11 +300,27 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
     return () => {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-        let message = senderDisplayName + ': ' + ev.getContent().body;
+        let message = ev.getContent().body;
+        if (ev.isRedacted()) {
+            message = _t("Message deleted");
+            const unsigned = ev.getUnsigned();
+            const redactedBecauseUserId = unsigned?.redacted_because?.sender;
+            if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
+                const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+                const sender = room?.getMember(redactedBecauseUserId);
+                message = _t("Message deleted by %(name)s", { name: sender?.name
+ || redactedBecauseUserId });
+            }
+        }
         if (ev.getContent().msgtype === "m.emote") {
             message = "* " + senderDisplayName + " " + message;
         } else if (ev.getContent().msgtype === "m.image") {
             message = _t('%(senderDisplayName)s sent an image.', { senderDisplayName });
+        } else if (ev.getType() == "m.sticker") {
+            message = _t('%(senderDisplayName)s sent a sticker.', { senderDisplayName });
+        } else {
+            // in this case, parse it as a plain text message
+            message = senderDisplayName + ': ' + message;
         }
         return message;
     };
@@ -408,6 +468,15 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void => {
+    defaultDispatcher.dispatch({
+        action: 'view_room',
+        event_id: messageId,
+        highlighted: true,
+        room_id: roomId,
+    });
+};
+
 const onPinnedMessagesClick = (): void => {
     defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
         action: Action.SetRightPanelPhase,
@@ -419,17 +488,77 @@ const onPinnedMessagesClick = (): void => {
 function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
     if (!SettingsStore.getValue("feature_pinning")) return null;
     const senderName = event.sender ? event.sender.name : event.getSender();
+    const roomId = event.getRoomId();
+
+    const pinned = event.getContent().pinned ?? [];
+    const previouslyPinned = event.getPrevContent().pinned ?? [];
+    const newlyPinned = pinned.filter(item => previouslyPinned.indexOf(item) < 0);
+    const newlyUnpinned = previouslyPinned.filter(item => pinned.indexOf(item) < 0);
+
+    if (newlyPinned.length === 1 && newlyUnpinned.length === 0) {
+        // A single message was pinned, include a link to that message.
+        if (allowJSX) {
+            const messageId = newlyPinned.pop();
+
+            return () => (
+                <span>
+                    { _t(
+                        "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.",
+                        { senderName },
+                        {
+                            "a": (sub) =>
+                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                    { sub }
+                                </a>,
+                            "b": (sub) =>
+                                <a onClick={onPinnedMessagesClick}>
+                                    { sub }
+                                </a>,
+                        },
+                    ) }
+                </span>
+            );
+        }
+
+        return () => _t("%(senderName)s pinned a message to this room. See all pinned messages.", { senderName });
+    }
+
+    if (newlyUnpinned.length === 1 && newlyPinned.length === 0) {
+        // A single message was unpinned, include a link to that message.
+        if (allowJSX) {
+            const messageId = newlyUnpinned.pop();
+
+            return () => (
+                <span>
+                    { _t(
+                        "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.",
+                        { senderName },
+                        {
+                            "a": (sub) =>
+                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                    { sub }
+                                </a>,
+                            "b": (sub) =>
+                                <a onClick={onPinnedMessagesClick}>
+                                    { sub }
+                                </a>,
+                        },
+                    ) }
+                </span>
+            );
+        }
+
+        return () => _t("%(senderName)s unpinned a message from this room. See all pinned messages.", { senderName });
+    }
 
     if (allowJSX) {
         return () => (
             <span>
-                {
-                    _t(
-                        "%(senderName)s changed the <a>pinned messages</a> for the room.",
-                        { senderName },
-                        { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> },
-                    )
-                }
+                { _t(
+                    "%(senderName)s changed the <a>pinned messages</a> for the room.",
+                    { senderName },
+                    { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> },
+                ) }
             </span>
         );
     }
@@ -567,6 +696,8 @@ interface IHandlers {
 
 const handlers: IHandlers = {
     'm.room.message': textForMessageEvent,
+    'm.sticker': textForMessageEvent,
+    'm.call.invite': textForCallInviteEvent,
 };
 
 const stateHandlers: IHandlers = {
@@ -574,6 +705,7 @@ const stateHandlers: IHandlers = {
     'm.room.name': textForRoomNameEvent,
     'm.room.topic': textForTopicEvent,
     'm.room.member': textForMemberEvent,
+    "m.room.avatar": textForRoomAvatarEvent,
     'm.room.third_party_invite': textForThreePidInviteEvent,
     'm.room.history_visibility': textForHistoryVisibilityEvent,
     'm.room.power_levels': textForPowerEvent,

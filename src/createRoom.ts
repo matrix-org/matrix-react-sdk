@@ -46,6 +46,8 @@ import { Action } from "./dispatcher/actions";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import Spinner from "./components/views/elements/Spinner";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
 
@@ -62,6 +64,8 @@ export interface IOpts {
     roomType?: RoomType | string;
     historyVisibility?: HistoryVisibility;
     parentSpace?: Room;
+    // contextually only makes sense if parentSpace is specified, if true then will be added to parentSpace as suggested
+    suggested?: boolean;
     joinRule?: JoinRule;
 }
 
@@ -184,7 +188,8 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         }
     }
 
-    if (opts.joinRule !== JoinRule.Restricted) {
+    // we handle the restricted join rule in the parentSpace handling block above
+    if (opts.joinRule && opts.joinRule !== JoinRule.Restricted) {
         createOpts.initial_state.push({
             type: EventType.RoomJoinRules,
             content: { join_rule: opts.joinRule },
@@ -216,7 +221,19 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     if (opts.spinner) modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
 
     let roomId;
-    return client.createRoom(createOpts).finally(function() {
+    return client.createRoom(createOpts).catch(function(err) {
+        // NB This checks for the Synapse-specific error condition of a room creation
+        // having been denied because the requesting user wanted to publish the room,
+        // but the server denies them that permission (via room_list_publication_rules).
+        // The check below responds by retrying without publishing the room.
+        if (err.httpStatus === 403 && err.errcode === "M_UNKNOWN" && err.data.error === "Not allowed to publish room") {
+            logger.warn("Failed to publish room, try again without publishing it");
+            createOpts.visibility = Visibility.Private;
+            return client.createRoom(createOpts);
+        } else {
+            return Promise.reject(err);
+        }
+    }).finally(function() {
         if (modal) modal.close();
     }).then(function(res) {
         roomId = res.room_id;
@@ -227,7 +244,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         }
     }).then(() => {
         if (opts.parentSpace) {
-            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], true);
+            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], opts.suggested);
         }
         if (opts.associatedWithCommunity) {
             return GroupStore.addRoomToGroup(opts.associatedWithCommunity, roomId, false);
@@ -263,7 +280,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             action: Action.JoinRoomError,
             roomId,
         });
-        console.error("Failed to create room " + roomId + " " + err);
+        logger.error("Failed to create room " + roomId + " " + err);
         let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
         if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
             // Technically not possible with the UI as of April 2019 because there's no
@@ -341,7 +358,7 @@ export async function canEncryptToAllUsers(client: MatrixClient, userIds: string
             Object.keys(userDevices).length > 0,
         );
     } catch (e) {
-        console.error("Error determining if it's possible to encrypt to all users: ", e);
+        logger.error("Error determining if it's possible to encrypt to all users: ", e);
         return false; // assume not
     }
 }
