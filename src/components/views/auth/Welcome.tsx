@@ -60,6 +60,7 @@ export default class Welcome extends React.PureComponent<IProps> {
                 <div className={classNames("mx_Welcome", {
                     mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
                 })}>
+                    <p> oh noes </p>
                     <EmbeddedPage
                         className="mx_WelcomePage"
                         url={pageUrl}
