@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634827249457,
+  "lastUpdate": 1634891785449,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -33968,6 +33968,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4573.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e20ac7bf1e872102f7b6e01df7cdc1ae2d8decc1",
+          "message": "Implement deep-linking for threads (matrix.to) (#7003)",
+          "timestamp": "2021-10-22T09:30:36+01:00",
+          "tree_id": "75700b9868e7a18bb5231f59468cd8d795a61240",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e20ac7bf1e872102f7b6e01df7cdc1ae2d8decc1"
+        },
+        "date": 1634891783399,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4149.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 945.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1762.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4443.5,
             "unit": "ms",
             "extra": "type: measure"
           }
