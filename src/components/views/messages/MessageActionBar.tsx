@@ -17,7 +17,8 @@ limitations under the License.
 */
 
 import React, { useEffect } from 'react';
-import { MatrixEvent, EventStatus } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import type { Relations } from 'matrix-js-sdk/src/models/relations';
 
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
@@ -26,7 +27,7 @@ import { Action } from '../../../dispatcher/actions';
 import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
-import RoomContext from "../../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -35,20 +36,24 @@ import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import DownloadActionButton from "./DownloadActionButton";
+import MessageContextMenu from "../context_menus/MessageContextMenu";
+import classNames from 'classnames';
+
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import ReplyThread from '../elements/ReplyThread';
+import ReplyChain from '../elements/ReplyChain';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
-    getTile: () => any; // TODO: FIXME, haven't figured out what the return type is here
-    getReplyThread: () => ReplyThread;
+    // TODO: Types
+    getTile: () => any | null;
+    getReplyChain: () => ReplyChain;
     permalinkCreator: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
 }
 
 const OptionsButton: React.FC<IOptionsButtonProps> =
-    ({ mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange }) => {
+    ({ mxEvent, getTile, getReplyChain, permalinkCreator, onFocusChange }) => {
         const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
         const [onFocus, isActive, ref] = useRovingTabIndex(button);
         useEffect(() => {
@@ -57,10 +62,8 @@ const OptionsButton: React.FC<IOptionsButtonProps> =
 
         let contextMenu;
         if (menuDisplayed) {
-            const MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
-
             const tile = getTile && getTile();
-            const replyThread = getReplyThread && getReplyThread();
+            const replyChain = getReplyChain && getReplyChain();
 
             const buttonRect = button.current.getBoundingClientRect();
             contextMenu = <MessageContextMenu
@@ -68,7 +71,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> =
                 mxEvent={mxEvent}
                 permalinkCreator={permalinkCreator}
                 eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
-                collapseReplyThread={replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined}
+                collapseReplyChain={replyChain && replyChain.canCollapse() ? replyChain.collapse : undefined}
                 onFinished={closeMenu}
             />;
         }
@@ -90,7 +93,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> =
 
 interface IReactButtonProps {
     mxEvent: MatrixEvent;
-    reactions: any; // TODO: types
+    reactions: Relations;
     onFocusChange: (menuDisplayed: boolean) => void;
 }
 
@@ -127,12 +130,14 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
 
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
-    // The Relations model from the JS SDK for reactions to `mxEvent`
-    reactions?: any;  // TODO: types
+    reactions?: Relations;
+    // TODO: Types
+    getTile: () => any | null;
+    getReplyChain: () => ReplyChain | undefined;
     permalinkCreator?: RoomPermalinkCreator;
-    getTile: () => any; // TODO: FIXME, haven't figured out what the return type is here
-    getReplyThread?: () => ReplyThread;
     onFocusChange?: (menuDisplayed: boolean) => void;
+    toggleThreadExpanded: () => void;
+    isQuoteExpanded?: boolean;
 }
 
 @replaceableComponent("views.messages.MessageActionBar")
@@ -186,6 +191,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         dis.dispatch({
             action: 'reply_to_event',
             event: this.props.mxEvent,
+            context: this.context.timelineRenderingType,
         });
     };
 
@@ -202,8 +208,9 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     private onEditClick = (ev: React.MouseEvent): void => {
         dis.dispatch({
-            action: 'edit_event',
+            action: Action.EditEvent,
             event: this.props.mxEvent,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
     };
 
@@ -291,7 +298,8 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             onClick={this.onReplyClick}
                             key="reply"
                         />
-                        { SettingsStore.getValue("feature_thread") && (
+                        { (SettingsStore.getValue("feature_thread")
+                            && this.context.timelineRenderingType !== TimelineRenderingType.Thread) && (
                             <RovingAccessibleTooltipButton
                                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
                                 title={_t("Thread")}
@@ -319,15 +327,42 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     />);
                 }
             }
+            // Show thread icon even for deleted messages, but only within main timeline
+            if (this.context.timelineRenderingType === TimelineRenderingType.Room &&
+                SettingsStore.getValue("feature_thread") &&
+                this.props.mxEvent.getThread() &&
+                !isContentActionable(this.props.mxEvent)
+            ) {
+                toolbarOpts.unshift(<RovingAccessibleTooltipButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                    title={_t("Thread")}
+                    onClick={this.onThreadClick}
+                    key="thread"
+                />);
+            }
 
             if (allowCancel) {
                 toolbarOpts.push(cancelSendingButton);
             }
 
+            if (this.props.isQuoteExpanded !== undefined && ReplyChain.hasReply(this.props.mxEvent)) {
+                const expandClassName = classNames({
+                    'mx_MessageActionBar_maskButton': true,
+                    'mx_MessageActionBar_expandMessageButton': !this.props.isQuoteExpanded,
+                    'mx_MessageActionBar_collapseMessageButton': this.props.isQuoteExpanded,
+                });
+                toolbarOpts.push(<RovingAccessibleTooltipButton
+                    className={expandClassName}
+                    title={this.props.isQuoteExpanded ? _t("Collapse quotes │ ⇧+click") : _t("Expand quotes │ ⇧+click")}
+                    onClick={this.props.toggleThreadExpanded}
+                    key="expand"
+                />);
+            }
+
             // The menu button should be last, so dump it there.
             toolbarOpts.push(<OptionsButton
                 mxEvent={this.props.mxEvent}
-                getReplyThread={this.props.getReplyThread}
+                getReplyChain={this.props.getReplyChain}
                 getTile={this.props.getTile}
                 permalinkCreator={this.props.permalinkCreator}
                 onFocusChange={this.onFocusChange}

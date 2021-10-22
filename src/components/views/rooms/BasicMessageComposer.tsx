@@ -49,6 +49,8 @@ import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
 export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
@@ -207,7 +209,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             try {
                 setSelection(this.editorRef.current, this.props.model, selection);
             } catch (err) {
-                console.error(err);
+                logger.error(err);
             }
             // if caret selection is a range, take the end position
             const position = selection instanceof Range ? selection.end : selection;
@@ -499,7 +501,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             handled = true;
         } else if (event.key === Key.BACKSPACE || event.key === Key.DELETE) {
             this.formatBarRef.current.hide();
-            handled = this.fakeDeletion(event.key === Key.BACKSPACE);
         }
 
         if (handled) {
@@ -565,29 +566,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
     };
 
-    /**
-     * TODO: Remove when Debian moves to newer version of Firefox
-     * On Firefox 78 no event emitted when the user tries to delete pills.
-     * Therefore we need to fake what would normally happen
-     * @param direction in which to delete
-     * @returns handled
-     */
-    private fakeDeletion(backward: boolean): boolean {
-        const selection = document.getSelection();
-        // Use the default handling for ranges
-        if (selection.type === "Range") return false;
-
-        this.modifiedFlag = true;
-        const { caret, text } = getCaretOffsetAndText(this.editorRef.current, selection);
-
-        // Do the deletion itself
-        if (backward) caret.offset--;
-        const newText = text.slice(0, caret.offset) + text.slice(caret.offset + 1);
-
-        this.props.model.update(newText, backward ? "deleteContentBackward" : "deleteContentForward", caret);
-        return true;
-    }
-
     private async tabCompleteName(): Promise<void> {
         try {
             await new Promise<void>(resolve => this.setState({ showVisualBell: false }, resolve));
@@ -620,7 +598,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.setState({ showVisualBell: true });
             }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     }
 

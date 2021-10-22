@@ -30,6 +30,8 @@ import { createSpace, SpaceCreateForm } from "../spaces/SpaceCreateMenu";
 import { SubspaceSelector } from "./AddExistingToSpaceDialog";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     space: Room;
     onAddExistingSpaceClick(): void;
@@ -64,14 +66,14 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
         setBusy(true);
         // require & validate the space name field
-        if (!await spaceNameField.current.validate({ allowEmpty: false })) {
+        if (!(await spaceNameField.current.validate({ allowEmpty: false }))) {
             spaceNameField.current.focus();
             spaceNameField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
         // validate the space name alias field but do not require it
-        if (joinRule === JoinRule.Public && !await spaceAliasField.current.validate({ allowEmpty: true })) {
+        if (joinRule === JoinRule.Public && !(await spaceAliasField.current.validate({ allowEmpty: true }))) {
             spaceAliasField.current.focus();
             spaceAliasField.current.validate({ allowEmpty: true, focused: true });
             setBusy(false);
@@ -83,7 +85,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
             onFinished(true);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
     };
 

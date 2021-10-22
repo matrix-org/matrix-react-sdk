@@ -44,7 +44,7 @@ import { Action } from "./dispatcher/actions";
 import { EffectiveMembership, getEffectiveMembership, leaveRoomBehaviour } from "./utils/membership";
 import SdkConfig from "./SdkConfig";
 import SettingsStore from "./settings/SettingsStore";
-import { UIFeature } from "./settings/UIFeature";
+import { UIComponent, UIFeature } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import CallHandler from "./CallHandler";
 import { guessAndSetDMRoom } from "./Rooms";
@@ -54,6 +54,9 @@ import DevtoolsDialog from './components/views/dialogs/DevtoolsDialog';
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
+
+import { logger } from "matrix-js-sdk/src/logger";
+import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -291,7 +294,7 @@ export const Commands = [
                 const cli = MatrixClientPeg.get();
                 const ev = cli.getRoom(roomId).currentState.getStateEvents('m.room.member', cli.getUserId());
                 const content = {
-                    ...ev ? ev.getContent() : { membership: 'join' },
+                    ...(ev ? ev.getContent() : { membership: 'join' }),
                     displayname: args,
                 };
                 return success(cli.sendStateEvent(roomId, 'm.room.member', content, cli.getUserId()));
@@ -335,7 +338,7 @@ export const Commands = [
                 if (!url) return;
                 const ev = room.currentState.getStateEvents('m.room.member', userId);
                 const content = {
-                    ...ev ? ev.getContent() : { membership: 'join' },
+                    ...(ev ? ev.getContent() : { membership: 'join' }),
                     avatar_url: url,
                 };
                 return cli.sendStateEvent(roomId, 'm.room.member', content, userId);
@@ -401,6 +404,7 @@ export const Commands = [
         command: 'invite',
         args: '<user-id> [<reason>]',
         description: _td('Invites user with given id to current room'),
+        isEnabled: () => shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
             if (args) {
                 const [address, reason] = args.split(/\s+(.+)/);
@@ -801,7 +805,7 @@ export const Commands = [
                     const iframe = embed.childNodes[0] as ChildElement;
                     if (iframe.tagName.toLowerCase() === 'iframe' && iframe.attrs) {
                         const srcAttr = iframe.attrs.find(a => a.name === 'src');
-                        console.log("Pulling URL out of iframe (embed code)");
+                        logger.log("Pulling URL out of iframe (embed code)");
                         widgetUrl = srcAttr.value;
                     }
                 }
@@ -821,7 +825,7 @@ export const Commands = [
                 // Make the widget a Jitsi widget if it looks like a Jitsi widget
                 const jitsiData = Jitsi.getInstance().parsePreferredConferenceUrl(widgetUrl);
                 if (jitsiData) {
-                    console.log("Making /addwidget widget a Jitsi conference");
+                    logger.log("Making /addwidget widget a Jitsi conference");
                     type = WidgetType.JITSI;
                     name = "Jitsi Conference";
                     data = jitsiData;

@@ -36,6 +36,8 @@ import { showSpaceInvite } from "../../../utils/space";
 import { privateShouldBeEncrypted } from "../../../createRoom";
 import EventTileBubble from "../messages/EventTileBubble";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -93,7 +95,11 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
             caption = _t("Topic: %(topic)s ", { topic });
         } else if (canAddTopic) {
             caption = _t("<a>Add a topic</a> to help people know what it is about.", {}, {
-                a: sub => <AccessibleButton kind="link" onClick={onTopicClick}>{ sub }</AccessibleButton>,
+                a: sub => <AccessibleButton
+                    kind="link"
+                    element="span"
+                    onClick={onTopicClick}
+                >{ sub }</AccessibleButton>,
             });
         }
 
@@ -126,7 +132,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
                     { _t("Invite to just this room") }
                 </AccessibleButton> }
             </div>;
-        } else if (room.canInvite(cli.getUserId())) {
+        } else if (room.canInvite(cli.getUserId()) && shouldShowComponent(UIComponent.InviteUsers)) {
             buttons = <div className="mx_RoomIntro_buttons">
                 <AccessibleButton
                     className="mx_RoomIntro_inviteButton"

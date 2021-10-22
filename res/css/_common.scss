@@ -22,10 +22,13 @@ limitations under the License.
 
 $hover-transition: 0.08s cubic-bezier(.46, .03, .52, .96); // quadratic
 
-$EventTile_e2e_state_indicator_width: 4px;
+$selected-message-border-width: 4px;
 
 $MessageTimestamp_width: 46px; /* 8 + 30 (avatar) + 8 */
-$MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $EventTile_e2e_state_indicator_width);
+$MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $selected-message-border-width);
+
+$slider-dot-size: 1em;
+$slider-selection-dot-size: 2.4em;
 
 :root {
     font-size: 10px;
@@ -138,6 +141,12 @@ input[type=search]::-webkit-search-results-decoration {
 input::placeholder,
 textarea::placeholder {
     opacity: initial;
+    font-weight: 400;
+}
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+    opacity: .6;
+    font-weight: 400;
 }
 
 input[type=text], input[type=password], textarea {
@@ -318,6 +327,8 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 .mx_Dialog_lightbox .mx_Dialog_background {
     opacity: $lightbox-background-bg-opacity;
     background-color: $lightbox-background-bg-color;
+    animation-name: mx_Dialog_lightbox_background_keyframes;
+    animation-duration: 300ms;
 }
 
 .mx_Dialog_lightbox .mx_Dialog {

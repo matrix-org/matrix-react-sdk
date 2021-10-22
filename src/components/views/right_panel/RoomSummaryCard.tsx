@@ -47,6 +47,8 @@ import { useRoomMemberCount } from "../../../hooks/useRoomMembers";
 import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import RoomName from "../elements/RoomName";
 import UIStore from "../../../stores/UIStore";
+import ExportDialog from "../dialogs/ExportDialog";
+import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-actions/threads";
 
 interface IProps {
     room: Room;
@@ -220,13 +222,6 @@ const onRoomFilesClick = () => {
     });
 };
 
-const onRoomThreadsClick = () => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.ThreadPanel,
-    });
-};
-
 const onRoomSettingsClick = () => {
     defaultDispatcher.dispatch({ action: "open_room_settings" });
 };
@@ -237,6 +232,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const onShareRoomClick = () => {
         Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
             target: room,
+        });
+    };
+
+    const onRoomExportClick = async () => {
+        Modal.createTrackedDialog('export room dialog', '', ExportDialog, {
+            room,
         });
     };
 
@@ -280,8 +281,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
             <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
                 { _t("Show files") }
             </Button>
+            <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
+                { _t("Export chat") }
+            </Button>
             { SettingsStore.getValue("feature_thread") && (
-                <Button className="mx_RoomSummaryCard_icon_threads" onClick={onRoomThreadsClick}>
+                <Button className="mx_RoomSummaryCard_icon_threads" onClick={dispatchShowThreadsPanelEvent}>
                     { _t("Show threads") }
                 </Button>
             ) }

@@ -30,6 +30,8 @@ import SettingsStore from "../settings/SettingsStore";
 import url from 'url';
 import { compare } from "../utils/strings";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const KIND_PREFERENCE = [
     // Ordered: first is most preferred, last is least preferred.
     Kind.Account,
@@ -86,12 +88,12 @@ export class IntegrationManagers {
     }
 
     private setupHomeserverManagers = async (discoveryResponse) => {
-        console.log("Updating homeserver-configured integration managers...");
+        logger.log("Updating homeserver-configured integration managers...");
         if (discoveryResponse && discoveryResponse['m.integrations']) {
             let managers = discoveryResponse['m.integrations']['managers'];
             if (!Array.isArray(managers)) managers = []; // make it an array so we can wipe the HS managers
 
-            console.log(`Homeserver has ${managers.length} integration managers`);
+            logger.log(`Homeserver has ${managers.length} integration managers`);
 
             // Clear out any known managers for the homeserver
             // TODO: Log out of the scalar clients
@@ -109,7 +111,7 @@ export class IntegrationManagers {
 
             this.primaryManager = null; // reset primary
         } else {
-            console.log("Homeserver has no integration managers");
+            logger.log("Homeserver has no integration managers");
         }
     };
 
@@ -211,7 +213,7 @@ export class IntegrationManagers {
      * or null if none was found.
      */
     async tryDiscoverManager(domainName: string): Promise<IntegrationManagerInstance> {
-        console.log("Looking up integration manager via .well-known");
+        logger.log("Looking up integration manager via .well-known");
         if (domainName.startsWith("http:") || domainName.startsWith("https:")) {
             // trim off the scheme and just use the domain
             domainName = url.parse(domainName).host;
@@ -222,25 +224,25 @@ export class IntegrationManagers {
             const result = await fetch(`https://${domainName}/.well-known/matrix/integrations`);
             wkConfig = await result.json();
         } catch (e) {
-            console.error(e);
-            console.warn("Failed to locate integration manager");
+            logger.error(e);
+            logger.warn("Failed to locate integration manager");
             return null;
         }
 
         if (!wkConfig || !wkConfig["m.integrations_widget"]) {
-            console.warn("Missing integrations widget on .well-known response");
+            logger.warn("Missing integrations widget on .well-known response");
             return null;
         }
 
         const widget = wkConfig["m.integrations_widget"];
         if (!widget["url"] || !widget["data"] || !widget["data"]["api_url"]) {
-            console.warn("Malformed .well-known response for integrations widget");
+            logger.warn("Malformed .well-known response for integrations widget");
             return null;
         }
 
         // All discovered managers are per-user managers
         const manager = new IntegrationManagerInstance(Kind.Account, widget["data"]["api_url"], widget["url"]);
-        console.log("Got an integration manager (untested)");
+        logger.log("Got an integration manager (untested)");
 
         // We don't test the manager because the caller may need to do extra
         // checks or similar with it. For instance, they may need to deal with

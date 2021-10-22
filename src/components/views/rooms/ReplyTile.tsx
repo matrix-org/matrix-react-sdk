@@ -29,12 +29,15 @@ import { getEventDisplayInfo, isVoiceMessage } from '../../../utils/EventUtils';
 import MFileBody from "../messages/MFileBody";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     mxEvent: MatrixEvent;
     permalinkCreator?: RoomPermalinkCreator;
     highlights?: string[];
     highlightLink?: string;
     onHeightChanged?(): void;
+    toggleExpandedQuote?: () => void;
 }
 
 @replaceableComponent("views.rooms.ReplyTile")
@@ -82,12 +85,17 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             // This allows the permalink to be opened in a new tab/window or copied as
             // matrix.to, but also for it to enable routing within Riot when clicked.
             e.preventDefault();
-            dis.dispatch({
-                action: 'view_room',
-                event_id: this.props.mxEvent.getId(),
-                highlighted: true,
-                room_id: this.props.mxEvent.getRoomId(),
-            });
+            // Expand thread on shift key
+            if (this.props.toggleExpandedQuote && e.shiftKey) {
+                this.props.toggleExpandedQuote();
+            } else {
+                dis.dispatch({
+                    action: 'view_room',
+                    event_id: this.props.mxEvent.getId(),
+                    highlighted: true,
+                    room_id: this.props.mxEvent.getRoomId(),
+                });
+            }
         }
     };
 
@@ -101,7 +109,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         // before trying to instantiate us
         if (!tileHandler) {
             const { mxEvent } = this.props;
-            console.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
+            logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
             return <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
                 { _t('This event could not be displayed') }
             </div>;

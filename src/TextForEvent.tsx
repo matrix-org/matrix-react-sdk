@@ -27,6 +27,9 @@ import { SetRightPanelPhasePayload } from './dispatcher/payloads/SetRightPanelPh
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 
+import { logger } from "matrix-js-sdk/src/logger";
+import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
+
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
@@ -95,18 +98,21 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
             if (prevContent && prevContent.membership === 'join') {
                 if (prevContent.displayname && content.displayname && prevContent.displayname !== content.displayname) {
                     return () => _t('%(oldDisplayName)s changed their display name to %(displayName)s', {
-                        oldDisplayName: prevContent.displayname,
-                        displayName: content.displayname,
+                        // We're taking the display namke directly from the event content here so we need
+                        // to strip direction override chars which the js-sdk would normally do when
+                        // calculating the display name
+                        oldDisplayName: removeDirectionOverrideChars(prevContent.displayname),
+                        displayName: removeDirectionOverrideChars(content.displayname),
                     });
                 } else if (!prevContent.displayname && content.displayname) {
                     return () => _t('%(senderName)s set their display name to %(displayName)s', {
                         senderName: ev.getSender(),
-                        displayName: content.displayname,
+                        displayName: removeDirectionOverrideChars(content.displayname),
                     });
                 } else if (prevContent.displayname && !content.displayname) {
                     return () => _t('%(senderName)s removed their display name (%(oldDisplayName)s)', {
                         senderName,
-                        oldDisplayName: prevContent.displayname,
+                        oldDisplayName: removeDirectionOverrideChars(prevContent.displayname),
                     });
                 } else if (prevContent.avatar_url && !content.avatar_url) {
                     return () => _t('%(senderName)s removed their profile picture', { senderName });
@@ -122,7 +128,7 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
                     return null;
                 }
             } else {
-                if (!ev.target) console.warn("Join message has no target! -- " + ev.getContent().state_key);
+                if (!ev.target) logger.warn("Join message has no target! -- " + ev.getContent().state_key);
                 return () => _t('%(targetName)s joined the room', { targetName });
             }
         case 'leave':
@@ -164,6 +170,11 @@ function textForTopicEvent(ev: MatrixEvent): () => string | null {
         senderDisplayName,
         topic: ev.getContent().topic,
     });
+}
+
+function textForRoomAvatarEvent(ev: MatrixEvent): () => string | null {
+    const senderDisplayName = ev?.sender?.name || ev.getSender();
+    return () => _t('%(senderDisplayName)s changed the room avatar.', { senderDisplayName });
 }
 
 function textForRoomNameEvent(ev: MatrixEvent): () => string | null {
@@ -289,11 +300,27 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
     return () => {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-        let message = senderDisplayName + ': ' + ev.getContent().body;
+        let message = ev.getContent().body;
+        if (ev.isRedacted()) {
+            message = _t("Message deleted");
+            const unsigned = ev.getUnsigned();
+            const redactedBecauseUserId = unsigned?.redacted_because?.sender;
+            if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
+                const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+                const sender = room?.getMember(redactedBecauseUserId);
+                message = _t("Message deleted by %(name)s", { name: sender?.name
+ || redactedBecauseUserId });
+            }
+        }
         if (ev.getContent().msgtype === "m.emote") {
             message = "* " + senderDisplayName + " " + message;
         } else if (ev.getContent().msgtype === "m.image") {
             message = _t('%(senderDisplayName)s sent an image.', { senderDisplayName });
+        } else if (ev.getType() == "m.sticker") {
+            message = _t('%(senderDisplayName)s sent a sticker.', { senderDisplayName });
+        } else {
+            // in this case, parse it as a plain text message
+            message = senderDisplayName + ': ' + message;
         }
         return message;
     };
@@ -669,6 +696,7 @@ interface IHandlers {
 
 const handlers: IHandlers = {
     'm.room.message': textForMessageEvent,
+    'm.sticker': textForMessageEvent,
     'm.call.invite': textForCallInviteEvent,
 };
 
@@ -677,6 +705,7 @@ const stateHandlers: IHandlers = {
     'm.room.name': textForRoomNameEvent,
     'm.room.topic': textForTopicEvent,
     'm.room.member': textForMemberEvent,
+    "m.room.avatar": textForRoomAvatarEvent,
     'm.room.third_party_invite': textForThreePidInviteEvent,
     'm.room.history_visibility': textForHistoryVisibilityEvent,
     'm.room.power_levels': textForPowerEvent,

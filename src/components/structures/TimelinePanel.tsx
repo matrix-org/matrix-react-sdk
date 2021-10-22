@@ -49,6 +49,8 @@ import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import ErrorDialog from '../views/dialogs/ErrorDialog';
 import { debounce } from 'lodash';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
 const READ_RECEIPT_INTERVAL_MS = 500;
@@ -60,7 +62,7 @@ const DEBUG = false;
 let debuglog = function(...s: any[]) {};
 if (DEBUG) {
     // using bind means that we get to keep useful line numbers in the console
-    debuglog = console.log.bind(console);
+    debuglog = logger.log.bind(console);
 }
 
 interface IProps {
@@ -310,13 +312,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
             //
             // for now, just warn about this. But we're going to end up paginating
             // both rooms separately, and it's all bad.
-            console.warn("Replacing timelineSet on a TimelinePanel - confusion may ensue");
+            logger.warn("Replacing timelineSet on a TimelinePanel - confusion may ensue");
         }
 
         const differentEventId = newProps.eventId != this.props.eventId;
         const differentHighlightedEventId = newProps.highlightedEventId != this.props.highlightedEventId;
         if (differentEventId || differentHighlightedEventId) {
-            console.log("TimelinePanel switching to eventId " + newProps.eventId +
+            logger.log("TimelinePanel switching to eventId " + newProps.eventId +
                         " (was " + this.props.eventId + ")");
             return this.initTimeline(newProps);
         }
@@ -797,11 +799,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
                         lastReadEvent,
                         {},
                     ).catch((e) => {
-                        console.error(e);
+                        logger.error(e);
                         this.lastRRSentEventId = undefined;
                     });
                 } else {
-                    console.error(e);
+                    logger.error(e);
                 }
                 // it failed, so allow retries next time the user is active
                 this.lastRRSentEventId = undefined;
@@ -1098,7 +1100,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     // we're in a setState callback, and we know
                     // timelineLoading is now false, so render() should have
                     // mounted the message panel.
-                    console.log("can't initialise scroll state because " +
+                    logger.log("can't initialise scroll state because " +
                                 "messagePanel didn't load");
                     return;
                 }
@@ -1119,7 +1121,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) return;
 
             this.setState({ timelineLoading: false });
-            console.error(
+            logger.error(
                 `Error loading timeline panel at ${eventId}: ${error}`,
             );
 
@@ -1264,7 +1266,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 // Somehow, it seems to be possible for live events to not have
                 // a timeline, even though that should not happen. :(
                 // https://github.com/vector-im/element-web/issues/12120
-                console.warn(
+                logger.warn(
                     `Event ${events[i].getId()} in room ${room.roomId} is live, ` +
                     `but it does not have a timeline`,
                 );

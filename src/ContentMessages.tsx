@@ -42,6 +42,8 @@ import { BlurhashEncoder } from "./BlurhashEncoder";
 import SettingsStore from "./settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
 
@@ -417,7 +419,7 @@ export default class ContentMessages {
     sendStickerContentToRoom(url: string, roomId: string, info: IImageInfo, text: string, matrixClient: MatrixClient) {
         const startTime = CountlyAnalytics.getTimestamp();
         const prom = matrixClient.sendStickerMessage(roomId, url, info, text).catch((e) => {
-            console.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
+            logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
         CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, false, { msgtype: "m.sticker" });
@@ -557,7 +559,7 @@ export default class ContentMessages {
                     Object.assign(content.info, imageInfo);
                     resolve();
                 }, (e) => {
-                    console.error(e);
+                    logger.error(e);
                     content.msgtype = 'm.file';
                     resolve();
                 });
@@ -678,13 +680,13 @@ export default class ContentMessages {
     private ensureMediaConfigFetched(matrixClient: MatrixClient) {
         if (this.mediaConfig !== null) return;
 
-        console.log("[Media Config] Fetching");
+        logger.log("[Media Config] Fetching");
         return matrixClient.getMediaConfig().then((config) => {
-            console.log("[Media Config] Fetched config:", config);
+            logger.log("[Media Config] Fetched config:", config);
             return config;
         }).catch(() => {
             // Media repo can't or won't report limits, so provide an empty object (no limits).
-            console.log("[Media Config] Could not fetch config, so not limiting uploads.");
+            logger.log("[Media Config] Could not fetch config, so not limiting uploads.");
             return {};
         }).then((config) => {
             this.mediaConfig = config;

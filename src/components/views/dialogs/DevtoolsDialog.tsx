@@ -44,6 +44,8 @@ import { SettingLevel } from '../../../settings/SettingLevel';
 import BaseDialog from "./BaseDialog";
 import TruncatedList from "../elements/TruncatedList";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IGenericEditorProps {
     onBack: () => void;
 }
@@ -984,22 +986,22 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
             const parsedExplicit = JSON.parse(this.state.explicitValues);
             const parsedExplicitRoom = JSON.parse(this.state.explicitRoomValues);
             for (const level of Object.keys(parsedExplicit)) {
-                console.log(`[Devtools] Setting value of ${settingId} at ${level} from user input`);
+                logger.log(`[Devtools] Setting value of ${settingId} at ${level} from user input`);
                 try {
                     const val = parsedExplicit[level];
                     await SettingsStore.setValue(settingId, null, level as SettingLevel, val);
                 } catch (e) {
-                    console.warn(e);
+                    logger.warn(e);
                 }
             }
             const roomId = this.props.room.roomId;
             for (const level of Object.keys(parsedExplicit)) {
-                console.log(`[Devtools] Setting value of ${settingId} at ${level} in ${roomId} from user input`);
+                logger.log(`[Devtools] Setting value of ${settingId} at ${level} in ${roomId} from user input`);
                 try {
                     const val = parsedExplicitRoom[level];
                     await SettingsStore.setValue(settingId, roomId, level as SettingLevel, val);
                 } catch (e) {
-                    console.warn(e);
+                    logger.warn(e);
                 }
             }
             this.setState({
@@ -1033,7 +1035,7 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                     vals[level] = null;
                 }
             } catch (e) {
-                console.warn(e);
+                logger.warn(e);
             }
         }
         return JSON.stringify(vals, null, 4);
