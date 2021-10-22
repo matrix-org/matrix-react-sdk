@@ -36,6 +36,7 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { presentableTextForFile } from "../../../utils/FileUtils";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { TileShape } from "../rooms/EventTile";
 
 interface IState {
     decryptedUrl?: string;
@@ -421,7 +422,10 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         let banner;
-        if (this.state.showImage && this.state.hover) {
+        const isTimeline = !this.props.tileShape
+            || this.props.tileShape === TileShape.FileGrid
+            || this.props.tileShape === TileShape.Notif;
+        if (this.state.showImage && this.state.hover && isTimeline) {
             banner = (
                 <span className='mx_MImageBody_banner'>
                     { presentableTextForFile(content, _t("Image"), true) }
