@@ -180,8 +180,14 @@ export async function fetchInitialEvent(
         try {
             const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
             const rootEvent = new MatrixEvent(rootEventData);
-            const thread = new Thread([rootEvent], client);
+            const room = client.getRoom(roomId);
+            const thread = new Thread(
+                [rootEvent],
+                room,
+                client,
+            );
             thread.addEvent(initialEvent);
+            room.threads.set(thread.id, thread);
         } catch (e) {
             logger.warn("Could not find root event: " + initialEvent.threadRootId);
         }
