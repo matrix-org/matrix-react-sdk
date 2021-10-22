@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634912678732,
+  "lastUpdate": 1634914554672,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34112,6 +34112,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4553.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "8217676+RafaelGoncalves8@users.noreply.github.com",
+            "name": "Rafael Gonçalves",
+            "username": "RafaelGoncalves8"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12ad01db5145c148ef6d4f5344bf3a52e4a54a12",
+          "message": "Show passphrase input label (#6992)",
+          "timestamp": "2021-10-22T15:50:11+01:00",
+          "tree_id": "cd3e5ce3c0fc518b968f45e9faa748e1e4b4447c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12ad01db5145c148ef6d4f5344bf3a52e4a54a12"
+        },
+        "date": 1634914551681,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4383.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1384.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1805.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4591,
             "unit": "ms",
             "extra": "type: measure"
           }
