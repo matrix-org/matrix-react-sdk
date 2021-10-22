@@ -64,10 +64,11 @@ const useFilteredThreadsTimelinePanel = ({
     filterOption: ThreadFilterType;
     updateTimeline: () => void;
 }) => {
-    const timelineSet = useMemo(() => new EventTimelineSet(room, {
-        unstableClientRelationAggregation: true,
+    const timelineSet = useMemo(() => new EventTimelineSet(null, {
         timelineSupport: true,
-    }), [room]);
+        unstableClientRelationAggregation: true,
+        pendingEvents: false,
+    }), []);
 
     useEffect(() => {
         let filteredThreads = Array.from(threads);
@@ -217,7 +218,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
                     showReactions={true}
                     className="mx_RoomView_messagePanel mx_GroupLayout"
                     membersLoaded={true}
-                    tileShape={TileShape.Thread}
+                    tileShape={TileShape.ThreadPanel}
                 />
             </BaseCard>
         </RoomContext.Provider>
