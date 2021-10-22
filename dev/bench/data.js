@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634918199744,
+  "lastUpdate": 1634924218477,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34208,6 +34208,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4257.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "39e98b9d7f41756f7ff170925c5b81c1d919cab2",
+          "message": "Always render disabled settings as disabled (#7014)\n\nThis is to prevent user confusion about whether or not a setting exists, or even what its value is. By rendering it with `disabled=true` the user is at least aware that the setting is set to a specific value, though we could (and should) do better in the future to communicate *why* a setting is disabled.",
+          "timestamp": "2021-10-22T11:30:14-06:00",
+          "tree_id": "d9cc01a3d97afd1bd1cea088e1b79b063a4c065f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/39e98b9d7f41756f7ff170925c5b81c1d919cab2"
+        },
+        "date": 1634924215935,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4941.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1138,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1729.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5025.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
