@@ -17,7 +17,7 @@ import React, { createRef } from 'react';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import dis from '../../../dispatcher/dispatcher';
@@ -54,6 +54,8 @@ import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import Modal from "../../../Modal";
 import InfoDialog from "../dialogs/InfoDialog";
+import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import RoomContext from '../../../contexts/RoomContext';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -115,7 +117,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
             className={className}
             onClick={openMenu}
             title={!narrowMode && _t('Emoji picker')}
-            label={narrowMode && _t("Add emoji")}
+            label={narrowMode ? _t("Add emoji") : null}
         />
 
         { contextMenu }
@@ -225,8 +227,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
-    replyInThread?: boolean;
-    showReplyPreview?: boolean;
+    relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
 }
@@ -251,9 +252,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
+    public static contextType = RoomContext;
+
     static defaultProps = {
-        replyInThread: false,
-        showReplyPreview: true,
         compact: false,
     };
 
@@ -294,7 +295,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === 'reply_to_event') {
+        if (payload.action === 'reply_to_event' && payload.context === this.context.timelineRenderingType) {
             // add a timeout for the reply preview to be rendered, so
             // that the ScrollPanel listening to the resizeNotifier can
             // correctly measure it's new height and scroll down to keep
@@ -378,9 +379,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private renderPlaceholderText = () => {
         if (this.props.replyToEvent) {
-            if (this.props.replyInThread && this.props.e2eStatus) {
+            const replyingToThread = this.props.relation?.rel_type === RelationType.Thread;
+            if (replyingToThread && this.props.e2eStatus) {
                 return _t('Reply to encrypted thread…');
-            } else if (this.props.replyInThread) {
+            } else if (replyingToThread) {
                 return _t('Reply to thread…');
             } else if (this.props.e2eStatus) {
                 return _t('Send an encrypted reply…');
@@ -484,13 +486,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     className="mx_MessageComposer_button mx_MessageComposer_stickers"
                     onClick={() => this.showStickers(!this.state.showStickers)}
                     title={title}
-                    label={this.state.narrowMode && _t("Send a sticker")}
+                    label={this.state.narrowMode ? _t("Send a sticker") : null}
                 />,
             );
         }
         if (!this.state.haveRecording && !this.state.narrowMode) {
             buttons.push(
                 <AccessibleTooltipButton
+                    key="voice_message_send"
                     className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
                     onClick={() => this.voiceRecordingButton.current?.onRecordStartEndClick()}
                     title={_t("Send voice message")}
@@ -558,7 +561,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     room={this.props.room}
                     placeholder={this.renderPlaceholderText()}
                     permalinkCreator={this.props.permalinkCreator}
-                    replyInThread={this.props.replyInThread}
+                    relation={this.props.relation}
                     replyToEvent={this.props.replyToEvent}
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
@@ -614,7 +617,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 room={this.props.room}
                 showStickers={this.state.showStickers}
                 setShowStickers={this.showStickers}
-                menuPosition={menuPosition} />,
+                menuPosition={menuPosition}
+                key="stickers"
+            />,
         );
 
         const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
@@ -629,9 +634,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             <div className={classes} ref={this.ref}>
                 { recordingTooltip }
                 <div className="mx_MessageComposer_wrapper">
-                    { this.props.showReplyPreview && (
-                        <ReplyPreview permalinkCreator={this.props.permalinkCreator} />
-                    ) }
+                    <ReplyPreview
+                        replyToEvent={this.props.replyToEvent}
+                        permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
                         { this.renderButtons(menuPosition) }

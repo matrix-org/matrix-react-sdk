@@ -30,6 +30,7 @@ import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
 import { IValidationResult } from "../../../../components/views/elements/Validation";
 import { IPreparedKeyBackupVersion } from "matrix-js-sdk/src/crypto/backup";
+import { logger } from "matrix-js-sdk/src/logger";
 
 enum Phase {
     Passphrase = "passphrase",
@@ -140,7 +141,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                 phase: Phase.Done,
             });
         } catch (e) {
-            console.error("Error creating key backup", e);
+            logger.error("Error creating key backup", e);
             // TODO: If creating a version succeeds, but backup fails, should we
             // delete the version, disable backup, or do nothing?  If we just
             // disable without deleting, we'll enable on next app reload since

@@ -444,7 +444,7 @@ export default class CallHandler extends EventEmitter {
             if (!this.matchesCallForThisRoom(call)) return;
 
             Analytics.trackEvent('voip', 'callError', 'error', err.toString());
-            console.error("Call error:", err);
+            logger.error("Call error:", err);
 
             if (err.code === CallErrorCode.NoUserMedia) {
                 this.showMediaCaptureError(call);
@@ -777,7 +777,7 @@ export default class CallHandler extends EventEmitter {
         } else if (type === 'video') {
             call.placeVideoCall();
         } else {
-            console.error("Unknown conf call type: " + type);
+            logger.error("Unknown conf call type: " + type);
         }
     }
 
@@ -811,7 +811,7 @@ export default class CallHandler extends EventEmitter {
 
                     const room = MatrixClientPeg.get().getRoom(payload.room_id);
                     if (!room) {
-                        console.error(`Room ${payload.room_id} does not exist.`);
+                        logger.error(`Room ${payload.room_id} does not exist.`);
                         return;
                     }
 
@@ -825,7 +825,7 @@ export default class CallHandler extends EventEmitter {
                         });
                         return;
                     } else if (members.length === 2) {
-                        console.info(`Place ${payload.type} call in ${payload.room_id}`);
+                        logger.info(`Place ${payload.type} call in ${payload.room_id}`);
 
                         this.placeCall(payload.room_id, payload.type, payload.transferee);
                     } else { // > 2
@@ -838,17 +838,17 @@ export default class CallHandler extends EventEmitter {
                 }
                 break;
             case 'place_conference_call':
-                console.info("Place conference call in " + payload.room_id);
+                logger.info("Place conference call in " + payload.room_id);
                 Analytics.trackEvent('voip', 'placeConferenceCall');
                 CountlyAnalytics.instance.trackStartCall(payload.room_id, payload.type === PlaceCallType.Video, true);
                 this.startCallApp(payload.room_id, payload.type);
                 break;
             case 'end_conference':
-                console.info("Terminating conference call in " + payload.room_id);
+                logger.info("Terminating conference call in " + payload.room_id);
                 this.terminateCallApp(payload.room_id);
                 break;
             case 'hangup_conference':
-                console.info("Leaving conference call in "+ payload.room_id);
+                logger.info("Leaving conference call in "+ payload.room_id);
                 this.hangupCallApp(payload.room_id);
                 break;
             case 'incoming_call':
@@ -1112,7 +1112,7 @@ export default class CallHandler extends EventEmitter {
                     description: _t("You do not have permission to start a conference call in this room"),
                 });
             }
-            console.error(e);
+            logger.error(e);
         });
     }
 

@@ -21,6 +21,7 @@ import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryptio
 import { _t } from '../../../../languageHandler';
 import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
+import { logger } from "matrix-js-sdk/src/logger";
 
 function readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
     return new Promise((resolve, reject) => {
@@ -97,7 +98,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
             // TODO: it would probably be nice to give some feedback about what we've imported here.
             this.props.onFinished(true);
         }).catch((e) => {
-            console.error("Error importing e2e keys:", e);
+            logger.error("Error importing e2e keys:", e);
             if (this.unmounted) {
                 return;
             }

@@ -224,19 +224,19 @@ export class IntegrationManagers {
             const result = await fetch(`https://${domainName}/.well-known/matrix/integrations`);
             wkConfig = await result.json();
         } catch (e) {
-            console.error(e);
-            console.warn("Failed to locate integration manager");
+            logger.error(e);
+            logger.warn("Failed to locate integration manager");
             return null;
         }
 
         if (!wkConfig || !wkConfig["m.integrations_widget"]) {
-            console.warn("Missing integrations widget on .well-known response");
+            logger.warn("Missing integrations widget on .well-known response");
             return null;
         }
 
         const widget = wkConfig["m.integrations_widget"];
         if (!widget["url"] || !widget["data"] || !widget["data"]["api_url"]) {
-            console.warn("Malformed .well-known response for integrations widget");
+            logger.warn("Malformed .well-known response for integrations widget");
             return null;
         }
 

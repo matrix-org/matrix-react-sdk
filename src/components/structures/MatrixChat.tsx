@@ -111,6 +111,7 @@ import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { showSpaceInvite } from "../../utils/space";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -175,6 +176,9 @@ interface IRoomInfo {
     threepid_invite?: IThreepidInvite;
 
     justCreatedOpts?: IOpts;
+
+    // Whether or not to override default behaviour to end up at a timeline
+    forceTimeline?: boolean;
 }
 /* eslint-enable camelcase */
 
@@ -237,6 +241,7 @@ interface IState {
     pendingInitialSync?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
+    forceTimeline?: boolean; // see props
 }
 
 @replaceableComponent("structures.MatrixChat")
@@ -741,9 +746,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'view_create_chat':
                 showStartChatInviteDialog(payload.initialText || "");
                 break;
-            case 'view_invite':
-                showRoomInviteDialog(payload.roomId);
+            case 'view_invite': {
+                const room = MatrixClientPeg.get().getRoom(payload.roomId);
+                if (room?.isSpaceRoom()) {
+                    showSpaceInvite(room);
+                } else {
+                    showRoomInviteDialog(payload.roomId);
+                }
                 break;
+            }
             case 'view_last_screen':
                 // This function does what we want, despite the name. The idea is that it shows
                 // the last room we were looking at or some reasonable default/guess. We don't
@@ -865,6 +876,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 params.hs_url, params.is_url,
             );
 
+            // If the hs url matches then take the hs name we know locally as it is likely prettier
+            const defaultConfig = SdkConfig.get()["validated_server_config"] as ValidatedServerConfig;
+            if (defaultConfig && defaultConfig.hsUrl === newState.serverConfig.hsUrl) {
+                newState.serverConfig.hsName = defaultConfig.hsName;
+                newState.serverConfig.hsNameIsDifferent = defaultConfig.hsNameIsDifferent;
+                newState.serverConfig.isDefault = defaultConfig.isDefault;
+                newState.serverConfig.isNameResolvable = defaultConfig.isNameResolvable;
+            }
+
             newState.register_client_secret = params.client_secret;
             newState.register_session_id = params.session_id;
             newState.register_id_sid = params.sid;
@@ -910,7 +930,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         let waitFor = Promise.resolve(null);
         if (!this.firstSyncComplete) {
             if (!this.firstSyncPromise) {
-                console.warn('Cannot view a room before first sync. room_id:', roomInfo.room_id);
+                logger.warn('Cannot view a room before first sync. room_id:', roomInfo.room_id);
                 return;
             }
             waitFor = this.firstSyncPromise.promise;
@@ -952,6 +972,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 page_type: PageType.RoomView,
                 threepidInvite: roomInfo.threepid_invite,
                 roomOobData: roomInfo.oob_data,
+                forceTimeline: roomInfo.forceTimeline,
                 ready: true,
                 roomJustCreatedOpts: roomInfo.justCreatedOpts,
             }, () => {
@@ -966,7 +987,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // Wait for the first sync to complete
         if (!this.firstSyncComplete) {
             if (!this.firstSyncPromise) {
-                console.warn('Cannot view a group before first sync. group_id:', groupId);
+                logger.warn('Cannot view a group before first sync. group_id:', groupId);
                 return;
             }
             await this.firstSyncPromise.promise;
@@ -1445,7 +1466,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (state === "SYNCING" && prevState === "SYNCING") {
                 return;
             }
-            console.info("MatrixClient sync state => %s", state);
+            logger.info("MatrixClient sync state => %s", state);
             if (state !== "PREPARED") { return; }
 
             this.firstSyncComplete = true;
@@ -1468,7 +1489,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             Modal.closeCurrentModal('Session.logged_out');
 
             if (errObj.httpStatus === 401 && errObj.data && errObj.data['soft_logout']) {
-                console.warn("Soft logout issued by server - avoiding data deletion");
+                logger.warn("Soft logout issued by server - avoiding data deletion");
                 Lifecycle.softLogout();
                 return;
             }
@@ -1573,7 +1594,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     newVersionInfo = await MatrixClientPeg.get().getKeyBackupVersion();
                     if (newVersionInfo !== null) haveNewVersion = true;
                 } catch (e) {
-                    console.error("Saw key backup error but failed to check backup version!", e);
+                    logger.error("Saw key backup error but failed to check backup version!", e);
                     return;
                 }
             }
@@ -1815,7 +1836,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 group_id: groupId,
             });
         } else {
-            console.info("Ignoring showScreen for '%s'", screen);
+            logger.info("Ignoring showScreen for '%s'", screen);
         }
     }
 
@@ -2118,7 +2139,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 />
             );
         } else {
-            console.error(`Unknown view ${this.state.view}`);
+            logger.error(`Unknown view ${this.state.view}`);
         }
 
         return <ErrorBoundary>
