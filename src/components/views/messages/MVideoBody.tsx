@@ -222,7 +222,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     };
 
     render() {
-        const content = this.props.mxEvent.getContent();
+        const content = this.props.mxEvent.getContent<IMediaEventContent>();
         const autoplay = SettingsStore.getValue("autoplayVideo");
 
         if (this.state.error !== null) {
@@ -293,7 +293,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 />
                 { fileBody }
                 { banner }
-            </span>
+            </div>
         );
     }
 }
