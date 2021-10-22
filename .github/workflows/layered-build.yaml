@@ -22,6 +22,7 @@ jobs:
               with:
                 script: |
                     var fs = require('fs');
+                    context.payload.pull_request.number = 7012;
                     fs.writeFileSync('${{github.workspace}}/pr.json', JSON.stringify(context.payload.pull_request));
             - name: Upload PR Info
               uses: actions/upload-artifact@v2
