@@ -242,8 +242,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private onEditClick = (): void => {
         dis.dispatch({
-            action: 'edit_event',
+            action: Action.EditEvent,
             event: this.props.mxEvent,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
         this.closeMenu();
     };
@@ -252,6 +253,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         dis.dispatch({
             action: 'reply_to_event',
             event: this.props.mxEvent,
+            context: this.context.timelineRenderingType,
         });
         this.closeMenu();
     };
