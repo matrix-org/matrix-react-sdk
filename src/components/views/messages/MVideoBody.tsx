@@ -221,7 +221,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     };
 
     render() {
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
+        const content = this.props.mxEvent.getContent();
         const autoplay = SettingsStore.getValue("autoplayVideo");
 
         if (this.state.error !== null) {
@@ -268,7 +268,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         const fileBody = this.getFileBody();
         return (
-            <div className="mx_MVideoBody">
+            <span className="mx_MVideoBody">
                 <video
                     className="mx_MVideoBody"
                     ref={this.videoRef}
@@ -284,7 +284,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     onPlay={this.videoOnPlay}
                 />
                 { fileBody }
-            </div>
+            </span>
         );
     }
 }
