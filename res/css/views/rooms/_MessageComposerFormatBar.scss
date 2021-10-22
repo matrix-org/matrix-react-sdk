@@ -89,7 +89,8 @@ limitations under the License.
     }
 
     .mx_MessageComposerFormatBar_buttonIconInsertLink::after {
-        mask-image: url('$(res)/img/element-icons/room/format-bar/insert-link.svg');
+        mask-image: url('$(res)/img/element-icons/link.svg');
+        mask-size: 18px;
     }
 }
 
