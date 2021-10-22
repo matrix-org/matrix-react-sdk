@@ -38,6 +38,7 @@ interface IState {
     fetchingData: boolean;
     posterLoading: boolean;
     blurhashUrl: string;
+    hover?: boolean;
 }
 
 @replaceableComponent("views.messages.MVideoBody")
@@ -248,12 +249,14 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             );
         }
 
-        const banner = (
-            // XXX: Class abuse (so we can have context on the border radius)
-            <span className='mx_MImageBody_banner'>
-                { presentableTextForFile(content, _t("Video"), true) }
-            </span>
-        );
+        const banner = this.state.hover
+            ? (
+                // XXX: Class abuse (so we can have context on the border radius)
+                <span className='mx_MImageBody_banner'>
+                    { presentableTextForFile(content, _t("Video"), true) }
+                </span>
+            )
+            : null;
 
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
@@ -290,6 +293,8 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     width={width}
                     poster={poster}
                     onPlay={this.videoOnPlay}
+                    onMouseEnter={() => this.setState({ hover: true })}
+                    onMouseLeave={() => this.setState({ hover: false })}
                 />
                 { fileBody }
                 { banner }

@@ -421,7 +421,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         let banner;
-        if (this.state.showImage) {
+        if (this.state.showImage && this.state.hover) {
             banner = (
                 <span className='mx_MImageBody_banner'>
                     { presentableTextForFile(content, _t("Image"), true) }
