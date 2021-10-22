@@ -35,6 +35,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { normalizeWheelEvent } from "../../../utils/Mouse";
 import { IDialogProps } from '../dialogs/IDialogProps';
 import UIStore from '../../../stores/UIStore';
+import { presentableTextForFile } from "../../../utils/FileUtils";
 
 // Max scale to keep gaps around the image
 const MAX_SCALE = 0.95;
@@ -540,6 +541,9 @@ export default class ImageView extends React.Component<IProps, IState> {
             >
                 <div className="mx_ImageView_panel">
                     { info }
+                    <div className="mx_ImageView_title">
+                        { presentableTextForFile(this.props.mxEvent.getContent(), _t("Image"), true) }
+                    </div>
                     <div className="mx_ImageView_toolbar">
                         { zoomOutButton }
                         { zoomInButton }
