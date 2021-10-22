@@ -20,9 +20,11 @@ $timelineImageBorderRadius: 4px;
     position: absolute;
     bottom: 4px;
     left: 4px;
-    line-height: 20px;
     padding: 4px;
     border-radius: $timelineImageBorderRadius;
+    font-size: $font-15px;
+
+    pointer-events: none; // let the cursor go through to the media underneath
 
     // Trying to match the width of the image is surprisingly difficult, so arbitrarily
     // break it off early.
@@ -33,7 +35,7 @@ $timelineImageBorderRadius: 4px;
     overflow: hidden;
 
     // Hardcoded colours because it's the same on all themes
-    background-color: #1A1D2399;
+    background-color: rgba(0, 0, 0, 0.6);
     color: #ffffff;
 }
 
