@@ -26,7 +26,6 @@ import { BLURHASH_FIELD } from "../../../ContentMessages";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
-import { presentableTextForFile } from "../../../utils/FileUtils";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -38,7 +37,6 @@ interface IState {
     fetchingData: boolean;
     posterLoading: boolean;
     blurhashUrl: string;
-    hover?: boolean;
 }
 
 @replaceableComponent("views.messages.MVideoBody")
@@ -249,15 +247,6 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             );
         }
 
-        const banner = this.state.hover
-            ? (
-                // XXX: Class abuse (so we can have context on the border radius)
-                <span className='mx_MImageBody_banner'>
-                    { presentableTextForFile(content, _t("Video"), true) }
-                </span>
-            )
-            : null;
-
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
         let height = null;
@@ -293,11 +282,8 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     width={width}
                     poster={poster}
                     onPlay={this.videoOnPlay}
-                    onMouseEnter={() => this.setState({ hover: true })}
-                    onMouseLeave={() => this.setState({ hover: false })}
                 />
                 { fileBody }
-                { banner }
             </div>
         );
     }
