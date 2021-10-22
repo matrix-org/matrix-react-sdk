@@ -862,8 +862,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 },
             );
 
-            SettingsStore.setValue("showPseudonymousAnalyticsPrompt", null, SettingLevel.ACCOUNT,
-                false);
+            SettingsStore.setValue("showPseudonymousAnalyticsPrompt", null, SettingLevel.ACCOUNT, false);
         });
     }
 
