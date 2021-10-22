@@ -309,8 +309,8 @@ export default class MemberEventListSummary extends React.Component<IProps> {
                 break;
             case "changed_avatar":
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)schanged their profile picture %(count)s times", { severalUsers: "", count: repeats })
+                    : _t("%(oneUser)schanged their profile picture %(count)s times", { oneUser: "", count: repeats });
                 break;
             case "no_change":
                 res = (userCount > 1)

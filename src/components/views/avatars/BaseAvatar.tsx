@@ -44,6 +44,8 @@ interface IProps {
     onClick?: React.MouseEventHandler;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
+    altText?: string;
+    ariaLabel?: string;
 }
 
 const calculateUrls = (url, urls, lowBandwidth) => {
@@ -112,6 +114,8 @@ const BaseAvatar = (props: IProps) => {
         onClick,
         inputRef,
         className,
+        altText = _t("Avatar"),
+        ariaLabel = _t("Avatar"),
         ...otherProps
     } = props;
 
@@ -149,7 +153,7 @@ const BaseAvatar = (props: IProps) => {
         if (onClick) {
             return (
                 <AccessibleButton
-                    aria-label={_t("Avatar")}
+                    aria-label={ariaLabel}
                     {...otherProps}
                     element="span"
                     className={classNames("mx_BaseAvatar", className)}
@@ -188,7 +192,7 @@ const BaseAvatar = (props: IProps) => {
                     height: toPx(height),
                 }}
                 title={title}
-                alt={_t("Avatar")}
+                alt={altText}
                 inputRef={inputRef}
                 {...otherProps} />
         );
