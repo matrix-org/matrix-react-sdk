@@ -113,7 +113,10 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
         let lastSeen = "";
         if (device.last_seen_ts) {
             const lastSeenDate = new Date(device.last_seen_ts);
-            lastSeen = "Last seen " + formatDate(lastSeenDate) + " at " + device.last_seen_ip;
+            lastSeen = _t("Last seen %(date)s at %(ip)s", {
+                date: formatDate(lastSeenDate),
+                ip: device.last_seen_ip,
+            });
         }
 
         const myDeviceClass = this.props.isOwnDevice ? " mx_DevicesPanel_myDevice" : '';
