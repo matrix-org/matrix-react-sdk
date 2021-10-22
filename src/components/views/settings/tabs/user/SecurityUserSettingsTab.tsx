@@ -292,7 +292,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                                 { analyticsOwner: SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand },
                             ) }
                             &nbsp;
-                            { _t("We don’t record or profile any personal data, and we don't share anything with any " +
+                            { _t("We don't record or profile any personal data, and we don't share anything with any " +
                                 "third parties.") }
                         </p>
                         <p>

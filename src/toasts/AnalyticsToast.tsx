@@ -56,10 +56,10 @@ const getPseudonymousDescriptions = (policyUrl: string, analyticsOwner: string):
     // The user previously opted into our old analytics system - let them know things have changed and ask
     // them to opt in again.
     const reOptInDescription = _t(
-        "To allow us to understand how people use multiple devices, we’ve enhanced our " +
+        "To allow us to understand how people use multiple devices, we've enhanced our " +
         "analytics data to include a randomly generated identifier associated " +
         "with your account that will be shared across your devices." + "<Linebreak/><Linebreak/>" +
-        "We don’t record or profile any personal data, and we don't share anything with any third " +
+        "We don't record or profile any personal data, and we don't share anything with any third " +
         "parties." + "<Linebreak/><Linebreak/>" + "<UsageDataLink>More information</UsageDataLink>" +
         "<Linebreak/><Linebreak/>" +
         "You previously agreed to send anonymous usage data to %(analyticsOwner)s - is this still okay?",
@@ -76,7 +76,7 @@ const getPseudonymousDescriptions = (policyUrl: string, analyticsOwner: string):
     const optInDescription = _t(
         "Would you like to send analytics data to %(analyticsOwner)s to help us improve the app? " +
         "<Linebreak/><Linebreak/>" +
-        "We don’t record or profile any personal data, and we don't share anything " +
+        "We don't record or profile any personal data, and we don't share anything " +
         "with any third parties." + "<Linebreak/><Linebreak/>" + "<UsageDataLink>More information</UsageDataLink>",
         {
             analyticsOwner: analyticsOwner,
