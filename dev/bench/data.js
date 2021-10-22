@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634911952344,
+  "lastUpdate": 1634912678732,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34064,6 +34064,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4598.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1f5d8a95e6fc63718bfed216f1f26a293da0be7a",
+          "message": "First draft of light-high-contrast theme (#7009)",
+          "timestamp": "2021-10-22T15:18:49+01:00",
+          "tree_id": "14f774eee39752bdbda57dccfcef4b6311c03049",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1f5d8a95e6fc63718bfed216f1f26a293da0be7a"
+        },
+        "date": 1634912676529,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4787.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 964.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1794.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4553.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
