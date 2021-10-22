@@ -32,7 +32,7 @@ export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): 
     });
 }
 
-export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset?: number): void {
+export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset = 0): void {
     const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
