@@ -15,5 +15,17 @@ export function useMediaStream<E extends HTMLMediaElement>(stream?: MediaStream,
         }
     }, [stream, mute]);
 
+    useEffect(() => {
+        const mediaEl = mediaRef.current;
+
+        return () => {
+            if (mediaEl) {
+                // Ensure we set srcObject to null before unmounting to prevent memory leak
+                // https://webrtchacks.com/srcobject-intervention/
+                mediaEl.srcObject = null;
+            }
+        };
+    }, []);
+
     return mediaRef;
 }
