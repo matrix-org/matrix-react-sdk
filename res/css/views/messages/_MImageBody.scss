@@ -18,16 +18,15 @@ $timelineImageBorderRadius: 4px;
 
 .mx_MImageBody_banner {
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 4px;
+    left: 4px;
     line-height: 20px;
     padding: 4px;
+    border-radius: $timelineImageBorderRadius;
 
     // Trying to match the width of the image is surprisingly difficult, so arbitrarily
     // break it off early.
     max-width: min(100%, 350px);
-
-    border-top-left-radius: $timelineImageBorderRadius;
 
     text-overflow: ellipsis;
     white-space: nowrap;
