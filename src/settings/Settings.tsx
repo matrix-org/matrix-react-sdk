@@ -42,6 +42,7 @@ import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
 import PseudonymousAnalyticsController from './controllers/PseudonymousAnalyticsController';
 import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
+import { ImageSize } from "./enums/ImageSize";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -719,6 +720,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "layout": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: Layout.Group,
+    },
+    "Images.size": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: ImageSize.Normal,
     },
     "showChatEffects": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,

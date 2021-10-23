@@ -35,6 +35,7 @@ import classNames from 'classnames';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { ImageSize } from "../../../settings/enums/ImageSize";
 
 interface IState {
     decryptedUrl?: string;
@@ -58,6 +59,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
     private timeout?: number;
+    private sizeWatcher: string;
 
     constructor(props: IBodyProps) {
         super(props);
@@ -317,12 +319,17 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 }
             }, 150);
         }
+
+        this.sizeWatcher = SettingsStore.watchSetting("Images.size", null, () => {
+            this.forceUpdate(); // we don't really have a reliable thing to update, so just update the whole thing
+        });
     }
 
     componentWillUnmount() {
         this.unmounted = true;
         this.context.removeListener('sync', this.onClientSync);
         this.clearBlurhashTimeout();
+        SettingsStore.unwatchSetting(this.sizeWatcher);
     }
 
     protected messageContent(
@@ -368,7 +375,17 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         // The maximum height of the thumbnail as it is rendered as an <img>
-        const maxHeight = forcedHeight || Math.min((this.props.maxImageHeight || 600), infoHeight);
+        let maxHeight = forcedHeight;
+        if (!maxHeight) {
+            switch (SettingsStore.getValue("Images.size") as ImageSize) {
+                case ImageSize.Large:
+                    maxHeight = Math.min((this.props.maxImageHeight || 600), infoHeight);
+                    break;
+                case ImageSize.Normal:
+                default:
+                    maxHeight = Math.min((this.props.maxImageHeight || 220), infoHeight);
+            }
+        }
         // The maximum width of the thumbnail, as dictated by its natural
         // maximum height.
         const maxWidth = infoWidth * maxHeight / infoHeight;
