@@ -418,17 +418,21 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         }
 
         let decryptedAccessToken = accessToken;
-        const pickleKey = await PlatformPeg.get().getPickleKey(userId, deviceId);
-        if (pickleKey) {
-            logger.log("Got pickle key");
-            if (typeof accessToken !== "string") {
-                const encrKey = await pickleKeyToAesKey(pickleKey);
-                decryptedAccessToken = await decryptAES(accessToken, encrKey, "access_token");
-                encrKey.fill(0);
+        let pickleKey = null;
+        do {
+            pickleKey = await PlatformPeg.get().getPickleKey(userId, deviceId);
+            if (pickleKey) {
+                logger.log("Got pickle key");
+                if (typeof accessToken !== "string") {
+                    const encrKey = await pickleKeyToAesKey(pickleKey);
+                    decryptedAccessToken = await decryptAES(accessToken, encrKey, "access_token");
+                    encrKey.fill(0);
+                }
+            } else {
+                logger.log("No pickle key available. Waiting 1s and trying to read it again. (Hint: Is your Keyring unlocked?)");
+                await new Promise(r => setTimeout(r, 1000));
             }
-        } else {
-            logger.log("No pickle key available");
-        }
+        } while(pickleKey == null);
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
