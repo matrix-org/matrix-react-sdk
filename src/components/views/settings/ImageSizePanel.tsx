@@ -38,7 +38,7 @@ export default class ImageSizePanel extends React.Component<IProps, IState> {
         };
     }
 
-    private onSizeChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    private onSizeChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
         const newSize = ev.target.value as ImageSize;
         this.setState({ size: newSize });
 
