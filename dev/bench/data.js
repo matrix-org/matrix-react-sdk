@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634924218477,
+  "lastUpdate": 1634960285553,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34256,6 +34256,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5025.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0ba24ec14f6b7f90953e839592301585a8416c13",
+          "message": "I shall be murdered by design people for this (#6384)\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-10-22T21:32:45-06:00",
+          "tree_id": "da7d5272911dd94b2bd8f153f732981072f4ffd1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0ba24ec14f6b7f90953e839592301585a8416c13"
+        },
+        "date": 1634960283600,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4242.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 978.6000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
