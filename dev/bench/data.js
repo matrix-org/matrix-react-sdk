@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634960285553,
+  "lastUpdate": 1634960298512,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34292,6 +34292,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 978.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c5bd1fb32d04cb2e3394ed64ebb950a9064408d6",
+          "message": "Convert `/src/async-components/views/dialogs/security` to TS (#6923)\n\n* Convert RecoveryMethodRemovedDialog to TS\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Convert NewRecoveryMethodDialog to TS\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Convert ImportE2eKeysDialog to TS\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Convert ExportE2eKeysDialog to TS\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Convert CreateSecretStorageDialog to TS\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Convert CreateKeyBackupDialog to TS\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix types\r\n\r\nThis is somewhat hacky though I don't know of a better way to do this\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-10-22T21:32:16-06:00",
+          "tree_id": "b599eb3682cddd976c53f4d6be30200c09cf3cfc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c5bd1fb32d04cb2e3394ed64ebb950a9064408d6"
+        },
+        "date": 1634960295716,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4724.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1017.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
