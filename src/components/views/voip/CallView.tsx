@@ -544,6 +544,7 @@ export default class CallView extends React.Component<IProps, IState> {
                 <div
                     className={classes}
                     onMouseMove={this.onMouseMove}
+                    ref={this.contentRef}
                 >
                     { sidebar }
                     <div className="mx_CallView_voice_avatarsContainer">
