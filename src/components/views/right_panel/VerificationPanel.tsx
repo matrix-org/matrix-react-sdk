@@ -35,6 +35,8 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from "../elements/AccessibleButton";
 import VerificationShowSas from "../verification/VerificationShowSas";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     layout: string;
     request: VerificationRequest;
@@ -234,7 +236,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (!device) {
                 // This can happen if the device is logged out while we're still showing verification
                 // UI for it.
-                console.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
+                logger.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
                 description = _t("You've successfully verified your device!");
             } else {
                 description = _t("You've successfully verified %(deviceName)s (%(deviceId)s)!", {
@@ -250,7 +252,6 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         return (
             <div className="mx_UserInfo_container mx_VerificationPanel_verified_section">
-                <h3>{ _t("Verified") }</h3>
                 <p>{ description }</p>
                 <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
                 { text ? <p>{ text }</p> : null }
@@ -323,7 +324,6 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                                 isSelf={request.isSelfVerification}
                             /> : <Spinner />;
                         return <div className="mx_UserInfo_container">
-                            <h3>{ _t("Compare emoji") }</h3>
                             { emojis }
                         </div>;
                     }
@@ -335,7 +335,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             case Phase.Cancelled:
                 return this.renderCancelledPhase();
         }
-        console.error("VerificationPanel unhandled phase:", phase);
+        logger.error("VerificationPanel unhandled phase:", phase);
         return null;
     }
 
@@ -345,7 +345,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         try {
             await verifier.verify();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     };
 
@@ -378,7 +378,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 // but that's ok as verify should return the same promise.
                 await request.verifier.verify();
             } catch (err) {
-                console.error("error verify", err);
+                logger.error("error verify", err);
             }
         }
     };

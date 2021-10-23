@@ -312,7 +312,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             //
             // for now, just warn about this. But we're going to end up paginating
             // both rooms separately, and it's all bad.
-            console.warn("Replacing timelineSet on a TimelinePanel - confusion may ensue");
+            logger.warn("Replacing timelineSet on a TimelinePanel - confusion may ensue");
         }
 
         const differentEventId = newProps.eventId != this.props.eventId;
@@ -799,11 +799,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
                         lastReadEvent,
                         {},
                     ).catch((e) => {
-                        console.error(e);
+                        logger.error(e);
                         this.lastRRSentEventId = undefined;
                     });
                 } else {
-                    console.error(e);
+                    logger.error(e);
                 }
                 // it failed, so allow retries next time the user is active
                 this.lastRRSentEventId = undefined;
@@ -1121,7 +1121,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) return;
 
             this.setState({ timelineLoading: false });
-            console.error(
+            logger.error(
                 `Error loading timeline panel at ${eventId}: ${error}`,
             );
 
@@ -1266,7 +1266,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 // Somehow, it seems to be possible for live events to not have
                 // a timeline, even though that should not happen. :(
                 // https://github.com/vector-im/element-web/issues/12120
-                console.warn(
+                logger.warn(
                     `Event ${events[i].getId()} in room ${room.roomId} is live, ` +
                     `but it does not have a timeline`,
                 );
