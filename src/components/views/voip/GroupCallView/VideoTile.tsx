@@ -5,6 +5,8 @@ import { useCallFeed } from "../../../../hooks/useCallFeed";
 import { useMediaStream } from "../../../../hooks/useMediaStream";
 import { useRoomMemberName } from "../../../../hooks/useRoomMemberName";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
+
 interface IVideoTileProps {
     style: any;
     callFeed: CallFeed;
@@ -17,7 +19,7 @@ export default function VideoTile({
     disableSpeakingHighlight,
     ...rest
 }: IVideoTileProps) {
-    const { isLocal, audioMuted, videoMuted, speaking, stream, member } = useCallFeed(callFeed);
+    const { isLocal, audioMuted, videoMuted, speaking, stream, member, purpose } = useCallFeed(callFeed);
     const name = useRoomMemberName(member);
     const mediaRef = useMediaStream<HTMLVideoElement>(stream, isLocal);
 
@@ -33,10 +35,12 @@ export default function VideoTile({
             style={style}
             {...rest}
         >
-            <div className="mx_memberName">
-                <i className={audioMuted ? "mx_muteMicIcon" : "mx_micIcon"} />
-                <span>{ name }</span>
-            </div>
+            { purpose === SDPStreamMetadataPurpose.Usermedia && (
+                <div className="mx_memberName">
+                    <i className={audioMuted ? "mx_muteMicIcon" : "mx_micIcon"} />
+                    <span>{ name }</span>
+                </div>
+            ) }
             { videoMuted && (
                 <i className="mx_videoMutedIcon" />
             ) }
