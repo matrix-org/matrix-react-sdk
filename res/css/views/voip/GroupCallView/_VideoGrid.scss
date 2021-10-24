@@ -70,20 +70,15 @@ limitations under the License.
             }
         }
 
-        .mx_micIcon, .mx_muteMicIcon, .mx_speakingIcon, .mx_videoMutedIcon {
+        .mx_micIcon, .mx_muteMicIcon, .mx_videoMutedIcon {
             mask-repeat: no-repeat;
             mask-size: contain;
             mask-position: center;
         }
 
-        .mx_muteMicIcon, .mx_speakingIcon, .mx_micIcon {
+        .mx_muteMicIcon, .mx_micIcon {
             height: 16px;
             width: 16px;
-        }
-
-        .mx_speakingIcon{
-            background-color: #8D99A5;
-            mask-image: url('$(res)/img/voip/silence.svg');
         }
 
         .mx_muteMicIcon {
