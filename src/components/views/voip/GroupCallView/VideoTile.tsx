@@ -34,11 +34,7 @@ export default function VideoTile({
             {...rest}
         >
             <div className="mx_memberName">
-                { speaking ? (
-                    <i className="mx_speakingIcon" />
-                ) : audioMuted ? (
-                    <i className="mx_muteMicIcon" />
-                ) : null }
+                <i className={speaking ? "mx_speakingIcon" : audioMuted ? "mx_muteMicIcon" : "mx_micIcon"} />
                 <span>{ name }</span>
             </div>
             { videoMuted && (

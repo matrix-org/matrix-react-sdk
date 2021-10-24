@@ -48,7 +48,7 @@ limitations under the License.
             height: 32px;
             padding: 0 8px;
             background-color: rgba(23, 25, 28, 0.96);
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 8px;
@@ -70,13 +70,13 @@ limitations under the License.
             }
         }
 
-        .mx_muteMicIcon, .mx_speakingIcon, .mx_videoMutedIcon {
+        .mx_micIcon, .mx_muteMicIcon, .mx_speakingIcon, .mx_videoMutedIcon {
             mask-repeat: no-repeat;
             mask-size: contain;
             mask-position: center;
         }
 
-        .mx_muteMicIcon, .mx_speakingIcon {
+        .mx_muteMicIcon, .mx_speakingIcon, .mx_micIcon {
             height: 16px;
             width: 16px;
         }
@@ -89,6 +89,11 @@ limitations under the License.
         .mx_muteMicIcon {
             background-color: #FF5B55;
             mask-image: url('$(res)/img/voip/mic-muted.svg');
+        }
+
+        .mx_micIcon {
+            background-color: #8D99A5;
+            mask-image: url('$(res)/img/voip/mic-unmuted.svg');
         }
 
         .mx_videoMutedIcon {
@@ -104,10 +109,6 @@ limitations under the License.
 
         &.mx_speaking {
             border-color: #0DBD8B;
-        }
-
-        &:hover .mx_memberName, &.mx_muted .mx_memberName {
-            display: flex;
         }
     }
 }
