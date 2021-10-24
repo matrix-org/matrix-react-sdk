@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CallFeed, CallFeedEvent } from "matrix-js-sdk/src/webrtc/callFeed";
 import { RoomMember } from "matrix-js-sdk";
+import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
 
 interface ICallFeedState {
     member?: RoomMember;
@@ -9,6 +10,7 @@ interface ICallFeedState {
     videoMuted: boolean;
     audioMuted: boolean;
     stream?: MediaStream;
+    purpose?: SDPStreamMetadataPurpose;
 }
 
 function getCallFeedState(callFeed?: CallFeed) {
@@ -19,6 +21,7 @@ function getCallFeedState(callFeed?: CallFeed) {
         videoMuted: callFeed ? callFeed.isVideoMuted() : true,
         audioMuted: callFeed ? callFeed.isAudioMuted() : true,
         stream: callFeed ? callFeed.stream : undefined,
+        purpose: callFeed ? callFeed.purpose : undefined,
     };
 }
 
