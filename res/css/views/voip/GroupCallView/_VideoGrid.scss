@@ -77,17 +77,16 @@ limitations under the License.
         }
 
         .mx_muteMicIcon, .mx_micIcon {
+            background-color: white;
             height: 16px;
             width: 16px;
         }
 
         .mx_muteMicIcon {
-            background-color: #FF5B55;
             mask-image: url('$(res)/img/voip/mic-muted.svg');
         }
 
         .mx_micIcon {
-            background-color: #8D99A5;
             mask-image: url('$(res)/img/voip/mic-unmuted.svg');
         }
 
