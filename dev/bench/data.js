@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635152558820,
+  "lastUpdate": 1635154716718,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34412,6 +34412,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 980.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "70606ffff65c6e6477b4aa7df3c73c3147d81bf4",
+          "message": "Replace all uses of notice-primary-color with the correct alert colour (#7010)",
+          "timestamp": "2021-10-25T10:32:38+01:00",
+          "tree_id": "88d8d26ae173099c52478441d700d2c8f1aafb25",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/70606ffff65c6e6477b4aa7df3c73c3147d81bf4"
+        },
+        "date": 1635154713809,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4646.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1003.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1803.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4826.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
