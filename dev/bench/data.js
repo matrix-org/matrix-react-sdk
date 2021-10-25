@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635158786170,
+  "lastUpdate": 1635158802902,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34784,6 +34784,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4638.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ead2a5152f348f91dde2dcca9fd3e235e8869b50",
+          "message": "Add decoration to space hierarchy for tiles which have already been j… (#6969)",
+          "timestamp": "2021-10-25T11:40:06+01:00",
+          "tree_id": "74d747387f9f4e9650fe4501fcfeb0259e6c1f26",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ead2a5152f348f91dde2dcca9fd3e235e8869b50"
+        },
+        "date": 1635158800026,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4810.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1275.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1796.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4739.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
