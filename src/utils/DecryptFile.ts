@@ -16,20 +16,22 @@ limitations under the License.
 
 // Pull in the encryption lib so that we can decrypt attachments.
 import encrypt from 'browser-encrypt-attachment';
+import { decodeBase64 } from 'matrix-js-sdk/src/crypto/olmlib';
 import { mediaFromContent } from "../customisations/Media";
 import { IEncryptedFile, IMediaEventInfo } from "../customisations/models/IMediaEventContent";
 import { getBlobSafeMimeType } from "./blobs";
+import { sanitizeSvg } from './FileUtils';
 
 /**
  * Decrypt a file attached to a matrix event.
  * @param {IEncryptedFile} file The encrypted file information taken from the matrix event.
  *   This passed to [link]{@link https://github.com/matrix-org/browser-encrypt-attachment}
- *   as the encryption info object, so will also have the those keys in addition to
+ *   as an encryption info object, so it will also have those keys in addition to
  *   the keys below.
  * @param {IMediaEventInfo} info The info parameter taken from the matrix event.
  * @returns {Promise<Blob>} Resolves to a Blob of the file.
  */
-export function decryptFile(
+export async function decryptFile(
     file: IEncryptedFile,
     info?: IMediaEventInfo,
 ): Promise<Blob> {
@@ -43,13 +45,19 @@ export function decryptFile(
         return encrypt.decryptAttachment(responseData, file);
     }).then((dataArray) => {
         // Turn the array into a Blob and give it the correct MIME-type.
-
-        // IMPORTANT: we must not allow scriptable mime-types into Blobs otherwise
+        // IMPORTANT: we must not allow scriptable MIME-types into Blobs otherwise
         // they introduce XSS attacks if the Blob URI is viewed directly in the
-        // browser (e.g. by copying the URI into a new tab or window.)
+        // browser (e.g. by copying the URI into a new tab or window).
+        // However, image/svg+xml can be allowed, since files of this type can be
+        // sanitized using DOMPurify.
         // See warning at top of file.
         let mimetype = info?.mimetype ? info.mimetype.split(";")[0].trim() : '';
         mimetype = getBlobSafeMimeType(mimetype);
+
+        if (mimetype === "image/svg+xml") {
+            let svgFile = new TextDecoder("utf-8").decode(decodeBase64(dataArray));
+            return new Blob([sanitizeSvg(svgFile)], { type: mimetype });
+        }
 
         return new Blob([dataArray], { type: mimetype });
     });
