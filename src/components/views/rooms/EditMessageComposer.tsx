@@ -500,8 +500,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     };
 
     private onAction = (payload: ActionPayload) => {
+        if (!this.editorRef.current) return;
+
         if (payload.action === Action.ComposerInsert) {
-            if (!this.editorRef.current) return;
             if (payload.timelineRenderingType !== this.context.timelineRenderingType) return;
             if (payload.composerType !== ComposerType.Edit) return;
 
@@ -512,7 +513,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             } else if (payload.text) {
                 this.editorRef.current?.insertPlaintext(payload.text);
             }
-        } else if (payload.action === Action.FocusEditMessageComposer && this.editorRef.current) {
+        } else if (payload.action === Action.FocusEditMessageComposer) {
             this.editorRef.current.focus();
         }
     };
