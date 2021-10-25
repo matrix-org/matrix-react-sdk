@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635152474433,
+  "lastUpdate": 1635152558820,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34376,6 +34376,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5051.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "52425971+CicadaCinema@users.noreply.github.com",
+            "name": "CicadaCinema",
+            "username": "CicadaCinema"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1c3ad14b4ec3ac1c926f958ec6ae06954d1c052d",
+          "message": "Fix recent css regression (#7022)",
+          "timestamp": "2021-10-25T09:57:16+01:00",
+          "tree_id": "d6b77151da5edac7ccbae0641c104631f7568edf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1c3ad14b4ec3ac1c926f958ec6ae06954d1c052d"
+        },
+        "date": 1635152556747,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4307.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 980.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
