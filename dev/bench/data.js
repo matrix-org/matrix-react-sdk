@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635170442462,
+  "lastUpdate": 1635193638534,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35024,6 +35024,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4405.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "8217676+RafaelGoncalves8@users.noreply.github.com",
+            "name": "Rafael Gonçalves",
+            "username": "RafaelGoncalves8"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a1029df901c37cb217b3663746a92c084291b507",
+          "message": "Add history entry before completing emoji (#7007)\n\nSigned-off-by: Rafael Goncalves <rafaelgoncalves@riseup.net>",
+          "timestamp": "2021-10-25T14:21:59-06:00",
+          "tree_id": "24010a56d57adb48c53a801fd14e77053cd81b3c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a1029df901c37cb217b3663746a92c084291b507"
+        },
+        "date": 1635193636709,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4040.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 612.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
