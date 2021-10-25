@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635155534166,
+  "lastUpdate": 1635156146717,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34556,6 +34556,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5433.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ceb4c7e368bf7dfdad37cad5fd083a1ba53094e6",
+          "message": "Add insert link button to the format bar (#5879)",
+          "timestamp": "2021-10-25T10:56:55+01:00",
+          "tree_id": "3b5142e6f7d99d6edebc061bc396c30b052fce55",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ceb4c7e368bf7dfdad37cad5fd083a1ba53094e6"
+        },
+        "date": 1635156144651,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4035.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 925.3999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1642.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4323.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
