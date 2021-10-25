@@ -24,6 +24,7 @@ import React, {
     useReducer,
     Reducer,
     Dispatch,
+    RefObject,
 } from "react";
 
 import { Key } from "../Keyboard";
@@ -145,13 +146,40 @@ export const reducer = (state: IState, action: IAction) => {
 interface IProps {
     handleHomeEnd?: boolean;
     handleUpDown?: boolean;
+    handleLeftRight?: boolean;
     children(renderProps: {
         onKeyDownHandler(ev: React.KeyboardEvent);
     });
     onKeyDown?(ev: React.KeyboardEvent, state: IState);
 }
 
-export const RovingTabIndexProvider: React.FC<IProps> = ({ children, handleHomeEnd, handleUpDown, onKeyDown }) => {
+export const findSiblingElement = (
+    refs: RefObject<HTMLElement>[],
+    startIndex: number,
+    backwards = false,
+): RefObject<HTMLElement> => {
+    if (backwards) {
+        for (let i = startIndex; i < refs.length && i >= 0; i--) {
+            if (refs[i].current.offsetParent !== null) {
+                return refs[i];
+            }
+        }
+    } else {
+        for (let i = startIndex; i < refs.length && i >= 0; i++) {
+            if (refs[i].current.offsetParent !== null) {
+                return refs[i];
+            }
+        }
+    }
+};
+
+export const RovingTabIndexProvider: React.FC<IProps> = ({
+    children,
+    handleHomeEnd,
+    handleUpDown,
+    handleLeftRight,
+    onKeyDown,
+}) => {
     const [state, dispatch] = useReducer<Reducer<IState, IAction>>(reducer, {
         activeRef: null,
         refs: [],
@@ -160,6 +188,13 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({ children, handleHomeE
     const context = useMemo<IContext>(() => ({ state, dispatch }), [state]);
 
     const onKeyDownHandler = useCallback((ev) => {
+        if (onKeyDown) {
+            onKeyDown(ev, context.state);
+            if (ev.defaultPrevented) {
+                return;
+            }
+        }
+
         let handled = false;
         // Don't interfere with input default keydown behaviour
         if (ev.target.tagName !== "INPUT" && ev.target.tagName !== "TEXTAREA") {
@@ -169,12 +204,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({ children, handleHomeE
                     if (handleHomeEnd) {
                         handled = true;
                         // move focus to first (visible) item
-                        for (let i = 0; i < context.state.refs.length; i++) {
-                            if (context.state.refs[i].current.offsetParent !== null) {
-                                context.state.refs[i].current.focus();
-                                break;
-                            }
-                        }
+                        findSiblingElement(context.state.refs, 0)?.current?.focus();
                     }
                     break;
 
@@ -182,35 +212,28 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({ children, handleHomeE
                     if (handleHomeEnd) {
                         handled = true;
                         // move focus to last (visible) item
-                        for (let i = context.state.refs.length - 1; i >= 0; i--) {
-                            if (context.state.refs[i].current.offsetParent !== null) {
-                                context.state.refs[i].current.focus();
-                                break;
-                            }
-                        }
+                        findSiblingElement(context.state.refs, context.state.refs.length - 1, true)?.current?.focus();
                     }
                     break;
 
                 case Key.ARROW_UP:
-                    if (handleUpDown) {
+                case Key.ARROW_RIGHT:
+                    if ((ev.key === Key.ARROW_UP && handleUpDown) || (ev.key === Key.ARROW_RIGHT && handleLeftRight)) {
                         handled = true;
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
-                            if (idx > 0) {
-                                context.state.refs[idx - 1].current.focus();
-                            }
+                            findSiblingElement(context.state.refs, idx - 1)?.current?.focus();
                         }
                     }
                     break;
 
                 case Key.ARROW_DOWN:
-                    if (handleUpDown) {
+                case Key.ARROW_LEFT:
+                    if ((ev.key === Key.ARROW_DOWN && handleUpDown) || (ev.key === Key.ARROW_LEFT && handleLeftRight)) {
                         handled = true;
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
-                            if (idx < context.state.refs.length - 1) {
-                                context.state.refs[idx + 1].current.focus();
-                            }
+                            findSiblingElement(context.state.refs, idx + 1, true)?.current?.focus();
                         }
                     }
                     break;
@@ -220,10 +243,8 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({ children, handleHomeE
         if (handled) {
             ev.preventDefault();
             ev.stopPropagation();
-        } else if (onKeyDown) {
-            return onKeyDown(ev, context.state);
         }
-    }, [context.state, onKeyDown, handleHomeEnd, handleUpDown]);
+    }, [context.state, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight]);
 
     return <RovingTabIndexContext.Provider value={context}>
         { children({ onKeyDownHandler }) }
