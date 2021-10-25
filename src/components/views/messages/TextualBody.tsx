@@ -411,7 +411,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             action: Action.ComposerInsert,
             userId: mxEvent.getSender(),
             timelineRenderingType: this.context.timelineRenderingType,
-            composerType: null,
         });
     };
 

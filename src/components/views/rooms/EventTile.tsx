@@ -863,7 +863,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             action: Action.ComposerInsert,
             userId: mxEvent.getSender(),
             timelineRenderingType: this.context.timelineRenderingType,
-            composerType: null,
         });
     };
 

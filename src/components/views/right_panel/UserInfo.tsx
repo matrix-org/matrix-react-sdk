@@ -380,7 +380,6 @@ const UserOptionsSection: React.FC<{
                     action: Action.ComposerInsert,
                     userId: member.userId,
                     timelineRenderingType: TimelineRenderingType.Room,
-                    composerType: null,
                 });
             };
 

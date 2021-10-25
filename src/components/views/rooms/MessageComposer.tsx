@@ -404,7 +404,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             action: Action.ComposerInsert,
             text: emoji,
             timelineRenderingType: this.context.timelineRenderingType,
-            composerType: null,
         });
         return true;
     };
