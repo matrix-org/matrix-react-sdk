@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import * as Email from '../../../email';
 import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
@@ -31,7 +32,6 @@ import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CountryDropdown from "./CountryDropdown";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -57,6 +57,7 @@ interface IProps {
     }[];
     serverConfig: ValidatedServerConfig;
     canSubmit?: boolean;
+    matrixClient: MatrixClient;
 
     onRegisterClick(params: {
         username: string;
@@ -394,7 +395,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                     }
 
                     try {
-                        await MatrixClientPeg.get().isUsernameAvailable(value);
+                        await this.props.matrixClient.isUsernameAvailable(value);
                         return true;
                     } catch (err) {
                         return false;
