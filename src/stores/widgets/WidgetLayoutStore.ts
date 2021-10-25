@@ -206,16 +206,16 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             const manualContainer = userLayout?.widgets?.[widget.id]?.container;
             const isLegacyPinned = !!legacyPinned?.[widget.id];
             const defaultContainer = WidgetType.JITSI.matches(widget.type) ? Container.Top : Container.Right;
-
-            if (manualContainer === Container.Right) {
-                rightWidgets.push(widget);
-            } else if (manualContainer === Container.Top || stateContainer === Container.Top) {
-                topWidgets.push(widget);
-            } else if (isLegacyPinned && !stateContainer) {
-                topWidgets.push(widget);
-            } else {
-                (defaultContainer === Container.Top ? topWidgets : rightWidgets).push(widget);
+            
+            let targetContainer = defaultContainer;
+            if(manualContainer !== undefined || stateContainer !== undefined){
+                targetContainer = (manualContainer) ? manualContainer : stateContainer;
+            } 
+            // Special legacy case
+            else if (isLegacyPinned && !stateContainer) {
+                targetContainer = Container.Top;
             }
+            (targetContainer === Container.Top ? topWidgets : rightWidgets).push(widget);
         }
 
         // Trim to MAX_PINNED
@@ -423,7 +423,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
 
     public moveToContainer(room: Room, widget: IApp, toContainer: Container) {
         const allWidgets = this.getAllWidgets(room);
-        if (!allWidgets.some(([w])=> w.id === widget.id)) return; // invalid
+        if (!allWidgets.some(([w]) => w.id === widget.id)) return; // invalid
         this.updateUserLayout(room, {
             [widget.id]: { container: toContainer },
         });
