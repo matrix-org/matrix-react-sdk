@@ -73,10 +73,7 @@ export class CapabilityText {
         },
         [MatrixCapabilities.MSC2931Navigate]: {
             [GENERIC_WIDGET_KIND]: _td("Change which room, message, or user you're viewing"),
-        },
-        [MatrixCapabilities.RequiresClient]: {
-            [GENERIC_WIDGET_KIND]: _td("Prohibits Element from showing the widget popout button."),
-        },
+        }
     };
 
     private static stateSendRecvCaps: ISendRecvStaticCapText = {
