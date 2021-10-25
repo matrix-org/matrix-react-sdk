@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635158538438,
+  "lastUpdate": 1635158761120,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34688,6 +34688,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 807.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "64c3f0a9b13ccae6543555d29ba55419399a208f",
+          "message": "Fix fullscreening a call while connecting (#7019)",
+          "timestamp": "2021-10-25T11:40:44+01:00",
+          "tree_id": "61901dae01755188d32b3af0adaca5229242e6b6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/64c3f0a9b13ccae6543555d29ba55419399a208f"
+        },
+        "date": 1635158759200,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3944.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 915.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4329.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
