@@ -33,6 +33,7 @@ interface IProps {
     // XXX: once design replaces all toggles make this the default
     useCheckbox?: boolean;
     disabled?: boolean;
+    disabledTooltip?: string;
     onChange?(checked: boolean): void;
 }
 
@@ -99,6 +100,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                         onChange={this.onChange}
                         disabled={this.props.disabled || !canChange}
                         aria-label={label}
+                        tooltip={this.props.disabled && this.props.disabledTooltip}
                     />
                     { description && <div className="mx_SettingsFlag_microcopy">
                         { description }
