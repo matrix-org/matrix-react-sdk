@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { ComponentType, createRef } from 'react';
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -42,7 +42,7 @@ import linkifyMatrix from "../../linkify-matrix";
 import * as Lifecycle from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
 import '../../stores/LifecycleStore';
-import PageTypes from '../../PageTypes';
+import PageType from '../../PageTypes';
 
 import createRoom, { IOpts } from "../../createRoom";
 import { _t, _td, getCurrentLanguage } from '../../languageHandler';
@@ -112,6 +112,7 @@ import { initSentry } from "../../sentry";
 import CallHandler from "../../CallHandler";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { showSpaceInvite } from "../../utils/space";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -176,6 +177,9 @@ interface IRoomInfo {
     threepid_invite?: IThreepidInvite;
 
     justCreatedOpts?: IOpts;
+
+    // Whether or not to override default behaviour to end up at a timeline
+    forceTimeline?: boolean;
 }
 /* eslint-enable camelcase */
 
@@ -208,7 +212,7 @@ interface IState {
     view: Views;
     // What the LoggedInView would be showing if visible
     // eslint-disable-next-line camelcase
-    page_type?: PageTypes;
+    page_type?: PageType;
     // The ID of the room we're viewing. This is either populated directly
     // in the case where we view a room by ID or by RoomView when it resolves
     // what ID an alias points at.
@@ -238,6 +242,7 @@ interface IState {
     pendingInitialSync?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
+    forceTimeline?: boolean; // see props
 }
 
 @replaceableComponent("structures.MatrixChat")
@@ -724,7 +729,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             }
             case 'view_my_groups':
-                this.setPage(PageTypes.MyGroups);
+                this.setPage(PageType.MyGroups);
                 this.notifyNewScreen('groups');
                 break;
             case 'view_group':
@@ -742,9 +747,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'view_create_chat':
                 showStartChatInviteDialog(payload.initialText || "");
                 break;
-            case 'view_invite':
-                showRoomInviteDialog(payload.roomId);
+            case 'view_invite': {
+                const room = MatrixClientPeg.get().getRoom(payload.roomId);
+                if (room?.isSpaceRoom()) {
+                    showSpaceInvite(room);
+                } else {
+                    showRoomInviteDialog(payload.roomId);
+                }
                 break;
+            }
             case 'view_last_screen':
                 // This function does what we want, despite the name. The idea is that it shows
                 // the last room we were looking at or some reasonable default/guess. We don't
@@ -757,7 +768,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 localStorage.setItem("mx_seenSpacesBeta", "1");
                 // We just dispatch the page change rather than have to worry about
                 // what the logic is for each of these branches.
-                if (this.state.page_type === PageTypes.MyGroups) {
+                if (this.state.page_type === PageType.MyGroups) {
                     dis.dispatch({ action: 'view_last_screen' });
                 } else {
                     dis.dispatch({ action: 'view_my_groups' });
@@ -843,7 +854,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private setPage(pageType: string) {
+    private setPage(pageType: PageType) {
         this.setState({
             page_type: pageType,
         });
@@ -865,6 +876,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             newState.serverConfig = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
                 params.hs_url, params.is_url,
             );
+
+            // If the hs url matches then take the hs name we know locally as it is likely prettier
+            const defaultConfig = SdkConfig.get()["validated_server_config"] as ValidatedServerConfig;
+            if (defaultConfig && defaultConfig.hsUrl === newState.serverConfig.hsUrl) {
+                newState.serverConfig.hsName = defaultConfig.hsName;
+                newState.serverConfig.hsNameIsDifferent = defaultConfig.hsNameIsDifferent;
+                newState.serverConfig.isDefault = defaultConfig.isDefault;
+                newState.serverConfig.isNameResolvable = defaultConfig.isNameResolvable;
+            }
 
             newState.register_client_secret = params.client_secret;
             newState.register_session_id = params.session_id;
@@ -911,7 +931,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         let waitFor = Promise.resolve(null);
         if (!this.firstSyncComplete) {
             if (!this.firstSyncPromise) {
-                console.warn('Cannot view a room before first sync. room_id:', roomInfo.room_id);
+                logger.warn('Cannot view a room before first sync. room_id:', roomInfo.room_id);
                 return;
             }
             waitFor = this.firstSyncPromise.promise;
@@ -950,9 +970,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.setState({
                 view: Views.LOGGED_IN,
                 currentRoomId: roomInfo.room_id || null,
-                page_type: PageTypes.RoomView,
+                page_type: PageType.RoomView,
                 threepidInvite: roomInfo.threepid_invite,
                 roomOobData: roomInfo.oob_data,
+                forceTimeline: roomInfo.forceTimeline,
                 ready: true,
                 roomJustCreatedOpts: roomInfo.justCreatedOpts,
             }, () => {
@@ -967,7 +988,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // Wait for the first sync to complete
         if (!this.firstSyncComplete) {
             if (!this.firstSyncPromise) {
-                console.warn('Cannot view a group before first sync. group_id:', groupId);
+                logger.warn('Cannot view a group before first sync. group_id:', groupId);
                 return;
             }
             await this.firstSyncPromise.promise;
@@ -978,7 +999,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             currentGroupId: groupId,
             currentGroupIsNew: payload.group_is_new,
         });
-        this.setPage(PageTypes.GroupView);
+        this.setPage(PageType.GroupView);
         this.notifyNewScreen('group/' + groupId);
     }
 
@@ -1021,7 +1042,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             justRegistered,
             currentRoomId: null,
         });
-        this.setPage(PageTypes.HomePage);
+        this.setPage(PageType.HomePage);
         this.notifyNewScreen('home');
         ThemeController.isLogin = false;
         this.themeWatcher.recheck();
@@ -1039,7 +1060,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
             this.notifyNewScreen('user/' + userId);
             this.setState({ currentUserId: userId });
-            this.setPage(PageTypes.UserView);
+            this.setPage(PageType.UserView);
         });
     }
 
@@ -1446,7 +1467,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (state === "SYNCING" && prevState === "SYNCING") {
                 return;
             }
-            console.info("MatrixClient sync state => %s", state);
+            logger.info("MatrixClient sync state => %s", state);
             if (state !== "PREPARED") { return; }
 
             this.firstSyncComplete = true;
@@ -1469,7 +1490,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             Modal.closeCurrentModal('Session.logged_out');
 
             if (errObj.httpStatus === 401 && errObj.data && errObj.data['soft_logout']) {
-                console.warn("Soft logout issued by server - avoiding data deletion");
+                logger.warn("Soft logout issued by server - avoiding data deletion");
                 Lifecycle.softLogout();
                 return;
             }
@@ -1574,19 +1595,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     newVersionInfo = await MatrixClientPeg.get().getKeyBackupVersion();
                     if (newVersionInfo !== null) haveNewVersion = true;
                 } catch (e) {
-                    console.error("Saw key backup error but failed to check backup version!", e);
+                    logger.error("Saw key backup error but failed to check backup version!", e);
                     return;
                 }
             }
 
             if (haveNewVersion) {
                 Modal.createTrackedDialogAsync('New Recovery Method', 'New Recovery Method',
-                    import('../../async-components/views/dialogs/security/NewRecoveryMethodDialog'),
+                    import(
+                        '../../async-components/views/dialogs/security/NewRecoveryMethodDialog'
+                    ) as unknown as Promise<ComponentType<{}>>,
                     { newVersionInfo },
                 );
             } else {
                 Modal.createTrackedDialogAsync('Recovery Method Removed', 'Recovery Method Removed',
-                    import('../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog'),
+                    import(
+                        '../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog'
+                    ) as unknown as Promise<ComponentType<{}>>,
                 );
             }
         });
@@ -1812,7 +1837,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 group_id: groupId,
             });
         } else {
-            console.info("Ignoring showScreen for '%s'", screen);
+            logger.info("Ignoring showScreen for '%s'", screen);
         }
     }
 
@@ -2115,7 +2140,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 />
             );
         } else {
-            console.error(`Unknown view ${this.state.view}`);
+            logger.error(`Unknown view ${this.state.view}`);
         }
 
         return <ErrorBoundary>

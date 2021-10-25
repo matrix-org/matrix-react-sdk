@@ -22,6 +22,12 @@ limitations under the License.
         display: none;
     }
 
+    &:not(.mx_RoomSublist_minimized) {
+        .mx_RoomSublist_headerContainer {
+            height: auto;
+        }
+    }
+
     .mx_RoomSublist_headerContainer {
         // Create a flexbox to make alignment easy
         display: flex;
@@ -41,10 +47,8 @@ limitations under the License.
         // The combined height must be set in the LeftPanel component for sticky headers
         // to work correctly.
         padding-bottom: 8px;
-        // Allow the container to collapse on itself if its children
-        // are not in the normal document flow
-        max-height: 24px;
-        color: $roomlist-header-color;
+        height: 24px;
+        color: $tertiary-content;
 
         .mx_RoomSublist_stickable {
             flex: 1;
@@ -161,7 +165,7 @@ limitations under the License.
                     mask-position: center;
                     mask-size: contain;
                     mask-repeat: no-repeat;
-                    background-color: $roomlist-header-color;
+                    background-color: $tertiary-content;
                     mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
                 }
 
@@ -170,14 +174,6 @@ limitations under the License.
                 }
             }
         }
-    }
-
-    // In the general case, we reserve space for each sublist header to prevent
-    // scroll jumps when they become sticky. However, that leaves a gap when
-    // scrolled to the top above the first sublist (whose header can only ever
-    // stick to top), so we make sure to exclude the first visible sublist.
-    &:not(.mx_RoomSublist_hidden) ~ .mx_RoomSublist .mx_RoomSublist_headerContainer {
-        height: 24px;
     }
 
     .mx_RoomSublist_resizeBox {
@@ -240,7 +236,7 @@ limitations under the License.
         cursor: pointer;
         font-size: $font-13px;
         line-height: $font-18px;
-        color: $roomtile-preview-color;
+        color: $secondary-content;
 
         // Update the render() function for RoomSublist if these change
         // Update the ListLayout class for minVisibleTiles if these change.
@@ -260,7 +256,7 @@ limitations under the License.
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
-            background: $roomlist-header-color;
+            background: $tertiary-content;
             left: -1px; // adjust for image position
         }
 
@@ -372,7 +368,7 @@ limitations under the License.
         margin-top: 16px;
         margin-bottom: 16px;
         margin-right: 16px; // additional 16px
-        border: 1px solid $roomsublist-divider-color;
+        border: 1px solid $primary-content;
         opacity: 0.1;
     }
 
@@ -395,7 +391,7 @@ limitations under the License.
 .mx_RoomSublist_skeletonUI {
     position: relative;
     margin-left: 4px;
-    height: 288px;
+    height: 240px;
 
     &::before {
         background: $roomsublist-skeleton-ui-bg;
@@ -409,4 +405,9 @@ limitations under the License.
         mask-size: auto 48px;
         mask-image: url('$(res)/img/element-icons/roomlist/skeleton-ui.svg');
     }
+}
+
+.mx_RoomSublist_minimized .mx_RoomSublist_skeletonUI {
+    width: 32px; // cut off the horizontal lines in the svg
+    margin-left: 10px; // align with sublist + buttons
 }

@@ -107,20 +107,20 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                 scalarClient.disableWidgetAssets(WidgetType.STICKERPICKER, this.state.widgetId).then(() => {
                     logger.log('Assets disabled');
                 }).catch((err) => {
-                    console.error('Failed to disable assets');
+                    logger.error('Failed to disable assets');
                 });
             } else {
-                console.error("Cannot disable assets: no scalar client");
+                logger.error("Cannot disable assets: no scalar client");
             }
         } else {
-            console.warn('No widget ID specified, not disabling assets');
+            logger.warn('No widget ID specified, not disabling assets');
         }
 
         this.props.setShowStickers(false);
         WidgetUtils.removeStickerpickerWidgets().then(() => {
             this.forceUpdate();
         }).catch((e) => {
-            console.error('Failed to remove sticker picker widget', e);
+            logger.error('Failed to remove sticker picker widget', e);
         });
     };
 
@@ -152,7 +152,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     }
 
     private imError(errorMsg: string, e: Error): void {
-        console.error(errorMsg, e);
+        logger.error(errorMsg, e);
         this.setState({
             imError: _t(errorMsg),
         });
@@ -230,7 +230,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         const messaging = WidgetMessagingStore.instance.getMessagingForId(this.state.stickerpickerWidget.id);
         if (messaging && visible !== this.prevSentVisibility) {
             messaging.updateVisibility(visible).catch(err => {
-                console.error("Error updating widget visibility: ", err);
+                logger.error("Error updating widget visibility: ", err);
             });
             this.prevSentVisibility = visible;
         }

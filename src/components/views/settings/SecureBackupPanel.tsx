@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ComponentType } from 'react';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
@@ -170,7 +170,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
     private startNewBackup = (): void => {
         Modal.createTrackedDialogAsync('Key Backup', 'Key Backup',
-            import('../../../async-components/views/dialogs/security/CreateKeyBackupDialog'),
+            import(
+                '../../../async-components/views/dialogs/security/CreateKeyBackupDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             {
                 onFinished: () => {
                     this.loadBackupStatus();
@@ -210,7 +212,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         try {
             await accessSecretStorage(async () => { }, /* forceReset = */ true);
         } catch (e) {
-            console.error("Error resetting secret storage", e);
+            logger.error("Error resetting secret storage", e);
             if (this.unmounted) return;
             this.setState({ error: e });
         }

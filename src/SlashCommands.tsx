@@ -44,7 +44,7 @@ import { Action } from "./dispatcher/actions";
 import { EffectiveMembership, getEffectiveMembership, leaveRoomBehaviour } from "./utils/membership";
 import SdkConfig from "./SdkConfig";
 import SettingsStore from "./settings/SettingsStore";
-import { UIFeature } from "./settings/UIFeature";
+import { UIComponent, UIFeature } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import CallHandler from "./CallHandler";
 import { guessAndSetDMRoom } from "./Rooms";
@@ -56,6 +56,7 @@ import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -403,6 +404,7 @@ export const Commands = [
         command: 'invite',
         args: '<user-id> [<reason>]',
         description: _td('Invites user with given id to current room'),
+        isEnabled: () => shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
             if (args) {
                 const [address, reason] = args.split(/\s+(.+)/);
@@ -1012,14 +1014,14 @@ export const Commands = [
     new Command({
         command: "msg",
         description: _td("Sends a message to the given user"),
-        args: "<user-id> <message>",
+        args: "<user-id> [<message>]",
         runFn: function(roomId, args) {
             if (args) {
                 // matches the first whitespace delimited group and then the rest of the string
                 const matches = args.match(/^(\S+?)(?: +(.*))?$/s);
                 if (matches) {
                     const [userId, msg] = matches.slice(1);
-                    if (msg && userId && userId.startsWith("@") && userId.includes(":")) {
+                    if (userId && userId.startsWith("@") && userId.includes(":")) {
                         return success((async () => {
                             const cli = MatrixClientPeg.get();
                             const roomId = await ensureDMExists(cli, userId);
@@ -1027,7 +1029,9 @@ export const Commands = [
                                 action: 'view_room',
                                 room_id: roomId,
                             });
-                            cli.sendTextMessage(roomId, msg);
+                            if (msg) {
+                                cli.sendTextMessage(roomId, msg);
+                            }
                         })());
                     }
                 }

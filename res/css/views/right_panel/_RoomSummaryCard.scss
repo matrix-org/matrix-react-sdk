@@ -83,7 +83,7 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_e2ee_warning {
-                background-color: #ff4b55;
+                background-color: #ff5b55;
                 &::before {
                     mask-image: url('$(res)/img/e2e/warning.svg');
                 }
@@ -242,4 +242,8 @@ limitations under the License.
 
 .mx_RoomSummaryCard_icon_settings::before {
     mask-image: url('$(res)/img/element-icons/settings.svg');
+}
+
+.mx_RoomSummaryCard_icon_export::before {
+    mask-image: url('$(res)/img/element-icons/export.svg');
 }

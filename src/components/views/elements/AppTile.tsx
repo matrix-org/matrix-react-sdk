@@ -164,7 +164,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         if (this.state.hasPermissionToLoad && !hasPermissionToLoad) {
             // Force the widget to be non-persistent (able to be deleted/forgotten)
-            ActiveWidgetStore.destroyPersistentWidget(this.props.app.id);
+            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
             PersistedElement.destroyElement(this.persistKey);
             if (this.sgWidget) this.sgWidget.stop();
         }
@@ -177,7 +177,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         const u = url.parse(this.props.app.url);
         const childContentProtocol = u.protocol;
         if (parentContentProtocol === 'https:' && childContentProtocol !== 'https:') {
-            console.warn("Refusing to load mixed-content app:",
+            logger.warn("Refusing to load mixed-content app:",
                 parentContentProtocol, childContentProtocol, window.location, this.props.app.url);
             return true;
         }
@@ -199,8 +199,8 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
 
         // if it's not remaining on screen, get rid of the PersistedElement container
-        if (!ActiveWidgetStore.getWidgetPersistence(this.props.app.id)) {
-            ActiveWidgetStore.destroyPersistentWidget(this.props.app.id);
+        if (!ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id)) {
+            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
             PersistedElement.destroyElement(this.persistKey);
         }
 
@@ -283,7 +283,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         // Delete the widget from the persisted store for good measure.
         PersistedElement.destroyElement(this.persistKey);
-        ActiveWidgetStore.destroyPersistentWidget(this.props.app.id);
+        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
 
         if (this.sgWidget) this.sgWidget.stop({ forceDestroy: true });
     }
@@ -306,7 +306,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                         dis.dispatch({ action: 'post_sticker_message', data: payload.data });
                         dis.dispatch({ action: 'stickerpicker_close' });
                     } else {
-                        console.warn('Ignoring sticker message. Invalid capability');
+                        logger.warn('Ignoring sticker message. Invalid capability');
                     }
                     break;
             }
@@ -315,7 +315,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private grantWidgetPermission = (): void => {
         const roomId = this.props.room.roomId;
-        console.info("Granting permission for widget to load: " + this.props.app.eventId);
+        logger.info("Granting permission for widget to load: " + this.props.app.eventId);
         const current = SettingsStore.getValue("allowedWidgets", roomId);
         current[this.props.app.eventId] = true;
         const level = SettingsStore.firstSupportedLevel("allowedWidgets");
@@ -325,7 +325,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             // Fetch a token for the integration manager, now that we're allowed to
             this.startWidget();
         }).catch(err => {
-            console.error(err);
+            logger.error(err);
             // We don't really need to do anything about this - the user will just hit the button again.
         });
     };

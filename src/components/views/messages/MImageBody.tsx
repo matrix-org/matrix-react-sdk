@@ -34,6 +34,8 @@ import { IBodyProps } from "./IBodyProps";
 import classNames from 'classnames';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IState {
     decryptedUrl?: string;
     decryptedThumbnailUrl?: string;
@@ -179,6 +181,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     };
 
     protected getContentUrl(): string {
+        const content: IMediaEventContent = this.props.mxEvent.getContent();
+        // During export, the content url will point to the MSC, which will later point to a local url
+        if (this.props.forExport) return content.url || content.file?.url;
         if (this.media.isEncrypted) {
             return this.state.decryptedUrl;
         } else {
@@ -272,7 +277,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 });
             } catch (err) {
                 if (this.unmounted) return;
-                console.warn("Unable to decrypt attachment: ", err);
+                logger.warn("Unable to decrypt attachment: ", err);
                 // Set a placeholder image when we can't decrypt the image.
                 this.setState({
                     error: err,
@@ -372,7 +377,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         let placeholder = null;
         let gifLabel = null;
 
-        if (!this.state.imgLoaded) {
+        if (!this.props.forExport && !this.state.imgLoaded) {
             placeholder = this.getPlaceholder(maxWidth, maxHeight);
         }
 
@@ -462,7 +467,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     // Overidden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
-        return <a href={contentUrl} onClick={this.onClick}>
+        return <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
             { children }
         </a>;
     }
@@ -490,6 +495,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     // Overidden by MStickerBody
     protected getFileBody(): string | JSX.Element {
+        if (this.props.forExport) return null;
         // We only ever need the download bar if we're appearing outside of the timeline
         if (this.props.tileShape) {
             return <MFileBody {...this.props} showGenericPlaceholder={false} />;
@@ -510,7 +516,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         const contentUrl = this.getContentUrl();
         let thumbUrl;
-        if (this.isGif() && SettingsStore.getValue("autoplayGifs")) {
+        if (this.props.forExport || (this.isGif() && SettingsStore.getValue("autoplayGifs"))) {
             thumbUrl = contentUrl;
         } else {
             thumbUrl = this.getThumbUrl();
