@@ -15,9 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import AccessibleButton from "./AccessibleButton";
+import Tooltip from "./Tooltip";
 
 interface IProps {
     // Whether or not this toggle is in the 'on' position.
@@ -26,15 +27,28 @@ interface IProps {
     // Whether or not the user can interact with the switch
     disabled: boolean;
 
+    // Tooltip to show on hover
+    tooltip?: string;
+
     // Called when the checked state changes. First argument will be the new state.
     onChange(checked: boolean): void;
 }
 
 // Controlled Toggle Switch element, written with Accessibility in mind
-export default ({ checked, disabled = false, onChange, ...props }: IProps) => {
+export default ({ checked, disabled = false, tooltip, onChange, ...props }: IProps) => {
+    const [hover, setHover] = useState<boolean>(false);
+
     const _onClick = () => {
         if (disabled) return;
         onChange(!checked);
+    };
+
+    const onMouseOver = (): void => {
+        setHover(true);
+    };
+
+    const onMouseLeave = (): void => {
+        setHover(false);
     };
 
     const classes = classNames({
@@ -50,8 +64,11 @@ export default ({ checked, disabled = false, onChange, ...props }: IProps) => {
             role="switch"
             aria-checked={checked}
             aria-disabled={disabled}
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
         >
             <div className="mx_ToggleSwitch_ball" />
+            { hover && tooltip && <Tooltip label={tooltip} /> }
         </AccessibleButton>
     );
 };
