@@ -358,6 +358,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 <div className="mx_SettingsTab_section">
                     { analytics }
                     <span className="mx_SettingsTab_subheading">{ _t("Presence") }</span>
+                    <SettingsFlag name="sendTypingNotifications" level={SettingLevel.ACCOUNT} />
                     <SettingsFlag
                         disabled={!this.state.canDisableReadReceipts}
                         disabledTooltip={_t("You server doesn't support disabling sending read receipts")}
