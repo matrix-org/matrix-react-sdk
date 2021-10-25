@@ -28,15 +28,17 @@ import AccessibleButton from "../elements/AccessibleButton";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../elements/MiniAvatarUploader";
 import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
+import dis from "../../../dispatcher/dispatcher";
 import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../../dispatcher/actions";
-import dis from "../../../dispatcher/dispatcher";
 import SpaceStore from "../../../stores/SpaceStore";
 import { showSpaceInvite } from "../../../utils/space";
 import { privateShouldBeEncrypted } from "../../../createRoom";
 import EventTileBubble from "../messages/EventTileBubble";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -104,7 +106,11 @@ const NewRoomIntro = () => {
             topicText = _t("Topic: %(topic)s ", { topic });
         } else if (canAddTopic) {
             topicText = _t("<a>Add a topic</a> to help people know what it is about.", {}, {
-                a: sub => <AccessibleButton kind="link" onClick={onTopicClick}>{ sub }</AccessibleButton>,
+                a: sub => <AccessibleButton
+                    kind="link"
+                    element="span"
+                    onClick={onTopicClick}
+                >{ sub }</AccessibleButton>,
             });
         }
 
@@ -150,7 +156,7 @@ const NewRoomIntro = () => {
                     { _t("Invite to just this room") }
                 </AccessibleButton> }
             </div>;
-        } else if (room.canInvite(cli.getUserId())) {
+        } else if (room.canInvite(cli.getUserId()) && shouldShowComponent(UIComponent.InviteUsers)) {
             buttons = <div className="mx_NewRoomIntro_buttons">
                 <AccessibleButton
                     className="mx_NewRoomIntro_inviteButton"

@@ -41,6 +41,8 @@ import { reorderLexicographically } from "../utils/stringOrderField";
 import { TAG_ORDER } from "../components/views/rooms/RoomList";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 type SpaceKey = string | symbol;
 
 interface IState {}
@@ -261,7 +263,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 viaServers: Array.from(viaMap.get(roomInfo.room_id) || []),
             }));
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
         return [];
     };
@@ -872,7 +874,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         try {
             await this.matrixClient.setRoomAccountData(space.roomId, EventType.SpaceOrder, { order });
         } catch (e) {
-            console.warn("Failed to set root space order", e);
+            logger.warn("Failed to set root space order", e);
             if (this.spaceOrderLocalEchoMap.get(space.roomId) === order) {
                 this.spaceOrderLocalEchoMap.delete(space.roomId);
             }

@@ -35,7 +35,7 @@ import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindin
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SendHistoryManager from '../../../SendHistoryManager';
 import Modal from '../../../Modal';
-import { MsgType, UNSTABLE_ELEMENT_REPLY_IN_THREAD } from 'matrix-js-sdk/src/@types/event';
+import { MsgType } from 'matrix-js-sdk/src/@types/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
@@ -46,7 +46,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import RoomContext from '../../../contexts/RoomContext';
+import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -70,7 +71,6 @@ function getTextReplyFallback(mxEvent: MatrixEvent): string {
 function createEditContent(
     model: EditorModel,
     editedEvent: MatrixEvent,
-    renderingContext?: TimelineRenderingType,
 ): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
@@ -112,10 +112,6 @@ function createEditContent(
         },
     };
 
-    if (renderingContext === TimelineRenderingType.Thread) {
-        relation['m.relates_to'][UNSTABLE_ELEMENT_REPLY_IN_THREAD.name] = true;
-    }
-
     return Object.assign(relation, contentBody);
 }
 
@@ -143,8 +139,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         const isRestored = this.createEditorModel();
         const ev = this.props.editState.getEvent();
 
-        const renderingContext = this.context.timelineRenderingType;
-        const editContent = createEditContent(this.model, ev, renderingContext);
+        const editContent = createEditContent(this.model, ev);
         this.state = {
             saveDisabled: !isRestored || !this.isContentModified(editContent["m.new_content"]),
         };
@@ -257,7 +252,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const parts: Part[] = serializedParts.map(p => partCreator.deserializePart(p));
                 return parts;
             } catch (e) {
-                console.error("Error parsing editing state: ", e);
+                logger.error("Error parsing editing state: ", e);
             }
         }
     }
@@ -335,7 +330,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             }
         }
         if (error) {
-            console.error("Command failure: %s", error);
+            logger.error("Command failure: %s", error);
             // assume the error is a server error when the command is async
             const isServerError = !!result.promise;
             const title = isServerError ? _td("Server error") : _td("Command error");
@@ -369,8 +364,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
             this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
         }
-        const renderingContext = this.context.timelineRenderingType;
-        const editContent = createEditContent(this.model, editedEvent, renderingContext);
+        const editContent = createEditContent(this.model, editedEvent);
         const newContent = editContent["m.new_content"];
 
         let shouldSend = true;
@@ -506,7 +500,12 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     };
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === "edit_composer_insert" && this.editorRef.current) {
+        if (!this.editorRef.current) return;
+
+        if (payload.action === Action.ComposerInsert) {
+            if (payload.timelineRenderingType !== this.context.timelineRenderingType) return;
+            if (payload.composerType !== ComposerType.Edit) return;
+
             if (payload.userId) {
                 this.editorRef.current?.insertMention(payload.userId);
             } else if (payload.event) {
@@ -514,7 +513,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             } else if (payload.text) {
                 this.editorRef.current?.insertPlaintext(payload.text);
             }
-        } else if (payload.action === Action.FocusEditMessageComposer && this.editorRef.current) {
+        } else if (payload.action === Action.FocusEditMessageComposer) {
             this.editorRef.current.focus();
         }
     };

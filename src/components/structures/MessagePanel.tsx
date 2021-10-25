@@ -26,7 +26,7 @@ import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import SettingsStore from '../../settings/SettingsStore';
-import RoomContext from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/Layout";
 import { _t } from "../../languageHandler";
 import EventTile, { haveTileForEvent, IReadReceiptProps, TileShape } from "../views/rooms/EventTile";
@@ -66,7 +66,9 @@ export function shouldFormContinuation(
     prevEvent: MatrixEvent,
     mxEvent: MatrixEvent,
     showHiddenEvents: boolean,
+    timelineRenderingType?: TimelineRenderingType,
 ): boolean {
+    if (timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
     // sanity check inputs
     if (!prevEvent || !prevEvent.sender || !mxEvent.sender) return false;
     // check if within the max continuation period
@@ -194,6 +196,7 @@ interface IReadReceiptForUser {
 @replaceableComponent("structures.MessagePanel")
 export default class MessagePanel extends React.Component<IProps, IState> {
     static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     // opaque readreceipt info for each userId; used by ReadReceiptMarker
     // to manage its animations
@@ -269,9 +272,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     componentDidMount() {
         this.calculateRoomMembersCount();
         this.props.room?.on("RoomState.members", this.calculateRoomMembersCount);
-        if (SettingsStore.getValue("feature_thread")) {
-            this.props.room?.getThreads().forEach(thread => thread.fetchReplyChain());
-        }
         this.isMounted = true;
     }
 
@@ -461,8 +461,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         // Checking if the message has a "parentEventId" as we do not
         // want to hide the root event of the thread
-        if (mxEv.replyInThread && mxEv.parentEventId
-                && this.props.hideThreadedMessages
+        if (mxEv.isThreadRelation && this.props.hideThreadedMessages
                 && SettingsStore.getValue("feature_thread")) {
             return false;
         }
@@ -562,6 +561,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     private get pendingEditItem(): string | undefined {
+        if (!this.props.room) {
+            return undefined;
+        }
         try {
             return localStorage.getItem(`mx_edit_room_${this.props.room.roomId}_${this.context.timelineRenderingType}`);
         } catch (err) {
@@ -722,7 +724,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         // is this a continuation of the previous message?
         const continuation = !wantsDateSeparator &&
-            shouldFormContinuation(prevEvent, mxEv, this.showHiddenEvents);
+            shouldFormContinuation(prevEvent, mxEv, this.showHiddenEvents, this.context.timelineRenderingType);
 
         const eventId = mxEv.getId();
         const highlight = (eventId === this.props.highlightedEventId);
@@ -786,6 +788,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     showReadReceipts={this.props.showReadReceipts}
                     callEventGrouper={callEventGrouper}
                     hideSender={this.membersCount <= 2 && this.props.layout === Layout.Bubble}
+                    timelineRenderingType={this.context.timelineRenderingType}
                 />
             </TileErrorBoundary>,
         );
@@ -794,6 +797,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public wantsDateSeparator(prevEvent: MatrixEvent, nextEventDate: Date): boolean {
+        if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+            return false;
+        }
         if (prevEvent == null) {
             // first event in the panel: depends if we could back-paginate from
             // here.

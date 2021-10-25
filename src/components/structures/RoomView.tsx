@@ -92,6 +92,9 @@ import SpaceStore from "../../stores/SpaceStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
+import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threads';
+import { fetchInitialEvent } from "../../utils/EventUtils";
+import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -109,6 +112,8 @@ interface IRoomProps extends MatrixClientProps {
 
     resizeNotifier: ResizeNotifier;
     justCreatedOpts?: IOpts;
+
+    forceTimeline?: boolean; // should we force access to the timeline, overriding (for eg) spaces
 
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;
@@ -319,7 +324,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onRoomViewStoreUpdate = (initial?: boolean) => {
+    private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
         if (this.unmounted) {
             return;
         }
@@ -347,8 +352,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             roomLoading: RoomViewStore.isRoomLoading(),
             roomLoadError: RoomViewStore.getRoomLoadError(),
             joining: RoomViewStore.isJoining(),
-            initialEventId: RoomViewStore.getInitialEventId(),
-            isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
             replyToEvent: RoomViewStore.getQuotingEvent(),
             // we should only peek once we have a ready client
             shouldPeek: this.state.matrixClientIsReady && RoomViewStore.shouldPeek(),
@@ -359,6 +362,39 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showDisplaynameChanges: SettingsStore.getValue("showDisplaynameChanges", roomId),
             wasContextSwitch: RoomViewStore.getWasContextSwitch(),
         };
+
+        const initialEventId = RoomViewStore.getInitialEventId();
+        if (initialEventId) {
+            const room = this.context.getRoom(roomId);
+            let initialEvent = room?.findEventById(initialEventId);
+            // The event does not exist in the current sync data
+            // We need to fetch it to know whether to route this request
+            // to the main timeline or to a threaded one
+            // In the current state, if a thread does not exist in the sync data
+            // We will only display the event targeted by the `matrix.to` link
+            // and the root event.
+            // The rest will be lost for now, until the aggregation API on the server
+            // becomes available to fetch a whole thread
+            if (!initialEvent) {
+                initialEvent = await fetchInitialEvent(
+                    this.context,
+                    roomId,
+                    initialEventId,
+                );
+            }
+
+            const thread = initialEvent?.getThread();
+            if (thread && !initialEvent?.isThreadRoot) {
+                dispatchShowThreadEvent(
+                    thread.rootEvent,
+                    initialEvent,
+                    RoomViewStore.isInitialEventHighlighted(),
+                );
+            } else {
+                newState.initialEventId = initialEventId;
+                newState.isInitialEventHighlighted = RoomViewStore.isInitialEventHighlighted();
+            }
+        }
 
         // Add watchers for each of the settings we just looked up
         this.settingWatchers = this.settingWatchers.concat([
@@ -498,7 +534,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // making it impossible to indicate a newly joined room.
         if (!joining && roomId) {
             if (!room && shouldPeek) {
-                console.info("Attempting to peek into room %s", roomId);
+                logger.info("Attempting to peek into room %s", roomId);
                 this.setState({
                     peekLoading: true,
                     isPeeking: true, // this will change to false if peeking fails
@@ -779,7 +815,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 });
                 break;
             case 'reply_to_event':
-                if (this.state.searchResults && payload.event.getRoomId() === this.state.roomId && !this.unmounted) {
+                if (this.state.searchResults
+                        && payload.event.getRoomId() === this.state.roomId
+                        && !this.unmounted
+                        && payload.context === TimelineRenderingType.Room) {
                     this.onCancelSearchClick();
                 }
                 break;
@@ -826,10 +865,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             case Action.ComposerInsert: {
+                if (payload.composerType) break;
                 // re-dispatch to the correct composer
                 dis.dispatch({
                     ...payload,
-                    action: this.state.editState ? "edit_composer_insert" : "send_composer_insert",
+                    composerType: this.state.editState ? ComposerType.Edit : ComposerType.Send,
                 });
                 break;
             }
@@ -841,7 +881,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             case "scroll_to_bottom":
-                this.messagePanel?.jumpToLiveTimeline();
+                if (payload.timelineRenderingType === this.context.timelineRenderingType) {
+                    this.messagePanel?.jumpToLiveTimeline();
+                }
                 break;
         }
     };
@@ -963,8 +1005,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 } catch (err) {
                     const errorMessage = `Fetching room members for ${room.roomId} failed.` +
                         " Room members will appear incomplete.";
-                    console.error(errorMessage);
-                    console.error(err);
+                    logger.error(errorMessage);
+                    logger.error(err);
                 }
             }
         }
@@ -1315,7 +1357,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return searchPromise.then((results) => {
             debuglog("search complete");
             if (this.unmounted || !this.state.searching || this.searchId != localSearchId) {
-                console.error("Discarding stale search results");
+                logger.error("Discarding stale search results");
                 return false;
             }
 
@@ -1341,7 +1383,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 searchResults: results,
             });
         }, (error) => {
-            console.error("Search failed", error);
+            logger.error("Search failed", error);
             Modal.createTrackedDialog('Search failed', '', ErrorDialog, {
                 title: _t("Search failed"),
                 description: ((error && error.message) ? error.message :
@@ -1472,7 +1514,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 rejecting: false,
             });
         }, (error) => {
-            console.error("Failed to reject invite: %s", error);
+            logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
             Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
@@ -1505,7 +1547,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 rejecting: false,
             });
         } catch (error) {
-            console.error("Failed to reject invite: %s", error);
+            logger.error("Failed to reject invite: %s", error);
 
             const msg = error.message ? error.message : JSON.stringify(error);
             Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
@@ -1906,7 +1948,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
-        if (this.state.room?.isSpaceRoom()) {
+        if (this.state.room?.isSpaceRoom() && !this.props.forceTimeline) {
             return <SpaceRoomView
                 space={this.state.room}
                 justCreatedOpts={this.props.justCreatedOpts}

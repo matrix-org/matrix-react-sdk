@@ -18,18 +18,18 @@ $font-family: var(--font-family, $font-family);
 $monospace-font-family: var(--font-family-monospace, $monospace-font-family);
 
 // Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A741
-$accent: var(--accent);
-$alert: var(--alert);
-$links: var(--links);
-$primary-content: var(--primary-content);
-$secondary-content: var(--secondary-content);
-$tertiary-content: var(--tertiary-content);
-$quaternary-content: var(--quaternary-content);
-$quinary-content: var(--quinary-content);
-$system: var(--system);
-$background: var(--background);
+$accent: var(--accent, $accent);
+$alert: var(--alert, $alert);
+$links: var(--links, $links);
+$primary-content: var(--primary-content, $primary-content);
+$secondary-content: var(--secondary-content, $secondary-content);
+$tertiary-content: var(--tertiary-content, $tertiary-content);
+$quaternary-content: var(--quaternary-content, $quaternary-content);
+$quinary-content: var(--quinary-content, $quinary-content);
+$system: var(--system, $system);
+$background: var(--background, $background);
 $panels: rgba($system, 0.9);
-$panel-base: var(--panel-base); // This color is not intended for use in the app
+$panel-base: var(--panel-base, $tertiary-content); // This color is not intended for use in the app
 $panel-selected: rgba($panel-base, 0.3);
 $panel-hover: rgba($panel-base, 0.1);
 $panel-actions: rgba($panel-base, 0.2);
@@ -52,7 +52,6 @@ $accent-color-50pct: var(--accent-color-50pct); //still needs alpha at .5
 // --timeline-background-color
 $authpage-body-bg-color: var(--timeline-background-color);
 $button-secondary-bg-color: var(--timeline-background-color);
-$field-focused-label-bg-color: var(--timeline-background-color);
 $lightbox-border-color: var(--timeline-background-color);
 $menu-bg-color: var(--timeline-background-color);
 $avatar-bg-color: var(--timeline-background-color);
@@ -64,7 +63,7 @@ $authpage-modal-bg-color: var(--timeline-background-color-50pct); //still needs 
 $roomheader-bg-color: var(--timeline-background-color);
 //
 // --roomlist-highlights-color
-$roomtile-selected-bg-color: var(--roomlist-highlights-color);
+$panel-actions: var(--roomlist-highlights-color);
 //
 // --sidebar-color
 $groupFilterPanel-bg-color: var(--sidebar-color);
@@ -103,8 +102,6 @@ $roomheader-color: var(--timeline-text-color);
 // was #232f32
 $authpage-primary-color: var(--timeline-text-color);
 // --roomlist-text-secondary-color
-$roomtile-preview-color: var(--roomlist-text-secondary-color);
-$roomlist-header-color: var(--roomlist-text-secondary-color);
 $roomtile-default-badge-bg-color: var(--roomlist-text-secondary-color);
 
 //
@@ -112,12 +109,10 @@ $roomtile-default-badge-bg-color: var(--roomlist-text-secondary-color);
 $input-darker-bg-color: var(--roomlist-separator-color);
 $panel-divider-color: var(--roomlist-separator-color);// originally #dee1f3, but close enough
 $primary-hairline-color: var(--roomlist-separator-color);// originally #e5e5e5, but close enough
-$roomsublist-divider-color: var(--roomlist-separator-color);
 //
 // --timeline-text-secondary-color
 $authpage-secondary-color: var(--timeline-text-secondary-color);
 $memberstatus-placeholder-color: var(--timeline-text-secondary-color);
-$notice-secondary-color: var(--timeline-text-secondary-color);
 $pinned-color: var(--timeline-text-secondary-color);
 $settings-subsection-fg-color: var(--timeline-text-secondary-color);
 $roomheader-addroom-bg-color: var(--timeline-text-secondary-color);
