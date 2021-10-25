@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635158802902,
+  "lastUpdate": 1635162214228,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34832,6 +34832,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4739.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "87dc2e8141d5e63c6294d58c11e15d87657a96ba",
+          "message": "Fix ModalManager reRender racing with itself (#7027)",
+          "timestamp": "2021-10-25T12:37:59+01:00",
+          "tree_id": "665f73f286ef3c5ab8db3d521a6a2278b1a8703b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/87dc2e8141d5e63c6294d58c11e15d87657a96ba"
+        },
+        "date": 1635162210496,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4205,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 912.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1666.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4411.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
