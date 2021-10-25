@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1634960298512,
+  "lastUpdate": 1635152474433,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34328,6 +34328,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1017.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e3946cc7def7cfba115a53cb2c7f55620dafe3f1",
+          "message": "Upgrade ua-parser-js (#7026)",
+          "timestamp": "2021-10-25T09:55:37+01:00",
+          "tree_id": "91c2849a99e800f217b83f2def86fa730a08ea6e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e3946cc7def7cfba115a53cb2c7f55620dafe3f1"
+        },
+        "date": 1635152470969,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4663.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1732.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5051.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
