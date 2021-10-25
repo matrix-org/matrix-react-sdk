@@ -45,17 +45,18 @@ export async function decryptFile(
         return encrypt.decryptAttachment(responseData, file);
     }).then((dataArray) => {
         // Turn the array into a Blob and give it the correct MIME-type.
+        //
         // IMPORTANT: we must not allow scriptable MIME-types into Blobs otherwise
         // they introduce XSS attacks if the Blob URI is viewed directly in the
         // browser (e.g. by copying the URI into a new tab or window).
         // However, image/svg+xml can be allowed, since files of this type can be
         // sanitized using DOMPurify.
-        // See warning at top of file.
+        // For more information refer to the comment in blobs.ts.
         let mimetype = info?.mimetype ? info.mimetype.split(";")[0].trim() : '';
         mimetype = getBlobSafeMimeType(mimetype);
 
         if (mimetype === "image/svg+xml") {
-            let svgFile = new TextDecoder("utf-8").decode(decodeBase64(dataArray));
+            const svgFile = new TextDecoder("utf-8").decode(decodeBase64(dataArray));
             return new Blob([sanitizeSvg(svgFile)], { type: mimetype });
         }
 
