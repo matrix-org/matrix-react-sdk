@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635158761120,
+  "lastUpdate": 1635158786170,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34736,6 +34736,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4329.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e3d1615169eee14ff6c832c328fb78f204d34c54",
+          "message": "Make /msg <message> param optional for more flexibility (#7028)",
+          "timestamp": "2021-10-25T11:40:33+01:00",
+          "tree_id": "a6b1fb12d89e3f90178a9dfee34aaf4ccb9b9145",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e3d1615169eee14ff6c832c328fb78f204d34c54"
+        },
+        "date": 1635158783333,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4022.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 930.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1893.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4638.5,
             "unit": "ms",
             "extra": "type: measure"
           }
