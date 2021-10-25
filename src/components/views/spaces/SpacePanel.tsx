@@ -43,7 +43,6 @@ import SpaceStore, {
 } from "../../../stores/SpaceStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
-import { Key } from "../../../Keyboard";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import IconizedContextMenu, {
