@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635162559146,
+  "lastUpdate": 1635167557406,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -34928,6 +34928,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4210.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "be0fa6da7b35ff0cb797eefcb50a4f4694bef297",
+          "message": "Fix removing a room from a Space and interaction with `m.space.parent` (#6944)",
+          "timestamp": "2021-10-25T14:06:00+01:00",
+          "tree_id": "5250141e16eb526d28fcde9e9991e63e1ea588ea",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/be0fa6da7b35ff0cb797eefcb50a4f4694bef297"
+        },
+        "date": 1635167554452,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4577,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1101.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1689.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4845.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
