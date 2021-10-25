@@ -32,6 +32,7 @@ import { Layout } from "../../../settings/Layout";
 import { formatTime } from "../../../DateUtils";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { ALL_RULE_TYPES } from "../../../mjolnir/BanList";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { E2EState } from "./E2EIcon";
 import { toRem } from "../../../utils/units";
 import { WidgetType } from "../../../widgets/WidgetType";
@@ -61,7 +62,7 @@ import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/th
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
 
 import { logger } from "matrix-js-sdk/src/logger";
-import RoomContext from "../../../contexts/RoomContext";
+import { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -313,6 +314,8 @@ interface IProps {
 
     // whether or not to display thread info
     showThreadInfo?: boolean;
+
+    timelineRenderingType?: TimelineRenderingType;
 }
 
 interface IState {
@@ -350,8 +353,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         layout: Layout.Group,
     };
 
-    static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    static contextType = MatrixClientContext;
 
     constructor(props, context) {
         super(props, context);
@@ -396,7 +398,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (!this.props.mxEvent) return false;
 
         // Sanity check (should never happen, but we shouldn't explode if it does)
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         if (!room) return false;
 
         // Quickly check to see if the event was sent by us. If it wasn't, it won't qualify for
@@ -460,7 +462,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.suppressReadReceiptAnimation = false;
-        const client = MatrixClientPeg.get();
+        const client = this.context;
         if (!this.props.forExport) {
             client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
             client.on("userTrustStatusChanged", this.onUserVerificationChanged);
@@ -480,7 +482,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
         }
 
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         room?.on(ThreadEvent.New, this.onNewThread);
     }
 
@@ -510,7 +512,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     componentWillUnmount() {
-        const client = MatrixClientPeg.get();
+        const client = this.context;
         client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
         client.removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
         client.removeListener("Room.receipt", this.onRoomReceipt);
@@ -524,14 +526,14 @@ export default class EventTile extends React.Component<IProps, IState> {
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
 
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         room?.off(ThreadEvent.New, this.onNewThread);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         // If we're not listening for receipts and expect to be, register a listener.
         if (!this.isListeningForReceipts && (this.shouldShowSentReceipt || this.shouldShowSendingReceipt)) {
-            MatrixClientPeg.get().on("Room.receipt", this.onRoomReceipt);
+            this.context.on("Room.receipt", this.onRoomReceipt);
             this.isListeningForReceipts = true;
         }
     }
@@ -539,7 +541,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     private onNewThread = (thread: Thread) => {
         if (thread.id === this.props.mxEvent.getId()) {
             this.updateThread(thread);
-            const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+            const room = this.context.getRoom(this.props.mxEvent.getRoomId());
             room.off(ThreadEvent.New, this.onNewThread);
         }
     };
@@ -612,7 +614,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.forceUpdate(() => {
             // Per elsewhere in this file, we can remove the listener once we will have no further purpose for it.
             if (!this.shouldShowSentReceipt && !this.shouldShowSendingReceipt) {
-                MatrixClientPeg.get().removeListener("Room.receipt", this.onRoomReceipt);
+                this.context.removeListener("Room.receipt", this.onRoomReceipt);
                 this.isListeningForReceipts = false;
             }
         });
@@ -645,9 +647,9 @@ export default class EventTile extends React.Component<IProps, IState> {
             return;
         }
 
-        const encryptionInfo = MatrixClientPeg.get().getEventEncryptionInfo(mxEvent);
+        const encryptionInfo = this.context.getEventEncryptionInfo(mxEvent);
         const senderId = mxEvent.getSender();
-        const userTrust = MatrixClientPeg.get().checkUserTrust(senderId);
+        const userTrust = this.context.checkUserTrust(senderId);
 
         if (encryptionInfo.mismatchedSender) {
             // something definitely wrong is going on here
@@ -665,7 +667,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             return;
         }
 
-        const eventSenderTrust = encryptionInfo.sender && MatrixClientPeg.get().checkDeviceTrust(
+        const eventSenderTrust = encryptionInfo.sender && this.context.checkDeviceTrust(
             senderId, encryptionInfo.sender.deviceId,
         );
         if (!eventSenderTrust) {
@@ -744,13 +746,11 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     shouldHighlight() {
         if (this.props.forExport) return false;
-        const actions = MatrixClientPeg.get().getPushActionsForEvent(
-            this.props.mxEvent.replacingEvent() || this.props.mxEvent,
-        );
+        const actions = this.context.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
         // don't show self-highlights from another of our clients
-        if (this.props.mxEvent.getSender() === MatrixClientPeg.get().credentials.userId) {
+        if (this.props.mxEvent.getSender() === this.context.credentials.userId) {
             return false;
         }
 
@@ -858,11 +858,11 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     onSenderProfileClick = () => {
-        const mxEvent = this.props.mxEvent;
+        if (!this.props.timelineRenderingType) return;
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
-            userId: mxEvent.getSender(),
-            timelineRenderingType: this.context.timelineRenderingType,
+            userId: this.props.mxEvent.getSender(),
+            timelineRenderingType: this.props.timelineRenderingType,
         });
     };
 
@@ -876,7 +876,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         // Cancel any outgoing key request for this event and resend it. If a response
         // is received for the request with the required keys, the event could be
         // decrypted successfully.
-        MatrixClientPeg.get().cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
+        this.context.cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
     };
 
     onPermalinkClicked = e => {
@@ -914,7 +914,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
         }
 
-        if (MatrixClientPeg.get().isRoomEncrypted(ev.getRoomId())) {
+        if (this.context.isRoomEncrypted(ev.getRoomId())) {
             // else if room is encrypted
             // and event is being encrypted or is not_sent (Unknown Devices/Network Error)
             if (ev.status === EventStatus.ENCRYPTING) {
@@ -1189,7 +1189,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         switch (this.props.tileShape) {
             case TileShape.Notif: {
-                const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+                const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
                     "className": classes,
                     "aria-live": ariaLive,
@@ -1236,7 +1236,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             isQuoteExpanded={isQuoteExpanded}
                             setQuoteExpanded={this.setQuoteExpanded}
                         />) : null;
-                const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+                const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
                     "className": classes,
                     "aria-live": ariaLive,
