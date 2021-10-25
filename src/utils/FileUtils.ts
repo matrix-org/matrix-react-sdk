@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import filesize from 'filesize';
+import DOMPurify from 'dompurify';
 import { IMediaEventContent } from '../customisations/models/IMediaEventContent';
 import { _t } from '../languageHandler';
 
@@ -68,4 +69,43 @@ export function presentableTextForFile(
         text += ' (' + filesize(content.info.size) + ')';
     }
     return text;
+}
+
+/**
+ * Sanitizes a svg file with DOMPurify in order to prevent XSS attacks 
+ * when viewing svg blobs in the browser
+ *
+ * @param {string} svgFile The original svg file.
+ * @param {boolean} allowUseTags Whether use tags will be filtered out. Default true.
+ * @return {string} The sanitized svg file.
+ */
+export function sanitizeSvg(
+    svgFile: string,
+    allowUseTags: boolean = true
+): string {
+    let allowedTags = [];
+
+    if (allowUseTags) {
+        // Adapted from https://github.com/cure53/DOMPurify/issues/574 which prevents
+        // this exploit: https://insert-script.blogspot.com/2014/02/svg-fun-time-firefox-svg-vector.html
+        // and enables us to safely allow the popular <use> tag.
+        allowedTags = ['use'];
+
+        DOMPurify.addHook('afterSanitizeAttributes', function (node: Element) {
+            const href = node.getAttribute('xlink:href') || node.getAttribute('href')
+            if (href && !href.startsWith('#')) {
+                node.removeAttribute('xlink:href')
+                node.removeAttribute('href')
+            }
+        });
+    }
+
+    return DOMPurify.sanitize(svgFile, {
+        USE_PROFILES: {
+            svg: true,
+            html: false,
+            MathML: false,
+        },
+        ADD_TAGS: allowedTags
+    });
 }
