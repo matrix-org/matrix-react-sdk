@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635251683934,
+  "lastUpdate": 1635258846726,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35324,6 +35324,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4271.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a4e20c7b418f59f420734a80a068737e8aa058c5",
+          "message": "Improve timeline message for restricted join rule changes (#6984)",
+          "timestamp": "2021-10-26T15:28:22+01:00",
+          "tree_id": "1ebf65c79a0f17e7cff17e4fb916c0452da53ea6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a4e20c7b418f59f420734a80a068737e8aa058c5"
+        },
+        "date": 1635258844386,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3906.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 925.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1778.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4601.5,
             "unit": "ms",
             "extra": "type: measure"
           }
