@@ -67,6 +67,10 @@ $event-highlight-fg-color: $warning-color;
     text-decoration: none;
 }
 
+.mx_AccessibleButton {
+    margin-left: 4px;
+}
+
 .mx_AccessibleButton:focus {
     outline: 2px solid $accent-color;
     outline-offset: 2px;
