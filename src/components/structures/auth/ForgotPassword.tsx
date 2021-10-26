@@ -181,8 +181,10 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         // refresh the server errors, just in case the server came back online
         await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
 
-        await this[ForgotPasswordField.Email].validate({ allowEmpty: false });
-        await this[ForgotPasswordField.Password].validate({ allowEmpty: false });
+        const allFieldsValid = await this.verifyFieldsBeforeSubmit();
+        if (!allFieldsValid) {
+            return;
+        }
 
         if (!this.state.email) {
             this.showErrorDialog(_t('The email address linked to your account must be entered.'));
@@ -215,6 +217,18 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             });
         }
     };
+
+    private async verifyFieldsBeforeSubmit() {
+        if (!await this[ForgotPasswordField.Email].validate({ allowEmpty: false })) {
+            return false;
+        }
+
+        if (!await this[ForgotPasswordField.Password].validate({ allowEmpty: false })) {
+            return false;
+        }
+
+        return true;
+    }
 
     private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
         this.setState({
