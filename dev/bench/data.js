@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635231610832,
+  "lastUpdate": 1635233394911,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35096,6 +35096,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 622.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5c66bd6c7b5aa0ea6bf1df8a991e11572dee278f",
+          "message": "Add `max-empty-lines` and `no-eol-whitespace` to stylelint (#7034)",
+          "timestamp": "2021-10-26T08:23:23+01:00",
+          "tree_id": "ea8aaf0d4e678493bb745d38488db1ecfc5ae03d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5c66bd6c7b5aa0ea6bf1df8a991e11572dee278f"
+        },
+        "date": 1635233392538,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4582.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1070.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1710.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4829.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
