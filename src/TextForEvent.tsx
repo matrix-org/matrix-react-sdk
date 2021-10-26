@@ -31,6 +31,7 @@ import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
@@ -200,7 +201,14 @@ function textForTombstoneEvent(ev: MatrixEvent): () => string | null {
     return () => _t('%(senderDisplayName)s upgraded this room.', { senderDisplayName });
 }
 
-function textForJoinRulesEvent(ev: MatrixEvent): () => string | null {
+const onViewJoinRuleSettingsClick = () => {
+    defaultDispatcher.dispatch({
+        action: "open_room_settings",
+        initial_tab_id: ROOM_SECURITY_TAB,
+    });
+};
+
+function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     switch (ev.getContent().join_rule) {
         case JoinRule.Public:
@@ -212,15 +220,19 @@ function textForJoinRulesEvent(ev: MatrixEvent): () => string | null {
                 senderDisplayName,
             });
         case JoinRule.Restricted:
-            if (ev.getPrevContent().join_rule === JoinRule.Restricted) {
-                return () => _t('%(senderDisplayName)s changed the spaces from which users can join this room.', {
-                    senderDisplayName,
-                });
-            } else {
-                return () => _t('%(senderDisplayName)s made the room accessible to members of some spaces.', {
-                    senderDisplayName,
-                });
+            if (allowJSX) {
+                return () => <span>
+                    { _t('%(senderDisplayName)s changed who can join this room. <a>View settings</a>.', {
+                        senderDisplayName,
+                    }, {
+                        "a": (sub) => <a onClick={onViewJoinRuleSettingsClick}>
+                            { sub }
+                        </a>,
+                    }) }
+                </span>;
             }
+
+            return () => _t('%(senderDisplayName)s changed who can join this room.', { senderDisplayName });
         default:
             // The spec supports "knock" and "private", however nothing implements these.
             return () => _t('%(senderDisplayName)s changed the join rule to %(rule)s', {
