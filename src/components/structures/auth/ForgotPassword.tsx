@@ -181,30 +181,24 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             return;
         }
 
-        if (!this.state.password2) {
-            this.showErrorDialog(_t('A new password must be entered.'));
-        } else if (this.state.password !== this.state.password2) {
-            this.showErrorDialog(_t('New passwords must match each other.'));
-        } else {
-            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
-                title: _t('Warning!'),
-                description:
-                    <div>
-                        { _t(
-                            "Changing your password will reset any end-to-end encryption keys " +
-                            "on all of your sessions, making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another session before resetting your " +
-                            "password.",
-                        ) }
-                    </div>,
-                button: _t('Continue'),
-                onFinished: (confirmed) => {
-                    if (confirmed) {
-                        this.submitPasswordReset(this.state.email, this.state.password);
-                    }
-                },
-            });
-        }
+        Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
+            title: _t('Warning!'),
+            description:
+                <div>
+                    { _t(
+                        "Changing your password will reset any end-to-end encryption keys " +
+                        "on all of your sessions, making encrypted chat history unreadable. Set up " +
+                        "Key Backup or export your room keys from another session before resetting your " +
+                        "password.",
+                    ) }
+                </div>,
+            button: _t('Continue'),
+            onFinished: (confirmed) => {
+                if (confirmed) {
+                    this.submitPasswordReset(this.state.email, this.state.password);
+                }
+            },
+        });
     };
 
     private async verifyFieldsBeforeSubmit() {
