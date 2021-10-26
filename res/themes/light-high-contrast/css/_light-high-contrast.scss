@@ -1,7 +1,6 @@
 //// Reference: https://www.figma.com/file/RnLKnv09glhxGIZtn8zfmh/UI-Themes-%26-Accessibility?node-id=321%3A65847
 $accent: #268075;
 $alert: #D62C25;
-$notice-primary-color: #D61C25;
 $links: #0A6ECA;
 $secondary-content: #5E6266;
 $tertiary-content: #5E6266;   // Same as secondary
@@ -18,9 +17,11 @@ $username-variant8-color: #3E810A;
 
 $accent-color: $accent;
 $accent-color-50pct: rgba($accent-color, 0.5);
+$input-border-color: $secondary-content;
 $input-darker-bg-color: $quinary-content;
 $input-lighter-fg-color: $input-darker-fg-color;
 $input-valid-border-color: $accent-color;
+$input-focused-border-color: $accent-color;
 $button-bg-color: $accent-color;
 $resend-button-divider-color: $input-darker-bg-color;
 $icon-button-color: $quaternary-content;
@@ -41,6 +42,7 @@ $voice-record-stop-border-color: $quinary-content;
 $voice-record-icon-color: $tertiary-content;
 $appearance-tab-border-color: $input-darker-bg-color;
 $eventbubble-reply-color: $quaternary-content;
+$notice-primary-color: $alert;
 $warning-color: $notice-primary-color; // red
 $pinned-unread-color: $notice-primary-color;
 $button-danger-bg-color: $notice-primary-color;
@@ -63,4 +65,21 @@ $event-highlight-fg-color: $warning-color;
 @define-mixin mx_Dialog_link {
     color: $accent-color;
     text-decoration: none;
+}
+
+.mx_TabbedView_tabLabel_active::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 2px solid $accent-color;
+    border-radius: 12px;
+}
+
+.mx_AccessibleButton:focus {
+    outline: 2px solid $accent-color;
 }
