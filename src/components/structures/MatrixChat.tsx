@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { ComponentType, createRef } from 'react';
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -176,6 +176,9 @@ interface IRoomInfo {
     threepid_invite?: IThreepidInvite;
 
     justCreatedOpts?: IOpts;
+
+    // Whether or not to override default behaviour to end up at a timeline
+    forceTimeline?: boolean;
 }
 /* eslint-enable camelcase */
 
@@ -238,6 +241,7 @@ interface IState {
     pendingInitialSync?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
+    forceTimeline?: boolean; // see props
 }
 
 @replaceableComponent("structures.MatrixChat")
@@ -968,6 +972,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 page_type: PageType.RoomView,
                 threepidInvite: roomInfo.threepid_invite,
                 roomOobData: roomInfo.oob_data,
+                forceTimeline: roomInfo.forceTimeline,
                 ready: true,
                 roomJustCreatedOpts: roomInfo.justCreatedOpts,
             }, () => {
@@ -1596,12 +1601,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (haveNewVersion) {
                 Modal.createTrackedDialogAsync('New Recovery Method', 'New Recovery Method',
-                    import('../../async-components/views/dialogs/security/NewRecoveryMethodDialog'),
+                    import(
+                        '../../async-components/views/dialogs/security/NewRecoveryMethodDialog'
+                    ) as unknown as Promise<ComponentType<{}>>,
                     { newVersionInfo },
                 );
             } else {
                 Modal.createTrackedDialogAsync('Recovery Method Removed', 'Recovery Method Removed',
-                    import('../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog'),
+                    import(
+                        '../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog'
+                    ) as unknown as Promise<ComponentType<{}>>,
                 );
             }
         });
