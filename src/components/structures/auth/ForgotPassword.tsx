@@ -34,9 +34,9 @@ import { logger } from "matrix-js-sdk/src/logger";
 import Spinner from "../../views/elements/Spinner";
 import QuestionDialog from "../../views/dialogs/QuestionDialog";
 import ErrorDialog from "../../views/dialogs/ErrorDialog";
-import Field from "../../views/elements/Field";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
+import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
 
 enum Phase {
     // Show the forgot password inputs
@@ -319,12 +319,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_blur")}
                         autoComplete="new-password"
                     />
-                    <Field
+                    <PassphraseConfirmField
                         name="reset_password_confirm"
-                        type="password"
                         label={_t('Confirm')}
+                        labelRequired={_t("A new password must be entered.")}
+                        labelInvalid={_t("New passwords must match each other.")}
                         value={this.state.password2}
-                        ref={field => this[ForgotPasswordField.PasswordConfirm] = field}
+                        password={this.state.password}
+                        fieldRef={field => this[ForgotPasswordField.PasswordConfirm] = field}
                         onChange={this.onInputChanged.bind(this, "password2")}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_blur")}
