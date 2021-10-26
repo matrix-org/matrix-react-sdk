@@ -117,6 +117,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             this.sgWidget = new StopGapWidget(this.props);
             this.sgWidget.on("preparing", this.onWidgetPrepared);
             this.sgWidget.on("ready", this.onWidgetReady);
+            this.sgWidget.on("capabilities_renegotiated", this.onWidgetCapabilitesRenegotiating);
         } catch (e) {
             logger.log("Failed to construct widget", e);
             this.sgWidget = null;
@@ -297,8 +298,11 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (WidgetType.JITSI.matches(this.props.app.type)) {
             this.sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
         }
+    };
+
+    private onWidgetCapabilitesRenegotiating = (): void => {
         this.setState({
-            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient)
+            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
         });
     };
 
@@ -517,7 +521,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                             { this.props.showTitle && this.getTileTitle() }
                         </span>
                         <span className="mx_AppTileMenuBarWidgets">
-                            {(this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
+                            { (this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
                                 className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                                 title={_t('Popout widget')}
                                 onClick={this.onPopoutWidgetClick}
