@@ -82,4 +82,5 @@ $event-highlight-fg-color: $warning-color;
 
 .mx_AccessibleButton:focus {
     outline: 2px solid $accent-color;
+    outline-offset: 2px;
 }
