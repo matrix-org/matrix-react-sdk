@@ -206,11 +206,11 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             const manualContainer = userLayout?.widgets?.[widget.id]?.container;
             const isLegacyPinned = !!legacyPinned?.[widget.id];
             const defaultContainer = WidgetType.JITSI.matches(widget.type) ? Container.Top : Container.Right;
-            
+
             let targetContainer = defaultContainer;
-            if(manualContainer !== undefined || stateContainer !== undefined){
+            if (!!manualContainer || !!stateContainer) {
                 targetContainer = (manualContainer) ? manualContainer : stateContainer;
-            } 
+            }
             // Special legacy case
             else if (isLegacyPinned && !stateContainer) {
                 targetContainer = Container.Top;
