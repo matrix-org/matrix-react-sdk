@@ -17,6 +17,7 @@ limitations under the License.
 import React, { PureComponent, RefCallback, RefObject } from "react";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Field, { IInputProps } from "../elements/Field";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t, _td } from "../../../languageHandler";
 
 interface IProps extends Omit<IInputProps, "onValidate"> {
@@ -26,13 +27,43 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     value: string;
     password: string; // The password we're confirming
 
+    labelRequired?: string;
+    labelInvalid?: string;
+
     onChange(ev: React.FormEvent<HTMLElement>);
+    onValidate?(result: IValidationResult);
 }
 
 @replaceableComponent("views.auth.EmailField")
 class PassphraseConfirmField extends PureComponent<IProps> {
     static defaultProps = {
         label: _td("Confirm password"),
+        labelRequired: _td("Confirm password"),
+        labelInvalid: _td("Passwords don't match"),
+    };
+
+    private validate = withValidation({
+        rules: [
+            {
+                key: "required",
+                test: ({ value, allowEmpty }) => allowEmpty || !!value,
+                invalid: () => _t(this.props.labelRequired),
+            },
+            {
+                key: "match",
+                test: ({ value }) => !value || value === this.props.password,
+                invalid: () => _t(this.props.labelInvalid),
+            },
+        ],
+    });
+
+    onValidate = async (fieldState: IFieldState) => {
+        const result = await this.validate(fieldState);
+        if (this.props.onValidate) {
+            this.props.onValidate(result);
+        }
+
+        return result;
     };
 
     render() {
@@ -44,6 +75,7 @@ class PassphraseConfirmField extends PureComponent<IProps> {
             autoComplete={this.props.autoComplete}
             value={this.props.value}
             onChange={this.props.onChange}
+            onValidate={this.onValidate}
         />;
     }
 }
