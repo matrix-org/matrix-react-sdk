@@ -818,10 +818,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.isAtEndOfLiveTimeline()) {
                 this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
                 this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
-                dis.dispatch({
-                    action: 'on_room_read',
-                    roomId: this.props.timelineSet.room.roomId,
-                });
             }
         }
     };
