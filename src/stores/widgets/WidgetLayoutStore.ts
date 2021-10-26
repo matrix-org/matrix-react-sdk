@@ -210,9 +210,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             let targetContainer = defaultContainer;
             if (!!manualContainer || !!stateContainer) {
                 targetContainer = (manualContainer) ? manualContainer : stateContainer;
-            }
-            // Special legacy case
-            else if (isLegacyPinned && !stateContainer) {
+            } else if (isLegacyPinned && !stateContainer) {
+                // Special legacy case
                 targetContainer = Container.Top;
             }
             (targetContainer === Container.Top ? topWidgets : rightWidgets).push(widget);
