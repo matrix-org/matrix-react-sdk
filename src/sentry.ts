@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import * as Sentry from "@sentry/browser";
-import PlatformPeg from "./PlatformPeg";
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
@@ -200,19 +199,12 @@ interface ISentryConfig {
 
 export async function initSentry(sentryConfig: ISentryConfig): Promise<void> {
     if (!sentryConfig) return;
-    const platform = PlatformPeg.get();
-    let appVersion = "unknown";
-    try {
-        appVersion = await platform.getAppVersion();
-    } catch (e) {}
-
     Sentry.init({
         dsn: sentryConfig.dsn,
-        release: `${platform.getHumanReadableName()}@${appVersion}`,
+        release: process.env.VERSION,
         environment: sentryConfig.environment,
         defaultIntegrations: false,
         autoSessionTracking: false,
-        debug: true,
         integrations: [
             // specifically disable Integrations.GlobalHandlers, which hooks uncaught exceptions - we don't
             // want to capture those at this stage, just explicit rageshakes

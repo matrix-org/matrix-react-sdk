@@ -122,7 +122,7 @@ limitations under the License.
 
     h3 {
         text-transform: uppercase;
-        color: $notice-secondary-color;
+        color: $tertiary-content;
         font-weight: 600;
         font-size: $font-12px;
         margin: 4px 0;
@@ -223,7 +223,6 @@ limitations under the License.
             display: flex;
             margin: 8px 0;
 
-
             &.mx_UserInfo_device_verified {
                 .mx_UserInfo_device_trusted {
                     color: $accent-color;
@@ -266,7 +265,6 @@ limitations under the License.
         display: block;
         margin: 16px 0 8px;
     }
-
 
     .mx_VerificationShowSas {
         .mx_AccessibleButton + .mx_AccessibleButton {

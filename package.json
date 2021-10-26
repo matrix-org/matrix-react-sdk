@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.32.1",
+  "version": "3.33.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -76,7 +76,7 @@
     "focus-visible": "^5.2.0",
     "gfm.css": "^1.1.2",
     "glob-to-regexp": "^0.4.1",
-    "highlight.js": "^10.5.0",
+    "highlight.js": "^11.3.1",
     "html-entities": "^1.4.0",
     "is-ip": "^3.1.0",
     "jszip": "^3.7.0",
@@ -154,7 +154,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
-    "allchange": "^1.0.3",
+    "allchange": "^1.0.4",
     "babel-jest": "^26.6.3",
     "chokidar": "^3.5.1",
     "concurrently": "^5.3.0",
@@ -188,7 +188,9 @@
     "@types/react": "17.0.14"
   },
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "testEnvironment": "./__test-utils__/environment.js",
     "testMatch": [
       "<rootDir>/test/**/*-test.[jt]s?(x)"

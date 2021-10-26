@@ -68,6 +68,8 @@ interface IState {
     hover: boolean;
 }
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 @replaceableComponent("views.elements.Pill")
 export default class Pill extends React.Component<IProps, IState> {
     private unmounted = true;
@@ -207,7 +209,7 @@ export default class Pill extends React.Component<IProps, IState> {
             };
             this.setState({ member });
         }).catch((err) => {
-            console.error('Could not retrieve profile data for ' + userId + ':', err);
+            logger.error('Could not retrieve profile data for ' + userId + ':', err);
         });
     }
 

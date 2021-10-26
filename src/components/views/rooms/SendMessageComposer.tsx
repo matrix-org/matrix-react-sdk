@@ -34,7 +34,7 @@ import {
 } from '../../../editor/serialize';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from '../../../editor/parts';
-import ReplyThread from "../elements/ReplyThread";
+import ReplyChain from "../elements/ReplyChain";
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
@@ -57,6 +57,8 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
 import RoomContext from '../../../contexts/RoomContext';
+import DocumentPosition from "../../../editor/position";
+import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
 function addReplyToMessageContent(
     content: IContent,
@@ -64,12 +66,12 @@ function addReplyToMessageContent(
     permalinkCreator: RoomPermalinkCreator,
     relation?: IEventRelation,
 ): void {
-    const replyContent = ReplyThread.makeReplyMixIn(replyToEvent);
+    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
 
     // Part of Replies fallback support - prepend the text we're sending
     // with the text we're replying to
-    const nestedReply = ReplyThread.getNestedReplyText(replyToEvent, permalinkCreator);
+    const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, permalinkCreator);
     if (nestedReply) {
         if (content.formatted_body) {
             content.formatted_body = nestedReply.html + content.formatted_body;
@@ -237,6 +239,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
                 break;
             default:
@@ -268,6 +271,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         dis.dispatch({
             action: 'reply_to_event',
             event: replyEventId ? this.props.room.findEventById(replyEventId) : null,
+            context: this.context.timelineRenderingType,
         });
         if (parts) {
             this.model.reset(parts);
@@ -358,7 +362,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             }
         }
         if (error) {
-            console.error("Command failure: %s", error);
+            logger.error("Command failure: %s", error);
             // assume the error is a server error when the command is async
             const isServerError = !!result.promise;
             const title = isServerError ? _td("Server error") : _td("Command error");
@@ -391,9 +395,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-            const caret = this.editorRef.current?.getCaret();
-            const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-            this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
+            const indexOfLastPart = model.parts.length - 1;
+            const positionInLastPart = model.parts[indexOfLastPart].text.length;
+            this.editorRef.current?.replaceEmoticon(
+                new DocumentPosition(indexOfLastPart, positionInLastPart),
+                REGEX_EMOTICON,
+            );
         }
 
         const replyToEvent = this.props.replyToEvent;
@@ -475,6 +482,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
             }
             dis.dispatch({ action: "message_sent" });
@@ -498,7 +506,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.editorRef.current?.focus();
         this.clearStoredEditorState();
         if (SettingsStore.getValue("scrollToBottomOnMessageSent")) {
-            dis.dispatch({ action: "scroll_to_bottom" });
+            dis.dispatch({
+                action: "scroll_to_bottom",
+                timelineRenderingType: this.context.timelineRenderingType,
+            });
         }
     }
 
@@ -545,11 +556,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     dis.dispatch({
                         action: 'reply_to_event',
                         event: this.props.room.findEventById(replyEventId),
+                        context: this.context.timelineRenderingType,
                     });
                 }
                 return parts;
             } catch (e) {
-                console.error(e);
+                logger.error(e);
             }
         }
     }
@@ -576,9 +588,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         switch (payload.action) {
             case 'reply_to_event':
             case Action.FocusSendMessageComposer:
-                this.editorRef.current?.focus();
+                if (payload.context === this.context.timelineRenderingType) {
+                    this.editorRef.current?.focus();
+                }
                 break;
-            case "send_composer_insert":
+            case Action.ComposerInsert:
+                if (payload.timelineRenderingType !== this.context.timelineRenderingType) break;
+                if (payload.composerType !== ComposerType.Send) break;
+
                 if (payload.userId) {
                     this.editorRef.current?.insertMention(payload.userId);
                 } else if (payload.event) {
