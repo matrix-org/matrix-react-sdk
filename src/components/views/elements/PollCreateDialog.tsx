@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IScrollableBaseState, ScrollableBaseModal } from "../dialogs/ScrollableBaseModal";
+import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, createRef } from "react";
 import { _t } from "../../../languageHandler";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { arrayFastClone, arraySeed } from "../../../utils/arrays";
@@ -39,6 +39,8 @@ const MAX_OPTIONS = 20;
 const DEFAULT_NUM_OPTIONS = 2;
 
 export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState> {
+    private addOptionRef = createRef<HTMLDivElement>();
+
     public constructor(props: IProps) {
         super(props);
 
@@ -81,7 +83,11 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     private onOptionAdd = () => {
         const newOptions = arrayFastClone(this.state.options);
         newOptions.push("");
-        this.setState({ options: newOptions });
+        this.setState({ options: newOptions }, () => {
+            // Scroll the button into view after the state update to ensure we don't experience
+            // a pop-in effect, and to avoid the button getting cut off due to a mid-scroll render.
+            this.addOptionRef.current?.scrollIntoView();
+        });
     };
 
     protected submit(): void {
@@ -108,6 +114,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 label={_t("Question or topic")}
                 placeholder={_t("Write something...")}
                 onChange={this.onQuestionChange}
+                usePlaceholderAsHint={true}
             />
             <h2>{ _t("Create options") }</h2>
             {
@@ -117,6 +124,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                         label={_t("Option %(number)s", { number: i + 1 })}
                         placeholder={_t("Write an option")}
                         onChange={e => this.onOptionChange(i, e)}
+                        usePlaceholderAsHint={true}
                     />
                     <AccessibleButton
                         onClick={() => this.onOptionRemove(i)}
@@ -129,6 +137,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 disabled={this.state.options.length >= MAX_OPTIONS}
                 kind="secondary"
                 className="mx_PollCreateDialog_addOption"
+                inputRef={this.addOptionRef}
             >{ _t("Add option") }</AccessibleButton>
         </div>;
     }

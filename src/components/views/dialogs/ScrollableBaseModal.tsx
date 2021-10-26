@@ -33,7 +33,7 @@ export interface IScrollableBaseState {
 /**
  * Scrollable dialog base from Compound (Web Components).
  */
-export abstract class ScrollableBaseModal<TProps extends IDialogProps, TState extends IScrollableBaseState>
+export default abstract class ScrollableBaseModal<TProps extends IDialogProps, TState extends IScrollableBaseState>
     extends React.PureComponent<TProps, TState> {
     protected constructor(props: TProps) {
         super(props);
