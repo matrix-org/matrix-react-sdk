@@ -155,6 +155,11 @@ $settings-profile-button-bg-color: #e7e7e7;
 $settings-profile-button-fg-color: $settings-profile-overlay-placeholder-fg-color;
 $settings-subsection-fg-color: #61708b;
 
+$call-view-button-on-foreground: $secondary-content;
+$call-view-button-on-background: $background;
+$call-view-button-off-foreground: $background;
+$call-view-button-off-background: $secondary-content;
+
 $voip-decline-color: #f48080;
 $voip-accept-color: #80f480;
 

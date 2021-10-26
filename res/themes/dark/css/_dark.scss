@@ -103,6 +103,11 @@ $settings-profile-button-bg-color: #e7e7e7;
 $settings-profile-button-fg-color: $settings-profile-overlay-placeholder-fg-color;
 $settings-subsection-fg-color: $text-secondary-color;
 
+$call-view-button-on-foreground: $primary-content;
+$call-view-button-on-background: $system;
+$call-view-button-off-foreground: $system;
+$call-view-button-off-background: $primary-content;
+
 $topleftmenu-color: $primary-content;
 $roomheader-color: $primary-content;
 $roomheader-addroom-bg-color: rgba(92, 100, 112, 0.3);
