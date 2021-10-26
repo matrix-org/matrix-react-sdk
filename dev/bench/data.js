@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635239290527,
+  "lastUpdate": 1635240432822,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35192,6 +35192,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4605,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "39e61c4fa3a8ae87406d2f1e2885e177a8af75ec",
+          "message": "Fix cannot read length of undefined for room upgrades (#7037)",
+          "timestamp": "2021-10-26T10:21:27+01:00",
+          "tree_id": "c3a9d54f1dacda74b1d101025188f9551a810cf5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/39e61c4fa3a8ae87406d2f1e2885e177a8af75ec"
+        },
+        "date": 1635240430598,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4484.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1138.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1699.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4300.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
