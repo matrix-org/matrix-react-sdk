@@ -21,6 +21,7 @@ $accent-color-50pct: rgba($accent-color, 0.5);
 $accent-color-alt: $links;
 $input-border-color: $secondary-content;
 $input-darker-bg-color: $quinary-content;
+$input-darker-fg-color: $secondary-content;
 $input-lighter-fg-color: $input-darker-fg-color;
 $input-valid-border-color: $accent-color;
 $input-focused-border-color: $accent-color;
@@ -87,4 +88,12 @@ $roomtopic-color: $secondary-content;
 .mx_TextualEvent {
     color: $secondary-content;
     opacity: 1 !important;
+}
+
+.mx_Dialog, .mx_MatrixChat_wrapper {
+    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text]::placeholder,
+    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=search]::placeholder,
+    .mx_textinput input::placeholder {
+        color: $input-darker-fg-color !important;
+    }
 }
