@@ -219,15 +219,30 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     };
 
     private async verifyFieldsBeforeSubmit() {
-        if (!await this[ForgotPasswordField.Email].validate({ allowEmpty: false })) {
-            return false;
+        const fieldIdsInDisplayOrder = [
+            ForgotPasswordField.Email,
+            ForgotPasswordField.Password,
+            ForgotPasswordField.PasswordConfirm,
+        ];
+
+        const invalidFields = [];
+        for (const fieldId of fieldIdsInDisplayOrder) {
+            const valid = await this[fieldId].validate({ allowEmpty: false });
+            if (!valid) {
+                invalidFields.push(this[fieldId]);
+            }
         }
 
-        if (!await this[ForgotPasswordField.Password].validate({ allowEmpty: false })) {
-            return false;
+        if (invalidFields.length === 0) {
+            return true;
         }
 
-        return true;
+        // Focus on the first invalid field, then re-validate,
+        // which will result in the error tooltip being displayed for that field.
+        invalidFields[0].focus();
+        invalidFields[0].validate({ allowEmpty: false, focused: true });
+
+        return false;
     }
 
     private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
