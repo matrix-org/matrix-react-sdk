@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635193638534,
+  "lastUpdate": 1635231610832,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35060,6 +35060,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 612.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e649bf55416be6caf22fd1cab033abb81be36bd3",
+          "message": "Update Thread icon (#7031)",
+          "timestamp": "2021-10-26T07:53:36+01:00",
+          "tree_id": "265bc2a67230e2275f7a918581f2ffbe76753bdd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e649bf55416be6caf22fd1cab033abb81be36bd3"
+        },
+        "date": 1635231606976,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4324.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 622.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
