@@ -77,6 +77,12 @@ interface IState {
     currentHttpRequest?: Promise<any>;
 }
 
+enum ForgotPasswordField {
+    Email = 'field_email',
+    Password = 'field_password',
+    PasswordConfirm = 'field_password_confirm',
+}
+
 @replaceableComponent("structures.auth.ForgotPassword")
 export default class ForgotPassword extends React.Component<IProps, IState> {
     private reset: PasswordReset;
@@ -175,8 +181,8 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         // refresh the server errors, just in case the server came back online
         await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
 
-        await this['email_field'].validate({ allowEmpty: false });
-        await this['password_field'].validate({ allowEmpty: false });
+        await this[ForgotPasswordField.Email].validate({ allowEmpty: false });
+        await this[ForgotPasswordField.Password].validate({ allowEmpty: false });
 
         if (!this.state.email) {
             this.showErrorDialog(_t('The email address linked to your account must be entered.'));
@@ -287,7 +293,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         labelRequired={_t('The email address linked to your account must be entered.')}
                         labelInvalid={_t("The email address doesn't appear to be valid.")}
                         value={this.state.email}
-                        fieldRef={field => this['email_field'] = field}
+                        fieldRef={field => this[ForgotPasswordField.Email] = field}
                         autoFocus={true}
                         onChange={this.onInputChanged.bind(this, "email")}
                         onValidate={this.onEmailValidate}
@@ -302,8 +308,8 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         label={_td('New Password')}
                         value={this.state.password}
                         minScore={PASSWORD_MIN_SCORE}
+                        fieldRef={field => this[ForgotPasswordField.Password] = field}
                         onChange={this.onInputChanged.bind(this, "password")}
-                        fieldRef={field => this['password_field'] = field}
                         onValidate={(result) => this.onPasswordValidate(result)}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_blur")}
@@ -314,6 +320,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         type="password"
                         label={_t('Confirm')}
                         value={this.state.password2}
+                        ref={field => this[ForgotPasswordField.PasswordConfirm] = field}
                         onChange={this.onInputChanged.bind(this, "password2")}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_blur")}
