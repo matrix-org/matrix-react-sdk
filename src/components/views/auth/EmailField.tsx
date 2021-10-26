@@ -34,8 +34,8 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     // When present, completely overrides the default validation rules.
     validationRules?: (fieldState: IFieldState) => Promise<IValidationResult>;
 
-    onChange(ev: React.FormEvent<HTMLElement>);
-    onValidate?(result: IValidationResult);
+    onChange(ev: React.FormEvent<HTMLElement>): void;
+    onValidate?(result: IValidationResult): void;
 }
 
 @replaceableComponent("views.auth.EmailField")
