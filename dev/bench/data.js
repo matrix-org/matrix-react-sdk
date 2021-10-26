@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635247330733,
+  "lastUpdate": 1635251683934,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35276,6 +35276,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 616.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "166fba64285876cd4314cfdf1c5de133b97da320",
+          "message": "Improve the appearance of the font size slider (#7038)",
+          "timestamp": "2021-10-26T13:29:02+01:00",
+          "tree_id": "1df4e510f72874b4af87cd988edccf68c51ff300",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/166fba64285876cd4314cfdf1c5de133b97da320"
+        },
+        "date": 1635251679664,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4329.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1287.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1629.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4271.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
