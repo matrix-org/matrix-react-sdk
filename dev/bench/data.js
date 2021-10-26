@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635240432822,
+  "lastUpdate": 1635247330733,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35240,6 +35240,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4300.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "04c06b6aa868f0ffab38b8cff2c5308d88189735",
+          "message": "Improve RovingTabIndex & Room List filtering performance (#6987)",
+          "timestamp": "2021-10-26T12:16:50+01:00",
+          "tree_id": "f6d560c614b4c04d250708455a1691fc57714885",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/04c06b6aa868f0ffab38b8cff2c5308d88189735"
+        },
+        "date": 1635247328602,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4292.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 616.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
