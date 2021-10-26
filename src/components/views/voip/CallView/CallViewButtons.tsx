@@ -162,18 +162,6 @@ export default class CallViewButtons extends React.Component<IProps, IState> {
             mx_CallViewButtons_button_sidebarOff: !this.props.buttonsState.sidebarShown,
         });
 
-        // Put the other states of the mic/video icons in the document to make sure they're cached
-        // (otherwise the icon disappears briefly when toggled)
-        const micCacheClasses = classNames("mx_CallViewButtons_button", "mx_CallViewButtons_button_invisible", {
-            mx_CallViewButtons_button_micOn: this.props.buttonsState.micMuted,
-            mx_CallViewButtons_button_micOff: !this.props.buttonsState.micMuted,
-        });
-
-        const vidCacheClasses = classNames("mx_CallViewButtons_button", "mx_CallViewButtons_button_invisible", {
-            mx_CallViewButtons_button_vidOn: this.props.buttonsState.micMuted,
-            mx_CallViewButtons_button_vidOff: !this.props.buttonsState.micMuted,
-        });
-
         const callControlsClasses = classNames("mx_CallViewButtons", {
             mx_CallViewButtons_hidden: !this.state.visible,
         });
@@ -298,8 +286,6 @@ export default class CallViewButtons extends React.Component<IProps, IState> {
                     yOffset={TOOLTIP_Y_OFFSET}
                 />
                 { vidMuteButton }
-                <div className={micCacheClasses} />
-                <div className={vidCacheClasses} />
                 { screensharingButton }
                 { sidebarButton }
                 { contextMenuButton }
