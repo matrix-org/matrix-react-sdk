@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635233394911,
+  "lastUpdate": 1635239290527,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35144,6 +35144,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4829.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0fa9638681361224885911a91b6f1adcea29cdaa",
+          "message": "Remove outdated Spaces restricted rooms warning (#6927)",
+          "timestamp": "2021-10-26T10:01:14+01:00",
+          "tree_id": "3d9138dd5c92f1ff61b56067f329c0b0acda8ad6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0fa9638681361224885911a91b6f1adcea29cdaa"
+        },
+        "date": 1635239287850,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5140.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1037.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1670.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4605,
             "unit": "ms",
             "extra": "type: measure"
           }
