@@ -14,16 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { PureComponent } from "react";
+import React, { PureComponent, RefCallback, RefObject } from "react";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { IInputProps } from "../elements/Field";
+import Field, { IInputProps } from "../elements/Field";
+import { _t, _td } from "../../../languageHandler";
 
 interface IProps extends Omit<IInputProps, "onValidate"> {
+    id?: string;
+    fieldRef?: RefCallback<Field> | RefObject<Field>;
+    autoComplete?: string;
+    value: string;
+    password: string; // The password we're confirming
+
+    onChange(ev: React.FormEvent<HTMLElement>);
 }
 
 @replaceableComponent("views.auth.EmailField")
 class PassphraseConfirmField extends PureComponent<IProps> {
+    static defaultProps = {
+        label: _td("Confirm password"),
+    };
 
+    render() {
+        return <Field
+            id={this.props.id}
+            ref={this.props.fieldRef}
+            type="password"
+            label={_t(this.props.label)}
+            autoComplete={this.props.autoComplete}
+            value={this.props.value}
+            onChange={this.props.onChange}
+        />;
+    }
 }
 
 export default PassphraseConfirmField;
