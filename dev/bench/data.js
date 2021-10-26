@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635258846726,
+  "lastUpdate": 1635266585963,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35372,6 +35372,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4601.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "82c2102ccbfefe246781ee8cd5b63f8e464a602c",
+          "message": "Respect the roomState right container request for the Jitsi widget (#7033)",
+          "timestamp": "2021-10-26T17:36:42+01:00",
+          "tree_id": "a2cac7039df6d5865da6fdccdd635c1d011a4344",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/82c2102ccbfefe246781ee8cd5b63f8e464a602c"
+        },
+        "date": 1635266583263,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4681.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1105,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1712.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4464,
             "unit": "ms",
             "extra": "type: measure"
           }
