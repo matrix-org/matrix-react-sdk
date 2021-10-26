@@ -67,19 +67,6 @@ $event-highlight-fg-color: $warning-color;
     text-decoration: none;
 }
 
-.mx_TabbedView_tabLabel_active::before {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: -1;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 2px solid $accent-color;
-    border-radius: 12px;
-}
-
 .mx_AccessibleButton:focus {
     outline: 2px solid $accent-color;
     outline-offset: 2px;
