@@ -135,7 +135,7 @@ export class PosthogAnalytics {
     private readonly enabled: boolean = false;
     private static _instance = null;
     private platformSuperProperties = {};
-    private static ANALYTICS_ID_EVENT_TYPE = "im.vector.web.analytics_id";
+    private static ANALYTICS_EVENT_TYPE = "im.vector.analytics";
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -255,7 +255,7 @@ export class PosthogAnalytics {
             // Check the user's account_data for an analytics ID to use. Storing the ID in account_data allows
             // different devices to send the same ID.
             try {
-                const accountData = await client.getAccountDataFromServer(PosthogAnalytics.ANALYTICS_ID_EVENT_TYPE);
+                const accountData = await client.getAccountDataFromServer(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
                 let analyticsID = accountData?.id;
                 if (!analyticsID) {
                     // Couldn't retrieve an analytics ID from user settings, so create one and set it on the server.
@@ -264,7 +264,8 @@ export class PosthogAnalytics {
                     // until the next time account data is refreshed and this function is called (most likely on next
                     // page load). This will happen pretty infrequently, so we can tolerate the possibility.
                     analyticsID = analyticsIdGenerator();
-                    await client.setAccountData("im.vector.web.analytics_id", { id: analyticsID });
+                    await client.setAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE,
+                        Object.assign({ id: analyticsID }, accountData));
                 }
                 this.posthog.identify(analyticsID);
             } catch (e) {
