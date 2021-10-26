@@ -103,9 +103,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 this.showImage();
                 return;
             }
-
+            // For encrypted SVGs we can just use the thumbnail url that will link to a sanitized svg Blob.
+            const httpUrl = this.isSvg && this.media.isEncrypted ? this.getThumbUrl() : this.getContentUrl();
             const content = this.props.mxEvent.getContent<IMediaEventContent>();
-            const httpUrl = this.getContentUrl();
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
                 name: content.body?.length > 0 ? content.body : _t('Attachment'),
@@ -137,6 +137,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private isGif = (): boolean => {
         const content = this.props.mxEvent.getContent();
         return content.info?.mimetype === "image/gif";
+    };
+
+    private isSvg = (): boolean => {
+        const content = this.props.mxEvent.getContent();
+        return content.info?.mimetype === "image/svg+xml";
     };
 
     private onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
@@ -269,10 +274,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     private async downloadImage() {
         if (this.props.mediaEventHelper.media.isEncrypted && this.state.decryptedUrl === null) {
             try {
-                const thumbnailUrl = await this.props.mediaEventHelper.thumbnailUrl.value;
                 this.setState({
                     decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
-                    decryptedThumbnailUrl: thumbnailUrl,
+                    decryptedThumbnailUrl: await this.props.mediaEventHelper.thumbnailUrl.value,
                     decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
                 });
             } catch (err) {
@@ -516,7 +520,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         const contentUrl = this.getContentUrl();
         let thumbUrl;
-        if (this.props.forExport || (this.isGif() && SettingsStore.getValue("autoplayGifs"))) {
+        if (this.props.forExport || (this.isGif() && SettingsStore.getValue("autoplayGifs"))
+            || (this.isSvg && !this.media.isEncrypted)) {
             thumbUrl = contentUrl;
         } else {
             thumbUrl = this.getThumbUrl();

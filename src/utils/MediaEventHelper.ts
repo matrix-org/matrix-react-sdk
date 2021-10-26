@@ -85,11 +85,14 @@ export class MediaEventHelper implements IDestroyable {
     };
 
     private fetchThumbnail = () => {
-        if (!this.media.hasThumbnail) return Promise.resolve(null);
+        // For SVGs we don't have thumbnails, so we can create them using the original file content.
+        if (!this.media.hasThumbnail && !this.isSvg()) return Promise.resolve(null);
 
         if (this.media.isEncrypted) {
             const content = this.event.getContent<IMediaEventContent>();
-            if (content.info?.thumbnail_file) {
+            if (this.isSvg) {
+                return decryptFile(content.file, content.info, true);
+            } else if (content.info?.thumbnail_file) {
                 return decryptFile(content.info.thumbnail_file, content.info.thumbnail_info);
             } else {
                 // "Should never happen"
@@ -119,5 +122,10 @@ export class MediaEventHelper implements IDestroyable {
 
         // Finally, it's probably not media
         return false;
+    }
+
+    private isSvg(): boolean {
+        const content = this.event.getContent<IMediaEventContent>();
+        return content.info?.mimetype === "image/svg+xml";
     }
 }

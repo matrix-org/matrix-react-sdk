@@ -81,7 +81,7 @@ export function presentableTextForFile(
  */
 export function sanitizeSvg(
     svgFile: string,
-    allowUseTags = true,
+    allowUseTags = false,
 ): string {
     let allowedTags = [];
 

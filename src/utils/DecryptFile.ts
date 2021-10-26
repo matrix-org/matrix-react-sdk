@@ -29,11 +29,13 @@ import { sanitizeSvg } from './FileUtils';
  *   as an encryption info object, so it will also have those keys in addition to
  *   the keys below.
  * @param {IMediaEventInfo} info The info parameter taken from the matrix event.
+ * @param {boolean} isSvgThumbnail Whether file is a encrypted svg used for thumbnails.
  * @returns {Promise<Blob>} Resolves to a Blob of the file.
  */
-export async function decryptFile(
+export function decryptFile(
     file: IEncryptedFile,
     info?: IMediaEventInfo,
+    isSvgThumbnail = false,
 ): Promise<Blob> {
     const media = mediaFromContent({ file });
     // Download the encrypted file as an array buffer.
@@ -55,7 +57,9 @@ export async function decryptFile(
         let mimetype = info?.mimetype ? info.mimetype.split(";")[0].trim() : '';
         mimetype = getBlobSafeMimeType(mimetype);
 
-        if (mimetype === "image/svg+xml") {
+        // In case of svg thumbnails we generate we create a sanitized Blob.
+        // NOTE: For SVG we can also use the thumbnail for the lightbox.
+        if (mimetype === "image/svg+xml" && isSvgThumbnail) {
             const svgFile = new TextDecoder("utf-8").decode(decodeBase64(dataArray));
             return new Blob([sanitizeSvg(svgFile)], { type: mimetype });
         }
