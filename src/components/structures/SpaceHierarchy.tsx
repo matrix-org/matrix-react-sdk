@@ -172,8 +172,15 @@ const Tile: React.FC<ITileProps> = ({
         description += " · " + topic;
     }
 
+    let joinedSection;
+    if (joinedRoom) {
+        joinedSection = <div className="mx_SpaceHierarchy_roomTile_joined">
+            { _t("Joined") }
+        </div>;
+    }
+
     let suggestedSection;
-    if (suggested) {
+    if (suggested && (!joinedRoom || hasPermissions)) {
         suggestedSection = <InfoTooltip tooltip={_t("This room is suggested as a good one to join")}>
             { _t("Suggested") }
         </InfoTooltip>;
@@ -183,6 +190,7 @@ const Tile: React.FC<ITileProps> = ({
         { avatar }
         <div className="mx_SpaceHierarchy_roomTile_name">
             { name }
+            { joinedSection }
             { suggestedSection }
         </div>
 
@@ -537,8 +545,18 @@ const ManageButtons = ({ hierarchy, selected, setSelected, setError }: IManageBu
             onClick={async () => {
                 setRemoving(true);
                 try {
+                    const userId = cli.getUserId();
                     for (const [parentId, childId] of selectedRelations) {
                         await cli.sendStateEvent(parentId, EventType.SpaceChild, {}, childId);
+
+                        // remove the child->parent relation too, if we have permission to.
+                        const childRoom = cli.getRoom(childId);
+                        const parentRelation = childRoom?.currentState.getStateEvents(EventType.SpaceParent, parentId);
+                        if (childRoom?.currentState.maySendStateEvent(EventType.SpaceParent, userId) &&
+                            Array.isArray(parentRelation?.getContent().via)
+                        ) {
+                            await cli.sendStateEvent(childId, EventType.SpaceParent, {}, parentId);
+                        }
 
                         hierarchy.removeRelation(parentId, childId);
                     }
