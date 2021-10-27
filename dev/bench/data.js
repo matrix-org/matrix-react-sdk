@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635341836574,
+  "lastUpdate": 1635344596540,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35528,6 +35528,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 634,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "43cbb947b6fa87550aa2798af5b006569f5b6f83",
+          "message": "PSFD-454: Add padding between controls on edit form in message bubbles (#7039)\n\n8px arbitrarily to make it not squishy",
+          "timestamp": "2021-10-27T08:17:52-06:00",
+          "tree_id": "825b12f1442941472d8190f560e0e8a318cc4aa6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/43cbb947b6fa87550aa2798af5b006569f5b6f83"
+        },
+        "date": 1635344594283,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4093.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 908.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1586.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4266.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
