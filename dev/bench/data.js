@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635325168580,
+  "lastUpdate": 1635340319954,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35456,6 +35456,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 673.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8170697bbfd8b4de1b9d0b7762e4bda569190d5a",
+          "message": "Add a global mxSendSentryReport so we can debug sentry from the console (#7042)",
+          "timestamp": "2021-10-27T13:05:58Z",
+          "tree_id": "21e0df3de9c93a13b2b97ccbf3ac4c033728c509",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8170697bbfd8b4de1b9d0b7762e4bda569190d5a"
+        },
+        "date": 1635340317495,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4370.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 590.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
