@@ -61,6 +61,7 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { useEventEmitterState } from "../../hooks/useEventEmitter";
 import { IOOBData } from "../../stores/ThreepidInviteStore";
 import { awaitRoomDownSync } from "../../utils/RoomUpgrade";
+import RoomViewStore from "../../stores/RoomViewStore";
 
 interface IProps {
     space: Room;
@@ -352,6 +353,8 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
 
     cli.joinRoom(roomId, {
         viaServers: Array.from(hierarchy.viaMap.get(roomId) || []),
+    }).catch(err => {
+        RoomViewStore.showJoinRoomError(err, roomId);
     });
 };
 
