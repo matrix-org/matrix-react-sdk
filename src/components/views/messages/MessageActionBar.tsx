@@ -337,7 +337,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
                     title={_t("Thread")}
                     onClick={this.onThreadClick}
-                    key="thread"
+                    key="thread_deleted"
                 />);
             }
 

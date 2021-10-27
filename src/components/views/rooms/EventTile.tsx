@@ -1187,6 +1187,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             msgOption = readAvatars;
         }
 
+        const eventId = this.props.mxEvent?.getId();
+
         switch (this.props.tileShape) {
             case TileShape.Notif: {
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
@@ -1195,6 +1197,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-live": ariaLive,
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
+                    "key": eventId,
                 }, [
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
                         <RoomAvatar room={room} width={28} height={28} />
@@ -1243,6 +1246,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                     "data-has-reply": !!replyChain,
+                    "key": eventId,
                 }, [
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
                         <RoomAvatar room={room} width={28} height={28} />
@@ -1280,6 +1284,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-live": ariaLive,
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
+                    "key": eventId,
                 }, [
                     <div className="mx_EventTile_line" key="mx_EventTile_line">
                         <EventTileType ref={this.tile}
@@ -1336,6 +1341,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
+                        "key": eventId,
                     }, <>
                         { ircTimestamp }
                         { sender }
