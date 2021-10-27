@@ -99,6 +99,7 @@ declare global {
         mxSkinner?: Skinner;
         mxOnRecaptchaLoaded?: () => void;
         electron?: Electron;
+        mxSendRageshake: (text: string, withLogs?: boolean) => void;
     }
 
     interface DesktopCapturerSource {
