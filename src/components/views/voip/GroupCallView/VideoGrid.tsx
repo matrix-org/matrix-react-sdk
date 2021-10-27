@@ -22,6 +22,16 @@ import moveArrItem from "lodash-move";
 import VideoTile from "./VideoTile";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 
+export function useVideoGridLayout(): [string, () => void] {
+    const [layout, setLayout] = useState("gallery");
+
+    const toggleLayout = useCallback(() => {
+        setLayout(layout === "spotlight" ? "gallery" : "spotlight");
+    }, [layout]);
+
+    return [layout, toggleLayout];
+}
+
 function useIsMounted() {
     const isMountedRef = useRef(false);
 
