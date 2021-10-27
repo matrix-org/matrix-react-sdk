@@ -199,6 +199,22 @@ interface ISentryConfig {
 
 export async function initSentry(sentryConfig: ISentryConfig): Promise<void> {
     if (!sentryConfig) return;
+    const integrations = [
+        // specifically disable Integrations.GlobalHandlers, which hooks uncaught exceptions - we don't
+        // want to capture those at this stage, just explicit rageshakes
+        new Sentry.Integrations.InboundFilters(),
+        new Sentry.Integrations.FunctionToString(),
+        new Sentry.Integrations.Breadcrumbs(),
+        new Sentry.Integrations.UserAgent(),
+        new Sentry.Integrations.Dedupe(),
+    ];
+
+    if (SettingsStore.getValue("automaticErrorReporting")) {
+        integrations.push(new Sentry.Integrations.GlobalHandlers(
+            { onerror: false, onunhandledrejection: true }));
+        integrations.push(new Sentry.Integrations.TryCatch());
+    }
+
     Sentry.init({
         dsn: sentryConfig.dsn,
         release: process.env.RELEASE,
@@ -206,15 +222,7 @@ export async function initSentry(sentryConfig: ISentryConfig): Promise<void> {
         defaultIntegrations: false,
         autoSessionTracking: false,
         debug: true,
-        integrations: [
-            // specifically disable Integrations.GlobalHandlers, which hooks uncaught exceptions - we don't
-            // want to capture those at this stage, just explicit rageshakes
-            new Sentry.Integrations.InboundFilters(),
-            new Sentry.Integrations.FunctionToString(),
-            new Sentry.Integrations.Breadcrumbs(),
-            new Sentry.Integrations.UserAgent(),
-            new Sentry.Integrations.Dedupe(),
-        ],
+        integrations,
         // Set to 1.0 which is reasonable if we're only submitting Rageshakes; will need to be set < 1.0
         // if we collect more frequently.
         tracesSampleRate: 1.0,
