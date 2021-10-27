@@ -157,6 +157,9 @@ export default class AppTile extends React.Component<IProps, IState> {
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
+            // requiresClient is initially set to true. This avoids the broken state of the popout
+            // button beeing visible (for an instance) and than disappearing when the widget is loaded.
+            // requiresClient <-> hide the popout button
             requiresClient: true,
         };
     }
