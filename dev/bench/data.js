@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635340319954,
+  "lastUpdate": 1635341836574,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35492,6 +35492,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 590.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "abbc39cdece2ac8f4385b2c24cdcc27a35f990a0",
+          "message": "Add a high contrast theme (a variant of the light theme) (#7036)\n\n* Enable choosing a high contrast variant of the Light theme\r\n\r\n* Updates to high contrast theme to match design and show focus\r\n\r\n* Adjust the outline-offset to match designs\r\n\r\n* Don't draw an outline around the active tab\r\n\r\n* Prevent cropping of outlines on buttons\r\n\r\n* Use the correct colour for links\r\n\r\n* Change light grey text to be darker in high contrast theme\r\n\r\n* Use a darker text colour in admin panel\r\n\r\n* Adjust background colours of back button and font slider",
+          "timestamp": "2021-10-27T14:31:54+01:00",
+          "tree_id": "f55d792e387f98d72345953c9fe9d3b1aca09506",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/abbc39cdece2ac8f4385b2c24cdcc27a35f990a0"
+        },
+        "date": 1635341834249,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3960,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 634,
             "unit": "ms",
             "extra": "type: measure"
           }
