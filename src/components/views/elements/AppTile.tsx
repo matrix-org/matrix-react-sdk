@@ -117,7 +117,8 @@ export default class AppTile extends React.Component<IProps, IState> {
             this.sgWidget = new StopGapWidget(this.props);
             this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
-            this.sgWidget.on("capabilities_renegotiated", this.onWidgetCapabilitesRenegotiating);
+            // emits when the capabilites have been setup or changed
+            this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
         } catch (e) {
             logger.log("Failed to construct widget", e);
             this.sgWidget = null;
@@ -303,7 +304,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
     };
 
-    private onWidgetCapabilitesRenegotiating = (): void => {
+    private onWidgetCapabilitiesNotified = (): void => {
         this.setState({
             requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
         });

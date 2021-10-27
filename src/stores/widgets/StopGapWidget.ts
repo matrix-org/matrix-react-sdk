@@ -262,7 +262,7 @@ export class StopGapWidget extends EventEmitter {
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
         this.messaging.on("ready", () => this.emit("ready"));
-        this.messaging.on("capabilities_renegotiated", () => this.emit("capabilities_renegotiated"));
+        this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
         WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.messaging);
 
