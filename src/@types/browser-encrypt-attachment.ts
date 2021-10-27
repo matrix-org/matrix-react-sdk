@@ -17,11 +17,15 @@ limitations under the License.
 declare module "browser-encrypt-attachment" {
     interface IInfo {
         v: string;
-        key: JsonWebKey;
-        iv: string;
-        hashes: {
-            sha256: string;
+        key: {
+            alg: string;
+            key_ops: string[]; // eslint-disable-line camelcase
+            kty: string;
+            k: string;
+            ext: boolean;
         };
+        iv: string;
+        hashes: {[alg: string]: string};
     }
 
     interface IEncryptedAttachment {
