@@ -1241,11 +1241,15 @@ export default class EventTile extends React.Component<IProps, IState> {
                         />) : null;
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
+                    "ref": this.ref,
                     "className": classes,
+                    "tabIndex": -1,
                     "aria-live": ariaLive,
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                     "data-has-reply": !!replyChain,
+                    "onMouseEnter": () => this.setState({ hover: true }),
+                    "onMouseLeave": () => this.setState({ hover: false }),
                     "key": eventId,
                 }, [
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">

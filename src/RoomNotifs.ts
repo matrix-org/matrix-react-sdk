@@ -17,7 +17,8 @@ limitations under the License.
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
 import { IAnnotatedPushRule, PushRuleKind } from "matrix-js-sdk/src/@types/PushRules";
 
 export enum RoomNotifState {

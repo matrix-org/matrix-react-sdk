@@ -23,7 +23,8 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from 'classnames';
-import { IRecommendedVersion, NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { IRecommendedVersion, Room } from "matrix-js-sdk/src/models/room";
+import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventSubscription } from "fbemitter";
 import { ISearchResults } from 'matrix-js-sdk/src/@types/search';

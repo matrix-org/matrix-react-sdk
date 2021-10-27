@@ -20,11 +20,14 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
 import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
 import { NotificationState } from "./NotificationState";
 import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
+import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import SettingsStore from "../../settings/SettingsStore";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
     constructor(public readonly room: Room) {
@@ -36,6 +39,9 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.on("Room.localEchoUpdated", this.handleLocalEchoUpdated);
         MatrixClientPeg.get().on("Event.decrypted", this.handleRoomEventUpdate);
         MatrixClientPeg.get().on("accountData", this.handleAccountDataUpdate);
+        if (SettingsStore.getValue("feature_thread")) {
+            this.room.on(ThreadEvent.Update, this.handleThreadUpdate);
+        }
         this.updateNotificationState();
     }
 
@@ -53,6 +59,9 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Event.decrypted", this.handleRoomEventUpdate);
             MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);
+        }
+        if (SettingsStore.getValue("feature_thread")) {
+            this.room.removeListener(ThreadEvent.Update, this.handleThreadUpdate);
         }
     }
 
@@ -74,6 +83,11 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         const roomId = event.getRoomId();
 
         if (roomId !== this.room.roomId) return; // ignore - not for us
+        this.updateNotificationState();
+    };
+
+    private handleThreadUpdate = (thread: Thread) => {
+        if (thread.roomId !== this.room.roomId) return; // ignore - not for us
         this.updateNotificationState();
     };
 

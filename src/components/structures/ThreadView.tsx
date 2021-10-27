@@ -201,10 +201,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     { this.state.thread && (
                         <TimelinePanel
                             ref={this.timelinePanelRef}
-                            showReadReceipts={false} // No RR support in thread's MVP
-                            manageReadReceipts={false} // No RR support in thread's MVP
-                            manageReadMarkers={false} // No RM support in thread's MVP
-                            sendReadReceiptOnLoad={false} // No RR support in thread's MVP
+                            showReadReceipts={true} // No RR support in thread's MVP
+                            // the read receipts should be hidden until server support
+                            // so that we should something as accurate as possible
+                            manageReadReceipts={true}
+                            manageReadMarkers={true}
+                            sendReadReceiptOnLoad={true}
                             timelineSet={this.state?.thread?.timelineSet}
                             showUrlPreview={true}
                             tileShape={TileShape.Thread}

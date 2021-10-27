@@ -16,7 +16,8 @@ limitations under the License.
 
 import React, { createRef, ReactNode, SyntheticEvent } from 'react';
 import ReactDOM from "react-dom";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
@@ -816,8 +817,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // that sending an RR for the latest message will set our notif counter
             // to zero: it may not do this if we send an RR for somewhere before the end.
             if (this.isAtEndOfLiveTimeline()) {
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Total, 0);
-                this.props.timelineSet.room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
+                this.props.timelineSet.context.setUnreadNotificationCount(NotificationCountType.Total, 0);
+                this.props.timelineSet.context.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
             }
         }
     };
@@ -1324,7 +1325,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as HTMLElement;
         if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
         const wrapperRect = messagePanelNode.getBoundingClientRect();
-        const myUserId = MatrixClientPeg.get().credentials.userId;
+        const myUserId = MatrixClientPeg.get().getUserId();
 
         const isNodeInView = (node) => {
             if (node) {
@@ -1407,7 +1408,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         const myUserId = client.credentials.userId;
-        return this.props.timelineSet.room.getEventReadUpTo(myUserId, ignoreSynthesized);
+        return this.props.timelineSet.context.getEventReadUpTo(myUserId, ignoreSynthesized);
     }
 
     private setReadMarker(eventId: string, eventTs: number, inhibitSetState = false): void {
