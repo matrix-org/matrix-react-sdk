@@ -115,7 +115,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.persistKey = getPersistKey(this.props.app.id);
         try {
             this.sgWidget = new StopGapWidget(this.props);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
             this.sgWidget.on("capabilities_renegotiated", this.onWidgetCapabilitesRenegotiating);
         } catch (e) {
@@ -158,7 +158,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
             // requiresClient is initially set to true. This avoids the broken state of the popout
-            // button beeing visible (for an instance) and than disappearing when the widget is loaded.
+            // button being visible (for an instance) and than disappearing when the widget is loaded.
             // requiresClient <-> hide the popout button
             requiresClient: true,
         };
@@ -222,7 +222,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
         try {
             this.sgWidget = new StopGapWidget(newProps);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
             this.startWidget();
         } catch (e) {
@@ -293,7 +293,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.sgWidget) this.sgWidget.stop({ forceDestroy: true });
     }
 
-    private onWidgetPrepared = (): void => {
+    private onWidgetPreparing = (): void => {
         this.setState({ loading: false });
     };
 
