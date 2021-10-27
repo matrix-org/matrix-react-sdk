@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635266585963,
+  "lastUpdate": 1635325168580,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35420,6 +35420,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4464,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "paulo.pinto@automattic.com",
+            "name": "Paulo Pinto",
+            "username": "psrpinto"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6a3fb5cbb431a94729eb62733a6f87ae201e189a",
+          "message": "Add EmailField component for login, registration and password recovery screens (#7006)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2021-10-27T09:52:34+01:00",
+          "tree_id": "aaf8f282482839d42325670c2a5306664dbfe4d7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6a3fb5cbb431a94729eb62733a6f87ae201e189a"
+        },
+        "date": 1635325165214,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4540.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 673.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
