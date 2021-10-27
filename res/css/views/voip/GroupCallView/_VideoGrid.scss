@@ -22,7 +22,7 @@ limitations under the License.
     .mx_videoTile {
         position: absolute;
         will-change: transform, width, height, opacity, box-shadow;
-        border-radius: 24px;
+        border-radius: 20px;
         overflow: hidden;
         border: 3px solid transparent;
         transition: border-color 500ms;
@@ -47,8 +47,8 @@ limitations under the License.
             left: 16px;
             height: 32px;
             padding: 0 8px;
-            background-color: rgba(23, 25, 28, 0.96);
-            display: none;
+            background-color: rgba(23, 25, 28, 0.85);
+            display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 8px;
@@ -70,25 +70,24 @@ limitations under the License.
             }
         }
 
-        .mx_muteMicIcon, .mx_speakingIcon, .mx_videoMutedIcon {
+        .mx_micIcon, .mx_muteMicIcon, .mx_videoMutedIcon {
             mask-repeat: no-repeat;
             mask-size: contain;
             mask-position: center;
         }
 
-        .mx_muteMicIcon, .mx_speakingIcon {
+        .mx_muteMicIcon, .mx_micIcon {
+            background-color: white;
             height: 16px;
             width: 16px;
         }
 
-        .mx_speakingIcon{
-            background-color: #8D99A5;
-            mask-image: url('$(res)/img/voip/silence.svg');
+        .mx_muteMicIcon {
+            mask-image: url('$(res)/img/voip/mic-muted.svg');
         }
 
-        .mx_muteMicIcon {
-            background-color: #FF5B55;
-            mask-image: url('$(res)/img/voip/mic-muted.svg');
+        .mx_micIcon {
+            mask-image: url('$(res)/img/voip/mic-unmuted.svg');
         }
 
         .mx_videoMutedIcon {
@@ -104,10 +103,6 @@ limitations under the License.
 
         &.mx_speaking {
             border-color: #0DBD8B;
-        }
-
-        &:hover .mx_memberName, &.mx_muted .mx_memberName {
-            display: flex;
         }
     }
 }
