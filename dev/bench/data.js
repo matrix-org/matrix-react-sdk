@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635422843161,
+  "lastUpdate": 1635423809220,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35756,6 +35756,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4463.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5736fea5f370fa70fe17fd263b17c95d28a542a8",
+          "message": "Implement RequiresClient capability for widgets (#7005)",
+          "timestamp": "2021-10-28T13:17:04+01:00",
+          "tree_id": "102802fd26ca2e131f75513c653a4b827079f08a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5736fea5f370fa70fe17fd263b17c95d28a542a8"
+        },
+        "date": 1635423805985,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4646.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1362.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1819.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4790.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
