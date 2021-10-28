@@ -25,7 +25,6 @@ import RoomList from "../views/rooms/RoomList";
 import CallHandler from "../../CallHandler";
 import { HEADER_HEIGHT } from "../views/rooms/RoomSublist";
 import { Action } from "../../dispatcher/actions";
-import UserMenu from "./UserMenu";
 import RoomSearch from "./RoomSearch";
 import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
@@ -308,14 +307,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         }
     };
 
-    private renderHeader(): React.ReactNode {
-        return (
-            <div className="mx_LeftPanel_userHeader">
-                <UserMenu isMinimized={this.props.isMinimized} />
-            </div>
-        );
-    }
-
     private renderBreadcrumbs(): React.ReactNode {
         if (this.state.showBreadcrumbs && !this.props.isMinimized) {
             return (
@@ -397,7 +388,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         return (
             <div className={containerClasses} ref={this.ref}>
                 <aside className="mx_LeftPanel_roomListContainer">
-                    { this.renderHeader() }
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }
                     <RoomListNumResults onVisibilityChange={this.refreshStickyHeaders} />

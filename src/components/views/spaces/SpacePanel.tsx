@@ -52,6 +52,7 @@ import IconizedContextMenu, {
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import UIStore from "../../../stores/UIStore";
+import UserMenu from "../../structures/UserMenu";
 
 const useSpaces = (): [Room[], Room[], Room | null] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -187,6 +188,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
     const activeSpaces = activeSpace ? [activeSpace] : [];
 
     return <div className="mx_SpaceTreeLevel">
+        <UserMenu />
         <HomeButton selected={!activeSpace} isPanelCollapsed={isPanelCollapsed} />
         { invites.map(s => (
             <SpaceItem

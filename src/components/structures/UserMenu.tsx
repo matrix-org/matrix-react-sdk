@@ -57,11 +57,9 @@ import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
 import RoomName from "../views/elements/RoomName";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import InlineSpinner from "../views/elements/InlineSpinner";
-import TooltipButton from "../views/elements/TooltipButton";
 import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
-    isMinimized: boolean;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
@@ -572,11 +570,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         let isPrototype = false;
         let menuName = _t("User menu");
         let name = <span className="mx_UserMenu_userName">{ displayName }</span>;
-        let buttons = (
-            <span className="mx_UserMenu_headerButtons">
-                { /* masked image in CSS */ }
-            </span>
-        );
+
         let dnd;
         if (this.state.selectedSpace) {
             name = (
@@ -615,54 +609,30 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 })}
             />;
         }
-        if (this.props.isMinimized) {
-            name = null;
-            buttons = null;
-        }
 
-        const classes = classNames({
-            'mx_UserMenu': true,
-            'mx_UserMenu_minimized': this.props.isMinimized,
-            'mx_UserMenu_prototype': isPrototype,
-        });
-
+        // TODO remove unused crap
         return (
-            <React.Fragment>
+            <div className="mx_UserMenu">
                 <ContextMenuButton
-                    className={classes}
                     onClick={this.onOpenMenuClick}
                     inputRef={this.buttonRef}
                     label={menuName}
                     isExpanded={!!this.state.contextMenuPosition}
                     onContextMenu={this.onContextMenu}
                 >
-                    <div className="mx_UserMenu_row">
-                        <span className="mx_UserMenu_userAvatarContainer">
-                            <BaseAvatar
-                                idName={userId}
-                                name={displayName}
-                                url={avatarUrl}
-                                width={avatarSize}
-                                height={avatarSize}
-                                resizeMethod="crop"
-                                className="mx_UserMenu_userAvatar"
-                            />
-                        </span>
-                        { name }
-                        { this.state.pendingRoomJoin.size > 0 && (
-                            <InlineSpinner>
-                                <TooltipButton helpText={_t(
-                                    "Currently joining %(count)s rooms",
-                                    { count: this.state.pendingRoomJoin.size },
-                                )} />
-                            </InlineSpinner>
-                        ) }
-                        { dnd }
-                        { buttons }
-                    </div>
+                    <BaseAvatar
+                        idName={userId}
+                        name={displayName}
+                        url={avatarUrl}
+                        width={avatarSize}
+                        height={avatarSize}
+                        resizeMethod="crop"
+                        className="mx_UserMenu_userAvatar"
+                    />
                 </ContextMenuButton>
+
                 { this.renderContextMenu() }
-            </React.Fragment>
+            </div>
         );
     }
 }

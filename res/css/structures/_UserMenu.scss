@@ -15,142 +15,16 @@ limitations under the License.
 */
 
 .mx_UserMenu {
-    // to make the menu button sort of aligned with the explore button below
-    padding-right: 6px;
+    padding: 0 2px 8px;
+    border-bottom: 1px solid $quinary-content;
+    margin-left: 18px;
+    margin-bottom: 8px;
+    width: 36px;
+    box-sizing: border-box;
 
-    &.mx_UserMenu_prototype {
-        // The margin & padding combination between here and the ::after is to
-        // align the border line with the tag panel.
-        margin-bottom: 6px;
-
-        padding-right: 0; // make the right edge line up with the explore button
-
-        .mx_UserMenu_headerButtons {
-            // considering we've eliminated right padding on the menu itself, we need to
-            // push the chevron in slightly (roughly lining up with the center of the
-            // plus buttons)
-            margin-right: 2px;
-        }
-
-        // we cheat opacity on the theme colour with an after selector here
-        &::after {
-            content: '';
-            border-bottom: 1px solid $primary-content;
-            opacity: 0.2;
-            display: block;
-            padding-top: 8px;
-        }
-    }
-
-    .mx_UserMenu_headerButtons {
-        width: 16px;
-        height: 16px;
-        position: relative;
-        display: block;
-
-        &::before {
-            content: '';
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            mask-position: center;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            background: $tertiary-content;
-            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
-        }
-    }
-
-    .mx_UserMenu_row {
-        // Create a row-based flexbox to ensure items stay aligned correctly.
-        display: flex;
-        align-items: center;
-
-        .mx_UserMenu_userAvatarContainer {
-            position: relative; // to make default avatars work
-            margin-right: 8px;
-            height: 32px; // to remove the unknown 4px gap the browser puts below it
-            padding: 3px 0; // to align with and without using doubleName
-
-            .mx_UserMenu_userAvatar {
-                border-radius: 32px; // should match avatar size
-                object-fit: cover;
-            }
-        }
-
-        .mx_UserMenu_doubleName {
-            flex: 1;
-            min-width: 0; // make flexbox aware that it can crush this to a tiny width
-
-            .mx_UserMenu_userName,
-            .mx_UserMenu_subUserName {
-                display: block;
-            }
-
-            .mx_UserMenu_subUserName {
-                color: $muted-fg-color;
-                font-size: $font-13px;
-                line-height: $font-18px;
-                flex: 1;
-
-                // Ellipsize any text overflow
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-            }
-        }
-
-        .mx_UserMenu_userName {
-            font-weight: 600;
-            font-size: $font-15px;
-            line-height: $font-20px;
-            flex: 1;
-
-            // Ellipsize any text overflow
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .mx_UserMenu_headerButtons {
-            // No special styles: the rest of the layout happens to make it work.
-        }
-
-        .mx_UserMenu_dnd {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-            position: relative;
-
-            &::before {
-                content: '';
-                position: absolute;
-                width: 24px;
-                height: 24px;
-                mask-position: center;
-                mask-size: contain;
-                mask-repeat: no-repeat;
-                background: $muted-fg-color;
-            }
-
-            &.mx_UserMenu_dnd_noisy::before {
-                mask-image: url('$(res)/img/element-icons/notifications.svg');
-            }
-
-            &.mx_UserMenu_dnd_muted::before {
-                mask-image: url('$(res)/img/element-icons/roomlist/notifications-off.svg');
-            }
-        }
-    }
-
-    &.mx_UserMenu_minimized {
-        padding-right: 0px;
-
-        .mx_UserMenu_userAvatarContainer {
-            margin-right: 0px;
-        }
+    .mx_UserMenu_userAvatar {
+        border-radius: 32px; // should match avatar size
+        object-fit: cover;
     }
 }
 
