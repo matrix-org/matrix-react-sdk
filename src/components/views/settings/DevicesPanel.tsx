@@ -312,33 +312,40 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
         }
 
         const section = (trustIcon: JSX.Element, title: string, deviceList: IMyDevice[]): JSX.Element => {
-            const anySelected = deviceList.some((device) => this.state.selectedDevices.includes(device.device_id));
-            const buttonAction = anySelected ?
-                () => { this.deselectAll(deviceList); } :
-                () => { this.selectAll(deviceList); };
-            const buttonText = anySelected ? _t("Deselect all") : _t("Select all");
-            return deviceList.length > 0 ?
-                <React.Fragment>
-                    <div className="mx_DevicesPanel_header">
-                        <div className="mx_DevicesPanel_header_trust">
-                            { trustIcon }
-                        </div>
-                        <div className="mx_DevicesPanel_header_title">
-                            { title }
-                        </div>
-                        <div className="mx_DevicesPanel_header_button">
-                            <AccessibleButton
-                                className="mx_DevicesPanel_selectButton"
-                                kind="danger_outline"
-                                onClick={buttonAction}
-                            >
-                                { buttonText }
-                            </AccessibleButton>
-                        </div>
+            if (deviceList.length === 0) {
+                return <React.Fragment />;
+            }
+
+            let selectButton: JSX.Element;
+            if (deviceList.length > 1) {
+                const anySelected = deviceList.some((device) => this.state.selectedDevices.includes(device.device_id));
+                const buttonAction = anySelected ?
+                    () => { this.deselectAll(deviceList); } :
+                    () => { this.selectAll(deviceList); };
+                const buttonText = anySelected ? _t("Deselect all") : _t("Select all");
+                selectButton = <div className="mx_DevicesPanel_header_button">
+                    <AccessibleButton
+                        className="mx_DevicesPanel_selectButton"
+                        kind="danger_outline"
+                        onClick={buttonAction}
+                    >
+                        { buttonText }
+                    </AccessibleButton>
+                </div>;
+            }
+
+            return <React.Fragment>
+                <div className="mx_DevicesPanel_header">
+                    <div className="mx_DevicesPanel_header_trust">
+                        { trustIcon }
                     </div>
-                    { deviceList.map(this.renderDevice) }
-                </React.Fragment> :
-                <React.Fragment />;
+                    <div className="mx_DevicesPanel_header_title">
+                        { title }
+                    </div>
+                    { selectButton }
+                </div>
+                { deviceList.map(this.renderDevice) }
+            </React.Fragment>;
         };
 
         const verifiedDevicesSection = section(
