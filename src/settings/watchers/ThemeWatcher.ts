@@ -112,7 +112,10 @@ export default class ThemeWatcher {
             SettingLevel.DEVICE, "use_system_theme", null, false, true);
         if (systemThemeExplicit) {
             logger.log("returning explicit system theme");
-            return this.themeBasedOnSystem();
+            const theme = this.themeBasedOnSystem();
+            if (theme) {
+                return theme;
+            }
         }
 
         // If the user has specifically enabled the theme (without the system matching option being
@@ -128,7 +131,10 @@ export default class ThemeWatcher {
         // If the user hasn't really made a preference in either direction, assume the defaults of the
         // settings and use those.
         if (SettingsStore.getValue('use_system_theme')) {
-            return this.themeBasedOnSystem();
+            const theme = this.themeBasedOnSystem();
+            if (theme) {
+                return theme;
+            }
         }
         logger.log("returning theme value");
         return SettingsStore.getValue('theme');
