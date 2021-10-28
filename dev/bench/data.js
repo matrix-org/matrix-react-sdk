@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635416028257,
+  "lastUpdate": 1635422843161,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35708,6 +35708,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4458.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "68b64564c08983c42c8e377d012285cb96e56979",
+          "message": "Respect the system high contrast setting when using system theme (#7043)\n\n* Respect the system high contrast setting when using system theme\r\n\r\n* Restore correct behaviour of getEffectiveTheme",
+          "timestamp": "2021-10-28T13:01:50+01:00",
+          "tree_id": "fd060af7b9fa16a210bbd9f79bc32a29e05fceb3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/68b64564c08983c42c8e377d012285cb96e56979"
+        },
+        "date": 1635422840045,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4064.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 957.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1841.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4463.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
