@@ -17,16 +17,35 @@ limitations under the License.
 .mx_DevicesPanel {
     width: auto;
     max-width: 880px;
+
+    hr {
+        opacity: 0.2;
+        border: none;
+        border-bottom: 1px solid $primary-content;
+    }
 }
 
 .mx_DevicesPanel_header {
-    font-size: $font-18px;
-    font-weight: 600;
-    color: $primary-content;
+    display: flex;
+    align-items: center;
     margin-block: 10px;
+
+    .mx_DevicesPanel_header_title {
+        font-size: $font-18px;
+        font-weight: 600;
+        color: $primary-content;
+        flex-grow: 1;
+    }
+
+    .mx_E2EIcon {
+        width: 24px;
+        height: 24px;
+        margin-left: 0;
+        margin-right: 5px;
+    }
 }
 
-.mx_DevicesPanel_deleteOthersButton {
+.mx_DevicesPanel_deleteButton {
     margin-top: 10px;
 }
 
@@ -37,7 +56,17 @@ limitations under the License.
     min-height: 35px;
 }
 
-.mx_DevicesPanel_device .mx_DevicesPanel_deviceInfo {
+.mx_DevicesPanel_icon, .mx_DevicesPanel_checkbox {
+    margin-left: 9px;
+    margin-top: 2px;
+}
+
+.mx_DevicesPanel_checkbox .mx_Checkbox input[type=checkbox]:checked + label > .mx_Checkbox_background {
+    background: $warning-color;
+    border-color: $warning-color;
+}
+
+.mx_DevicesPanel_deviceInfo {
     flex-grow: 1;
 }
 

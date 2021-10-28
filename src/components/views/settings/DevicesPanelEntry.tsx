@@ -20,6 +20,7 @@ import { IMyDevice } from 'matrix-js-sdk/src/client';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { formatDate } from '../../../DateUtils';
+import StyledCheckbox from '../elements/StyledCheckbox';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
@@ -27,6 +28,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
 import Modal from "../../../Modal";
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
+import LogoutDialog from '../dialogs/LogoutDialog';
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -36,7 +38,8 @@ interface IProps {
     verified: boolean | null;
     canBeVerified: boolean;
     onDeviceChange: () => void;
-    onDeviceSignOut: (device: IMyDevice) => void;
+    onDeviceToggled: (device: IMyDevice) => void;
+    selected: boolean;
 }
 
 interface IState {
@@ -53,6 +56,10 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
             displayName: props.device.display_name,
         };
     }
+
+    private onDeviceToggled = (): void => {
+        this.props.onDeviceToggled(this.props.device);
+    };
 
     private onRename = (): void => {
         this.setState({ renaming: true });
@@ -79,8 +86,10 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
         this.setState({ renaming: false });
     };
 
-    private onDeviceSignOut = (): void => {
-        this.props.onDeviceSignOut(this.props.device);
+    private onOwnDeviceSignOut = (): void => {
+        Modal.createTrackedDialog('Logout from device list', '', LogoutDialog,
+            /* props= */{}, /* className= */null,
+            /* isPriority= */false, /* isStatic= */true);
     };
 
     private verify = async () => {
@@ -132,6 +141,21 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
             }
         }
 
+        let signOutButton: JSX.Element;
+        if (this.props.isOwnDevice) {
+            signOutButton = <AccessibleButton kind="danger_outline" onClick={this.onOwnDeviceSignOut}>
+                { _t("Sign Out") }
+            </AccessibleButton>;
+        }
+
+        const left = this.props.isOwnDevice ?
+            <div className="mx_DevicesPanel_deviceTrust">
+                <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
+            </div> :
+            <div className="mx_DevicesPanel_checkbox">
+                <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
+            </div>;
+
         const buttons = this.state.renaming ?
             <form className="mx_DevicesPanel_renameForm" onSubmit={this.onRenameSubmit}>
                 <Field
@@ -145,20 +169,16 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
                 <AccessibleButton onClick={this.onRenameCancel} kind="cancel_sm" />
             </form> :
             <React.Fragment>
+                { signOutButton }
                 { verifyButton }
                 <AccessibleButton kind="primary_outline" onClick={this.onRename}>
                     { _t("Rename") }
-                </AccessibleButton>
-                <AccessibleButton kind="danger_outline" onClick={this.onDeviceSignOut}>
-                    { _t("Sign Out") }
                 </AccessibleButton>
             </React.Fragment>;
 
         return (
             <div className={"mx_DevicesPanel_device" + myDeviceClass}>
-                <div className="mx_DevicesPanel_deviceTrust">
-                    <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
-                </div>
+                { left }
                 <div className="mx_DevicesPanel_deviceInfo">
                     <div className="mx_DevicesPanel_deviceName">
                         <TextWithTooltip tooltip={device.display_name + " (" + device.device_id + ")"}>
