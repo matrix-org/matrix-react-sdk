@@ -22,6 +22,27 @@ limitations under the License.
     --maxWidth: 70%;
 }
 
+.mx_RoomView_searchResultsPanel {
+    .mx_EventTile[data-layout=bubble] {
+        .mx_SenderProfile {
+            // Group layout adds a 64px left margin, which we really don't want on search results
+            margin-left: 0;
+        }
+
+        &[data-self=true] {
+            // The avatars end up overlapping, so just hide them
+            .mx_EventTile_avatar {
+                display: none;
+            }
+        }
+
+        // Mirror rough designs for "greyed out" text
+        &.mx_EventTile_contextual {
+            opacity: 0.7;
+        }
+    }
+}
+
 .mx_EventTile[data-layout=bubble] {
     position: relative;
     margin-top: var(--gutterSize);

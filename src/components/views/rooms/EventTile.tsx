@@ -1320,7 +1320,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                             isQuoteExpanded={isQuoteExpanded}
                             setQuoteExpanded={this.setQuoteExpanded}
                         />) : null;
-                const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
+
+                // Use `getSender()` because searched events might not have a proper `sender`.
+                const isOwnEvent = this.props.mxEvent?.getSender() === MatrixClientPeg.get().getUserId();
 
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
