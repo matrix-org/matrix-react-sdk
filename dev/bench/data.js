@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635423809220,
+  "lastUpdate": 1635431885774,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35804,6 +35804,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4790.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3f3e4ff674e2e4802133656ed12479760d27d198",
+          "message": "Don't apply message bubble visual style to media messages (#7040)\n\n* PSFD-457: Don't apply message bubble visual style to media messages\r\n\r\n* Match corner rounding for images",
+          "timestamp": "2021-10-28T08:32:30-06:00",
+          "tree_id": "62231a7af7038ed79a657033491be63d918811ff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3f3e4ff674e2e4802133656ed12479760d27d198"
+        },
+        "date": 1635431882621,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4220.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1024.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1598.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4420,
             "unit": "ms",
             "extra": "type: measure"
           }
