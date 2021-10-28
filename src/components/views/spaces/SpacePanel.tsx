@@ -73,7 +73,11 @@ interface IInnerSpacePanelProps {
     setPanelCollapsed: Dispatch<SetStateAction<boolean>>;
 }
 
-const HomeButtonContextMenu = ({ onFinished, ...props }: ComponentProps<typeof SpaceContextMenu>) => {
+export const HomeButtonContextMenu = ({
+    onFinished,
+    hideHeader,
+    ...props
+}: ComponentProps<typeof SpaceContextMenu>) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
@@ -84,9 +88,9 @@ const HomeButtonContextMenu = ({ onFinished, ...props }: ComponentProps<typeof S
         className="mx_SpacePanel_contextMenu"
         compact
     >
-        <div className="mx_SpacePanel_contextMenu_header">
+        { !hideHeader && <div className="mx_SpacePanel_contextMenu_header">
             { _t("Home") }
-        </div>
+        </div> }
         <IconizedContextMenuOptionList first>
             <IconizedContextMenuCheckbox
                 iconClassName="mx_SpacePanel_noIcon"

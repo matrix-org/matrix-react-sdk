@@ -44,9 +44,10 @@ import SettingsStore from "../../../settings/SettingsStore";
 
 interface IProps extends IContextMenuProps {
     space: Room;
+    hideHeader?: boolean;
 }
 
-const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
+const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) => {
     const cli = useContext(MatrixClientContext);
     const userId = cli.getUserId();
 
@@ -214,9 +215,9 @@ const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
         className="mx_SpacePanel_contextMenu"
         compact
     >
-        <div className="mx_SpacePanel_contextMenu_header">
+        { !hideHeader && <div className="mx_SpacePanel_contextMenu_header">
             { space.name }
-        </div>
+        </div> }
         <IconizedContextMenuOptionList first>
             { inviteOption }
             <IconizedContextMenuOption

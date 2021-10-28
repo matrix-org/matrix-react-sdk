@@ -198,8 +198,6 @@ $activeBorderColor: $secondary-content;
         }
 
         &.mx_SpaceButton_new .mx_SpaceButton_icon {
-            background-color: $roomlist-button-bg-color;
-
             &::before {
                 background-color: $primary-content;
                 mask-image: url('$(res)/img/element-icons/plus.svg');

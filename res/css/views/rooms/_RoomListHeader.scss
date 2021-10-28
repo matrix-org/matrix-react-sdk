@@ -1,0 +1,75 @@
+/*
+Copyright 2021 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_RoomListHeader {
+    display: flex;
+    align-items: center;
+
+    .mx_RoomListHeader_contextMenuButton {
+        font-size: $font-15px;
+        line-height: $font-24px;
+        font-weight: $font-semi-bold;
+        padding-left: 12px;
+        padding-right: 24px;
+        position: relative;
+
+        &::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            top: 2px;
+            right: 0;
+            position: absolute;
+            mask-position: center;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $tertiary-content;
+            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+        }
+    }
+
+    .mx_RoomListHeader_plusButton {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        position: relative;
+        padding: 8px;
+        margin-left: auto;
+        margin-right: 14px;
+        background-color: $background;
+        box-sizing: border-box;
+
+        &::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            mask-position: center;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $secondary-content;
+            mask-image: url('$(res)/img/feather-customised/plus.svg');
+        }
+
+        &:hover {
+            background-color: $tertiary-content;
+
+            &::before {
+                background-color: $background;
+            }
+        }
+    }
+}

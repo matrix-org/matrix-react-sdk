@@ -102,7 +102,7 @@ $roomListCollapsedWidth: 68px;
 
         .mx_LeftPanel_filterContainer {
             margin: 0 12px;
-            padding: 12px 0 8px;
+            padding: 12px 0 6px;
             border-bottom: 1px solid $quinary-content;
 
             flex-shrink: 0; // to convince safari's layout engine the flexbox is fine
@@ -111,7 +111,23 @@ $roomListCollapsedWidth: 68px;
             display: flex;
             align-items: center;
 
+            .mx_RoomSearch_shortcutPrompt {
+                border-radius: 6px;
+                background-color: $quinary-content;
+                padding: 2px 4px;
+                user-select: none;
+                pointer-events: none;
+                font-size: $font-12px;
+                line-height: $font-15px;
+                color: $tertiary-content;
+                margin-right: 6px;
+            }
+
             .mx_RoomSearch_focused, .mx_RoomSearch_hasQuery {
+                .mx_RoomSearch_shortcutPrompt {
+                    display: none;
+                }
+
                 & + .mx_LeftPanel_exploreButton {
                     // Cheaty way to return the occupied space to the filter input
                     flex-basis: 0;
@@ -130,7 +146,7 @@ $roomListCollapsedWidth: 68px;
                 width: 32px;
                 height: 32px;
                 border-radius: 8px;
-                background-color: $roomlist-button-bg-color;
+                background-color: $background;
                 position: relative;
                 margin-left: 8px;
 
@@ -153,7 +169,7 @@ $roomListCollapsedWidth: 68px;
                 width: 32px;
                 height: 32px;
                 border-radius: 8px;
-                background-color: $roomlist-button-bg-color;
+                background-color: $background;
                 position: relative;
                 margin-left: 8px;
 
@@ -169,6 +185,14 @@ $roomListCollapsedWidth: 68px;
                     mask-size: contain;
                     mask-repeat: no-repeat;
                     background: $secondary-content;
+                }
+
+                &:hover {
+                    background-color: $tertiary-content;
+
+                    &::before {
+                        background-color: $background;
+                    }
                 }
 
                 &.mx_LeftPanel_exploreButton_space::before {

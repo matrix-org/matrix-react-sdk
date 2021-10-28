@@ -29,6 +29,7 @@ import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCo
 import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore, { UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES } from "../../stores/SpaceStore";
+import { isMac } from "../../Keyboard";
 
 interface IProps {
     isMinimized: boolean;
@@ -162,11 +163,6 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             'mx_RoomSearch_inputExpanded': this.state.query || this.state.focused,
         });
 
-        let placeholder = _t("Filter");
-        if (this.state.inSpaces) {
-            placeholder = _t("Filter all spaces");
-        }
-
         let icon = (
             <div className='mx_RoomSearch_icon' />
         );
@@ -180,7 +176,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
                 onBlur={this.onBlur}
                 onChange={this.onChange}
                 onKeyDown={this.onKeyDown}
-                placeholder={placeholder}
+                placeholder={_t("Filter")}
                 autoComplete="off"
             />
         );
@@ -192,6 +188,9 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
                 onClick={this.clearInput}
             />
         );
+        let shortcutPrompt = <div className="mx_RoomSearch_shortcutPrompt">
+            { isMac ? "⌘ K" : "Ctrl K" }
+        </div>;
 
         if (this.props.isMinimized) {
             icon = (
@@ -203,12 +202,14 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             );
             input = null;
             clearButton = null;
+            shortcutPrompt = null;
         }
 
         return (
             <div className={classes}>
                 { icon }
                 { input }
+                { shortcutPrompt }
                 { clearButton }
             </div>
         );
