@@ -85,7 +85,6 @@ $input-focused-border-color: #238cf5;
 
 $resend-button-divider-color: $input-darker-bg-color;
 
-$button-bg-color: $accent-color;
 $button-fg-color: white;
 
 // apart from login forms, which have stronger border
@@ -348,7 +347,7 @@ $groupFilterPanel-divider-color: $tertiary-content;
     font-family: $font-family;
     font-size: $font-14px;
     color: $button-fg-color;
-    background-color: $button-bg-color;
+    background-color: $accent-color;
     width: auto;
     padding: 7px;
     padding-left: 1.5em;
