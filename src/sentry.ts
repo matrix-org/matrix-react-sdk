@@ -192,6 +192,13 @@ export async function sendSentryReport(userText: string, issueUrl: string, error
     }
 }
 
+export function setSentryUser(mxid: string): void {
+    if (!SdkConfig.get().sentry || !SettingsStore.getValue("automaticErrorReporting")) return;
+    Sentry.setUser({ username: mxid });
+
+    throw new Error("test");
+}
+
 interface ISentryConfig {
     dsn: string;
     environment?: string;

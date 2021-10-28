@@ -59,6 +59,7 @@ import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestore
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { setSentryUser } from "./sentry";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -581,6 +582,8 @@ async function doSetLoggedIn(
     MatrixClientPeg.replaceUsingCreds(credentials);
 
     PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
+
+    setSentryUser(credentials.userId);
 
     const client = MatrixClientPeg.get();
 
