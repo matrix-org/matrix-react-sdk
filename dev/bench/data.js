@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635345071813,
+  "lastUpdate": 1635410805684,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35624,6 +35624,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4850.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "82807434b8c9231b0d498aefbbfa83eee5a5d8c7",
+          "message": "Remove redundant duplicate mimetype field which doesn't conform to spec (#7045)",
+          "timestamp": "2021-10-28T09:40:38+01:00",
+          "tree_id": "95d9dc49fe118250769ab63db66e9a846e50fc10",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/82807434b8c9231b0d498aefbbfa83eee5a5d8c7"
+        },
+        "date": 1635410803386,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3972.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 659.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
