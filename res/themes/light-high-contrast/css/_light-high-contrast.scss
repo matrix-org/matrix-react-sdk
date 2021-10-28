@@ -45,7 +45,6 @@ $eventbubble-reply-color: $quaternary-content;
 $notice-primary-color: $alert;
 $warning-color: $notice-primary-color; // red
 $button-danger-bg-color: $notice-primary-color;
-$event-highlight-fg-color: $warning-color;
 $roomtopic-color: $secondary-content;
 
 @define-mixin mx_DialogButton_danger {
