@@ -456,7 +456,7 @@ async function handleLoadSessionFailure(e: Error): Promise<boolean> {
     logger.error("Unable to load session", e);
 
     const modal = Modal.createTrackedDialog('Session Restore Error', '', SessionRestoreErrorDialog, {
-        error: e.message,
+        error: e,
     });
 
     const [success] = await modal.finished;
