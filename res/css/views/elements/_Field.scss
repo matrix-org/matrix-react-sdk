@@ -151,12 +151,12 @@ limitations under the License.
 .mx_Field_valid {
     &.mx_Field,
     &.mx_Field:focus-within {
-        border-color: $input-valid-border-color;
+        border-color: $accent-color;
     }
 
     &.mx_Field label,
     &.mx_Field:focus-within label {
-        color: $input-valid-border-color;
+        color: $accent-color;
     }
 }
 
