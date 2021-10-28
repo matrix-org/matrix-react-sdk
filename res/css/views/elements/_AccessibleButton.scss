@@ -67,13 +67,13 @@ limitations under the License.
 
 .mx_AccessibleButton_kind_danger {
     color: $button-danger-fg-color;
-    background-color: $button-danger-bg-color;
+    background-color: $notice-primary-color;
 }
 
 .mx_AccessibleButton_kind_danger_outline {
-    color: $button-danger-bg-color;
+    color: $notice-primary-color;
     background-color: transparent;
-    border: 1px solid $button-danger-bg-color;
+    border: 1px solid $notice-primary-color;
 }
 
 .mx_AccessibleButton_kind_danger.mx_AccessibleButton_disabled {
@@ -89,7 +89,7 @@ limitations under the License.
 .mx_AccessibleButton_hasKind.mx_AccessibleButton_kind_danger_sm {
     padding: 5px 12px;
     color: $button-danger-fg-color;
-    background-color: $button-danger-bg-color;
+    background-color: $notice-primary-color;
 }
 
 .mx_AccessibleButton_kind_danger_sm.mx_AccessibleButton_disabled {
