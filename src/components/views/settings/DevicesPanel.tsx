@@ -326,7 +326,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                 selectButton = <div className="mx_DevicesPanel_header_button">
                     <AccessibleButton
                         className="mx_DevicesPanel_selectButton"
-                        kind="danger_outline"
+                        kind="secondary"
                         onClick={buttonAction}
                     >
                         { buttonText }
@@ -335,6 +335,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
             }
 
             return <React.Fragment>
+                <hr />
                 <div className="mx_DevicesPanel_header">
                     <div className="mx_DevicesPanel_header_trust">
                         { trustIcon }
@@ -366,16 +367,19 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
             nonCryptoDevices,
         );
 
-        const deleteButtonKind = this.state.selectedDevices.length > 0 ? "danger" : "danger_outline";
         const deleteButton = this.state.deleting ?
             <Spinner w={22} h={22} /> :
-            <AccessibleButton className="mx_DevicesPanel_deleteButton" onClick={this.onDeleteClick} kind={deleteButtonKind}>
+            <AccessibleButton
+                className="mx_DevicesPanel_deleteButton"
+                onClick={this.onDeleteClick}
+                kind="danger_outline"
+                disabled={this.state.selectedDevices.length === 0}
+            >
                 { _t("Sign out %(count)s selected devices", { count: this.state.selectedDevices.length }) }
             </AccessibleButton>;
 
         const otherDevicesSection = (otherDevices.length > 0) ?
             <React.Fragment>
-                <hr />
                 { verifiedDevicesSection }
                 { unverifiedDevicesSection }
                 { nonCryptoDevicesSection }

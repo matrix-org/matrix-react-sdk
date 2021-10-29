@@ -34,7 +34,10 @@ limitations under the License.
         font-size: $font-18px;
         font-weight: 600;
         color: $primary-content;
-        flex-grow: 1;
+    }
+
+    .mx_DevicesPanel_selectButton {
+        padding-top: 9px;
     }
 
     .mx_E2EIcon {
@@ -61,17 +64,11 @@ limitations under the License.
     margin-top: 2px;
 }
 
-.mx_DevicesPanel_checkbox .mx_Checkbox input[type=checkbox]:checked + label > .mx_Checkbox_background {
-    background: $warning-color;
-    border-color: $warning-color;
-}
-
 .mx_DevicesPanel_deviceInfo {
     flex-grow: 1;
 }
 
 .mx_DevicesPanel_deviceName {
-    font-weight: bold;
     color: $primary-content;
 }
 
