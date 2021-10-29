@@ -70,12 +70,26 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             },
         },
         {
+            action: MessageComposerAction.FormatCode,
+            keyCombo: {
+                key: Key.E,
+                ctrlOrCmd: true,
+            }
+        },
+        {
             action: MessageComposerAction.FormatQuote,
             keyCombo: {
                 key: Key.GREATER_THAN,
                 ctrlOrCmd: true,
-                shiftKey: true,
             },
+        },
+        {
+            action: MessageComposerAction.FormatLink,
+            keyCombo: {
+                key: Key.K,
+                ctrlOrCmd: true,
+                altKey: true,
+            }
         },
         {
             action: MessageComposerAction.EditUndo,
