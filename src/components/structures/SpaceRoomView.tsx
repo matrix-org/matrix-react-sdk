@@ -396,7 +396,7 @@ const SpaceLandingAddButton = ({ space }) => {
                 />
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
-                    iconClassName="mx_RoomList_iconHash"
+                    iconClassName="mx_RoomList_iconAddExistingRoom"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();

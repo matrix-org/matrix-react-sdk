@@ -21,7 +21,7 @@ import * as fbEmitter from "fbemitter";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t, _td } from "../../../languageHandler";
-import { RovingTabIndexProvider, IState as IRovingTabIndexState } from "../../../accessibility/RovingTabIndex";
+import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import RoomViewStore from "../../../stores/RoomViewStore";
@@ -45,7 +45,7 @@ import { IconizedContextMenuOption, IconizedContextMenuOptionList } from "../con
 import AccessibleButton from "../elements/AccessibleButton";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import SpaceStore, { ISuggestedRoom, SUGGESTED_ROOMS } from "../../../stores/SpaceStore";
-import { showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
+import { shouldShowSpaceInvite, showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -120,9 +120,49 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
         sectionLabel: _td("People"),
         isInvite: false,
         defaultHidden: false,
-        addRoomLabel: _td("Start chat"),
-        onAddRoom: (dispatcher?: Dispatcher<ActionPayload>) => {
-            (dispatcher || defaultDispatcher).dispatch({ action: 'view_create_chat' });
+        addRoomLabel: _td("Add people"),
+        addRoomContextMenu: (onFinished: () => void) => {
+            if (!SpaceStore.instance.activeSpace) {
+                return <IconizedContextMenuOptionList first>
+                    <IconizedContextMenuOption
+                        label={_t("Start new chat")}
+                        iconClassName="mx_RoomList_iconStartChat"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onFinished();
+                            defaultDispatcher.dispatch({ action: "view_create_chat" });
+                        }}
+                    />
+                </IconizedContextMenuOptionList>;
+            }
+
+            const canInvite = shouldShowSpaceInvite(SpaceStore.instance.activeSpace);
+            return <IconizedContextMenuOptionList first>
+                <IconizedContextMenuOption
+                    label={_t("Start new chat")}
+                    iconClassName="mx_RoomList_iconStartChat"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onFinished();
+                        defaultDispatcher.dispatch({ action: "view_create_chat" });
+                    }}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Invite to space")}
+                    iconClassName="mx_RoomList_iconInvite"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onFinished();
+                        showSpaceInvite(SpaceStore.instance.activeSpace);
+                    }}
+                    disabled={!canInvite}
+                    tooltip={canInvite ? undefined
+                        : _t("You do not have permissions to invite people to this space")}
+                />
+            </IconizedContextMenuOptionList>;
         },
     },
     [DefaultTagID.Untagged]: {
@@ -136,12 +176,22 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
                     MatrixClientPeg.get().getUserId());
 
                 return <IconizedContextMenuOptionList first>
+                    <IconizedContextMenuOption
+                        label={_t("Explore rooms")}
+                        iconClassName="mx_RoomList_iconExplore"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onFinished();
+                            defaultDispatcher.fire(Action.ViewRoomDirectory);
+                        }}
+                    />
                     {
                         shouldShowComponent(UIComponent.CreateRooms)
                             ? (<>
                                 <IconizedContextMenuOption
                                     label={_t("Create new room")}
-                                    iconClassName="mx_RoomList_iconPlus"
+                                    iconClassName="mx_RoomList_iconCreateNewRoom"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
@@ -154,7 +204,7 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
                                 />
                                 <IconizedContextMenuOption
                                     label={_t("Add existing room")}
-                                    iconClassName="mx_RoomList_iconHash"
+                                    iconClassName="mx_RoomList_iconAddExistingRoom"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
@@ -168,23 +218,13 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
                             </>)
                             : null
                     }
-                    <IconizedContextMenuOption
-                        label={_t("Explore rooms")}
-                        iconClassName="mx_RoomList_iconBrowse"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onFinished();
-                            defaultDispatcher.fire(Action.ViewRoomDirectory);
-                        }}
-                    />
                 </IconizedContextMenuOptionList>;
             }
 
             return <IconizedContextMenuOptionList first>
                 <IconizedContextMenuOption
                     label={_t("Create new room")}
-                    iconClassName="mx_RoomList_iconPlus"
+                    iconClassName="mx_RoomList_iconCreateNewRoom"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
