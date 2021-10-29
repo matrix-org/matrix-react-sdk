@@ -723,7 +723,7 @@ export class Algorithm extends EventEmitter {
                 didTagChange = true;
             } else {
                 // This is a tag change update and no tags were changed, nothing to do!
-                return;
+                return false;
             }
 
             if (didTagChange && isSticky) {
