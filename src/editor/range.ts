@@ -55,6 +55,10 @@ export default class Range {
         this._start = this._start.backwardsWhile(this.model, predicate);
     }
 
+    public expandForwardsWhile(predicate: Predicate): void {
+        this._end = this._end.forwardsWhile(this.model, predicate);
+    }
+
     public get text(): string {
         let text = "";
         this._start.iteratePartsBetween(this._end, this.model, (part, startIdx, endIdx) => {
