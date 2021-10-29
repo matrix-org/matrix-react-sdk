@@ -59,6 +59,7 @@ import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestore
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { setSentryUser } from "./sentry";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -455,7 +456,7 @@ async function handleLoadSessionFailure(e: Error): Promise<boolean> {
     logger.error("Unable to load session", e);
 
     const modal = Modal.createTrackedDialog('Session Restore Error', '', SessionRestoreErrorDialog, {
-        error: e.message,
+        error: e,
     });
 
     const [success] = await modal.finished;
@@ -579,6 +580,8 @@ async function doSetLoggedIn(
     Analytics.setLoggedIn(credentials.guest, credentials.homeserverUrl);
 
     MatrixClientPeg.replaceUsingCreds(credentials);
+
+    setSentryUser(credentials.userId);
 
     const client = MatrixClientPeg.get();
 

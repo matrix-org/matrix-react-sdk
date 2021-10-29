@@ -55,7 +55,7 @@ import {
     showSpaceInvite,
     showSpaceSettings,
 } from "../../utils/space";
-import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
+import SpaceHierarchy, { joinRoom, showRoom } from "./SpaceHierarchy";
 import MemberAvatar from "../views/avatars/MemberAvatar";
 import SpaceStore from "../../stores/SpaceStore";
 import FacePile from "../views/elements/FacePile";
@@ -127,8 +127,17 @@ const useMyRoomMembership = (room: Room) => {
     return membership;
 };
 
-const SpaceInfo = ({ space }) => {
+const SpaceInfo = ({ space }: { space: Room }) => {
+    const summary = useAsyncMemo(async () => {
+        if (space.getMyMembership() !== "invite") return;
+        try {
+            return space.client.getRoomSummary(space.roomId);
+        } catch (e) {
+            return null;
+        }
+    }, [space]);
     const joinRule = useRoomState(space, state => state.getJoinRule());
+    const membership = useMyRoomMembership(space);
 
     let visibilitySection;
     if (joinRule === "public") {
@@ -141,12 +150,18 @@ const SpaceInfo = ({ space }) => {
         </span>;
     }
 
-    return <div className="mx_SpaceRoomView_info">
-        { visibilitySection }
-        { joinRule === "public" && <RoomMemberCount room={space}>
+    let memberSection;
+    if (membership === "invite" && summary) {
+        // Don't trust local state and instead use the summary API
+        memberSection = <span className="mx_SpaceRoomView_info_memberCount">
+            { _t("%(count)s members", { count: summary.num_joined_members }) }
+        </span>;
+    } else if (summary === null) {
+        memberSection = <RoomMemberCount room={space}>
             { (count) => count > 0 ? (
                 <AccessibleButton
                     kind="link"
+                    className="mx_SpaceRoomView_info_memberCount"
                     onClick={() => {
                         defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
                             action: Action.SetRightPanelPhase,
@@ -158,7 +173,12 @@ const SpaceInfo = ({ space }) => {
                     { _t("%(count)s members", { count }) }
                 </AccessibleButton>
             ) : null }
-        </RoomMemberCount> }
+        </RoomMemberCount>;
+    }
+
+    return <div className="mx_SpaceRoomView_info">
+        { visibilitySection }
+        { memberSection }
     </div>;
 };
 
@@ -275,8 +295,11 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
             <AccessibleButton
                 kind="primary"
                 onClick={() => {
-                    setBusy(true);
                     onJoinButtonClicked();
+                    if (!cli.isGuest()) {
+                        // user will be shown a modal that won't fire a room join error
+                        setBusy(true);
+                    }
                 }}
                 disabled={!spacesEnabled || cannotJoin}
             >
@@ -485,7 +508,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
             ) }
         </RoomTopic>
 
-        <SpaceHierarchy space={space} showRoom={showRoom} additionalButtons={addRoomButton} />
+        <SpaceHierarchy space={space} showRoom={showRoom} joinRoom={joinRoom} additionalButtons={addRoomButton} />
     </div>;
 };
 
@@ -645,10 +668,6 @@ const SpaceSetupPrivateScope = ({ space, justCreatedOpts, onFinished }) => {
             <h3>{ _t("Me and my teammates") }</h3>
             <div>{ _t("A private space for you and your teammates") }</div>
         </AccessibleButton>
-        <div className="mx_SpaceRoomView_betaWarning">
-            <h3>{ _t("Teammates might not be able to view or join any private rooms you make.") }</h3>
-            <p>{ _t("We're working on this, but just want to let you know.") }</p>
-        </div>
     </div>;
 };
 
@@ -906,21 +925,21 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
                     space={this.props.space}
                     justCreatedOpts={this.props.justCreatedOpts}
                     onFinished={(invite: boolean) => {
-                        this.setState({ phase: invite ? Phase.PrivateInvite : Phase.PrivateExistingRooms });
+                        this.setState({ phase: invite ? Phase.PrivateCreateRooms : Phase.PrivateExistingRooms });
                     }}
                 />;
             case Phase.PrivateInvite:
                 return <SpaceSetupPrivateInvite
                     space={this.props.space}
-                    onFinished={() => this.setState({ phase: Phase.PrivateCreateRooms })}
+                    onFinished={() => this.setState({ phase: Phase.Landing })}
                 />;
             case Phase.PrivateCreateRooms:
                 return <SpaceSetupFirstRooms
                     space={this.props.space}
-                    title={_t("What projects are you working on?")}
+                    title={_t("What projects are your team working on?")}
                     description={_t("We'll create rooms for each of them. " +
                         "You can add more later too, including already existing ones.")}
-                    onFinished={(firstRoomId: string) => this.setState({ phase: Phase.Landing, firstRoomId })}
+                    onFinished={(firstRoomId: string) => this.setState({ phase: Phase.PrivateInvite, firstRoomId })}
                 />;
             case Phase.PrivateExistingRooms:
                 return <SpaceAddExistingRooms
