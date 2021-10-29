@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { useContext, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from "../../../languageHandler";
 import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -28,7 +29,7 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { shouldShowSpaceInvite, showSpaceInvite } from "../../../utils/space";
+import { shouldShowSpaceInvite, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
@@ -139,6 +140,7 @@ const useJoiningRooms = (): Set<string> => {
 };
 
 const RoomListHeader: React.FC = () => {
+    const cli = useContext(MatrixClientContext);
     const [mainMenuDisplayed, mainMenuHandle, openMainMenu, closeMainMenu] = useContextMenu<HTMLDivElement>();
     const [plusMenuDisplayed, plusMenuHandle, openPlusMenu, closePlusMenu] = useContextMenu<HTMLDivElement>();
     const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
@@ -164,33 +166,43 @@ const RoomListHeader: React.FC = () => {
             onFinished={closeMainMenu}
             hideHeader={true}
         />;
-    } else if (plusMenuDisplayed) {
+    } else if (plusMenuDisplayed && activeSpace) {
         let inviteOption: JSX.Element;
-
         if (shouldShowSpaceInvite(activeSpace)) {
             inviteOption = <IconizedContextMenuOption
-                label={_t("Invite to Space")}
-                iconClassName="mx_RoomList_iconPlus"
+                label={_t("Invite")}
+                iconClassName="mx_RoomListHeader_iconInvite"
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    closePlusMenu();
                     showSpaceInvite(activeSpace);
+                    closePlusMenu();
                 }}
             />;
         } else if (CommunityPrototypeStore.instance.canInviteTo(communityId)) {
-            const onCommunityInviteClick = (ev: ButtonEvent) => {
-                ev.preventDefault();
-                ev.stopPropagation();
-
-                showCommunityInviteDialog(CommunityPrototypeStore.instance.getSelectedCommunityId());
-                closePlusMenu();
-            };
-
             inviteOption = <IconizedContextMenuOption
-                iconClassName="mx_UserMenu_iconInvite"
+                iconClassName="mx_RoomListHeader_iconInvite"
                 label={_t("Invite")}
-                onClick={onCommunityInviteClick}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showCommunityInviteDialog(CommunityPrototypeStore.instance.getSelectedCommunityId());
+                    closePlusMenu();
+                }}
+            />;
+        }
+
+        let createNewRoomOption: JSX.Element;
+        if (activeSpace?.currentState.maySendStateEvent(EventType.RoomAvatar, cli.getUserId())) {
+            createNewRoomOption = <IconizedContextMenuOption
+                iconClassName="mx_RoomListHeader_iconCreateRoom"
+                label={_t("Create new room")}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showCreateNewRoom(activeSpace);
+                    closePlusMenu();
+                }}
             />;
         }
 
@@ -200,17 +212,67 @@ const RoomListHeader: React.FC = () => {
             compact
         >
             <IconizedContextMenuOptionList first>
+                { inviteOption }
                 <IconizedContextMenuOption
                     label={_t("Start new chat")}
-                    iconClassName="mx_RoomList_iconPlus"
+                    iconClassName="mx_RoomListHeader_iconStartChat"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        closePlusMenu();
                         defaultDispatcher.dispatch({ action: "view_create_chat" });
+                        closePlusMenu();
                     }}
                 />
-                { inviteOption }
+                { createNewRoomOption }
+                <IconizedContextMenuOption
+                    label={_t("Explore rooms")}
+                    iconClassName="mx_RoomListHeader_iconExplore"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        closePlusMenu();
+                    }}
+                />
+            </IconizedContextMenuOptionList>
+        </IconizedContextMenu>;
+    } else if (plusMenuDisplayed) {
+        contextMenu = <IconizedContextMenu
+            {...contextMenuBelow(plusMenuHandle.current.getBoundingClientRect())}
+            onFinished={closePlusMenu}
+            compact
+        >
+            <IconizedContextMenuOptionList first>
+                <IconizedContextMenuOption
+                    label={_t("Start new chat")}
+                    iconClassName="mx_RoomListHeader_iconStartChat"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        defaultDispatcher.dispatch({ action: "view_create_chat" });
+                        closePlusMenu();
+                    }}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Create new room")}
+                    iconClassName="mx_RoomListHeader_iconCreateRoom"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        defaultDispatcher.dispatch({ action: "view_create_room" });
+                        closePlusMenu();
+                    }}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Join public room")}
+                    iconClassName="mx_RoomListHeader_iconExplore"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        closePlusMenu();
+                    }}
+                />
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     }

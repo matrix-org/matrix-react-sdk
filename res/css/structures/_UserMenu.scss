@@ -162,12 +162,4 @@ limitations under the License.
     .mx_UserMenu_iconSignOut::before {
         mask-image: url('$(res)/img/element-icons/leave.svg');
     }
-
-    .mx_UserMenu_iconMembers::before {
-        mask-image: url('$(res)/img/element-icons/room/members.svg');
-    }
-
-    .mx_UserMenu_iconInvite::before {
-        mask-image: url('$(res)/img/element-icons/room/invite.svg');
-    }
 }

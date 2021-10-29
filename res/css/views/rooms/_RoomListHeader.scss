@@ -28,6 +28,7 @@ limitations under the License.
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        margin-right: auto;
 
         &::before {
             content: '';
@@ -50,7 +51,6 @@ limitations under the License.
         border-radius: 8px;
         position: relative;
         padding: 8px;
-        margin-left: auto;
         margin-right: 14px;
         background-color: $background;
         box-sizing: border-box;
@@ -76,4 +76,17 @@ limitations under the License.
             }
         }
     }
+}
+
+.mx_RoomListHeader_iconInvite::before {
+    mask-image: url('$(res)/img/element-icons/room/share.svg');
+}
+.mx_RoomListHeader_iconStartChat::before {
+    mask-image: url('$(res)/img/element-icons/roomlist/member-plus.svg');
+}
+.mx_RoomListHeader_iconCreateRoom::before {
+    mask-image: url('$(res)/img/element-icons/roomlist/hash-plus.svg');
+}
+.mx_RoomListHeader_iconExplore::before {
+    mask-image: url('$(res)/img/element-icons/roomlist/hash-search.svg');
 }
