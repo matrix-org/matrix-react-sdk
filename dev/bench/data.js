@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635431885774,
+  "lastUpdate": 1635495470597,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35852,6 +35852,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4420,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d0bb6e0657650bebfd90791d47443d80313ed551",
+          "message": "Unit tests for getEffectiveTheme (#7051)\n\n* Unit tests for getEffectiveTheme\r\n\r\n* Unit tests for choosing high-contrast theme",
+          "timestamp": "2021-10-29T09:11:55+01:00",
+          "tree_id": "c1dc880e244f61da2b34e3e683850367baa12423",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d0bb6e0657650bebfd90791d47443d80313ed551"
+        },
+        "date": 1635495467998,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4713.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 974.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1679.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4460.5,
             "unit": "ms",
             "extra": "type: measure"
           }
