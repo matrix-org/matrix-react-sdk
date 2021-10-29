@@ -19,8 +19,13 @@ import { randomString } from "matrix-js-sdk/src/randomstring";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import classnames from 'classnames';
 
+export enum CheckboxStyle {
+    Solid = "solid",
+    Outline = "outline",
+}
+
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    kind?: string;
+    kind?: CheckboxStyle;
 }
 
 interface IState {
@@ -42,7 +47,7 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
 
     public render() {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { children, className, kind, ...otherProps } = this.props;
+        const { children, className, kind = CheckboxStyle.Solid, ...otherProps } = this.props;
         const newClassName = classnames(
             "mx_Checkbox",
             className,
