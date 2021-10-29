@@ -49,12 +49,16 @@ limitations under the License.
             box-sizing: border-box;
             border-radius: $border-radius;
 
-            img {
+            .mx_Checkbox_checkmark {
                 display: none;
 
                 height: 100%;
                 width: 100%;
-                filter: invert(100%);
+                background: #ffffff;
+                mask-image: url('$(res)/img/feather-customised/check.svg');
+                mask-position: center;
+                mask-size: 100%;
+                mask-repeat: no-repeat;
             }
         }
 
@@ -62,7 +66,7 @@ limitations under the License.
             background: $accent-color;
             border-color: $accent-color;
 
-            img {
+            .mx_Checkbox_checkmark {
                 display: block;
             }
         }
@@ -85,6 +89,18 @@ limitations under the License.
             & + label .mx_Checkbox_background {
                 @mixin unreal-focus;
             }
+        }
+    }
+}
+
+.mx_Checkbox.mx_Checkbox_kind_outline {
+    input[type=checkbox] {
+        & + label > .mx_Checkbox_background .mx_Checkbox_checkmark {
+            background: $accent-color;
+        }
+
+        &:checked + label > .mx_Checkbox_background {
+            background: transparent;
         }
     }
 }

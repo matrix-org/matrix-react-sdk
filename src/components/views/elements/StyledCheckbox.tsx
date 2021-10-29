@@ -17,8 +17,10 @@ limitations under the License.
 import React from "react";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import classnames from 'classnames';
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    kind?: string;
 }
 
 interface IState {
@@ -40,13 +42,21 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
 
     public render() {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { children, className, ...otherProps } = this.props;
-        return <span className={"mx_Checkbox " + className}>
+        const { children, className, kind, ...otherProps } = this.props;
+        const newClassName = classnames(
+            "mx_Checkbox",
+            className,
+            {
+                "mx_Checkbox_hasKind": kind,
+                [`mx_Checkbox_kind_${kind}`]: kind,
+            },
+        );
+        return <span className={newClassName}>
             <input id={this.id} {...otherProps} type="checkbox" />
             <label htmlFor={this.id}>
                 { /* Using the div to center the image */ }
                 <div className="mx_Checkbox_background">
-                    <img src={require("../../../../res/img/feather-customised/check.svg")} />
+                    <div className="mx_Checkbox_checkmark" />
                 </div>
                 <div>
                     { this.props.children }
