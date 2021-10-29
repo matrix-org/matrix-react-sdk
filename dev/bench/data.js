@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635521210000,
+  "lastUpdate": 1635545805511,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36044,6 +36044,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4622.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d88b8efd199eb302df084d820cfaaca0ea6e2d72",
+          "message": "Improve device list in Security & Privacy settings (#7004)\n\nOverhaul the device list in the \"Security and Privacy\" settings tab to include device trust status, provide buttons for verifying unverified devices, and improve overall usability and style. This should now be the primary interface for checking and changing the trust status of your own devices, rather than looking at your own user profile in the right panel.",
+          "timestamp": "2021-10-29T18:11:39-04:00",
+          "tree_id": "08f58731380f847d267344a12e1dd92d59731bb1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d88b8efd199eb302df084d820cfaaca0ea6e2d72"
+        },
+        "date": 1635545803394,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3815.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 892.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1693,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4119.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
