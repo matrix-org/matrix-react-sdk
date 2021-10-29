@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635495470597,
+  "lastUpdate": 1635496807484,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35900,6 +35900,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4460.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3defb863b35b707cfe719b334030a6c66a252261",
+          "message": "Automatic error reporting (#7046)\n\n* Enable sentry global handlers if automaticErrorReporting is on\r\n\r\n* Pass the exception through on session restore error\r\n\r\nPassing the exception object itself through to the BugReportDialog means a stack trace can be correctly recorded in Sentry",
+          "timestamp": "2021-10-29T08:34:25Z",
+          "tree_id": "6c71d73fff77a742ff49f59e2d7b4516e2249c77",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3defb863b35b707cfe719b334030a6c66a252261"
+        },
+        "date": 1635496803908,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4492,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1194.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1752,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4240.5,
             "unit": "ms",
             "extra": "type: measure"
           }
