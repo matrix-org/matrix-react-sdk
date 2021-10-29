@@ -21,10 +21,39 @@ limitations under the License.
     margin-bottom: 8px;
     width: 36px;
     box-sizing: border-box;
+    position: relative;
 
     .mx_UserMenu_userAvatar {
         border-radius: 32px; // should match avatar size
         object-fit: cover;
+    }
+
+    &.mx_UserMenu_cutout .mx_BaseAvatar {
+        mask-image: url('$(res)/img/element-icons/roomlist/dnd-avatar-mask.svg');
+        mask-position: center;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+    }
+
+    .mx_UserMenu_dndBadge {
+        position: absolute;
+        bottom: 6px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+
+        &::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            mask-position: center;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $alert;
+            mask-image: url('$(res)/img/element-icons/roomlist/dnd.svg');
+        }
     }
 }
 
@@ -135,6 +164,11 @@ limitations under the License.
     .mx_UserMenu_iconHome::before {
         mask-image: url('$(res)/img/element-icons/roomlist/home.svg');
     }
+
+    .mx_UserMenu_iconDnd::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/dnd-cross.svg');
+    }
+
     .mx_UserMenu_iconHosting::before {
         mask-image: url('$(res)/img/element-icons/brands/element.svg');
     }
@@ -151,12 +185,8 @@ limitations under the License.
         mask-image: url('$(res)/img/element-icons/settings.svg');
     }
 
-    .mx_UserMenu_iconArchive::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/archived.svg');
-    }
-
     .mx_UserMenu_iconMessage::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/feedback.svg');
+        mask-image: url('$(res)/img/element-icons/feedback.svg');
     }
 
     .mx_UserMenu_iconSignOut::before {

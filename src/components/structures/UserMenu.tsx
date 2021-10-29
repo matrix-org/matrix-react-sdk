@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import * as fbEmitter from "fbemitter";
+import classNames from "classnames";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -41,6 +42,7 @@ import BaseAvatar from '../views/avatars/BaseAvatar';
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { SettingLevel } from "../../settings/SettingLevel";
 import IconizedContextMenu, {
+    IconizedContextMenuCheckbox,
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../views/context_menus/IconizedContextMenu";
@@ -60,13 +62,14 @@ interface IState {
     contextMenuPosition: PartialDOMRect;
     isDarkTheme: boolean;
     selectedSpace?: Room;
+    dndEnabled: boolean;
 }
 
 @replaceableComponent("structures.UserMenu")
 export default class UserMenu extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private themeWatcherRef: string;
-    private dndWatcherRef: string;
+    private readonly dndWatcherRef: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
     private tagStoreRef: fbEmitter.EventSubscription;
 
@@ -76,6 +79,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.state = {
             contextMenuPosition: null,
             isDarkTheme: this.isUserOnDarkTheme(),
+            dndEnabled: this.doNotDisturb,
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
@@ -83,8 +87,17 @@ export default class UserMenu extends React.Component<IProps, IState> {
             SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
         }
 
-        // Force update is the easiest way to trigger the UI update (we don't store state for this)
-        this.dndWatcherRef = SettingsStore.watchSetting("doNotDisturb", null, () => this.forceUpdate());
+        this.dndWatcherRef = SettingsStore.watchSetting("doNotDisturb", null, this.onDndChanged);
+    }
+
+    private onDndChanged = () => {
+        this.setState({
+            dndEnabled: this.doNotDisturb,
+        });
+    };
+
+    private get doNotDisturb(): boolean {
+        return SettingsStore.getValue("doNotDisturb");
     }
 
     private get hasHomePage(): boolean {
@@ -235,8 +248,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
-    // TODO remove this once we find a new home for the DND toggle
-    private onDndToggle = (ev) => {
+    private onDndToggle = (ev: ButtonEvent) => {
         ev.stopPropagation();
         const current = SettingsStore.getValue("doNotDisturb");
         SettingsStore.setValue("doNotDisturb", null, SettingLevel.DEVICE, !current);
@@ -245,10 +257,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        let topSection;
+        let bottomSection;
         const hostSignupConfig: IHostSignupConfig = SdkConfig.get().hostSignup;
         if (MatrixClientPeg.get().isGuest()) {
-            topSection = (
+            bottomSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
                     { _t("Got an account? <a>Sign in</a>", {}, {
                         a: sub => (
@@ -274,7 +286,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 const mxDomain = MatrixClientPeg.get().getDomain();
                 const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
                 if (!hostSignupConfig.domains || validDomains.length > 0) {
-                    topSection = <HostSignupAction onClick={this.onCloseMenu} />;
+                    bottomSection = <HostSignupAction onClick={this.onCloseMenu} />;
                 }
             }
         }
@@ -286,6 +298,19 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     iconClassName="mx_UserMenu_iconHome"
                     label={_t("Home")}
                     onClick={this.onHomeClick}
+                />
+            );
+        }
+
+        let dndButton: JSX.Element;
+        if (SettingsStore.getValue("feature_dnd")) {
+            dndButton = (
+                <IconizedContextMenuCheckbox
+                    iconClassName="mx_UserMenu_iconDnd"
+                    label={_t("Do not disturb")}
+                    onClick={this.onDndToggle}
+                    active={this.state.dndEnabled}
+                    words
                 />
             );
         }
@@ -303,11 +328,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             <React.Fragment>
                 <IconizedContextMenuOptionList>
                     { homeButton }
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconBell"
-                        label={_t("Notification settings")}
-                        onClick={(e) => this.onSettingsOpen(e, UserTab.Notifications)}
-                    />
+                    { dndButton }
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconLock"
                         label={_t("Security & privacy")}
@@ -318,15 +339,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         label={_t("All settings")}
                         onClick={(e) => this.onSettingsOpen(e, null)}
                     />
-                    { /* <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconArchive"
-                        label={_t("Archived rooms")}
-                        onClick={this.onShowArchived}
-                    /> */ }
                     { feedbackButton }
-                </IconizedContextMenuOptionList>
-                <IconizedContextMenuOptionList red>
                     <IconizedContextMenuOption
+                        className="mx_IconizedContextMenu_option_red"
                         iconClassName="mx_UserMenu_iconSignOut"
                         label={_t("Sign out")}
                         onClick={this.onSignOutClick}
@@ -381,8 +396,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     />
                 </AccessibleTooltipButton>
             </div>
-            { topSection }
             { primaryOptionList }
+            { bottomSection }
         </IconizedContextMenu>;
     };
 
@@ -393,8 +408,15 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const displayName = OwnProfileStore.instance.displayName || userId;
         const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
 
+        let badge: JSX.Element;
+        if (this.state.dndEnabled) {
+            badge = <div className="mx_UserMenu_dndBadge" />;
+        }
+
         return (
-            <div className="mx_UserMenu">
+            <div className={classNames("mx_UserMenu", {
+                mx_UserMenu_cutout: badge,
+            })}>
                 <ContextMenuButton
                     onClick={this.onOpenMenuClick}
                     inputRef={this.buttonRef}
@@ -411,6 +433,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         resizeMethod="crop"
                         className="mx_UserMenu_userAvatar"
                     />
+                    { badge }
                 </ContextMenuButton>
 
                 { this.renderContextMenu() }
