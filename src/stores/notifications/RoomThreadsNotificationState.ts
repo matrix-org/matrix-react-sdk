@@ -20,7 +20,7 @@ import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
 import { RoomNotificationState } from "./RoomNotificationState";
 
-export class ThreadNotificationState extends RoomNotificationState {
+export class RoomThreadsNotificationState extends RoomNotificationState {
     protected updateNotificationState(): void {
         const snapshot = this.snapshot();
 
