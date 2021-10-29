@@ -62,6 +62,8 @@ import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/th
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -313,6 +315,8 @@ interface IProps {
 
     // whether or not to display thread info
     showThreadInfo?: boolean;
+
+    timelineRenderingType?: TimelineRenderingType;
 }
 
 interface IState {
@@ -574,7 +578,9 @@ export default class EventTile extends React.Component<IProps, IState> {
             <div
                 className="mx_ThreadInfo"
                 onClick={() => {
-                    dispatchShowThreadEvent(this.props.mxEvent);
+                    dispatchShowThreadEvent(
+                        this.props.mxEvent,
+                    );
                 }}
             >
                 <span className="mx_ThreadInfo_thread-icon" />
@@ -853,10 +859,11 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     onSenderProfileClick = () => {
-        const mxEvent = this.props.mxEvent;
+        if (!this.props.timelineRenderingType) return;
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
-            userId: mxEvent.getSender(),
+            userId: this.props.mxEvent.getSender(),
+            timelineRenderingType: this.props.timelineRenderingType,
         });
     };
 
@@ -988,6 +995,12 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         const EventTileType = sdk.getComponent(tileHandler);
+        const isProbablyMedia = MediaEventHelper.isEligible(this.props.mxEvent);
+
+        const lineClasses = classNames({
+            mx_EventTile_line: true,
+            mx_EventTile_mediaLine: isProbablyMedia,
+        });
 
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
         const isRedacted = isMessageEvent(this.props.mxEvent) && this.props.isRedacted;
@@ -1089,7 +1102,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         if (needsSenderProfile && this.props.hideSender !== true) {
-            if (!this.props.tileShape) {
+            if (!this.props.tileShape || this.props.tileShape === TileShape.Thread) {
                 sender = <SenderProfile onClick={this.onSenderProfileClick}
                     mxEvent={this.props.mxEvent}
                     enableFlair={this.props.enableFlair}
@@ -1203,7 +1216,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { timestamp }
                         </a>
                     </div>,
-                    <div className="mx_EventTile_line" key="mx_EventTile_line">
+                    <div className={lineClasses} key="mx_EventTile_line">
                         <EventTileType ref={this.tile}
                             mxEvent={this.props.mxEvent}
                             highlights={this.props.highlights}
@@ -1251,7 +1264,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { timestamp }
                         </a>
                     </div>,
-                    <div className="mx_EventTile_line" key="mx_EventTile_line">
+                    <div className={lineClasses} key="mx_EventTile_line">
                         { replyChain }
                         <EventTileType ref={this.tile}
                             mxEvent={this.props.mxEvent}
@@ -1275,7 +1288,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                 }, [
-                    <div className="mx_EventTile_line" key="mx_EventTile_line">
+                    <div className={lineClasses} key="mx_EventTile_line">
                         <EventTileType ref={this.tile}
                             mxEvent={this.props.mxEvent}
                             highlights={this.props.highlights}
@@ -1335,7 +1348,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         { sender }
                         { ircPadlock }
                         { avatar }
-                        <div className="mx_EventTile_line" key="mx_EventTile_line">
+                        <div className={lineClasses} key="mx_EventTile_line">
                             { groupTimestamp }
                             { groupPadlock }
                             { replyChain }
