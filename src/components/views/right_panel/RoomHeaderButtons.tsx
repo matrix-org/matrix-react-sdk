@@ -33,6 +33,8 @@ import { useSettingValue } from "../../../hooks/useSettings";
 import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
 import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import NotificationBadge from "../rooms/NotificationBadge";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -118,19 +120,28 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     };
 
     public renderButtons() {
+        const threadsNotificationState = RoomNotificationStateStore.instance.getThreadsState(this.props.room);
+
         return <>
             <PinnedMessagesHeaderButton
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
                 onClick={this.onPinnedMessagesClicked}
             />
-            { SettingsStore.getValue("feature_thread") && <HeaderButton
-                name="threadsButton"
-                title={_t("Threads")}
-                onClick={dispatchShowThreadsPanelEvent}
-                isHighlighted={this.isPhase(RightPanelPhases.ThreadPanel)}
-                analytics={['Right Panel', 'Threads List Button', 'click']}
-            /> }
+            { SettingsStore.getValue("feature_thread") && <div className="mx_RoomHeader_buttonContainer">
+                <NotificationBadge
+                    notification={threadsNotificationState}
+                    forceCount={true}
+                    roomId={this.props.room.roomId}
+                />
+                <HeaderButton
+                    name="threadsButton"
+                    title={_t("Threads")}
+                    onClick={dispatchShowThreadsPanelEvent}
+                    isHighlighted={this.isPhase(RightPanelPhases.ThreadPanel)}
+                    analytics={['Right Panel', 'Threads List Button', 'click']}
+                />
+            </div> }
             <HeaderButton
                 name="notifsButton"
                 title={_t('Notifications')}

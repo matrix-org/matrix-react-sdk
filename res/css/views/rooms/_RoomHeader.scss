@@ -77,6 +77,15 @@ limitations under the License.
     background-color: $background;
 }
 
+.mx_RoomHeader_buttonContainer {
+    position: relative;
+    .mx_NotificationBadge {
+        position: absolute;
+        right: 0;
+        z-index: 2;
+    }
+}
+
 .mx_RoomHeader_info {
     display: flex;
     flex: 1;

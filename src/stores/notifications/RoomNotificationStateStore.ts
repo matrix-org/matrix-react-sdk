@@ -23,6 +23,8 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomNotificationState } from "./RoomNotificationState";
 import { SummarizedNotificationState } from "./SummarizedNotificationState";
 import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
+import { ThreadNotificationState } from "./ThreadNotificationState";
+import SettingsStore from "../../settings/SettingsStore";
 
 interface IState {}
 
@@ -30,6 +32,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private static internalInstance = new RoomNotificationStateStore();
 
     private roomMap = new Map<Room, RoomNotificationState>();
+    private roomThreadsMap = new Map<Room, ThreadNotificationState>();
     private listMap = new Map<TagID, ListNotificationState>();
 
     private constructor() {
@@ -85,8 +88,22 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     public getRoomState(room: Room): RoomNotificationState {
         if (!this.roomMap.has(room)) {
             this.roomMap.set(room, new RoomNotificationState(room));
+            if (SettingsStore.getValue("feature_thread")) {
+                this.roomMap.set(room, new ThreadNotificationState(room));
+            }
         }
         return this.roomMap.get(room);
+    }
+
+    public getThreadsState(room: Room): ThreadNotificationState {
+        if (SettingsStore.getValue("feature_thread")) {
+            if (!this.roomThreadsMap.has(room)) {
+                this.roomThreadsMap.set(room, new ThreadNotificationState(room));
+            }
+            return this.roomThreadsMap.get(room);
+        } else {
+            return null;
+        }
     }
 
     public static get instance(): RoomNotificationStateStore {

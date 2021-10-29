@@ -114,24 +114,44 @@ export function setRoomNotifsState(roomId: string, newState: RoomNotifState): Pr
     }
 }
 
+function getRoomPredecessor(room: Room): Room {
+    const createEvent = room.currentState.getStateEvents("m.room.create", "");
+    if (createEvent && createEvent.getContent()['predecessor']) {
+        const oldRoomId = createEvent.getContent()['predecessor']['room_id'];
+        return MatrixClientPeg.get().getRoom(oldRoomId);
+    }
+}
+
 export function getUnreadNotificationCount(room: Room, type: NotificationCountType = null): number {
     let notificationCount = room.getUnreadNotificationCount(type);
 
     // Check notification counts in the old room just in case there's some lost
     // there. We only go one level down to avoid performance issues, and theory
     // is that 1st generation rooms will have already been read by the 3rd generation.
-    const createEvent = room.currentState.getStateEvents("m.room.create", "");
-    if (createEvent && createEvent.getContent()['predecessor']) {
-        const oldRoomId = createEvent.getContent()['predecessor']['room_id'];
-        const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
-        if (oldRoom) {
-            // We only ever care if there's highlights in the old room. No point in
-            // notifying the user for unread messages because they would have extreme
-            // difficulty changing their notification preferences away from "All Messages"
-            // and "Noisy".
-            notificationCount += oldRoom.getUnreadNotificationCount(NotificationCountType.Highlight);
-        }
-    }
+    const oldRoom = getRoomPredecessor(room);
+
+    // We only ever care if there's highlights in the old room. No point in
+    // notifying the user for unread messages because they would have extreme
+    // difficulty changing their notification preferences away from "All Messages"
+    // and "Noisy".
+    notificationCount += oldRoom?.getUnreadNotificationCount(NotificationCountType.Highlight) ?? 0;
+
+    return notificationCount;
+}
+
+export function getThreadsUnreadNotificationCount(room: Room, type: NotificationCountType = null): number {
+    let notificationCount = room.getThreadsUnreadNotificationCount(type);
+
+    // Check notification counts in the old room just in case there's some lost
+    // there. We only go one level down to avoid performance issues, and theory
+    // is that 1st generation rooms will have already been read by the 3rd generation.
+    const oldRoom = getRoomPredecessor(room);
+
+    // We only ever care if there's highlights in the old room. No point in
+    // notifying the user for unread messages because they would have extreme
+    // difficulty changing their notification preferences away from "All Messages"
+    // and "Noisy".
+    notificationCount += oldRoom?.getThreadsUnreadNotificationCount(NotificationCountType.Highlight) ?? 0;
 
     return notificationCount;
 }

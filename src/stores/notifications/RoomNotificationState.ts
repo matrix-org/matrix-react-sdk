@@ -97,7 +97,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         }
     };
 
-    private updateNotificationState() {
+    protected updateNotificationState(): void {
         const snapshot = this.snapshot();
 
         if (getUnsentMessages(this.room).length > 0) {
