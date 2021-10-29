@@ -36,6 +36,10 @@ export enum MessageComposerAction {
     FormatBold = 'FormatBold',
     /** Set italics format the current selection */
     FormatItalics = 'FormatItalics',
+    /** Insert link for current selection */
+    FormatLink = 'FormatLink',
+    /** Set code format for current selection */
+    FormatCode = 'FormatCode',
     /** Format the current selection as quote */
     FormatQuote = 'FormatQuote',
     /** Undo the last editing */
