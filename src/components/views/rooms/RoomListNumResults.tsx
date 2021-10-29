@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import React, { useEffect, useState } from "react";
 import { _t } from "../../../languageHandler";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import { useEventEmitter } from "../../../hooks/useEventEmitter";
-import SpaceStore from "../../../stores/SpaceStore";
 
 interface IProps {
     onVisibilityChange?: () => void;
@@ -45,10 +44,7 @@ const RoomListNumResults: React.FC<IProps> = ({ onVisibilityChange }) => {
     if (typeof count !== "number") return null;
 
     return <div className="mx_LeftPanel_roomListFilterCount">
-        { SpaceStore.instance.spacePanelSpaces.length
-            ? _t("%(count)s results in all spaces", { count })
-            : _t("%(count)s results", { count })
-        }
+        { _t("%(count)s results", { count }) }
     </div>;
 };
 

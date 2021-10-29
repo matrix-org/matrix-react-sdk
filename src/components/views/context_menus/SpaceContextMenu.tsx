@@ -26,7 +26,6 @@ import { _t } from "../../../languageHandler";
 import {
     leaveSpace,
     shouldShowSpaceSettings,
-    showAddExistingRooms,
     showCreateNewRoom,
     showCreateNewSubspace,
     showSpaceInvite,
@@ -35,10 +34,6 @@ import {
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import RoomViewStore from "../../../stores/RoomViewStore";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
-import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import { BetaPill } from "../beta/BetaCard";
 import SettingsStore from "../../../settings/SettingsStore";
 
@@ -65,7 +60,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             <IconizedContextMenuOption
                 className="mx_SpacePanel_contextMenu_inviteButton"
                 iconClassName="mx_SpacePanel_iconInvite"
-                label={_t("Invite people")}
+                label={_t("Invite")}
                 onClick={onInviteClick}
             />
         );
@@ -142,14 +137,6 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             onFinished();
         };
 
-        const onAddExistingRoomClick = (ev: ButtonEvent) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-
-            showAddExistingRooms(space);
-            onFinished();
-        };
-
         const onNewSubspaceClick = (ev: ButtonEvent) => {
             ev.preventDefault();
             ev.stopPropagation();
@@ -160,17 +147,12 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
 
         newRoomSection = <IconizedContextMenuOptionList first>
             <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconPlus"
+                iconClassName="mx_SpacePanel_iconCreateRoom"
                 label={_t("Create new room")}
                 onClick={onNewRoomClick}
             />
             <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconHash"
-                label={_t("Add existing room")}
-                onClick={onAddExistingRoomClick}
-            />
-            <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconPlus"
+                iconClassName="mx_SpacePanel_iconAddSpace"
                 label={_t("Add space")}
                 onClick={onNewSubspaceClick}
             >
@@ -178,25 +160,6 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             </IconizedContextMenuOption>
         </IconizedContextMenuOptionList>;
     }
-
-    const onMembersClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        if (!RoomViewStore.getRoomId()) {
-            defaultDispatcher.dispatch({
-                action: "view_room",
-                room_id: space.roomId,
-            }, true);
-        }
-
-        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.SpaceMemberList,
-            refireParams: { space },
-        });
-        onFinished();
-    };
 
     const onExploreRoomsClick = (ev: ButtonEvent) => {
         ev.preventDefault();
@@ -219,18 +182,18 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             { space.name }
         </div> }
         <IconizedContextMenuOptionList first>
-            { inviteOption }
             <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconMembers"
-                label={_t("Members")}
-                onClick={onMembersClick}
+                iconClassName="mx_SpacePanel_iconHome"
+                label={_t("Space home")}
+                onClick={onExploreRoomsClick}
             />
-            { settingsOption }
+            { inviteOption }
             <IconizedContextMenuOption
                 iconClassName="mx_SpacePanel_iconExplore"
                 label={canAddRooms ? _t("Manage & explore rooms") : _t("Explore rooms")}
                 onClick={onExploreRoomsClick}
             />
+            { settingsOption }
         </IconizedContextMenuOptionList>
         { newRoomSection }
         { leaveSection }
