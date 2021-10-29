@@ -385,11 +385,12 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                 { nonCryptoDevicesSection }
                 { deleteButton }
             </React.Fragment> :
-            <div className="mx_DevicesPanel_header">
-                <div className="mx_DevicesPanel_header_title">
-                    { _t("No other devices") }
+            <React.Fragment>
+                <hr />
+                <div className="mx_DevicesPanel_noOtherDevices">
+                    { _t("You aren't signed into any other devices.") }
                 </div>
-            </div>;
+            </React.Fragment>;
 
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (
