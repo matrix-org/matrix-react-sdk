@@ -45,7 +45,7 @@ import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar
 import DocumentOffset from "../../../editor/offset";
 import { IDiff } from "../../../editor/diff";
 import AutocompleteWrapperModel from "../../../editor/autocomplete";
-import DocumentPosition from "../../../editor/position";
+import DocumentPosition, { Predicate } from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -66,8 +66,8 @@ const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
     ["<", ">"],
 ]);
 
-function ctrlShortcutLabel(key: string): string {
-    return (IS_MAC ? "⌘" : "Ctrl") + "+" + key;
+function ctrlShortcutLabel(key: string, useShift?: boolean, useAlt?: boolean): string {
+    return (IS_MAC ? "⌘" : "Ctrl") + (useShift ? "+Shift" : "") + (useAlt ? "+Alt" : "") + "+" + key;
 }
 
 function cloneSelection(selection: Selection): Partial<Selection> {
@@ -522,8 +522,16 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.Italics);
                 handled = true;
                 break;
+            case MessageComposerAction.FormatCode:
+                this.onFormatAction(Formatting.Code);
+                handled = true;
+                break;
             case MessageComposerAction.FormatQuote:
                 this.onFormatAction(Formatting.Quote);
+                handled = true;
+                break;
+            case MessageComposerAction.FormatLink:
+                this.onFormatAction(Formatting.InsertLink);
                 handled = true;
                 break;
             case MessageComposerAction.EditRedo:
@@ -681,15 +689,48 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
         return caretPosition;
     }
+    
+    private getRangeOfWordAtCaret(): Range {
+        const { model } = this.props;
+        let caret = this.getCaret();
+        let position = model.positionForOffset(caret.offset, caret.atNodeEnd);
+        const range = model.startRange(position);
+
+        // Select left side of word
+        range.expandForwardsWhile((index, offset, part) => {
+            return part.text[offset] !== " " && part.text[offset] !== "+" && (
+                part.type === Type.Plain ||
+                part.type === Type.PillCandidate ||
+                part.type === Type.Command
+            );
+        });
+
+        // Reset caret position
+        caret = this.getCaret();
+        position = model.positionForOffset(caret.offset, caret.atNodeEnd);
+
+        // Select right side of word
+        range.expandBackwardsWhile((index, offset, part) => {
+            return part.text[offset] !== " " && part.text[offset] !== "+" && (
+                part.type === Type.Plain ||
+                part.type === Type.PillCandidate ||
+                part.type === Type.Command
+            );
+        });
+
+        return range;
+    }
 
     private onFormatAction = (action: Formatting): void => {
-        const range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
+        let range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
+
+        // If the user didn't select any text, we select the current word instead
+        if (range.length == 0) {
+            range = this.getRangeOfWordAtCaret();
+        }
+
         // trim the range as we want it to exclude leading/trailing spaces
         range.trim();
-
-        if (range.length === 0) {
-            return;
-        }
 
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
@@ -742,7 +783,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const shortcuts = {
             [Formatting.Bold]: ctrlShortcutLabel("B"),
             [Formatting.Italics]: ctrlShortcutLabel("I"),
+            [Formatting.Code]: ctrlShortcutLabel("E"),
             [Formatting.Quote]: ctrlShortcutLabel(">"),
+            [Formatting.InsertLink]: ctrlShortcutLabel("K", false, true),
         };
 
         const { completionIndex } = this.state;
