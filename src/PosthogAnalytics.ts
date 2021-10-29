@@ -328,9 +328,9 @@ export class PosthogAnalytics {
         this.registerSuperProperties(this.platformSuperProperties);
     }
 
-    public async updateAnonymityFromSettings(pseudonumousOptIn: boolean): Promise<void> {
+    public async updateAnonymityFromSettings(pseudonymousOptIn: boolean): Promise<void> {
         // Update this.anonymity based on the user's analytics opt-in settings
-        const anonymity = pseudonumousOptIn ? Anonymity.Pseudonymous : Anonymity.Disabled;
+        const anonymity = pseudonymousOptIn ? Anonymity.Pseudonymous : Anonymity.Disabled;
         this.setAnonymity(anonymity);
         if (anonymity == Anonymity.Pseudonymous) {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
@@ -341,7 +341,7 @@ export class PosthogAnalytics {
         }
     }
 
-    public startListeningToSettingsChanges(client: MatrixClient): void {
+    public startListeningToSettingsChanges(): void {
         // Listen to account data changes from sync so we can observe changes to relevant flags and update.
         // This is called -
         //  * On page load, when the account data is first received by sync
@@ -352,7 +352,7 @@ export class PosthogAnalytics {
         // won't be called (i.e. this.anonymity will be left as the default, until the setting changes)
         SettingsStore.watchSetting("pseudonymousAnalyticsOptIn", null,
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
-                this.updateAnonymityFromSettings(newValue);
+                this.updateAnonymityFromSettings(!!newValue);
             });
     }
 }
