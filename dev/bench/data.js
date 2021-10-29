@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635510957430,
+  "lastUpdate": 1635521210000,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35996,6 +35996,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4843,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nolan@thewordnerd.info",
+            "name": "Nolan Darilek",
+            "username": "ndarilek"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ea54ea89d45eb7c24039e1e5711e338999c79c5a",
+          "message": "Make message separator more accessible. (#7056)",
+          "timestamp": "2021-10-29T15:20:10Z",
+          "tree_id": "c1e29ea13e972da0082277ddc3ef82fb12d12b81",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ea54ea89d45eb7c24039e1e5711e338999c79c5a"
+        },
+        "date": 1635521206784,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5102.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1073.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1760.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4622.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
