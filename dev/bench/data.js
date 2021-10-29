@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635496807484,
+  "lastUpdate": 1635510957430,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -35948,6 +35948,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4240.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nolan@thewordnerd.info",
+            "name": "Nolan Darilek",
+            "username": "ndarilek"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "98edc467e06d36c05f51c090a463e7bcb2534283",
+          "message": "Give each room directory entry the `listitem` role to correspond with the containing `list`. (#7035)",
+          "timestamp": "2021-10-29T13:30:05+01:00",
+          "tree_id": "e31980fea18b9c711c10bce94f28bade1fbd6761",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/98edc467e06d36c05f51c090a463e7bcb2534283"
+        },
+        "date": 1635510954087,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5172.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 940.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4843,
             "unit": "ms",
             "extra": "type: measure"
           }
