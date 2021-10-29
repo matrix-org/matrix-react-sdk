@@ -532,11 +532,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td('Send analytics data'),
-        default: false,
-    },
-    "showPseudonymousAnalyticsPrompt": {
-        supportedLevels: [SettingLevel.ACCOUNT],
-        default: true,
+        default: null,
     },
     "autocompleteDelay": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,

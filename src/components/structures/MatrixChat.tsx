@@ -843,27 +843,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private async setCookieAccountData(accept: boolean): Promise<{}> {
-        // Update showPseudonymousAnalyticsPrompt and then pseudonymousAnalyticsOptIn.
-        //
-        // XXX: SettingsStore.setValue doesn't wait until the local copy of settings has been reflected in accountData,
-        // so calling it twice in succession clobbers the first value as it passes that full local copy on each set.
-        //
-        // To get around that, watch showPseudonymousAnalyticsPrompt until its observed to change, and only then
-        // update pseudonymousAnalyticsOptIn.
-        return new Promise((resolve) => {
-            const watcher = SettingsStore.watchSetting("showPseudonymousAnalyticsPrompt", null,
-                (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
-                    if (newValue === false) {
-                        SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, accept);
-                        SettingsStore.unwatchSetting(watcher);
-                        resolve({});
-                    }
-                },
-            );
-
-            SettingsStore.setValue("showPseudonymousAnalyticsPrompt", null, SettingLevel.ACCOUNT, false);
-        });
+    private async setCookieAccountData(accept: boolean) {
+        await SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, accept);
     }
 
     private setPage(pageType: PageType) {
@@ -1368,16 +1349,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private initPosthogAnalyticsToast() {
         // Show the analytics toast if necessary
-        if (SettingsStore.getValue("showPseudonymousAnalyticsPrompt") !== false) {
+        if (SettingsStore.getValue("pseudonymousAnalyticsOptIn") === null) {
             this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
         }
 
         // Listen to changes in settings and show the toast if appropriate - this is necessary because account
         // settings can still be changing at this point in app init (due to the initial sync being cached, then
         // subsequent syncs being received from the server)
-        SettingsStore.watchSetting("showPseudonymousAnalyticsPrompt", null,
+        SettingsStore.watchSetting("pseudonymousAnalyticsOptIn", null,
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
-                if (newValue !== false) {
+                if (newValue === null) {
                     this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
                 } else {
                     // It's possible for the value to change if a cached sync loads at page load, but then network

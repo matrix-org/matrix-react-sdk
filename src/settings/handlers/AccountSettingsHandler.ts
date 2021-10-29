@@ -128,7 +128,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             return value;
         }
 
-        if (settingName === "pseudonymousAnalyticsOptIn" || settingName == "showPseudonymousAnalyticsPrompt") {
+        if (settingName === "pseudonymousAnalyticsOptIn") {
             const content = this.getSettings(ANALYTICS_EVENT_TYPE) || {};
             // Check to make sure that we actually got a boolean
             if (typeof(content[settingName]) !== "boolean") return null;
@@ -188,7 +188,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         }
 
         // Special case analytics
-        if (settingName === "pseudonymousAnalyticsOptIn" || settingName === "showPseudonymousAnalyticsPrompt") {
+        if (settingName === "pseudonymousAnalyticsOptIn") {
             const content = this.getSettings(ANALYTICS_EVENT_TYPE) || {};
             content[settingName] = newValue;
             await MatrixClientPeg.get().setAccountData(ANALYTICS_EVENT_TYPE, content);
