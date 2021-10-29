@@ -25,6 +25,9 @@ limitations under the License.
         padding-left: 12px;
         padding-right: 24px;
         position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &::before {
             content: '';
@@ -51,6 +54,7 @@ limitations under the License.
         margin-right: 14px;
         background-color: $background;
         box-sizing: border-box;
+        flex-shrink: 0;
 
         &::before {
             content: '';

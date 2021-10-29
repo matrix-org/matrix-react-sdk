@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from "../../../languageHandler";
-import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../../stores/SpaceStore";
 import { ChevronFace, ContextMenuButton, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -38,6 +38,10 @@ import { Action } from "../../../dispatcher/actions";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { showCommunityInviteDialog } from "../../../RoomInvite";
+import { useDispatcher } from "../../../hooks/useDispatcher";
+import InlineSpinner from "../elements/InlineSpinner";
+import TooltipButton from "../elements/TooltipButton";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -107,6 +111,31 @@ const PrototypeCommunityContextMenu = (props) => {
             />
         </IconizedContextMenuOptionList>
     </IconizedContextMenu>;
+};
+
+const useJoiningRooms = (): Set<string> => {
+    const cli = useContext(MatrixClientContext);
+    const [joiningRooms, setJoiningRooms] = useState(new Set<string>());
+    useDispatcher(defaultDispatcher, payload => {
+        switch (payload.action) {
+            case Action.JoinRoom:
+                setJoiningRooms(new Set(joiningRooms.add(payload.roomId)));
+                break;
+            case Action.JoinRoomReady:
+            case Action.JoinRoomError:
+                if (joiningRooms.delete(payload.roomId)) {
+                    setJoiningRooms(new Set(joiningRooms));
+                }
+                break;
+        }
+    });
+    useEventEmitter(cli, "Room", (room: Room) => {
+        if (joiningRooms.delete(room.roomId)) {
+            setJoiningRooms(new Set(joiningRooms));
+        }
+    });
+
+    return joiningRooms;
 };
 
 const RoomListHeader: React.FC = () => {
@@ -193,6 +222,17 @@ const RoomListHeader: React.FC = () => {
         title = CommunityPrototypeStore.instance.getSelectedCommunityName();
     }
 
+    const joiningRooms = useJoiningRooms();
+    let pendingRoomJoinSpinner;
+    if (joiningRooms.size) {
+        pendingRoomJoinSpinner = <InlineSpinner>
+            <TooltipButton helpText={_t(
+                "Currently joining %(count)s rooms",
+                { count: joiningRooms.size },
+            )} />
+        </InlineSpinner>;
+    }
+
     return <div className="mx_RoomListHeader">
         <ContextMenuButton
             inputRef={mainMenuHandle}
@@ -202,12 +242,13 @@ const RoomListHeader: React.FC = () => {
         >
             { title }
         </ContextMenuButton>
+        { pendingRoomJoinSpinner }
         <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
             onClick={openPlusMenu}
             isExpanded={plusMenuDisplayed}
             className="mx_RoomListHeader_plusButton"
-            title={activeSpace ? _t("Add to %(spaceName)s", { spaceName: activeSpace.name }) : _t("Add")}
+            title={activeSpace ? _t("Add to %(spaceName)s", { spaceName: activeSpace.name }) : _t("Add to Home")}
         />
 
         { contextMenu }
