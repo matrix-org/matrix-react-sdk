@@ -42,7 +42,7 @@ export class ThreadNotificationState extends NotificationState implements IDestr
         const greyNotifs = this.thread.getUnreadNotificationCount(NotificationCountType.Total);
 
         if (redNotifs > 0) {
-            this._color = NotificationColor.BoldHighlight;
+            this._color = NotificationColor.BoldRed;
         } else if (greyNotifs > 0) {
             this._color = NotificationColor.Bold;
         } else {
