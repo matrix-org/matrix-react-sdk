@@ -50,7 +50,7 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
     }
 
     public get hasMentions(): boolean {
-        return this.color >= NotificationColor.Red;
+        return this.color >= NotificationColor.BoldRed;
     }
 
     protected emitIfUpdated(snapshot: NotificationStateSnapshot) {

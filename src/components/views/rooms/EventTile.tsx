@@ -63,6 +63,7 @@ import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewSto
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -891,6 +892,17 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
+    private renderThreadNotificationBadge(): JSX.Element {
+        if (this.props.tileShape === TileShape.ThreadPanel) {
+            const thread = this.props.mxEvent.getThread();
+            const notificationState = RoomNotificationStateStore.instance.getThreadState(thread);
+
+            return <NotificationBadge notification={notificationState} />;
+        } else {
+            return null;
+        }
+    }
+
     private renderE2EPadlock() {
         const ev = this.props.mxEvent;
 
@@ -1348,6 +1360,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "key": eventId,
                     }, <>
                         { ircTimestamp }
+                        { this.renderThreadNotificationBadge() }
                         { sender }
                         { ircPadlock }
                         { avatar }

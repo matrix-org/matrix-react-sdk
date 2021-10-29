@@ -30,7 +30,7 @@ limitations under the License.
         display: none;
     }
 
-    &__header {
+    .mx_ThreadPanel__header {
         width: calc(100% - 40px);
         display: flex;
         flex: 1;
@@ -121,8 +121,14 @@ limitations under the License.
             // We need to add !important here due to some enormous selectors overriding it anyways
             // See: _EventTile.scss:241
             left: unset !important;
-            right: 0 !important;
+            right: 12px !important;
             top: 16px;
+        }
+
+        .mx_NotificationBadge {
+            position: absolute;
+            right: 5px;
+            top: 24px;
         }
 
         .mx_EventTile_line.mx_EventTile_line {
