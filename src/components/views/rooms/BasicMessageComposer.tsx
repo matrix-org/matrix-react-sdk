@@ -32,7 +32,7 @@ import {
 } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
-import { getAutoCompleteCreator, Type } from '../../../editor/parts';
+import { getAutoCompleteCreator, Part, Type } from '../../../editor/parts';
 import { parseEvent, parsePlainTextMessage } from '../../../editor/deserialize';
 import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
@@ -45,7 +45,6 @@ import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar
 import DocumentOffset from "../../../editor/offset";
 import { IDiff } from "../../../editor/diff";
 import AutocompleteWrapperModel from "../../../editor/autocomplete";
-import DocumentPosition, { Predicate } from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -585,11 +584,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
             const range = model.startRange(position);
             range.expandBackwardsWhile((index, offset, part) => {
-                return part.text[offset] !== " " && part.text[offset] !== "+" && (
-                    part.type === Type.Plain ||
-                    part.type === Type.PillCandidate ||
-                    part.type === Type.Command
-                );
+                return this.isEndOfWord(offset, part);
             });
             const { partCreator } = model;
             // await for auto-complete to be open
@@ -689,7 +684,15 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
         return caretPosition;
     }
-    
+
+    private isEndOfWord(offset: number, part: Part): boolean {
+        return part.text[offset] !== " " && part.text[offset] !== "+" && (
+            part.type === Type.Plain ||
+            part.type === Type.PillCandidate ||
+            part.type === Type.Command
+        );
+    }
+
     private getRangeOfWordAtCaret(): Range {
         const { model } = this.props;
         let caret = this.getCaret();
@@ -698,11 +701,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // Select left side of word
         range.expandForwardsWhile((index, offset, part) => {
-            return part.text[offset] !== " " && part.text[offset] !== "+" && (
-                part.type === Type.Plain ||
-                part.type === Type.PillCandidate ||
-                part.type === Type.Command
-            );
+            return this.isEndOfWord(offset, part);
         });
 
         // Reset caret position
@@ -711,11 +710,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // Select right side of word
         range.expandBackwardsWhile((index, offset, part) => {
-            return part.text[offset] !== " " && part.text[offset] !== "+" && (
-                part.type === Type.Plain ||
-                part.type === Type.PillCandidate ||
-                part.type === Type.Command
-            );
+            return this.isEndOfWord(offset, part);
         });
 
         return range;
