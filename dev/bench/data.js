@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635545805511,
+  "lastUpdate": 1635559407685,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36092,6 +36092,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4119.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "71244f3b3c6f83c7fbb3e10ba2b8408bc1b3d06c",
+          "message": "Add more checkbox styles (#7058)\n\nAdd a \"kind\" param for StyledCheckbox, allowing designers to choose different styles of checkbox as needed.  In addition to the preexisting default kind (now called Solid), there's an Outline kind with a green checkmark and a transparent fill.  This is used in the device trust view, since the default checkbox style looks too much like the green \"verified\" shield and it's awkward to have those next to each other.",
+          "timestamp": "2021-10-29T21:57:32-04:00",
+          "tree_id": "e2c615616b6435168e24f5a501d3d06fab1a31c6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/71244f3b3c6f83c7fbb3e10ba2b8408bc1b3d06c"
+        },
+        "date": 1635559405020,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4655.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 609,
             "unit": "ms",
             "extra": "type: measure"
           }
