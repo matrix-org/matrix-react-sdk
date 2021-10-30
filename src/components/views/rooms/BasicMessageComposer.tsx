@@ -584,7 +584,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
             const range = model.startRange(position);
             range.expandBackwardsWhile((index, offset, part) => {
-                return this.isEndOfWord(offset, part);
+                return this.isNotEndOfWord(offset, part);
             });
             const { partCreator } = model;
             // await for auto-complete to be open
@@ -685,7 +685,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         return caretPosition;
     }
 
-    private isEndOfWord(offset: number, part: Part): boolean {
+    private isNotEndOfWord(offset: number, part: Part): boolean {
         return part.text[offset] !== " " && part.text[offset] !== "+" && (
             part.type === Type.Plain ||
             part.type === Type.PillCandidate ||
@@ -701,7 +701,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // Select left side of word
         range.expandForwardsWhile((index, offset, part) => {
-            return this.isEndOfWord(offset, part);
+            return this.isNotEndOfWord(offset, part);
         });
 
         // Reset caret position
@@ -710,7 +710,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // Select right side of word
         range.expandBackwardsWhile((index, offset, part) => {
-            return this.isEndOfWord(offset, part);
+            return this.isNotEndOfWord(offset, part);
         });
 
         return range;
