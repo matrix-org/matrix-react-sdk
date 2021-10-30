@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635559407685,
+  "lastUpdate": 1635559492676,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36128,6 +36128,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 609,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d61a83a7b911c91767a7eb0b8ff476c9358a6603",
+          "message": "Remove all directional quotation marks in the codebase (#7059)",
+          "timestamp": "2021-10-29T21:59:21-04:00",
+          "tree_id": "c89c98d0e4f6fa1f9bbfcc817183224cd1e2a0db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d61a83a7b911c91767a7eb0b8ff476c9358a6603"
+        },
+        "date": 1635559489835,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5269.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 962.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1768,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4430.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
