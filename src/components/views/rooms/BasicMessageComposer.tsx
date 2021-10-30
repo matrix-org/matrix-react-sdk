@@ -65,8 +65,8 @@ const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
     ["<", ">"],
 ]);
 
-function ctrlShortcutLabel(key: string, useShift?: boolean, useAlt?: boolean): string {
-    return (IS_MAC ? "⌘" : "Ctrl") + (useShift ? "+Shift" : "") + (useAlt ? "+Alt" : "") + "+" + key;
+function ctrlShortcutLabel(key: string, needsShift = false, needsAlt = false): string {
+    return (IS_MAC ? "⌘" : "Ctrl") + (needsShift ? "+Shift") + (needsAlt ? "+Alt" : "") + "+" + key;
 }
 
 function cloneSelection(selection: Selection): Partial<Selection> {
