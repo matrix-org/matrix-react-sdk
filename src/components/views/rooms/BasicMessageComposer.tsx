@@ -28,6 +28,7 @@ import {
     formatRangeAsCode,
     toggleInlineFormat,
     replaceRangeAndMoveCaret,
+    formatRangeAsLink,
 } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
@@ -49,8 +50,11 @@ import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 // matches emoticons which follow the start of a line or whitespace
-const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
+const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
+export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
 
 const IS_MAC = navigator.platform.indexOf("Mac") !== -1;
 
@@ -161,7 +165,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
     }
 
-    private replaceEmoticon = (caretPosition: DocumentPosition): number => {
+    public replaceEmoticon(caretPosition: DocumentPosition, regex: RegExp): number {
         const { model } = this.props;
         const range = model.startRange(caretPosition);
         // expand range max 8 characters backwards from caretPosition,
@@ -170,9 +174,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         range.expandBackwardsWhile((index, offset) => {
             const part = model.parts[index];
             n -= 1;
-            return n >= 0 && (part.type === Type.Plain || part.type === Type.PillCandidate);
+            return n >= 0 && [Type.Plain, Type.PillCandidate, Type.Newline].includes(part.type);
         });
-        const emoticonMatch = REGEX_EMOTICON_WHITESPACE.exec(range.text);
+        const emoticonMatch = regex.exec(range.text);
         if (emoticonMatch) {
             const query = emoticonMatch[1].replace("-", "");
             // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
@@ -180,18 +184,25 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
             if (data) {
                 const { partCreator } = model;
-                const hasPrecedingSpace = emoticonMatch[0][0] === " ";
+                const firstMatch = emoticonMatch[0];
+                const moveStart = firstMatch[0] === " " ? 1 : 0;
+
                 // we need the range to only comprise of the emoticon
                 // because we'll replace the whole range with an emoji,
                 // so move the start forward to the start of the emoticon.
                 // Take + 1 because index is reported without the possible preceding space.
-                range.moveStart(emoticonMatch.index + (hasPrecedingSpace ? 1 : 0));
+                range.moveStartForwards(emoticonMatch.index + moveStart);
+                // If the end is a trailing space/newline move end backwards, so that we don't replace it
+                if (["\n", " "].includes(firstMatch[firstMatch.length - 1])) {
+                    range.moveEndBackwards(1);
+                }
+
                 // this returns the amount of added/removed characters during the replace
                 // so the caret position can be adjusted.
-                return range.replace([partCreator.plain(data.unicode + " ")]);
+                return range.replace([partCreator.plain(data.unicode)]);
             }
         }
-    };
+    }
 
     private updateEditorState = (selection: Caret, inputType?: string, diff?: IDiff): void => {
         renderModel(this.editorRef.current, this.props.model);
@@ -199,7 +210,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             try {
                 setSelection(this.editorRef.current, this.props.model, selection);
             } catch (err) {
-                console.error(err);
+                logger.error(err);
             }
             // if caret selection is a range, take the end position
             const position = selection instanceof Range ? selection.end : selection;
@@ -467,6 +478,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             switch (autocompleteAction) {
                 case AutocompleteAction.ForceComplete:
                 case AutocompleteAction.Complete:
+                    this.historyManager.ensureLastChangesPushed(this.props.model);
+                    this.modifiedFlag = true;
                     autoComplete.confirmCompletion();
                     handled = true;
                     break;
@@ -588,7 +601,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.setState({ showVisualBell: true });
             }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     }
 
@@ -607,8 +620,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     };
 
     private configureEmoticonAutoReplace = (): void => {
-        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
-        this.props.model.setTransformCallback(shouldReplace ? this.replaceEmoticon : null);
+        this.props.model.setTransformCallback(this.transform);
     };
 
     private configureShouldShowPillAvatar = (): void => {
@@ -619,6 +631,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private surroundWithSettingChanged = () => {
         const surroundWith = SettingsStore.getValue("MessageComposerInput.surroundWith");
         this.setState({ surroundWith });
+    };
+
+    private transform = (documentPosition: DocumentPosition): void => {
+        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
+        if (shouldReplace) this.replaceEmoticon(documentPosition, REGEX_EMOTICON_WHITESPACE);
     };
 
     componentWillUnmount() {
@@ -691,6 +708,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 break;
             case Formatting.Quote:
                 formatRangeAsQuote(range);
+                break;
+            case Formatting.InsertLink:
+                formatRangeAsLink(range);
                 break;
         }
     };

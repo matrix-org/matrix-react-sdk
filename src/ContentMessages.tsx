@@ -18,6 +18,9 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
+import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import dis from './dispatcher/dispatcher';
 import * as sdk from './index';
@@ -39,6 +42,10 @@ import {
 import { IUpload } from "./models/IUpload";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { BlurhashEncoder } from "./BlurhashEncoder";
+import SettingsStore from "./settings/SettingsStore";
+import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -303,7 +310,7 @@ function loadVideoElement(videoFile): Promise<HTMLVideoElement> {
 function infoForVideoFile(matrixClient, roomId, videoFile) {
     const thumbnailType = "image/jpeg";
 
-    let videoInfo;
+    let videoInfo: Partial<IMediaEventInfo>;
     return loadVideoElement(videoFile).then((video) => {
         return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
     }).then((result) => {
@@ -352,49 +359,48 @@ export function uploadFile(
     matrixClient: MatrixClient,
     roomId: string,
     file: File | Blob,
-    progressHandler?: any, // TODO: Types
-): IAbortablePromise<{url?: string, file?: any}> { // TODO: Types
+    progressHandler?: IUploadOpts["progressHandler"],
+): IAbortablePromise<{ url?: string, file?: IEncryptedFile }> {
     let canceled = false;
     if (matrixClient.isRoomEncrypted(roomId)) {
         // If the room is encrypted then encrypt the file before uploading it.
         // First read the file into memory.
-        let uploadPromise;
-        let encryptInfo;
+        let uploadPromise: IAbortablePromise<string>;
         const prom = readFileAsArrayBuffer(file).then(function(data) {
             if (canceled) throw new UploadCanceledError();
             // Then encrypt the file.
             return encrypt.encryptAttachment(data);
         }).then(function(encryptResult) {
             if (canceled) throw new UploadCanceledError();
-            // Record the information needed to decrypt the attachment.
-            encryptInfo = encryptResult.info;
+
             // Pass the encrypted data as a Blob to the uploader.
             const blob = new Blob([encryptResult.data]);
             uploadPromise = matrixClient.uploadContent(blob, {
-                progressHandler: progressHandler,
+                progressHandler,
                 includeFilename: false,
             });
-            return uploadPromise;
-        }).then(function(url) {
-            if (canceled) throw new UploadCanceledError();
-            // If the attachment is encrypted then bundle the URL along
-            // with the information needed to decrypt the attachment and
-            // add it under a file key.
-            encryptInfo.url = url;
-            if (file.type) {
-                encryptInfo.mimetype = file.type;
-            }
-            return { "file": encryptInfo };
-        }) as IAbortablePromise<{ file: any }>;
+
+            return uploadPromise.then(url => {
+                if (canceled) throw new UploadCanceledError();
+
+                // If the attachment is encrypted then bundle the URL along
+                // with the information needed to decrypt the attachment and
+                // add it under a file key.
+                return {
+                    file: {
+                        ...encryptResult.info,
+                        url,
+                    },
+                };
+            });
+        }) as IAbortablePromise<{ file: IEncryptedFile }>;
         prom.abort = () => {
             canceled = true;
             if (uploadPromise) matrixClient.cancelUpload(uploadPromise);
         };
         return prom;
     } else {
-        const basePromise = matrixClient.uploadContent(file, {
-            progressHandler: progressHandler,
-        });
+        const basePromise = matrixClient.uploadContent(file, { progressHandler });
         const promise1 = basePromise.then(function(url) {
             if (canceled) throw new UploadCanceledError();
             // If the attachment isn't encrypted then include the URL directly.
@@ -415,7 +421,7 @@ export default class ContentMessages {
     sendStickerContentToRoom(url: string, roomId: string, info: IImageInfo, text: string, matrixClient: MatrixClient) {
         const startTime = CountlyAnalytics.getTimestamp();
         const prom = matrixClient.sendStickerMessage(roomId, url, info, text).catch((e) => {
-            console.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
+            logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
         CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, false, { msgtype: "m.sticker" });
@@ -539,6 +545,10 @@ export default class ContentMessages {
             msgtype: "", // set later
         };
 
+        if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
+            decorateStartSendingTime(content);
+        }
+
         // if we have a mime type for the file, add it to the message metadata
         if (file.type) {
             content.info.mimetype = file.type;
@@ -546,29 +556,29 @@ export default class ContentMessages {
 
         const prom = new Promise<void>((resolve) => {
             if (file.type.indexOf('image/') === 0) {
-                content.msgtype = 'm.image';
+                content.msgtype = MsgType.Image;
                 infoForImageFile(matrixClient, roomId, file).then((imageInfo) => {
                     Object.assign(content.info, imageInfo);
                     resolve();
                 }, (e) => {
-                    console.error(e);
-                    content.msgtype = 'm.file';
+                    logger.error(e);
+                    content.msgtype = MsgType.File;
                     resolve();
                 });
             } else if (file.type.indexOf('audio/') === 0) {
-                content.msgtype = 'm.audio';
+                content.msgtype = MsgType.Audio;
                 resolve();
             } else if (file.type.indexOf('video/') === 0) {
-                content.msgtype = 'm.video';
+                content.msgtype = MsgType.Video;
                 infoForVideoFile(matrixClient, roomId, file).then((videoInfo) => {
                     Object.assign(content.info, videoInfo);
                     resolve();
                 }, (e) => {
-                    content.msgtype = 'm.file';
+                    content.msgtype = MsgType.File;
                     resolve();
                 });
             } else {
-                content.msgtype = 'm.file';
+                content.msgtype = MsgType.File;
                 resolve();
             }
         }) as IAbortablePromise<void>;
@@ -614,6 +624,11 @@ export default class ContentMessages {
         }).then(function() {
             if (upload.canceled) throw new UploadCanceledError();
             const prom = matrixClient.sendMessage(roomId, content);
+            if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
+                prom.then(resp => {
+                    sendRoundTripMetric(matrixClient, roomId, resp.event_id);
+                });
+            }
             CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, false, content);
             return prom;
         }, function(err) {
@@ -667,13 +682,13 @@ export default class ContentMessages {
     private ensureMediaConfigFetched(matrixClient: MatrixClient) {
         if (this.mediaConfig !== null) return;
 
-        console.log("[Media Config] Fetching");
+        logger.log("[Media Config] Fetching");
         return matrixClient.getMediaConfig().then((config) => {
-            console.log("[Media Config] Fetched config:", config);
+            logger.log("[Media Config] Fetched config:", config);
             return config;
         }).catch(() => {
             // Media repo can't or won't report limits, so provide an empty object (no limits).
-            console.log("[Media Config] Could not fetch config, so not limiting uploads.");
+            logger.log("[Media Config] Could not fetch config, so not limiting uploads.");
             return {};
         }).then((config) => {
             this.mediaConfig = config;

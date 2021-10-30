@@ -21,6 +21,8 @@ import dis from "./dispatcher/dispatcher";
 import Timer from './utils/Timer';
 import { ActionPayload } from "./dispatcher/payloads";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 // Time in ms after that a user is considered as unavailable/away
 const UNAVAILABLE_TIME_MS = 3 * 60 * 1000; // 3 mins
 
@@ -99,9 +101,9 @@ class Presence {
 
         try {
             await MatrixClientPeg.get().setPresence({ presence: this.state });
-            console.info("Presence:", newState);
+            logger.info("Presence:", newState);
         } catch (err) {
-            console.error("Failed to set presence:", err);
+            logger.error("Failed to set presence:", err);
             this.state = oldState;
         }
     }

@@ -32,7 +32,6 @@ limitations under the License.
     position: relative;
 }
 
-
 @keyframes mx_RoomView_fileDropTarget_animation {
     from {
         opacity: 0;
@@ -89,7 +88,6 @@ limitations under the License.
     margin: 0px auto;
 
     overflow: auto;
-    flex: 0 0 auto;
 }
 
 .mx_RoomView_auxPanel_fullHeight {
@@ -112,7 +110,6 @@ limitations under the License.
 .mx_RoomView_auxPanel_apps {
     max-width: 1920px !important;
 }
-
 
 .mx_RoomView .mx_MainSplit {
     flex: 1 1 0;

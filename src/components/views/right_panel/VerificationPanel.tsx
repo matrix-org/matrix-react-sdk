@@ -28,44 +28,30 @@ import { SAS } from "matrix-js-sdk/src/crypto/verification/SAS";
 import VerificationQRCode from "../elements/crypto/VerificationQRCode";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
-import E2EIcon from "../rooms/E2EIcon";
-import {
-    PHASE_READY,
-    PHASE_DONE,
-    PHASE_STARTED,
-    PHASE_CANCELLED,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import E2EIcon, { E2EState } from "../rooms/E2EIcon";
+import { Phase } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import Spinner from "../elements/Spinner";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from "../elements/AccessibleButton";
 import VerificationShowSas from "../verification/VerificationShowSas";
 
-// XXX: Should be defined in matrix-js-sdk
-enum VerificationPhase {
-    PHASE_UNSENT,
-    PHASE_REQUESTED,
-    PHASE_READY,
-    PHASE_DONE,
-    PHASE_STARTED,
-    PHASE_CANCELLED,
-}
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     layout: string;
     request: VerificationRequest;
     member: RoomMember | User;
-    phase: VerificationPhase;
+    phase: Phase;
     onClose: () => void;
     isRoomEncrypted: boolean;
     inDialog: boolean;
-    key: number;
 }
 
 interface IState {
-    sasEvent?: SAS;
+    sasEvent?: SAS["sasEvent"];
     emojiButtonClicked?: boolean;
     reciprocateButtonClicked?: boolean;
-    reciprocateQREvent?: ReciprocateQRCode;
+    reciprocateQREvent?: ReciprocateQRCode["reciprocateQREvent"];
 }
 
 @replaceableComponent("views.right_panel.VerificationPanel")
@@ -205,7 +191,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             // Element Web doesn't support scanning yet, so assume here we're the client being scanned.
             body = <React.Fragment>
                 <p>{ description }</p>
-                <E2EIcon isUser={true} status="verified" size={128} hideTooltip={true} />
+                <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
                 <div className="mx_VerificationPanel_reciprocateButtons">
                     <AccessibleButton
                         kind="danger"
@@ -240,7 +226,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (this.props.isRoomEncrypted) {
                 text = _t("Verify all users in a room to ensure it's secure.");
             } else {
-                text = _t("In encrypted rooms, verify all users to ensure it’s secure.");
+                text = _t("In encrypted rooms, verify all users to ensure it's secure.");
             }
         }
 
@@ -250,7 +236,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (!device) {
                 // This can happen if the device is logged out while we're still showing verification
                 // UI for it.
-                console.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
+                logger.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
                 description = _t("You've successfully verified your device!");
             } else {
                 description = _t("You've successfully verified %(deviceName)s (%(deviceId)s)!", {
@@ -266,9 +252,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         return (
             <div className="mx_UserInfo_container mx_VerificationPanel_verified_section">
-                <h3>{ _t("Verified") }</h3>
                 <p>{ description }</p>
-                <E2EIcon isUser={true} status="verified" size={128} hideTooltip={true} />
+                <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
                 { text ? <p>{ text }</p> : null }
                 <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={this.props.onClose}>
                     { _t("Got it") }
@@ -321,9 +306,9 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const displayName = (member as User).displayName || (member as RoomMember).name || member.userId;
 
         switch (phase) {
-            case PHASE_READY:
+            case Phase.Ready:
                 return this.renderQRPhase();
-            case PHASE_STARTED:
+            case Phase.Started:
                 switch (request.chosenMethod) {
                     case verificationMethods.RECIPROCATE_QR_CODE:
                         return this.renderQRReciprocatePhase();
@@ -339,19 +324,18 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                                 isSelf={request.isSelfVerification}
                             /> : <Spinner />;
                         return <div className="mx_UserInfo_container">
-                            <h3>{ _t("Compare emoji") }</h3>
                             { emojis }
                         </div>;
                     }
                     default:
                         return null;
                 }
-            case PHASE_DONE:
+            case Phase.Done:
                 return this.renderVerifiedPhase();
-            case PHASE_CANCELLED:
+            case Phase.Cancelled:
                 return this.renderCancelledPhase();
         }
-        console.error("VerificationPanel unhandled phase:", phase);
+        logger.error("VerificationPanel unhandled phase:", phase);
         return null;
     }
 
@@ -361,7 +345,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         try {
             await verifier.verify();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     };
 
@@ -375,7 +359,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
     private updateVerifierState = () => {
         const { request } = this.props;
-        const { sasEvent, reciprocateQREvent } = request.verifier;
+        const sasEvent = (request.verifier as SAS).sasEvent;
+        const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
         request.verifier.off('show_sas', this.updateVerifierState);
         request.verifier.off('show_reciprocate_qr', this.updateVerifierState);
         this.setState({ sasEvent, reciprocateQREvent });
@@ -393,7 +378,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 // but that's ok as verify should return the same promise.
                 await request.verifier.verify();
             } catch (err) {
-                console.error("error verify", err);
+                logger.error("error verify", err);
             }
         }
     };
@@ -402,7 +387,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const { request } = this.props;
         request.on("change", this.onRequestChange);
         if (request.verifier) {
-            const { sasEvent, reciprocateQREvent } = request.verifier;
+            const sasEvent = (request.verifier as SAS).sasEvent;
+            const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
             this.setState({ sasEvent, reciprocateQREvent });
         }
         this.onRequestChange();

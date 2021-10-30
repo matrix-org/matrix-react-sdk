@@ -29,6 +29,8 @@ import getEntryComponentForLoginType, { IStageComponent } from '../views/auth/In
 import Spinner from "../views/elements/Spinner";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 export const ERROR_USER_CANCELLED = new Error("User cancelled auth session");
 
 interface IProps {
@@ -84,7 +86,7 @@ interface IState {
     stageState?: IStageStatus;
     busy: boolean;
     errorText?: string;
-    stageErrorText?: string;
+    errorCode?: string;
     submitButtonEnabled: boolean;
 }
 
@@ -103,7 +105,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
             authStage: null,
             busy: false,
             errorText: null,
-            stageErrorText: null,
+            errorCode: null,
             submitButtonEnabled: false,
         };
 
@@ -137,7 +139,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
             this.props.onAuthFinished(true, result, extra);
         }).catch((error) => {
             this.props.onAuthFinished(false, error);
-            console.error("Error during user-interactive auth:", error);
+            logger.error("Error during user-interactive auth:", error);
             if (this.unmounted) {
                 return;
             }
@@ -145,6 +147,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
             const msg = error.message || error.toString();
             this.setState({
                 errorText: msg,
+                errorCode: error.errcode,
             });
         });
     }
@@ -186,6 +189,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
             authStage: stageType,
             stageState: stageState,
             errorText: stageState.error,
+            errorCode: stageState.errcode,
         }, () => {
             if (oldStage !== stageType) {
                 this.setFocus();
@@ -208,7 +212,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
             this.setState({
                 busy: true,
                 errorText: null,
-                stageErrorText: null,
+                errorCode: null,
             });
         }
         // The JS SDK eagerly reports itself as "not busy" right after any
@@ -235,7 +239,15 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
         this.props.onAuthFinished(false, ERROR_USER_CANCELLED);
     };
 
-    private renderCurrentStage(): JSX.Element {
+    private onAuthStageFailed = (e: Error): void => {
+        this.props.onAuthFinished(false, e);
+    };
+
+    private setEmailSid = (sid: string): void => {
+        this.authLogic.setEmailSid(sid);
+    };
+
+    render() {
         const stage = this.state.authStage;
         if (!stage) {
             if (this.state.busy) {
@@ -255,7 +267,8 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
                 clientSecret={this.authLogic.getClientSecret()}
                 stageParams={this.authLogic.getStageParams(stage)}
                 submitAuthDict={this.submitAuthDict}
-                errorText={this.state.stageErrorText}
+                errorText={this.state.errorText}
+                errorCode={this.state.errorCode}
                 busy={this.state.busy}
                 inputs={this.props.inputs}
                 stageState={this.state.stageState}
@@ -267,34 +280,6 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
                 continueKind={this.props.continueKind}
                 onCancel={this.onStageCancel}
             />
-        );
-    }
-
-    private onAuthStageFailed = (e: Error): void => {
-        this.props.onAuthFinished(false, e);
-    };
-
-    private setEmailSid = (sid: string): void => {
-        this.authLogic.setEmailSid(sid);
-    };
-
-    render() {
-        let error = null;
-        if (this.state.errorText) {
-            error = (
-                <div className="error">
-                    { this.state.errorText }
-                </div>
-            );
-        }
-
-        return (
-            <div>
-                <div>
-                    { this.renderCurrentStage() }
-                    { error }
-                </div>
-            </div>
         );
     }
 }

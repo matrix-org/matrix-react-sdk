@@ -20,7 +20,6 @@ import React, { ReactNode } from "react";
 import { IUpload, RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import classNames from "classnames";
 import LiveRecordingWaveform from "../audio_messages/LiveRecordingWaveform";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import LiveRecordingClock from "../audio_messages/LiveRecordingClock";
@@ -36,6 +35,8 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     room: Room;
@@ -76,7 +77,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         try {
             upload = await this.state.recorder.upload(this.props.room.roomId);
         } catch (e) {
-            console.error("Error uploading voice message:", e);
+            logger.error("Error uploading voice message:", e);
 
             // Flag error and move on. The recording phase will be reset by the upload function.
             this.setState({ didUploadFail: true });
@@ -117,7 +118,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 "org.matrix.msc3245.voice": {}, // No content, this is a rendering hint
             });
         } catch (e) {
-            console.error("Error sending voice message:", e);
+            logger.error("Error sending voice message:", e);
 
             // Voice message should be in the timeline at this point, so let other things take care
             // of error handling. We also shouldn't need the recording anymore, so fall through to
@@ -137,7 +138,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         await this.disposeRecording();
     };
 
-    private onRecordStartEndClick = async () => {
+    public onRecordStartEndClick = async () => {
         if (this.state.recorder) {
             await this.state.recorder.stop();
             return;
@@ -172,14 +173,14 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             }
             // else we probably have a device that is good enough
         } catch (e) {
-            console.error("Error getting devices: ", e);
+            logger.error("Error getting devices: ", e);
             accessError();
             return;
         }
 
         try {
             // stop any noises which might be happening
-            await PlaybackManager.instance.playOnly(null);
+            await PlaybackManager.instance.pauseAllExcept(null);
 
             const recorder = VoiceRecordingStore.instance.startRecording();
             await recorder.start();
@@ -192,7 +193,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
             this.setState({ recorder, recordingPhase: RecordingState.Started });
         } catch (e) {
-            console.error("Error starting recording: ", e);
+            logger.error("Error starting recording: ", e);
             accessError();
 
             // noinspection ES6MissingAwait - if this goes wrong we don't want it to affect the call stack
@@ -215,27 +216,23 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
     }
 
     public render(): ReactNode {
-        let stopOrRecordBtn;
-        let deleteButton;
-        if (!this.state.recordingPhase || this.state.recordingPhase === RecordingState.Started) {
-            const classes = classNames({
-                'mx_MessageComposer_button': !this.state.recorder,
-                'mx_MessageComposer_voiceMessage': !this.state.recorder,
-                'mx_VoiceRecordComposerTile_stop': this.state.recorder?.isRecording,
-            });
+        if (!this.state.recordingPhase) return null;
 
+        let stopBtn;
+        let deleteButton;
+        if (this.state.recordingPhase === RecordingState.Started) {
             let tooltip = _t("Send voice message");
             if (!!this.state.recorder) {
                 tooltip = _t("Stop recording");
             }
 
-            stopOrRecordBtn = <AccessibleTooltipButton
-                className={classes}
+            stopBtn = <AccessibleTooltipButton
+                className="mx_VoiceRecordComposerTile_stop"
                 onClick={this.onRecordStartEndClick}
                 title={tooltip}
             />;
             if (this.state.recorder && !this.state.recorder?.isRecording) {
-                stopOrRecordBtn = null;
+                stopBtn = null;
             }
         }
 
@@ -264,13 +261,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             </span>;
         }
 
-        // The record button (mic icon) is meant to be on the right edge, but we also want the
-        // stop button to be left of the waveform area. Luckily, none of the surrounding UI is
-        // rendered when we're not recording, so the record button ends up in the correct spot.
         return (<>
             { uploadIndicator }
             { deleteButton }
-            { stopOrRecordBtn }
+            { stopBtn }
             { this.renderWaveformArea() }
         </>);
     }

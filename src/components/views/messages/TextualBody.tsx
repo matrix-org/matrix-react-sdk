@@ -27,7 +27,7 @@ import { _t } from '../../../languageHandler';
 import * as ContextMenu from '../../structures/ContextMenu';
 import { toRightOf } from '../../structures/ContextMenu';
 import SettingsStore from "../../../settings/SettingsStore";
-import ReplyThread from "../elements/ReplyThread";
+import ReplyChain from "../elements/ReplyChain";
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { isPermalinkHost } from "../../../utils/permalinks/Permalinks";
@@ -44,6 +44,9 @@ import MessageEditHistoryDialog from "../dialogs/MessageEditHistoryDialog";
 import EditMessageComposer from '../rooms/EditMessageComposer';
 import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
 import { IBodyProps } from "./IBodyProps";
+import RoomContext from "../../../contexts/RoomContext";
+
+const MAX_HIGHLIGHT_LENGTH = 4096;
 
 interface IState {
     // the URLs (if any) to be previewed with a LinkPreviewWidget inside this TextualBody.
@@ -59,6 +62,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
     private unmounted = false;
     private pills: Element[] = [];
+
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     constructor(props) {
         super(props);
@@ -117,9 +123,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 setTimeout(() => {
                     if (this.unmounted) return;
                     for (let i = 0; i < codes.length; i++) {
-                        // If the code already has the hljs class we want to skip this.
-                        // This happens after the codeblock was edited.
-                        if (codes[i].className.includes("hljs")) continue;
                         this.highlightCode(codes[i]);
                     }
                 }, 10);
@@ -138,6 +141,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         // If it's less than 30% we don't add the expansion button.
         // We also round the number as it sometimes can be 29.99...
         const percentageOfViewport = Math.round(pre.offsetHeight / UIStore.instance.windowHeight * 100);
+        // TODO: additionally show the button if it's an expanded quoted message
         if (percentageOfViewport < 30) return;
 
         const button = document.createElement("span");
@@ -211,30 +215,57 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     private addLineNumbers(pre: HTMLPreElement): void {
         // Calculate number of lines in pre
         const number = pre.innerHTML.replace(/\n(<\/code>)?$/, "").split(/\n/).length;
-        pre.innerHTML = '<span class="mx_EventTile_lineNumbers"></span>' + pre.innerHTML + '<span></span>';
-        const lineNumbers = pre.getElementsByClassName("mx_EventTile_lineNumbers")[0];
+        const lineNumbers = document.createElement('span');
+        lineNumbers.className = 'mx_EventTile_lineNumbers';
         // Iterate through lines starting with 1 (number of the first line is 1)
         for (let i = 1; i <= number; i++) {
-            lineNumbers.innerHTML += '<span class="mx_EventTile_lineNumber">' + i + '</span>';
+            const s = document.createElement('span');
+            s.textContent = i.toString();
+            lineNumbers.appendChild(s);
         }
+        pre.prepend(lineNumbers);
+        pre.append(document.createElement('span'));
     }
 
     private highlightCode(code: HTMLElement): void {
-        // Auto-detect language only if enabled and only for codeblocks
-        if (
+        if (code.textContent.length > MAX_HIGHLIGHT_LENGTH) {
+            console.log(
+                "Code block is bigger than highlight limit (" +
+                code.textContent.length + " > " + MAX_HIGHLIGHT_LENGTH +
+                "): not highlighting",
+            );
+            return;
+        }
+
+        let advertisedLang;
+        for (const cl of code.className.split(/\s+/)) {
+            if (cl.startsWith('language-')) {
+                const maybeLang = cl.split('-', 2)[1];
+                if (highlight.getLanguage(maybeLang)) {
+                    advertisedLang = maybeLang;
+                    break;
+                }
+            }
+        }
+
+        if (advertisedLang) {
+            // If the code says what language it is, highlight it in that language
+            // We don't use highlightElement here because we can't force language detection
+            // off. It should use the one we've found in the CSS class but we'd rather pass
+            // it in explicitly to make sure.
+            code.innerHTML = highlight.highlight(advertisedLang, code.textContent).value;
+        } else if (
             SettingsStore.getValue("enableSyntaxHighlightLanguageDetection") &&
             code.parentElement instanceof HTMLPreElement
         ) {
-            highlight.highlightBlock(code);
-        } else {
-            // Only syntax highlight if there's a class starting with language-
-            const classes = code.className.split(/\s+/).filter(function(cl) {
-                return cl.startsWith('language-') && !cl.startsWith('language-_');
-            });
-
-            if (classes.length != 0) {
-                highlight.highlightBlock(code);
-            }
+            // User has language detection enabled and the code is within a pre
+            // we only auto-highlight if the code block is in a pre), so highlight
+            // the block with auto-highlighting enabled.
+            // We pass highlightjs the text to highlight rather than letting it
+            // work on the DOM with highlightElement because that also adds CSS
+            // classes to the pre/code element that we don't want (the CSS
+            // conflicts with our own).
+            code.innerHTML = highlight.highlightAuto(code.textContent).value;
         }
     }
 
@@ -379,6 +410,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: mxEvent.getSender(),
+            timelineRenderingType: this.context.timelineRenderingType,
         });
     };
 
@@ -478,7 +510,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const content = mxEvent.getContent();
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
-        const stripReply = !mxEvent.replacingEvent() && !!ReplyThread.getParentEventId(mxEvent);
+        const stripReply = !mxEvent.replacingEvent() && !!ReplyChain.getParentEventId(mxEvent);
         let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
             disableBigEmoji: content.msgtype === MsgType.Emote
                 || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),

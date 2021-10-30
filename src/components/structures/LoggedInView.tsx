@@ -69,6 +69,7 @@ import classNames from 'classnames';
 import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
+import LegacyCommunityPreview from "./LegacyCommunityPreview";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -107,6 +108,7 @@ interface IProps {
     currentGroupIsNew?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
+    forceTimeline?: boolean; // see props on MatrixChat
 }
 
 interface IUsageLimit {
@@ -610,6 +612,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     key={this.props.currentRoomId || 'roomview'}
                     resizeNotifier={this.props.resizeNotifier}
                     justCreatedOpts={this.props.roomJustCreatedOpts}
+                    forceTimeline={this.props.forceTimeline}
                 />;
                 break;
 
@@ -629,11 +632,15 @@ class LoggedInView extends React.Component<IProps, IState> {
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
                 break;
             case PageTypes.GroupView:
-                pageElement = <GroupView
-                    groupId={this.props.currentGroupId}
-                    isNew={this.props.currentGroupIsNew}
-                    resizeNotifier={this.props.resizeNotifier}
-                />;
+                if (SpaceStore.spacesEnabled) {
+                    pageElement = <LegacyCommunityPreview groupId={this.props.currentGroupId} />;
+                } else {
+                    pageElement = <GroupView
+                        groupId={this.props.currentGroupId}
+                        isNew={this.props.currentGroupIsNew}
+                        resizeNotifier={this.props.resizeNotifier}
+                    />;
+                }
                 break;
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
+ * Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,6 +55,9 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
 import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
+import { arrayFastClone } from "../../utils/arrays";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 // TODO: Destroy all of this code
 
@@ -66,7 +69,7 @@ interface IAppTileProps {
     userId: string;
     creatorUserId: string;
     waitForIframeLoad: boolean;
-    whitelistCapabilities: string[];
+    whitelistCapabilities?: string[];
     userWidget: boolean;
 }
 
@@ -132,7 +135,7 @@ export class ElementWidget extends Widget {
         };
     }
 
-    public getCompleteUrl(params: ITemplateParams, asPopout=false): string {
+    public getCompleteUrl(params: ITemplateParams, asPopout = false): string {
         return runTemplate(asPopout ? this.popoutTemplateUrl : this.templateUrl, {
             ...this.rawDefinition,
             data: this.rawData,
@@ -146,6 +149,7 @@ export class StopGapWidget extends EventEmitter {
     private scalarToken: string;
     private roomId?: string;
     private kind: WidgetKind;
+    private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
 
     constructor(private appTileProps: IAppTileProps) {
         super();
@@ -258,11 +262,12 @@ export class StopGapWidget extends EventEmitter {
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
         this.messaging.on("ready", () => this.emit("ready"));
+        this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
         WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.messaging);
 
         if (!this.appTileProps.userWidget && this.appTileProps.room) {
-            ActiveWidgetStore.setRoomId(this.mockWidget.id, this.appTileProps.room.roomId);
+            ActiveWidgetStore.instance.setRoomId(this.mockWidget.id, this.appTileProps.room.roomId);
         }
 
         // Always attach a handler for ViewRoom, but permission check it internally
@@ -294,6 +299,17 @@ export class StopGapWidget extends EventEmitter {
             this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
         });
 
+        // Populate the map of "read up to" events for this widget with the current event in every room.
+        // This is a bit inefficient, but should be okay. We do this for all rooms in case the widget
+        // requests timeline capabilities in other rooms down the road. It's just easier to manage here.
+        for (const room of MatrixClientPeg.get().getRooms()) {
+            // Timelines are most recent last
+            const events = room.getLiveTimeline()?.getEvents() || [];
+            const roomEvent = events[events.length - 1];
+            if (!roomEvent) continue; // force later code to think the room is fresh
+            this.readUpToMap[room.roomId] = roomEvent.getId();
+        }
+
         // Attach listeners for feeding events - the underlying widget classes handle permissions for us
         MatrixClientPeg.get().on('event', this.onEvent);
         MatrixClientPeg.get().on('Event.decrypted', this.onEventDecrypted);
@@ -304,7 +320,7 @@ export class StopGapWidget extends EventEmitter {
                     if (WidgetType.JITSI.matches(this.mockWidget.type)) {
                         CountlyAnalytics.instance.trackJoinCall(this.appTileProps.room.roomId, true, true);
                     }
-                    ActiveWidgetStore.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
+                    ActiveWidgetStore.instance.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
                     ev.preventDefault();
                     this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
                 }
@@ -386,18 +402,18 @@ export class StopGapWidget extends EventEmitter {
             }
         } catch (e) {
             // All errors are non-fatal
-            console.error("Error preparing widget communications: ", e);
+            logger.error("Error preparing widget communications: ", e);
         }
     }
 
     public stop(opts = { forceDestroy: false }) {
-        if (!opts?.forceDestroy && ActiveWidgetStore.getPersistentWidgetId() === this.mockWidget.id) {
-            console.log("Skipping destroy - persistent widget");
+        if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {
+            logger.log("Skipping destroy - persistent widget");
             return;
         }
         if (!this.started) return;
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget);
-        ActiveWidgetStore.delRoomId(this.mockWidget.id);
+        ActiveWidgetStore.instance.delRoomId(this.mockWidget.id);
 
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().off('event', this.onEvent);
@@ -408,22 +424,57 @@ export class StopGapWidget extends EventEmitter {
     private onEvent = (ev: MatrixEvent) => {
         MatrixClientPeg.get().decryptEventIfNeeded(ev);
         if (ev.isBeingDecrypted() || ev.isDecryptionFailure()) return;
-        if (ev.getRoomId() !== this.eventListenerRoomId) return;
         this.feedEvent(ev);
     };
 
     private onEventDecrypted = (ev: MatrixEvent) => {
         if (ev.isDecryptionFailure()) return;
-        if (ev.getRoomId() !== this.eventListenerRoomId) return;
         this.feedEvent(ev);
     };
 
     private feedEvent(ev: MatrixEvent) {
         if (!this.messaging) return;
 
+        // Check to see if this event would be before or after our "read up to" marker. If it's
+        // before, or we can't decide, then we assume the widget will have already seen the event.
+        // If the event is after, or we don't have a marker for the room, then we'll send it through.
+        //
+        // This approach of "read up to" prevents widgets receiving decryption spam from startup or
+        // receiving out-of-order events from backfill and such.
+        const upToEventId = this.readUpToMap[ev.getRoomId()];
+        if (upToEventId) {
+            // Small optimization for exact match (prevent search)
+            if (upToEventId === ev.getId()) {
+                return;
+            }
+
+            let isBeforeMark = true;
+
+            // Timelines are most recent last, so reverse the order and limit ourselves to 100 events
+            // to avoid overusing the CPU.
+            const timeline = MatrixClientPeg.get().getRoom(ev.getRoomId()).getLiveTimeline();
+            const events = arrayFastClone(timeline.getEvents()).reverse().slice(0, 100);
+
+            for (const timelineEvent of events) {
+                if (timelineEvent.getId() === upToEventId) {
+                    break;
+                } else if (timelineEvent.getId() === ev.getId()) {
+                    isBeforeMark = false;
+                    break;
+                }
+            }
+
+            if (isBeforeMark) {
+                // Ignore the event: it is before our interest.
+                return;
+            }
+        }
+
+        this.readUpToMap[ev.getRoomId()] = ev.getId();
+
         const raw = ev.getEffectiveEvent();
-        this.messaging.feedEvent(raw).catch(e => {
-            console.error("Error sending event to widget: ", e);
+        this.messaging.feedEvent(raw, this.eventListenerRoomId).catch(e => {
+            logger.error("Error sending event to widget: ", e);
         });
     }
 }

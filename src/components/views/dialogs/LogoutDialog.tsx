@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ComponentType } from 'react';
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import Modal from '../../../Modal';
 import * as sdk from '../../../index';
@@ -24,6 +24,8 @@ import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RestoreKeyBackupDialog from './security/RestoreKeyBackupDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -68,7 +70,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
                 backupInfo,
             });
         } catch (e) {
-            console.log("Unable to fetch key backup status", e);
+            logger.log("Unable to fetch key backup status", e);
             this.setState({
                 loading: false,
                 error: e,
@@ -83,7 +85,9 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     private onExportE2eKeysClicked = (): void => {
         Modal.createTrackedDialogAsync('Export E2E Keys', '',
-            import('../../../async-components/views/dialogs/security/ExportE2eKeysDialog'),
+            import(
+                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             {
                 matrixClient: MatrixClientPeg.get(),
             },
@@ -109,7 +113,9 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             );
         } else {
             Modal.createTrackedDialogAsync("Key Backup", "Key Backup",
-                import("../../../async-components/views/dialogs/security/CreateKeyBackupDialog"),
+                import(
+                    "../../../async-components/views/dialogs/security/CreateKeyBackupDialog"
+                ) as unknown as Promise<ComponentType<{}>>,
                 null, null, /* priority = */ false, /* static = */ true,
             );
         }
