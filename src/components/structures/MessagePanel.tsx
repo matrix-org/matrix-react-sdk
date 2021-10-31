@@ -1090,15 +1090,22 @@ class CreationGrouper extends BaseGrouper {
     }
 
     public getTiles(): ReactNode[] {
+        const panel = this.panel;
+        const ret = [];
+        const createEvent = this.event;
+
+        // If this m.room.create event should be shown (room upgrade) then show it before the summary
+        if (panel.shouldShowEvent(createEvent)) {
+            // pass in the createEvent as prevEvent as well so no extra DateSeparator is rendered
+            ret.push(...panel.getTilesForEvent(createEvent, createEvent));
+        }
+
         // If we don't have any events to group, don't even try to group them. The logic
         // below assumes that we have a group of events to deal with, but we might not if
         // the events we were supposed to group were redacted.
-        if (!this.events || !this.events.length) return [];
+        if (!this.events || !this.events.length) return ret;
 
-        const panel = this.panel;
-        const ret = [];
         const isGrouped = true;
-        const createEvent = this.event;
         const lastShownEvent = this.lastShownEvent;
 
         if (panel.wantsDateSeparator(this.prevEvent, createEvent.getDate())) {
@@ -1106,12 +1113,6 @@ class CreationGrouper extends BaseGrouper {
             ret.push(
                 <li key={ts+'~'}><DateSeparator key={ts+'~'} ts={ts} /></li>,
             );
-        }
-
-        // If this m.room.create event should be shown (room upgrade) then show it before the summary
-        if (panel.shouldShowEvent(createEvent)) {
-            // pass in the createEvent as prevEvent as well so no extra DateSeparator is rendered
-            ret.push(...panel.getTilesForEvent(createEvent, createEvent));
         }
 
         for (const ejected of this.ejectedEvents) {
