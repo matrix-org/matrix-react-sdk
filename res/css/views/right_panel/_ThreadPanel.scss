@@ -18,12 +18,18 @@ limitations under the License.
     display: flex;
     flex-direction: column;
 
+    padding-right: 0;
+
     .mx_BaseCard_header {
-        padding: 6px 0;
+        padding: 6px 8px 6px 0;
 
         .mx_BaseCard_close,
         .mx_BaseCard_back {
             margin-top: 15px;
+        }
+
+        .mx_BaseCard_close {
+            right: -8px;
         }
     }
 
@@ -123,11 +129,14 @@ limitations under the License.
         }
     }
 
+    .mx_AutoHideScrollbar {
+        border-radius: 8px;
+    }
+
     .mx_RoomView_messageListWrapper {
         background-color: $background;
-        border-radius: 8px;
-        padding-top: 8px;
-        padding-bottom: 12px;
+        padding: 8px;
+        border-radius: inherit;
     }
 
     .mx_ScrollPanel {
@@ -171,6 +180,15 @@ limitations under the License.
         .mx_DateSeparator {
             display: none;
         }
+    }
+
+    .mx_MessageComposer {
+        background-color: $background;
+        border-radius: 8px;
+        margin-top: 8px;
+        width: calc(100% - 8px);
+        padding: 0 8px;
+        box-sizing: border-box;
     }
 }
 
