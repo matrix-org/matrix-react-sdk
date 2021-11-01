@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635559492676,
+  "lastUpdate": 1635757639690,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36176,6 +36176,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4430.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "nolan@thewordnerd.info",
+            "name": "Nolan Darilek",
+            "username": "ndarilek"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "022588fe064dd2160e0866b065a9f6e4fed73151",
+          "message": "Silence some widgets for better screen reader presentation. (#7057)",
+          "timestamp": "2021-11-01T09:01:18Z",
+          "tree_id": "cc0c025d047949093923b318f2512850321fc877",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/022588fe064dd2160e0866b065a9f6e4fed73151"
+        },
+        "date": 1635757636919,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5063.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 956.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1671.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4538.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
