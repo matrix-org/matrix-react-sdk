@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635762236102,
+  "lastUpdate": 1635772039748,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36260,6 +36260,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 606.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "459b5ccaf93457d26a36600765573c230ca4d21a",
+          "message": "Add notify-element-web job (#7062)\n\nThis triggers a repository_dispatch event in element-web which allows that repo to run new CI actions for EW with the new SDK code",
+          "timestamp": "2021-11-01T13:00:51Z",
+          "tree_id": "54ecd48046f0ab84eedf5329a42eae2d71a481e2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/459b5ccaf93457d26a36600765573c230ca4d21a"
+        },
+        "date": 1635772037115,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4928.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1154.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1707.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4767.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
