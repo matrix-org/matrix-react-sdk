@@ -10,7 +10,7 @@ on:
 jobs:
     end-to-end:
         runs-on: ubuntu-latest
-        env: 
+        env:
           PR_NUMBER: ${{github.event.number}}
         container: vectorim/element-web-ci-e2etests-env:latest
         steps:
@@ -46,6 +46,7 @@ jobs:
                 auto-push: ${{ github.ref == 'refs/heads/develop' }}
     notify-element-web:
         runs-on: ubuntu-latest
+        environment: develop
         steps:
             -   name: Notify element-web repo that we have a new SDK build
                 uses: peter-evans/repository-dispatch@v1
