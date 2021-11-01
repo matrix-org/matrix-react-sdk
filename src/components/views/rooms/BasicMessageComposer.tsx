@@ -720,20 +720,18 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private onFormatAction = (action: Formatting): void => {
         let range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
 
+        // Edgecase when just selecting whitespace or new line. We don't want 
+        // to trim here, as the selection will jump and behave weirdly
+        if (range.text.trim().length == 0) {
+            return;
+        }
+
         // If the user didn't select any text, we select the current word instead
         if (range.length == 0) {
             range = this.getRangeOfWordAtCaret();
         } else {
-            let initalRange = range;
-
-            // trim the range as we want it to exclude leading/trailing spaces
+            // Trim the range as we want it to exclude leading/trailing spaces
             range.trim();
-
-            // Edgecase: When just selecting whitespace or new line. We don"t want 
-            // to trim here, as the selection will jump and behave weirdly.
-            if (range.length == 0) {
-                range = initalRange;
-            }        
         }
         
         this.historyManager.ensureLastChangesPushed(this.props.model);

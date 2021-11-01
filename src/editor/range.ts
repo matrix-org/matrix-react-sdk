@@ -48,6 +48,9 @@ export default class Range {
 
     public trim(): void {
         this._start = this._start.forwardsWhile(this.model, whitespacePredicate);
+        if (this.length == 0) {
+            return;
+        }
         this._end = this._end.backwardsWhile(this.model, whitespacePredicate);
     }
 
