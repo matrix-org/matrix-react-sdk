@@ -522,7 +522,16 @@ export default class ContentMessages {
         }
     }
 
-    getCurrentUploads() {
+    getCurrentUploads(relation?: IEventRelation) {
+        return this.inprogress.filter(upload => {
+            const noRelation = !relation && !upload.relation;
+            const matchingRelation = relation && upload.relation
+                && relation.rel_type === upload.relation.rel_type
+                && relation.event_id === upload.relation.event_id;
+
+            return (noRelation || matchingRelation) && !upload.canceled;
+        });
+
         return this.inprogress.filter(u => !u.canceled);
     }
 
@@ -606,7 +615,8 @@ export default class ContentMessages {
 
         const upload: IUpload = {
             fileName: file.name || 'Attachment',
-            roomId: roomId,
+            roomId,
+            relation,
             total: file.size,
             loaded: 0,
             promise: prom,
