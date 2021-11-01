@@ -90,13 +90,20 @@ limitations under the License.
     }
 
     &.mx_RoomSearch_minimized {
-        border-radius: 32px;
         height: auto;
         width: auto;
-        padding: 8px;
+        padding: 5px;
 
         .mx_RoomSearch_icon {
             margin-left: 0;
+        }
+
+        &:hover {
+            background-color: $tertiary-content;
+
+            .mx_RoomSearch_icon {
+                background-color: $background;
+            }
         }
     }
 }

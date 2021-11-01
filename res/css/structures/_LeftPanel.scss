@@ -102,7 +102,7 @@ $roomListCollapsedWidth: 68px;
 
         .mx_LeftPanel_filterContainer {
             margin: 0 12px;
-            padding: 12px 0 6px;
+            padding: 12px 0 8px;
             border-bottom: 1px solid $quinary-content;
 
             flex-shrink: 0; // to convince safari's layout engine the flexbox is fine
@@ -259,7 +259,6 @@ $roomListCollapsedWidth: 68px;
                 .mx_LeftPanel_exploreButton {
                     margin-left: 0;
                     margin-top: 8px;
-                    background-color: transparent;
                 }
             }
         }
