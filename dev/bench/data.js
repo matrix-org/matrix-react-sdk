@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635757639690,
+  "lastUpdate": 1635762236102,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36224,6 +36224,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4538.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "github@elsiehupp.com",
+            "name": "Elsie Hupp",
+            "username": "elsiehupp"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "89ef8e9441b2f0762a52e970f49d87f49aba9591",
+          "message": "Add convenience inline links to README.md (#7061)\n\nSigned-off-by: Elsie Hupp <9206310+elsiehupp@users.noreply.github.com>",
+          "timestamp": "2021-11-01T10:17:51Z",
+          "tree_id": "3e79c115c60990bf68813152c84da6402c78a7be",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/89ef8e9441b2f0762a52e970f49d87f49aba9591"
+        },
+        "date": 1635762233096,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4711.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 606.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
