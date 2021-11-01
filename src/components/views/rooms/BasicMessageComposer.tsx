@@ -48,6 +48,7 @@ import AutocompleteWrapperModel from "../../../editor/autocomplete";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import DocumentPosition from '../../../editor/position';
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -66,7 +67,7 @@ const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
 ]);
 
 function ctrlShortcutLabel(key: string, needsShift = false, needsAlt = false): string {
-    return (IS_MAC ? "⌘" : "Ctrl") + (needsShift ? "+Shift") + (needsAlt ? "+Alt" : "") + "+" + key;
+    return (IS_MAC ? "⌘" : "Ctrl") + (needsShift ? "+Shift" : "") + (needsAlt ? "+Alt" : "") + "+" + key;
 }
 
 function cloneSelection(selection: Selection): Partial<Selection> {
