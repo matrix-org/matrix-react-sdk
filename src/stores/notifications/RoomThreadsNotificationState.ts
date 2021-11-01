@@ -14,56 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NotificationColor } from "./NotificationColor";
 import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
 import * as RoomNotifs from '../../RoomNotifs';
-import * as Unread from '../../Unread';
 import { RoomNotificationState } from "./RoomNotificationState";
 
 export class RoomThreadsNotificationState extends RoomNotificationState {
     protected updateNotificationState(): void {
         const snapshot = this.snapshot();
 
-        if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.RoomNotifState.Mute) {
-            // When muted we suppress all notification states, even if we have context on them.
-            this._color = NotificationColor.None;
-            this._symbol = null;
-            this._count = 0;
+        if (this.isRoomMuted) {
+            this.setMutedState();
         } else {
             const redNotifs = RoomNotifs.getThreadsUnreadNotificationCount(this.room, NotificationCountType.Highlight);
             const greyNotifs = RoomNotifs.getThreadsUnreadNotificationCount(this.room, NotificationCountType.Total);
-
-            // For a 'true count' we pick the grey notifications first because they include the
-            // red notifications. If we don't have a grey count for some reason we use the red
-            // count. If that count is broken for some reason, assume zero. This avoids us showing
-            // a badge for 'NaN' (which formats as 'NaNB' for NaN Billion).
-            const trueCount = greyNotifs ? greyNotifs : (redNotifs ? redNotifs : 0);
-
-            // Note: we only set the symbol if we have an actual count. We don't want to show
-            // zero on badges.
-
-            if (redNotifs > 0) {
-                this._color = NotificationColor.Red;
-                this._count = trueCount;
-                this._symbol = null; // symbol calculated by component
-            } else if (greyNotifs > 0) {
-                this._color = NotificationColor.Grey;
-                this._count = trueCount;
-                this._symbol = null; // symbol calculated by component
-            } else {
-                // We don't have any notified messages, but we might have unread messages. Let's
-                // find out.
-                const hasUnread = Unread.doesRoomHaveUnreadMessages(this.room);
-                if (hasUnread) {
-                    this._color = NotificationColor.Bold;
-                } else {
-                    this._color = NotificationColor.None;
-                }
-
-                // no symbol or count for this state
-                this._count = 0;
-                this._symbol = null;
-            }
+            this.setNotificationState(redNotifs, greyNotifs);
         }
 
         // finally, publish an update if needed
