@@ -733,7 +733,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             range = this.getRangeOfWordAtCaret();
         } else {
             // Trim the range as we want it to exclude leading/trailing spaces
-            range.trim
+            range.trim();
         }
         
         this.historyManager.ensureLastChangesPushed(this.props.model);
