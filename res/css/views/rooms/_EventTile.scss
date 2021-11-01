@@ -736,7 +736,6 @@ $left-gutter: 64px;
         display: flex;
         align-items: center;
         gap: 6px;
-        margin-bottom: 6px;
 
         a {
             flex: 1;
@@ -769,20 +768,27 @@ $left-gutter: 64px;
         width: 100%;
         display: flex;
         flex-direction: column;
-        margin-top: 0;
-        padding-bottom: 5px;
-        margin-bottom: 5px;
+        padding-top: 0;
 
         .mx_MessageTimestamp {
             left: auto;
-            right: 0;
+            right: 2px !important;
+            top: 1px !important;
         }
 
         .mx_ReactionsRow {
             order: 999;
             padding-left: 0;
             padding-right: 0;
+            margin-left: 36px;
+            margin-right: 50px;
+
         }
+    }
+
+    .mx_EventTile_content {
+        margin-left: 36px;
+        margin-right: 50px;
     }
 
     .mx_MessageComposer_sendMessage {

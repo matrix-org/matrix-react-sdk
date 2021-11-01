@@ -253,7 +253,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         const hasSuccessfullyCopied = await copyPlaintext(matrixToUrl);
 
-        if (!hasSuccessfullyCopied) {
+        if (hasSuccessfullyCopied) {
+            await sleep(500);
+        } else {
             this.setState({ copyingPhase: CopyingPhase.Failed });
             await sleep(2500);
         }
@@ -327,7 +329,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             showUrlPreview={true}
                             tileShape={TileShape.Thread}
                             empty={<div>empty</div>}
-                            alwaysShowTimestamps={true}
                             layout={Layout.Group}
                             hideThreadedMessages={false}
                             hidden={false}
