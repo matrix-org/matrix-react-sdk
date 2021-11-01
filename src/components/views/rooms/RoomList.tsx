@@ -48,10 +48,8 @@ import SpaceStore, { ISuggestedRoom, SUGGESTED_ROOMS } from "../../../stores/Spa
 import { shouldShowSpaceInvite, showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
