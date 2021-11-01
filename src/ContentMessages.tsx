@@ -46,6 +46,7 @@ import SettingsStore from "./settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { IEventRelation } from "matrix-js-sdk";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -436,7 +437,12 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient) {
+    async sendContentListToRoom(
+        files: File[],
+        roomId: string,
+        relation: IEventRelation | null,
+        matrixClient: MatrixClient,
+    ) {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
@@ -512,7 +518,7 @@ export default class ContentMessages {
                     uploadAll = true;
                 }
             }
-            promBefore = this.sendContentToRoom(file, roomId, matrixClient, promBefore);
+            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, promBefore);
         }
     }
 
@@ -535,7 +541,13 @@ export default class ContentMessages {
         }
     }
 
-    private sendContentToRoom(file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>) {
+    private sendContentToRoom(
+        file: File,
+        roomId: string,
+        relation: IEventRelation,
+        matrixClient: MatrixClient,
+        promBefore: Promise<any>,
+    ) {
         const startTime = CountlyAnalytics.getTimestamp();
         const content: IContent = {
             body: file.name || 'Attachment',
@@ -544,6 +556,10 @@ export default class ContentMessages {
             },
             msgtype: "", // set later
         };
+
+        if (relation) {
+            content["m.relates_to"] = relation;
+        }
 
         if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
             decorateStartSendingTime(content);
