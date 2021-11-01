@@ -15,22 +15,11 @@ limitations under the License.
 */
 
 import Range from "./range";
-import { Part, PartCreator, Type } from "./parts";
+import { Part, Type } from "./parts";
 
 /**
  * Some common queries and transformations on the editor model
  */
-
- export function stripFormattingSymbols(parts: Part[], base: any, prefix: string, partCreator: PartCreator, index: any, suffix: string) {
-    const partWithoutPrefix = parts[base].serialize();
-    partWithoutPrefix.text = partWithoutPrefix.text.substring(prefix.length);
-    parts[base] = partCreator.deserializePart(partWithoutPrefix);
-
-    const partWithoutSuffix = parts[index].serialize();
-    const suffixPartText = partWithoutSuffix.text;
-    partWithoutSuffix.text = suffixPartText.substring(0, suffixPartText.length - suffix.length);
-    parts[index] = partCreator.deserializePart(partWithoutSuffix);
-}
 
 export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): void {
     const { model } = range;
@@ -103,14 +92,13 @@ export function formatRangeAsCode(range: Range): void {
     const needsBlockFormatting = parts.some(p => p.type === Type.Newline);
 
     if (hasBlockFormatting) {
-        // Check whether the block formatting is on its own line
-        if (parts[range.start.index + 1]?.text == "\n" && parts[range.end.index - 1]?.text == "\n") {
-            // Remove part containing new line
-            parts[range.start.index + 1].remove(0, 1);
-            parts[range.end.index - 1].remove(0, 1);
+        // Remove previously pushed backticks and new lines
+        parts.shift();
+        parts.pop();
+        if (parts[0]?.text == "\n" && parts[parts.length - 1]?.text == "\n") {
+            parts.shift();
+            parts.pop();
         }
-        // remove prefix and suffix formatting string
-        stripFormattingSymbols(parts, range.start.index, "```", partCreator, range.end.index, "```");
     } else if (needsBlockFormatting) {
         parts.unshift(partCreator.plain("```"), partCreator.newline());
         if (!rangeStartsAtBeginningOfLine(range)) {
@@ -128,7 +116,7 @@ export function formatRangeAsCode(range: Range): void {
             && range.text.endsWith("`");
         if (hasInlineFormatting) {
             toggleInlineFormat(range, "`");
-            return;
+            return; // Toggle already does replace the range for us
         } else {
             parts.unshift(partCreator.plain("`"));
             parts.push(partCreator.plain("`"));
@@ -198,7 +186,14 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
 
         if (isFormatted) {
             // remove prefix and suffix formatting string
-            stripFormattingSymbols(parts, base, prefix, partCreator, index - 1, suffix);
+            const partWithoutPrefix = parts[base].serialize();
+            partWithoutPrefix.text = partWithoutPrefix.text.substring(prefix.length);
+            parts[base] = partCreator.deserializePart(partWithoutPrefix);
+        
+            const partWithoutSuffix = parts[index - 1].serialize();
+            const suffixPartText = partWithoutSuffix.text;
+            partWithoutSuffix.text = suffixPartText.substring(0, suffixPartText.length - suffix.length);
+            parts[index - 1] = partCreator.deserializePart(partWithoutSuffix);
         } else {
             parts.splice(index, 0, partCreator.plain(suffix)); // splice in the later one first to not change offset
             parts.splice(base, 0, partCreator.plain(prefix));
