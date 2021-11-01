@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635772039748,
+  "lastUpdate": 1635788914588,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36308,6 +36308,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4767.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5202c0a237945c9e7a56007452617dc80e7b82b3",
+          "message": "Show a gray shield when encrypted by deleted session (#6119)",
+          "timestamp": "2021-11-01T17:28:23Z",
+          "tree_id": "1f6108de74095e1fe52a0a0e8f04bdc2d9a6664e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5202c0a237945c9e7a56007452617dc80e7b82b3"
+        },
+        "date": 1635788911211,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5322.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1104.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1740.5999999998603,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4792.600000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
