@@ -732,14 +732,6 @@ $left-gutter: 64px;
     display: flex;
     flex-direction: column;
 
-    .mx_ScrollPanel {
-        margin-top: 20px;
-
-        .mx_RoomView_MessageList {
-            padding: 0;
-        }
-    }
-
     .mx_EventTile_senderDetails {
         display: flex;
         align-items: center;

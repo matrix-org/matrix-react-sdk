@@ -98,6 +98,31 @@ limitations under the License.
         }
     }
 
+    .mx_ThreadPanel_button {
+        width: 20px;
+        height: 20px;
+        margin-top: -3px;
+        margin-bottom: auto;
+        position: relative;
+
+        &::before {
+            top: 2px;
+            left: 2px;
+            content: '';
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            mask-position: center;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background: $primary-content;
+        }
+
+        &.mx_ThreadPanel_OptionsButton::before {
+            mask-image: url('$(res)/img/element-icons/context-menu.svg');
+        }
+    }
+
     .mx_RoomView_messageListWrapper {
         background-color: $background;
         border-radius: 8px;
@@ -147,4 +172,12 @@ limitations under the License.
             display: none;
         }
     }
+}
+
+.mx_ThreadPanel_viewInRoom::before {
+    mask-image: url('$(res)/img/element-icons/view-in-room.svg');
+}
+
+.mx_ThreadPanel_copyLinkToThread::before {
+    mask-image: url('$(res)/img/element-icons/link.svg');
 }
