@@ -553,9 +553,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     }
 
     public render() {
-        const cli = MatrixClientPeg.get();
-        const userId = cli.getUserId();
-
         let explorePrompt: JSX.Element;
         if (!this.props.isMinimized) {
             if (this.state.isNameFiltering) {
@@ -575,31 +572,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     >
                         { this.props.activeSpace ? _t("Explore rooms") : _t("Explore all public rooms") }
                     </AccessibleButton>
-                </div>;
-            } else if (
-                this.props.activeSpace?.canInvite(userId) ||
-                this.props.activeSpace?.getMyMembership() === "join" ||
-                this.props.activeSpace?.getJoinRule() === JoinRule.Public
-            ) {
-                const spaceName = this.props.activeSpace.name;
-                const canInvite = this.props.activeSpace?.canInvite(userId) ||
-                    this.props.activeSpace?.getJoinRule() === JoinRule.Public;
-                explorePrompt = <div className="mx_RoomList_explorePrompt">
-                    <div>{ _t("Quick actions") }</div>
-                    { canInvite && <AccessibleTooltipButton
-                        className="mx_RoomList_explorePrompt_spaceInvite"
-                        onClick={this.onSpaceInviteClick}
-                        title={_t("Invite to %(spaceName)s", { spaceName })}
-                    >
-                        { _t("Invite people") }
-                    </AccessibleTooltipButton> }
-                    { this.props.activeSpace?.getMyMembership() === "join" && <AccessibleTooltipButton
-                        className="mx_RoomList_explorePrompt_spaceExplore"
-                        onClick={this.onExplore}
-                        title={_t("Explore %(spaceName)s", { spaceName })}
-                    >
-                        { _t("Explore rooms") }
-                    </AccessibleTooltipButton> }
                 </div>;
             } else if (Object.values(this.state.sublists).some(list => list.length > 0)) {
                 const unfilteredLists = RoomListStore.instance.unfilteredLists;
