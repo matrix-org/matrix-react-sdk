@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, useContext, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import * as fbEmitter from "fbemitter";
 import classNames from "classnames";
@@ -52,6 +52,41 @@ import HostSignupAction from "./HostSignupAction";
 import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
 import { replaceableComponent } from "../../utils/replaceableComponent";
+import MatrixClientContext from "../../contexts/MatrixClientContext";
+
+const CustomStatusSection = () => {
+    const cli = useContext(MatrixClientContext);
+    const setStatus = cli.getUser(cli.getUserId()).unstable_statusMessage || "";
+    const [value, setValue] = useState(setStatus);
+
+    return <div className="mx_UserMenu_CustomStatusSection">
+        <div className="mx_UserMenu_CustomStatusSection_input">
+            <input
+                type="text"
+                value={value}
+                onChange={e => setValue(e.target.value)}
+                placeholder={_t("Set a new status")}
+                autoComplete="off"
+            />
+            <AccessibleButton
+                tabIndex={-1}
+                title={_t("Clear")}
+                className="mx_UserMenu_CustomStatusSection_clear"
+                onClick={() => setValue("")}
+            />
+        </div>
+
+        <p>{ _t("Your status will be shown to people you have a DM with.") }</p>
+
+        <AccessibleButton
+            onClick={() => cli._unstable_setStatusMessage(value)}
+            kind="primary_outline"
+            disabled={value === setStatus}
+        >
+            { value ? _t("Set status") : _t("Clear status") }
+        </AccessibleButton>
+    </div>;
+};
 
 interface IProps {
 }
@@ -302,6 +337,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
             );
         }
 
+        let customStatusSection: JSX.Element;
+        if (SettingsStore.getValue("feature_custom_status")) {
+            customStatusSection = <CustomStatusSection />;
+        }
+
         let dndButton: JSX.Element;
         if (SettingsStore.getValue("feature_dnd")) {
             dndButton = (
@@ -325,44 +365,40 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
 
         let primaryOptionList = (
-            <React.Fragment>
-                <IconizedContextMenuOptionList>
-                    { homeButton }
-                    { dndButton }
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconLock"
-                        label={_t("Security & privacy")}
-                        onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
-                    />
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconSettings"
-                        label={_t("All settings")}
-                        onClick={(e) => this.onSettingsOpen(e, null)}
-                    />
-                    { feedbackButton }
-                    <IconizedContextMenuOption
-                        className="mx_IconizedContextMenu_option_red"
-                        iconClassName="mx_UserMenu_iconSignOut"
-                        label={_t("Sign out")}
-                        onClick={this.onSignOutClick}
-                    />
-                </IconizedContextMenuOptionList>
-            </React.Fragment>
+            <IconizedContextMenuOptionList>
+                { homeButton }
+                { dndButton }
+                <IconizedContextMenuOption
+                    iconClassName="mx_UserMenu_iconLock"
+                    label={_t("Security & privacy")}
+                    onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
+                />
+                <IconizedContextMenuOption
+                    iconClassName="mx_UserMenu_iconSettings"
+                    label={_t("All settings")}
+                    onClick={(e) => this.onSettingsOpen(e, null)}
+                />
+                { feedbackButton }
+                <IconizedContextMenuOption
+                    className="mx_IconizedContextMenu_option_red"
+                    iconClassName="mx_UserMenu_iconSignOut"
+                    label={_t("Sign out")}
+                    onClick={this.onSignOutClick}
+                />
+            </IconizedContextMenuOptionList>
         );
 
         if (MatrixClientPeg.get().isGuest()) {
             primaryOptionList = (
-                <React.Fragment>
-                    <IconizedContextMenuOptionList>
-                        { homeButton }
-                        <IconizedContextMenuOption
-                            iconClassName="mx_UserMenu_iconSettings"
-                            label={_t("Settings")}
-                            onClick={(e) => this.onSettingsOpen(e, null)}
-                        />
-                        { feedbackButton }
-                    </IconizedContextMenuOptionList>
-                </React.Fragment>
+                <IconizedContextMenuOptionList>
+                    { homeButton }
+                    <IconizedContextMenuOption
+                        iconClassName="mx_UserMenu_iconSettings"
+                        label={_t("Settings")}
+                        onClick={(e) => this.onSettingsOpen(e, null)}
+                    />
+                    { feedbackButton }
+                </IconizedContextMenuOptionList>
             );
         }
 
@@ -396,6 +432,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     />
                 </AccessibleTooltipButton>
             </div>
+            { customStatusSection }
             { primaryOptionList }
             { bottomSection }
         </IconizedContextMenu>;
