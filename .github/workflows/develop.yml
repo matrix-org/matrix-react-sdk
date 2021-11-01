@@ -44,3 +44,12 @@ jobs:
                 alert-comment-cc-users: '@gsouquet'
                 github-token: ${{ secrets.DEPLOY_GH_PAGES }}
                 auto-push: ${{ github.ref == 'refs/heads/develop' }}
+    notify-element-web:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Notify element-web repo that we have a new SDK build
+                uses: peter-evans/repository-dispatch@v1
+                with:
+                    token: ${{ secrets.ELEMENT_WEB_NOTIFY_TOKEN }}
+                    repository: vector-im/element-web
+                    event-type: element-web-notify
