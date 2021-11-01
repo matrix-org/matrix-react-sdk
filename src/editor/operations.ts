@@ -21,15 +21,15 @@ import { Part, PartCreator, Type } from "./parts";
  * Some common queries and transformations on the editor model
  */
 
- export function stripFormatting(parts: Part[], base: any, prefix: string, partCreator: PartCreator, index: any, suffix: string) {
+ export function stripFormattingSymbols(parts: Part[], base: any, prefix: string, partCreator: PartCreator, index: any, suffix: string) {
     const partWithoutPrefix = parts[base].serialize();
     partWithoutPrefix.text = partWithoutPrefix.text.substring(prefix.length);
     parts[base] = partCreator.deserializePart(partWithoutPrefix);
 
-    const partWithoutSuffix = parts[index - 1].serialize();
+    const partWithoutSuffix = parts[index].serialize();
     const suffixPartText = partWithoutSuffix.text;
     partWithoutSuffix.text = suffixPartText.substring(0, suffixPartText.length - suffix.length);
-    parts[index - 1] = partCreator.deserializePart(partWithoutSuffix);
+    parts[index] = partCreator.deserializePart(partWithoutSuffix);
 }
 
 export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): void {
@@ -109,8 +109,8 @@ export function formatRangeAsCode(range: Range): void {
             parts[range.start.index + 1].remove(0, 1);
             parts[range.end.index - 1].remove(0, 1);
         }
-        // Need to add +1 to range.end.index since stripFormatting subtracts one again
-        stripFormatting(parts, range.start.index, "```", partCreator, range.end.index + 1, "```");
+        // remove prefix and suffix formatting string
+        stripFormattingSymbols(parts, range.start.index, "```", partCreator, range.end.index, "```");
     } else if (needsBlockFormatting) {
         parts.unshift(partCreator.plain("```"), partCreator.newline());
         if (!rangeStartsAtBeginningOfLine(range)) {
@@ -134,7 +134,7 @@ export function formatRangeAsCode(range: Range): void {
             parts.push(partCreator.plain("`"));
         }
     }
-    
+
     replaceRangeAndExpandSelection(range, parts);
 }
 
@@ -197,8 +197,8 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
             parts[index - 1].text.endsWith(suffix);
 
         if (isFormatted) {
-            // remove prefix and suffix
-            stripFormatting(parts, base, prefix, partCreator, index, suffix);
+            // remove prefix and suffix formatting string
+            stripFormattingSymbols(parts, base, prefix, partCreator, index - 1, suffix);
         } else {
             parts.splice(index, 0, partCreator.plain(suffix)); // splice in the later one first to not change offset
             parts.splice(base, 0, partCreator.plain(prefix));

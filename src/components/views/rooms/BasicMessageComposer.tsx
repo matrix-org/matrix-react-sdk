@@ -585,7 +585,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
             const range = model.startRange(position);
             range.expandBackwardsWhile((index, offset, part) => {
-                return this.isNotEndOfWord(offset, part);
+                return this.isWord(offset, part);
             });
             const { partCreator } = model;
             // await for auto-complete to be open
@@ -686,7 +686,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         return caretPosition;
     }
 
-    private isNotEndOfWord(offset: number, part: Part): boolean {
+    private isWord(offset: number, part: Part): boolean {
         return part.text[offset] !== " " && part.text[offset] !== "+" && (
             part.type === Type.Plain ||
             part.type === Type.PillCandidate ||
@@ -702,7 +702,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // Select left side of word
         range.expandForwardsWhile((index, offset, part) => {
-            return this.isNotEndOfWord(offset, part);
+            return this.isWord(offset, part);
         });
 
         // Reset caret position
@@ -711,7 +711,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // Select right side of word
         range.expandBackwardsWhile((index, offset, part) => {
-            return this.isNotEndOfWord(offset, part);
+            return this.isWord(offset, part);
         });
 
         return range;
@@ -723,11 +723,19 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // If the user didn't select any text, we select the current word instead
         if (range.length == 0) {
             range = this.getRangeOfWordAtCaret();
+        } else {
+            let initalRange = range;
+
+            // trim the range as we want it to exclude leading/trailing spaces
+            range.trim();
+
+            // Edgecase: When just selecting whitespace or new line. We don"t want 
+            // to trim here, as the selection will jump and behave weirdly.
+            if (range.length == 0) {
+                range = initalRange;
+            }        
         }
-
-        // trim the range as we want it to exclude leading/trailing spaces
-        range.trim();
-
+        
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
         switch (action) {
