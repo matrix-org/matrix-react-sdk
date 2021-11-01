@@ -98,7 +98,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
             makePollContent(this.state.question, this.state.options, POLL_KIND_DISCLOSED.name),
         ).then(() => this.props.onFinished(true)).catch(e => {
             console.error("Failed to submit poll event:", e);
-            this.setState({ busy: false, canSubmit: false });
+            this.setState({ busy: false, canSubmit: true });
         });
     }
 
