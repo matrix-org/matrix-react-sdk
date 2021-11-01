@@ -21,8 +21,8 @@ import { IDestroyable } from "../../utils/IDestroyable";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 
 export class ThreadNotificationState extends NotificationState implements IDestroyable {
-    public _symbol: string = null;
-    public _count = 0;
+    protected _symbol: string = null;
+    protected _count = 0;
 
     constructor(public readonly thread: Thread) {
         super();
