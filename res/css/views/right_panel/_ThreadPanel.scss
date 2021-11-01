@@ -21,17 +21,16 @@ limitations under the License.
     .mx_BaseCard_header {
         padding: 6px 0;
 
-        .mx_BaseCard_close {
+        .mx_BaseCard_close,
+        .mx_BaseCard_back {
             margin-top: 15px;
         }
     }
 
-    .mx_AccessibleButton.mx_BaseCard_back {
-        display: none;
-    }
 
-    &__header {
-        width: calc(100% - 40px);
+    .mx_ThreadPanel__header {
+        width: calc(100% - 60px);
+        margin-left: 30px;
         display: flex;
         flex: 1;
         justify-content: space-between;
