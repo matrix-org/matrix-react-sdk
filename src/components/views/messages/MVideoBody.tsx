@@ -192,6 +192,9 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     }
 
     private videoOnPlay = async () => {
+        // As soon as we start playing the video, we need to hide the poster image.
+        // On chromium-based browsers this gets rendered behind the playing video
+        // which creates weird artifacts if the video contains transparency.
         if (this.hasContentUrl()) {
             this.setState({
                 renderPoster: false,
