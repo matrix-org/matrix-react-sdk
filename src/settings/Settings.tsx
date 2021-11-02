@@ -631,11 +631,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show rooms with unread notifications first"),
         default: true,
     },
-    "breadcrumbs": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
-        default: true,
-    },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,

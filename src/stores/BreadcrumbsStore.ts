@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsStore from "../settings/SettingsStore";
 import { Room } from "matrix-js-sdk/src/models/room";
+
+import SettingsStore from "../settings/SettingsStore";
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { arrayHasDiff } from "../utils/arrays";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { SettingLevel } from "../settings/SettingLevel";
-import SpaceStore from "./SpaceStore";
 import { Action } from "../dispatcher/actions";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 
@@ -30,7 +29,6 @@ const MAX_ROOMS = 20; // arbitrary
 const AUTOJOIN_WAIT_THRESHOLD_MS = 90000; // 90s, the time we wait for an autojoined room to show up
 
 interface IState {
-    enabled?: boolean;
     rooms?: Room[];
 }
 
@@ -43,7 +41,6 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         super(defaultDispatcher);
 
         SettingsStore.monitorSetting("breadcrumb_rooms", null);
-        SettingsStore.monitorSetting("breadcrumbs", null);
     }
 
     public static get instance(): BreadcrumbsStore {
@@ -54,14 +51,6 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         return this.state.rooms || [];
     }
 
-    public get visible(): boolean {
-        return this.state.enabled && this.meetsRoomRequirement;
-    }
-
-    private get meetsRoomRequirement(): boolean {
-        return this.matrixClient && this.matrixClient.getVisibleRooms().length >= 20;
-    }
-
     protected async onAction(payload: ActionPayload) {
         if (!this.matrixClient) return;
 
@@ -69,8 +58,6 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
             const settingUpdatedPayload = payload as SettingUpdatedPayload;
             if (settingUpdatedPayload.settingName === 'breadcrumb_rooms') {
                 await this.updateRooms();
-            } else if (settingUpdatedPayload.settingName === 'breadcrumbs') {
-                await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
             }
         } else if (payload.action === 'view_room') {
             if (payload.auto_join && !this.matrixClient.getRoom(payload.room_id)) {
@@ -87,24 +74,13 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
 
     protected async onReady() {
         await this.updateRooms();
-        await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
 
-        this.matrixClient.on("Room.myMembership", this.onMyMembership);
         this.matrixClient.on("Room", this.onRoom);
     }
 
     protected async onNotReady() {
-        this.matrixClient.removeListener("Room.myMembership", this.onMyMembership);
         this.matrixClient.removeListener("Room", this.onRoom);
     }
-
-    private onMyMembership = async (room: Room) => {
-        // Only turn on breadcrumbs is the user hasn't explicitly turned it off again.
-        const settingValueRaw = SettingsStore.getValue("breadcrumbs", null, /*excludeDefault=*/true);
-        if (this.meetsRoomRequirement && isNullOrUndefined(settingValueRaw)) {
-            await SettingsStore.setValue("breadcrumbs", null, SettingLevel.ACCOUNT, true);
-        }
-    };
 
     private onRoom = async (room: Room) => {
         const waitingRoom = this.waitingRooms.find(r => r.roomId === room.roomId);
@@ -126,7 +102,6 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     }
 
     private async appendRoom(room: Room) {
-        if (SpaceStore.spacesEnabled && room.isSpaceRoom()) return; // hide space rooms
         let updated = false;
         const rooms = (this.state.rooms || []).slice(); // cheap clone
 

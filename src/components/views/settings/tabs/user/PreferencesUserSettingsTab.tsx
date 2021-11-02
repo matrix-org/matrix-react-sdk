@@ -135,10 +135,6 @@ const CommunityMigrator = ({ onFinished }) => {
 
 @replaceableComponent("views.settings.tabs.user.PreferencesUserSettingsTab")
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
-    static ROOM_LIST_SETTINGS = [
-        'breadcrumbs',
-    ];
-
     static SPACES_SETTINGS = [
         "Spaces.allRoomsInHome",
     ];
@@ -331,11 +327,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         return (
             <div className="mx_SettingsTab mx_PreferencesUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Preferences") }</div>
-
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
-                </div>
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Spaces") }</span>

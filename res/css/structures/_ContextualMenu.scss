@@ -39,6 +39,7 @@ limitations under the License.
     font-size: $font-14px;
     z-index: 5001;
     contain: content;
+    width: max-content;
 }
 
 .mx_ContextualMenu_right {

@@ -18,8 +18,11 @@ limitations under the License.
 const { measureStart, measureStop } = require('../util');
 
 async function openRoomDirectory(session) {
-    const roomDirectoryButton = await session.query('.mx_LeftPanel_exploreButton');
-    await roomDirectoryButton.click();
+    const roomsPlusButton = await session.query('.mx_RoomSublist_auxButton[aria-label="Add room"]');
+    await roomsPlusButton.click();
+
+    const exploreRoomsButton = await session.query('.mx_AccessibleButton[aria-label="Explore rooms"]');
+    await exploreRoomsButton.click();
 }
 
 async function findSublist(session, name) {
