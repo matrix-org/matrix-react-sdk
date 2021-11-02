@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635847497199,
+  "lastUpdate": 1635854124239,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36548,6 +36548,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4311.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "773b147a0312a7a7cf9cc100fc0ee20c847b0429",
+          "message": "Add a condition to only activate the resizer which belongs to the clicked handle (#7055)",
+          "timestamp": "2021-11-02T11:48:50Z",
+          "tree_id": "2710692ded2ccec1b2b45ca3bb22faee9643fa77",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/773b147a0312a7a7cf9cc100fc0ee20c847b0429"
+        },
+        "date": 1635854121624,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4709.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1211.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1771.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4910.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
