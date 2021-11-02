@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635788914588,
+  "lastUpdate": 1635832351737,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36356,6 +36356,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4792.600000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "73731cc478630edf6c15c3435acc91140ad5d8a1",
+          "message": "Polls: Creation form & start event (#7001)\n\n* PSFD-423: Permission check for polls dialog\r\n\r\n* PSFD-423: Implement compound scrollable dialog and skeleton create poll\r\n\r\n* PSFD-325: Ask the question\r\n\r\n* PSFD-328: Ask for options\r\n\r\n* PSFD-423: Ensure form submission semantics work for dialogs\r\n\r\n* PSFD-328: Option semantics\r\n\r\n* Can delete all option to end up with zero\r\n* Minimum 2 to submit the form\r\n\r\n* PSFD-316: Send poll start event\r\n\r\n* Appease the linter\r\n\r\n* PSFD-328: Reduce padding between options to account for field size\r\n\r\n* Iterate per design\r\n\r\n* Fix submission",
+          "timestamp": "2021-11-01T23:44:42-06:00",
+          "tree_id": "c09bb8c810cd47633071dcdaf6377db90464eea9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/73731cc478630edf6c15c3435acc91140ad5d8a1"
+        },
+        "date": 1635832347442,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5931.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1174.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1832.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5223.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
