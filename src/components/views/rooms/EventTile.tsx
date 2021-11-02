@@ -843,7 +843,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             if (remainder > 0) {
                 remText = <span className="mx_EventTile_readAvatarRemainder"
                     onClick={this.toggleAllReadAvatars}
-                    style={{ right: "calc(" + toRem(-left) + " + " + receiptOffset + "px)" }}>{ remainder }+
+                    style={{ right: "calc(" + toRem(-left) + " + " + receiptOffset + "px)" }}
+                    aria-live="off">{ remainder }+
                 </span>;
             }
         }
@@ -1250,6 +1251,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                     "data-has-reply": !!replyChain,
+                    "onMouseEnter": () => this.setState({ hover: true }),
+                    "onMouseLeave": () => this.setState({ hover: false }),
                 }, [
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
                         <RoomAvatar room={room} width={28} height={28} />
@@ -1261,7 +1264,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                         { avatar }
                         <a href={permalink} onClick={this.onPermalinkClicked}>
                             { sender }
-                            { timestamp }
                         </a>
                     </div>,
                     <div className={lineClasses} key="mx_EventTile_line">
@@ -1277,6 +1279,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             replacingEventId={this.props.replacingEventId}
                         />
                         { actionBar }
+                        { timestamp }
                     </div>,
                     reactionsRow,
                 ]);
@@ -1404,25 +1407,25 @@ export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean) {
 
 function E2ePadlockUndecryptable(props) {
     return (
-        <E2ePadlock title={_t("This message cannot be decrypted")} icon="undecryptable" {...props} />
+        <E2ePadlock title={_t("This message cannot be decrypted")} icon="warning" {...props} />
     );
 }
 
 function E2ePadlockUnverified(props) {
     return (
-        <E2ePadlock title={_t("Encrypted by an unverified session")} icon="unverified" {...props} />
+        <E2ePadlock title={_t("Encrypted by an unverified session")} icon="warning" {...props} />
     );
 }
 
 function E2ePadlockUnencrypted(props) {
     return (
-        <E2ePadlock title={_t("Unencrypted")} icon="unencrypted" {...props} />
+        <E2ePadlock title={_t("Unencrypted")} icon="warning" {...props} />
     );
 }
 
 function E2ePadlockUnknown(props) {
     return (
-        <E2ePadlock title={_t("Encrypted by a deleted session")} icon="unknown" {...props} />
+        <E2ePadlock title={_t("Encrypted by a deleted session")} icon="normal" {...props} />
     );
 }
 
