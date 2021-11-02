@@ -33,7 +33,6 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
 import IndicatorScrollbar from "../structures/IndicatorScrollbar";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import RoomListNumResults from "../views/rooms/RoomListNumResults";
 import LeftPanelWidget from "./LeftPanelWidget";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
@@ -391,8 +390,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 <aside className="mx_LeftPanel_roomListContainer">
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }
-                    { !this.props.isMinimized && <RoomListHeader /> }
-                    <RoomListNumResults onVisibilityChange={this.refreshStickyHeaders} />
+                    { !this.props.isMinimized && <RoomListHeader onVisibilityChange={this.refreshStickyHeaders} /> }
                     <div className="mx_LeftPanel_roomListWrapper">
                         <div
                             className={roomListClasses}

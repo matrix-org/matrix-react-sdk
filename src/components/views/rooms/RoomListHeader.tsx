@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -43,6 +43,7 @@ import { useDispatcher } from "../../../hooks/useDispatcher";
 import InlineSpinner from "../elements/InlineSpinner";
 import TooltipButton from "../elements/TooltipButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -139,13 +140,38 @@ const useJoiningRooms = (): Set<string> => {
     return joiningRooms;
 };
 
-const RoomListHeader: React.FC = () => {
+interface IProps {
+    onVisibilityChange?(): void;
+}
+
+const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     const cli = useContext(MatrixClientContext);
     const [mainMenuDisplayed, mainMenuHandle, openMainMenu, closeMainMenu] = useContextMenu<HTMLDivElement>();
     const [plusMenuDisplayed, plusMenuHandle, openPlusMenu, closePlusMenu] = useContextMenu<HTMLDivElement>();
     const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpace;
     });
+    const joiningRooms = useJoiningRooms();
+
+    const count = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () => {
+        if (RoomListStore.instance.getFirstNameFilterCondition()) {
+            return Object.values(RoomListStore.instance.orderedLists).flat(1).length;
+        } else {
+            return null;
+        }
+    });
+
+    useEffect(() => {
+        if (onVisibilityChange) {
+            onVisibilityChange();
+        }
+    }, [count, onVisibilityChange]);
+
+    if (typeof count === "number") {
+        return <div className="mx_LeftPanel_roomListFilterCount">
+            { _t("%(count)s results", { count }) }
+        </div>;
+    }
 
     const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
 
@@ -284,7 +310,6 @@ const RoomListHeader: React.FC = () => {
         title = CommunityPrototypeStore.instance.getSelectedCommunityName();
     }
 
-    const joiningRooms = useJoiningRooms();
     let pendingRoomJoinSpinner;
     if (joiningRooms.size) {
         pendingRoomJoinSpinner = <InlineSpinner>
