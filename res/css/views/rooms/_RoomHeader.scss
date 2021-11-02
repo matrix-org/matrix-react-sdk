@@ -122,7 +122,14 @@ limitations under the License.
     }
 
     .mx_RoomHeader_chevron {
-
+        align-self: center;
+        width: 16px;
+        height: 16px;
+        mask-position: center;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+        background-color: $tertiary-content;
     }
 }
 
@@ -145,8 +152,8 @@ limitations under the License.
     color: $roomtopic-color;
     font-weight: 400;
     font-size: $font-13px;
-    margin: 0 7px;
-    margin-top: 4px; // to align baseline of topic with room name
+    // to align baseline of topic with room name
+    margin: 4px 7px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     border-bottom: 1px solid transparent;
