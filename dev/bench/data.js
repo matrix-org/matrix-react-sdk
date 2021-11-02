@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635855134460,
+  "lastUpdate": 1635884947758,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36692,6 +36692,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4502.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c9619bfe48a2d047abe76b3169710c4d7d5f06cc",
+          "message": "Fix documentation to make `yarn test` work out of the box (mk II) (#7075)\n\n* Fix documentation to make `yarn test` work out of the box\r\n\r\nBefore, invoking `yarn test` croaked on a missing src/component-index.js\r\nfile. In another part of the README, the missing instruction to generate\r\nthis file was found.\r\n\r\n* Fix CI: Unauthenticated git protocol on port 9418 is no longer supported\r\n\r\nGitHub is deprecating the service which answered unauthenticated git\r\nprotocol requests. Either it happened already, or they are running\r\nbrownouts.\r\n\r\n* This is where I meant to leave that comment\r\n\r\nCo-authored-by: Andreas Motl <andreas.motl@panodata.org>",
+          "timestamp": "2021-11-02T20:22:24Z",
+          "tree_id": "be22ac2300743fe9184a5f814851ecf699832faa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c9619bfe48a2d047abe76b3169710c4d7d5f06cc"
+        },
+        "date": 1635884944642,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4881.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1076.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1727.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4712.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
