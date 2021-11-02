@@ -51,7 +51,7 @@ limitations under the License.
         border-radius: 8px;
         position: relative;
         padding: 8px;
-        margin-right: 14px;
+        margin-right: 12px;
         background-color: $background;
         box-sizing: border-box;
         flex-shrink: 0;
@@ -65,7 +65,7 @@ limitations under the License.
             mask-size: contain;
             mask-repeat: no-repeat;
             background-color: $secondary-content;
-            mask-image: url('$(res)/img/feather-customised/plus.svg');
+            mask-image: url('$(res)/img/element-icons/roomlist/plus.svg');
         }
 
         &:hover {
