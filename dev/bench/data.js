@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635854124239,
+  "lastUpdate": 1635854558168,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36596,6 +36596,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4910.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f8d1f60944c50bb72946481861d9b51386e61b0",
+          "message": "Null-guard for missing root event in thread panel (#7067)",
+          "timestamp": "2021-11-02T11:57:03Z",
+          "tree_id": "f6d4d78b485e276086c51cbfa4284c3e208969c8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f8d1f60944c50bb72946481861d9b51386e61b0"
+        },
+        "date": 1635854555686,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4333.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 940.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1706.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4503.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
