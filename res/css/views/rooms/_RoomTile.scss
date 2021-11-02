@@ -79,10 +79,6 @@ limitations under the License.
         }
     }
 
-    .mx_RoomTile_notificationsButton {
-        margin-left: 4px; // spacing between buttons
-    }
-
     .mx_RoomTile_badgeContainer {
         height: 16px;
         // don't set width so that it takes no space when there is no badge to show
@@ -103,9 +99,8 @@ limitations under the License.
         }
     }
 
-    // The context menu buttons are hidden by default
-    .mx_RoomTile_menuButton,
-    .mx_RoomTile_notificationsButton {
+    // The context menu button is hidden by default
+    .mx_RoomTile_menuButton {
         width: 20px;
         min-width: 20px; // yay flex
         height: 20px;
@@ -128,11 +123,6 @@ limitations under the License.
         }
     }
 
-    // If the room has an overriden notification setting then we always show the notifications menu button
-    .mx_RoomTile_notificationsButton.mx_RoomTile_notificationsButton_show {
-        display: block;
-    }
-
     .mx_RoomTile_menuButton::before {
         mask-image: url('$(res)/img/element-icons/context-menu.svg');
     }
@@ -148,7 +138,6 @@ limitations under the License.
                 display: none;
             }
 
-            .mx_RoomTile_notificationsButton,
             .mx_RoomTile_menuButton {
                 display: block;
             }
@@ -166,20 +155,6 @@ limitations under the License.
     }
 }
 
-// We use these both in context menus and the room tiles
-.mx_RoomTile_iconBell::before {
-    mask-image: url('$(res)/img/element-icons/notifications.svg');
-}
-.mx_RoomTile_iconBellDot::before {
-    mask-image: url('$(res)/img/element-icons/roomlist/notifications-default.svg');
-}
-.mx_RoomTile_iconBellCrossed::before {
-    mask-image: url('$(res)/img/element-icons/roomlist/notifications-off.svg');
-}
-.mx_RoomTile_iconBellMentions::before {
-    mask-image: url('$(res)/img/element-icons/roomlist/notifications-dm.svg');
-}
-
 .mx_RoomTile_contextMenu {
     .mx_RoomTile_iconStar::before {
         mask-image: url('$(res)/img/element-icons/roomlist/favorite.svg');
@@ -189,8 +164,28 @@ limitations under the License.
         mask-image: url('$(res)/img/element-icons/roomlist/low-priority.svg');
     }
 
+    .mx_RoomTile_iconNotifications::before {
+        mask-image: url('$(res)/img/element-icons/notifications.svg');
+    }
+
+    .mx_RoomTile_iconPeople::before {
+        mask-image: url('$(res)/img/element-icons/room/members.svg');
+    }
+
+    .mx_RoomTile_iconFiles::before {
+        mask-image: url('$(res)/img/element-icons/room/files.svg');
+    }
+
+    .mx_RoomTile_iconWidgets::before {
+        mask-image: url('$(res)/img/element-icons/room/apps.svg');
+    }
+
     .mx_RoomTile_iconSettings::before {
         mask-image: url('$(res)/img/element-icons/settings.svg');
+    }
+
+    .mx_RoomTile_iconExport::before {
+        mask-image: url('$(res)/img/element-icons/export.svg');
     }
 
     .mx_RoomTile_iconCopyLink::before {

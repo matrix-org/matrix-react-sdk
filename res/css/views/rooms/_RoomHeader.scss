@@ -113,12 +113,17 @@ limitations under the License.
     margin: 0 7px;
     border-bottom: 1px solid transparent;
     display: flex;
-}
+    user-select: none;
 
-.mx_RoomHeader_nametext {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    .mx_RoomHeader_nametext {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .mx_RoomHeader_chevron {
+
+    }
 }
 
 .mx_RoomHeader_settingsHint {
@@ -131,37 +136,8 @@ limitations under the License.
 }
 
 .mx_RoomHeader_name,
-.mx_RoomHeader_avatar,
-.mx_RoomHeader_avatarPicker,
-.mx_RoomHeader_avatarPicker_edit,
-.mx_RoomHeader_avatarPicker_remove {
+.mx_RoomHeader_avatar {
     cursor: pointer;
-}
-
-.mx_RoomHeader_avatarPicker_remove {
-    position: absolute;
-    top: -11px;
-    right: -9px;
-}
-
-.mx_RoomHeader_name:hover div:not(.mx_RoomHeader_editable) {
-    color: $accent-color;
-}
-
-.mx_RoomHeader_placeholder {
-    color: $settings-grey-fg-color !important;
-}
-
-.mx_RoomHeader_editable {
-    border-bottom: 1px solid $strong-input-border-color !important;
-    min-width: 150px;
-    cursor: text;
-}
-
-.mx_RoomHeader_editable:focus {
-    border-bottom: 1px solid $accent-color !important;
-    outline: none;
-    box-shadow: none;
 }
 
 .mx_RoomHeader_topic {
@@ -186,24 +162,6 @@ limitations under the License.
 
 .mx_RoomHeader_avatar .mx_BaseAvatar_image {
     object-fit: cover;
-}
-
-.mx_RoomHeader_avatarPicker {
-    position: relative;
-}
-
-.mx_RoomHeader_avatarPicker_edit {
-    position: absolute;
-    left: 16px;
-    top: 18px;
-}
-
-.mx_RoomHeader_avatarPicker_edit > label {
-    cursor: pointer;
-}
-
-.mx_RoomHeader_avatarPicker_edit > input {
-    display: none;
 }
 
 .mx_RoomHeader_button {
@@ -263,18 +221,6 @@ limitations under the License.
 
 .mx_RoomHeader_videoCallButton::before {
     mask-image: url('$(res)/img/element-icons/call/video-call.svg');
-}
-
-.mx_RoomHeader_showPanel {
-    height: 16px;
-}
-
-.mx_RoomHeader_voipButton {
-    display: table-cell;
-}
-
-.mx_RoomHeader_voipButtons {
-    margin-top: 18px;
 }
 
 @media only screen and (max-width: 480px) {

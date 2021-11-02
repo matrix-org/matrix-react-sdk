@@ -208,17 +208,19 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
     </Group>;
 };
 
-const onRoomMembersClick = () => {
+export const onRoomMembersClick = (allowClose = true) => {
     defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
         action: Action.SetRightPanelPhase,
         phase: RightPanelPhases.RoomMemberList,
+        allowClose,
     });
 };
 
-const onRoomFilesClick = () => {
+export const onRoomFilesClick = (allowClose = true) => {
     defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
         action: Action.SetRightPanelPhase,
         phase: RightPanelPhases.FilePanel,
+        allowClose,
     });
 };
 

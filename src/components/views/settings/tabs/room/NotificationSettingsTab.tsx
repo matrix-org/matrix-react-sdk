@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,6 +24,11 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomEchoChamber } from "../../../../../stores/local-echo/RoomEchoChamber";
+import { EchoChamber } from '../../../../../stores/local-echo/EchoChamber';
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import StyledRadioGroup from "../../../elements/StyledRadioGroup";
+import { RoomNotifState } from '../../../../../RoomNotifs';
 
 interface IProps {
     roomId: string;
@@ -36,10 +41,16 @@ interface IState {
 
 @replaceableComponent("views.settings.tabs.room.NotificationsSettingsTab")
 export default class NotificationsSettingsTab extends React.Component<IProps, IState> {
+    private readonly roomProps: RoomEchoChamber;
     private soundUpload = createRef<HTMLInputElement>();
 
-    constructor(props: IProps) {
-        super(props);
+    static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
+    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+        super(props, context);
+
+        this.roomProps = EchoChamber.forRoom(context.getRoom(this.props.roomId));
 
         this.state = {
             currentSound: "default",
@@ -144,6 +155,11 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         });
     };
 
+    private onRoomNotificationChange = (value: RoomNotifState) => {
+        this.roomProps.notificationVolume = value;
+        this.forceUpdate();
+    };
+
     public render(): JSX.Element {
         let currentUploadedFile = null;
         if (this.state.uploadedFile) {
@@ -157,6 +173,30 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         return (
             <div className="mx_SettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Notifications") }</div>
+
+                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
+                    <StyledRadioGroup
+                        name="roomNotificationSetting"
+                        definitions={[
+                            {
+                                value: RoomNotifState.AllMessages,
+                                label: _t("Default"),
+                            }, {
+                                value: RoomNotifState.AllMessagesLoud,
+                                label: _t("All messages"),
+                            }, {
+                                value: RoomNotifState.MentionsOnly,
+                                label: _t("@mentions & keywords"),
+                            }, {
+                                value: RoomNotifState.Mute,
+                                label: _t("Off"),
+                            },
+                        ]}
+                        onChange={this.onRoomNotificationChange}
+                        value={this.roomProps.notificationVolume}
+                    />
+                </div>
+
                 <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
                     <span className='mx_SettingsTab_subheading'>{ _t("Sounds") }</span>
                     <div>
