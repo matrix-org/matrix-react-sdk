@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635832351737,
+  "lastUpdate": 1635846031583,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36404,6 +36404,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5223.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f643839a00988cfc7ff87f46b6a500d73a07e3bb",
+          "message": "Improve the look of the spinner (#6083)",
+          "timestamp": "2021-11-02T09:35:06Z",
+          "tree_id": "a06be003acac655ea8ea09b1681a2be5257edec1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f643839a00988cfc7ff87f46b6a500d73a07e3bb"
+        },
+        "date": 1635846028716,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4398.399999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 891.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1650.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4307.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
