@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635884947758,
+  "lastUpdate": 1635886212839,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36740,6 +36740,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4712.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "bradtgmurray@gmail.com",
+            "name": "Brad Murray",
+            "username": "bradtgmurray"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "74376f989e8da984909ca08afc853ff20a08ae3c",
+          "message": "Don't re-sort rooms on no-op RoomUpdateCause.PossibleTagChange (#7053)\n\n* Don't re-sort rooms on no-op RoomUpdateCause.PossibleTagChange\r\n\r\n* Update src/stores/room-list/algorithms/Algorithm.ts\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2021-11-02T20:44:54Z",
+          "tree_id": "91ba897f2e662a781408379228ecb4ffd129fba9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/74376f989e8da984909ca08afc853ff20a08ae3c"
+        },
+        "date": 1635886210671,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4426.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 925.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1678.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4422.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
