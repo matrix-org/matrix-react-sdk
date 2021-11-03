@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import dis from '../../../dispatcher/dispatcher';
