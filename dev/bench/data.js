@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635935053981,
+  "lastUpdate": 1635963075134,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36932,6 +36932,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4431.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "38750202ee0effd5bf6a965a4609a283b587e526",
+          "message": "Design thread list tiles according to mockups (#7078)",
+          "timestamp": "2021-11-03T18:05:01Z",
+          "tree_id": "a9356ea03864617cb405cbf32d4a8d2abd9d0f78",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/38750202ee0effd5bf6a965a4609a283b587e526"
+        },
+        "date": 1635963071950,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4475.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1219,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1707.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4889.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
