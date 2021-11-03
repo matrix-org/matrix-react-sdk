@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635929403212,
+  "lastUpdate": 1635935053981,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36884,6 +36884,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4798.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2a20d9a7df195384e4ae16566970b2fed516b2cf",
+          "message": "Display relative time in thread panel event tile (#7068)\n\n* Null-guard for missing root event in thread panel\r\n\r\n* Add formatRelativeTime date utility\r\n\r\n* Display relative time format in thread panel event tiles",
+          "timestamp": "2021-11-03T10:16:50Z",
+          "tree_id": "d0a9c9d0a907c3c5be50c3765c094834865d0ad9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2a20d9a7df195384e4ae16566970b2fed516b2cf"
+        },
+        "date": 1635935050931,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3648.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1625.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4431.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
