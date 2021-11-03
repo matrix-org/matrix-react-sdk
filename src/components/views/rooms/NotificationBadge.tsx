@@ -26,14 +26,16 @@ import Tooltip from "../elements/Tooltip";
 import { _t } from "../../../languageHandler";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 
+export enum NotificationCountDisplay {
+    Default,
+    Show,
+    Hide,
+}
+
 interface IProps {
     notification: NotificationState;
 
-    /**
-     * If true, the badge will show a count if at all possible. This is typically
-     * used to override the user's preference for things like room sublists.
-     */
-    forceCount?: boolean;
+    displayCount?: NotificationCountDisplay;
 
     /**
      * The room ID, if any, the badge represents.
@@ -50,13 +52,17 @@ interface IClickableProps extends IProps, React.InputHTMLAttributes<Element> {
 }
 
 interface IState {
-    showCounts: boolean; // whether or not to show counts. Independent of props.forceCount
+    showCounts: boolean; // whether or not to show counts. Independent of props.displayCount
     showTooltip: boolean;
 }
 
 @replaceableComponent("views.rooms.NotificationBadge")
 export default class NotificationBadge extends React.PureComponent<XOR<IProps, IClickableProps>, IState> {
     private countWatcherRef: string;
+
+    public static defaultProps = {
+        displayCount: NotificationCountDisplay.Default,
+    };
 
     constructor(props: IProps) {
         super(props);
@@ -114,7 +120,7 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
 
     public render(): React.ReactElement {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { notification, showUnsentTooltip, forceCount, roomId, onClick, ...props } = this.props;
+        const { notification, showUnsentTooltip, displayCount, roomId, onClick, ...props } = this.props;
 
         // Don't show a badge if we don't need to
         if (notification.isIdle) return null;
@@ -125,9 +131,11 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
         // XXX: We ignore this.state.showCounts (the setting which controls counts vs dots).
         const hasAnySymbol = notification.symbol || notification.count > 0;
         let isEmptyBadge = !hasAnySymbol || !notification.hasUnreadCount;
-        if (forceCount) {
+        if (displayCount === NotificationCountDisplay.Show) {
             isEmptyBadge = false;
             if (!notification.hasUnreadCount) return null; // Can't render a badge
+        } else if (displayCount === NotificationCountDisplay.Hide) {
+            isEmptyBadge = true;
         }
 
         let symbol = notification.symbol || formatCount(notification.count);

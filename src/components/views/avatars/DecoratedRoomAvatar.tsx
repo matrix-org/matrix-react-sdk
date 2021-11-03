@@ -21,7 +21,7 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import RoomAvatar from "./RoomAvatar";
-import NotificationBadge from '../rooms/NotificationBadge';
+import NotificationBadge, { NotificationCountDisplay } from '../rooms/NotificationBadge';
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import { isPresenceEnabled } from "../../../utils/presence";
@@ -36,7 +36,7 @@ interface IProps {
     room: Room;
     avatarSize: number;
     displayBadge?: boolean;
-    forceCount?: boolean;
+    displayCount?: NotificationCountDisplay;
     oobData?: IOOBData;
     viewAvatarOnClick?: boolean;
 }
@@ -180,7 +180,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.props.displayBadge) {
             badge = <NotificationBadge
                 notification={this.state.notificationState}
-                forceCount={this.props.forceCount}
+                displayCount={this.props.displayCount}
                 roomId={this.props.room.roomId}
             />;
         }

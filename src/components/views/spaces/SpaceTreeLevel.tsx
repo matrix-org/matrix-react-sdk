@@ -89,7 +89,6 @@ export const SpaceButton: React.FC<IButtonProps> = ({
         notifBadge = <div className="mx_SpacePanel_badgeContainer">
             <NotificationBadge
                 onClick={() => SpaceStore.instance.setActiveRoomInSpace(space || null)}
-                forceCount={false}
                 notification={notificationState}
                 aria-label={ariaLabel}
                 tabIndex={tabIndex}

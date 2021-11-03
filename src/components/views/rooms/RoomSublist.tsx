@@ -38,7 +38,7 @@ import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorith
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import NotificationBadge from "./NotificationBadge";
+import NotificationBadge, { NotificationCountDisplay } from "./NotificationBadge";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { Key } from "../../../Keyboard";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -667,7 +667,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
                     const badge = (
                         <NotificationBadge
-                            forceCount={true}
+                            displayCount={NotificationCountDisplay.Show}
                             notification={this.notificationState}
                             onClick={this.onBadgeClick}
                             tabIndex={tabIndex}

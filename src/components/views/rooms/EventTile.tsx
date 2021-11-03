@@ -44,7 +44,7 @@ import Tooltip from "../elements/Tooltip";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
-import NotificationBadge from "./NotificationBadge";
+import NotificationBadge, { NotificationCountDisplay } from "./NotificationBadge";
 import CallEventGrouper from "../../structures/CallEventGrouper";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
@@ -899,7 +899,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             const thread = this.props.mxEvent.getThread();
             const notificationState = RoomNotificationStateStore.instance.getThreadState(thread);
 
-            return <NotificationBadge notification={notificationState} />;
+            return <NotificationBadge
+                displayCount={NotificationCountDisplay.Hide}
+                notification={notificationState}
+            />;
         } else {
             return null;
         }

@@ -20,7 +20,7 @@ import {
     RovingAccessibleButton,
     RovingAccessibleTooltipButton,
 } from "../../../accessibility/RovingTabIndex";
-import NotificationBadge from "./NotificationBadge";
+import NotificationBadge, { NotificationCountDisplay } from "./NotificationBadge";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 
 interface IProps {
@@ -67,7 +67,7 @@ export default class ExtraTile extends React.Component<IProps, IState> {
             badge = (
                 <NotificationBadge
                     notification={this.props.notificationState}
-                    forceCount={false}
+                    displayCount={NotificationCountDisplay.Show}
                 />
             );
         }

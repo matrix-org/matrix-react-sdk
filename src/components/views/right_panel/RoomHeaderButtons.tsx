@@ -34,7 +34,7 @@ import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
 import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import NotificationBadge from "../rooms/NotificationBadge";
+import NotificationBadge, { NotificationCountDisplay } from "../rooms/NotificationBadge";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -131,7 +131,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             { SettingsStore.getValue("feature_thread") && <div className="mx_RoomHeader_buttonContainer">
                 <NotificationBadge
                     notification={threadsNotificationState}
-                    forceCount={true}
+                    displayCount={NotificationCountDisplay.Show}
                     roomId={this.props.room.roomId}
                 />
                 <HeaderButton

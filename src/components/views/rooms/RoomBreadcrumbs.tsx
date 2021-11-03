@@ -26,6 +26,7 @@ import { CSSTransition } from "react-transition-group";
 import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { NotificationCountDisplay } from "./NotificationBadge";
 
 interface IProps {
 }
@@ -95,7 +96,7 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
                         room={r}
                         avatarSize={32}
                         displayBadge={true}
-                        forceCount={true}
+                        displayCount={NotificationCountDisplay.Show}
                     />
                 </RovingAccessibleTooltipButton>
             );

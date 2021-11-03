@@ -578,7 +578,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 <div className="mx_RoomTile_badgeContainer" aria-hidden="true">
                     <NotificationBadge
                         notification={this.notificationState}
-                        forceCount={false}
                         roomId={this.props.room.roomId}
                     />
                 </div>
