@@ -50,7 +50,15 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
     }
 
     public get hasMentions(): boolean {
-        return this.color >= NotificationColor.BoldRed;
+        return this.color >= NotificationColor.Red;
+    }
+
+    protected trueCount(redNotifs: number, greyNotifs: number): number {
+        // For a 'true count' we pick the grey notifications first because they include the
+        // red notifications. If we don't have a grey count for some reason we use the red
+        // count. If that count is broken for some reason, assume zero. This avoids us showing
+        // a badge for 'NaN' (which formats as 'NaNB' for NaN Billion).
+        return greyNotifs ? greyNotifs : (redNotifs ? redNotifs : 0);
     }
 
     protected emitIfUpdated(snapshot: NotificationStateSnapshot) {

@@ -109,11 +109,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     }
 
     protected setNotificationState(redNotifs: number, greyNotifs: number): void {
-        // For a 'true count' we pick the grey notifications first because they include the
-        // red notifications. If we don't have a grey count for some reason we use the red
-        // count. If that count is broken for some reason, assume zero. This avoids us showing
-        // a badge for 'NaN' (which formats as 'NaNB' for NaN Billion).
-        const trueCount = greyNotifs ? greyNotifs : (redNotifs ? redNotifs : 0);
+        const trueCount = this.trueCount(redNotifs, greyNotifs);
 
         // Note: we only set the symbol if we have an actual count. We don't want to show
         // zero on badges.

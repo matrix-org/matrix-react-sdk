@@ -21,9 +21,6 @@ import { IDestroyable } from "../../utils/IDestroyable";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 
 export class ThreadNotificationState extends NotificationState implements IDestroyable {
-    protected _symbol: string = null;
-    protected _count = 0;
-
     constructor(public readonly thread: Thread) {
         super();
         this.thread.room.on(ThreadEvent.Update, this.updateNotificationState);
@@ -41,10 +38,12 @@ export class ThreadNotificationState extends NotificationState implements IDestr
         const redNotifs = this.thread.getUnreadNotificationCount(NotificationCountType.Highlight);
         const greyNotifs = this.thread.getUnreadNotificationCount(NotificationCountType.Total);
 
+        this._count = this.trueCount(redNotifs, greyNotifs);
+
         if (redNotifs > 0) {
-            this._color = NotificationColor.BoldRed;
+            this._color = NotificationColor.Red;
         } else if (greyNotifs > 0) {
-            this._color = NotificationColor.Bold;
+            this._color = NotificationColor.Grey;
         } else {
             this._color = NotificationColor.None;
         }
