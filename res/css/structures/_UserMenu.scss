@@ -166,6 +166,10 @@ limitations under the License.
     }
 
     .mx_UserMenu_iconDnd::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/dnd.svg');
+    }
+
+    .mx_UserMenu_iconDndOff::before {
         mask-image: url('$(res)/img/element-icons/roomlist/dnd-cross.svg');
     }
 
@@ -199,6 +203,7 @@ limitations under the License.
 
     .mx_UserMenu_CustomStatusSection_input {
         position: relative;
+        display: flex;
 
         > input {
             border: 1px solid $accent;

@@ -59,6 +59,20 @@ const CustomStatusSection = () => {
     const setStatus = cli.getUser(cli.getUserId()).unstable_statusMessage || "";
     const [value, setValue] = useState(setStatus);
 
+    let details: JSX.Element;
+    if (value !== setStatus) {
+        details = <>
+            <p>{ _t("Your status will be shown to people you have a DM with.") }</p>
+
+            <AccessibleButton
+                onClick={() => cli._unstable_setStatusMessage(value)}
+                kind="primary_outline"
+            >
+                { value ? _t("Set status") : _t("Clear status") }
+            </AccessibleButton>
+        </>;
+    }
+
     return <div className="mx_UserMenu_CustomStatusSection">
         <div className="mx_UserMenu_CustomStatusSection_input">
             <input
@@ -76,15 +90,7 @@ const CustomStatusSection = () => {
             />
         </div>
 
-        <p>{ _t("Your status will be shown to people you have a DM with.") }</p>
-
-        <AccessibleButton
-            onClick={() => cli._unstable_setStatusMessage(value)}
-            kind="primary_outline"
-            disabled={value === setStatus}
-        >
-            { value ? _t("Set status") : _t("Clear status") }
-        </AccessibleButton>
+        { details }
     </div>;
 };
 
@@ -370,7 +376,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_dnd")) {
             dndButton = (
                 <IconizedContextMenuCheckbox
-                    iconClassName="mx_UserMenu_iconDnd"
+                    iconClassName={this.state.dndEnabled ? "mx_UserMenu_iconDnd" : "mx_UserMenu_iconDndOff"}
                     label={_t("Do not disturb")}
                     onClick={this.onDndToggle}
                     active={this.state.dndEnabled}
