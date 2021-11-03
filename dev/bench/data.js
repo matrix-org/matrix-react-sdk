@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635928395943,
+  "lastUpdate": 1635929403212,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36836,6 +36836,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4712.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "801eb068d69b24482c417a995c17cb4febed1881",
+          "message": "Make attachments uploadable to a thread (#7064)",
+          "timestamp": "2021-11-03T08:43:24Z",
+          "tree_id": "c3326e390797c717e0a45708cd9aedf8ba91630c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/801eb068d69b24482c417a995c17cb4febed1881"
+        },
+        "date": 1635929399267,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4687,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1121.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1702,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4798.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
