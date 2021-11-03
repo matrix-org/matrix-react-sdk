@@ -43,6 +43,17 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset 
     });
 }
 
+
+export function replaceRangeAndResetCaret(range: Range, newParts: Part[], offset = 0): void {
+    const { model } = range;
+    model.transform(() => {
+        range.replace(newParts);
+        const initialPosition = range.getInitialPosition();
+        const previousCaretOffset = initialPosition.asOffset(model).add(offset);
+        return previousCaretOffset.asPosition(model);
+    });
+}
+
 export function rangeStartsAtBeginningOfLine(range: Range): boolean {
     const { model } = range;
     const startsWithPartial = range.start.offset !== 0;
@@ -76,9 +87,13 @@ export function formatRangeAsQuote(range: Range): void {
     if (!rangeEndsAtEndOfLine(range)) {
         parts.push(partCreator.newline());
     }
-
     parts.push(partCreator.newline());
-    replaceRangeAndExpandSelection(range, parts);
+
+    if (range.wasInitializedEmpty()) {
+        replaceRangeAndMoveCaret(range, parts);
+    } else {
+        replaceRangeAndExpandSelection(range, parts);
+    }
 }
 
 export function formatRangeAsCode(range: Range): void {
@@ -111,19 +126,11 @@ export function formatRangeAsCode(range: Range): void {
             parts.push(partCreator.newline());
         }
     } else {        
-        const hasInlineFormatting = (range.length > 0)
-            && range.text.startsWith("`")
-            && range.text.endsWith("`");
-        if (hasInlineFormatting) {
-            toggleInlineFormat(range, "`");
-            return; // Toggle already does replace the range for us
-        } else {
-            parts.unshift(partCreator.plain("`"));
-            parts.push(partCreator.plain("`"));
-        }
+        toggleInlineFormat(range, "`");
+        return;
     }
 
-    replaceRangeAndExpandSelection(range, parts);
+    replaceRangeAndExpandSelection(range, parts); 
 }
 
 export function formatRangeAsLink(range: Range) {
@@ -201,5 +208,16 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
         }
     });
 
-    replaceRangeAndExpandSelection(range, parts);
+    // If the user didn't select something initially, we want to just restore
+    // the caret position instead of making a new selection.
+    if (range.wasInitializedEmpty()) {
+        // Check if we need to add a offset for a toggle or untoggle
+        if (range.text.startsWith(prefix) && range.text.endsWith(suffix)) {
+            replaceRangeAndResetCaret(range, parts, -prefix.length); 
+        } else {
+            replaceRangeAndResetCaret(range, parts, prefix.length); 
+        }
+    } else {
+        replaceRangeAndExpandSelection(range, parts);
+    }
 }

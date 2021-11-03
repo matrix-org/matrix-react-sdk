@@ -694,7 +694,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         );
     }
 
-    private getRangeOfWordAtCaret(): Range {
+    private getRangeOfWordAtCaretPosition(): Range {
         const { model } = this.props;
         let caret = this.getCaret();
         let position = model.positionForOffset(caret.offset, caret.atNodeEnd);
@@ -705,7 +705,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             return this.isWord(offset, part);
         });
 
-        // Reset caret position
+        // Reset to caret position
         caret = this.getCaret();
         position = model.positionForOffset(caret.offset, caret.atNodeEnd);
 
@@ -724,17 +724,17 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // There should be no reason to format whitespace, so we just return.
         // This also prevents weird, jumpy selection behavior that would occur
         // in this case, that is caused by the later trim.
-        if (range.text.trim().length == 0) {
+        if (range.length > 0 && range.text.trim().length === 0) {
             return;
         }
 
         // If the user didn't select any text, we select the current word instead
-        if (range.length == 0) {
-            range = this.getRangeOfWordAtCaret();
-        } else {
-            // Trim the range as we want it to exclude leading/trailing spaces
-            range.trim();
+        if (range.length === 0) {
+            range = this.getRangeOfWordAtCaretPosition();
         }
+
+        // Trim the range as we want it to exclude leading/trailing spaces
+        // range.trim();
         
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
