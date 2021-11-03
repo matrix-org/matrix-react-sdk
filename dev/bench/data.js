@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635963075134,
+  "lastUpdate": 1635963821371,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -36980,6 +36980,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4889.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bd2f4b6c93c5671b333d070f7fccda34d40aba5a",
+          "message": "Fix thread switching sometimes stuck (#7079)",
+          "timestamp": "2021-11-03T18:17:05Z",
+          "tree_id": "4ae26ea18398d654a0b50ccbed73b2bed4081afe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bd2f4b6c93c5671b333d070f7fccda34d40aba5a"
+        },
+        "date": 1635963818346,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4030.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1129.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1695.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4741.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
