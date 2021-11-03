@@ -26,7 +26,7 @@ import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import RoomAvatar from "../avatars/RoomAvatar";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore, { SpaceKey } from "../../../stores/SpaceStore";
 import SpaceTreeLevelLayoutStore from "../../../stores/SpaceTreeLevelLayoutStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { _t } from "../../../languageHandler";
@@ -146,7 +146,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
 
 interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
     space?: Room;
-    activeSpaces: Room[];
+    activeSpaces: SpaceKey[];
     isNested?: boolean;
     isPanelCollapsed?: boolean;
     onExpand?: Function;
@@ -258,7 +258,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
     private onClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        SpaceStore.instance.setActiveSpace(this.props.space);
+        SpaceStore.instance.setActiveSpace(this.props.space.roomId);
     };
 
     render() {
@@ -316,7 +316,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     {...restDragHandleProps}
                     space={space}
                     className={isInvite ? "mx_SpaceButton_invite" : undefined}
-                    selected={activeSpaces.includes(space)}
+                    selected={activeSpaces.includes(space.roomId)}
                     label={space.name}
                     contextMenuTooltip={_t("Space options")}
                     notificationState={notificationState}
@@ -337,7 +337,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
 
 interface ITreeLevelProps {
     spaces: Room[];
-    activeSpaces: Room[];
+    activeSpaces: SpaceKey[];
     isNested?: boolean;
     parents: Set<string>;
 }

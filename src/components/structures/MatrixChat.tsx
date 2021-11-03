@@ -712,10 +712,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             }
             case Action.ViewRoomDirectory: {
-                if (SpaceStore.instance.activeSpace) {
+                if (SpaceStore.instance.activeSpace[0] === "!") {
                     defaultDispatcher.dispatch({
                         action: "view_room",
-                        room_id: SpaceStore.instance.activeSpace.roomId,
+                        room_id: SpaceStore.instance.activeSpace,
                     });
                 } else {
                     Modal.createTrackedDialog('Room directory', '', RoomDirectory, {

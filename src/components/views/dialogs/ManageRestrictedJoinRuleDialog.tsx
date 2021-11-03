@@ -75,7 +75,7 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
     const [spacesContainingRoom, otherEntries] = useMemo(() => {
         const spaces = cli.getVisibleRooms().filter(r => r.getMyMembership() === "join" && r.isSpaceRoom());
         return [
-            spaces.filter(r => SpaceStore.instance.getSpaceFilteredRoomIds(r).has(room.roomId)),
+            spaces.filter(r => SpaceStore.instance.getSpaceFilteredRoomIds(r.roomId).has(room.roomId)),
             selected.map(roomId => {
                 const room = cli.getRoom(roomId);
                 if (!room) {

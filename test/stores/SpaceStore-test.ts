@@ -20,6 +20,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import "../skinned-sdk"; // Must be first for skinning to work
 import SpaceStore, {
+    MetaSpace,
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_INVITED_SPACES,
     UPDATE_SELECTED_SPACE,
@@ -615,7 +616,7 @@ describe("SpaceStore", () => {
             mkSpace(space3).getMyMembership.mockReturnValue("invite");
             await run();
             store.setActiveSpace(null);
-            expect(store.activeSpace).toBe(null);
+            expect(store.activeSpace).toBe(MetaSpace.Home);
         });
         afterEach(() => {
             fn.mockClear();
@@ -627,36 +628,36 @@ describe("SpaceStore", () => {
 
             store.setActiveSpace(null);
             expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, null);
-            expect(store.activeSpace).toBe(null);
+            expect(store.activeSpace).toBe(MetaSpace.Home);
         });
 
         it("switch to invited space", async () => {
             const space = client.getRoom(space3);
             store.setActiveSpace(space);
             expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space);
-            expect(store.activeSpace).toBe(space);
+            expect(store.activeSpace).toBe(space.roomId);
         });
 
         it("switch to top level space", async () => {
             const space = client.getRoom(space1);
             store.setActiveSpace(space);
             expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space);
-            expect(store.activeSpace).toBe(space);
+            expect(store.activeSpace).toBe(space.roomId);
         });
 
         it("switch to subspace", async () => {
             const space = client.getRoom(space2);
             store.setActiveSpace(space);
             expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space);
-            expect(store.activeSpace).toBe(space);
+            expect(store.activeSpace).toBe(space.roomId);
         });
 
         it("switch to unknown space is a nop", async () => {
-            expect(store.activeSpace).toBe(null);
+            expect(store.activeSpace).toBe(MetaSpace.Home);
             const space = client.getRoom(room1); // not a space
             store.setActiveSpace(space);
             expect(fn).not.toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space);
-            expect(store.activeSpace).toBe(null);
+            expect(store.activeSpace).toBe(MetaSpace.Home);
         });
     });
 
@@ -769,28 +770,28 @@ describe("SpaceStore", () => {
             viewRoom(room1);
             store.setActiveSpace(client.getRoom(space1), false);
             viewRoom(room2);
-            expect(store.activeSpace).toBe(client.getRoom(space1));
+            expect(store.activeSpace).toBe(space1);
         });
 
         it("switch to canonical parent space for room", async () => {
             viewRoom(room1);
             store.setActiveSpace(client.getRoom(space2), false);
             viewRoom(room2);
-            expect(store.activeSpace).toBe(client.getRoom(space2));
+            expect(store.activeSpace).toBe(space2);
         });
 
         it("switch to first containing space for room", async () => {
             viewRoom(room2);
             store.setActiveSpace(client.getRoom(space2), false);
             viewRoom(room3);
-            expect(store.activeSpace).toBe(client.getRoom(space1));
+            expect(store.activeSpace).toBe(space1);
         });
 
         it("switch to home for orphaned room", async () => {
             viewRoom(room1);
             store.setActiveSpace(client.getRoom(space1), false);
             viewRoom(orphan1);
-            expect(store.activeSpace).toBeNull();
+            expect(store.activeSpace).toBe(MetaSpace.Home);
         });
 
         it("when switching rooms in the all rooms home space don't switch to related space", async () => {
@@ -798,7 +799,7 @@ describe("SpaceStore", () => {
             viewRoom(room2);
             store.setActiveSpace(null, false);
             viewRoom(room1);
-            expect(store.activeSpace).toBeNull();
+            expect(store.activeSpace).toBe(MetaSpace.Home);
         });
     });
 

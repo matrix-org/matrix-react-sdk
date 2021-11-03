@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-
 import { RoomListStoreClass } from "./RoomListStore";
 import { SpaceFilterCondition } from "./filters/SpaceFilterCondition";
-import SpaceStore, { UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../SpaceStore";
+import SpaceStore, { SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../SpaceStore";
 
 /**
  * Watches for changes in spaces to manage the filter on the provided RoomListStore
@@ -26,7 +24,7 @@ import SpaceStore, { UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../Spa
 export class SpaceWatcher {
     private readonly filter = new SpaceFilterCondition();
     // we track these separately to the SpaceStore as we need to observe transitions
-    private activeSpace: Room = SpaceStore.instance.activeSpace;
+    private activeSpace: SpaceKey = SpaceStore.instance.activeSpace;
     private allRoomsInHome: boolean = SpaceStore.instance.allRoomsInHome;
 
     constructor(private store: RoomListStoreClass) {
@@ -38,7 +36,7 @@ export class SpaceWatcher {
         SpaceStore.instance.on(UPDATE_HOME_BEHAVIOUR, this.onHomeBehaviourUpdated);
     }
 
-    private onSelectedSpaceUpdated = (activeSpace?: Room, allRoomsInHome = this.allRoomsInHome) => {
+    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome = this.allRoomsInHome) => {
         if (activeSpace === this.activeSpace && allRoomsInHome === this.allRoomsInHome) return; // nop
 
         const oldActiveSpace = this.activeSpace;
@@ -62,8 +60,8 @@ export class SpaceWatcher {
     };
 
     private updateFilter = () => {
-        if (this.activeSpace) {
-            SpaceStore.instance.traverseSpace(this.activeSpace.roomId, roomId => {
+        if (this.activeSpace[0] === "!") {
+            SpaceStore.instance.traverseSpace(this.activeSpace, roomId => {
                 this.store.matrixClient?.getRoom(roomId)?.loadMembersIfNeeded();
             });
         }

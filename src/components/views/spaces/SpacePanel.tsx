@@ -35,7 +35,8 @@ import { SpaceButton, SpaceItem } from "./SpaceTreeLevel";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore, {
-    HOME_SPACE,
+    MetaSpace,
+    SpaceKey,
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_INVITED_SPACES,
     UPDATE_SELECTED_SPACE,
@@ -53,14 +54,14 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import UIStore from "../../../stores/UIStore";
 
-const useSpaces = (): [Room[], Room[], Room | null] => {
+const useSpaces = (): [Room[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
         return SpaceStore.instance.invitedSpaces;
     });
     const spaces = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_TOP_LEVEL_SPACES, () => {
         return SpaceStore.instance.spacePanelSpaces;
     });
-    const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
+    const activeSpace = useEventEmitterState<SpaceKey>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpace;
     });
     return [invites, spaces, activeSpace];
@@ -122,7 +123,7 @@ const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
             label={allRoomsInHome ? _t("All rooms") : _t("Home")}
             notificationState={allRoomsInHome
                 ? RoomNotificationStateStore.instance.globalState
-                : SpaceStore.instance.getNotificationState(HOME_SPACE)}
+                : SpaceStore.instance.getNotificationState(MetaSpace.Home)}
             isNarrow={isPanelCollapsed}
             ContextMenuComponent={HomeButtonContextMenu}
             contextMenuTooltip={_t("Options")}
@@ -187,7 +188,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
     const activeSpaces = activeSpace ? [activeSpace] : [];
 
     return <div className="mx_SpaceTreeLevel">
-        <HomeButton selected={!activeSpace} isPanelCollapsed={isPanelCollapsed} />
+        <HomeButton selected={activeSpace === MetaSpace.Home} isPanelCollapsed={isPanelCollapsed} />
         { invites.map(s => (
             <SpaceItem
                 key={s.roomId}
