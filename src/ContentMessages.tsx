@@ -46,7 +46,7 @@ import SettingsStore from "./settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation } from "matrix-js-sdk";
+import { IEventRelation } from "matrix-js-sdk/src";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;

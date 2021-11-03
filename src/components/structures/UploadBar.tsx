@@ -27,7 +27,7 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import { IUpload } from "../../models/IUpload";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { IEventRelation } from 'matrix-js-sdk';
+import { IEventRelation } from 'matrix-js-sdk/src';
 
 interface IProps {
     room: Room;
