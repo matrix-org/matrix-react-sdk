@@ -42,6 +42,7 @@ import classNames from 'classnames';
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
+import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -196,14 +197,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     };
 
     private onThreadClick = (): void => {
-        dis.dispatch({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.ThreadView,
-            allowClose: false,
-            refireParams: {
-                event: this.props.mxEvent,
-            },
-        });
+        dispatchShowThreadEvent(this.props.mxEvent);
     };
 
     private onEditClick = (ev: React.MouseEvent): void => {
