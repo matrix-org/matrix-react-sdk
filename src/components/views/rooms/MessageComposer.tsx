@@ -52,9 +52,11 @@ import EditorModel from "../../../editor/model";
 import EmojiPicker from '../emojipicker/EmojiPicker';
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import Modal from "../../../Modal";
-import InfoDialog from "../dialogs/InfoDialog";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import RoomContext from '../../../contexts/RoomContext';
+import { POLL_START_EVENT_TYPE } from "../../../polls/consts";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import PollCreateDialog from "../elements/PollCreateDialog";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -115,6 +117,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
 
 interface IUploadButtonProps {
     roomId: string;
+    relation?: IEventRelation | null;
 }
 
 class UploadButton extends React.Component<IUploadButtonProps> {
@@ -156,7 +159,7 @@ class UploadButton extends React.Component<IUploadButtonProps> {
         }
 
         ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(),
+            tfiles, this.props.roomId, this.props.relation, MatrixClientPeg.get(),
         );
 
         // This is the onChange handler for a file form control, but we're
@@ -186,18 +189,26 @@ class UploadButton extends React.Component<IUploadButtonProps> {
     }
 }
 
-// TODO: [polls] Make this component actually do something
-class PollButton extends React.PureComponent {
+interface IPollButtonProps {
+    room: Room;
+}
+
+class PollButton extends React.PureComponent<IPollButtonProps> {
     private onCreateClick = () => {
-        Modal.createTrackedDialog('Polls', 'Not Yet Implemented', InfoDialog, {
-            // XXX: Deliberately not translated given this dialog is meant to be replaced and we don't
-            // want to clutter the language files with short-lived strings.
-            title: "Polls are currently in development",
-            description: "" +
-                "Thanks for testing polls! We haven't quite gotten a chance to write the feature yet " +
-                "though. Check back later for updates.",
-            hasCloseButton: true,
-        });
+        const canSend = this.props.room.currentState.maySendEvent(
+            POLL_START_EVENT_TYPE.name,
+            MatrixClientPeg.get().getUserId(),
+        );
+        if (!canSend) {
+            Modal.createTrackedDialog('Polls', 'permissions error: cannot start', ErrorDialog, {
+                title: _t("Permission Required"),
+                description: _t("You do not have permission to start polls in this room."),
+            });
+        } else {
+            Modal.createTrackedDialog('Polls', 'create', PollCreateDialog, {
+                room: this.props.room,
+            }, 'mx_CompoundDialog');
+        }
     };
 
     render() {
@@ -454,11 +465,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         if (!this.state.haveRecording) {
             if (SettingsStore.getValue("feature_polls")) {
                 buttons.push(
-                    <PollButton key="polls" />,
+                    <PollButton key="polls" room={this.props.room} />,
                 );
             }
             buttons.push(
-                <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
+                <UploadButton
+                    key="controls_upload"
+                    roomId={this.props.room.roomId}
+                    relation={this.props.relation}
+                />,
             );
             buttons.push(
                 <EmojiButton key="emoji_button" addEmoji={this.addEmoji} menuPosition={menuPosition} narrowMode={this.state.narrowMode} />,
@@ -618,6 +633,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             "mx_MessageComposer": true,
             "mx_GroupLayout": true,
             "mx_MessageComposer--compact": this.props.compact,
+            "mx_MessageComposer_e2eStatus": this.props.e2eStatus != undefined,
         });
 
         return (
