@@ -64,6 +64,9 @@ import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewSto
 import { logger } from "matrix-js-sdk/src/logger";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
+import Toolbar from '../../../accessibility/Toolbar';
+import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
+import { ThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -1354,7 +1357,17 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 tileShape={this.props.tileShape}
                             />
                             { keyRequestInfo }
-                            { actionBar }
+                            <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+                                <RovingAccessibleTooltipButton
+                                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                                    title={_t("Thread")}
+                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                                    key="thread"
+                                />
+                                <ThreadListContextMenu
+                                    mxEvent={this.props.mxEvent}
+                                    permalinkCreator={this.props.permalinkCreator} />
+                            </Toolbar>
                             { this.renderThreadLastMessagePreview() }
                         </div>
                         { msgOption }

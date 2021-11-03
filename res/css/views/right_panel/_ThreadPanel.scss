@@ -47,7 +47,11 @@ limitations under the License.
 
         .mx_AccessibleButton {
             font-size: 12px;
-            color: $secondary-content;
+            color: $primary-content;
+        }
+
+        .mx_MessageActionBar_optionsButton {
+            position: relative;
         }
 
         .mx_ContextualMenu_wrapper {
