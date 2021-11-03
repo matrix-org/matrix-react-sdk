@@ -304,7 +304,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     msg = _t('This server does not support authentication with a phone number.');
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
-                msg = _t("That username already exists, please try another.");
+                msg = _t("Someone already has that username, please try another.");
             }
             this.setState({
                 busy: false,

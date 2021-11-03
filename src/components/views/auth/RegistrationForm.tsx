@@ -401,8 +401,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                         return false;
                     }
                 },
-                invalid: () => _t("That username already exists, please try another. " +
-                    "If it belongs to you then click 'Sign in here' below"),
+                invalid: () => _t("Someone already has that username. Try another or if it is you, sign in below."),
             },
         ],
     });
