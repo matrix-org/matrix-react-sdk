@@ -440,8 +440,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (this.allRoomsInHome) return true;
         if (room.isSpaceRoom()) return false;
         return !this.parentMap.get(room.roomId)?.size // put all orphaned rooms in the Home Space
-            || DMRoomMap.shared().getUserIdForRoomId(room.roomId) // put all DMs in the Home Space
-            || RoomListStore.instance.getTagsForRoom(room).includes(DefaultTagID.Favourite); // show all favourites
+            || DMRoomMap.shared().getUserIdForRoomId(room.roomId); // put all DMs in the Home Space
     };
 
     // Update a given room due to its tag changing (e.g DM-ness or Fav-ness)
@@ -694,7 +693,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             if (order !== lastOrder) {
                 this.notifyIfOrderChanged();
             }
-        } else if (ev.getType() === EventType.Tag && !this.allRoomsInHome) {
+        } else if (ev.getType() === EventType.Tag) {
             // If the room was in favourites and now isn't or the opposite then update its position in the trees
             const oldTags = lastEv?.getContent()?.tags || {};
             const newTags = ev.getContent()?.tags || {};
