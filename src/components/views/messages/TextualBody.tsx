@@ -44,6 +44,7 @@ import MessageEditHistoryDialog from "../dialogs/MessageEditHistoryDialog";
 import EditMessageComposer from '../rooms/EditMessageComposer';
 import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
 import { IBodyProps } from "./IBodyProps";
+import RoomContext from "../../../contexts/RoomContext";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -61,6 +62,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
     private unmounted = false;
     private pills: Element[] = [];
+
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     constructor(props) {
         super(props);
@@ -232,7 +236,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             );
             return;
         }
-        console.log('highlighting');
 
         let advertisedLang;
         for (const cl of code.className.split(/\s+/)) {
@@ -258,7 +261,11 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             // User has language detection enabled and the code is within a pre
             // we only auto-highlight if the code block is in a pre), so highlight
             // the block with auto-highlighting enabled.
-            highlight.highlightElement(code);
+            // We pass highlightjs the text to highlight rather than letting it
+            // work on the DOM with highlightElement because that also adds CSS
+            // classes to the pre/code element that we don't want (the CSS
+            // conflicts with our own).
+            code.innerHTML = highlight.highlightAuto(code.textContent).value;
         }
     }
 
@@ -403,6 +410,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: mxEvent.getSender(),
+            timelineRenderingType: this.context.timelineRenderingType,
         });
     };
 
