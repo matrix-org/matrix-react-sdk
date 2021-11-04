@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636030986530,
+  "lastUpdate": 1636040174424,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37244,6 +37244,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 686.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a76fa5d62479030fb84575e63f0e26ae090547db",
+          "message": "add feature flag for maximised widgets (#7084)",
+          "timestamp": "2021-11-04T16:30:07+01:00",
+          "tree_id": "c293b032f0cc7b17b3cbf66ab4211802db5d77df",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a76fa5d62479030fb84575e63f0e26ae090547db"
+        },
+        "date": 1636040171746,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5581.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1040.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1634.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4732.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
