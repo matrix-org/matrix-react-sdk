@@ -22,13 +22,25 @@ limitations under the License.
         overflow-y: auto;
 
         > h4 {
-            margin: 0;
+            margin: 0 0 12px 0;
         }
 
         .mx_AccessibleButton {
-            margin-top: 16px;
+            margin-top: 2px;
+            padding: 4px;
             display: flex;
             align-items: center;
+            border-radius: 8px;
+
+            &:hover {
+                background-color: $tertiary-content;
+
+                color: $background;
+
+                .mx_RecentlyViewedButton_entry_spaces {
+                    color: $background;
+                }
+            }
 
             .mx_BaseAvatar {
                 margin-right: 8px;
