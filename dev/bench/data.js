@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636021921494,
+  "lastUpdate": 1636022589175,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37124,6 +37124,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4836.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "558a6204f1b2130cacd3a05ead1c9de32a6c2990",
+          "message": "Fix possible infinite loop on widget start (#7071)\n\n* fix 15494 infinit loop on widget start error\r\n\r\n* change message to error from log\r\nand fix block style",
+          "timestamp": "2021-11-04T11:36:20+01:00",
+          "tree_id": "1ea35b74d370c28caea4c330e7a236b4f9d0ee27",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/558a6204f1b2130cacd3a05ead1c9de32a6c2990"
+        },
+        "date": 1636022586033,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4866.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 684.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
