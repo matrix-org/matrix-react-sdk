@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636021871127,
+  "lastUpdate": 1636021921494,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37076,6 +37076,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4825.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e26abbba723328a0b982fb11ed99ab7342ffcae1",
+          "message": "Do pre-submit availability check on username during registration (#6978)",
+          "timestamp": "2021-11-04T10:25:26Z",
+          "tree_id": "0d0096f3784bd833677e8321ec167a98858e6930",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e26abbba723328a0b982fb11ed99ab7342ffcae1"
+        },
+        "date": 1636021917186,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4906.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1127.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1689.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4836.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
