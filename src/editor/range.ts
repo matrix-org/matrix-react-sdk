@@ -17,7 +17,6 @@ limitations under the License.
 import EditorModel from "./model";
 import DocumentPosition, { Predicate } from "./position";
 import { Part } from "./parts";
-import { logger } from "matrix-js-sdk/src/logger";
 
 const whitespacePredicate: Predicate = (index, offset, part) => {
     return part.text[offset].trim() === "";

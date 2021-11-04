@@ -43,7 +43,6 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset 
     });
 }
 
-
 export function replaceRangeAndResetCaret(range: Range, newParts: Part[], offset = 0): void {
     const { model } = range;
     model.transform(() => {
@@ -125,12 +124,12 @@ export function formatRangeAsCode(range: Range): void {
         if (!rangeEndsAtEndOfLine(range)) {
             parts.push(partCreator.newline());
         }
-    } else {        
+    } else {
         toggleInlineFormat(range, "`");
         return;
     }
 
-    replaceRangeAndExpandSelection(range, parts); 
+    replaceRangeAndExpandSelection(range, parts);
 }
 
 export function formatRangeAsLink(range: Range) {
@@ -196,7 +195,7 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
             const partWithoutPrefix = parts[base].serialize();
             partWithoutPrefix.text = partWithoutPrefix.text.substring(prefix.length);
             parts[base] = partCreator.deserializePart(partWithoutPrefix);
-        
+
             const partWithoutSuffix = parts[index - 1].serialize();
             const suffixPartText = partWithoutSuffix.text;
             partWithoutSuffix.text = suffixPartText.substring(0, suffixPartText.length - suffix.length);
@@ -213,9 +212,9 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
     if (range.wasInitializedEmpty()) {
         // Check if we need to add a offset for a toggle or untoggle
         if (range.text.startsWith(prefix) && range.text.endsWith(suffix)) {
-            replaceRangeAndResetCaret(range, parts, -prefix.length); 
+            replaceRangeAndResetCaret(range, parts, -prefix.length);
         } else {
-            replaceRangeAndResetCaret(range, parts, prefix.length); 
+            replaceRangeAndResetCaret(range, parts, prefix.length);
         }
     } else {
         replaceRangeAndExpandSelection(range, parts);

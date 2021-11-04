@@ -585,7 +585,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
             const range = model.startRange(position);
             range.expandBackwardsWhile((index, offset, part) => {
-                return this.isWord(offset, part);
+                return part.text[offset] !== " " && part.text[offset] !== "+" && (
+                    part.type === Type.Plain ||
+                    part.type === Type.PillCandidate ||
+                    part.type === Type.Command
+                );
             });
             const { partCreator } = model;
             // await for auto-complete to be open
@@ -686,32 +690,25 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         return caretPosition;
     }
 
-    private isWord(offset: number, part: Part): boolean {
-        return part.text[offset] !== " " && part.text[offset] !== "+" && (
-            part.type === Type.Plain ||
-            part.type === Type.PillCandidate ||
-            part.type === Type.Command
-        );
+    private isPlainWord(offset: number, part: Part): boolean {
+        return part.text[offset] !== " " && part.text[offset] !== "+" && part.text[offset] !== "+"
+            && part.type !== Type.Newline && part.type === Type.Plain;
     }
 
     private getRangeOfWordAtCaretPosition(): Range {
         const { model } = this.props;
-        let caret = this.getCaret();
-        let position = model.positionForOffset(caret.offset, caret.atNodeEnd);
+        const caret = this.getCaret();
+        const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
         const range = model.startRange(position);
 
-        // Select left side of word
-        range.expandForwardsWhile((index, offset, part) => {
-            return this.isWord(offset, part);
+        // Select right side of word
+        range.expandForwardsWhile((_index, offset, part) => {
+            return this.isPlainWord(offset, part);
         });
 
-        // Reset to caret position
-        caret = this.getCaret();
-        position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-
-        // Select right side of word
-        range.expandBackwardsWhile((index, offset, part) => {
-            return this.isWord(offset, part);
+        // Select left side of word
+        range.expandBackwardsWhile((_index, offset, part) => {
+            return this.isPlainWord(offset, part);
         });
 
         return range;
@@ -721,7 +718,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         let range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
 
         // Edgecase when just selecting whitespace or new line.
-        // There should be no reason to format whitespace, so we just return.
+        // There should be no reason to format whitespace, so we can just return.
         // This also prevents weird, jumpy selection behavior that would occur
         // in this case, that is caused by the later trim.
         if (range.length > 0 && range.text.trim().length === 0) {
@@ -732,10 +729,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (range.length === 0) {
             range = this.getRangeOfWordAtCaretPosition();
         }
-
         // Trim the range as we want it to exclude leading/trailing spaces
-        // range.trim();
-        
+        range.trim();
+
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
         switch (action) {
