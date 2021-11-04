@@ -37,7 +37,7 @@ interface IState {
     fetchingData: boolean;
     posterLoading: boolean;
     blurhashUrl: string;
-    renderPoster: boolean;
+    hasPlayed: boolean;
 }
 
 @replaceableComponent("views.messages.MVideoBody")
@@ -55,7 +55,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             error: null,
             posterLoading: false,
             blurhashUrl: null,
-            renderPoster: true,
+            hasPlayed: false,
         };
     }
 
@@ -197,7 +197,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         // which creates weird artifacts if the video contains transparency.
         if (this.hasContentUrl()) {
             this.setState({
-                renderPoster: false,
+                hasPlayed: true,
             });
         }
         if (this.hasContentUrl() || this.state.fetchingData || this.state.error) {
@@ -271,7 +271,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             }
 
             if (thumbUrl) {
-                if (this.state.renderPoster) {
+                if (!this.state.hasPlayed) {
                     poster = thumbUrl;
                 } else {
                     poster = null;
