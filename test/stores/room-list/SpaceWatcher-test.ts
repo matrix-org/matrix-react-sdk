@@ -18,12 +18,12 @@ import "../../skinned-sdk"; // Must be first for skinning to work
 import { SpaceWatcher } from "../../../src/stores/room-list/SpaceWatcher";
 import type { RoomListStoreClass } from "../../../src/stores/room-list/RoomListStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
-import SpaceStore, { UPDATE_HOME_BEHAVIOUR } from "../../../src/stores/SpaceStore";
+import SpaceStore, { MetaSpace, UPDATE_HOME_BEHAVIOUR } from "../../../src/stores/SpaceStore";
 import { stubClient } from "../../test-utils";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
+import * as testUtils from "../../utils/test-utils";
 import { setupAsyncStoreWithClient } from "../../utils/test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
-import * as testUtils from "../../utils/test-utils";
 import { SpaceFilterCondition } from "../../../src/stores/room-list/filters/SpaceFilterCondition";
 
 let filter: SpaceFilterCondition = null;
@@ -56,7 +56,7 @@ describe("SpaceWatcher", () => {
     beforeEach(async () => {
         filter = null;
         store.removeAllListeners();
-        store.setActiveSpace(null);
+        store.setActiveSpace(MetaSpace.Home);
         client.getVisibleRooms.mockReturnValue(rooms = []);
 
         space1 = mkSpace(space1Id);
@@ -87,7 +87,7 @@ describe("SpaceWatcher", () => {
         await setShowAllRooms(false);
 
         expect(filter).toBeInstanceOf(SpaceFilterCondition);
-        expect(filter["space"]).toBeNull();
+        expect(filter["space"]).toBe(MetaSpace.Home);
     });
 
     it("sets filter correctly for all -> space transition", async () => {
@@ -126,7 +126,7 @@ describe("SpaceWatcher", () => {
         SpaceStore.instance.setActiveSpace(space1);
         expect(filter).toBeInstanceOf(SpaceFilterCondition);
         expect(filter["space"]).toBe(space1);
-        SpaceStore.instance.setActiveSpace(null);
+        SpaceStore.instance.setActiveSpace(MetaSpace.Home);
 
         expect(filter).toBeNull();
     });
@@ -138,10 +138,10 @@ describe("SpaceWatcher", () => {
         new SpaceWatcher(mockRoomListStore);
         expect(filter).toBeInstanceOf(SpaceFilterCondition);
         expect(filter["space"]).toBe(space1);
-        SpaceStore.instance.setActiveSpace(null);
+        SpaceStore.instance.setActiveSpace(MetaSpace.Home);
 
         expect(filter).toBeInstanceOf(SpaceFilterCondition);
-        expect(filter["space"]).toBe(null);
+        expect(filter["space"]).toBe(MetaSpace.Home);
     });
 
     it("updates filter correctly for space -> space transition", async () => {
