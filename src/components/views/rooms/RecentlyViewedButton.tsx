@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useContext } from "react";
 
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
@@ -23,6 +23,8 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import dis from "../../../dispatcher/dispatcher";
+import SpaceStore from "../../../stores/SpaceStore";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -33,6 +35,7 @@ const contextMenuBelow = (elementRect: DOMRect) => {
 };
 
 const RecentlyViewedButton = () => {
+    const cli = useContext(MatrixClientContext);
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
     const crumbs = useEventEmitterState(BreadcrumbsStore.instance, UPDATE_EVENT, () => BreadcrumbsStore.instance.rooms);
 
@@ -45,8 +48,21 @@ const RecentlyViewedButton = () => {
         >
             <h4>{ _t("Recently viewed") }</h4>
 
-            { crumbs.map(crumb => (
-                <MenuItem
+            { crumbs.map(crumb => {
+                let parentsSection: JSX.Element;
+                if (!crumb.isSpaceRoom()) {
+                    const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(crumb.roomId);
+                    if (parent) {
+                        parentsSection = <div className="mx_RecentlyViewedButton_entry_spaces">
+                            { _t("%(spaceName)s and %(count)s others", {
+                                spaceName: cli.getRoom(parent).name,
+                                count: otherParents.length,
+                            }) }
+                        </div>;
+                    }
+                }
+
+                return <MenuItem
                     key={crumb.roomId}
                     onClick={() => {
                         dis.dispatch({
@@ -63,12 +79,10 @@ const RecentlyViewedButton = () => {
                     />
                     <span className="mx_RecentlyViewedButton_entry_label">
                         <div>{ crumb.name }</div>
-                        { crumb.isSpaceRoom() ? null : <div className="mx_RecentlyViewedButton_entry_spaces">
-                            Space name and 3 others
-                        </div> }
+                        { parentsSection }
                     </span>
-                </MenuItem>
-            )) }
+                </MenuItem>;
+            }) }
         </ContextMenu>;
     }
 
