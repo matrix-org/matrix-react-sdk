@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636022589175,
+  "lastUpdate": 1636022776439,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37160,6 +37160,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 684.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7a203461f7dcc89e023c3021cd2d4c3179b7339f",
+          "message": "Fix TimeZone to be UTC in Jest tests (#7082)",
+          "timestamp": "2021-11-04T10:39:49Z",
+          "tree_id": "6168475e2717066917b2090d9a73b030a99c1c4f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7a203461f7dcc89e023c3021cd2d4c3179b7339f"
+        },
+        "date": 1636022773315,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4926.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1078.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1689.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4619,
             "unit": "ms",
             "extra": "type: measure"
           }
