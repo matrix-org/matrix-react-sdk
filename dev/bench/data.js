@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1635963821371,
+  "lastUpdate": 1636021871127,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37028,6 +37028,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4741.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e31b126daa7f6c39e2c223a821f0d40b5ae636f3",
+          "message": "Use device IDs for nameless devices in device list (#7081)",
+          "timestamp": "2021-11-04T06:24:48-04:00",
+          "tree_id": "2e802e670114353057d7fd84c29d28dc52df3966",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e31b126daa7f6c39e2c223a821f0d40b5ae636f3"
+        },
+        "date": 1636021868052,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4034.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1109.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1651.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4825.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
