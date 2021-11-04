@@ -18,21 +18,19 @@ import React, { useContext } from "react";
 
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import { ChevronFace, ContextMenu, ContextMenuTooltipButton, MenuItem, useContextMenu } from "../../structures/ContextMenu";
+import {
+    ContextMenu,
+    ContextMenuTooltipButton,
+    MenuItem,
+    toRightOf,
+    useContextMenu,
+} from "../../structures/ContextMenu";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import dis from "../../../dispatcher/dispatcher";
 import SpaceStore from "../../../stores/SpaceStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-
-const contextMenuBelow = (elementRect: DOMRect) => {
-    // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset;
-    const top = elementRect.bottom + window.pageYOffset + 17;
-    const chevronFace = ChevronFace.None;
-    return { left, top, chevronFace };
-};
 
 const RecentlyViewedButton = () => {
     const cli = useContext(MatrixClientContext);
@@ -42,7 +40,7 @@ const RecentlyViewedButton = () => {
     let contextMenu: JSX.Element;
     if (menuDisplayed) {
         contextMenu = <ContextMenu
-            {...contextMenuBelow(handle.current.getBoundingClientRect())}
+            {...toRightOf(handle.current.getBoundingClientRect())}
             onFinished={closeMenu}
             wrapperClassName="mx_RecentlyViewedButton_ContextMenu"
         >
