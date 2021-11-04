@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636040174424,
+  "lastUpdate": 1636046184803,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37292,6 +37292,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4732.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aacea8d87b9739d2b8284cfb0d66b3ad436e9224",
+          "message": "Fix MemberAvatar rendering and thread info color (#7085)",
+          "timestamp": "2021-11-04T17:10:22Z",
+          "tree_id": "c75ee421c52e3385fb13a7c915d5585df1f13547",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aacea8d87b9739d2b8284cfb0d66b3ad436e9224"
+        },
+        "date": 1636046181658,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5148.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 992.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4397.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
