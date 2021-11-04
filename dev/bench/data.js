@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636022776439,
+  "lastUpdate": 1636030986530,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37208,6 +37208,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4619,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9c8e1d32e205989d7504aa105b7f89971331ec5f",
+          "message": "Rename mx_RadioButton to mx_StyledRadioButton to match class name (#7083)",
+          "timestamp": "2021-11-04T12:57:38Z",
+          "tree_id": "035a83ea4ae25102f9f0883fa5b1d51ec50175b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9c8e1d32e205989d7504aa105b7f89971331ec5f"
+        },
+        "date": 1636030984161,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4780.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 686.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
