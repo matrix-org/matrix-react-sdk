@@ -710,7 +710,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         range.expandBackwardsWhile((index, offset, part) => {
             return this.isPlainWord(offset, part);
         });
-        
+
         // Cut off new lines
         range.trim();
         return range;
@@ -731,11 +731,10 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (range.length === 0) {
             // Already correctly trimmed
             range = this.getRangeOfWordAtCaretPosition();
-        } else {            
+        } else {
             // Trim the range as we want it to exclude leading/trailing spaces
             range.trim();
         }
-
 
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
