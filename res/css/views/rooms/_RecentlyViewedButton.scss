@@ -15,52 +15,51 @@ limitations under the License.
 */
 
 .mx_RecentlyViewedButton_ContextMenu {
-    .mx_ContextualMenu {
-        padding: 16px;
-        max-width: 240px;
-        max-height: 400px;
-        overflow-y: auto;
+    padding: 16px;
+    width: max-content;
+    max-width: 240px;
+    max-height: 400px;
+    overflow-y: auto;
 
-        > h4 {
-            margin: 0 0 12px 0;
-        }
+    > h4 {
+        margin: 0 0 12px 0;
+    }
 
-        .mx_AccessibleButton {
-            margin-top: 2px;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            border-radius: 8px;
+    .mx_AccessibleButton {
+        margin-top: 2px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
 
-            &:hover {
-                background-color: $tertiary-content;
+        &:hover {
+            background-color: $tertiary-content;
 
-                color: $background;
-
-                .mx_RecentlyViewedButton_entry_spaces {
-                    color: $background;
-                }
-            }
-
-            .mx_BaseAvatar {
-                margin-right: 8px;
-            }
-
-            .mx_RecentlyViewedButton_entry_label {
-                display: grid;
-
-                > div {
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
-            }
+            color: $background;
 
             .mx_RecentlyViewedButton_entry_spaces {
-                font-size: $font-12px;
-                line-height: $font-15px;
-                color: $secondary-content;
+                color: $background;
             }
+        }
+
+        .mx_BaseAvatar {
+            margin-right: 8px;
+        }
+
+        .mx_RecentlyViewedButton_entry_label {
+            display: grid;
+
+            > div {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .mx_RecentlyViewedButton_entry_spaces {
+            font-size: $font-12px;
+            line-height: $font-15px;
+            color: $secondary-content;
         }
     }
 }
