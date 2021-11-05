@@ -49,13 +49,16 @@ limitations under the License.
     }
 
     .mx_CallViewButtons {
-        bottom: 0px;
+        bottom: 13px;
     }
 
     .mx_CallViewButtons_button {
+        width: 34px;
+        height: 34px;
+
         &::before {
-            width: 36px;
-            height: 36px;
+            width: 22px;
+            height: 22px;
         }
     }
 
