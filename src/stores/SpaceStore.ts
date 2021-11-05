@@ -47,12 +47,11 @@ interface IState {}
 
 const ACTIVE_SPACE_LS_KEY = "mx_active_space";
 
-export const SUGGESTED_ROOMS = Symbol("suggested-rooms");
-
 export const UPDATE_TOP_LEVEL_SPACES = Symbol("top-level-spaces");
 export const UPDATE_INVITED_SPACES = Symbol("invited-spaces");
 export const UPDATE_SELECTED_SPACE = Symbol("selected-space");
 export const UPDATE_HOME_BEHAVIOUR = Symbol("home-behaviour");
+export const UPDATE_SUGGESTED_ROOMS = Symbol("suggested-rooms");
 // Space Key will be emitted when a Space's children change
 
 export enum MetaSpace {
@@ -203,7 +202,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         this._activeSpace = space;
         this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
-        this.emit(SUGGESTED_ROOMS, this._suggestedRooms = []);
+        this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms = []);
 
         if (contextSwitch) {
             // view last selected room from space
@@ -246,7 +245,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const suggestedRooms = await this.fetchSuggestedRooms(space);
         if (this._activeSpace === space.roomId) {
             this._suggestedRooms = suggestedRooms;
-            this.emit(SUGGESTED_ROOMS, this._suggestedRooms);
+            this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms);
         }
     }
 
@@ -606,7 +605,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 const numSuggestedRooms = this._suggestedRooms.length;
                 this._suggestedRooms = this._suggestedRooms.filter(r => r.room_id !== room.roomId);
                 if (numSuggestedRooms !== this._suggestedRooms.length) {
-                    this.emit(SUGGESTED_ROOMS, this._suggestedRooms);
+                    this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms);
                 }
 
                 // if the room currently being viewed was just joined then switch to its related space

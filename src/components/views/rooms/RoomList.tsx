@@ -44,7 +44,7 @@ import { objectShallowClone, objectWithOnly } from "../../../utils/objects";
 import { IconizedContextMenuOption, IconizedContextMenuOptionList } from "../context_menus/IconizedContextMenu";
 import AccessibleButton from "../elements/AccessibleButton";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
-import SpaceStore, { ISuggestedRoom, SpaceKey, SUGGESTED_ROOMS } from "../../../stores/SpaceStore";
+import SpaceStore, { ISuggestedRoom, SpaceKey, UPDATE_SUGGESTED_ROOMS } from "../../../stores/SpaceStore";
 import { showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -269,14 +269,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        SpaceStore.instance.on(SUGGESTED_ROOMS, this.updateSuggestedRooms);
+        SpaceStore.instance.on(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.updateLists);
         this.customTagStoreRef = CustomRoomTagStore.addListener(this.updateLists);
         this.updateLists(); // trigger the first update
     }
 
     public componentWillUnmount() {
-        SpaceStore.instance.off(SUGGESTED_ROOMS, this.updateSuggestedRooms);
+        SpaceStore.instance.off(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
         defaultDispatcher.unregister(this.dispatcherRef);
         if (this.customTagStoreRef) this.customTagStoreRef.remove();
