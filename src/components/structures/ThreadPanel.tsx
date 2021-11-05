@@ -81,7 +81,7 @@ const useFilteredThreadsTimelinePanel = ({
         // The proper list order should be top-to-bottom, like in social-media newsfeeds.
         filteredThreads.reverse().forEach(([id, thread]) => {
             const event = thread.rootEvent;
-            if (timelineSet.findEventById(event.getId()) || event.status !== null) return;
+            if (!event || timelineSet.findEventById(event.getId()) || event.status !== null) return;
             timelineSet.addEventToTimeline(
                 event,
                 timelineSet.getLiveTimeline(),
@@ -141,7 +141,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     const options: readonly ThreadPanelHeaderOption[] = [
         {
             label: _t("My threads"),
-            description: _t("Shows all threads you’ve participated in"),
+            description: _t("Shows all threads you've participated in"),
             key: ThreadFilterType.My,
         },
         {
@@ -167,7 +167,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     </ContextMenu> : null;
     return <div className="mx_ThreadPanel__header">
         <span>{ _t("Threads") }</span>
-        <ContextMenuButton inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
+        <ContextMenuButton className="mx_ThreadPanel_dropdown" inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
             { `${_t('Show:')} ${value.label}` }
         </ContextMenuButton>
         { contextMenu }
