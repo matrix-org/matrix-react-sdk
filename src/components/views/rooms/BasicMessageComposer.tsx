@@ -691,7 +691,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     }
 
     private isPlainWord(offset: number, part: Part): boolean {
-        return part.text[offset] !== " " && part.text[offset] !== "+" && part.text[offset] !== "+"
+        return part.text[offset] !== " " && part.text[offset] !== "+"
             && part.type !== Type.Newline && part.type === Type.Plain;
     }
 
@@ -702,15 +702,17 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const range = model.startRange(position);
 
         // Select right side of word
-        range.expandForwardsWhile((_index, offset, part) => {
+        range.expandForwardsWhile((index, offset, part) => {
             return this.isPlainWord(offset, part);
         });
 
         // Select left side of word
-        range.expandBackwardsWhile((_index, offset, part) => {
+        range.expandBackwardsWhile((index, offset, part) => {
             return this.isPlainWord(offset, part);
         });
-
+        
+        // Cut off new lines
+        range.trim();
         return range;
     }
 
@@ -727,10 +729,13 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // If the user didn't select any text, we select the current word instead
         if (range.length === 0) {
+            // Already correctly trimmed
             range = this.getRangeOfWordAtCaretPosition();
+        } else {            
+            // Trim the range as we want it to exclude leading/trailing spaces
+            range.trim();
         }
-        // Trim the range as we want it to exclude leading/trailing spaces
-        range.trim();
+
 
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;

@@ -43,7 +43,9 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset 
     });
 }
 
-export function replaceRangeAndResetCaret(range: Range, newParts: Part[], offset = 0): void {
+export function replaceRangeAndResetCaret(range: Range, newParts: Part[], offset = 0, shrinked = false): void {
+    shrinked ? offset = -offset : offset;
+
     const { model } = range;
     model.transform(() => {
         range.replace(newParts);
@@ -211,11 +213,8 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
     // the caret position instead of making a new selection.
     if (range.wasInitializedEmpty()) {
         // Check if we need to add a offset for a toggle or untoggle
-        if (range.text.startsWith(prefix) && range.text.endsWith(suffix)) {
-            replaceRangeAndResetCaret(range, parts, -prefix.length);
-        } else {
-            replaceRangeAndResetCaret(range, parts, prefix.length);
-        }
+        const hasFormatting = range.text.startsWith(prefix) && range.text.endsWith(suffix);
+        replaceRangeAndResetCaret(range, parts, prefix.length, hasFormatting);
     } else {
         replaceRangeAndExpandSelection(range, parts);
     }
