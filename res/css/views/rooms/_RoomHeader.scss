@@ -93,16 +93,16 @@ limitations under the License.
     margin-left: 63px;
     text-overflow: ellipsis;
     width: 100%;
-}
 
-.mx_RoomHeader_simpleHeader .mx_RoomHeader_cancelButton {
-    float: right;
-}
+    .mx_RoomHeader_cancelButton {
+        float: right;
+    }
 
-.mx_RoomHeader_simpleHeader .mx_RoomHeader_icon {
-    margin-left: 14px;
-    margin-right: 24px;
-    vertical-align: -4px;
+    .mx_RoomHeader_icon {
+        margin-left: 14px;
+        margin-right: 24px;
+        vertical-align: -4px;
+    }
 }
 
 .mx_RoomHeader_name {
