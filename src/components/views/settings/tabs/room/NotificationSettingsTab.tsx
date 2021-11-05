@@ -29,9 +29,13 @@ import { EchoChamber } from '../../../../../stores/local-echo/EchoChamber';
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import { RoomNotifState } from '../../../../../RoomNotifs';
+import defaultDispatcher from "../../../../../dispatcher/dispatcher";
+import { Action } from "../../../../../dispatcher/actions";
+import { UserTab } from "../../../dialogs/UserSettingsDialog";
 
 interface IProps {
     roomId: string;
+    closeSettingsFn(): void;
 }
 
 interface IState {
@@ -160,6 +164,14 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         this.forceUpdate();
     };
 
+    private onOpenSettingsClick = () => {
+        this.props.closeSettingsFn();
+        defaultDispatcher.dispatch({
+            action: Action.ViewUserSettings,
+            initialTabId: UserTab.Notifications,
+        });
+    };
+
     public render(): JSX.Element {
         let currentUploadedFile = null;
         if (this.state.uploadedFile) {
@@ -174,22 +186,55 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
             <div className="mx_SettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Notifications") }</div>
 
-                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
+                <div className="mx_SettingsTab_section mx_NotificationSettingsTab_notificationsSection">
                     <StyledRadioGroup
                         name="roomNotificationSetting"
                         definitions={[
                             {
                                 value: RoomNotifState.AllMessages,
-                                label: _t("Default"),
+                                className: "mx_NotificationSettingsTab_defaultEntry",
+                                label: <>
+                                    { _t("Default") }
+                                    <div className="mx_NotificationSettingsTab_microCopy">
+                                        { _t("Get notifications as set up in your <a>settings</a>", {}, {
+                                            a: sub => <AccessibleButton kind="link" onClick={this.onOpenSettingsClick}>
+                                                { sub }
+                                            </AccessibleButton>,
+                                        }) }
+                                    </div>
+                                </>,
                             }, {
                                 value: RoomNotifState.AllMessagesLoud,
-                                label: _t("All messages"),
+                                className: "mx_NotificationSettingsTab_allMessagesEntry",
+                                label: <>
+                                    { _t("All messages") }
+                                    <div className="mx_NotificationSettingsTab_microCopy">
+                                        { _t("Get notified for every message") }
+                                    </div>
+                                </>,
                             }, {
                                 value: RoomNotifState.MentionsOnly,
-                                label: _t("@mentions & keywords"),
+                                className: "mx_NotificationSettingsTab_mentionsKeywordsEntry",
+                                label: <>
+                                    { _t("@mentions & keywords") }
+                                    <div className="mx_NotificationSettingsTab_microCopy">
+                                        { _t("Get notified only with mentions and keywords " +
+                                            "as set up in your <a>settings</a>", {}, {
+                                            a: sub => <AccessibleButton kind="link" onClick={this.onOpenSettingsClick}>
+                                                { sub }
+                                            </AccessibleButton>,
+                                        }) }
+                                    </div>
+                                </>,
                             }, {
                                 value: RoomNotifState.Mute,
-                                label: _t("Off"),
+                                className: "mx_NotificationSettingsTab_noneEntry",
+                                label: <>
+                                    { _t("Off") }
+                                    <div className="mx_NotificationSettingsTab_microCopy">
+                                        { _t("You won't get any notifications") }
+                                    </div>
+                                </>,
                             },
                         ]}
                         onChange={this.onRoomNotificationChange}
