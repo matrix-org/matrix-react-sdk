@@ -47,14 +47,13 @@ interface IState {}
 
 const ACTIVE_SPACE_LS_KEY = "mx_active_space";
 
-export const HOME_SPACE = Symbol("home-space");
 export const SUGGESTED_ROOMS = Symbol("suggested-rooms");
 
 export const UPDATE_TOP_LEVEL_SPACES = Symbol("top-level-spaces");
 export const UPDATE_INVITED_SPACES = Symbol("invited-spaces");
 export const UPDATE_SELECTED_SPACE = Symbol("selected-space");
 export const UPDATE_HOME_BEHAVIOUR = Symbol("home-behaviour");
-// Space Room ID/HOME_SPACE will be emitted when a Space's children change
+// Space Key will be emitted when a Space's children change
 
 export enum MetaSpace {
     Home = "home-space",
@@ -459,10 +458,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private onRoomUpdate = (room: Room) => {
         if (this.showInHomeSpace(room)) {
             this.spaceFilteredRooms.get(MetaSpace.Home)?.add(room.roomId);
-            this.emit(HOME_SPACE);
+            this.emit(MetaSpace.Home);
         } else if (!this.orphanedRooms.has(room.roomId)) {
             this.spaceFilteredRooms.get(MetaSpace.Home)?.delete(room.roomId);
-            this.emit(HOME_SPACE);
+            this.emit(MetaSpace.Home);
         }
     };
 
