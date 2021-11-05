@@ -85,9 +85,9 @@ limitations under the License.
 
 .mx_RoomHeader_simpleHeader {
     line-height: $font-52px;
-    color: $roomheader-color;
+    color: $primary-content;
     font-size: $font-18px;
-    font-weight: 600;
+    font-weight: $font-semi-bold;
     overflow: hidden;
     margin-left: 63px;
     text-overflow: ellipsis;
@@ -107,8 +107,8 @@ limitations under the License.
 .mx_RoomHeader_name {
     flex: 0 1 auto;
     overflow: hidden;
-    color: $roomheader-color;
-    font-weight: 600;
+    color: $primary-content;
+    font-weight: $font-semi-bold;
     font-size: $font-18px;
     margin: 0 7px;
     border-bottom: 1px solid transparent;
