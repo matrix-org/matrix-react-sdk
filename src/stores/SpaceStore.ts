@@ -431,7 +431,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.parentMap = backrefs;
 
         // if the currently selected space no longer exists, remove its selection
-        if (this._activeSpace && detachedNodes.has(this.matrixClient.getRoom(this._activeSpace))) {
+        if (this._activeSpace[0] === "!" && detachedNodes.has(this.matrixClient.getRoom(this._activeSpace))) {
             this.setActiveSpace(null, false);
         }
 
@@ -738,7 +738,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.parentMap = new EnhancedMap();
         this.notificationStateMap = new Map();
         this.spaceFilteredRooms = new Map();
-        this._activeSpace = null;
+        this._activeSpace = MetaSpace.Home;
         this._suggestedRooms = [];
         this._invitedSpaces = new Set();
     }
@@ -795,7 +795,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     // as it will cause you to end up in the wrong room
                     this.setActiveSpace(room.roomId, false);
                 } else if (
-                    (!this.allRoomsInHome || this.activeSpace) &&
+                    (!this.allRoomsInHome || this.activeSpace[0] === "!") &&
                     !this.getSpaceFilteredRoomIds(this.activeSpace).has(roomId)
                 ) {
                     this.switchToRelatedSpace(roomId);
@@ -809,7 +809,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             }
 
             case "after_leave_room":
-                if (this._activeSpace && payload.room_id === this._activeSpace) {
+                if (this._activeSpace[0] === "!" && payload.room_id === this._activeSpace) {
                     this.setActiveSpace(null, false);
                 }
                 break;

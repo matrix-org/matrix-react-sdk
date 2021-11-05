@@ -33,8 +33,8 @@ const mockRoomListStore = {
     removeFilter: () => filter = null,
 } as unknown as RoomListStoreClass;
 
-const space1Id = "!space1:server";
-const space2Id = "!space2:server";
+const space1 = "!space1:server";
+const space2 = "!space2:server";
 
 describe("SpaceWatcher", () => {
     stubClient();
@@ -50,17 +50,14 @@ describe("SpaceWatcher", () => {
         await testUtils.emitPromise(store, UPDATE_HOME_BEHAVIOUR);
     };
 
-    let space1;
-    let space2;
-
     beforeEach(async () => {
         filter = null;
         store.removeAllListeners();
         store.setActiveSpace(MetaSpace.Home);
         client.getVisibleRooms.mockReturnValue(rooms = []);
 
-        space1 = mkSpace(space1Id);
-        space2 = mkSpace(space2Id);
+        mkSpace(space1);
+        mkSpace(space2);
 
         client.getRoom.mockImplementation(roomId => rooms.find(room => room.roomId === roomId));
         await setupAsyncStoreWithClient(store, client);
@@ -80,7 +77,7 @@ describe("SpaceWatcher", () => {
         expect(filter).toBeNull();
     });
 
-    it("sets space=null filter for all -> home transition", async () => {
+    it("sets space=Home filter for all -> home transition", async () => {
         await setShowAllRooms(true);
         new SpaceWatcher(mockRoomListStore);
 

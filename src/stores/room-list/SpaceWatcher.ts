@@ -28,7 +28,7 @@ export class SpaceWatcher {
     private allRoomsInHome: boolean = SpaceStore.instance.allRoomsInHome;
 
     constructor(private store: RoomListStoreClass) {
-        if (!this.allRoomsInHome || this.activeSpace) {
+        if (!this.allRoomsInHome || this.activeSpace[0] === "!") {
             this.updateFilter();
             store.addFilter(this.filter);
         }
@@ -39,18 +39,19 @@ export class SpaceWatcher {
     private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome = this.allRoomsInHome) => {
         if (activeSpace === this.activeSpace && allRoomsInHome === this.allRoomsInHome) return; // nop
 
-        const oldActiveSpace = this.activeSpace;
+        const oldIsActualSpace = this.activeSpace[0] === "!";
         const oldAllRoomsInHome = this.allRoomsInHome;
         this.activeSpace = activeSpace;
         this.allRoomsInHome = allRoomsInHome;
 
-        if (activeSpace || !allRoomsInHome) {
+        const isActualSpace = activeSpace[0] === "!";
+        if (isActualSpace || !allRoomsInHome) {
             this.updateFilter();
         }
 
-        if (oldAllRoomsInHome && !oldActiveSpace) {
+        if (oldAllRoomsInHome && !oldIsActualSpace) {
             this.store.addFilter(this.filter);
-        } else if (allRoomsInHome && !activeSpace) {
+        } else if (allRoomsInHome && !isActualSpace) {
             this.store.removeFilter(this.filter);
         }
     };
