@@ -36,7 +36,7 @@ import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
-import { ContextMenuButton } from '../../structures/ContextMenu';
+import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
 
@@ -164,10 +164,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         const textClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
         const name = (
-            <ContextMenuButton
+            <ContextMenuTooltipButton
                 className="mx_RoomHeader_name"
                 onClick={this.onContextMenuOpenClick}
                 isExpanded={!!this.state.contextMenuPosition}
+                title={_t("Room options")}
             >
                 <RoomName room={this.props.room}>
                     { (name) => {
@@ -176,9 +177,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     } }
                 </RoomName>
                 { this.props.room && <div className="mx_RoomHeader_chevron" /> }
-                { searchStatus }
                 { contextMenu }
-            </ContextMenuButton>
+            </ContextMenuTooltipButton>
         );
 
         const topicElement = <RoomTopic room={this.props.room}>
@@ -191,7 +191,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.room) {
             roomAvatar = <DecoratedRoomAvatar
                 room={this.props.room}
-                avatarSize={32}
+                avatarSize={24}
                 oobData={this.props.oobData}
                 viewAvatarOnClick={true}
             />;
@@ -261,6 +261,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
                     <div className="mx_RoomHeader_e2eIcon">{ e2eIcon }</div>
                     { name }
+                    { searchStatus }
                     { topicElement }
                     { rightRow }
                     <RoomHeaderButtons room={this.props.room} />

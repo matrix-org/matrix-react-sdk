@@ -33,12 +33,13 @@ limitations under the License.
 }
 
 .mx_RoomHeader_wrapper {
-    margin: auto;
-    height: 50px;
+    height: 44px;
     display: flex;
     align-items: center;
     min-width: 0;
-    padding: 0 10px 0 18px;
+    margin: 0 20px 0 16px;
+    padding-top: 8px;
+    border-bottom: 1px solid $system;
 
     .mx_InviteOnlyIcon_large {
         margin: 0;
@@ -110,10 +111,15 @@ limitations under the License.
     color: $primary-content;
     font-weight: $font-semi-bold;
     font-size: $font-18px;
+    border-radius: 6px;
     margin: 0 7px;
-    border-bottom: 1px solid transparent;
+    padding: 1px 4px;
     display: flex;
     user-select: none;
+
+    &:hover {
+        background-color: $quinary-content;
+    }
 
     .mx_RoomHeader_nametext {
         white-space: nowrap;
@@ -233,6 +239,7 @@ limitations under the License.
 @media only screen and (max-width: 480px) {
     .mx_RoomHeader_wrapper {
         padding: 0;
+        margin: 0;
     }
     .mx_RoomHeader {
         overflow: hidden;
