@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636123256844,
+  "lastUpdate": 1636123954319,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37388,6 +37388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4471.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0f8272c6a1588d37571e45b8dcf7f12678a34f32",
+          "message": "Update highlighted event line to prevent content jumping (#7090)",
+          "timestamp": "2021-11-05T14:46:29Z",
+          "tree_id": "779ae6e9be736262e5e494e2c2ad88e4b9da7104",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0f8272c6a1588d37571e45b8dcf7f12678a34f32"
+        },
+        "date": 1636123951680,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6112.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1046.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4693,
             "unit": "ms",
             "extra": "type: measure"
           }
