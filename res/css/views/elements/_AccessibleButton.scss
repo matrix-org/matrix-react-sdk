@@ -127,7 +127,7 @@ limitations under the License.
 }
 
 .mx_AccessibleButton_hasKind.mx_AccessibleButton_kind_cancel_sm {
-    background-color: $button-danger-bg-color;
+    background-color: $notice-primary-color;
 
     &::before {
         mask-image: url('$(res)/img/feather-customised/x.svg');
