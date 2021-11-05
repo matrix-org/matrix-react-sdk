@@ -133,18 +133,23 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
 
         const echoChamber = EchoChamber.forRoom(room);
         let notificationLabel: string;
+        let iconClassName: string;
         switch (echoChamber.notificationVolume) {
             case RoomNotifState.AllMessages:
                 notificationLabel = _t("Default");
+                iconClassName = "mx_RoomTile_iconNotificationsDefault";
                 break;
             case RoomNotifState.AllMessagesLoud:
                 notificationLabel = _t("All messages");
+                iconClassName = "mx_RoomTile_iconNotificationsAllMessages";
                 break;
             case RoomNotifState.MentionsOnly:
                 notificationLabel = _t("Mentions only");
+                iconClassName = "mx_RoomTile_iconNotificationsMentionsKeywords";
                 break;
             case RoomNotifState.Mute:
                 notificationLabel = _t("Mute");
+                iconClassName = "mx_RoomTile_iconNotificationsNone";
                 break;
         }
 
@@ -161,7 +166,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 onFinished();
             }}
             label={_t("Notifications")}
-            iconClassName="mx_RoomTile_iconNotifications"
+            iconClassName={iconClassName}
         >
             <span className="mx_IconizedContextMenu_sublabel">
                 { notificationLabel }

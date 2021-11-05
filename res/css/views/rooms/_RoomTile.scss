@@ -164,8 +164,20 @@ limitations under the License.
         mask-image: url('$(res)/img/element-icons/roomlist/low-priority.svg');
     }
 
-    .mx_RoomTile_iconNotifications::before {
+    .mx_RoomTile_iconNotificationsDefault::before {
         mask-image: url('$(res)/img/element-icons/notifications.svg');
+    }
+
+    .mx_RoomTile_iconNotificationsAllMessages::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-default.svg');
+    }
+
+    .mx_RoomTile_iconNotificationsMentionsKeywords::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-dm.svg');
+    }
+
+    .mx_RoomTile_iconNotificationsNone::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-off.svg');
     }
 
     .mx_RoomTile_iconPeople::before {
