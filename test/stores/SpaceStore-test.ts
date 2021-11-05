@@ -629,24 +629,21 @@ describe("SpaceStore", () => {
         });
 
         it("switch to invited space", async () => {
-            const space = client.getRoom(space3);
-            store.setActiveSpace(space);
-            expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space.roomId);
-            expect(store.activeSpace).toBe(space.roomId);
+            store.setActiveSpace(space3);
+            expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space3);
+            expect(store.activeSpace).toBe(space3);
         });
 
         it("switch to top level space", async () => {
-            const space = client.getRoom(space1);
-            store.setActiveSpace(space);
-            expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space.roomId);
-            expect(store.activeSpace).toBe(space.roomId);
+            store.setActiveSpace(space1);
+            expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space1);
+            expect(store.activeSpace).toBe(space1);
         });
 
         it("switch to subspace", async () => {
-            const space = client.getRoom(space2);
-            store.setActiveSpace(space);
-            expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space.roomId);
-            expect(store.activeSpace).toBe(space.roomId);
+            store.setActiveSpace(space2);
+            expect(fn).toHaveBeenCalledWith(UPDATE_SELECTED_SPACE, space2);
+            expect(store.activeSpace).toBe(space2);
         });
 
         it("switch to unknown space is a nop", async () => {

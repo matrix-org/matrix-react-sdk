@@ -58,9 +58,9 @@ export const UPDATE_HOME_BEHAVIOUR = Symbol("home-behaviour");
 
 export enum MetaSpace {
     Home = "home-space",
-    Favourites = "favourites-space",
-    People = "people-space",
-    Orphans = "orphans-space",
+    // Favourites = "favourites-space",
+    // People = "people-space",
+    // Orphans = "orphans-space",
 }
 
 export type SpaceKey = MetaSpace | Room["roomId"];
@@ -349,7 +349,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     public getSpaceFilteredRoomIds = (space: SpaceKey): Set<string> => {
-        if (!space && this.allRoomsInHome) {
+        if (space === MetaSpace.Home && this.allRoomsInHome) {
             return new Set(this.matrixClient.getVisibleRooms().map(r => r.roomId));
         }
         return this.spaceFilteredRooms.get(space) || new Set();
