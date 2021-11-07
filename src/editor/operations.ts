@@ -16,10 +16,46 @@ limitations under the License.
 
 import Range from "./range";
 import { Part, Type } from "./parts";
+import { Formatting } from "../components/views/rooms/MessageComposerFormatBar";
 
 /**
  * Some common queries and transformations on the editor model
  */
+
+export function formatRange(range: Range, action: Formatting) {
+    if (range.wasInitializedEmpty()) {
+        range = getRangeOfWordAtCaretPosition(range);
+    }
+
+    // Edgecase when just selecting whitespace or new line.
+    // There should be no reason to format whitespace, so we can just return.
+    if (range.text.trim().length == 0) {
+        return;
+    }
+
+    range.trim();
+
+    switch (action) {
+        case Formatting.Bold:
+            toggleInlineFormat(range, "**");
+            break;
+        case Formatting.Italics:
+            toggleInlineFormat(range, "_");
+            break;
+        case Formatting.Strikethrough:
+            toggleInlineFormat(range, "<del>", "</del>");
+            break;
+        case Formatting.Code:
+            formatRangeAsCode(range);
+            break;
+        case Formatting.Quote:
+            formatRangeAsQuote(range);
+            break;
+        case Formatting.InsertLink:
+            formatRangeAsLink(range);
+            break;
+    }
+}
 
 export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): void {
     const { model } = range;
@@ -43,14 +79,15 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset 
     });
 }
 
-export function replaceRangeAndResetCaret(range: Range, newParts: Part[], offset = 0, shrinked = false): void {
-    shrinked ? offset = -offset : offset;
-
+export function replaceRangeAndResetCaret(range: Range, newParts: Part[], offset = 0, toggled = false): void {
     const { model } = range;
+
+    // Flip offset sign depening on whether we toggle or untoggle formatting
+    toggled ? offset = -offset + 1 : offset;
+
     model.transform(() => {
         range.replace(newParts);
-        const initialPosition = range.getInitialPosition();
-        const previousCaretOffset = initialPosition.asOffset(model).add(offset);
+        const previousCaretOffset = range.getInitialPosition().asOffset(model).add(offset);
         return previousCaretOffset.asPosition(model);
     });
 }
@@ -132,6 +169,30 @@ export function formatRangeAsCode(range: Range): void {
     }
 
     replaceRangeAndExpandSelection(range, parts);
+}
+
+const isPlainWord = (offset: number, part: Part) => {
+    return part.text[offset] !== " " && part.text[offset] !== "+"
+    && part.type !== Type.Newline && part.type === Type.Plain;
+};
+
+export function getRangeOfWordAtCaretPosition(range: Range): Range {
+    // Select right side of word
+    range.expandForwardsWhile((index, offset, part) => {
+        return isPlainWord(offset, part);
+    });
+
+    // Select left side of word
+    range.expandBackwardsWhile((index, offset, part) => {
+        return isPlainWord(offset, part);
+    });
+
+    // Cut off new lines
+    // This is needed since expandBackwardsWhile lands on the index of the previous new line if
+    // at the beginning of a line that is not the first line
+    range.trim();
+
+    return range;
 }
 
 export function formatRangeAsLink(range: Range) {

@@ -17,7 +17,12 @@ limitations under the License.
 import "../skinned-sdk"; // Must be first for skinning to work
 import EditorModel from "../../src/editor/model";
 import { createPartCreator, createRenderer } from "./mock";
-import { toggleInlineFormat } from "../../src/editor/operations";
+import {
+    toggleInlineFormat,
+    getRangeOfWordAtCaretPosition,
+    formatRange,
+} from "../../src/editor/operations";
+import { Formatting } from "../../src/components/views/rooms/MessageComposerFormatBar";
 
 const SERIALIZED_NEWLINE = { "text": "\n", "type": "newline" };
 
@@ -35,7 +40,7 @@ describe('editor/operations: formatting operations', () => {
 
             expect(range.parts[0].text).toBe("world");
             expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
-            toggleInlineFormat(range, "_");
+            formatRange(range, Formatting.Italics);
             expect(model.serializeParts()).toEqual([{ "text": "hello _world_!", "type": "plain" }]);
         });
 
@@ -73,7 +78,7 @@ describe('editor/operations: formatting operations', () => {
                 { "text": "@room", "type": "at-room-pill" },
                 { "text": ", how are you doing?", "type": "plain" },
             ]);
-            toggleInlineFormat(range, "_");
+            formatRange(range, Formatting.Italics);
             expect(model.serializeParts()).toEqual([
                 { "text": "hello _there ", "type": "plain" },
                 { "text": "@room", "type": "at-room-pill" },
@@ -99,7 +104,7 @@ describe('editor/operations: formatting operations', () => {
                 SERIALIZED_NEWLINE,
                 { "text": "how are you doing?", "type": "plain" },
             ]);
-            toggleInlineFormat(range, "**");
+            formatRange(range, Formatting.Bold);
             expect(model.serializeParts()).toEqual([
                 { "text": "hello **world,", "type": "plain" },
                 SERIALIZED_NEWLINE,
@@ -132,7 +137,7 @@ describe('editor/operations: formatting operations', () => {
                 SERIALIZED_NEWLINE,
                 SERIALIZED_NEWLINE,
             ]);
-            toggleInlineFormat(range, "**");
+            formatRange(range, Formatting.Bold);
             expect(model.serializeParts()).toEqual([
                 SERIALIZED_NEWLINE,
                 SERIALIZED_NEWLINE,
@@ -185,6 +190,187 @@ describe('editor/operations: formatting operations', () => {
                 SERIALIZED_NEWLINE,
                 SERIALIZED_NEWLINE,
                 { "text": "new paragraph", "type": "plain" },
+            ]);
+        });
+
+        it('format word at caret position at beginning of line', () => {
+            const renderer = createRenderer();
+            const pc = createPartCreator();
+            const model = new EditorModel([
+                pc.newline(),
+                pc.plain("hello!"),
+            ], pc, renderer);
+
+            let range = model.startRange(model.positionForOffset(0, false));
+
+            // Initial position should equal start and end since we did not select anything
+            expect(range.getInitialPosition()).toEqual(range.start);
+            expect(range.getInitialPosition()).toEqual(range.end);
+
+            getRangeOfWordAtCaretPosition(range);
+
+            expect(range.wasInitializedEmpty()).toEqual(true);
+
+            // Preceding new line should never be selected in this case
+            expect(range.length).toBe(1);
+            expect(range.parts.map(p => p.text).join("")).toBe("");
+            expect(model.serializeParts()).toEqual([
+                SERIALIZED_NEWLINE,
+                { "text": "hello!", "type": "plain" },
+            ]);
+
+            getRangeOfWordAtCaretPosition(range);
+            formatRange(range, Formatting.Bold);
+            expect(range.start).toEqual(2);
+            expect(range.end).toEqual(2);
+
+            expect(model.serializeParts()).toEqual([
+                SERIALIZED_NEWLINE,
+                { "text": "**hello!**", "type": "plain" },
+            ]);
+
+            // Untoggle
+            getRangeOfWordAtCaretPosition(range);
+            formatRange(range, Formatting.Bold);
+            expect(range.start).toEqual(0);
+            expect(range.end).toEqual(0);
+
+            expect(model.serializeParts()).toEqual([
+                SERIALIZED_NEWLINE,
+                { "text": "hello!", "type": "plain" },
+            ]);
+
+            range = model.startRange(model.positionForOffset(1, false));
+            getRangeOfWordAtCaretPosition(range);
+
+            formatRange(range, Formatting.Code);
+            expect(range.start).toEqual(2);
+            expect(range.end).toEqual(2);
+
+            expect(model.serializeParts()).toEqual([
+                SERIALIZED_NEWLINE,
+                { "text": "`hello!`", "type": "plain" },
+            ]);
+
+            getRangeOfWordAtCaretPosition(range);
+
+            // Untoggle
+            formatRange(range, Formatting.Code);
+            expect(range.start).toEqual(1);
+            expect(range.end).toEqual(1);
+
+            expect(model.serializeParts()).toEqual([
+                SERIALIZED_NEWLINE,
+                { "text": "hello!", "type": "plain" },
+            ]);
+
+            range = model.startRange(model.getPositionAtEnd());
+
+            formatRange(range, Formatting.InsertLink);
+            getRangeOfWordAtCaretPosition(range);
+            expect(range.start).toEqual(8);
+            expect(range.end).toEqual(8);
+
+            expect(model.serializeParts()).toEqual([
+                SERIALIZED_NEWLINE,
+                { "text": "[hello!]()", "type": "plain" },
+            ]);
+        });
+
+        it('format link in front of new line part', () => {
+            const renderer = createRenderer();
+            const pc = createPartCreator();
+            const model = new EditorModel([
+                pc.plain("hello!"),
+                pc.newline(),
+                pc.newline(),
+                pc.plain("konnichiwa!"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(8, false), model.getPositionAtEnd()); // select-all
+
+            expect(range.parts.map(p => p.text).join("")).toBe("konnichiwa!");
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "hello!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "konnichiwa!", "type": "plain" },
+            ]);
+
+            formatRange(range, Formatting.InsertLink);
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "hello!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "[konnichiwa!]()", "type": "plain" },
+            ]);
+        });
+
+        it('format multi line code', () => {
+            const renderer = createRenderer();
+            const pc = createPartCreator();
+            const model = new EditorModel([
+                pc.plain("hello!"),
+                pc.newline(),
+                pc.newline(),
+                pc.plain("konnichiwa!"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(0, false), model.getPositionAtEnd()); // select-all
+
+            expect(range.parts.map(p => p.text).join("")).toBe("hello!\n\nkonnichiwa!");
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "hello!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "konnichiwa!", "type": "plain" },
+            ]);
+
+            formatRange(range, Formatting.Code);
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "```", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "hello!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "konnichiwa!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "```", "type": "plain" },
+            ]);
+        });
+
+        it('format white space', () => {
+            const renderer = createRenderer();
+            const pc = createPartCreator();
+            const model = new EditorModel([
+                pc.plain("       "),
+                pc.newline(),
+                pc.newline(),
+                pc.plain("         "),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(0, false), model.getPositionAtEnd()); // select-all
+
+            expect(range.parts.map(p => p.text).join("")).toBe("       \n\n         ");
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "       ", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "         ", "type": "plain" },
+            ]);
+
+            formatRange(range, Formatting.Bold);
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "       ", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "         ", "type": "plain" },
             ]);
         });
     });

@@ -23,16 +23,10 @@ import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
 import { Caret, setSelection } from '../../../editor/caret';
-import {
-    formatRangeAsQuote,
-    formatRangeAsCode,
-    toggleInlineFormat,
-    replaceRangeAndMoveCaret,
-    formatRangeAsLink,
-} from '../../../editor/operations';
+import { formatRange, replaceRangeAndMoveCaret, toggleInlineFormat } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
-import { getAutoCompleteCreator, Part, Type } from '../../../editor/parts';
+import { getAutoCompleteCreator, Type } from '../../../editor/parts';
 import { parseEvent, parsePlainTextMessage } from '../../../editor/deserialize';
 import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
@@ -690,74 +684,13 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         return caretPosition;
     }
 
-    private isPlainWord(offset: number, part: Part): boolean {
-        return part.text[offset] !== " " && part.text[offset] !== "+"
-            && part.type !== Type.Newline && part.type === Type.Plain;
-    }
-
-    private getRangeOfWordAtCaretPosition(): Range {
-        const { model } = this.props;
-        const caret = this.getCaret();
-        const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-        const range = model.startRange(position);
-
-        // Select right side of word
-        range.expandForwardsWhile((index, offset, part) => {
-            return this.isPlainWord(offset, part);
-        });
-
-        // Select left side of word
-        range.expandBackwardsWhile((index, offset, part) => {
-            return this.isPlainWord(offset, part);
-        });
-
-        // Cut off new lines
-        range.trim();
-        return range;
-    }
-
-    private onFormatAction = (action: Formatting): void => {
-        let range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
-
-        // Edgecase when just selecting whitespace or new line.
-        // There should be no reason to format whitespace, so we can just return.
-        // This also prevents weird, jumpy selection behavior that would occur
-        // in this case, that is caused by the later trim.
-        if (range.length > 0 && range.text.trim().length === 0) {
-            return;
-        }
-
-        // If the user didn't select any text, we select the current word instead
-        if (range.length === 0) {
-            // Already correctly trimmed
-            range = this.getRangeOfWordAtCaretPosition();
-        } else {
-            // Trim the range as we want it to exclude leading/trailing spaces
-            range.trim();
-        }
+    public onFormatAction = (action: Formatting): void => {
+        const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
 
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
-        switch (action) {
-            case Formatting.Bold:
-                toggleInlineFormat(range, "**");
-                break;
-            case Formatting.Italics:
-                toggleInlineFormat(range, "_");
-                break;
-            case Formatting.Strikethrough:
-                toggleInlineFormat(range, "<del>", "</del>");
-                break;
-            case Formatting.Code:
-                formatRangeAsCode(range);
-                break;
-            case Formatting.Quote:
-                formatRangeAsQuote(range);
-                break;
-            case Formatting.InsertLink:
-                formatRangeAsLink(range);
-                break;
-        }
+
+        formatRange(range, action);
     };
 
     render() {

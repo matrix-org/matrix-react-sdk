@@ -17,8 +17,12 @@ limitations under the License.
 import EditorModel from "./model";
 import DocumentPosition, { Predicate } from "./position";
 import { Part } from "./parts";
+import { logger } from "matrix-js-sdk/src/logger";
 
 const whitespacePredicate: Predicate = (index, offset, part) => {
+    if (part.text[offset] == null) {
+        logger.debug("Meme");
+    }
     return part.text[offset].trim() === "";
 };
 
@@ -26,14 +30,14 @@ export default class Range {
     private _start: DocumentPosition;
     private _end: DocumentPosition;
     private _initialStart: DocumentPosition;
-    private _initalizedEmpty: boolean;
+    private _initializedEmpty: boolean;
 
     constructor(public readonly model: EditorModel, positionA: DocumentPosition, positionB = positionA) {
         const bIsLarger = positionA.compare(positionB) < 0;
         this._start = bIsLarger ? positionA : positionB;
         this._end = bIsLarger ? positionB : positionA;
         this._initialStart = this._start;
-        this._initalizedEmpty = this._start == this._end;
+        this._initializedEmpty = this._start.index === this._end.index && this._start.offset == this._end.offset;
     }
 
     public moveStartForwards(delta: number): void {
@@ -44,7 +48,11 @@ export default class Range {
     }
 
     public wasInitializedEmpty(): boolean {
-        return this._initalizedEmpty;
+        return this._initializedEmpty;
+    }
+
+    public setWasEmpty(value: boolean) {
+        this._initializedEmpty = value;
     }
 
     public getInitialPosition(): DocumentPosition {
