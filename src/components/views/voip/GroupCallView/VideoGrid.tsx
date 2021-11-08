@@ -18,6 +18,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDrag } from "react-use-gesture";
 import { useSprings } from "@react-spring/web";
 import useMeasure from "react-use-measure";
+import { ResizeObserver } from "@juggle/resize-observer";
 import moveArrItem from "lodash-move";
 import VideoTile from "./VideoTile";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
@@ -485,7 +486,7 @@ export default function VideoGrid({ items, layout, onFocusTile }: IVideoGridProp
     const lastLayoutRef = useRef(layout);
     const isMounted = useIsMounted();
 
-    const [gridRef, gridBounds] = useMeasure();
+    const [gridRef, gridBounds] = useMeasure({ polyfill: ResizeObserver });
 
     useEffect(() => {
         setTileState(({ tiles }) => {
