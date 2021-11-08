@@ -30,7 +30,7 @@ import { Formatting } from "../components/views/rooms/MessageComposerFormatBar";
 export function formatRange(range: Range, action: Formatting): void {
     // If the selection was empty we select the current word instead
     if (range.wasInitializedEmpty()) {
-        range = getRangeOfWordAtCaretPosition(range);
+        selectRangeOfWordAtCaret(range);
     } else {
         // Remove whitespace or new lines in our selection
         range.trim();
@@ -117,8 +117,9 @@ export function replaceRangeAndAutoAdjustCaret(
         }
         const offset = range.replace(newParts) / 2;
         const atEnd = range.getLastStartingPosition().asOffset(model).atNodeEnd;
-        const previousCaretOffset = range.getLastStartingPosition().asOffset(model).add(offset, atEnd);
-        return previousCaretOffset.asPosition(model);
+        const newStart = range.getLastStartingPosition().asOffset(model).add(offset, atEnd).asPosition(model);
+        range.setLastStartingPosition(newStart);
+        return range.getLastStartingPosition();
     });
 }
 
@@ -127,21 +128,17 @@ const isPlainWord = (offset: number, part: Part) => {
     && part.type !== Type.Newline && part.type === Type.Plain;
 };
 
-export function getRangeOfWordAtCaretPosition(range: Range): Range {
+export function selectRangeOfWordAtCaret(range: Range): void {
     // Select right side of word
     range.expandForwardsWhile((_index, offset, part) => {
         return isPlainWord(offset, part);
     });
-
     // Select left side of word
     range.expandBackwardsWhile((_index, offset, part) => {
         return isPlainWord(offset, part);
     });
-
     // Trim possibly selected new lines
     range.trim();
-
-    return range;
 }
 
 export function rangeStartsAtBeginningOfLine(range: Range): boolean {
