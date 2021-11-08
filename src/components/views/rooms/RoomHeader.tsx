@@ -50,7 +50,6 @@ interface IProps {
     room: Room;
     oobData?: IOOBData;
     inRoom: boolean;
-    onSettingsClick: () => void;
     onSearchClick: () => void;
     onForgetClick: () => void;
     onCallPlaced: (type: PlaceCallType) => void;
