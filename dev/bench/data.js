@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636367665178,
+  "lastUpdate": 1636372619079,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37532,6 +37532,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4641.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "07d9e93d67960dbe0f15131105d8535be6dd69ac",
+          "message": "Color cleanup number six (#7050)\n\n* Remove $voip-decline-color and $voip-accept-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Remove $dialog-background-bg-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $mention-user-pill-bg-color -> $warning-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $plinth-bg-color -> $secondary-accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $input-lighter-fg-color -> $input-darker-fg-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $input-valid-border-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $input-invalid-border-color -> $warning-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $button-bg-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $avatar-bg-color -> $background\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $preview-widget-fg-color -> $greyed-fg-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $settings-profile-button-fg-color -> $settings-profile-overlay-placeholder-fg-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $presence-online -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $pinned-unread-color -> $notice-primary-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $event-highlight-fg-color -> $warning-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $tab-label-active-bg-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $button-primary-bg-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $button-danger-bg-color -> $notice-primary-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $button-link-fg-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $togglesw-on-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $slider-selection-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $progressbar-fg-color -> $accent-color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* $authpage-body-bg-color -> $background\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix merge issue\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix second merge issue\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-11-08T11:50:53Z",
+          "tree_id": "68705f4b1990af7a18b7ead24efaf0d0d4df5dda",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/07d9e93d67960dbe0f15131105d8535be6dd69ac"
+        },
+        "date": 1636372616728,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4650,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1082.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1653.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4668.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
