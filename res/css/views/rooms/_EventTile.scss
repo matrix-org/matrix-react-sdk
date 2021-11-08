@@ -722,10 +722,10 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile[data-shape=thread_list] {
-    --topOffset: 24px;
+    --topOffset: 20px;
     --leftOffset: 46px;
 
-    margin: var(--topOffset) 0;
+    margin: var(--topOffset) 32px var(--topOffset) 0;
     border-radius: 8px;
 
     &:hover {
