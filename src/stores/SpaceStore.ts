@@ -113,22 +113,19 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // Map from space key to Set of room IDs that should be shown as part of that space's filter
     private spaceFilteredRooms = new Map<SpaceKey, Set<string>>();
     // The space currently selected in the Space Panel
-    private _activeSpace?: SpaceKey = MetaSpace.Home; // TODO what if home is disabled?
+    private _activeSpace?: SpaceKey; // set by onReady
     private _suggestedRooms: ISuggestedRoom[] = [];
     private _invitedSpaces = new Set<Room>();
     private spaceOrderLocalEchoMap = new Map<string, string>();
     private _restrictedJoinRuleSupport?: IRoomCapability;
     private _allRoomsInHome: boolean = SettingsStore.getValue("Spaces.allRoomsInHome");
-    private _enabledMetaSpaces: MetaSpace[]; // set by c'tor
+    private _enabledMetaSpaces: MetaSpace[]; // set by onReady
 
     constructor() {
         super(defaultDispatcher, {});
 
         SettingsStore.monitorSetting("Spaces.allRoomsInHome", null);
         SettingsStore.monitorSetting("Spaces.enabledMetaSpaces", null);
-
-        const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
-        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]);
     }
 
     public get invitedSpaces(): Room[] {
@@ -206,7 +203,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
      * should not be done when the space switch is done implicitly due to another event like switching room.
      */
     public setActiveSpace(space: SpaceKey, contextSwitch = true) {
-        if (!this.matrixClient || space === this.activeSpace) return;
+        if (!space || !this.matrixClient || space === this.activeSpace) return;
 
         const cliSpace = space[0] === "!" ? this.matrixClient.getRoom(space) : null;
         if (cliSpace && !cliSpace.isSpaceRoom()) return;
@@ -804,14 +801,25 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 ?.["m.room_versions"]?.["org.matrix.msc3244.room_capabilities"]?.["restricted"];
         });
 
+        const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
+        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]);
+
         await this.onSpaceUpdate(); // trigger an initial update
 
         // restore selected state from last session if any and still valid
         const lastSpaceId = window.localStorage.getItem(ACTIVE_SPACE_LS_KEY);
-        if (lastSpaceId && this.matrixClient.getRoom(lastSpaceId)) {
+        if (lastSpaceId && (
+            lastSpaceId[0] === "!" ? this.matrixClient.getRoom(lastSpaceId) : enabledMetaSpaces[lastSpaceId]
+        )) {
             // don't context switch here as it may break permalinks
             this.setActiveSpace(lastSpaceId, false);
+        } else {
+            this.goToFirstSpace();
         }
+    }
+
+    private goToFirstSpace() {
+        this.setActiveSpace(this.enabledMetaSpaces[0] ?? this.spacePanelSpaces[0]?.roomId, false);
     }
 
     protected async onAction(payload: ActionPayload) {
@@ -844,18 +852,22 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
             case "after_leave_room":
                 if (this._activeSpace[0] === "!" && payload.room_id === this._activeSpace) {
-                    this.setActiveSpace(MetaSpace.Home, false); // TODO
+                    // User has left the current space, go to first space
+                    this.goToFirstSpace();
                 }
                 break;
 
-            case Action.SwitchSpace:
-                // 1 is Home, 2-9 are the spaces after Home
-                if (payload.num === 1) {
-                    this.setActiveSpace(MetaSpace.Home); // TODO
-                } else if (payload.num > 0 && this.spacePanelSpaces.length > payload.num - 2) {
-                    this.setActiveSpace(this.spacePanelSpaces[payload.num - 2].roomId);
+            case Action.SwitchSpace: {
+                // Metaspaces start at 1, Spaces follow
+                if (payload.num < 1 || payload.num > 9) break;
+                const numMetaSpaces = this.enabledMetaSpaces.length;
+                if (payload.num <= numMetaSpaces) {
+                    this.setActiveSpace(this.enabledMetaSpaces[payload.num - 1]);
+                } else if (this.spacePanelSpaces.length > payload.num - numMetaSpaces - 1) {
+                    this.setActiveSpace(this.spacePanelSpaces[payload.num - numMetaSpaces - 1].roomId);
                 }
                 break;
+            }
 
             case Action.SettingUpdated: {
                 const settingUpdatedPayload = payload as SettingUpdatedPayload;
