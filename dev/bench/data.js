@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636372619079,
+  "lastUpdate": 1636373046527,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37580,6 +37580,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4668.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8c9e75b16e4fedf0e4778b7dab0004a9bdb36b02",
+          "message": "Fix avatar disappearing when setting a topic (#7092)\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-11-08T11:58:26Z",
+          "tree_id": "63c14da7392b5c1bbc7ab547adb0dcacea292aa9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8c9e75b16e4fedf0e4778b7dab0004a9bdb36b02"
+        },
+        "date": 1636373043900,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4445.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 686.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
