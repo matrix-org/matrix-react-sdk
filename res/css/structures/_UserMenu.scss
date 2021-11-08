@@ -19,13 +19,25 @@ limitations under the License.
     border-bottom: 1px solid $quinary-content;
     margin-left: 18px;
     margin-bottom: 8px;
-    width: 36px;
     box-sizing: border-box;
-    position: relative;
+    display: flex;
+    align-items: center;
 
     .mx_UserMenu_userAvatar {
-        border-radius: 32px; // should match avatar size
-        object-fit: cover;
+        position: relative;
+        width: 36px;
+
+        .mx_BaseAvatar {
+            border-radius: 32px; // should match avatar size
+            object-fit: cover;
+        }
+    }
+
+    .mx_UserMenu_name {
+        font-weight: $font-semi-bold;
+        font-size: $font-15px;
+        line-height: $font-24px;
+        margin-left: 10px;
     }
 
     &.mx_UserMenu_cutout .mx_BaseAvatar {
@@ -37,8 +49,8 @@ limitations under the License.
 
     .mx_UserMenu_dndBadge {
         position: absolute;
-        bottom: 6px;
-        right: -5px;
+        bottom: -2px;
+        right: -3px;
         width: 16px;
         height: 16px;
         border-radius: 50%;

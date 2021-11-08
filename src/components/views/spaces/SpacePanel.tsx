@@ -192,7 +192,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
     const activeSpaces = activeSpace ? [activeSpace] : [];
 
     return <div className="mx_SpaceTreeLevel">
-        <UserMenu />
+        <UserMenu isPanelCollapsed={isPanelCollapsed} />
         <HomeButton selected={!activeSpace} isPanelCollapsed={isPanelCollapsed} />
         { invites.map(s => (
             <SpaceItem

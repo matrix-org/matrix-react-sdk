@@ -95,6 +95,7 @@ const CustomStatusSection = () => {
 };
 
 interface IProps {
+    isPanelCollapsed: boolean;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
@@ -480,6 +481,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
             badge = <div className="mx_UserMenu_dndBadge" />;
         }
 
+        let name: JSX.Element;
+        if (!this.props.isPanelCollapsed) {
+            name = <div className="mx_UserMenu_name">
+                { displayName }
+            </div>;
+        }
+
         return (
             <div className={classNames("mx_UserMenu", {
                 mx_UserMenu_cutout: badge,
@@ -491,16 +499,19 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     isExpanded={!!this.state.contextMenuPosition}
                     onContextMenu={this.onContextMenu}
                 >
-                    <BaseAvatar
-                        idName={userId}
-                        name={displayName}
-                        url={avatarUrl}
-                        width={avatarSize}
-                        height={avatarSize}
-                        resizeMethod="crop"
-                        className="mx_UserMenu_userAvatar"
-                    />
-                    { badge }
+                    <div className="mx_UserMenu_userAvatar">
+                        <BaseAvatar
+                            idName={userId}
+                            name={displayName}
+                            url={avatarUrl}
+                            width={avatarSize}
+                            height={avatarSize}
+                            resizeMethod="crop"
+                            className=""
+                        />
+                        { badge }
+                    </div>
+                    { name }
                 </ContextMenuButton>
 
                 { this.renderContextMenu() }
