@@ -122,7 +122,7 @@ const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
     >
         <SpaceButton
             className="mx_SpaceButton_home"
-            onClick={() => SpaceStore.instance.setActiveSpace(null)}
+            onClick={() => SpaceStore.instance.setActiveSpace(MetaSpace.Home)}
             selected={selected}
             label={allRoomsInHome ? _t("All rooms") : _t("Home")}
             notificationState={allRoomsInHome

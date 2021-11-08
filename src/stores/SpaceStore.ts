@@ -441,7 +441,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         // if the currently selected space no longer exists, remove its selection
         if (this._activeSpace[0] === "!" && detachedNodes.has(this.matrixClient.getRoom(this._activeSpace))) {
-            this.setActiveSpace(null, false);
+            this.setActiveSpace(MetaSpace.Home, false); // TODO home may not be enabled
         }
 
         this.onRoomsUpdate(); // TODO only do this if a change has happened
@@ -669,7 +669,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.setActiveSpace(room.roomId, false);
         } else if (membership === "leave" && room.roomId === this.activeSpace) {
             // user's active space has gone away, go back to home
-            this.setActiveSpace(null, true);
+            this.setActiveSpace(MetaSpace.Home, true); // TODO
         }
     };
 
@@ -844,14 +844,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
             case "after_leave_room":
                 if (this._activeSpace[0] === "!" && payload.room_id === this._activeSpace) {
-                    this.setActiveSpace(null, false);
+                    this.setActiveSpace(MetaSpace.Home, false); // TODO
                 }
                 break;
 
             case Action.SwitchSpace:
                 // 1 is Home, 2-9 are the spaces after Home
                 if (payload.num === 1) {
-                    this.setActiveSpace(null);
+                    this.setActiveSpace(MetaSpace.Home); // TODO
                 } else if (payload.num > 0 && this.spacePanelSpaces.length > payload.num - 2) {
                     this.setActiveSpace(this.spacePanelSpaces[payload.num - 2].roomId);
                 }
