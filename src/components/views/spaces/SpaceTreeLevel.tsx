@@ -26,8 +26,8 @@ import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import RoomAvatar from "../avatars/RoomAvatar";
-import SpaceStore, { SpaceKey } from "../../../stores/SpaceStore";
-import SpaceTreeLevelLayoutStore from "../../../stores/SpaceTreeLevelLayoutStore";
+import SpaceStore, { SpaceKey } from "../../../stores/spaces/SpaceStore";
+import SpaceTreeLevelLayoutStore from "../../../stores/spaces/SpaceTreeLevelLayoutStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { _t } from "../../../languageHandler";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";

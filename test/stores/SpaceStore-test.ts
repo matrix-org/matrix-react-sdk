@@ -19,13 +19,14 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import "../skinned-sdk"; // Must be first for skinning to work
-import SpaceStore, {
+import SpaceStore from "../../src/stores/spaces/SpaceStore";
+import {
     MetaSpace,
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_INVITED_SPACES,
     UPDATE_SELECTED_SPACE,
     UPDATE_TOP_LEVEL_SPACES,
-} from "../../src/stores/SpaceStore";
+} from "../../src/stores/spaces";
 import * as testUtils from "../utils/test-utils";
 import { mkEvent, stubClient } from "../test-utils";
 import DMRoomMap from "../../src/utils/DMRoomMap";

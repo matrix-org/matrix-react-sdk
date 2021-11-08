@@ -21,7 +21,7 @@ import { _t } from '../../../languageHandler';
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import SearchBox from "../../structures/SearchBox";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import RoomAvatar from "../avatars/RoomAvatar";
 import AccessibleButton from "../elements/AccessibleButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";

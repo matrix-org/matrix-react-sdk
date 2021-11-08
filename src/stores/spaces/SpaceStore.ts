@@ -18,56 +18,44 @@ import { ListIteratee, Many, sortBy, throttle } from "lodash";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { IRoomCapability } from "matrix-js-sdk/src/client";
-
-import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
-import defaultDispatcher from "../dispatcher/dispatcher";
-import { ActionPayload } from "../dispatcher/payloads";
-import RoomListStore from "./room-list/RoomListStore";
-import SettingsStore from "../settings/SettingsStore";
-import DMRoomMap from "../utils/DMRoomMap";
-import { FetchRoomFn } from "./notifications/ListNotificationState";
-import { SpaceNotificationState } from "./notifications/SpaceNotificationState";
-import { RoomNotificationStateStore } from "./notifications/RoomNotificationStateStore";
-import { DefaultTagID } from "./room-list/models";
-import { EnhancedMap, mapDiff } from "../utils/maps";
-import { setHasDiff } from "../utils/sets";
-import RoomViewStore from "./RoomViewStore";
-import { Action } from "../dispatcher/actions";
-import { arrayHasDiff, arrayHasOrderChange } from "../utils/arrays";
-import { objectDiff } from "../utils/objects";
-import { reorderLexicographically } from "../utils/stringOrderField";
-import { TAG_ORDER } from "../components/views/rooms/RoomList";
-import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
-
 import { logger } from "matrix-js-sdk/src/logger";
+
+import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
+import defaultDispatcher from "../../dispatcher/dispatcher";
+import { ActionPayload } from "../../dispatcher/payloads";
+import RoomListStore from "../room-list/RoomListStore";
+import SettingsStore from "../../settings/SettingsStore";
+import DMRoomMap from "../../utils/DMRoomMap";
+import { FetchRoomFn } from "../notifications/ListNotificationState";
+import { SpaceNotificationState } from "../notifications/SpaceNotificationState";
+import { RoomNotificationStateStore } from "../notifications/RoomNotificationStateStore";
+import { DefaultTagID } from "../room-list/models";
+import { EnhancedMap, mapDiff } from "../../utils/maps";
+import { setHasDiff } from "../../utils/sets";
+import RoomViewStore from "../RoomViewStore";
+import { Action } from "../../dispatcher/actions";
+import { arrayHasDiff, arrayHasOrderChange } from "../../utils/arrays";
+import { objectDiff } from "../../utils/objects";
+import { reorderLexicographically } from "../../utils/stringOrderField";
+import { TAG_ORDER } from "../../components/views/rooms/RoomList";
+import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
+import {
+    ISuggestedRoom,
+    MetaSpace,
+    SpaceKey,
+    UPDATE_HOME_BEHAVIOUR,
+    UPDATE_INVITED_SPACES,
+    UPDATE_SELECTED_SPACE,
+    UPDATE_SUGGESTED_ROOMS,
+    UPDATE_TOP_LEVEL_SPACES,
+} from ".";
 
 interface IState {}
 
 const ACTIVE_SPACE_LS_KEY = "mx_active_space";
 
-export const UPDATE_TOP_LEVEL_SPACES = Symbol("top-level-spaces");
-export const UPDATE_INVITED_SPACES = Symbol("invited-spaces");
-export const UPDATE_SELECTED_SPACE = Symbol("selected-space");
-export const UPDATE_HOME_BEHAVIOUR = Symbol("home-behaviour");
-export const UPDATE_SUGGESTED_ROOMS = Symbol("suggested-rooms");
-// Space Key will be emitted when a Space's children change
-
-export enum MetaSpace {
-    Home = "home-space",
-    Favourites = "favourites-space",
-    People = "people-space",
-    Orphans = "orphans-space",
-}
-
 const metaSpaceOrder: MetaSpace[] = [MetaSpace.Home, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans];
-
-export type SpaceKey = MetaSpace | Room["roomId"];
-
-export interface ISuggestedRoom extends IHierarchyRoom {
-    viaServers: string[];
-}
 
 const MAX_SUGGESTED_ROOMS = 20;
 
@@ -113,13 +101,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // Map from space key to Set of room IDs that should be shown as part of that space's filter
     private spaceFilteredRooms = new Map<SpaceKey, Set<string>>();
     // The space currently selected in the Space Panel
-    private _activeSpace?: SpaceKey; // set by onReady
+    private _activeSpace?: SpaceKey = MetaSpace.Home; // set properly by onReady
     private _suggestedRooms: ISuggestedRoom[] = [];
     private _invitedSpaces = new Set<Room>();
     private spaceOrderLocalEchoMap = new Map<string, string>();
     private _restrictedJoinRuleSupport?: IRoomCapability;
     private _allRoomsInHome: boolean = SettingsStore.getValue("Spaces.allRoomsInHome");
-    private _enabledMetaSpaces: MetaSpace[]; // set by onReady
+    private _enabledMetaSpaces: MetaSpace[] = []; // set by onReady
 
     constructor() {
         super(defaultDispatcher, {});
@@ -438,7 +426,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         // if the currently selected space no longer exists, remove its selection
         if (this._activeSpace[0] === "!" && detachedNodes.has(this.matrixClient.getRoom(this._activeSpace))) {
-            this.setActiveSpace(MetaSpace.Home, false); // TODO home may not be enabled
+            this.goToFirstSpace();
         }
 
         this.onRoomsUpdate(); // TODO only do this if a change has happened
@@ -666,7 +654,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.setActiveSpace(room.roomId, false);
         } else if (membership === "leave" && room.roomId === this.activeSpace) {
             // user's active space has gone away, go back to home
-            this.setActiveSpace(MetaSpace.Home, true); // TODO
+            this.goToFirstSpace(true);
         }
     };
 
@@ -769,7 +757,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.parentMap = new EnhancedMap();
         this.notificationStateMap = new Map();
         this.spaceFilteredRooms = new Map();
-        this._activeSpace = MetaSpace.Home; // TODO
+        this._activeSpace = MetaSpace.Home; // set properly by onReady
         this._suggestedRooms = [];
         this._invitedSpaces = new Set();
     }
@@ -818,8 +806,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
     }
 
-    private goToFirstSpace() {
-        this.setActiveSpace(this.enabledMetaSpaces[0] ?? this.spacePanelSpaces[0]?.roomId, false);
+    private goToFirstSpace(contextSwitch = false) {
+        this.setActiveSpace(this.enabledMetaSpaces[0] ?? this.spacePanelSpaces[0]?.roomId, contextSwitch);
     }
 
     protected async onAction(payload: ActionPayload) {

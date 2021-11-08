@@ -19,7 +19,8 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./IFilterCondition";
 import { IDestroyable } from "../../../utils/IDestroyable";
-import SpaceStore, { MetaSpace, SpaceKey } from "../../SpaceStore";
+import SpaceStore from "../../spaces/SpaceStore";
+import { MetaSpace, SpaceKey } from "../../spaces";
 import { setHasDiff } from "../../../utils/sets";
 
 /**

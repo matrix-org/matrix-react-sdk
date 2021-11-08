@@ -18,7 +18,7 @@ import "../../skinned-sdk"; // Must be first for skinning to work
 import { SpaceWatcher } from "../../../src/stores/room-list/SpaceWatcher";
 import type { RoomListStoreClass } from "../../../src/stores/room-list/RoomListStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
-import SpaceStore, { MetaSpace, UPDATE_HOME_BEHAVIOUR } from "../../../src/stores/SpaceStore";
+import SpaceStore, { MetaSpace, UPDATE_HOME_BEHAVIOUR } from "../../../src/stores/spaces/SpaceStore";
 import { stubClient } from "../../test-utils";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import * as testUtils from "../../utils/test-utils";

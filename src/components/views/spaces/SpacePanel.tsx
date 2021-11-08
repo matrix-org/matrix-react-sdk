@@ -34,14 +34,15 @@ import SpaceCreateMenu from "./SpaceCreateMenu";
 import { SpaceButton, SpaceItem } from "./SpaceTreeLevel";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import SpaceStore, {
+import SpaceStore from "../../../stores/spaces/SpaceStore";
+import {
     MetaSpace,
     SpaceKey,
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_INVITED_SPACES,
     UPDATE_SELECTED_SPACE,
     UPDATE_TOP_LEVEL_SPACES,
-} from "../../../stores/SpaceStore";
+} from "../../../stores/spaces";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
@@ -60,9 +61,9 @@ const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     });
     const [metaSpaces, actualSpaces] = useEventEmitterState<[MetaSpace[], Room[]]>(
         SpaceStore.instance, UPDATE_TOP_LEVEL_SPACES,
-        (realSpaces: Room[], metaSpaces: MetaSpace[]) => [
-            metaSpaces,
-            realSpaces,
+        () => [
+            SpaceStore.instance.enabledMetaSpaces,
+            SpaceStore.instance.spacePanelSpaces,
         ],
     );
     const activeSpace = useEventEmitterState<SpaceKey>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
