@@ -26,7 +26,6 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { compare } from "../../utils/strings";
-import { some } from "lodash";
 
 export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
 

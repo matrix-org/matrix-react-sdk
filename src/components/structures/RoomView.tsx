@@ -196,7 +196,7 @@ export interface IRoomState {
     rejecting?: boolean;
     rejectError?: Error;
     hasPinnedWidgets?: boolean;
-    mainSplitContentType: MainSplitContentType;
+    mainSplitContentType?: MainSplitContentType;
     dragCounter: number;
     // whether or not a spaces context switch brought us here,
     // if it did we don't want the room to be marked as read as soon as it is loaded.
