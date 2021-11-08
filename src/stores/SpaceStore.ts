@@ -113,7 +113,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // Map from space key to Set of room IDs that should be shown as part of that space's filter
     private spaceFilteredRooms = new Map<SpaceKey, Set<string>>();
     // The space currently selected in the Space Panel
-    private _activeSpace?: SpaceKey = MetaSpace.Home;
+    private _activeSpace?: SpaceKey = MetaSpace.Home; // TODO what if home is disabled?
     private _suggestedRooms: ISuggestedRoom[] = [];
     private _invitedSpaces = new Set<Room>();
     private spaceOrderLocalEchoMap = new Map<string, string>();
@@ -466,12 +466,16 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // Update a given room due to its tag changing (e.g DM-ness or Fav-ness)
     // This can only change whether it shows up in the HOME_SPACE or not
     private onRoomUpdate = (room: Room) => {
-        if (this.showInHomeSpace(room)) {
-            this.spaceFilteredRooms.get(MetaSpace.Home)?.add(room.roomId);
-            this.emit(MetaSpace.Home);
-        } else if (!this.orphanedRooms.has(room.roomId)) {
-            this.spaceFilteredRooms.get(MetaSpace.Home)?.delete(room.roomId);
-            this.emit(MetaSpace.Home);
+        const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
+        // TODO more metaspace stuffs
+        if (enabledMetaSpaces.has(MetaSpace.Home)) {
+            if (this.showInHomeSpace(room)) {
+                this.spaceFilteredRooms.get(MetaSpace.Home)?.add(room.roomId);
+                this.emit(MetaSpace.Home);
+            } else if (!this.orphanedRooms.has(room.roomId)) {
+                this.spaceFilteredRooms.get(MetaSpace.Home)?.delete(room.roomId);
+                this.emit(MetaSpace.Home);
+            }
         }
     };
 
@@ -488,16 +492,36 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const oldFilteredRooms = this.spaceFilteredRooms;
         this.spaceFilteredRooms = new Map();
 
-        if (!this.allRoomsInHome) {
+        const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
+        // populate the Home metaspace if it is enabled and is not set to all rooms
+        if (enabledMetaSpaces.has(MetaSpace.Home) && !this.allRoomsInHome) {
             // put all room invites in the Home Space
             const invites = visibleRooms.filter(r => !r.isSpaceRoom() && r.getMyMembership() === "invite");
-            this.spaceFilteredRooms.set(MetaSpace.Home, new Set<string>(invites.map(room => room.roomId)));
+            this.spaceFilteredRooms.set(MetaSpace.Home, new Set(invites.map(r => r.roomId)));
 
             visibleRooms.forEach(room => {
                 if (this.showInHomeSpace(room)) {
                     this.spaceFilteredRooms.get(MetaSpace.Home).add(room.roomId);
                 }
             });
+        }
+
+        // populate the Favourites metaspace if it is enabled
+        if (enabledMetaSpaces.has(MetaSpace.Favourites)) {
+            const favourites = visibleRooms.filter(r => r.tags[DefaultTagID.Favourite]);
+            this.spaceFilteredRooms.set(MetaSpace.Favourites, new Set(favourites.map(r => r.roomId)));
+        }
+
+        // populate the People metaspace if it is enabled
+        if (enabledMetaSpaces.has(MetaSpace.People)) {
+            const people = visibleRooms.filter(r => DMRoomMap.shared().getUserIdForRoomId(r.roomId));
+            this.spaceFilteredRooms.set(MetaSpace.People, new Set(people.map(r => r.roomId)));
+        }
+
+        // populate the Orphans metaspace if it is enabled
+        if (enabledMetaSpaces.has(MetaSpace.Orphans)) {
+            const orphans = visibleRooms.filter(r => !this.parentMap.get(r.roomId)?.size);
+            this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
         }
 
         const hiddenChildren = new EnhancedMap<string, Set<string>>();
@@ -560,6 +584,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         });
 
         this.spaceFilteredRooms.forEach((roomIds, s) => {
+            // TODO metaspaces
             if (this.allRoomsInHome && s === MetaSpace.Home) return; // we'll be using the global notification state, skip
 
             // Update NotificationStates
@@ -567,7 +592,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 if (!roomIds.has(room.roomId) || room.isSpaceRoom()) return false;
 
                 if (DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
-                    return s === MetaSpace.Home;
+                    return s === MetaSpace.Home; // TODO
                 }
 
                 return true;
@@ -594,7 +619,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         // don't trigger a context switch when we are switching a space to match the chosen room
-        this.setActiveSpace(parent?.roomId ?? MetaSpace.Home, false);
+        this.setActiveSpace(parent?.roomId ?? MetaSpace.Home, false); // TODO
     };
 
     private onRoom = (room: Room, newMembership?: string, oldMembership?: string) => {
@@ -747,7 +772,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.parentMap = new EnhancedMap();
         this.notificationStateMap = new Map();
         this.spaceFilteredRooms = new Map();
-        this._activeSpace = MetaSpace.Home;
+        this._activeSpace = MetaSpace.Home; // TODO
         this._suggestedRooms = [];
         this._invitedSpaces = new Set();
     }

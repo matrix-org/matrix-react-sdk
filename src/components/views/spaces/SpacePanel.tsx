@@ -135,6 +135,24 @@ const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
     </li>;
 };
 
+const FavouritesButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
+    return <li
+        className={classNames("mx_SpaceItem", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
+        <SpaceButton
+            className="mx_SpaceButton_favourites"
+            onClick={() => SpaceStore.instance.setActiveSpace(MetaSpace.Favourites)}
+            selected={selected}
+            label={_t("Favourites")}
+            notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Favourites)}
+            isNarrow={isPanelCollapsed}
+        />
+    </li>;
+};
+
 const CreateSpaceButton = ({
     isPanelCollapsed,
     setPanelCollapsed,
@@ -188,6 +206,7 @@ const CreateSpaceButton = ({
 
 const metaSpaceComponentMap: Record<MetaSpace, typeof HomeButton> = {
     [MetaSpace.Home]: HomeButton,
+    [MetaSpace.Favourites]: FavouritesButton,
 };
 
 // Optimisation based on https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#recommended-droppable--performance-optimisation
