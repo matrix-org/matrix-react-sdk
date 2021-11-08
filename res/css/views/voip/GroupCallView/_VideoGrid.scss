@@ -104,5 +104,14 @@ limitations under the License.
             border-color: #0DBD8B;
         }
     }
+
+    &.mx_simpleVideoGrid {
+        .mx_videoTile {
+            position: relative;
+            display: flex;
+            width: 426px;
+            height: 240px;
+        }
+    }
 }
 

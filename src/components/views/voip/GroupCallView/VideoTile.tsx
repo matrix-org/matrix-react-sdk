@@ -8,7 +8,7 @@ import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
 
 interface IVideoTileProps {
-    style: any;
+    style?: any;
     callFeed: CallFeed;
     disableSpeakingHighlight: boolean;
 }
