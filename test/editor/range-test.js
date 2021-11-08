@@ -104,4 +104,20 @@ describe('editor/range', function() {
         range.trim();
         expect(range.parts[0].text).toBe("abc");
     });
+    // test for edge case when the selection just consists of whitespace
+    it('range trim just whitespace', () => {
+        const renderer = createRenderer();
+        const pc = createPartCreator();
+        const model = new EditorModel([
+            pc.plain("  \n    \n\n"),
+        ], pc, renderer);
+        const range = model.startRange(
+            model.positionForOffset(0, false),
+            model.getPositionAtEnd(),
+        );
+
+        expect(range.text).toBe("  \n    \n\n");
+        range.trim();
+        expect(range.text).toBe("");
+    });
 });

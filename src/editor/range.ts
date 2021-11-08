@@ -17,26 +17,22 @@ limitations under the License.
 import EditorModel from "./model";
 import DocumentPosition, { Predicate } from "./position";
 import { Part } from "./parts";
-import { logger } from "matrix-js-sdk/src/logger";
 
 const whitespacePredicate: Predicate = (index, offset, part) => {
-    if (part.text[offset] == null) {
-        logger.debug("Meme");
-    }
     return part.text[offset].trim() === "";
 };
 
 export default class Range {
     private _start: DocumentPosition;
     private _end: DocumentPosition;
-    private _initialStart: DocumentPosition;
+    private _lastStart: DocumentPosition;
     private _initializedEmpty: boolean;
 
     constructor(public readonly model: EditorModel, positionA: DocumentPosition, positionB = positionA) {
         const bIsLarger = positionA.compare(positionB) < 0;
         this._start = bIsLarger ? positionA : positionB;
         this._end = bIsLarger ? positionB : positionA;
-        this._initialStart = this._start;
+        this._lastStart = this._start;
         this._initializedEmpty = this._start.index === this._end.index && this._start.offset == this._end.offset;
     }
 
@@ -55,8 +51,12 @@ export default class Range {
         this._initializedEmpty = value;
     }
 
-    public getInitialPosition(): DocumentPosition {
-        return this._initialStart;
+    public getLastStartingPosition(): DocumentPosition {
+        return this._lastStart;
+    }
+
+    public setLastStartingPosition(position: DocumentPosition): void {
+        this._lastStart = position;
     }
 
     public moveEndBackwards(delta: number): void {
@@ -67,6 +67,10 @@ export default class Range {
     }
 
     public trim(): void {
+        if (this.text.trim() === "") {
+            this._start = this._end;
+            return;
+        }
         this._start = this._start.forwardsWhile(this.model, whitespacePredicate);
         this._end = this._end.backwardsWhile(this.model, whitespacePredicate);
     }
