@@ -60,11 +60,9 @@ const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     });
     const [metaSpaces, actualSpaces] = useEventEmitterState<[MetaSpace[], Room[]]>(
         SpaceStore.instance, UPDATE_TOP_LEVEL_SPACES,
-        () => [
-            Object.keys(SpaceStore.instance.enabledMetaSpaces).filter(k => {
-                return SpaceStore.instance.enabledMetaSpaces[k];
-            }) as MetaSpace[],
-            SpaceStore.instance.spacePanelSpaces,
+        (realSpaces: Room[], metaSpaces: MetaSpace[]) => [
+            metaSpaces,
+            realSpaces,
         ],
     );
     const activeSpace = useEventEmitterState<SpaceKey>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {

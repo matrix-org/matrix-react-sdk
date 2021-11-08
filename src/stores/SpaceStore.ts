@@ -61,6 +61,8 @@ export enum MetaSpace {
     Orphans = "orphans-space",
 }
 
+const metaSpaceOrder: MetaSpace[] = [MetaSpace.Home, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans];
+
 export type SpaceKey = MetaSpace | Room["roomId"];
 
 export interface ISuggestedRoom extends IHierarchyRoom {
@@ -117,19 +119,23 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private spaceOrderLocalEchoMap = new Map<string, string>();
     private _restrictedJoinRuleSupport?: IRoomCapability;
     private _allRoomsInHome: boolean = SettingsStore.getValue("Spaces.allRoomsInHome");
-    private _enabledMetaSpaces: Record<MetaSpace, boolean> = SettingsStore.getValue("Spaces.enabledMetaSpaces");
+    private _enabledMetaSpaces: MetaSpace[]; // set by c'tor
 
     constructor() {
         super(defaultDispatcher, {});
 
         SettingsStore.monitorSetting("Spaces.allRoomsInHome", null);
+        SettingsStore.monitorSetting("Spaces.enabledMetaSpaces", null);
+
+        const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
+        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]);
     }
 
     public get invitedSpaces(): Room[] {
         return Array.from(this._invitedSpaces);
     }
 
-    public get enabledMetaSpaces(): Record<MetaSpace, boolean> {
+    public get enabledMetaSpaces(): MetaSpace[] {
         return this._enabledMetaSpaces;
     }
 
@@ -439,7 +445,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         this.onRoomsUpdate(); // TODO only do this if a change has happened
-        this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces);
+        this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
 
         // build initial state of invited spaces as we would have missed the emitted events about the room at launch
         this._invitedSpaces = new Set(this.sortRootSpaces(invitedSpaces));
@@ -646,7 +652,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const rootSpaces = this.sortRootSpaces(this.rootSpaces);
         if (arrayHasOrderChange(this.rootSpaces, rootSpaces)) {
             this.rootSpaces = rootSpaces;
-            this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces);
+            this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
         }
     }
 
@@ -828,15 +834,28 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
             case Action.SettingUpdated: {
                 const settingUpdatedPayload = payload as SettingUpdatedPayload;
-                if (settingUpdatedPayload.settingName === "Spaces.allRoomsInHome") {
-                    const newValue = SettingsStore.getValue("Spaces.allRoomsInHome");
-                    if (this.allRoomsInHome !== newValue) {
-                        this._allRoomsInHome = newValue;
-                        this.emit(UPDATE_HOME_BEHAVIOUR, this.allRoomsInHome);
-                        this.rebuild(); // rebuild everything
+                switch (settingUpdatedPayload.settingName) {
+                    case "Spaces.allRoomsInHome": {
+                        const newValue = SettingsStore.getValue("Spaces.allRoomsInHome");
+                        if (this.allRoomsInHome !== newValue) {
+                            this._allRoomsInHome = newValue;
+                            this.emit(UPDATE_HOME_BEHAVIOUR, this.allRoomsInHome);
+                            this.rebuild(); // rebuild everything
+                        }
+                        break;
+                    }
+
+                    case "Spaces.enabledMetaSpaces": {
+                        const newValue = SettingsStore.getValue("Spaces.enabledMetaSpaces");
+                        const enabledMetaSpaces = newValue.filter(k => enabledMetaSpaces[k]);
+                        if (arrayHasDiff(this._enabledMetaSpaces, enabledMetaSpaces)) {
+                            this._enabledMetaSpaces = enabledMetaSpaces;
+                            this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
+                            this.rebuild(); // rebuild everything
+                        }
+                        break;
                     }
                 }
-                break;
             }
         }
     }
