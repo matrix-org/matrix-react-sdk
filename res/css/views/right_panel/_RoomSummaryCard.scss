@@ -133,6 +133,8 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_app_pinToggle,
+            .mx_RoomSummaryCard_app_maximise,
+            .mx_RoomSummaryCard_app_minimise,
             .mx_RoomSummaryCard_app_options {
                 position: absolute;
                 top: 0;
@@ -174,9 +176,23 @@ limitations under the License.
                     mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
                 }
             }
+            .mx_RoomSummaryCard_app_maximise {
+                right: 48px;
+
+                &::before {
+                    mask-image: url('$(res)/img/element-icons/room/widgets/maximise.svg');
+                }
+            }
+            .mx_RoomSummaryCard_app_minimise {
+                right: 48px;
+                &::before {
+                    background-color: $accent-color;
+                    mask-image: url('$(res)/img/element-icons/room/widgets/minimise.svg');
+                }
+            }
 
             .mx_RoomSummaryCard_app_options {
-                right: 48px;
+                right: 72px;
                 display: none;
 
                 &::before {

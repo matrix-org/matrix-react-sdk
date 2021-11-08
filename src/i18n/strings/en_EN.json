@@ -1853,6 +1853,8 @@
     "Threads": "Threads",
     "Room Info": "Room Info",
     "You can only pin up to %(count)s widgets|other": "You can only pin up to %(count)s widgets",
+    "Minimise widget": "Minimise widget",
+    "Maximise widget": "Maximise widget",
     "Unpin a widget to view it in this panel": "Unpin a widget to view it in this panel",
     "Set my room layout for everyone": "Set my room layout for everyone",
     "Widgets": "Widgets",

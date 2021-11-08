@@ -227,6 +227,14 @@ $MinWidth: 240px;
     margin: 0 3px;
 }
 
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_minWidget {
+    mask-image: url('$(res)/img/element-icons/room/widgets/minimise.svg');
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_maxWidget {
+    mask-image: url('$(res)/img/element-icons/room/widgets/maximise.svg');
+}
+
 .mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_popout {
     mask-image: url('$(res)/img/feather-customised/widget/external-link.svg');
 }

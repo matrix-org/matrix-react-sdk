@@ -139,6 +139,13 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
         mx_RoomSummaryCard_Button_pinned: isPinned,
     });
 
+    const isMaximised = WidgetLayoutStore.instance.isInContainer(room, app, Container.Center);
+    const toggleMaximised = isMaximised
+        ? () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right); }
+        : () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center); };
+
+    const maximiseTitle = isMaximised ? _t("Minimise widget") : _t("Maximise widget");
+
     return <div className={classes} ref={handle}>
         <AccessibleTooltipButton
             className="mx_RoomSummaryCard_icon_app"
@@ -169,6 +176,13 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             disabled={cannotPin}
             yOffset={-24}
         />
+        { SettingsStore.getValue("feature_maximised_widgets") &&
+        <AccessibleTooltipButton
+            className={isMaximised ? "mx_RoomSummaryCard_app_minimise" : "mx_RoomSummaryCard_app_maximise"}
+            onClick={toggleMaximised}
+            title={maximiseTitle}
+            yOffset={-24}
+        /> }
 
         { contextMenu }
     </div>;

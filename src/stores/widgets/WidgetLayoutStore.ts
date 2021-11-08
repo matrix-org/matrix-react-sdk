@@ -26,6 +26,7 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { compare } from "../../utils/strings";
+import { some } from "lodash";
 
 export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
 
@@ -40,6 +41,7 @@ export enum Container {
 
     // ... more as needed. Note that most of this code assumes that there
     // are only two containers, and that only the top container is special.
+    Center = "center"
 }
 
 export interface IStoredLayout {
@@ -201,12 +203,21 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         // function will go into the right container.
         const topWidgets: IApp[] = [];
         const rightWidgets: IApp[] = [];
+        const centerWidgets: IApp[] = [];
         for (const widget of widgets) {
             const stateContainer = roomLayout?.widgets?.[widget.id]?.container;
             const manualContainer = userLayout?.widgets?.[widget.id]?.container;
             const isLegacyPinned = !!legacyPinned?.[widget.id];
             const defaultContainer = WidgetType.JITSI.matches(widget.type) ? Container.Top : Container.Right;
-
+            if (stateContainer === Container.Center || manualContainer === Container.Center) {
+                if (centerWidgets.length) {
+                    console.error("Tried to push a second Widget into the center container");
+                } else {
+                    centerWidgets.push(widget);
+                }
+                // The widget won't need to be put in any oter container.
+                continue;
+            }
             let targetContainer = defaultContainer;
             if (!!manualContainer || !!stateContainer) {
                 targetContainer = (manualContainer) ? manualContainer : stateContainer;
@@ -323,6 +334,11 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 ordered: rightWidgets,
             };
         }
+        if (centerWidgets.length) {
+            this.byRoom[room.roomId][Container.Center] = {
+                ordered: centerWidgets,
+            };
+        }
 
         const afterChanges = JSON.stringify(this.byRoom[room.roomId]);
         if (afterChanges !== beforeChanges) {
@@ -339,7 +355,11 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     }
 
     public canAddToContainer(room: Room, container: Container): boolean {
-        return this.getContainerWidgets(room, container).length < MAX_PINNED;
+        switch (container) {
+            case Container.Top: return this.getContainerWidgets(room, container).length < MAX_PINNED;
+            case Container.Right: return this.getContainerWidgets(room, container).length < MAX_PINNED;
+            case Container.Center: return this.getContainerWidgets(room, container).length < 1;
+        }
     }
 
     public getResizerDistributions(room: Room, container: Container): string[] { // yes, string.
@@ -426,6 +446,31 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.updateUserLayout(room, {
             [widget.id]: { container: toContainer },
         });
+        switch (toContainer) {
+            case Container.Center:
+                for (const w of this.getContainerWidgets(room, Container.Top)) {
+                    this.moveToContainer(room, w, Container.Right);
+                }
+                for (const w of this.getContainerWidgets(room, Container.Top)) {
+                    if (w !== widget) {this.moveToContainer(room, w, Container.Right);}
+                }
+                break;
+            case Container.Right:
+                break;
+            case Container.Top:
+                if (this.hasMaximisedWidget(room) && toContainer) {
+                    this.moveToContainer(room, this.getContainerWidgets(room, Container.Center)[0], Container.Right);
+                }
+                break;
+        }
+    }
+
+    public hasMaximisedWidget(room: Room) {
+        return this.getContainerWidgets(room, Container.Center).length > 0;
+    }
+
+    public hasPinnedWidgets(room: Room) {
+        return this.getContainerWidgets(room, Container.Top).length > 0;
     }
 
     public canCopyLayoutToRoom(room: Room): boolean {
