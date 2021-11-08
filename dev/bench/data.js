@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636386274731,
+  "lastUpdate": 1636386311394,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37664,6 +37664,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4193.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f9c7417aa10576695172e9e40cf1a5c9f5303231",
+          "message": "Fix quote button (#7096)",
+          "timestamp": "2021-11-08T15:39:39Z",
+          "tree_id": "ac5573ef584096c963092fcb6d3cfb89ada0a132",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f9c7417aa10576695172e9e40cf1a5c9f5303231"
+        },
+        "date": 1636386309220,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5190,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1691.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4473.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
