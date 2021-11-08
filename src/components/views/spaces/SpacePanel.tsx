@@ -54,17 +54,23 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import UIStore from "../../../stores/UIStore";
 
-const useSpaces = (): [Room[], Room[], SpaceKey] => {
+const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
         return SpaceStore.instance.invitedSpaces;
     });
-    const spaces = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_TOP_LEVEL_SPACES, () => {
-        return SpaceStore.instance.spacePanelSpaces;
-    });
+    const [metaSpaces, actualSpaces] = useEventEmitterState<[MetaSpace[], Room[]]>(
+        SpaceStore.instance, UPDATE_TOP_LEVEL_SPACES,
+        () => [
+            Object.keys(SpaceStore.instance.enabledMetaSpaces).filter(k => {
+                return SpaceStore.instance.enabledMetaSpaces[k];
+            }) as MetaSpace[],
+            SpaceStore.instance.spacePanelSpaces,
+        ],
+    );
     const activeSpace = useEventEmitterState<SpaceKey>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpace;
     });
-    return [invites, spaces, activeSpace];
+    return [invites, metaSpaces, actualSpaces, activeSpace];
 };
 
 interface IInnerSpacePanelProps {
@@ -182,13 +188,22 @@ const CreateSpaceButton = ({
     </li>;
 };
 
+const metaSpaceComponentMap: Record<MetaSpace, typeof HomeButton> = {
+    [MetaSpace.Home]: HomeButton,
+};
+
 // Optimisation based on https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#recommended-droppable--performance-optimisation
 const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCollapsed, setPanelCollapsed }) => {
-    const [invites, spaces, activeSpace] = useSpaces();
+    const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
     const activeSpaces = activeSpace ? [activeSpace] : [];
 
+    const metaSpacesSection = metaSpaces.map(key => {
+        const Component = metaSpaceComponentMap[key];
+        return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
+    });
+
     return <div className="mx_SpaceTreeLevel">
-        <HomeButton selected={activeSpace === MetaSpace.Home} isPanelCollapsed={isPanelCollapsed} />
+        { metaSpacesSection }
         { invites.map(s => (
             <SpaceItem
                 key={s.roomId}
@@ -198,7 +213,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
                 onExpand={() => setPanelCollapsed(false)}
             />
         )) }
-        { spaces.map((s, i) => (
+        { actualSpaces.map((s, i) => (
             <Draggable key={s.roomId} draggableId={s.roomId} index={i}>
                 { (provided, snapshot) => (
                     <SpaceItem

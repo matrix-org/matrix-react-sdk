@@ -56,9 +56,9 @@ export const UPDATE_SUGGESTED_ROOMS = Symbol("suggested-rooms");
 
 export enum MetaSpace {
     Home = "home-space",
-    // Favourites = "favourites-space",
-    // People = "people-space",
-    // Orphans = "orphans-space",
+    Favourites = "favourites-space",
+    People = "people-space",
+    Orphans = "orphans-space",
 }
 
 export type SpaceKey = MetaSpace | Room["roomId"];
@@ -117,6 +117,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private spaceOrderLocalEchoMap = new Map<string, string>();
     private _restrictedJoinRuleSupport?: IRoomCapability;
     private _allRoomsInHome: boolean = SettingsStore.getValue("Spaces.allRoomsInHome");
+    private _enabledMetaSpaces: Record<MetaSpace, boolean> = SettingsStore.getValue("Spaces.enabledMetaSpaces");
 
     constructor() {
         super(defaultDispatcher, {});
@@ -126,6 +127,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     public get invitedSpaces(): Room[] {
         return Array.from(this._invitedSpaces);
+    }
+
+    public get enabledMetaSpaces(): Record<MetaSpace, boolean> {
+        return this._enabledMetaSpaces;
     }
 
     public get spacePanelSpaces(): Room[] {
