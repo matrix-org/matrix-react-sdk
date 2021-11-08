@@ -23,17 +23,19 @@ import { Formatting } from "../components/views/rooms/MessageComposerFormatBar";
  */
 
 export function formatRange(range: Range, action: Formatting) {
+    // If the selection was empty we select the current word instead
     if (range.wasInitializedEmpty()) {
         range = getRangeOfWordAtCaretPosition(range);
+    } else {
+        // Remove whitespace or new lines in our selection
+        range.trim();
     }
 
     // Edgecase when just selecting whitespace or new line.
     // There should be no reason to format whitespace, so we can just return.
-    if (range.text.trim().length == 0) {
+    if (range.length == 0) {
         return;
     }
-
-    range.trim();
 
     switch (action) {
         case Formatting.Bold:
@@ -79,15 +81,27 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset 
     });
 }
 
-export function replaceRangeAndResetCaret(range: Range, newParts: Part[], offset = 0, toggled = false): void {
+export function toggleFormattingForRangeAndResetCaret(
+    range: Range, newParts: Part[], rangeHasFormatting: boolean,
+    prefixLength: number, suffixLength = prefixLength): void {
     const { model } = range;
-
-    // Flip offset sign depening on whether we toggle or untoggle formatting
-    toggled ? offset = -offset + 1 : offset;
-
     model.transform(() => {
-        range.replace(newParts);
-        const previousCaretOffset = range.getInitialPosition().asOffset(model).add(offset);
+        // Shift the initialPosition
+        if (rangeHasFormatting) {
+            const relativeOffset = range.getLastStartingPosition().offset - range.start.offset; // Always positive
+            if (range.length - relativeOffset < suffixLength) {
+                const offset = (range.length - relativeOffset - suffixLength);
+                const start = range.getLastStartingPosition().asOffset(model).add(offset);
+                range.setLastStartingPosition(start.asPosition(model));
+            } else if (relativeOffset < prefixLength) {
+                const offset = prefixLength - relativeOffset;
+                const start = range.getLastStartingPosition().asOffset(model).add(offset);
+                range.setLastStartingPosition(start.asPosition(model));
+            }
+        }
+        const offset = range.replace(newParts) / 2;
+        const atEnd = range.getLastStartingPosition().asOffset(model).atNodeEnd;
+        const previousCaretOffset = range.getLastStartingPosition().asOffset(model).add(offset, atEnd);
         return previousCaretOffset.asPosition(model);
     });
 }
@@ -187,9 +201,7 @@ export function getRangeOfWordAtCaretPosition(range: Range): Range {
         return isPlainWord(offset, part);
     });
 
-    // Cut off new lines
-    // This is needed since expandBackwardsWhile lands on the index of the previous new line if
-    // at the beginning of a line that is not the first line
+    // Trim possibly selected new lines
     range.trim();
 
     return range;
@@ -275,7 +287,7 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
     if (range.wasInitializedEmpty()) {
         // Check if we need to add a offset for a toggle or untoggle
         const hasFormatting = range.text.startsWith(prefix) && range.text.endsWith(suffix);
-        replaceRangeAndResetCaret(range, parts, prefix.length, hasFormatting);
+        toggleFormattingForRangeAndResetCaret(range, parts, hasFormatting, prefix.length);
     } else {
         replaceRangeAndExpandSelection(range, parts);
     }

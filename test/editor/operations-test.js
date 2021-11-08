@@ -193,7 +193,7 @@ describe('editor/operations: formatting operations', () => {
             ]);
         });
 
-        it('format word at caret position at beginning of line', () => {
+        it('format word at caret position at beginning of new line without selection', () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -201,39 +201,25 @@ describe('editor/operations: formatting operations', () => {
                 pc.plain("hello!"),
             ], pc, renderer);
 
-            let range = model.startRange(model.positionForOffset(0, false));
+            let range = model.startRange(model.positionForOffset(2, false));
 
             // Initial position should equal start and end since we did not select anything
-            expect(range.getInitialPosition()).toEqual(range.start);
-            expect(range.getInitialPosition()).toEqual(range.end);
+            expect(range.getLastStartingPosition()).toEqual(range.start);
+            expect(range.getLastStartingPosition()).toEqual(range.end);
 
-            getRangeOfWordAtCaretPosition(range);
+            range = getRangeOfWordAtCaretPosition(range);
 
-            expect(range.wasInitializedEmpty()).toEqual(true);
+            // Check whether selection has the correct length
+            expect(range.length).toBe("hello!".length);
 
-            // Preceding new line should never be selected in this case
-            expect(range.length).toBe(1);
-            expect(range.parts.map(p => p.text).join("")).toBe("");
-            expect(model.serializeParts()).toEqual([
-                SERIALIZED_NEWLINE,
-                { "text": "hello!", "type": "plain" },
-            ]);
-
-            getRangeOfWordAtCaretPosition(range);
             formatRange(range, Formatting.Bold);
-            expect(range.start).toEqual(2);
-            expect(range.end).toEqual(2);
 
             expect(model.serializeParts()).toEqual([
                 SERIALIZED_NEWLINE,
                 { "text": "**hello!**", "type": "plain" },
             ]);
 
-            // Untoggle
-            getRangeOfWordAtCaretPosition(range);
-            formatRange(range, Formatting.Bold);
-            expect(range.start).toEqual(0);
-            expect(range.end).toEqual(0);
+            formatRange(range, Formatting.Bold); // Untoggle
 
             expect(model.serializeParts()).toEqual([
                 SERIALIZED_NEWLINE,
@@ -244,36 +230,47 @@ describe('editor/operations: formatting operations', () => {
             getRangeOfWordAtCaretPosition(range);
 
             formatRange(range, Formatting.Code);
-            expect(range.start).toEqual(2);
-            expect(range.end).toEqual(2);
 
             expect(model.serializeParts()).toEqual([
                 SERIALIZED_NEWLINE,
                 { "text": "`hello!`", "type": "plain" },
             ]);
 
-            getRangeOfWordAtCaretPosition(range);
-
-            // Untoggle
-            formatRange(range, Formatting.Code);
-            expect(range.start).toEqual(1);
-            expect(range.end).toEqual(1);
-
+            formatRange(range, Formatting.Code); // Untoggle
             expect(model.serializeParts()).toEqual([
                 SERIALIZED_NEWLINE,
                 { "text": "hello!", "type": "plain" },
             ]);
+        });
 
-            range = model.startRange(model.getPositionAtEnd());
-
-            formatRange(range, Formatting.InsertLink);
-            getRangeOfWordAtCaretPosition(range);
-            expect(range.start).toEqual(8);
-            expect(range.end).toEqual(8);
+        it('caret resets correctly to current line when untoggling formatting while caret at line end', () => {
+            const renderer = createRenderer();
+            const pc = createPartCreator();
+            const model = new EditorModel([
+                pc.plain("**hello!**"),
+                pc.newline(),
+                pc.plain("world"),
+            ], pc, renderer);
 
             expect(model.serializeParts()).toEqual([
+                { "text": "**hello!**", "type": "plain" },
                 SERIALIZED_NEWLINE,
-                { "text": "[hello!]()", "type": "plain" },
+                { "text": "world", "type": "plain" },
+            ]);
+
+            const endOfFirstLine = 10;
+            const range = model.startRange(model.positionForOffset(endOfFirstLine, true));
+            expect(range.getLastStartingPosition()).toEqual(range.start);
+            expect(range.getLastStartingPosition()).toEqual(range.end);
+
+            formatRange(range, Formatting.Bold); // Toggle
+            formatRange(range, Formatting.Bold); // Untoggle
+
+            // We expected formatting to still happen in the first line as the caret should not jump down
+            expect(model.serializeParts()).toEqual([
+                { "text": "**hello!**", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "world", "type": "plain" },
             ]);
         });
 
@@ -299,7 +296,6 @@ describe('editor/operations: formatting operations', () => {
             ]);
 
             formatRange(range, Formatting.InsertLink);
-
             expect(model.serializeParts()).toEqual([
                 { "text": "hello!", "type": "plain" },
                 SERIALIZED_NEWLINE,
@@ -354,7 +350,6 @@ describe('editor/operations: formatting operations', () => {
             ], pc, renderer);
 
             const range = model.startRange(model.positionForOffset(0, false), model.getPositionAtEnd()); // select-all
-
             expect(range.parts.map(p => p.text).join("")).toBe("       \n\n         ");
 
             expect(model.serializeParts()).toEqual([
