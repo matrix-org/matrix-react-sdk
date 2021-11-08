@@ -43,6 +43,7 @@ import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 import { IPosition, ChevronFace } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
 export function canCancel(eventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -88,6 +89,8 @@ interface IState {
 @replaceableComponent("views.context_menus.MessageContextMenu")
 export default class MessageContextMenu extends React.Component<IProps, IState> {
     static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     private reactButtonRef = createRef<any>(); // XXX Ref to a functional component
 
     constructor(props: IProps) {
@@ -208,9 +211,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onQuoteClick = (): void => {
-        dis.dispatch({
+        dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             event: this.props.mxEvent,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
         this.closeMenu();
     };
