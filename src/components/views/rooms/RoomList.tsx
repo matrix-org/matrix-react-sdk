@@ -21,7 +21,7 @@ import * as fbEmitter from "fbemitter";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t, _td } from "../../../languageHandler";
-import { RovingTabIndexProvider, IState as IRovingTabIndexState } from "../../../accessibility/RovingTabIndex";
+import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import RoomViewStore from "../../../stores/RoomViewStore";
@@ -45,7 +45,7 @@ import { IconizedContextMenuOption, IconizedContextMenuOptionList } from "../con
 import AccessibleButton from "../elements/AccessibleButton";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
-import { ISuggestedRoom, SpaceKey, UPDATE_SUGGESTED_ROOMS } from "../../../stores/spaces";
+import { ISuggestedRoom, MetaSpace, SpaceKey, UPDATE_SUGGESTED_ROOMS } from "../../../stores/spaces";
 import { showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -491,6 +491,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     : TAG_AESTHETICS[orderedTagId];
                 if (!aesthetics) throw new Error(`Tag ${orderedTagId} does not have aesthetics`);
 
+                let alwaysVisible = ALWAYS_VISIBLE_TAGS.includes(orderedTagId);
+                if (
+                    (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
+                    (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM)
+                ) {
+                    alwaysVisible = false;
+                }
+
                 // The cost of mounting/unmounting this component offsets the cost
                 // of keeping it in the DOM and hiding it when it is not required
                 return <RoomSublist
@@ -506,7 +514,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     showSkeleton={showSkeleton}
                     extraTiles={extraTiles}
                     resizeNotifier={this.props.resizeNotifier}
-                    alwaysVisible={ALWAYS_VISIBLE_TAGS.includes(orderedTagId)}
+                    alwaysVisible={alwaysVisible}
                     onListCollapse={this.props.onListCollapse}
                 />;
             });

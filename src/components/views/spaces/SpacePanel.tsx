@@ -105,53 +105,74 @@ const HomeButtonContextMenu = ({ onFinished, ...props }: ComponentProps<typeof S
     </IconizedContextMenu>;
 };
 
-interface IHomeButtonProps {
+interface IMetaSpaceButtonProps extends ComponentProps<typeof SpaceButton> {
     selected: boolean;
     isPanelCollapsed: boolean;
 }
 
-const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
+type MetaSpaceButtonProps = Pick<IMetaSpaceButtonProps, "selected" | "isPanelCollapsed">;
+
+const MetaSpaceButton = ({ selected, isPanelCollapsed, ...props }: IMetaSpaceButtonProps) => {
+    return <li
+        className={classNames("mx_SpaceItem", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
+        <SpaceButton {...props} selected={selected} isNarrow={isPanelCollapsed} />
+    </li>;
+};
+
+const HomeButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
 
-    return <li
-        className={classNames("mx_SpaceItem", {
-            "collapsed": isPanelCollapsed,
-        })}
-        role="treeitem"
-    >
-        <SpaceButton
-            className="mx_SpaceButton_home"
-            onClick={() => SpaceStore.instance.setActiveSpace(MetaSpace.Home)}
-            selected={selected}
-            label={allRoomsInHome ? _t("All rooms") : _t("Home")}
-            notificationState={allRoomsInHome
-                ? RoomNotificationStateStore.instance.globalState
-                : SpaceStore.instance.getNotificationState(MetaSpace.Home)}
-            isNarrow={isPanelCollapsed}
-            ContextMenuComponent={HomeButtonContextMenu}
-            contextMenuTooltip={_t("Options")}
-        />
-    </li>;
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.Home}
+        className="mx_SpaceButton_home"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={allRoomsInHome ? _t("All rooms") : _t("Home")}
+        notificationState={allRoomsInHome
+            ? RoomNotificationStateStore.instance.globalState
+            : SpaceStore.instance.getNotificationState(MetaSpace.Home)}
+        ContextMenuComponent={HomeButtonContextMenu}
+        contextMenuTooltip={_t("Options")}
+    />;
 };
 
-const FavouritesButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
-    return <li
-        className={classNames("mx_SpaceItem", {
-            "collapsed": isPanelCollapsed,
-        })}
-        role="treeitem"
-    >
-        <SpaceButton
-            className="mx_SpaceButton_favourites"
-            onClick={() => SpaceStore.instance.setActiveSpace(MetaSpace.Favourites)}
-            selected={selected}
-            label={_t("Favourites")}
-            notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Favourites)}
-            isNarrow={isPanelCollapsed}
-        />
-    </li>;
+const FavouritesButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.Favourites}
+        className="mx_SpaceButton_favourites"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={_t("Favourites")}
+        notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Favourites)}
+    />;
+};
+
+const PeopleButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.People}
+        className="mx_SpaceButton_people"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={_t("People")}
+        notificationState={SpaceStore.instance.getNotificationState(MetaSpace.People)}
+    />;
+};
+
+const OrphansButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.Orphans}
+        className="mx_SpaceButton_orphans"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={_t("Orphans")}
+        notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Orphans)}
+    />;
 };
 
 const CreateSpaceButton = ({
@@ -208,6 +229,8 @@ const CreateSpaceButton = ({
 const metaSpaceComponentMap: Record<MetaSpace, typeof HomeButton> = {
     [MetaSpace.Home]: HomeButton,
     [MetaSpace.Favourites]: FavouritesButton,
+    [MetaSpace.People]: PeopleButton,
+    [MetaSpace.Orphans]: OrphansButton,
 };
 
 // Optimisation based on https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#recommended-droppable--performance-optimisation
