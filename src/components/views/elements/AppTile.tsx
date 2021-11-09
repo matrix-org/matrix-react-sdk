@@ -84,6 +84,7 @@ interface IState {
     error: Error;
     menuDisplayed: boolean;
     widgetPageTitle: string;
+    requiresClient: boolean;
 }
 
 import { logger } from "matrix-js-sdk/src/logger";
@@ -114,8 +115,10 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.persistKey = getPersistKey(this.props.app.id);
         try {
             this.sgWidget = new StopGapWidget(this.props);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
+            // emits when the capabilites have been setup or changed
+            this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
         } catch (e) {
             logger.log("Failed to construct widget", e);
             this.sgWidget = null;
@@ -155,6 +158,10 @@ export default class AppTile extends React.Component<IProps, IState> {
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
+            // requiresClient is initially set to true. This avoids the broken state of the popout
+            // button being visible (for an instance) and then disappearing when the widget is loaded.
+            // requiresClient <-> hide the popout button
+            requiresClient: true,
         };
     }
 
@@ -216,11 +223,11 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
         try {
             this.sgWidget = new StopGapWidget(newProps);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
             this.startWidget();
         } catch (e) {
-            logger.log("Failed to construct widget", e);
+            logger.error("Failed to construct widget", e);
             this.sgWidget = null;
         }
     }
@@ -234,7 +241,13 @@ export default class AppTile extends React.Component<IProps, IState> {
     private iframeRefChange = (ref: HTMLIFrameElement): void => {
         this.iframe = ref;
         if (ref) {
-            if (this.sgWidget) this.sgWidget.start(ref);
+            try {
+                if (this.sgWidget) {
+                    this.sgWidget.start(ref);
+                }
+            } catch (e) {
+                logger.error("Failed to start widget", e);
+            }
         } else {
             this.resetWidget(this.props);
         }
@@ -287,7 +300,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.sgWidget) this.sgWidget.stop({ forceDestroy: true });
     }
 
-    private onWidgetPrepared = (): void => {
+    private onWidgetPreparing = (): void => {
         this.setState({ loading: false });
     };
 
@@ -295,6 +308,12 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (WidgetType.JITSI.matches(this.props.app.type)) {
             this.sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
         }
+    };
+
+    private onWidgetCapabilitiesNotified = (): void => {
+        this.setState({
+            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
+        });
     };
 
     private onAction = (payload): void => {
@@ -512,7 +531,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                             { this.props.showTitle && this.getTileTitle() }
                         </span>
                         <span className="mx_AppTileMenuBarWidgets">
-                            { this.props.showPopout && <AccessibleButton
+                            { (this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
                                 className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                                 title={_t('Popout widget')}
                                 onClick={this.onPopoutWidgetClick}
