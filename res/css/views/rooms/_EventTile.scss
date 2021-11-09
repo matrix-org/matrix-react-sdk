@@ -689,6 +689,17 @@ $left-gutter: 64px;
         padding-left: 11px;
         padding-right: 15px;
     }
+
+    &::before {
+        content: "";
+        mask-image: url('$(res)/img/element-icons/thread-summary.svg');
+        mask-position: center;
+        height: 16px;
+        min-width: 16px;
+        background-color: $secondary-content;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
 }
 
 .mx_ThreadInfo_content {
@@ -705,15 +716,7 @@ $left-gutter: 64px;
     float: left;
 }
 
-.mx_ThreadInfo_thread-icon {
-    mask-image: url('$(res)/img/element-icons/thread-summary.svg');
-    mask-position: center;
-    height: 16px;
-    min-width: 16px;
-    background-color: $secondary-content;
-    mask-repeat: no-repeat;
-    mask-size: contain;
-}
+
 .mx_ThreadInfo_threads-amount {
     font-weight: 600;
     position: relative;

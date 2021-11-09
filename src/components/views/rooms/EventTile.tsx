@@ -550,7 +550,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     };
 
-    private renderThreadLastMessagePreview(): JSX.Element | null {
+    private get thread(): Thread | null {
         if (!SettingsStore.getValue("feature_thread")) {
             return null;
         }
@@ -568,7 +568,28 @@ export default class EventTile extends React.Component<IProps, IState> {
             return null;
         }
 
-        const [lastEvent] = thread.events
+        return thread;
+    }
+
+    private renderThreadPanelSummary(): JSX.Element | null {
+        if (!this.thread) {
+            return null;
+        }
+
+        return <>
+            <span className="mx_ThreadPanel_repliesSummary">
+                { this.thread.length }
+            </span>
+            { this.renderThreadLastMessagePreview() }
+        </>;
+    }
+
+    private renderThreadLastMessagePreview(): JSX.Element | null {
+        if (!this.thread) {
+            return null;
+        }
+
+        const [lastEvent] = this.thread.events
             .filter(event => event.isThreadRelation)
             .slice(-1);
         const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(lastEvent);
@@ -588,24 +609,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadInfo(): React.ReactNode {
-        if (!SettingsStore.getValue("feature_thread")) {
-            return null;
-        }
-
-        /**
-         * Accessing the threads value through the room due to a race condition
-         * that will be solved when there are proper backend support for threads
-         * We currently have no reliable way to discover than an event is a thread
-         * when we are at the sync stage
-         */
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.threads.get(this.props.mxEvent.getId());
-
-        if (thread && !thread.ready) {
-            thread.addEvent(this.props.mxEvent, true);
-        }
-
-        if (!thread || this.props.showThreadInfo === false || thread.length === 0) {
+        if (!this.thread) {
             return null;
         }
 
@@ -618,10 +622,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                     );
                 }}
             >
-                <span className="mx_ThreadInfo_thread-icon" />
                 <span className="mx_ThreadInfo_threads-amount">
                     { _t("%(count)s reply", {
-                        count: thread.length,
+                        count: this.thread.length,
                     }) }
                 </span>
                 { this.renderThreadLastMessagePreview() }
@@ -1368,7 +1371,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                     mxEvent={this.props.mxEvent}
                                     permalinkCreator={this.props.permalinkCreator} />
                             </Toolbar>
-                            { this.renderThreadLastMessagePreview() }
+                            { this.renderThreadPanelSummary() }
                         </div>
                         { msgOption }
                     </>)

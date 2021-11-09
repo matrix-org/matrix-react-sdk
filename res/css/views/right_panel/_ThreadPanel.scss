@@ -208,6 +208,29 @@ limitations under the License.
     }
 }
 
+.mx_ThreadPanel_repliesSummary {
+    &::before {
+        content: "";
+        mask-image: url('$(res)/img/element-icons/thread-summary.svg');
+        mask-position: center;
+        display: inline-block;
+        height: 16px;
+        min-width: 16px;
+        background-color: currentColor;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    color: $secondary-content;
+    font-weight: 600;
+    float: left;
+    margin-right: 8px;
+    font-size: $font-12px;
+
+}
+
 .mx_ThreadPanel_viewInRoom::before {
     mask-image: url('$(res)/img/element-icons/view-in-room.svg');
 }
