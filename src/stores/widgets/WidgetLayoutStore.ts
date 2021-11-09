@@ -214,7 +214,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 } else {
                     centerWidgets.push(widget);
                 }
-                // The widget won't need to be put in any oter container.
+                // The widget won't need to be put in any other container.
                 continue;
             }
             let targetContainer = defaultContainer;
