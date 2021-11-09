@@ -479,13 +479,15 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     };
 
     private onExplore = () => {
-        const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
-        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
-    };
-
-    private onSpaceInviteClick = () => {
-        const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
-        showSpaceInvite(this.props.activeSpace, initialText);
+        if (this.props.activeSpace) {
+            defaultDispatcher.dispatch({
+                action: "view_room",
+                room_id: SpaceStore.instance.activeSpace.roomId,
+            });
+        } else {
+            const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
+            defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
+        }
     };
 
     private renderSuggestedRooms(): ReactComponentElement<typeof ExtraTile>[] {
