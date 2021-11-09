@@ -12,7 +12,6 @@ $header-panel-text-primary-color: #a1b2d1;
 $header-panel-text-secondary-color: #c8c8cd;
 $text-primary-color: #edf3ff;
 $text-secondary-color: #a1b2d1;
-$search-bg-color: #181b21;
 $room-highlight-color: #343a46;
 
 // typical text (dark-on-white in light skin)
@@ -52,7 +51,7 @@ $primary-hairline-color: $header-panel-border-color;
 
 // used for the border of input text fields
 $input-border-color: #e7e7e7;
-$input-darker-bg-color: $search-bg-color;
+$input-darker-bg-color: #181b21;
 $input-darker-fg-color: #61708b;
 $input-lighter-bg-color: #f2f5f8;
 $input-focused-border-color: #238cf5;
