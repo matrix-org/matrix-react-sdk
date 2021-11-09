@@ -680,6 +680,7 @@ $left-gutter: 64px;
     box-sizing: border-box;
     justify-content: flex-start;
     clear: both;
+    overflow: hidden;
 
     &:hover {
         cursor: pointer;
@@ -699,6 +700,33 @@ $left-gutter: 64px;
         background-color: $secondary-content;
         mask-repeat: no-repeat;
         mask-size: contain;
+    }
+
+    &::after {
+        content: "›";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 60px;
+        padding: 0 10px;
+        font-size: 15px;
+        line-height: 34px;
+        box-sizing: border-box;
+
+        text-align: right;
+        font-weight: 600;
+
+        background: linear-gradient(270deg, $system 52.6%, transparent 100%);
+
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all .1s ease-in-out;
+    }
+
+    &:hover::after {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
