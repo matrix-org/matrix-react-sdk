@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636450265813,
+  "lastUpdate": 1636453946624,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37808,6 +37808,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4258.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "009f5f2dc9e8d2b10469f28d87d0e33b9b373c66",
+          "message": "Fix space panel layout edge cases (#7101)",
+          "timestamp": "2021-11-09T10:25:57Z",
+          "tree_id": "90b126c788a602514a5d2e696cd3050fc92f26c9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/009f5f2dc9e8d2b10469f28d87d0e33b9b373c66"
+        },
+        "date": 1636453944158,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5148.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1132,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4605,
             "unit": "ms",
             "extra": "type: measure"
           }
