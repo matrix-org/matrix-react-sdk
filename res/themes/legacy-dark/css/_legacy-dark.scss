@@ -13,7 +13,6 @@ $header-panel-text-secondary-color: #c8c8cd;
 $text-primary-color: #edf3ff;
 $text-secondary-color: #a1b2d1;
 $search-bg-color: #181b21;
-$search-placeholder-color: #61708b;
 $room-highlight-color: #343a46;
 
 // typical text (dark-on-white in light skin)
@@ -54,7 +53,7 @@ $primary-hairline-color: $header-panel-border-color;
 // used for the border of input text fields
 $input-border-color: #e7e7e7;
 $input-darker-bg-color: $search-bg-color;
-$input-darker-fg-color: $search-placeholder-color;
+$input-darker-fg-color: #61708b;
 $input-lighter-bg-color: #f2f5f8;
 $input-focused-border-color: #238cf5;
 
@@ -89,7 +88,7 @@ $settings-subsection-fg-color: $text-secondary-color;
 
 $topleftmenu-color: $text-primary-color;
 $roomheader-color: $text-primary-color;
-$roomheader-addroom-bg-color: #3c4556; // $search-placeholder-color at 0.5 opacity
+$roomheader-addroom-bg-color: #3c4556;
 $roomheader-addroom-fg-color: $text-primary-color;
 $groupFilterPanel-button-color: $header-panel-text-primary-color;
 $groupheader-button-color: $header-panel-text-primary-color;
