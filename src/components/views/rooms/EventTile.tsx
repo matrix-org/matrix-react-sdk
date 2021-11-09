@@ -576,12 +576,12 @@ export default class EventTile extends React.Component<IProps, IState> {
             return null;
         }
 
-        return <>
+        return <div className="mx_ThreadPanel_replies">
             <span className="mx_ThreadPanel_repliesSummary">
                 { this.thread.length }
             </span>
             { this.renderThreadLastMessagePreview() }
-        </>;
+        </div>;
     }
 
     private renderThreadLastMessagePreview(): JSX.Element | null {

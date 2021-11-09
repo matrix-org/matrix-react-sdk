@@ -49,7 +49,7 @@ limitations under the License.
 
         .mx_AccessibleButton {
             font-size: 12px;
-            color: $primary-content;
+            color: $secondary-content;
         }
 
         .mx_MessageActionBar_optionsButton {
@@ -83,8 +83,6 @@ limitations under the License.
             left: auto;
             right: 17px;
             border-bottom-color: $quinary-content;
-
-
             &::after {
                 content: "";
                 border: inherit;
@@ -122,6 +120,10 @@ limitations under the License.
                     display: inline-block;
                     vertical-align: middle;
                 }
+            }
+
+            :last-child {
+                color: $secondary-content;
             }
         }
     }
@@ -227,6 +229,10 @@ limitations under the License.
     .mx_ThreadPanel_dropdown[aria-expanded=true]::before {
         transform: rotate(180deg);
     }
+}
+
+.mx_ThreadPanel_replies {
+    margin-top: 4px;
 }
 
 .mx_ThreadPanel_repliesSummary {
