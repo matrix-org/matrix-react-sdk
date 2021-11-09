@@ -37,7 +37,7 @@ const contextMenuBelow = (elementRect: DOMRect) => {
     return { left, top, chevronFace };
 };
 
-export const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCreator }) => {
+const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCreator }) => {
     const [optionsPosition, setOptionsPosition] = useState(null);
     const closeThreadOptions = useCallback(() => {
         setOptionsPosition(null);
@@ -101,3 +101,5 @@ export const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCrea
         </IconizedContextMenu>) }
     </React.Fragment>;
 };
+
+export default ThreadListContextMenu;

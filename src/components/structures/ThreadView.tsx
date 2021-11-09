@@ -40,7 +40,7 @@ import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
-import { ThreadListContextMenu } from '../views/context_menus/ThreadListContextMenu';
+import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 
 interface IProps {
     room: Room;

@@ -33,11 +33,13 @@ import { Layout } from '../../settings/Layout';
 import { useEventEmitter } from '../../hooks/useEventEmitter';
 import AccessibleButton from '../views/elements/AccessibleButton';
 import { TileShape } from '../views/rooms/EventTile';
+import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 
 interface IProps {
     roomId: string;
     onClose: () => void;
     resizeNotifier: ResizeNotifier;
+    permalinkCreator: RoomPermalinkCreator;
 }
 
 export enum ThreadFilterType {
@@ -174,7 +176,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     </div>;
 };
 
-const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
+const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
     const room = mxClient.getRoom(roomId);
@@ -219,6 +221,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
                     showReactions={true}
                     className="mx_RoomView_messagePanel mx_GroupLayout"
                     membersLoaded={true}
+                    permalinkCreator={permalinkCreator}
                     tileShape={TileShape.ThreadPanel}
                 />
             </BaseCard>

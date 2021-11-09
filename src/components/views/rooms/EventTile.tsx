@@ -66,7 +66,7 @@ import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
-import { ThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
+import ThreadListContextMenu from '../context_menus/ThreadListContextMenu';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -1344,7 +1344,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent),
+
                     }, <>
                         { sender }
                         { avatar }
