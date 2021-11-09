@@ -674,8 +674,8 @@ $left-gutter: 64px;
 
 .mx_ThreadInfo {
     min-width: 267px;
-    max-width: 600px;
-    width: fit-content;
+    max-width: min(calc(100% - 64px), 600px);
+    width: auto;
     height: 35px;
     position: relative;
     background-color: $system;
