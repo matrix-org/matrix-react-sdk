@@ -125,20 +125,15 @@ export function replaceRangeAndAutoAdjustCaret(
     });
 }
 
-const isPlainWord = (offset: number, part: Part) => {
-    return part.text[offset] !== " " && part.text[offset] !== "+"
-    && part.type !== Type.Newline && part.type === Type.Plain;
+const isPlainWord = (_index: number, offset: number, part: Part) => {
+    return part.text[offset] !== " " && part.text[offset] !== "+" && part.type === Type.Plain;
 };
 
 export function selectRangeOfWordAtCaret(range: Range): void {
     // Select right side of word
-    range.expandForwardsWhile((_index, offset, part) => {
-        return isPlainWord(offset, part);
-    });
+    range.expandForwardsWhile(isPlainWord);
     // Select left side of word
-    range.expandBackwardsWhile((_index, offset, part) => {
-        return isPlainWord(offset, part);
-    });
+    range.expandBackwardsWhile(isPlainWord);
     // Trim possibly selected new lines
     range.trim();
 }
