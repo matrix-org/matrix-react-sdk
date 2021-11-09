@@ -47,7 +47,7 @@ import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/Roo
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset + 12;
+    const left = elementRect.left + window.pageXOffset;
     const top = elementRect.bottom + window.pageYOffset + 12;
     const chevronFace = ChevronFace.None;
     return { left, top, chevronFace };
@@ -321,14 +321,15 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     }
 
     return <div className="mx_RoomListHeader">
-        <ContextMenuButton
+        <ContextMenuTooltipButton
             inputRef={mainMenuHandle}
             onClick={openMainMenu}
             isExpanded={mainMenuDisplayed}
             className="mx_RoomListHeader_contextMenuButton"
+            title={activeSpace ? _t("Space menu") : _t("Home options")}
         >
             { title }
-        </ContextMenuButton>
+        </ContextMenuTooltipButton>
         { pendingRoomJoinSpinner }
         <ContextMenuTooltipButton
             inputRef={plusMenuHandle}

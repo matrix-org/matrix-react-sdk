@@ -22,13 +22,19 @@ limitations under the License.
         font-size: $font-15px;
         line-height: $font-24px;
         font-weight: $font-semi-bold;
-        padding-left: 12px;
-        padding-right: 24px;
+        padding: 1px 24px 1px 4px;
         position: relative;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        margin-left: 8px;
         margin-right: auto;
+        user-select: none;
+        border-radius: 6px;
+
+        &:hover {
+            background-color: $quinary-content;
+        }
 
         &::before {
             content: '';
@@ -42,6 +48,14 @@ limitations under the License.
             mask-repeat: no-repeat;
             background-color: $tertiary-content;
             mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+        }
+
+        &[aria-expanded=true] {
+            background-color: $quinary-content;
+
+            &::before {
+                transform: rotate(180deg);
+            }
         }
     }
 
