@@ -283,7 +283,7 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
         if (isFormatted) {
             // remove prefix and suffix formatting string
             const partWithoutPrefix = parts[base].serialize();
-            partWithoutPrefix.text = partWithoutPrefix.text.substring(prefix.length);
+            partWithoutPrefix.text = partWithoutPrefix.text.substr(prefix.length);
             parts[base] = partCreator.deserializePart(partWithoutPrefix);
 
             const partWithoutSuffix = parts[index - 1].serialize();
