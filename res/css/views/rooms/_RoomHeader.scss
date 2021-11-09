@@ -137,6 +137,14 @@ limitations under the License.
         mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
         background-color: $tertiary-content;
     }
+
+    &[aria-expanded=true] {
+        background-color: $quinary-content;
+
+        .mx_RoomHeader_chevron {
+            transform: rotate(180deg);
+        }
+    }
 }
 
 .mx_RoomHeader_settingsHint {
