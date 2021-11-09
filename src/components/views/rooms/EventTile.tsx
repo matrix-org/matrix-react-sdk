@@ -1162,11 +1162,16 @@ export default class EventTile extends React.Component<IProps, IState> {
             || this.state.hover
             || this.state.actionBarFocused);
 
+        // Thread panel shows the timestamp of the last reply in that thread
+        const ts = this.props.tileShape !== TileShape.ThreadPanel
+            ? this.props.mxEvent.getTs()
+            : this.props.mxEvent.getThread().lastReply.getTs();
+
         const timestamp = showTimestamp ?
             <MessageTimestamp
                 showRelative={this.props.tileShape === TileShape.ThreadPanel}
                 showTwelveHour={this.props.isTwelveHour}
-                ts={this.props.mxEvent.getTs()}
+                ts={ts}
             /> : null;
 
         const keyRequestHelpText =
