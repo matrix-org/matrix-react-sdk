@@ -31,6 +31,7 @@ interface IProps {
     className?: string;
     withoutScrollContainer?: boolean;
     previousPhase?: RightPanelPhases;
+    previousPhaseLabel?: string;
     closeLabel?: string;
     onClose?(): void;
     refireParams?;
@@ -56,6 +57,7 @@ const BaseCard: React.FC<IProps> = ({
     footer,
     withoutScrollContainer,
     previousPhase,
+    previousPhaseLabel,
     children,
     refireParams,
 }) => {
@@ -68,7 +70,11 @@ const BaseCard: React.FC<IProps> = ({
                 refireParams: refireParams,
             });
         };
-        backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={_t("Back")} />;
+        backButton = <AccessibleButton
+            className="mx_BaseCard_back"
+            onClick={onBackClick}
+            title={previousPhaseLabel || _t("Back")}
+        />;
     }
 
     let closeButton;
