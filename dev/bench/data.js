@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636394472587,
+  "lastUpdate": 1636450265813,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37760,6 +37760,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4506.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6cae1768575c69a7c65235d7a0238f700a09f7ef",
+          "message": "Update powerlevel/role when the user changes in the user info panel (#7099)",
+          "timestamp": "2021-11-09T09:25:47Z",
+          "tree_id": "7b12b938495049dfc2400fcceba5e68e57c0bedf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6cae1768575c69a7c65235d7a0238f700a09f7ef"
+        },
+        "date": 1636450263430,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4718.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 925.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1578.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4258.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
