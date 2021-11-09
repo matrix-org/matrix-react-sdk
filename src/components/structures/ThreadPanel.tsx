@@ -26,7 +26,7 @@ import ResizeNotifier from '../../utils/ResizeNotifier';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
 import { _t } from '../../languageHandler';
 import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuButton';
-import ContextMenu, { useContextMenu } from './ContextMenu';
+import ContextMenu, { ChevronFace, useContextMenu } from './ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import TimelinePanel from './TimelinePanel';
 import { Layout } from '../../settings/Layout';
@@ -164,7 +164,13 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
         }}
         isSelected={opt === value}
     />);
-    const contextMenu = menuDisplayed ? <ContextMenu top={0} right={25} onFinished={closeMenu} managed={false}>
+    const contextMenu = menuDisplayed ? <ContextMenu
+        top={0}
+        right={25}
+        onFinished={closeMenu}
+        managed={false}
+        chevronFace={ChevronFace.Top}
+    >
         { contextMenuOptions }
     </ContextMenu> : null;
     return <div className="mx_ThreadPanel__header">

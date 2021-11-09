@@ -79,6 +79,22 @@ limitations under the License.
             box-shadow: 0px 1px 3px rgba(23, 25, 28, 0.05);
         }
 
+        .mx_ContextualMenu_chevron_top {
+            left: auto;
+            right: 17px;
+            border-bottom-color: $quinary-content;
+
+
+            &::after {
+                content: "";
+                border: inherit;
+                border-bottom-color: $background;
+                position: absolute;
+                top: 1px;
+                left: -8px;
+            }
+        }
+
         .mx_ThreadPanel_Header_FilterOptionItem {
             display: flex;
             flex-grow: 1;
