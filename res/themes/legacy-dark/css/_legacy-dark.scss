@@ -7,7 +7,6 @@ $bg-color: #181b21;
 $base-color: #15171b;
 $base-text-color: #edf3ff;
 $header-panel-bg-color: #22262e;
-$header-panel-border-color: #000000;
 $header-panel-text-primary-color: #a1b2d1;
 $header-panel-text-secondary-color: #c8c8cd;
 $text-primary-color: #edf3ff;
@@ -47,7 +46,7 @@ $selected-color: $room-highlight-color;
 $event-selected-color: $header-panel-bg-color;
 
 // used for the hairline dividers in RoomView
-$primary-hairline-color: $header-panel-border-color;
+$primary-hairline-color: #000000;
 
 // used for the border of input text fields
 $input-border-color: #e7e7e7;
@@ -63,7 +62,7 @@ $scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
 $scrollbar-track-color: transparent;
 
 // context menus
-$menu-border-color: $header-panel-border-color;
+$menu-border-color: #000000;
 $menu-bg-color: $header-panel-bg-color;
 $menu-box-shadow-color: $bg-color;
 $menu-selected-color: $room-highlight-color;

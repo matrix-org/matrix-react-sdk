@@ -21,7 +21,6 @@ $space-nav: rgba($panel-base, 0.1);
 // unified palette
 // try to use these colors when possible
 $header-panel-bg-color: #20252B;
-$header-panel-border-color: #000000;
 $header-panel-text-primary-color: #B9BEC6;
 $header-panel-text-secondary-color: #c8c8cd;
 $text-secondary-color: #B9BEC6;
@@ -72,7 +71,7 @@ $scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
 $scrollbar-track-color: transparent;
 
 // context menus
-$menu-border-color: $header-panel-border-color;
+$menu-border-color: #000000;
 $menu-bg-color: $header-panel-bg-color;
 $menu-box-shadow-color: $background;
 $menu-selected-color: $room-highlight-color;
