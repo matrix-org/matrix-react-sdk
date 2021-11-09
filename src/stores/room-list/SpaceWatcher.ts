@@ -17,7 +17,7 @@ limitations under the License.
 import { RoomListStoreClass } from "./RoomListStore";
 import { SpaceFilterCondition } from "./filters/SpaceFilterCondition";
 import SpaceStore from "../spaces/SpaceStore";
-import { SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
+import { MetaSpace, SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
 
 /**
  * Watches for changes in spaces to manage the filter on the provided RoomListStore
@@ -29,7 +29,7 @@ export class SpaceWatcher {
     private allRoomsInHome: boolean = SpaceStore.instance.allRoomsInHome;
 
     constructor(private store: RoomListStoreClass) {
-        if (!this.allRoomsInHome || this.activeSpace[0] === "!") {
+        if (SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome)) {
             this.updateFilter();
             store.addFilter(this.filter);
         }
@@ -37,22 +37,26 @@ export class SpaceWatcher {
         SpaceStore.instance.on(UPDATE_HOME_BEHAVIOUR, this.onHomeBehaviourUpdated);
     }
 
+    private static needsFilter(spaceKey: SpaceKey, allRoomsInHome: boolean): boolean {
+        return !(spaceKey === MetaSpace.Home && allRoomsInHome);
+    }
+
     private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome = this.allRoomsInHome) => {
         if (activeSpace === this.activeSpace && allRoomsInHome === this.allRoomsInHome) return; // nop
 
-        const oldIsActualSpace = this.activeSpace[0] === "!";
-        const oldAllRoomsInHome = this.allRoomsInHome;
+        const neededFilter = SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome);
+        const needsFilter = SpaceWatcher.needsFilter(activeSpace, allRoomsInHome);
+
         this.activeSpace = activeSpace;
         this.allRoomsInHome = allRoomsInHome;
 
-        const isActualSpace = activeSpace[0] === "!";
-        if (isActualSpace || !allRoomsInHome) {
+        if (needsFilter) {
             this.updateFilter();
         }
 
-        if (oldAllRoomsInHome && !oldIsActualSpace) {
+        if (!neededFilter && needsFilter) {
             this.store.addFilter(this.filter);
-        } else if (allRoomsInHome && !isActualSpace) {
+        } else if (neededFilter && !needsFilter) {
             this.store.removeFilter(this.filter);
         }
     };

@@ -875,6 +875,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                         const enabledMetaSpaces = metaSpaceOrder.filter(k => newValue[k]) as MetaSpace[];
                         if (arrayHasDiff(this._enabledMetaSpaces, enabledMetaSpaces)) {
                             this._enabledMetaSpaces = enabledMetaSpaces;
+                            // if a metaspace currently being viewed was remove, go to another one
+                            if (this.activeSpace[0] !== "!" &&
+                                !enabledMetaSpaces.includes(this.activeSpace as MetaSpace)
+                            ) {
+                                this.goToFirstSpace();
+                            }
                             this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
                             this.rebuild(); // rebuild everything
                         }
