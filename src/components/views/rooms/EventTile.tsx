@@ -1348,7 +1348,11 @@ export default class EventTile extends React.Component<IProps, IState> {
                     }, <>
                         { sender }
                         { avatar }
-                        <div className={lineClasses} key="mx_EventTile_line">
+                        <div
+                            className={lineClasses}
+                            onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                            key="mx_EventTile_line"
+                        >
                             { linkedTimestamp }
                             { this.renderE2EPadlock() }
                             { replyChain }
@@ -1366,19 +1370,19 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 tileShape={this.props.tileShape}
                             />
                             { keyRequestInfo }
-                            <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
-                                <RovingAccessibleTooltipButton
-                                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                    title={_t("Thread")}
-                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
-                                    key="thread"
-                                />
-                                <ThreadListContextMenu
-                                    mxEvent={this.props.mxEvent}
-                                    permalinkCreator={this.props.permalinkCreator} />
-                            </Toolbar>
                             { this.renderThreadPanelSummary() }
                         </div>
+                        <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+                            <RovingAccessibleTooltipButton
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                                title={_t("Thread")}
+                                onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                                key="thread"
+                            />
+                            <ThreadListContextMenu
+                                mxEvent={this.props.mxEvent}
+                                permalinkCreator={this.props.permalinkCreator} />
+                        </Toolbar>
                         { msgOption }
                     </>)
                 );
