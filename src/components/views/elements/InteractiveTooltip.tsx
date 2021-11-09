@@ -371,7 +371,6 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
     };
 
     private showTooltip(): void {
-        console.log("@@", "showTooltip");
         // Don't enter visible state if we haven't collected the target yet
         if (!this.target) return;
 
@@ -391,7 +390,6 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
     }
 
     private renderTooltip() {
-        console.log("@@", "renderTooltip", this.state. visible);
         const { contentRect, visible } = this.state;
         if (!visible) {
             ReactDOM.unmountComponentAtNode(getOrCreateContainer());
@@ -405,7 +403,6 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         const targetRight = targetRect.right + window.pageXOffset;
         const targetBottom = targetRect.bottom + window.pageYOffset;
         const targetTop = targetRect.top + window.pageYOffset;
-        console.log("@@", targetRect);
 
         // Place the tooltip above the target by default. If we find that the
         // tooltip content would extend past the safe area towards the window
