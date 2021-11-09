@@ -73,7 +73,7 @@ export default class AppMaximisedDrawer extends React.Component<IProps, IState> 
     }
 
     private onIsResizing = (resizing: boolean): void => {
-        // This inoformation is needed to make sure the widget does not consume the pointer events for resizing.
+        // This information is needed to make sure the widget does not consume the pointer events for resizing.
         this.setState({ resizing: resizing });
     };
 
