@@ -123,8 +123,10 @@ export function replaceRangeAndAutoAdjustCaret(
     });
 }
 
+const punctuation = [".", ",", "?", "!"];
+
 const isPlainWord = (offset: number, part: Part) => {
-    return part.text[offset] !== " " && part.text[offset] !== "+"
+    return part.text[offset] !== " " && !punctuation.includes(part.text[offset])
     && part.type !== Type.Newline && part.type === Type.Plain;
 };
 
