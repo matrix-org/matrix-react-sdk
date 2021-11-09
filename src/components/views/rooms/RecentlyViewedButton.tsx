@@ -33,41 +33,42 @@ const RecentlyViewedButton = () => {
 
     const content = <div className="mx_RecentlyViewedButton_ContextMenu">
         <h4>{ _t("Recently viewed") }</h4>
-
-        { crumbs.map(crumb => {
-            let parentsSection: JSX.Element;
-            if (!crumb.isSpaceRoom()) {
-                const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(crumb.roomId);
-                if (parent) {
-                    parentsSection = <div className="mx_RecentlyViewedButton_entry_spaces">
-                        { _t("%(spaceName)s and %(count)s others", {
-                            spaceName: cli.getRoom(parent).name,
-                            count: otherParents.length,
-                        }) }
-                    </div>;
+        <div>
+            { crumbs.map(crumb => {
+                let parentsSection: JSX.Element;
+                if (!crumb.isSpaceRoom()) {
+                    const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(crumb.roomId);
+                    if (parent) {
+                        parentsSection = <div className="mx_RecentlyViewedButton_entry_spaces">
+                            { _t("%(spaceName)s and %(count)s others", {
+                                spaceName: cli.getRoom(parent).name,
+                                count: otherParents.length,
+                            }) }
+                        </div>;
+                    }
                 }
-            }
 
-            return <MenuItem
-                key={crumb.roomId}
-                onClick={() => {
-                    dis.dispatch({
-                        action: "view_room",
-                        room_id: crumb.roomId,
-                    });
-                }}
-            >
-                <RoomAvatar
-                    room={crumb}
-                    width={24}
-                    height={24}
-                />
-                <span className="mx_RecentlyViewedButton_entry_label">
-                    <div>{ crumb.name }</div>
-                    { parentsSection }
-                </span>
-            </MenuItem>;
-        }) }
+                return <MenuItem
+                    key={crumb.roomId}
+                    onClick={() => {
+                        dis.dispatch({
+                            action: "view_room",
+                            room_id: crumb.roomId,
+                        });
+                    }}
+                >
+                    <RoomAvatar
+                        room={crumb}
+                        width={24}
+                        height={24}
+                    />
+                    <span className="mx_RecentlyViewedButton_entry_label">
+                        <div>{ crumb.name }</div>
+                        { parentsSection }
+                    </span>
+                </MenuItem>;
+            }) }
+        </div>
     </div>;
 
     return <InteractiveTooltip content={content} direction={Direction.Right}>
