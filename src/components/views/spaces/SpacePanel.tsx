@@ -175,6 +175,42 @@ const OrphansButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => 
     />;
 };
 
+const PeopleButton = ({ selected, isPanelCollapsed }: IMetaSpaceButtonProps) => {
+    return <li
+        className={classNames("mx_SpaceItem", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
+        <SpaceButton
+            spaceKey={MetaSpace.People}
+            className="mx_SpaceButton_people"
+            selected={selected}
+            label={_t("People")}
+            notificationState={SpaceStore.instance.getNotificationState(MetaSpace.People)}
+            isNarrow={isPanelCollapsed}
+        />
+    </li>;
+};
+
+const OrphansButton = ({ selected, isPanelCollapsed }: IMetaSpaceButtonProps) => {
+    return <li
+        className={classNames("mx_SpaceItem", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
+        <SpaceButton
+            spaceKey={MetaSpace.Orphans}
+            className="mx_SpaceButton_orphans"
+            selected={selected}
+            label={_t("Orphans")}
+            notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Orphans)}
+            isNarrow={isPanelCollapsed}
+        />
+    </li>;
+};
+
 const CreateSpaceButton = ({
     isPanelCollapsed,
     setPanelCollapsed,
