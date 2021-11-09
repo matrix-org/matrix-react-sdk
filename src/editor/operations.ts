@@ -124,7 +124,7 @@ export function replaceRangeAndAutoAdjustCaret(
 }
 
 const isPlainWord = (offset: number, part: Part) => {
-    return part.text[offset] !== " " &&  part.text[offset] !== "+"
+    return part.text[offset] !== " " && part.text[offset] !== "+"
     && part.type !== Type.Newline && part.type === Type.Plain;
 };
 
