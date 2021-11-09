@@ -327,7 +327,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onWidgetLayoutChange = () => {
         if (!this.state.room) return;
-        this.checkWidgets(this.state.room); // we cheat here by calling the thing that matters
+        this.checkWidgets(this.state.room);
     };
 
     private checkWidgets = (room) => {
