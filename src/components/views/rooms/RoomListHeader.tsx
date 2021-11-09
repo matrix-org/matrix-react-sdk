@@ -21,7 +21,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { _t } from "../../../languageHandler";
 import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../../stores/SpaceStore";
-import { ChevronFace, ContextMenuButton, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
+import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import { HomeButtonContextMenu } from "../spaces/SpacePanel";
 import IconizedContextMenu, {
