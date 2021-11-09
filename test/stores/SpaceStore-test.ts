@@ -92,10 +92,18 @@ describe("SpaceStore", () => {
         await emitProm;
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
         jest.runAllTimers(); // run async dispatch
         client.getVisibleRooms.mockReturnValue(rooms = []);
+
+        await SettingsStore.setValue("Spaces.enabledMetaSpaces", null, SettingLevel.DEVICE, {
+            [MetaSpace.Home]: true,
+            [MetaSpace.Favourites]: true,
+            [MetaSpace.People]: true,
+            [MetaSpace.Orphans]: true,
+        });
     });
+
     afterEach(async () => {
         await testUtils.resetAsyncStoreWithClient(store);
     });
@@ -406,6 +414,24 @@ describe("SpaceStore", () => {
             it("all rooms space does contain rooms/low priority even if they are also shown in a space", async () => {
                 await setShowAllRooms(true);
                 expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(room1)).toBeTruthy();
+            });
+
+            it("favourites space does contain favourites even if they are also shown in a space", async () => {
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.Favourites).has(fav1)).toBeTruthy();
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.Favourites).has(fav2)).toBeTruthy();
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.Favourites).has(fav3)).toBeTruthy();
+            });
+
+            it("people space does contain people even if they are also shown in a space", async () => {
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.People).has(dm1)).toBeTruthy();
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.People).has(dm2)).toBeTruthy();
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.People).has(dm3)).toBeTruthy();
+            });
+
+            it("orphans space does contain orphans even if they are also shown in all rooms", async () => {
+                await setShowAllRooms(true);
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.Orphans).has(orphan1)).toBeTruthy();
+                expect(store.getSpaceFilteredRoomIds(MetaSpace.Orphans).has(orphan2)).toBeTruthy();
             });
 
             it("home space doesn't contain rooms/low priority if they are also shown in a space", async () => {
@@ -787,6 +813,19 @@ describe("SpaceStore", () => {
             store.setActiveSpace(space1, false);
             viewRoom(orphan1);
             expect(store.activeSpace).toBe(MetaSpace.Home);
+        });
+
+        it("switch to first space when selected metaspace is disabled", async () => {
+            store.setActiveSpace(MetaSpace.People, false);
+            expect(store.activeSpace).toBe(MetaSpace.People);
+            await SettingsStore.setValue("Spaces.enabledMetaSpaces", null, SettingLevel.DEVICE, {
+                [MetaSpace.Home]: false,
+                [MetaSpace.Favourites]: true,
+                [MetaSpace.People]: false,
+                [MetaSpace.Orphans]: true,
+            });
+            jest.runAllTimers();
+            expect(store.activeSpace).toBe(MetaSpace.Favourites);
         });
 
         it("when switching rooms in the all rooms home space don't switch to related space", async () => {

@@ -193,8 +193,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     public setActiveSpace(space: SpaceKey, contextSwitch = true) {
         if (!space || !this.matrixClient || space === this.activeSpace) return;
 
-        const cliSpace = space[0] === "!" ? this.matrixClient.getRoom(space) : null;
-        if (cliSpace && !cliSpace.isSpaceRoom()) return;
+        let cliSpace: Room;
+        if (space[0] === "!") {
+            cliSpace = this.matrixClient.getRoom(space);
+            if (!cliSpace?.isSpaceRoom()) return;
+        } else if (!this.enabledMetaSpaces.includes(space as MetaSpace)) {
+            return;
+        }
 
         this._activeSpace = space;
         this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
@@ -568,16 +573,23 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.emit(k);
         });
 
+        let dmBadgeSpace: MetaSpace;
+        // only show badges on dms on the most relevant space if such exists
+        if (enabledMetaSpaces.has(MetaSpace.People)) {
+            dmBadgeSpace = MetaSpace.People;
+        } else if (enabledMetaSpaces.has(MetaSpace.Home)) {
+            dmBadgeSpace = MetaSpace.Home;
+        }
+
         this.spaceFilteredRooms.forEach((roomIds, s) => {
-            // TODO metaspaces
             if (this.allRoomsInHome && s === MetaSpace.Home) return; // we'll be using the global notification state, skip
 
             // Update NotificationStates
             this.getNotificationState(s).setRooms(visibleRooms.filter(room => {
                 if (!roomIds.has(room.roomId) || room.isSpaceRoom()) return false;
 
-                if (DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
-                    return s === MetaSpace.Home; // TODO
+                if (dmBadgeSpace && DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
+                    return s === dmBadgeSpace;
                 }
 
                 return true;
@@ -760,6 +772,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this._activeSpace = MetaSpace.Home; // set properly by onReady
         this._suggestedRooms = [];
         this._invitedSpaces = new Set();
+        this._enabledMetaSpaces = [];
     }
 
     protected async onNotReady() {
