@@ -18,20 +18,22 @@ limitations under the License.
     display: flex;
     flex-direction: column;
 
-    padding-right: 0;
-
     .mx_BaseCard_header {
         .mx_BaseCard_close,
         .mx_BaseCard_back {
             margin-top: 15px;
         }
+        .mx_BaseCard_back {
+            left: -4px;
+        }
         .mx_BaseCard_close {
-            right: -8px;
+            right: -4px;
         }
     }
 
     .mx_ThreadPanel__header {
-        width: calc(100% - 60px);
+        width: calc(100% - 55px);
+        min-height: 28px;
         margin-left: 30px;
         display: flex;
         flex: 1;
@@ -131,19 +133,16 @@ limitations under the License.
     }
 
     .mx_AutoHideScrollbar {
-        border-radius: 8px;
-    }
-
-    .mx_RoomView_messageListWrapper {
+        background: #fff;
         background-color: $background;
-        padding: 8px;
-        border-radius: inherit;
+        border-radius: 8px;
+        width: calc(100% - 16px);
+        padding-right: 16px;
     }
 
-    .mx_ScrollPanel {
-        .mx_RoomView_MessageList {
-            padding: 0;
-        }
+    .mx_RoomView_MessageList {
+        padding-left: 12px;
+        padding-right: 0;
     }
 
     .mx_EventTile, .mx_EventListSummary {
@@ -175,7 +174,6 @@ limitations under the License.
         background-color: $background;
         border-radius: 8px;
         margin-top: 8px;
-        width: calc(100% - 8px);
         padding: 0 8px;
         box-sizing: border-box;
     }

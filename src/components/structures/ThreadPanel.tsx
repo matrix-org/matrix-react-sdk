@@ -200,6 +200,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose }) => {
                 header={<ThreadPanelHeader filterOption={filterOption} setFilterOption={setFilterOption} />}
                 className="mx_ThreadPanel"
                 onClose={onClose}
+                withoutScrollContainer={true}
                 previousPhase={RightPanelPhases.RoomSummary}
             >
                 <TimelinePanel
