@@ -102,20 +102,22 @@ export function replaceRangeAndAutoAdjustCaret(
 ): void {
     const { model } = range;
     model.transform(() => {
-        // Shift the initialPosition
+        // Shift the initialPosition by the length amount of characters that are between the format string, if it exists
         if (rangeHasFormatting) {
-            const relativeOffset = range.getLastStartingPosition().offset - range.start.offset; // Always positive
-            if (range.length - relativeOffset < formatStringLength) {
-                const correctionOffset = (range.length - relativeOffset - formatStringLength);
-                const newStart = range.getLastStartingPosition().asOffset(model).add(correctionOffset);
-                range.setLastStartingPosition(newStart.asPosition(model));
-            } else if (relativeOffset < formatStringLength) {
+            // getLastStartingPosition will always be after range.start.offset, we get a positive delta
+            const relativeOffset = range.getLastStartingPosition().offset - range.start.offset;
+            if (relativeOffset < formatStringLength) { // Was the caret at the left format string?
                 const correctionOffset = formatStringLength - relativeOffset;
                 const newStart = range.getLastStartingPosition().asOffset(model).add(correctionOffset);
                 range.setLastStartingPosition(newStart.asPosition(model));
             }
+            if (range.length - relativeOffset < formatStringLength) { // Was the caret at the right format string?
+                const correctionOffset = (range.length - relativeOffset - formatStringLength);
+                const newStart = range.getLastStartingPosition().asOffset(model).add(correctionOffset);
+                range.setLastStartingPosition(newStart.asPosition(model));
+            }
         }
-        const offset = range.replace(newParts) / 2;
+        const offset = range.replace(newParts) / 2; // Works since all formatting that can be toggled is symmetric
         const atEnd = range.getLastStartingPosition().asOffset(model).atNodeEnd;
         const newStart = range.getLastStartingPosition().asOffset(model).add(offset, atEnd).asPosition(model);
         range.setLastStartingPosition(newStart);

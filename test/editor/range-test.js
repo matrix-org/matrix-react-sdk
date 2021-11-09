@@ -108,15 +108,16 @@ describe('editor/range', function() {
     it('range trim just whitespace', () => {
         const renderer = createRenderer();
         const pc = createPartCreator();
+        const whitespace = "  \n    \n\n";
         const model = new EditorModel([
-            pc.plain("  \n    \n\n"),
+            pc.plain(whitespace),
         ], pc, renderer);
         const range = model.startRange(
             model.positionForOffset(0, false),
             model.getPositionAtEnd(),
         );
 
-        expect(range.text).toBe("  \n    \n\n");
+        expect(range.text).toBe(whitespace);
         range.trim();
         expect(range.text).toBe("");
     });

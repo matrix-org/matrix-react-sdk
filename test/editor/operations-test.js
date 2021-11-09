@@ -271,7 +271,7 @@ describe('editor/operations: formatting operations', () => {
             expect(range.getLastStartingPosition().index).toEqual(0);
             expect(range.getLastStartingPosition().offset).toEqual(12);
 
-            formatRange(range, Formatting.Italics); // Untoggle
+            formatRange(range, Formatting.Italics); // Toggle
 
             // We expected formatting to still happen in the first line as the caret should not jump down
             expect(model.serializeParts()).toEqual([
@@ -302,7 +302,7 @@ describe('editor/operations: formatting operations', () => {
                 { "text": "world!", "type": "plain" },
             ]);
 
-            formatRange(range, Formatting.InsertLink);
+            formatRange(range, Formatting.InsertLink); // Toggle
             expect(model.serializeParts()).toEqual([
                 { "text": "hello!", "type": "plain" },
                 SERIALIZED_NEWLINE,
@@ -332,7 +332,7 @@ describe('editor/operations: formatting operations', () => {
                 { "text": "int y = 42;", "type": "plain" },
             ]);
 
-            formatRange(range, Formatting.Code);
+            formatRange(range, Formatting.Code); // Toggle
 
             expect(model.serializeParts()).toEqual([
                 { "text": "```", "type": "plain" },
