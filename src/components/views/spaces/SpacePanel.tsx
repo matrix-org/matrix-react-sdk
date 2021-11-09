@@ -105,12 +105,12 @@ const HomeButtonContextMenu = ({ onFinished, ...props }: ComponentProps<typeof S
     </IconizedContextMenu>;
 };
 
-interface IHomeButtonProps {
+interface IMetaSpaceButtonProps {
     selected: boolean;
     isPanelCollapsed: boolean;
 }
 
-const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
+const HomeButton = ({ selected, isPanelCollapsed }: IMetaSpaceButtonProps) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
@@ -122,8 +122,8 @@ const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
         role="treeitem"
     >
         <SpaceButton
+            spaceKey={MetaSpace.Home}
             className="mx_SpaceButton_home"
-            onClick={() => SpaceStore.instance.setActiveSpace(MetaSpace.Home)}
             selected={selected}
             label={allRoomsInHome ? _t("All rooms") : _t("Home")}
             notificationState={allRoomsInHome
@@ -136,7 +136,7 @@ const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
     </li>;
 };
 
-const FavouritesButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
+const FavouritesButton = ({ selected, isPanelCollapsed }: IMetaSpaceButtonProps) => {
     return <li
         className={classNames("mx_SpaceItem", {
             "collapsed": isPanelCollapsed,
@@ -144,11 +144,47 @@ const FavouritesButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
         role="treeitem"
     >
         <SpaceButton
+            spaceKey={MetaSpace.Favourites}
             className="mx_SpaceButton_favourites"
-            onClick={() => SpaceStore.instance.setActiveSpace(MetaSpace.Favourites)}
             selected={selected}
             label={_t("Favourites")}
             notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Favourites)}
+            isNarrow={isPanelCollapsed}
+        />
+    </li>;
+};
+
+const PeopleButton = ({ selected, isPanelCollapsed }: IMetaSpaceButtonProps) => {
+    return <li
+        className={classNames("mx_SpaceItem", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
+        <SpaceButton
+            spaceKey={MetaSpace.People}
+            className="mx_SpaceButton_people"
+            selected={selected}
+            label={_t("People")}
+            notificationState={SpaceStore.instance.getNotificationState(MetaSpace.People)}
+            isNarrow={isPanelCollapsed}
+        />
+    </li>;
+};
+
+const OrphansButton = ({ selected, isPanelCollapsed }: IMetaSpaceButtonProps) => {
+    return <li
+        className={classNames("mx_SpaceItem", {
+            "collapsed": isPanelCollapsed,
+        })}
+        role="treeitem"
+    >
+        <SpaceButton
+            spaceKey={MetaSpace.Orphans}
+            className="mx_SpaceButton_orphans"
+            selected={selected}
+            label={_t("Orphans")}
+            notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Orphans)}
             isNarrow={isPanelCollapsed}
         />
     </li>;
@@ -208,6 +244,8 @@ const CreateSpaceButton = ({
 const metaSpaceComponentMap: Record<MetaSpace, typeof HomeButton> = {
     [MetaSpace.Home]: HomeButton,
     [MetaSpace.Favourites]: FavouritesButton,
+    [MetaSpace.People]: PeopleButton,
+    [MetaSpace.Orphans]: OrphansButton,
 };
 
 // Optimisation based on https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#recommended-droppable--performance-optimisation

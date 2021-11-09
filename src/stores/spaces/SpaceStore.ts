@@ -145,12 +145,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return this._allRoomsInHome;
     }
 
-    public setActiveRoomInSpace(space: Room | null): void {
-        if (space && !space.isSpaceRoom()) return;
-        if (space.roomId !== this.activeSpace) this.setActiveSpace(space.roomId);
+    public setActiveRoomInSpace(space: SpaceKey): void {
+        if (space[0] === "!" && !this.matrixClient?.getRoom(space)?.isSpaceRoom()) return;
+        if (space !== this.activeSpace) this.setActiveSpace(space);
 
         if (space) {
-            const roomId = this.getNotificationState(space.roomId).getFirstRoomWithNotifications();
+            const roomId = this.getNotificationState(space).getFirstRoomWithNotifications();
             defaultDispatcher.dispatch({
                 action: "view_room",
                 room_id: roomId,
@@ -790,7 +790,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         });
 
         const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
-        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]);
+        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]) as MetaSpace[];
 
         await this.onSpaceUpdate(); // trigger an initial update
 
@@ -872,7 +872,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                     case "Spaces.enabledMetaSpaces": {
                         const newValue = SettingsStore.getValue("Spaces.enabledMetaSpaces");
-                        const enabledMetaSpaces = newValue.filter(k => enabledMetaSpaces[k]);
+                        const enabledMetaSpaces = metaSpaceOrder.filter(k => newValue[k]) as MetaSpace[];
                         if (arrayHasDiff(this._enabledMetaSpaces, enabledMetaSpaces)) {
                             this._enabledMetaSpaces = enabledMetaSpaces;
                             this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
