@@ -38,8 +38,6 @@ export enum Container {
     // changes needed", though this may change in the future.
     Right = "right",
 
-    // ... more as needed. Note that most of this code assumes that there
-    // are only two containers, and that only the top container is special.
     Center = "center"
 }
 
@@ -196,9 +194,9 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
 
         const roomLayout: ILayoutStateEvent = layoutEv ? layoutEv.getContent() : null;
-        // We filter for the center container.
+        // We filter for the center container first.
         // (An error is raised, if there are multiple widgets marked for the center container)
-        // For the right and top container we allow multiple widgets.
+        // For the right and top container multiple widgets are allowed.
         const topWidgets: IApp[] = [];
         const rightWidgets: IApp[] = [];
         const centerWidgets: IApp[] = [];
