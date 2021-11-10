@@ -170,7 +170,7 @@ const OrphansButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => 
         className="mx_SpaceButton_orphans"
         selected={selected}
         isPanelCollapsed={isPanelCollapsed}
-        label={_t("Orphans")}
+        label={_t("Other rooms")}
         notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Orphans)}
     />;
 };
