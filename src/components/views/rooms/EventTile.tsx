@@ -927,9 +927,9 @@ export default class EventTile extends React.Component<IProps, IState> {
     private renderE2EPadlock() {
         const ev = this.props.mxEvent;
 
-        return <E2ePadlockUndecryptable />;
         // event could not be decrypted
         if (ev.getContent().msgtype === 'm.bad.encrypted') {
+            return <E2ePadlockUndecryptable />;
         }
 
         // event is encrypted, display padlock corresponding to whether or not it is verified
