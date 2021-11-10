@@ -249,6 +249,10 @@ limitations under the License.
     .mx_ThreadPanel_dropdown[aria-expanded=true]::before {
         transform: rotate(180deg);
     }
+
+    .mx_MessageTimestamp {
+        font-size: $font-12px;
+    }
 }
 
 .mx_ThreadPanel_replies {
@@ -261,8 +265,8 @@ limitations under the License.
         mask-image: url('$(res)/img/element-icons/thread-summary.svg');
         mask-position: center;
         display: inline-block;
-        height: 16px;
-        min-width: 16px;
+        height: 18px;
+        min-width: 18px;
         background-color: currentColor;
         mask-repeat: no-repeat;
         mask-size: contain;
@@ -273,7 +277,7 @@ limitations under the License.
     color: $secondary-content;
     font-weight: 600;
     float: left;
-    margin-right: 8px;
+    margin-right: 12px;
     font-size: $font-12px;
 }
 
