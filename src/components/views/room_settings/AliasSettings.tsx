@@ -206,20 +206,25 @@ export default class AliasSettings extends React.Component<IProps, IState> {
             eventContent["alt_aliases"] = altAliases;
         }
 
-        this.context.sendStateEvent(this.props.roomId, "m.room.canonical_alias",
-        this.context.mxClient.sendStateEvent(this.props.roomId, "m.room.canonical_alias",
-            eventContent, "").catch((err) => {
-            logger.error(err);
-            Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
-                title: _t("Error updating main address"),
-                description: _t(
-                    "There was an error updating the room's alternative addresses. " +
+        this.context.sendStateEvent(this.props.roomId, "m.room.canonical_alias", eventContent, "")
+            .then(() => {
+                this.setState({
+                    altAliases,
+                });
+            })
+            .catch((err) => {
+                // TODO: Add error handling based upon server validation
+                logger.error(err);
+                Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
+                    title: _t("Error updating main address"),
+                    description: _t(
+                        "There was an error updating the room's alternative addresses. " +
                     "It may not be allowed by the server or a temporary failure occurred.",
-                ),
+                    ),
+                });
+            }).finally(() => {
+                this.setState({ updatingCanonicalAlias: false });
             });
-        }).finally(() => {
-            this.setState({ updatingCanonicalAlias: false });
-        });
     }
 
     private onNewAliasChanged = (value: string) => {
