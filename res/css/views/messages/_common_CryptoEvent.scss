@@ -31,7 +31,7 @@ limitations under the License.
 
     &.mx_cryptoEvent_icon_verified::after {
         mask-image: url("$(res)/img/e2e/verified.svg");
-        background-color: $accent-color;
+        background-color: $accent;
     }
 
     &.mx_cryptoEvent_icon_warning::after {

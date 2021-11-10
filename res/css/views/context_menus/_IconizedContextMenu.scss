@@ -135,11 +135,11 @@ limitations under the License.
 
     .mx_IconizedContextMenu_active {
         &.mx_AccessibleButton, .mx_AccessibleButton {
-            color: $accent-color !important;
+            color: $accent !important;
         }
 
         .mx_IconizedContextMenu_icon::before {
-            background-color: $accent-color;
+            background-color: $accent;
         }
     }
 

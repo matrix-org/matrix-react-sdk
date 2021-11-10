@@ -50,11 +50,11 @@ limitations under the License.
     }
 
     &.mx_Validation_valid {
-        color: $accent-color;
+        color: $accent;
 
         &::before {
             mask-image: url('$(res)/img/feather-customised/check.svg');
-            background-color: $accent-color;
+            background-color: $accent;
         }
     }
 
