@@ -180,7 +180,6 @@ limitations under the License.
                 right: 48px;
 
                 &::before {
-                    background-color: $secondary-fg-color;
                     mask-image: url('$(res)/img/feather-customised/maximise.svg');
                 }
             }
@@ -193,7 +192,7 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_app_options {
-                right: 72px;
+                right: 48px;
                 display: none;
 
                 &::before {
