@@ -617,10 +617,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             <div
                 className="mx_ThreadInfo"
                 onClick={() => {
-                    dispatchShowThreadEvent(this.props.mxEvent,
-                        undefined,
-                        undefined,
-                        this.props.threadViewPreviousCard );
+                    dispatchShowThreadEvent(this.props.mxEvent);
                 }}
             >
                 <span className="mx_ThreadInfo_thread-icon" />
@@ -1340,10 +1337,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent,
-                            undefined,
-                            undefined,
-                            this.props.threadViewPreviousCard ),
+                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent),
                     }, <>
                         { sender }
                         { avatar }
@@ -1369,10 +1363,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 <RovingAccessibleTooltipButton
                                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
                                     title={_t("Thread")}
-                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent,
-                                        undefined,
-                                        undefined,
-                                        this.props.threadViewPreviousCard )}
+                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
                                     key="thread"
                                 />
                                 <ThreadListContextMenu

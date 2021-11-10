@@ -20,8 +20,6 @@ limitations under the License.
 
     padding-right: 0;
 
-
-
     .mx_TimelineCard__header {
         width: calc(100% - 60px);
         margin-left: 6px;
@@ -30,7 +28,7 @@ limitations under the License.
         flex: 1;
         justify-content: space-between;
         align-items: center;
-    
+
         span:first-of-type {
             font-weight: 600;
             font-size: 15px;
