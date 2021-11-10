@@ -18,8 +18,6 @@ limitations under the License.
     display: flex;
     flex-direction: column;
 
-    padding-right: 0;
-
     .mx_BaseCard_header {
         .mx_BaseCard_close,
         .mx_BaseCard_back {
@@ -132,6 +130,13 @@ limitations under the License.
 
     .mx_AutoHideScrollbar {
         border-radius: 8px;
+        padding-right: 0px;
+        -ms-overflow-style: none;  // IE and Edge
+        scrollbar-width: none;  // Firefox
+        
+        &::-webkit-scrollbar {
+            display: none; // Chrome, Safari, Opera
+        }
     }
 
     .mx_RoomView_messageListWrapper {
@@ -176,7 +181,7 @@ limitations under the License.
         background-color: $background;
         border-radius: 8px;
         margin-top: 8px;
-        width: calc(100% - 8px);
+        width: 100%;
         padding: 0 8px;
         box-sizing: border-box;
     }
