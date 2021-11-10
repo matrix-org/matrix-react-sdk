@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import dis from '../../../dispatcher/dispatcher';
@@ -27,6 +27,7 @@ import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOpti
 interface IProps {
     mxEvent: MatrixEvent;
     permalinkCreator: RoomPermalinkCreator;
+    onMenuToggle?: (open: boolean) => void;
 }
 
 const contextMenuBelow = (elementRect: DOMRect) => {
@@ -37,7 +38,7 @@ const contextMenuBelow = (elementRect: DOMRect) => {
     return { left, top, chevronFace };
 };
 
-const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCreator }) => {
+const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCreator, onMenuToggle }) => {
     const [optionsPosition, setOptionsPosition] = useState(null);
     const closeThreadOptions = useCallback(() => {
         setOptionsPosition(null);
@@ -71,6 +72,12 @@ const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCreator }) 
             setOptionsPosition(position);
         }
     }, [closeThreadOptions, optionsPosition]);
+
+    useEffect(() => {
+        if (onMenuToggle) {
+            onMenuToggle(!!optionsPosition);
+        }
+    }, [optionsPosition, onMenuToggle]);
 
     return <React.Fragment>
         <ContextMenuTooltipButton
