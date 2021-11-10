@@ -26,6 +26,10 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { compare } from "../../utils/strings";
+import dis from '../../dispatcher/dispatcher';
+import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
+import { Action } from "../../dispatcher/actions";
+import { RightPanelPhases } from "../RightPanelStorePhases";
 
 export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
 
@@ -452,6 +456,11 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 for (const w of this.getContainerWidgets(room, Container.Center)) {
                     this.moveToContainer(room, w, Container.Right);
                 }
+                // Additionally change the right panel phase to chat:
+                dis.dispatch<SetRightPanelPhasePayload>({
+                    action: Action.SetRightPanelPhase,
+                    phase: RightPanelPhases.TimelinePanel,
+                });
                 break;
             case Container.Top:
                 // new "top" widget => the center widget moves into "right"
