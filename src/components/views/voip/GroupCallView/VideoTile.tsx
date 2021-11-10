@@ -38,7 +38,7 @@ export default function VideoTile({
             { purpose === SDPStreamMetadataPurpose.Usermedia && (
                 <div className="mx_memberName">
                     <i className={audioMuted ? "mx_muteMicIcon" : "mx_micIcon"} />
-                    <span>{ name }</span>
+                    <span title={name}>{ name }</span>
                 </div>
             ) }
             { videoMuted && (
