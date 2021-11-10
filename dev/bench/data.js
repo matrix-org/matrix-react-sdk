@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636543816558,
+  "lastUpdate": 1636559420365,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38024,6 +38024,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4288.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "431b69ee49dc3ee1e54e6d39b4b04ec832d6e72e",
+          "message": "Display started polls in timeline (without votes) (behind labs setting) (#7088)\n\n* Display started polls in timeline (without votes)\r\n\r\n* Update i18n info\r\n\r\n* Keep original background colour of poll options, even on hover\r\n\r\n* Show full avatar above a poll message",
+          "timestamp": "2021-11-10T15:44:57Z",
+          "tree_id": "b282dc5dd70f414a56c25ef419745d6ff48aabef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/431b69ee49dc3ee1e54e6d39b4b04ec832d6e72e"
+        },
+        "date": 1636559417792,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4634.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 958.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1607.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4317.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
