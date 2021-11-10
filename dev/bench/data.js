@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636457697185,
+  "lastUpdate": 1636537202710,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37892,6 +37892,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 755.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "50ff00084fb3b712664c536e17c40d8301976a0e",
+          "message": "Change radio button border colour to match design (#7087)",
+          "timestamp": "2021-11-10T09:34:21Z",
+          "tree_id": "5c66b12cb1b9e539c2b1cff0b3a3f1c9e617c7b8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/50ff00084fb3b712664c536e17c40d8301976a0e"
+        },
+        "date": 1636537199102,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4833.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 679.7000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
