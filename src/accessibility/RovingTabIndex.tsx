@@ -55,7 +55,7 @@ interface IContext {
     dispatch: Dispatch<IAction>;
 }
 
-const RovingTabIndexContext = createContext<IContext>({
+export const RovingTabIndexContext = createContext<IContext>({
     state: {
         activeRef: null,
         refs: [], // list of refs in DOM order

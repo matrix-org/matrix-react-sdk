@@ -30,6 +30,9 @@ import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { isMac } from "../../Keyboard";
+import SettingsStore from "../../settings/SettingsStore";
+import Modal from "../../Modal";
+import SpotlightDialog from "../views/dialogs/SpotlightDialog";
 
 interface IProps {
     isMinimized: boolean;
@@ -81,13 +84,22 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.clearInput);
+        SpaceStore.instance.off(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
+    }
+
+    private openSpotlight() {
+        Modal.createTrackedDialog("Spotlight", "", SpotlightDialog, {}, "mx_SpotlightDialog_wrapper");
     }
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === Action.ViewRoom && payload.clear_search) {
             this.clearInput();
         } else if (payload.action === 'focus_room_filter' && this.inputRef.current) {
-            this.inputRef.current.focus();
+            if (SettingsStore.getValue("feature_spotlight")) {
+                this.openSpotlight();
+            } else {
+                this.inputRef.current.focus();
+            }
         }
     };
 
@@ -105,6 +117,14 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private onChange = () => {
         if (!this.inputRef.current) return;
         this.setState({ query: this.inputRef.current.value });
+    };
+
+    private onMouseDown = (ev: React.MouseEvent<HTMLInputElement>) => {
+        if (SettingsStore.getValue("feature_spotlight")) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            this.openSpotlight();
+        }
     };
 
     private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {
@@ -162,11 +182,12 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
                 ref={this.inputRef}
                 className={inputClasses}
                 value={this.state.query}
+                onMouseDown={this.onMouseDown}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onChange={this.onChange}
                 onKeyDown={this.onKeyDown}
-                placeholder={_t("Filter")}
+                placeholder={SettingsStore.getValue("feature_spotlight") ? _t("Search") : _t("Filter")}
                 autoComplete="off"
             />
         );
