@@ -209,7 +209,6 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 className="mx_ThreadPanel"
                 onClose={onClose}
                 withoutScrollContainer={true}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <TimelinePanel
                     ref={ref}
