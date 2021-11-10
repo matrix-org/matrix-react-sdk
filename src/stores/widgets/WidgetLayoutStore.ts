@@ -451,7 +451,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                     this.moveToContainer(room, w, Container.Right);
                 }
                 for (const w of this.getContainerWidgets(room, Container.Top)) {
-                    if (w !== widget) {this.moveToContainer(room, w, Container.Right);}
+                    if (w === widget) continue;
+                    this.moveToContainer(room, w, Container.Right);
                 }
                 break;
             case Container.Right:
