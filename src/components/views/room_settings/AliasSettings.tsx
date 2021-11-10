@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef } from "react";
+import React, { ChangeEvent, ContextType, createRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import EditableItemList from "../elements/EditableItemList";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
@@ -28,6 +27,7 @@ import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAliasField from "../elements/RoomAliasField";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -98,13 +98,16 @@ interface IState {
 
 @replaceableComponent("views.room_settings.AliasSettings")
 export default class AliasSettings extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    context: ContextType<typeof MatrixClientContext>;
+
     static defaultProps = {
         canSetAliases: false,
         canSetCanonicalAlias: false,
     };
 
-    constructor(props) {
-        super(props);
+    constructor(props, context: ContextType<typeof MatrixClientContext>) {
+        super(props, context);
 
         const state = {
             altAliases: [], // [ #alias:domain.tld, ... ]
@@ -138,10 +141,10 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     private async loadLocalAliases() {
         this.setState({ localAliasesLoading: true });
         try {
-            const cli = MatrixClientPeg.get();
+            const mxClient = this.context;
             let localAliases = [];
-            if (await cli.doesServerSupportUnstableFeature("org.matrix.msc2432")) {
-                const response = await cli.unstableGetLocalAliases(this.props.roomId);
+            if (await mxClient.doesServerSupportUnstableFeature("org.matrix.msc2432")) {
+                const response = await mxClient.unstableGetLocalAliases(this.props.roomId);
                 if (Array.isArray(response.aliases)) {
                     localAliases = response.aliases;
                 }
@@ -171,7 +174,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         if (alias) eventContent["alias"] = alias;
 
-        MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
+        this.context.sendStateEvent(this.props.roomId, "m.room.canonical_alias",
             eventContent, "").catch((err) => {
             logger.error(err);
             Modal.createTrackedDialog('Error updating main address', '', ErrorDialog, {
@@ -192,7 +195,6 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         this.setState({
             updatingCanonicalAlias: true,
-            altAliases,
         });
 
         const eventContent = {};
@@ -204,7 +206,8 @@ export default class AliasSettings extends React.Component<IProps, IState> {
             eventContent["alt_aliases"] = altAliases;
         }
 
-        MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
+        this.context.sendStateEvent(this.props.roomId, "m.room.canonical_alias",
+        this.context.mxClient.sendStateEvent(this.props.roomId, "m.room.canonical_alias",
             eventContent, "").catch((err) => {
             logger.error(err);
             Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
@@ -226,10 +229,10 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     private onLocalAliasAdded = (alias: string) => {
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
-        const localDomain = MatrixClientPeg.get().getDomain();
+        const localDomain = this.context.getDomain();
         if (!alias.includes(':')) alias += ':' + localDomain;
 
-        MatrixClientPeg.get().createAlias(alias, this.props.roomId).then(() => {
+        this.context.createAlias(alias, this.props.roomId).then(() => {
             this.setState({
                 localAliases: this.state.localAliases.concat(alias),
                 newAlias: null,
@@ -253,7 +256,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         const alias = this.state.localAliases[index];
         // TODO: In future, we should probably be making sure that the alias actually belongs
         // to this room. See https://github.com/vector-im/element-web/issues/7353
-        MatrixClientPeg.get().deleteAlias(alias).then(() => {
+        this.context.deleteAlias(alias).then(() => {
             const localAliases = this.state.localAliases.filter(a => a !== alias);
             this.setState({ localAliases });
 
@@ -322,9 +325,9 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     }
 
     render() {
-        const cli = MatrixClientPeg.get();
-        const localDomain = cli.getDomain();
-        const isSpaceRoom = cli.getRoom(this.props.roomId)?.isSpaceRoom();
+        const mxClient = this.context;
+        const localDomain = mxClient.getDomain();
+        const isSpaceRoom = mxClient.getRoom(this.props.roomId)?.isSpaceRoom();
 
         let found = false;
         const canonicalValue = this.state.canonicalAlias || "";
