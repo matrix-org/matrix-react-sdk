@@ -210,7 +210,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             const defaultContainer = WidgetType.JITSI.matches(widget.type) ? Container.Top : Container.Right;
             if (stateContainer === Container.Center || manualContainer === Container.Center) {
                 if (centerWidgets.length) {
-                    console.error("Tried to push a second Widget into the center container");
+                    console.error("Tried to push a second widget into the center container");
                 } else {
                     centerWidgets.push(widget);
                 }
