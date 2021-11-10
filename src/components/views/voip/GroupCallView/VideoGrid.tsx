@@ -615,7 +615,9 @@ export default function VideoGrid({ items, layout, onFocusTile }: IVideoGridProp
                     opacity: 1,
                     zIndex: 1,
                     shadow: 15,
-                    immediate: (key) => key === "zIndex" || key === "x" || key === "y",
+                    immediate: (key) =>
+                        key === "zIndex" || key === "x" || key === "y" ||
+                            key === "shadow" || key === "width" || key === "height",
                     from: {
                         shadow: 0,
                         scale: 0,
@@ -636,7 +638,7 @@ export default function VideoGrid({ items, layout, onFocusTile }: IVideoGridProp
                         opacity: 0,
                     },
                     reset: false,
-                    immediate: (key) => key === "zIndex",
+                    immediate: (key) => key === "zIndex" || key === "shadow" || key === "width" || key === "height",
                 };
             }
         },
