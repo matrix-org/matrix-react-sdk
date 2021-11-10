@@ -26,6 +26,7 @@ import * as testUtils from "../../utils/test-utils";
 import { setupAsyncStoreWithClient } from "../../utils/test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { SpaceFilterCondition } from "../../../src/stores/room-list/filters/SpaceFilterCondition";
+import DMRoomMap from "../../../src/utils/DMRoomMap";
 
 let filter: SpaceFilterCondition = null;
 
@@ -33,6 +34,11 @@ const mockRoomListStore = {
     addFilter: f => filter = f,
     removeFilter: () => filter = null,
 } as unknown as RoomListStoreClass;
+
+const getUserIdForRoomId = jest.fn();
+const getDMRoomsForUserId = jest.fn();
+// @ts-ignore
+DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
 
 const space1 = "!space1:server";
 const space2 = "!space2:server";
