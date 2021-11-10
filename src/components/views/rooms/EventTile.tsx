@@ -68,6 +68,7 @@ import Toolbar from '../../../accessibility/Toolbar';
 import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
 import { ThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
+import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -322,6 +323,7 @@ interface IProps {
     showThreadInfo?: boolean;
 
     timelineRenderingType?: TimelineRenderingType;
+    threadViewPreviousCard?: RightPanelPhases;
 }
 
 interface IState {
@@ -615,9 +617,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             <div
                 className="mx_ThreadInfo"
                 onClick={() => {
-                    dispatchShowThreadEvent(
-                        this.props.mxEvent,
-                    );
+                    dispatchShowThreadEvent(this.props.mxEvent,
+                        undefined,
+                        undefined,
+                        this.props.threadViewPreviousCard );
                 }}
             >
                 <span className="mx_ThreadInfo_thread-icon" />
@@ -1337,7 +1340,10 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent),
+                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent,
+                            undefined,
+                            undefined,
+                            this.props.threadViewPreviousCard ),
                     }, <>
                         { sender }
                         { avatar }
@@ -1363,7 +1369,10 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 <RovingAccessibleTooltipButton
                                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
                                     title={_t("Thread")}
-                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent,
+                                        undefined,
+                                        undefined,
+                                        this.props.threadViewPreviousCard )}
                                     key="thread"
                                 />
                                 <ThreadListContextMenu

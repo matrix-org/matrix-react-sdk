@@ -54,6 +54,7 @@ import SpaceStore from "../../stores/SpaceStore";
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
+import TimelineCard from './TimelineCard';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
@@ -66,6 +67,7 @@ interface IProps {
 
 interface IState {
     phase: RightPanelPhases;
+    previousPhase?: RightPanelPhases;
     isUserPrivilegedInGroup?: boolean;
     member?: RoomMember;
     verificationRequest?: VerificationRequest;
@@ -219,6 +221,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 verificationRequestPromise: payload.verificationRequestPromise,
                 widgetId: payload.widgetId,
                 space: payload.space,
+                previousPhase: payload.previousPhase,
             });
         }
     };
@@ -334,7 +337,13 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     panel = <PinnedMessagesCard room={this.props.room} onClose={this.onClose} />;
                 }
                 break;
-
+            case RightPanelPhases.TimelinePanel:
+                if (!SettingsStore.getValue("feature_maximised_widgets")) { break; }
+                panel = <TimelineCard
+                    room={this.props.room}
+                    resizeNotifier={this.props.resizeNotifier}
+                    onClose={this.onClose} />;
+                break;
             case RightPanelPhases.FilePanel:
                 panel = <FilePanel roomId={roomId} resizeNotifier={this.props.resizeNotifier} onClose={this.onClose} />;
                 break;
@@ -348,7 +357,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     initialEvent={this.state.initialEvent}
                     initialEventHighlighted={this.state.initialEventHighlighted}
                     permalinkCreator={this.props.permalinkCreator}
-                    e2eStatus={this.props.e2eStatus} />;
+                    e2eStatus={this.props.e2eStatus}
+                    previousPhase={this.state.previousPhase} />;
                 break;
 
             case RightPanelPhases.ThreadPanel:

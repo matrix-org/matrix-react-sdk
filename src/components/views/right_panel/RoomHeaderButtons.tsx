@@ -66,6 +66,25 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
     </HeaderButton>;
 };
 
+const TimelinePanelHeaderButton = ({ room, isHighlighted, showNewMessage, onClick }) => {
+    if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
+
+    let unreadIndicator;
+    if (/*pinnedEvents.some(id => !readPinnedEvents.has(id)*/ showNewMessage) {
+        unreadIndicator = <div className="mx_RightPanel_pinnedMessagesButton_unreadIndicator" />;
+    }
+
+    return <HeaderButton
+        name="timelinePanelButton"
+        title={_t("Chat panel")}
+        isHighlighted={isHighlighted}
+        onClick={onClick}
+        analytics={["Right Panel", "Timeline Panel Button", "click"]}
+    >
+        { unreadIndicator }
+    </HeaderButton>;
+};
+
 interface IProps {
     room?: Room;
 }
@@ -116,6 +135,9 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         // This toggles for us, if needed
         this.setPhase(RightPanelPhases.PinnedMessages);
     };
+    private onTimelinePanelClicked = () => {
+        this.setPhase(RightPanelPhases.TimelinePanel);
+    };
 
     public renderButtons() {
         return <>
@@ -123,6 +145,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
                 onClick={this.onPinnedMessagesClicked}
+            />
+            <TimelinePanelHeaderButton
+                room={this.props.room}
+                isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
+                showNewMessage={false}
+                onClick={this.onTimelinePanelClicked}
             />
             { SettingsStore.getValue("feature_thread") && <HeaderButton
                 name="threadsButton"

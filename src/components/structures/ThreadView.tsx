@@ -51,6 +51,7 @@ interface IProps {
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     initialEventHighlighted?: boolean;
+    previousPhase?: RightPanelPhases;
 }
 interface IState {
     thread?: Thread;
@@ -213,7 +214,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 <BaseCard
                     className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
-                    previousPhase={RightPanelPhases.ThreadPanel}
+                    previousPhase={(this.props.previousPhase) ? this.props.previousPhase : RightPanelPhases.ThreadPanel}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
                 >

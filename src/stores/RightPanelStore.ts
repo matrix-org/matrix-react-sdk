@@ -219,6 +219,7 @@ export default class RightPanelStore extends Store<ActionPayload> {
                 dis.dispatch({
                     action: Action.AfterRightPanelPhaseChange,
                     phase: targetPhase,
+                    previousPhase: this.state.previousPhase,
                     ...(refireParams || {}),
                 });
                 break;

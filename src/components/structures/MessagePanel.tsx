@@ -50,6 +50,7 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { Action } from '../../dispatcher/actions';
+import { RightPanelPhases } from '../../stores/RightPanelStorePhases';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -179,6 +180,7 @@ interface IProps {
     getRelationsForEvent?(eventId: string, relationType: string, eventType: string): Relations;
 
     hideThreadedMessages?: boolean;
+    threadViewPreviousCard?: RightPanelPhases;
 }
 
 interface IState {
@@ -789,6 +791,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     callEventGrouper={callEventGrouper}
                     hideSender={this.membersCount <= 2 && this.props.layout === Layout.Bubble}
                     timelineRenderingType={this.context.timelineRenderingType}
+                    threadViewPreviousCard={this.props.threadViewPreviousCard}
                 />
             </TileErrorBoundary>,
         );

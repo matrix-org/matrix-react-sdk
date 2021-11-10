@@ -50,6 +50,7 @@ import ErrorDialog from '../views/dialogs/ErrorDialog';
 import { debounce } from 'lodash';
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { RightPanelPhases } from '../../stores/RightPanelStorePhases';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -133,6 +134,7 @@ interface IProps {
     onPaginationRequest?(timelineWindow: TimelineWindow, direction: string, size: number): Promise<boolean>;
 
     hideThreadedMessages?: boolean;
+    threadViewPreviousCard?: RightPanelPhases;
 }
 
 interface IState {
@@ -1539,6 +1541,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 layout={this.props.layout}
                 enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                 hideThreadedMessages={this.props.hideThreadedMessages}
+                threadViewPreviousCard={this.props.threadViewPreviousCard}
             />
         );
     }

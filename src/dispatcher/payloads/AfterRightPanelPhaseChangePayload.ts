@@ -23,6 +23,7 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 interface AfterRightPanelPhaseChangeAction extends ActionPayload {
     action: Action.AfterRightPanelPhaseChange;
     phase: RightPanelPhases;
+    previousPhase: RightPanelPhases;
     verificationRequestPromise?: Promise<VerificationRequest>;
 }
 
