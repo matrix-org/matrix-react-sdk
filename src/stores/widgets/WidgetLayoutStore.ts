@@ -439,27 +439,32 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     public moveToContainer(room: Room, widget: IApp, toContainer: Container) {
         const allWidgets = this.getAllWidgets(room);
         if (!allWidgets.some(([w]) => w.id === widget.id)) return; // invalid
-        this.updateUserLayout(room, {
-            [widget.id]: { container: toContainer },
-        });
+        // Prepare other containers (potentially move widgets to obay the following rules)
         switch (toContainer) {
-            case Container.Center:
-                for (const w of this.getContainerWidgets(room, Container.Top)) {
-                    this.moveToContainer(room, w, Container.Right);
-                }
-                for (const w of this.getContainerWidgets(room, Container.Top)) {
-                    if (w === widget) continue;
-                    this.moveToContainer(room, w, Container.Right);
-                }
-                break;
             case Container.Right:
+                // new "right" widget
+                break;
+            case Container.Center:
+                // new "center" widget => all other widgets go into "right"
+                for (const w of this.getContainerWidgets(room, Container.Top)) {
+                    this.moveToContainer(room, w, Container.Right);
+                }
+                for (const w of this.getContainerWidgets(room, Container.Center)) {
+                    this.moveToContainer(room, w, Container.Right);
+                }
                 break;
             case Container.Top:
+                // new "top" widget => the center widget moves into "right"
                 if (this.hasMaximisedWidget(room) && toContainer) {
                     this.moveToContainer(room, this.getContainerWidgets(room, Container.Center)[0], Container.Right);
                 }
                 break;
         }
+
+        // move widgets into requested container.
+        this.updateUserLayout(room, {
+            [widget.id]: { container: toContainer },
+        });
     }
 
     public hasMaximisedWidget(room: Room) {
