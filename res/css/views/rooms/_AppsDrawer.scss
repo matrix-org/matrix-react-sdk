@@ -18,11 +18,12 @@ limitations under the License.
 $MiniAppTileHeight: 200px;
 
 .mx_AppsDrawer {
-    margin: 5px 5px 5px 18px;
+    margin: 5px 5px 5px 5px;
     position: relative;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    flex-grow: 1;
 
     .mx_AppsContainer_resizerHandleContainer {
         width: 100%;
