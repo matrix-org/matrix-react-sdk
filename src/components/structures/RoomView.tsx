@@ -987,7 +987,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (this.unmounted) return;
         // Attach a widget store listener only when we get a room
         WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.onWidgetLayoutChange);
-        // this.onWidgetLayoutChange(); // provoke an update // Done with checkwidget now TODO-maximise_widget remove comment after review
 
         this.calculatePeekRules(room);
         this.updatePreviewUrlVisibility(room);
@@ -2114,49 +2113,35 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const showChatEffects = SettingsStore.getValue('showChatEffects');
 
         // Decide what to show in the main split
-        let mainSplitBody;
-        if (SettingsStore.getValue("feature_maximised_widgets")) {
-            switch (this.state.mainSplitContentType) {
-                case MainSplitContentType.Timeline:
-                    mainSplitBody = <React.Fragment>
-                        { auxPanel }
-                        <div className={timelineClasses}>
-                            { fileDropTarget }
-                            { topUnreadMessagesBar }
-                            { jumpToBottom }
-                            { messagePanel }
-                            { searchResultsPanel }
-                        </div>
-                        { statusBarArea }
-                        { previewBar }
-                        { messageComposer }
-                    </React.Fragment>;
-                    break;
-                case MainSplitContentType.MaximisedWidget:
-                    mainSplitBody = <AppMaximisedDrawer
-                        room={this.state.room}
-                        userId={this.context.credentials.userId}
-                        resizeNotifier={this.props.resizeNotifier}
-                        showApps={true}
-                    />;
-                    break;
-                // TODO-video MainSplitContentType.Video:
-                //     break;
-            }
-        } else {
-            mainSplitBody = <React.Fragment>
-                { auxPanel }
-                <div className={timelineClasses}>
-                    { fileDropTarget }
-                    { topUnreadMessagesBar }
-                    { jumpToBottom }
-                    { messagePanel }
-                    { searchResultsPanel }
-                </div>
-                { statusBarArea }
-                { previewBar }
-                { messageComposer }
-            </React.Fragment>;
+        let mainSplitBody = <React.Fragment>
+            { auxPanel }
+            <div className={timelineClasses}>
+                { fileDropTarget }
+                { topUnreadMessagesBar }
+                { jumpToBottom }
+                { messagePanel }
+                { searchResultsPanel }
+            </div>
+            { statusBarArea }
+            { previewBar }
+            { messageComposer }
+        </React.Fragment>;
+
+        switch (this.state.mainSplitContentType) {
+            case MainSplitContentType.Timeline:
+                // keep the timeline in as the mainSplitBody
+                break;
+            case MainSplitContentType.MaximisedWidget:
+                if (!SettingsStore.getValue("feature_maximised_widgets")) {break;}
+                mainSplitBody = <AppMaximisedDrawer
+                    room={this.state.room}
+                    userId={this.context.credentials.userId}
+                    resizeNotifier={this.props.resizeNotifier}
+                    showApps={true}
+                />;
+                break;
+            // TODO-video MainSplitContentType.Video:
+            //     break;
         }
 
         return (

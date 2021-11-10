@@ -401,8 +401,6 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onMaxMinWidgetClick = (): void => {
-        // TODO-video make this not interfere with the new video conference design
-
         const targetContainer =
         WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
             ? Container.Right
