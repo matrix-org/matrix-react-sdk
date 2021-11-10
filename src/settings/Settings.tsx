@@ -773,7 +773,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         },
         controller: new IncompatibleController("feature_spaces_metaspaces", {
             [MetaSpace.Home]: true,
-        }),
+        }, false),
     },
     "showCommunitiesInsteadOfSpaces": {
         displayName: _td("Display Communities instead of Spaces"),
