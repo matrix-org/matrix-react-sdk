@@ -19,9 +19,11 @@ limitations under the License.
     flex-direction: column;
 
     .mx_BaseCard_header {
+        margin-bottom: 12px;
         .mx_BaseCard_close,
         .mx_BaseCard_back {
-            margin-top: 15px;
+            width: 24px;
+            height: 24px;
         }
         .mx_BaseCard_back {
             left: -4px;
@@ -31,10 +33,14 @@ limitations under the License.
         }
     }
 
-    .mx_ThreadPanel__header {
-        width: calc(100% - 55px);
-        min-height: 28px;
+    .mx_BaseCard_back ~ .mx_ThreadPanel__header {
+        width: calc(100% - 60px);
         margin-left: 30px;
+    }
+
+    .mx_ThreadPanel__header {
+        width: calc(100% - 30px);
+        height: 24px;
         display: flex;
         flex: 1;
         justify-content: space-between;
@@ -54,6 +60,14 @@ limitations under the License.
 
         .mx_MessageActionBar_optionsButton {
             position: relative;
+        }
+
+        .mx_MessageActionBar_maskButton {
+            width: 24px;
+            height: 24px;
+            &::after {
+                mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
+            }
         }
 
         .mx_ContextualMenu_wrapper {
@@ -210,7 +224,7 @@ limitations under the License.
     }
 
     .mx_ThreadPanel_dropdown {
-        padding: 4px 8px;
+        padding: 3px 8px;
         border-radius: 4px;
         line-height: 1.5;
         user-select: none;

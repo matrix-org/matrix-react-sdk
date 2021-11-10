@@ -20,8 +20,6 @@ import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
 import BaseCard from "../views/right_panel/BaseCard";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
 import { _t } from '../../languageHandler';

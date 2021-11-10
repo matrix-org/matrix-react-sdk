@@ -872,7 +872,8 @@ $left-gutter: 64px;
         }
     }
 
-    .mx_EventTile_content {
+    .mx_EventTile_content,
+    .mx_RedactedBody {
         margin-left: 36px;
         margin-right: 50px;
     }
