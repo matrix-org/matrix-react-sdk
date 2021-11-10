@@ -18,6 +18,7 @@ import { EventEmitter } from "events";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
+import "./enable-metaspaces-labs";
 import "../skinned-sdk"; // Must be first for skinning to work
 import SpaceStore from "../../src/stores/spaces/SpaceStore";
 import {
@@ -700,6 +701,7 @@ describe("SpaceStore", () => {
         });
         afterEach(() => {
             localStorage.clear();
+            localStorage.setItem("mx_labs_feature_feature_spaces_metaspaces", "true");
             defaultDispatcher.unregister(dispatcherRef);
         });
 
