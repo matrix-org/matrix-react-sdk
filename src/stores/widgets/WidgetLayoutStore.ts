@@ -196,10 +196,9 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
 
         const roomLayout: ILayoutStateEvent = layoutEv ? layoutEv.getContent() : null;
-
-        // We essentially just need to find the top container's widgets because we
-        // only have two containers. Anything not in the top widget by the end of this
-        // function will go into the right container.
+        // We filter for the center container.
+        // (An error is raised, if there are multiple widgets marked for the center container)
+        // For the right and top container we allow multiple widgets.
         const topWidgets: IApp[] = [];
         const rightWidgets: IApp[] = [];
         const centerWidgets: IApp[] = [];
