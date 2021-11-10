@@ -141,7 +141,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
     static SPACES_SETTINGS = [
         "Spaces.allRoomsInHome",
-        // "Spaces.enabledMetaSpaces",
     ];
 
     static COMMUNITIES_SETTINGS = [
