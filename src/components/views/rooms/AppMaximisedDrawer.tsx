@@ -85,12 +85,7 @@ export default class AppMaximisedDrawer extends React.Component<IProps, IState> 
     }
 
     private getApp = (): IApp => {
-        if (WidgetLayoutStore.instance.hasMaximisedWidget(this.props.room)) {
-            return WidgetLayoutStore.instance.getContainerWidgets(this.props.room, Container.Center)[0];
-        } else {
-            console.error("Maximised widget container is shown although there is no app in the center container");
-            return undefined;
-        }
+        return WidgetLayoutStore.instance.getContainerWidgets(this.props.room, Container.Center)[0];
     };
 
     private updateApps = (): void => {
@@ -100,9 +95,9 @@ export default class AppMaximisedDrawer extends React.Component<IProps, IState> 
     };
 
     public render(): JSX.Element {
-        // Should the showApps button also impct the maximied widget? TODO-maximise_widget Remove after review
-        // if (!this.props.showApps) return <div />;
-
+        if (!this.state.app) {
+            return <div />;
+        }
         const app = <AppTile
             key={this.state.app.id}
             app={this.state.app}
@@ -114,10 +109,6 @@ export default class AppMaximisedDrawer extends React.Component<IProps, IState> 
             waitForIframeLoad={this.state.app.waitForIframeLoad}
             pointerEvents={this.state.resizing ? 'none' : undefined}
         />;
-
-        if (!app) {
-            return <div />;
-        }
 
         let spinner;
         if (
