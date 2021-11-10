@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
-import { enumerateThemes, findHighContrastTheme, findNonHighContrastTheme, isHighContrastTheme } from "../../../theme";
+import { Theme } from "../../../theme";
 import ThemeWatcher from "../../../settings/watchers/ThemeWatcher";
 import AccessibleButton from "../elements/AccessibleButton";
 import dis from "../../../dispatcher/dispatcher";
@@ -162,13 +162,13 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
     private renderHighContrastCheckbox(): React.ReactElement<HTMLDivElement> {
         if (
             !this.state.useSystemTheme && (
-                findHighContrastTheme(this.state.theme) ||
-                isHighContrastTheme(this.state.theme)
+                // Theme.findHighContrast(this.state.theme) ||
+                ThemeWatcher.isHighContrast()
             )
         ) {
             return <div>
                 <StyledCheckbox
-                    checked={isHighContrastTheme(this.state.theme)}
+                    checked={ThemeWatcher.isHighContrast()}
                     onChange={(e) => this.highContrastThemeChanged(e.target.checked)}
                 >
                     { _t( "Use high contrast" ) }
@@ -178,11 +178,12 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
     }
 
     private highContrastThemeChanged(checked: boolean): void {
+        const theme = new Theme(this.state.theme)
         let newTheme: string;
         if (checked) {
-            newTheme = findHighContrastTheme(this.state.theme);
+            newTheme = theme.highContrast;
         } else {
-            newTheme = findNonHighContrastTheme(this.state.theme);
+            newTheme = theme.nonHighContrast;
         }
         if (newTheme) {
             this.onThemeChange(newTheme);
@@ -190,9 +191,8 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
     }
 
     public render(): React.ReactElement<HTMLDivElement> {
-        const themeWatcher = new ThemeWatcher();
         let systemThemeSection: JSX.Element;
-        if (themeWatcher.isSystemThemeSupported()) {
+        if (ThemeWatcher.supportsSystemTheme()) {
             systemThemeSection = <div>
                 <StyledCheckbox
                     checked={this.state.useSystemTheme}
@@ -241,7 +241,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
         // XXX: replace any type here
         const themes = Object.entries<any>(enumerateThemes())
             .map(p => ({ id: p[0], name: p[1] })) // convert pairs to objects for code readability
-            .filter(p => !isHighContrastTheme(p.id));
+            .filter(p => !ThemeWatcher.isHighContrast());
         const builtInThemes = themes.filter(p => !p.id.startsWith("custom-"));
         const customThemes = themes.filter(p => !builtInThemes.includes(p))
             .sort((a, b) => compare(a.name, b.name));

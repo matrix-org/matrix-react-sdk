@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { SETTINGS } from '../../../src/settings/Settings';
 import SettingsStore from '../../../src/settings/SettingsStore';
 import ThemeWatcher from '../../../src/settings/watchers/ThemeWatcher';
 import { SettingLevel } from '../../../src/settings/SettingLevel';
@@ -66,9 +67,9 @@ describe('ThemeWatcher', function() {
         // Given no system settings
         global.matchMedia = makeMatchMedia({});
 
-        // Then getEffectiveTheme returns light
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light");
+        // Then currentTheme() returns light
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe(SETTINGS["theme"].default);
     });
 
     it('should choose default theme if system settings are inconclusive', () => {
@@ -76,12 +77,11 @@ describe('ThemeWatcher', function() {
         global.matchMedia = makeMatchMedia({});
         SettingsStore.getValue = makeGetValue({
             "use_system_theme": true,
-            "theme": "light",
         });
 
-        // Then getEffectiveTheme returns light
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light");
+        // Then currentTheme() returns light
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("light");
     });
 
     it('should choose a dark theme if that is selected', () => {
@@ -92,9 +92,9 @@ describe('ThemeWatcher', function() {
         });
         SettingsStore.getValueAt = makeGetValueAt({ "theme": "dark" });
 
-        // Then getEffectiveTheme returns dark
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("dark");
+        // Then currentTheme() returns dark
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("dark");
     });
 
     it('should choose a light theme if that is selected', () => {
@@ -105,9 +105,9 @@ describe('ThemeWatcher', function() {
         });
         SettingsStore.getValueAt = makeGetValueAt({ "theme": "light" });
 
-        // Then getEffectiveTheme returns light
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light");
+        // Then currentTheme() returns light
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("light");
     });
 
     it('should choose a light-high-contrast theme if that is selected', () => {
@@ -115,9 +115,9 @@ describe('ThemeWatcher', function() {
         global.matchMedia = makeMatchMedia({ "(prefers-color-scheme: dark)": true });
         SettingsStore.getValueAt = makeGetValueAt({ "theme": "light-high-contrast" });
 
-        // Then getEffectiveTheme returns light-high-contrast
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light-high-contrast");
+        // Then currentTheme() returns light-high-contrast
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("light-high-contrast");
     });
 
     it('should choose a light theme if system prefers it (via default)', () => {
@@ -127,9 +127,9 @@ describe('ThemeWatcher', function() {
         SettingsStore.getValueAt = makeGetValueAt({});
         SettingsStore.getValue = makeGetValue({ "use_system_theme": true });
 
-        // Then getEffectiveTheme returns light
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light");
+        // Then currentTheme() returns light
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("light");
     });
 
     it('should choose a dark theme if system prefers it (via default)', () => {
@@ -139,9 +139,9 @@ describe('ThemeWatcher', function() {
         SettingsStore.getValueAt = makeGetValueAt({});
         SettingsStore.getValue = makeGetValue({ "use_system_theme": true });
 
-        // Then getEffectiveTheme returns dark
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("dark");
+        // Then currentTheme() returns dark
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("dark");
     });
 
     it('should choose a light theme if system prefers it (explicit)', () => {
@@ -150,9 +150,9 @@ describe('ThemeWatcher', function() {
         SettingsStore.getValueAt = makeGetValueAt({ "use_system_theme": true });
         SettingsStore.getValue = makeGetValue({ "use_system_theme": true });
 
-        // Then getEffectiveTheme returns light
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light");
+        // Then currentTheme() returns light
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("light");
     });
 
     it('should choose a dark theme if system prefers it (explicit)', () => {
@@ -161,9 +161,9 @@ describe('ThemeWatcher', function() {
         SettingsStore.getValueAt = makeGetValueAt({ "use_system_theme": true });
         SettingsStore.getValue = makeGetValue({ "use_system_theme": true });
 
-        // Then getEffectiveTheme returns dark
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("dark");
+        // Then currentTheme() returns dark
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("dark");
     });
 
     it('should choose a high-contrast theme if system prefers it', () => {
@@ -175,9 +175,9 @@ describe('ThemeWatcher', function() {
         SettingsStore.getValueAt = makeGetValueAt({ "use_system_theme": true });
         SettingsStore.getValue = makeGetValue({ "use_system_theme": true });
 
-        // Then getEffectiveTheme returns light-high-contrast
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light-high-contrast");
+        // Then currentTheme() returns light-high-contrast
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("light-high-contrast");
     });
 
     it('should not choose a high-contrast theme if not available', () => {
@@ -190,9 +190,9 @@ describe('ThemeWatcher', function() {
         SettingsStore.getValueAt = makeGetValueAt({ "use_system_theme": true });
         SettingsStore.getValue = makeGetValue({ "use_system_theme": true });
 
-        // Then getEffectiveTheme returns dark
-        const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("dark");
+        // Then currentTheme() returns dark
+        ThemeWatcher.instance({ newInstance: true });
+        expect(ThemeWatcher.currentTheme()).toBe("dark");
     });
 });
 

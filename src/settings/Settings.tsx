@@ -459,6 +459,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: "light",
         controller: new ThemeController(),
     },
+    "dark_theme": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: "dark", // Must be "dark" for compatibility with, e.g., Jitsi
+    },
+    "light_theme": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: "light", // Must be "light" for compatibility with, e.g., Jitsi
+    },
     "custom_themes": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: [],
