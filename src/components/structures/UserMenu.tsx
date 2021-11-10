@@ -32,7 +32,8 @@ import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import Modal from "../../Modal";
 import LogoutDialog from "../views/dialogs/LogoutDialog";
 import SettingsStore from "../../settings/SettingsStore";
-import { getCustomTheme } from "../../theme";
+import { Theme } from '../../Theme';
+import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
@@ -69,6 +70,7 @@ type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
 interface IState {
     contextMenuPosition: PartialDOMRect;
     isDarkTheme: boolean;
+    isHighContrast: boolean;
     selectedSpace?: Room;
     pendingRoomJoin: Set<string>;
 }
@@ -86,7 +88,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
 
         this.state = {
             contextMenuPosition: null,
-            isDarkTheme: this.isUserOnDarkTheme(),
+            isDarkTheme: ThemeWatcher.isDarkTheme(),
+            isHighContrast: ThemeWatcher.isHighContrast(),
             pendingRoomJoin: new Set<string>(),
         };
 
@@ -130,18 +133,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.forceUpdate(); // we don't have anything useful in state to update
     };
 
-    private isUserOnDarkTheme(): boolean {
-        if (SettingsStore.getValue("use_system_theme")) {
-            return window.matchMedia("(prefers-color-scheme: dark)").matches;
-        } else {
-            const theme = SettingsStore.getValue("theme");
-            if (theme.startsWith("custom-")) {
-                return getCustomTheme(theme.substring("custom-".length)).is_dark;
-            }
-            return theme === "dark";
-        }
-    }
-
     private onProfileUpdate = async () => {
         // the store triggered an update, so force a layout update. We don't
         // have any state to store here for that to magically happen.
@@ -153,7 +144,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
     };
 
     private onThemeChanged = () => {
-        this.setState({ isDarkTheme: this.isUserOnDarkTheme() });
+        this.setState(
+            {
+                isDarkTheme: ThemeWatcher.isDarkTheme,
+                isHighContrast: ThemeWatcher.isHighContrast,
+            });
     };
 
     private onAction = (ev: ActionPayload) => {
@@ -221,7 +216,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
         // Disable system theme matching if the user hits this button
         SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
-        const newTheme = this.state.isDarkTheme ? "light" : "dark";
+        let newTheme = this.state.isDarkTheme ? SettingsStore.getValue("light_theme") : SettingsStore.getValue("dark_theme");
+        if (this.state.isHighContrast) {
+            const hcTheme = new Theme(newTheme).highContrast;
+            if (hcTheme) {
+                newTheme = hcTheme;
+            }
+        }
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
     };
 

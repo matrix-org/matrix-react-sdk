@@ -48,7 +48,6 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
-import { getCustomTheme } from "../../theme";
 import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -112,24 +111,11 @@ export class ElementWidget extends Widget {
             domain = "jitsi.riot.im";
         }
 
-        let theme = new ThemeWatcher().getEffectiveTheme();
-        if (theme.startsWith("custom-")) {
-            const customTheme = getCustomTheme(theme.substr(7));
-            // Jitsi only understands light/dark
-            theme = customTheme.is_dark ? "dark" : "light";
-        }
-
-        // only allow light/dark through, defaulting to dark as that was previously the only state
-        // accounts for legacy-light/legacy-dark themes too
-        if (theme.includes("light")) {
-            theme = "light";
-        } else {
-            theme = "dark";
-        }
+        const sanitizedTheme = ThemeWatcher.currentTheme({ sanitized: true });
 
         return {
             ...super.rawData,
-            theme,
+            sanitizedTheme,
             conferenceId,
             domain,
         };
@@ -149,7 +135,7 @@ export class StopGapWidget extends EventEmitter {
     private scalarToken: string;
     private roomId?: string;
     private kind: WidgetKind;
-    private readUpToMap: {[roomId: string]: string} = {}; // room ID to event ID
+    private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
 
     constructor(private appTileProps: IAppTileProps) {
         super();

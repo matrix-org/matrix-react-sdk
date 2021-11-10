@@ -43,6 +43,8 @@ import LayoutSwitcher from "../../LayoutSwitcher";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
+import ThemeChoicePanel from '../../ThemeChoicePanel';
+
 interface IProps {
 }
 
@@ -119,7 +121,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     }
 
     private calculateThemeState(): IThemeState {
-        // We have to mirror the logic from ThemeWatcher.getEffectiveTheme so we
+        // We have to mirror the logic from ThemeWatcher.currentTheme() so we
         // show the right values for things.
 
         const themeChoice: string = SettingsStore.getValue("theme");
