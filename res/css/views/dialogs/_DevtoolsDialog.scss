@@ -242,7 +242,7 @@ limitations under the License.
     }
 
     .mx_DevTools_SettingsExplorer_immutable {
-        background-color: $warning-color;
+        background-color: $alert;
     }
 
     .mx_DevTools_SettingsExplorer_edit {
@@ -251,7 +251,7 @@ limitations under the License.
     }
 
     .mx_DevTools_SettingsExplorer_warning {
-        border: 2px solid $warning-color;
+        border: 2px solid $alert;
         border-radius: 4px;
         padding: 4px;
         margin-bottom: 8px;

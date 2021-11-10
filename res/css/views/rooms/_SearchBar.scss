@@ -58,7 +58,7 @@ limitations under the License.
     }
 
     .mx_SearchBar_cancel {
-        background-color: $warning-color;
+        background-color: $alert;
         mask: url('$(res)/img/cancel.svg');
         mask-repeat: no-repeat;
         mask-position: center;

@@ -54,7 +54,6 @@ $selection-fg-color: $background;
 $focus-brightness: 105%;
 
 // warning colours
-$warning-color: $alert; // red
 $orange-warning-color: #ff8d13; // used for true warnings
 // background colour for warnings
 $warning-bg-color: #DF2A8B;
@@ -271,7 +270,7 @@ $tooltip-timeline-fg-color: $background;
 
 $breadcrumb-placeholder-bg-color: #e8eef5;
 
-// These two don't change between themes. They are the $warning-color, but we don't
+// These two don't change between themes. They are the $alert, but we don't
 // want custom themes to affect them by accident.
 $voice-record-stop-symbol-color: #ff5b55;
 $voice-record-live-circle-color: #ff5b55;

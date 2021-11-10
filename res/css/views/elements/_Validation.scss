@@ -59,11 +59,11 @@ limitations under the License.
     }
 
     &.mx_Validation_invalid {
-        color: $warning-color;
+        color: $alert;
 
         &::before {
             mask-image: url('$(res)/img/feather-customised/x.svg');
-            background-color: $warning-color;
+            background-color: $alert;
         }
     }
 }
