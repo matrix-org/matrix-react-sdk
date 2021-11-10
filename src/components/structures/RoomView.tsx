@@ -120,8 +120,8 @@ interface IRoomProps extends MatrixClientProps {
     onRegistered?(credentials: IMatrixClientCreds): void;
 }
 
-// This defines, the content of the mainSplit
-// AND if the mainSplit does not contain the Timeline, the chat is shown in the right panel.
+// This defines the content of the mainSplit.
+// If the mainSplit does not contain the Timeline, the chat is shown in the right panel.
 enum MainSplitContentType {
     Timeline,
     MaximisedWidget,
