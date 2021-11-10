@@ -1375,7 +1375,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
                                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                title={_t("Thread")}
+                                title={_t("Reply in thread")}
                                 onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
                                 key="thread"
                             />
