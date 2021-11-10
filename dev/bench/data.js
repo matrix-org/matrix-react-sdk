@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636537992131,
+  "lastUpdate": 1636543816558,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -37976,6 +37976,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4596.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8ea551fb6de2ee89310c4b21f3fe487835c468d4",
+          "message": "Do not shift buttons in high contrast theme (#7102)",
+          "timestamp": "2021-11-10T11:24:27Z",
+          "tree_id": "1200734bb3868473bd824662c8b7ed44a24317f9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8ea551fb6de2ee89310c4b21f3fe487835c468d4"
+        },
+        "date": 1636543813815,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4893.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 921.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1627.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4288.5,
             "unit": "ms",
             "extra": "type: measure"
           }
