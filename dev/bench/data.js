@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636559420365,
+  "lastUpdate": 1636562468558,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38072,6 +38072,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4317.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5226edba4b5501579cf616a5c5485de57bd16858",
+          "message": "Use en_GB spelling of maximise / minimise in labels (#7111)",
+          "timestamp": "2021-11-10T16:35:43Z",
+          "tree_id": "be6765d7b37b7eb22c5cd215b365ca8096c5c169",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5226edba4b5501579cf616a5c5485de57bd16858"
+        },
+        "date": 1636562465656,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 913.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1627.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4195.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
