@@ -510,7 +510,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         // populate the Orphans metaspace if it is enabled
         if (enabledMetaSpaces.has(MetaSpace.Orphans)) {
-            const orphans = visibleRooms.filter(r => !this.parentMap.get(r.roomId)?.size);
+            const orphans = visibleRooms.filter(r => {
+                // filter out DMs and rooms with >0 parents
+                return !this.parentMap.get(r.roomId)?.size && !DMRoomMap.shared().getUserIdForRoomId(r.roomId);
+            });
             this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
         }
 

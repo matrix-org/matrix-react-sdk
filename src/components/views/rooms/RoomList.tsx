@@ -494,7 +494,8 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 let alwaysVisible = ALWAYS_VISIBLE_TAGS.includes(orderedTagId);
                 if (
                     (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
-                    (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM)
+                    (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM) ||
+                    (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM)
                 ) {
                     alwaysVisible = false;
                 }
