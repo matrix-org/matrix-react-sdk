@@ -36,7 +36,7 @@ limitations under the License.
 
     &.mx_cryptoEvent_icon_warning::after {
         mask-image: url("$(res)/img/e2e/warning.svg");
-        background-color: $notice-primary-color;
+        background-color: $alert;
     }
 
     .mx_cryptoEvent_state, .mx_cryptoEvent_buttons {

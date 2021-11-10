@@ -33,7 +33,6 @@ $space-nav: rgba($tertiary-content, 0.15);
 
 // unified palette
 // try to use these colors when possible
-$notice-primary-color: $alert;
 $notice-primary-bg-color: rgba(255, 75, 85, 0.16);
 $header-panel-bg-color: #f3f8fd;
 
@@ -57,7 +56,7 @@ $selection-fg-color: $background;
 $focus-brightness: 105%;
 
 // warning colours
-$warning-color: $notice-primary-color; // red
+$warning-color: $alert; // red
 $orange-warning-color: #ff8d13; // used for true warnings
 // background colour for warnings
 $warning-bg-color: #DF2A8B;

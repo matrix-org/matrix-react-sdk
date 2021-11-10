@@ -14,7 +14,6 @@ $monospace-font-family: 'Inconsolata', 'Twemoji', 'Apple Color Emoji', 'Segoe UI
 
 // unified palette
 // try to use these colors when possible
-$notice-primary-color: #ff4b55;
 $notice-primary-bg-color: rgba(255, 75, 85, 0.16);
 $header-panel-bg-color: #f3f8fd;
 
@@ -42,7 +41,6 @@ $selection-fg-color: $primary-bg-color;
 $focus-brightness: 105%;
 
 // warning colours
-$warning-color: $notice-primary-color; // red
 $orange-warning-color: #ff8d13; // used for true warnings
 // background colour for warnings
 $warning-bg-color: #df2a8b;
@@ -186,6 +184,8 @@ $space-nav: rgba($tertiary-content, 0.15);
 // ********************
 
 $voipcall-plinth-color: $system;
+
+$warning-color: $alert;
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
