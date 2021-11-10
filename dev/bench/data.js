@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636562468558,
+  "lastUpdate": 1636568043865,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38120,6 +38120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4195.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "paulo.pinto@automattic.com",
+            "name": "Paulo Pinto",
+            "username": "psrpinto"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8edebecc958ec9681b64a368320887aa8ec558b",
+          "message": "Add PassphraseConfirmField component for registration and password recovery screens (#7044)",
+          "timestamp": "2021-11-10T18:07:31Z",
+          "tree_id": "965160d926e2e746f3ba858375c10c836c15a3ca",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8edebecc958ec9681b64a368320887aa8ec558b"
+        },
+        "date": 1636568040476,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5121.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1102.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1819.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4583,
             "unit": "ms",
             "extra": "type: measure"
           }
