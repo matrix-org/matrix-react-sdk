@@ -95,7 +95,7 @@ import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threads';
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
-import AppMaximisedDrawer from '../views/rooms/AppMaximisedDrawer';
+import AppsDrawer from '../views/rooms/AppsDrawer';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -2133,7 +2133,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 break;
             case MainSplitContentType.MaximisedWidget:
                 if (!SettingsStore.getValue("feature_maximised_widgets")) {break;}
-                mainSplitBody = <AppMaximisedDrawer
+                mainSplitBody = <AppsDrawer
                     room={this.state.room}
                     userId={this.context.credentials.userId}
                     resizeNotifier={this.props.resizeNotifier}
