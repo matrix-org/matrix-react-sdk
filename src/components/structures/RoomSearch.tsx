@@ -17,7 +17,6 @@ limitations under the License.
 import * as React from "react";
 import { createRef } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
@@ -29,7 +28,7 @@ import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCo
 import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import { UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES } from "../../stores/spaces";
+import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { isMac } from "../../Keyboard";
 
 interface IProps {
@@ -43,7 +42,6 @@ interface IProps {
 interface IState {
     query: string;
     focused: boolean;
-    inSpaces: boolean;
 }
 
 @replaceableComponent("structures.RoomSearch")
@@ -58,13 +56,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         this.state = {
             query: "",
             focused: false,
-            inSpaces: false,
         };
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         // clear filter when changing spaces, in future we may wish to maintain a filter per-space
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.clearInput);
-        SpaceStore.instance.on(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
     }
 
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
@@ -85,14 +81,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.clearInput);
-        SpaceStore.instance.off(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
     }
-
-    private onSpaces = (spaces: Room[]) => {
-        this.setState({
-            inSpaces: spaces.length > 0,
-        });
-    };
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === 'view_room' && payload.clear_search) {
