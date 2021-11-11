@@ -147,12 +147,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
                 onClick={this.onPinnedMessagesClicked}
             /> }
-            <TimelineCardHeaderButton
+            { this.props.coreElementsOnly && <TimelineCardHeaderButton
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.TimelineCard)}
                 showNewMessage={false}
                 onClick={this.onTimelineCardClicked}
-            />
+            /> }
             { (!this.props.coreElementsOnly && SettingsStore.getValue("feature_thread")) && <HeaderButton
                 name="threadsButton"
                 title={_t("Threads")}
