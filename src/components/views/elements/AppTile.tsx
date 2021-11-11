@@ -88,6 +88,9 @@ interface IState {
 }
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
+import { Action } from '../../../dispatcher/actions';
+import RightPanelStore from '../../../stores/RightPanelStore';
 
 @replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component<IProps, IState> {
@@ -406,6 +409,11 @@ export default class AppTile extends React.Component<IProps, IState> {
             ? Container.Right
             : Container.Center;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
+        if (targetContainer === Container.Right
+            && RightPanelStore.getSharedInstance().visibleRoomPanelPhase === RightPanelPhases.TimelineCard) {
+            // If the widget gets closed also close the RightPanel chat.
+            dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomSummary });
+        }
     };
 
     private onContextMenuClick = (): void => {
