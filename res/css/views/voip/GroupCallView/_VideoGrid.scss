@@ -45,19 +45,18 @@ limitations under the License.
             position: absolute;
             bottom: 16px;
             left: 16px;
-            height: 32px;
+            height: 24px;
             padding: 0 8px;
             background-color: rgba(23, 25, 28, 0.85);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
+            border-radius: 4px;
             user-select: none;
             max-width: calc(100% - 48px);
             overflow: hidden;
-
             & > * {
-                margin-right: 8px;
+                margin-right: 6px;
             }
 
             & > :last-child {
@@ -65,9 +64,9 @@ limitations under the License.
             }
 
             span {
-                font-size: 15px;
-                font-weight: 600;
-                line-height: 32px;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 16px;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
@@ -82,8 +81,8 @@ limitations under the License.
 
         .mx_muteMicIcon, .mx_micIcon {
             background-color: white;
-            height: 16px;
-            width: 16px;
+            height: 14px;
+            width: 14px;
             flex-shrink: 0;
         }
 
@@ -95,15 +94,17 @@ limitations under the License.
             mask-image: url('$(res)/img/voip/mic-unmuted.svg');
         }
 
-        .mx_videoMutedIcon {
+        .mx_videoMutedAvatar {
             position: absolute;
-            top: 50%;
             left: 50%;
+            top: 50%;
             transform: translate(-50%, -50%);
-            height: 25%;
-            width: 25%;
-            background-color: #8D99A5;
-            mask-image: url('$(res)/img/voip/declined-video.svg');
+        }
+
+        .mx_videoMutedOverlay {
+            width: 100%;
+            height: 100%;
+            background-color: #21262C;
         }
 
         &.mx_speaking {
