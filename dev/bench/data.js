@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636568043865,
+  "lastUpdate": 1636628775279,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38168,6 +38168,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4583,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1de9630e44c694693ee7d039c95e8e697c13c881",
+          "message": "Fixes following threads design implementation review (#7100)",
+          "timestamp": "2021-11-11T11:00:18Z",
+          "tree_id": "c7dc071f6c8cf164866a44b6b946cecd04e5119d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1de9630e44c694693ee7d039c95e8e697c13c881"
+        },
+        "date": 1636628772974,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5372.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 656.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
