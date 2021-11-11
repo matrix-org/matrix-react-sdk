@@ -55,6 +55,7 @@ interface IProps {
     e2eStatus: E2EStatus;
     appsShown: boolean;
     searchInfo: ISearchInfo;
+    coreElementsOnly?: boolean;
 }
 
 @replaceableComponent("views.rooms.RoomHeader")
@@ -62,6 +63,7 @@ export default class RoomHeader extends React.Component<IProps> {
     static defaultProps = {
         editing: false,
         inRoom: false,
+        coreElementsOnly: false,
     };
 
     public componentDidMount() {
@@ -184,7 +186,7 @@ export default class RoomHeader extends React.Component<IProps> {
             buttons.push(forgetButton);
         }
 
-        if (this.props.onAppsClick) {
+        if (this.props.onAppsClick && !this.props.coreElementsOnly) {
             const appsButton = <AccessibleTooltipButton
                 className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
                     mx_RoomHeader_appsButton_highlight: this.props.appsShown,
@@ -196,7 +198,7 @@ export default class RoomHeader extends React.Component<IProps> {
             buttons.push(appsButton);
         }
 
-        if (this.props.onSearchClick && this.props.inRoom) {
+        if (this.props.onSearchClick && this.props.inRoom && !this.props.coreElementsOnly) {
             const searchButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_searchButton"
                 onClick={this.props.onSearchClick}
@@ -221,7 +223,7 @@ export default class RoomHeader extends React.Component<IProps> {
                     { name }
                     { topicElement }
                     { rightRow }
-                    <RoomHeaderButtons room={this.props.room} />
+                    <RoomHeaderButtons room={this.props.room} coreElementsOnly={this.props.coreElementsOnly} />
                 </div>
             </div>
         );

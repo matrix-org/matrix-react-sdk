@@ -2163,6 +2163,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             onAppsClick={this.state.hasPinnedWidgets ? this.onAppsClick : null}
                             appsShown={this.state.showApps}
                             onCallPlaced={this.onCallPlaced}
+                            coreElementsOnly={this.state.mainSplitContentType === MainSplitContentType.MaximisedWidget}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className="mx_RoomView_body">

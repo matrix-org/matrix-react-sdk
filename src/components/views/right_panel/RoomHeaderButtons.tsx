@@ -87,6 +87,7 @@ const TimelineCardHeaderButton = ({ room, isHighlighted, showNewMessage, onClick
 
 interface IProps {
     room?: Room;
+    coreElementsOnly?: boolean;
 }
 
 @replaceableComponent("views.right_panel.RoomHeaderButtons")
@@ -141,18 +142,18 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
 
     public renderButtons() {
         return <>
-            <PinnedMessagesHeaderButton
+            { !this.props.coreElementsOnly && <PinnedMessagesHeaderButton
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
                 onClick={this.onPinnedMessagesClicked}
-            />
+            /> }
             <TimelineCardHeaderButton
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.TimelineCard)}
                 showNewMessage={false}
                 onClick={this.onTimelineCardClicked}
             />
-            { SettingsStore.getValue("feature_thread") && <HeaderButton
+            { (!this.props.coreElementsOnly && SettingsStore.getValue("feature_thread")) && <HeaderButton
                 name="threadsButton"
                 title={_t("Threads")}
                 onClick={dispatchShowThreadsPanelEvent}
