@@ -144,7 +144,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
         ? () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right); }
         : () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center); };
 
-    const maximiseTitle = isMaximised ? _t("Minimise widget") : _t("Maximise widget");
+    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise widget");
 
     return <div className={classes} ref={handle}>
         <AccessibleTooltipButton

@@ -542,7 +542,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                         : " mx_AppTileMenuBar_iconButton_maxWidget")
                 }
                 title={
-                    widgetIsMaximised ? _t('Minimise widget'): _t('Maximise widget')
+                    widgetIsMaximised ? _t('Close'): _t('Maximise widget')
                 }
                 onClick={this.onMaxMinWidgetClick}
             />;
