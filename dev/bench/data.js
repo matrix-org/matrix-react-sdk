@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636642477392,
+  "lastUpdate": 1636648707444,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38396,6 +38396,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4709.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "155157dba18b6b3d488356c90f53dd28f732bd45",
+          "message": "Expose power level control for m.space.child (#7120)",
+          "timestamp": "2021-11-11T16:32:30Z",
+          "tree_id": "d7de28a4381302926f36cfd30f4b96e575f4d56e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/155157dba18b6b3d488356c90f53dd28f732bd45"
+        },
+        "date": 1636648704783,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5097.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 906.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1684.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4443.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
