@@ -36,6 +36,7 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
+    getMetaSpaceName,
     MetaSpace,
     SpaceKey,
     UPDATE_HOME_BEHAVIOUR,
@@ -138,7 +139,7 @@ const HomeButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
         className="mx_SpaceButton_home"
         selected={selected}
         isPanelCollapsed={isPanelCollapsed}
-        label={allRoomsInHome ? _t("All rooms") : _t("Home")}
+        label={getMetaSpaceName(MetaSpace.Home, allRoomsInHome)}
         notificationState={allRoomsInHome
             ? RoomNotificationStateStore.instance.globalState
             : SpaceStore.instance.getNotificationState(MetaSpace.Home)}
@@ -153,7 +154,7 @@ const FavouritesButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) 
         className="mx_SpaceButton_favourites"
         selected={selected}
         isPanelCollapsed={isPanelCollapsed}
-        label={_t("Favourites")}
+        label={getMetaSpaceName(MetaSpace.Favourites)}
         notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Favourites)}
     />;
 };
@@ -164,7 +165,7 @@ const PeopleButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
         className="mx_SpaceButton_people"
         selected={selected}
         isPanelCollapsed={isPanelCollapsed}
-        label={_t("People")}
+        label={getMetaSpaceName(MetaSpace.People)}
         notificationState={SpaceStore.instance.getNotificationState(MetaSpace.People)}
     />;
 };
@@ -175,7 +176,7 @@ const OrphansButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => 
         className="mx_SpaceButton_orphans"
         selected={selected}
         isPanelCollapsed={isPanelCollapsed}
-        label={_t("Other rooms")}
+        label={getMetaSpaceName(MetaSpace.Orphans)}
         notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Orphans)}
     />;
 };

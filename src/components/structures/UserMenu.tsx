@@ -25,7 +25,7 @@ import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { _t } from "../../languageHandler";
-import { ContextMenuButton } from "./ContextMenu";
+import { ChevronFace, ContextMenuButton } from "./ContextMenu";
 import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
@@ -52,7 +52,6 @@ import HostSignupAction from "./HostSignupAction";
 import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
-import RoomName from "../views/elements/RoomName";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 
@@ -109,6 +108,22 @@ interface IState {
     selectedSpace?: Room;
     dndEnabled: boolean;
 }
+
+const toRightOf = (rect: PartialDOMRect) => {
+    return {
+        left: rect.width + rect.left + 8,
+        top: rect.top,
+        chevronFace: ChevronFace.None,
+    };
+};
+
+const below = (rect: PartialDOMRect) => {
+    return {
+        left: rect.left,
+        top: rect.top + rect.height,
+        chevronFace: ChevronFace.None,
+    };
+};
 
 @replaceableComponent("structures.UserMenu")
 export default class UserMenu extends React.Component<IProps, IState> {
@@ -231,8 +246,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private onOpenMenuClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        const target = ev.target as HTMLButtonElement;
-        this.setState({ contextMenuPosition: target.getBoundingClientRect() });
+        this.setState({ contextMenuPosition: ev.currentTarget.getBoundingClientRect() });
     };
 
     private onContextMenu = (ev: React.MouseEvent) => {
@@ -443,11 +457,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
             );
         }
 
+        const position = this.props.isPanelCollapsed
+            ? toRightOf(this.state.contextMenuPosition)
+            : below(this.state.contextMenuPosition);
+
         return <IconizedContextMenu
-            // numerical adjustments to overlap the context menu by just over the width of the
-            // menu icon and make it look connected
-            left={this.state.contextMenuPosition.width + this.state.contextMenuPosition.left - 10}
-            top={this.state.contextMenuPosition.top + this.state.contextMenuPosition.height + 8}
+            {...position}
             onFinished={this.onCloseMenu}
             className="mx_UserMenu_contextMenu"
         >
@@ -499,33 +514,32 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
 
         return (
-            <div className={classNames("mx_UserMenu", {
-                mx_UserMenu_cutout: badge,
-            })}>
-                <ContextMenuButton
-                    onClick={this.onOpenMenuClick}
-                    inputRef={this.buttonRef}
-                    label={_t("User menu")}
-                    isExpanded={!!this.state.contextMenuPosition}
-                    onContextMenu={this.onContextMenu}
-                >
-                    <div className="mx_UserMenu_userAvatar">
-                        <BaseAvatar
-                            idName={userId}
-                            name={displayName}
-                            url={avatarUrl}
-                            width={avatarSize}
-                            height={avatarSize}
-                            resizeMethod="crop"
-                            className=""
-                        />
-                        { badge }
-                    </div>
-                    { name }
-                </ContextMenuButton>
+            <ContextMenuButton
+                onClick={this.onOpenMenuClick}
+                inputRef={this.buttonRef}
+                label={_t("User menu")}
+                isExpanded={!!this.state.contextMenuPosition}
+                onContextMenu={this.onContextMenu}
+                className={classNames("mx_UserMenu", {
+                    mx_UserMenu_cutout: badge,
+                })}
+            >
+                <div className="mx_UserMenu_userAvatar">
+                    <BaseAvatar
+                        idName={userId}
+                        name={displayName}
+                        url={avatarUrl}
+                        width={avatarSize}
+                        height={avatarSize}
+                        resizeMethod="crop"
+                        className=""
+                    />
+                    { badge }
+                </div>
+                { name }
 
                 { this.renderContextMenu() }
-            </div>
+            </ContextMenuButton>
         );
     }
 }
