@@ -198,6 +198,9 @@ limitations under the License.
                 &::before {
                     mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
                 }
+                &.mx_RoomSummaryCard_maximised_widget {
+                    right: 72px;
+                }
             }
 
             &.mx_RoomSummaryCard_Button_pinned {
