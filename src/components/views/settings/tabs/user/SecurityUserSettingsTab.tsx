@@ -29,6 +29,10 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
+import { ListNotificationState } from '../../../../../stores/notifications/ListNotificationState';
+import { RoomNotificationStateStore } from '../../../../../stores/notifications/RoomNotificationStateStore';
+import { DefaultTagID } from '../../../../../stores/room-list/models';
+import { NOTIFICATION_STATE_UPDATE } from '../../../../../stores/notifications/NotificationState';
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
 import CountlyAnalytics from "../../../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
@@ -82,18 +86,19 @@ interface IState {
 @replaceableComponent("views.settings.tabs.user.SecurityUserSettingsTab")
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
     private dispatcherRef: string;
+    private notificationState: ListNotificationState;
 
     constructor(props: IProps) {
         super(props);
 
         // Get number of rooms we're invited to
-        const invitedRooms = this.getInvitedRooms();
+        this.notificationState = RoomNotificationStateStore.instance.getListState(DefaultTagID.Invite);
 
         this.state = {
             ignoredUserIds: MatrixClientPeg.get().getIgnoredUsers(),
             waitingUnignored: [],
             managingInvites: false,
-            invitedRoomAmt: invitedRooms.length,
+            invitedRoomAmt: this.notificationState.count,
         };
     }
 
@@ -107,16 +112,22 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
+        this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
     }
 
     public componentWillUnmount(): void {
         dis.unregister(this.dispatcherRef);
+        this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
     }
 
     private updateAnalytics = (checked: boolean): void => {
         checked ? Analytics.enable() : Analytics.disable();
         CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
         PosthogAnalytics.instance.updateAnonymityFromSettings(MatrixClientPeg.get().getUserId());
+    };
+
+    private onNotificationUpdate = () => {
+        this.setState({ invitedRoomAmt: this.notificationState.count });
     };
 
     private onGoToUserProfileClick = (): void => {
@@ -162,10 +173,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             const roomId = invitedRoomIds[i];
 
             // Accept/reject invite
-            await action(roomId).then(() => {
-                // No error, update invited rooms button
-                this.setState({ invitedRoomAmt: this.state.invitedRoomAmt - 1 });
-            }, async (e) => {
+            await action(roomId).catch(async (e) => {
                 // Action failure
                 if (e.errcode === "M_LIMIT_EXCEEDED") {
                     // Add a delay between each invite change in order to avoid rate
@@ -225,9 +233,8 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             return null;
         }
 
-        const invitedRooms = this.getInvitedRooms();
-        const onClickAccept = this.onAcceptAllInvitesClicked.bind(this, invitedRooms);
-        const onClickReject = this.onRejectAllInvitesClicked.bind(this, invitedRooms);
+        const onClickAccept = this.onAcceptAllInvitesClicked.bind(this);
+        const onClickReject = this.onRejectAllInvitesClicked.bind(this);
         return (
             <div className='mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions'>
                 <span className='mx_SettingsTab_subheading'>{ _t('Bulk options') }</span>
