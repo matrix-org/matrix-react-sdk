@@ -76,7 +76,7 @@ const TimelinePanelHeaderButton = ({ room, isHighlighted, showNewMessage, onClic
 
     return <HeaderButton
         name="timelinePanelButton"
-        title={_t("Chat panel")}
+        title={_t("Chat")}
         isHighlighted={isHighlighted}
         onClick={onClick}
         analytics={["Right Panel", "Timeline Panel Button", "click"]}
@@ -148,7 +148,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             />
             <TimelinePanelHeaderButton
                 room={this.props.room}
-                isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
+                isHighlighted={this.isPhase(RightPanelPhases.TimelinePanel)}
                 showNewMessage={false}
                 onClick={this.onTimelinePanelClicked}
             />
