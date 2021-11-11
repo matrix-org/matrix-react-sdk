@@ -25,7 +25,7 @@ export enum RightPanelPhases {
     RoomSummary = 'RoomSummary',
     Widget = 'Widget',
     PinnedMessages = "PinnedMessages",
-    TimelinePanel = "TimelinePanel",
+    TimelineCard = "TimelineCard",
 
     Room3pidMemberInfo = 'Room3pidMemberInfo',
     // Group stuff

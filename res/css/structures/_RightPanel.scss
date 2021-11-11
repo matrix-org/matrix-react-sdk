@@ -144,7 +144,7 @@ $pulse-color: $notice-primary-color;
     }
 }
 
-.mx_RightPanel_timelinePanelButton {
+.mx_RightPanel_timelineCardButton {
     &::before {
         mask-image: url('$(res)/img/element-icons/feedback.svg');
         mask-position: center;

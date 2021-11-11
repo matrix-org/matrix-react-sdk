@@ -459,7 +459,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 // Additionally change the right panel phase to chat:
                 dis.dispatch<SetRightPanelPhasePayload>({
                     action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.TimelinePanel,
+                    phase: RightPanelPhases.TimelineCard,
                 });
                 break;
             case Container.Top:

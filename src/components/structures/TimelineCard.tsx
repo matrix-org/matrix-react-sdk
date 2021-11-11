@@ -133,7 +133,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                     sendReadReceiptOnLoad={true} // No RR support in thread's MVP
                     timelineSet={this.props.room.getUnfilteredTimelineSet()}
                     showUrlPreview={true}
-                    threadViewPreviousCard={RightPanelPhases.TimelinePanel}
+                    threadViewPreviousCard={RightPanelPhases.TimelineCard}
                     layout={Layout.Group}
                     hideThreadedMessages={false}
                     hidden={false}
