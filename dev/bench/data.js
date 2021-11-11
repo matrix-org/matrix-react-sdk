@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636648707444,
+  "lastUpdate": 1636649343665,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38444,6 +38444,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4443.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cd1f660d047e3f6a792966775ea0453876a0ac17",
+          "message": "Fix missing spaces in threads copy (#7119)\n\n* Fix missing spaces in threads copy\r\n\r\nFixes: https://github.com/vector-im/element-web/issues/19702\r\nType: defect\r\n\r\n* i18n",
+          "timestamp": "2021-11-11T16:42:32Z",
+          "tree_id": "93b010c76bdd5aa5d5c3c9e7c1c178b7b763a765",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cd1f660d047e3f6a792966775ea0453876a0ac17"
+        },
+        "date": 1636649340186,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4866.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1096.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1606.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4727.5,
             "unit": "ms",
             "extra": "type: measure"
           }
