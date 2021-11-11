@@ -45,7 +45,14 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import AccessibleButton from "../elements/AccessibleButton";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
-import SpaceStore, { ISuggestedRoom, SUGGESTED_ROOMS, UPDATE_SELECTED_SPACE } from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
+import {
+    ISuggestedRoom,
+    MetaSpace,
+    SpaceKey,
+    UPDATE_SUGGESTED_ROOMS,
+    UPDATE_SELECTED_SPACE,
+} from "../../../stores/spaces";
 import { shouldShowSpaceInvite, showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -54,6 +61,7 @@ import { UIComponent } from "../../../settings/UIFeature";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -63,7 +71,7 @@ interface IProps {
     onListCollapse?: (isExpanded: boolean) => void;
     resizeNotifier: ResizeNotifier;
     isMinimized: boolean;
-    activeSpace: Room;
+    activeSpace: SpaceKey;
 }
 
 interface IState {
@@ -117,7 +125,7 @@ const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>) => {
 const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonProps) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
     const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
-        return SpaceStore.instance.activeSpace;
+        return SpaceStore.instance.activeSpaceRoom;
     });
 
     const showCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
@@ -126,7 +134,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
     if (activeSpace && (showCreateRooms || showInviteUsers)) {
         let contextMenu: JSX.Element;
         if (menuDisplayed) {
-            const canInvite = shouldShowSpaceInvite(SpaceStore.instance.activeSpace);
+            const canInvite = shouldShowSpaceInvite(activeSpace);
 
             contextMenu = <IconizedContextMenu {...auxButtonContextMenuPosition(handle)} onFinished={closeMenu} compact>
                 <IconizedContextMenuOptionList first>
@@ -147,7 +155,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
                             e.preventDefault();
                             e.stopPropagation();
                             closeMenu();
-                            showSpaceInvite(SpaceStore.instance.activeSpace);
+                            showSpaceInvite(activeSpace);
                         }}
                         disabled={!canInvite}
                         tooltip={canInvite ? undefined
@@ -186,7 +194,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
 const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
     const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
-        return SpaceStore.instance.activeSpace;
+        return SpaceStore.instance.activeSpaceRoom;
     });
 
     const showCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
@@ -217,7 +225,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 closeMenu();
-                                showCreateNewRoom(SpaceStore.instance.activeSpace);
+                                showCreateNewRoom(activeSpace);
                             }}
                             disabled={!canAddRooms}
                             tooltip={canAddRooms ? undefined
@@ -230,7 +238,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 closeMenu();
-                                showAddExistingRooms(SpaceStore.instance.activeSpace);
+                                showAddExistingRooms(activeSpace);
                             }}
                             disabled={!canAddRooms}
                             tooltip={canAddRooms ? undefined
@@ -357,6 +365,9 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     private roomStoreToken: fbEmitter.EventSubscription;
     private treeRef = createRef<HTMLDivElement>();
 
+    static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     constructor(props: IProps) {
         super(props);
 
@@ -370,14 +381,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        SpaceStore.instance.on(SUGGESTED_ROOMS, this.updateSuggestedRooms);
+        SpaceStore.instance.on(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.updateLists);
         this.customTagStoreRef = CustomRoomTagStore.addListener(this.updateLists);
         this.updateLists(); // trigger the first update
     }
 
     public componentWillUnmount() {
-        SpaceStore.instance.off(SUGGESTED_ROOMS, this.updateSuggestedRooms);
+        SpaceStore.instance.off(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
         defaultDispatcher.unregister(this.dispatcherRef);
         if (this.customTagStoreRef) this.customTagStoreRef.remove();
@@ -479,10 +490,10 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     };
 
     private onExplore = () => {
-        if (this.props.activeSpace) {
+        if (this.props.activeSpace[0] === "!") {
             defaultDispatcher.dispatch({
                 action: "view_room",
-                room_id: SpaceStore.instance.activeSpace.roomId,
+                room_id: SpaceStore.instance.activeSpace,
             });
         } else {
             const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
@@ -593,6 +604,15 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     : TAG_AESTHETICS[orderedTagId];
                 if (!aesthetics) throw new Error(`Tag ${orderedTagId} does not have aesthetics`);
 
+                let alwaysVisible = ALWAYS_VISIBLE_TAGS.includes(orderedTagId);
+                if (
+                    (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
+                    (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM) ||
+                    (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM)
+                ) {
+                    alwaysVisible = false;
+                }
+
                 // The cost of mounting/unmounting this component offsets the cost
                 // of keeping it in the DOM and hiding it when it is not required
                 return <RoomSublist
@@ -606,7 +626,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     showSkeleton={showSkeleton}
                     extraTiles={extraTiles}
                     resizeNotifier={this.props.resizeNotifier}
-                    alwaysVisible={ALWAYS_VISIBLE_TAGS.includes(orderedTagId)}
+                    alwaysVisible={alwaysVisible}
                     onListCollapse={this.props.onListCollapse}
                 />;
             });
@@ -636,7 +656,9 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         kind="link"
                         onClick={this.onExplore}
                     >
-                        { this.props.activeSpace ? _t("Explore rooms") : _t("Explore all public rooms") }
+                        { this.props.activeSpace[0] === "!"
+                            ? _t("Explore rooms")
+                            : _t("Explore all public rooms") }
                     </AccessibleButton>
                 </div>;
             } else if (Object.values(this.state.sublists).some(list => list.length > 0)) {

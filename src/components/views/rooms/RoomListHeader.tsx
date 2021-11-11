@@ -20,7 +20,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from "../../../languageHandler";
 import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
-import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import { HomeButtonContextMenu } from "../spaces/SpacePanel";
@@ -44,6 +44,7 @@ import InlineSpinner from "../elements/InlineSpinner";
 import TooltipButton from "../elements/TooltipButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
+import { UPDATE_SELECTED_SPACE } from "../../../stores/spaces";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -149,7 +150,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     const [mainMenuDisplayed, mainMenuHandle, openMainMenu, closeMainMenu] = useContextMenu<HTMLDivElement>();
     const [plusMenuDisplayed, plusMenuHandle, openPlusMenu, closePlusMenu] = useContextMenu<HTMLDivElement>();
     const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
-        return SpaceStore.instance.activeSpace;
+        return SpaceStore.instance.activeSpaceRoom;
     });
     const joiningRooms = useJoiningRooms();
 

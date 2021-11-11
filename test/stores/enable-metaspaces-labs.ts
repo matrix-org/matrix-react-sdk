@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Vector Creations Ltd
+Copyright 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DateSeparator {
-    clear: both;
-    margin: 4px 0;
-    display: flex;
-    align-items: center;
-    font-size: $font-14px;
-    color: $roomtopic-color;
-}
-
-.mx_DateSeparator > hr {
-    flex: 1 1 0;
-    height: 0;
-    border: none;
-}
-
-.mx_DateSeparator > div {
-    margin: 0 25px;
-    flex: 0 0 auto;
-}
+localStorage.setItem("mx_labs_feature_feature_spaces_metaspaces", "true");
