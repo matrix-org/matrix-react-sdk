@@ -63,9 +63,11 @@ limitations under the License.
         }
 
         .mx_MessageActionBar_maskButton {
-            width: 24px;
-            height: 24px;
+            --size: 24px;
+            width: var(--size);
+            height: var(--size);
             &::after {
+                mask-size: var(--size);
                 mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
             }
         }
@@ -95,7 +97,7 @@ limitations under the License.
 
         .mx_ContextualMenu_chevron_top {
             left: auto;
-            right: 17px;
+            right: 22px;
             border-bottom-color: $quinary-content;
             &::after {
                 content: "";
@@ -256,7 +258,7 @@ limitations under the License.
 }
 
 .mx_ThreadPanel_replies {
-    margin-top: 4px;
+    margin-top: 8px;
 }
 
 .mx_ThreadPanel_repliesSummary {
