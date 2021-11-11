@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636636420694,
+  "lastUpdate": 1636641708649,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38300,6 +38300,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4417.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f87e9d86a4089d348536b50f160fb032f8925da8",
+          "message": "Catch up MPollBody CSS with everything else that now uses just 'accent' (#7118)",
+          "timestamp": "2021-11-11T14:34:55Z",
+          "tree_id": "02e5c6c6b4577a4096fbafbecd21319ff3a6190b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f87e9d86a4089d348536b50f160fb032f8925da8"
+        },
+        "date": 1636641705249,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5337.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1326.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1683.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4774.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
