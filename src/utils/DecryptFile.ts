@@ -60,7 +60,7 @@ export function decryptFile(
         // In case of svg thumbnails we generate we create a sanitized Blob.
         // NOTE: For SVG we can also use the thumbnail for the lightbox.
         if (mimetype === "image/svg+xml" && isSvgThumbnail) {
-            const encodedSvgFile = dataArray as string; // Data is always in form of a string
+            const encodedSvgFile = dataArray as unknown as string; // Data is always in form of a string
             const decodedSvgFile = new TextDecoder("utf-8").decode(decodeBase64(encodedSvgFile));
             return new Blob([sanitizeSvg(decodedSvgFile, true)], { type: mimetype });
         }
