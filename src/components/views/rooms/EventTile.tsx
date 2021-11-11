@@ -65,12 +65,14 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
+import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
-import { ThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
+import ThreadListContextMenu from '../context_menus/ThreadListContextMenu';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
     [EventType.Sticker]: 'messages.MessageEvent',
+    [POLL_START_EVENT_TYPE.name]: 'messages.MessageEvent',
     [EventType.KeyVerificationCancel]: 'messages.MKeyVerificationConclusion',
     [EventType.KeyVerificationDone]: 'messages.MKeyVerificationConclusion',
     [EventType.CallInvite]: 'messages.CallEvent',
@@ -550,7 +552,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     };
 
-    private renderThreadLastMessagePreview(): JSX.Element | null {
+    private get thread(): Thread | null {
         if (!SettingsStore.getValue("feature_thread")) {
             return null;
         }
@@ -568,7 +570,28 @@ export default class EventTile extends React.Component<IProps, IState> {
             return null;
         }
 
-        const [lastEvent] = thread.events
+        return thread;
+    }
+
+    private renderThreadPanelSummary(): JSX.Element | null {
+        if (!this.thread) {
+            return null;
+        }
+
+        return <div className="mx_ThreadPanel_replies">
+            <span className="mx_ThreadPanel_repliesSummary">
+                { this.thread.length }
+            </span>
+            { this.renderThreadLastMessagePreview() }
+        </div>;
+    }
+
+    private renderThreadLastMessagePreview(): JSX.Element | null {
+        if (!this.thread) {
+            return null;
+        }
+
+        const [lastEvent] = this.thread.events
             .filter(event => event.isThreadRelation)
             .slice(-1);
         const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(lastEvent);
@@ -588,24 +611,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadInfo(): React.ReactNode {
-        if (!SettingsStore.getValue("feature_thread")) {
-            return null;
-        }
-
-        /**
-         * Accessing the threads value through the room due to a race condition
-         * that will be solved when there are proper backend support for threads
-         * We currently have no reliable way to discover than an event is a thread
-         * when we are at the sync stage
-         */
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.threads.get(this.props.mxEvent.getId());
-
-        if (thread && !thread.ready) {
-            thread.addEvent(this.props.mxEvent, true);
-        }
-
-        if (!thread || this.props.showThreadInfo === false || thread.length === 0) {
+        if (!this.thread) {
             return null;
         }
 
@@ -618,10 +624,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                     );
                 }}
             >
-                <span className="mx_ThreadInfo_thread-icon" />
                 <span className="mx_ThreadInfo_threads-amount">
                     { _t("%(count)s reply", {
-                        count: thread.length,
+                        count: this.thread.length,
                     }) }
                 </span>
                 { this.renderThreadLastMessagePreview() }
@@ -1061,6 +1066,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
             mx_EventTile_noSender: this.props.hideSender,
+            mx_EventTile_clamp: this.props.tileShape === TileShape.ThreadPanel,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -1159,11 +1165,16 @@ export default class EventTile extends React.Component<IProps, IState> {
             || this.state.hover
             || this.state.actionBarFocused);
 
+        // Thread panel shows the timestamp of the last reply in that thread
+        const ts = this.props.tileShape !== TileShape.ThreadPanel
+            ? this.props.mxEvent.getTs()
+            : this.props.mxEvent.getThread().lastReply.getTs();
+
         const timestamp = showTimestamp ?
             <MessageTimestamp
                 showRelative={this.props.tileShape === TileShape.ThreadPanel}
                 showTwelveHour={this.props.isTwelveHour}
-                ts={this.props.mxEvent.getTs()}
+                ts={ts}
             /> : null;
 
         const keyRequestHelpText =
@@ -1335,11 +1346,15 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent),
+
                     }, <>
                         { sender }
                         { avatar }
-                        <div className={lineClasses} key="mx_EventTile_line">
+                        <div
+                            className={lineClasses}
+                            onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                            key="mx_EventTile_line"
+                        >
                             { linkedTimestamp }
                             { this.renderE2EPadlock() }
                             { replyChain }
@@ -1357,19 +1372,21 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 tileShape={this.props.tileShape}
                             />
                             { keyRequestInfo }
-                            <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
-                                <RovingAccessibleTooltipButton
-                                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                    title={_t("Thread")}
-                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
-                                    key="thread"
-                                />
-                                <ThreadListContextMenu
-                                    mxEvent={this.props.mxEvent}
-                                    permalinkCreator={this.props.permalinkCreator} />
-                            </Toolbar>
-                            { this.renderThreadLastMessagePreview() }
+                            { this.renderThreadPanelSummary() }
                         </div>
+                        <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+                            <RovingAccessibleTooltipButton
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                                title={_t("Reply in thread")}
+                                onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                                key="thread"
+                            />
+                            <ThreadListContextMenu
+                                mxEvent={this.props.mxEvent}
+                                permalinkCreator={this.props.permalinkCreator}
+                                onMenuToggle={this.onActionBarFocusChange}
+                            />
+                        </Toolbar>
                         { msgOption }
                     </>)
                 );

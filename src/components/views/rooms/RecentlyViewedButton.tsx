@@ -23,7 +23,7 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import dis from "../../../dispatcher/dispatcher";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import InteractiveTooltip, { Direction } from "../elements/InteractiveTooltip";
 
