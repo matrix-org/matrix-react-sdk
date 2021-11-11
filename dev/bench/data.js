@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636641708649,
+  "lastUpdate": 1636642477392,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38348,6 +38348,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4774.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2a1a180ece3d0ce73fa7af4a7c720e6369141e3c",
+          "message": "Fix hover tile border (#7117)\n\n* Revert \"Update highlighted event line to prevent content jumping (#7090)\"\r\n\r\nThis reverts commit 0f8272c6a1588d37571e45b8dcf7f12678a34f32.\r\n\r\n* Fix message jumps\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-11-11T14:48:11Z",
+          "tree_id": "73f12a5e7d2aec8cddc0b6ccd664f3734cdcd004",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2a1a180ece3d0ce73fa7af4a7c720e6369141e3c"
+        },
+        "date": 1636642474693,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5253.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1145.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4709.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
