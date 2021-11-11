@@ -76,6 +76,30 @@ $roomListCollapsedWidth: 68px;
             flex-direction: column;
         }
 
+        .mx_LeftPanel_breadcrumbsContainer {
+            overflow-y: hidden;
+            overflow-x: scroll;
+            margin: 12px 12px 0 12px;
+            flex: 0 0 auto;
+            // Create yet another flexbox, this time within the row, to ensure items stay
+            // aligned correctly. This is also a row-based flexbox.
+            display: flex;
+            align-items: center;
+            contain: content;
+
+            &.mx_IndicatorScrollbar_leftOverflow {
+                mask-image: linear-gradient(90deg, transparent, black 5%);
+            }
+
+            &.mx_IndicatorScrollbar_rightOverflow {
+                mask-image: linear-gradient(90deg, black, black 95%, transparent);
+            }
+
+            &.mx_IndicatorScrollbar_rightOverflow.mx_IndicatorScrollbar_leftOverflow {
+                mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+            }
+        }
+
         .mx_LeftPanel_filterContainer {
             margin-left: 12px;
             margin-right: 12px;
@@ -87,6 +111,7 @@ $roomListCollapsedWidth: 68px;
             align-items: center;
 
             .mx_RoomSearch_focused, .mx_RoomSearch_hasQuery {
+                & + .mx_LeftPanel_exploreButton,
                 & + .mx_LeftPanel_recentsButton {
                     // Cheaty way to return the occupied space to the filter input
                     flex-basis: 0;
@@ -124,6 +149,7 @@ $roomListCollapsedWidth: 68px;
                 }
             }
 
+            .mx_LeftPanel_exploreButton,
             .mx_LeftPanel_recentsButton {
                 width: 32px;
                 height: 32px;
@@ -139,7 +165,6 @@ $roomListCollapsedWidth: 68px;
                     left: 8px;
                     width: 16px;
                     height: 16px;
-                    mask-image: url('$(res)/img/element-icons/clock.svg');
                     mask-position: center;
                     mask-size: contain;
                     mask-repeat: no-repeat;
@@ -153,6 +178,14 @@ $roomListCollapsedWidth: 68px;
                         background-color: $background;
                     }
                 }
+            }
+
+            .mx_LeftPanel_exploreButton::before {
+                mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
+            }
+
+            .mx_LeftPanel_recentsButton::before {
+                mask-image: url('$(res)/img/element-icons/clock.svg');
             }
         }
 
@@ -211,6 +244,7 @@ $roomListCollapsedWidth: 68px;
                     background-color: transparent;
                 }
 
+                .mx_LeftPanel_exploreButton,
                 .mx_LeftPanel_recentsButton {
                     margin-left: 0;
                     margin-top: 8px;

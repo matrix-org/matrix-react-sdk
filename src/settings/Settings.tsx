@@ -294,15 +294,19 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             new ReloadOnChangeController(),
         ]),
     },
+    "feature_breadcrumbs_v2": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new room breadcrumbs"),
+        default: false,
+    },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
     "feature_hidden_read_receipts": {
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td(
-            "Don't send read receipts",
-        ),
+        displayName: _td("Don't send read receipts"),
         default: false,
     },
     "baseFontSize": {
@@ -647,6 +651,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show rooms with unread notifications first"),
         default: true,
+    },
+    "breadcrumbs": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
+        default: true,
+        controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
