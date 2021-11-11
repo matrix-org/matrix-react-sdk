@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636634070868,
+  "lastUpdate": 1636636420694,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38252,6 +38252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4097.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5ad3261cb210c862a7d9aecd387bd37fa99f74fa",
+          "message": "Implement more meta-spaces (#7077)",
+          "timestamp": "2021-11-11T13:07:41Z",
+          "tree_id": "6196b80a7faa33dabbabf824a2d44baa13dd1b8c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5ad3261cb210c862a7d9aecd387bd37fa99f74fa"
+        },
+        "date": 1636636418072,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5574,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1042.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1665.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4417.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
