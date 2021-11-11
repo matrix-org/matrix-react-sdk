@@ -67,7 +67,6 @@ interface IProps {
 
 interface IState {
     phase: RightPanelPhases;
-    previousPhase?: RightPanelPhases;
     isUserPrivilegedInGroup?: boolean;
     member?: RoomMember;
     verificationRequest?: VerificationRequest;
@@ -221,7 +220,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 verificationRequestPromise: payload.verificationRequestPromise,
                 widgetId: payload.widgetId,
                 space: payload.space,
-                previousPhase: payload.previousPhase,
             });
         }
     };
@@ -358,7 +356,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     initialEventHighlighted={this.state.initialEventHighlighted}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus}
-                    previousPhase={this.state.previousPhase} />;
+                    previousPhase={RightPanelStore.getSharedInstance().previousPhase} />;
                 break;
 
             case RightPanelPhases.ThreadPanel:

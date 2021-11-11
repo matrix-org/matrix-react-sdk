@@ -54,6 +54,7 @@ export const RIGHT_PANEL_PHASES_NO_ARGS = [
     RightPanelPhases.RoomMemberList,
     RightPanelPhases.GroupMemberList,
     RightPanelPhases.GroupRoomList,
+    RightPanelPhases.TimelineCard,
 ];
 
 // Subset of phases visible in the Space View
