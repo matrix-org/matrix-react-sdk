@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636721425471,
+  "lastUpdate": 1636732285962,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38780,6 +38780,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4755.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a057ec18cabf5d6e264af03421c6af4f9e0013de",
+          "message": "Don't keep spinning if joining space child failed (#7129)",
+          "timestamp": "2021-11-12T15:45:14Z",
+          "tree_id": "d61e68e53e89817b235cdea29993bd072639b986",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a057ec18cabf5d6e264af03421c6af4f9e0013de"
+        },
+        "date": 1636732283066,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5597.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1079.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1694.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4673.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
