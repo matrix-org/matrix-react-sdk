@@ -187,7 +187,7 @@ limitations under the License.
                 right: 48px;
                 &::before {
                     mask-image: url('$(res)/img/feather-customised/minimise.svg');
-                    background-color: $accent-color-50pct;
+                    background-color: $tertiary-content;
                 }
             }
 
