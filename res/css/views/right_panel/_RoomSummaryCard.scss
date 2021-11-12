@@ -186,8 +186,8 @@ limitations under the License.
             .mx_RoomSummaryCard_app_minimise {
                 right: 48px;
                 &::before {
-                    background-color: $accent-color;
                     mask-image: url('$(res)/img/feather-customised/minimise.svg');
+                    background-color: $accent-color-50pct;
                 }
             }
 
