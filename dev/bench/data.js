@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636713975039,
+  "lastUpdate": 1636717541164,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38588,6 +38588,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4634.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "paulo.pinto@automattic.com",
+            "name": "Paulo Pinto",
+            "username": "psrpinto"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "646f87b2dbae1d5ebfa8351cd850ebdafd103a9d",
+          "message": "In forgot password screen, show validation errors inline in the form, instead of in modals (#7113)",
+          "timestamp": "2021-11-12T11:39:39Z",
+          "tree_id": "f24a343344c38f2966374dcfe90ccd1a60b3566c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/646f87b2dbae1d5ebfa8351cd850ebdafd103a9d"
+        },
+        "date": 1636717538321,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5580.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1088.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1712.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4513.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
