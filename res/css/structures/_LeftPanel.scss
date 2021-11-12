@@ -111,6 +111,10 @@ $roomListCollapsedWidth: 68px;
             display: flex;
             align-items: center;
 
+            .mx_UserMenu {
+                margin-right: 12px;
+            }
+
             & + .mx_RoomListHeader {
                 margin-top: 12px;
             }

@@ -18,6 +18,7 @@ import { RoomListStoreClass } from "./RoomListStore";
 import { SpaceFilterCondition } from "./filters/SpaceFilterCondition";
 import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
+import SettingsStore from "../../settings/SettingsStore";
 
 /**
  * Watches for changes in spaces to manage the filter on the provided RoomListStore
@@ -27,28 +28,40 @@ export class SpaceWatcher {
     // we track these separately to the SpaceStore as we need to observe transitions
     private activeSpace: SpaceKey = SpaceStore.instance.activeSpace;
     private allRoomsInHome: boolean = SpaceStore.instance.allRoomsInHome;
+    private sidebarEnabled: boolean = SettingsStore.getValue("Spaces.sidebarEnabled");
 
     constructor(private store: RoomListStoreClass) {
-        if (SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome)) {
+        if (SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome, this.sidebarEnabled)) {
             this.updateFilter();
             store.addFilter(this.filter);
         }
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated);
         SpaceStore.instance.on(UPDATE_HOME_BEHAVIOUR, this.onHomeBehaviourUpdated);
+        SettingsStore.watchSetting("Spaces.sidebarEnabled", null, this.onSidebarSettingChanged);
     }
 
-    private static needsFilter(spaceKey: SpaceKey, allRoomsInHome: boolean): boolean {
-        return !(spaceKey === MetaSpace.Home && allRoomsInHome);
+    private static needsFilter(spaceKey: SpaceKey, allRoomsInHome: boolean, sidebarEnabled: boolean): boolean {
+        return !(spaceKey === MetaSpace.Home && allRoomsInHome) && sidebarEnabled;
     }
 
-    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome = this.allRoomsInHome) => {
-        if (activeSpace === this.activeSpace && allRoomsInHome === this.allRoomsInHome) return; // nop
+    private onSelectedSpaceUpdated = (
+        activeSpace = this.activeSpace,
+        allRoomsInHome = this.allRoomsInHome,
+        sidebarEnabled = this.sidebarEnabled,
+    ) => {
+        if (activeSpace === this.activeSpace &&
+            allRoomsInHome === this.allRoomsInHome &&
+            sidebarEnabled === this.sidebarEnabled
+        ) {
+            return; // nop
+        }
 
-        const neededFilter = SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome);
-        const needsFilter = SpaceWatcher.needsFilter(activeSpace, allRoomsInHome);
+        const neededFilter = SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome, this.sidebarEnabled);
+        const needsFilter = SpaceWatcher.needsFilter(activeSpace, allRoomsInHome, sidebarEnabled);
 
         this.activeSpace = activeSpace;
         this.allRoomsInHome = allRoomsInHome;
+        this.sidebarEnabled = sidebarEnabled;
 
         if (needsFilter) {
             this.updateFilter();
@@ -59,6 +72,11 @@ export class SpaceWatcher {
         } else if (neededFilter && !needsFilter) {
             this.store.removeFilter(this.filter);
         }
+    };
+
+    private onSidebarSettingChanged = () => {
+        const sidebarEnabled = SettingsStore.getValue("Spaces.sidebarEnabled");
+        this.onSelectedSpaceUpdated(this.activeSpace, this.allRoomsInHome, sidebarEnabled);
     };
 
     private onHomeBehaviourUpdated = (allRoomsInHome: boolean) => {

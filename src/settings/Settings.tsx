@@ -830,12 +830,19 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
+    "Spaces.sidebarEnabled": {
+        displayName: _td("Show spaces"),
+        description: _td("Display spaces on the left side of the sidebar"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: true,
+        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces"),
+    },
     "Spaces.allRoomsInHome": {
         displayName: _td("Show all rooms in Home"),
         description: _td("All rooms you're in will appear in Home."),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
+        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", true),
     },
     "Spaces.enabledMetaSpaces": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

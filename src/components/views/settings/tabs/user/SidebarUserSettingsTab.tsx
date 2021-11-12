@@ -22,6 +22,7 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { MetaSpace } from "../../../../../stores/spaces";
+import SettingsFlag from "../../../elements/SettingsFlag";
 
 export const onMetaSpaceChangeFactory = (metaSpace: MetaSpace) => (e: ChangeEvent<HTMLInputElement>) => {
     const currentValue = SettingsStore.getValue("Spaces.enabledMetaSpaces");
@@ -47,6 +48,8 @@ const SidebarUserSettingsTab = () => {
             <div className="mx_SettingsTab_section">
                 <span className="mx_SettingsTab_subheading">{ _t("Spaces") }</span>
                 <div className="mx_SettingsTab_subsectionText">{ _t("Spaces are ways to group rooms and people.") }</div>
+
+                <SettingsFlag name="Spaces.sidebarEnabled" level={SettingLevel.DEVICE} />
 
                 <div className="mx_SidebarUserSettingsTab_subheading">{ _t("Spaces to show") }</div>
                 <div className="mx_SettingsTab_subsectionText">

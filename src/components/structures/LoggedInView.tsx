@@ -70,6 +70,8 @@ import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
 import LegacyCommunityPreview from "./LegacyCommunityPreview";
+import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
+import { ActionPayload } from "../../dispatcher/payloads";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -132,6 +134,7 @@ interface IState {
     useCompactLayout: boolean;
     activeCalls: Array<MatrixCall>;
     backgroundImage?: string;
+    spacePanelEnabled: boolean;
 }
 
 /**
@@ -153,6 +156,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
     protected compactLayoutWatcherRef: string;
     protected backgroundImageWatcherRef: string;
+    protected sidebarEnabledWatcherRef: string;
     protected resizer: Resizer;
 
     constructor(props, context) {
@@ -164,6 +168,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
             usageLimitDismissed: false,
             activeCalls: CallHandler.instance.getAllActiveCalls(),
+            spacePanelEnabled: SettingsStore.getValue("Spaces.sidebarEnabled"),
         };
 
         // stash the MatrixClient in case we log out before we are unmounted
@@ -200,6 +205,9 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.backgroundImageWatcherRef = SettingsStore.watchSetting(
             "RoomList.backgroundImage", null, this.refreshBackgroundImage,
         );
+        this.sidebarEnabledWatcherRef = SettingsStore.watchSetting(
+            "Spaces.sidebarEnabled", null, this.onSidebarEnabledToggle,
+        );
 
         this.resizer = this.createResizer();
         this.resizer.attach();
@@ -218,6 +226,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
         SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
+        SettingsStore.unwatchSetting(this.sidebarEnabledWatcherRef);
         this.resizer.detach();
     }
 
@@ -236,6 +245,13 @@ class LoggedInView extends React.Component<IProps, IState> {
             backgroundImage = OwnProfileStore.instance.getHttpAvatarUrl();
         }
         this.setState({ backgroundImage });
+    };
+
+    private onSidebarEnabledToggle = (): void => {
+        const spacePanelEnabled = SettingsStore.getValue("Spaces.sidebarEnabled");
+        if (spacePanelEnabled !== this.state.spacePanelEnabled) {
+            this.setState({ spacePanelEnabled });
+        }
     };
 
     public canResetTimelineInRoom = (roomId: string) => {
@@ -668,7 +684,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                                     { SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null }
                                 </div>)
                             }
-                            { SpaceStore.spacesEnabled ? <>
+                            { this.state.spacePanelEnabled ? <>
                                 <BackdropPanel
                                     blurMultiplier={0.5}
                                     backgroundImage={this.state.backgroundImage}
@@ -686,6 +702,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                                 <LeftPanel
                                     isMinimized={this.props.collapseLhs || false}
                                     resizeNotifier={this.props.resizeNotifier}
+                                    showUserMenu={!this.state.spacePanelEnabled}
                                 />
                             </div>
                         </div>
