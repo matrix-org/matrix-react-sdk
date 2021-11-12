@@ -33,9 +33,10 @@ $timelineImageBorderRadius: 8px;
     height: 100%;
     width: 100%;
 
+    // this is needed so that the Blurhash can get have rounded corners without beeing the correct size during loading.
+    overflow: hidden;
     .mx_Blurhash > canvas {
         animation: mx--anim-pulse 1.75s infinite cubic-bezier(.4, 0, .6, 1);
-        border-radius: $timelineImageBorderRadius;
     }
 
     .mx_no-image-placeholder {
