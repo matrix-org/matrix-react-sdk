@@ -43,6 +43,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import PseudonymousAnalyticsController from './controllers/PseudonymousAnalyticsController';
 import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
 import { ImageSize } from "./enums/ImageSize";
+import { MetaSpace } from "../stores/spaces";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -173,6 +174,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_maximised_widgets": {
+        isFeature: true,
+        displayName: _td("Maximised widgets"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_thread": {
         isFeature: true,
         // Requires a reload as we change an option flag on the `js-sdk`
@@ -278,6 +285,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new NewLayoutSwitcherController(),
     },
+    "feature_spaces_metaspaces": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Meta Spaces"),
+        default: false,
+        controller: new OrderedMultiController([
+            new IncompatibleController("showCommunitiesInsteadOfSpaces"),
+            new ReloadOnChangeController(),
+        ]),
+    },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
@@ -318,7 +335,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td('Use a more compact ‘Modern’ layout'),
+        displayName: _td("Use a more compact 'Modern' layout"),
         default: false,
     },
     "showRedactions": {
@@ -754,6 +771,15 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
+    "Spaces.enabledMetaSpaces": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            [MetaSpace.Home]: true,
+        },
+        controller: new IncompatibleController("feature_spaces_metaspaces", {
+            [MetaSpace.Home]: true,
+        }, false),
+    },
     "showCommunitiesInsteadOfSpaces": {
         displayName: _td("Display Communities instead of Spaces"),
         description: _td("Temporarily show communities instead of Spaces for this session. " +
@@ -766,6 +792,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Developer mode"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
+    },
+    "automaticErrorReporting": {
+        displayName: _td("Automatically send debug logs on any error"),
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: false,
+        controller: new ReloadOnChangeController(),
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
