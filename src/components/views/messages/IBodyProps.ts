@@ -19,6 +19,7 @@ import { TileShape } from "../rooms/EventTile";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { Relations } from "../../../../../matrix-js-sdk/src/models/relations";
 
 export interface IBodyProps {
     mxEvent: MatrixEvent;
@@ -41,4 +42,7 @@ export interface IBodyProps {
     onMessageAllowed: () => void; // TODO: Docs
     permalinkCreator: RoomPermalinkCreator;
     mediaEventHelper: MediaEventHelper;
+
+    // helper function to access relations for this event
+    getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
 }
