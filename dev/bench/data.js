@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636650875326,
+  "lastUpdate": 1636713975039,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38540,6 +38540,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4762.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a16e6dab4decc831e706441e68c2e672d41a37f6",
+          "message": "Guard around SpaceStore onAccountData handler prevEvent (#7123)",
+          "timestamp": "2021-11-12T10:39:52Z",
+          "tree_id": "2ca47b31a4cca2eea53f74a69a7f38722a8684a5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a16e6dab4decc831e706441e68c2e672d41a37f6"
+        },
+        "date": 1636713972526,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5084.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1078.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1733.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4634.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
