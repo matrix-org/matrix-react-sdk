@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636721370359,
+  "lastUpdate": 1636721388860,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38684,6 +38684,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4496.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "77c79467c6d5cffa85b05b5bedb584f61adef3b4",
+          "message": "Attach composer IRelation to slash commands content (#7125)",
+          "timestamp": "2021-11-12T12:43:52Z",
+          "tree_id": "88c0e99971ec59a2304926f0294a2cefffffa2bc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/77c79467c6d5cffa85b05b5bedb584f61adef3b4"
+        },
+        "date": 1636721386280,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5570.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1009,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4570.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
