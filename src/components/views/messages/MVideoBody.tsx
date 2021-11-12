@@ -28,7 +28,7 @@ import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { ImageSize } from "../../../settings/enums/ImageSize";
+import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
 
 interface IState {
     decryptedUrl?: string;
@@ -60,20 +60,14 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     }
 
     private get suggestedDimensions(): { w: number, h: number } {
-        switch (SettingsStore.getValue("Images.size") as ImageSize) {
-            case ImageSize.Large:
-                return { w: 480, h: 360 };
-            case ImageSize.Normal:
-            default:
-                return { w: 324, h: 220 };
-        }
+        return suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize);
     }
 
     private thumbScale(
         fullWidth: number,
         fullHeight: number,
-        thumbWidth?,
-        thumbHeight?,
+        thumbWidth?: number,
+        thumbHeight?: number,
     ) {
         if (!thumbWidth || !thumbHeight) {
             const dims = this.suggestedDimensions;

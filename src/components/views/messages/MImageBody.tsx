@@ -35,7 +35,7 @@ import classNames from 'classnames';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { ImageSize } from "../../../settings/enums/ImageSize";
+import { ImageSize, suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
 
 interface IState {
     decryptedUrl?: string;
@@ -374,21 +374,25 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             infoHeight = this.state.loadedImageDimensions.naturalHeight;
         }
 
-        // The maximum height of the thumbnail as it is rendered as an <img>
-        let maxHeight = forcedHeight;
-        if (!maxHeight) {
-            switch (SettingsStore.getValue("Images.size") as ImageSize) {
-                case ImageSize.Large:
-                    maxHeight = Math.min((this.props.maxImageHeight || 600), infoHeight);
-                    break;
-                case ImageSize.Normal:
-                default:
-                    maxHeight = Math.min((this.props.maxImageHeight || 220), infoHeight);
-            }
+        // The maximum size of the thumbnail as it is rendered as an <img>
+        //check for any height contraints
+        const imageSize = SettingsStore.getValue("Images.size") as ImageSize;
+        const suggestedAndPossibleWidth = Math.min(suggestedImageSize(imageSize).w, infoWidth);
+        const aspectRatio = infoWidth / infoHeight;
+
+        let maxWidth;
+        let maxHeight;
+        const maxHeightConstraint = forcedHeight || this.props.maxImageHeight || undefined;
+        if (maxHeightConstraint && maxHeightConstraint * aspectRatio < suggestedAndPossibleWidth) {
+            // width is dictated by the maximum height that was defined by the props or the function param `forcedHeight`
+            maxWidth = maxHeightConstraint * aspectRatio;
+            // there is no need to check for infoHeight here since this is done with `maxHeightConstraint * aspectRatio < suggestedAndPossibleWidth`
+            maxHeight = maxHeightConstraint;
+        } else {
+            // height is dictated by suggestedWidth (based on the Image.size setting)
+            maxWidth = suggestedAndPossibleWidth;
+            maxHeight = suggestedAndPossibleWidth / aspectRatio;
         }
-        // The maximum width of the thumbnail, as dictated by its natural
-        // maximum height.
-        const maxWidth = infoWidth * maxHeight / infoHeight;
 
         let img = null;
         let placeholder = null;
