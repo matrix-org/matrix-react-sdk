@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636732285962,
+  "lastUpdate": 1636739051212,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38828,6 +38828,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4673.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "365950e3667002e5044ea08ab2450c63b250054b",
+          "message": "Fix appearance settings crash (#7131)",
+          "timestamp": "2021-11-12T17:38:04Z",
+          "tree_id": "1e51c0c688b2d855d5b4d08f7ef5a75061d7d61f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/365950e3667002e5044ea08ab2450c63b250054b"
+        },
+        "date": 1636739048506,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5040.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 640,
             "unit": "ms",
             "extra": "type: measure"
           }
