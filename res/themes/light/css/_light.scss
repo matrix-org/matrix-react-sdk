@@ -114,7 +114,7 @@ $menu-selected-color: #f5f8fa;
 $settings-grey-fg-color: #a2a2a2;
 $settings-profile-overlay-placeholder-fg-color: #2e2f32;
 $settings-profile-button-bg-color: #e7e7e7;
-$settings-subsection-fg-color: #61708b;
+$settings-subsection-fg-color: $muted-fg-color;
 // ********************
 
 // RoomHeader
@@ -168,7 +168,7 @@ $imagebody-giflabel-color: rgba(255, 255, 255, 1);
 $roomlist-button-bg-color: rgba(141, 151, 165, 0.2); // Buttons include the filter box, explore button, and sublist buttons
 $roomlist-bg-color: rgba(245, 245, 245, 0.90);
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, #ffffff 0%, #ffffff00 100%);
-$roomtile-default-badge-bg-color: #61708b;
+$roomtile-default-badge-bg-color: $muted-fg-color;
 // ********************
 
 // e2e
@@ -207,7 +207,7 @@ $authpage-modal-bg-color: rgba(245, 245, 245, 0.90);
 $authpage-focus-bg-color: #dddddd;
 $authpage-lang-color: #4e5054;
 $authpage-primary-color: #232f32;
-$authpage-secondary-color: #61708b;
+$authpage-secondary-color: $muted-fg-color;
 // ********************
 
 // Message action bar
