@@ -245,7 +245,7 @@ $eventbubble-reply-color: $quaternary-content;
 
 // Lightbox
 // ********************
-$lightbox-fg-color: #ffffff;
+$lightbox-fg-color: $background;
 $lightbox-background-bg-color: #000;
 $lightbox-background-bg-opacity: 0.95;
 // ********************
