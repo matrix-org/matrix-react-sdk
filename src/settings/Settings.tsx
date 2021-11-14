@@ -259,6 +259,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Polls (under active development)"),
         default: false,
     },
+    "feature_location_share": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing (under active development)"),
+        default: false,
+    },
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,
