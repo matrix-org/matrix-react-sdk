@@ -47,29 +47,28 @@ interface IDropdownProps {
 
 const LocationShareTypeDropdown = ({
     value,
-    width = 448,
+    width,
     onChange,
 }: IDropDownProps) => {
     const options = [
-        <div key={ LocationShareType.CUSTOM }>{ _t("custom location") }</div>,
-        <div key={ LocationShareType.ONE_OFF }>{ _t("current location as a one off") }</div>,
-        <div key={ LocationShareType.ONE_MIN }>{ _t("current location for one minute") }</div>,
-        <div key={ LocationShareType.FIVE_MINS }>{ _t("current location for five minutes") }</div>,
-        <div key={ LocationShareType.THIRTY_MINS }>{ _t("current location for thirty minutes") }</div>,
-        <div key={ LocationShareType.ONE_HOUR }>{ _t("current location for one hour") }</div>,
-        <div key={ LocationShareType.THREE_HOURS }>{ _t("current location for three hours") }</div>,
-        <div key={ LocationShareType.SIX_HOURS }>{ _t("current location for six hours") }</div>,
-        <div key={ LocationShareType.ONE_DAY }>{ _t("current location for one day") }</div>,
-        <div key={ LocationShareType.FOREVER }>{ _t("current location until I disable it") }</div>,
+        <div key={ LocationShareType.CUSTOM }>{ _t("Share custom location") }</div>,
+        <div key={ LocationShareType.ONE_OFF }>{ _t("Share my current location as a one off") }</div>,
+        <div key={ LocationShareType.ONE_MIN }>{ _t("Share my current location for one minute") }</div>,
+        <div key={ LocationShareType.FIVE_MINS }>{ _t("Share my current location for five minutes") }</div>,
+        <div key={ LocationShareType.THIRTY_MINS }>{ _t("Share my current location for thirty minutes") }</div>,
+        <div key={ LocationShareType.ONE_HOUR }>{ _t("Share my current location for one hour") }</div>,
+        <div key={ LocationShareType.THREE_HOURS }>{ _t("Share my current location for three hours") }</div>,
+        <div key={ LocationShareType.SIX_HOURS }>{ _t("Share my current location for six hours") }</div>,
+        <div key={ LocationShareType.ONE_DAY }>{ _t("Share my current location for one day") }</div>,
+        <div key={ LocationShareType.FOREVER }>{ _t("Share my current location until I disable it") }</div>,
     ];
 
     return <Dropdown
         id="mx_LocationShareTypeDropdown"
         className="mx_LocationShareTypeDropdown"
         onOptionChange={onChange}
-        menuWidth={width}
+        width={width}
         value={value}
-        label={_t("Share my")}
     >
         { options }
     </Dropdown>;
@@ -125,29 +124,29 @@ class LocationPicker extends React.Component<IProps, IState> {
     render() {
         return (
             <div className="mx_LocationPicker">
-                <div className="mx_LocationPicker_header">
-                    Share location
-                </div>
                 <div id ="mx_LocationPicker_map">
                 </div>
-                <form onSubmit={this.onOk} onKeyDown={this.onKeyDown}>
-                    <div className="mx_LocationPicker_footer">
+                <div className="mx_LocationPicker_footer">
+                    <form onSubmit={this.onOk} onKeyDown={this.onKeyDown}>
                         <LocationShareTypeDropdown
                             value={this.state.type}
                             onChange={this.onTypeChange}
+                            width={400}
                         />
 
                         <Field
                             label={_t('Description')}
                             onChange={this.onDescriptionChange}
                             value={this.state.description}
+                            width={400}
                             className="mx_LocationPicker_description"
                         />
-                    </div>
-                    <DialogButtons primaryButton={_t('Share')}
-                        onPrimaryButtonClick={this.onOk}
-                        onCancel={this.onCancel} />
-                </form>
+
+                        <DialogButtons primaryButton={_t('Share')}
+                            onPrimaryButtonClick={this.onOk}
+                            onCancel={this.onCancel} />
+                    </form>
+                </div>
             </div>
         );
     }

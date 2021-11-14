@@ -16,23 +16,25 @@ limitations under the License.
 
 .mx_LocationPicker {
     width: 450px;
-    height: 450px;
+    height: 500px;
 
     border-radius: 4px;
 
     display: flex;
+    flex-direction: column;
 }
 
-.mx_LocationPicker_header {
-    padding: 4px 8px 0;
-    border-bottom: 1px solid $message-action-bar-border-color;
+
+#mx_LocationPicker_map {
+    height: 324px;
 }
 
 .mx_LocationPicker_footer {
-    border-top: 1px solid $message-action-bar-border-color;
-    min-height: 72px;
+    margin: 24px;
+    // border-top: 1px solid $message-action-bar-border-color;
+    // min-height: 72px;
 
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
 }
 
