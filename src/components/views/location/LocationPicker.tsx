@@ -105,21 +105,21 @@ class LocationPicker extends React.Component<IProps, IState> {
         });
     }
 
-    onDescriptionChange(description: string) {
-        // TODO
-    }
+    private onDescriptionChange = (ev: ChangeEvent<HTMLInputElement>) => {
+        this.setState({ description: ev.target.value });
+    };
 
-    onOk() {
+    private onOk = () => {
         // TODO
-    }
+    };
 
-    onCancel() {
+    private onCancel = () => {
         // TODO        
-    }
+    };
 
-    onTypeChange(type: LocationShareType) {
-
-    }
+    private onTypeChange= (type: LocationShareType) => {
+        this.setState({ type });
+    };
 
     render() {
         return (
