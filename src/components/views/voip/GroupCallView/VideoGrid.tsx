@@ -463,7 +463,7 @@ interface IVideoGridState {
 }
 
 interface IVideoGridProps {
-    disableAnimations: boolean;
+    disableAnimations?: boolean;
     items: IVideoGridItem[];
     layout: string;
     onFocusTile?: (tiles: IVideoGridTile[], item: IVideoGridTile) => IVideoGridTile[];
