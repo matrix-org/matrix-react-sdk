@@ -156,7 +156,7 @@ $MinWidth: 240px;
     width: 100% !important; // to override the inline style set by the resizer
     margin: 0;
     padding: 0;
-    border: 8px solid $widget-menu-bar-bg-color;
+    border: $container-border-width solid $widget-menu-bar-bg-color;
     border-radius: 8px;
     display: flex;
     flex-direction: column;

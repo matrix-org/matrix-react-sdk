@@ -21,7 +21,7 @@ limitations under the License.
     .mx_AppTileFullWidth {
         max-width: unset;
         width: auto;
-        margin: 0px 8px 0px 8px;
+        margin: 0px $container-border-width 0px $container-border-width;
         height: 100%;
         border: 0;
     }
