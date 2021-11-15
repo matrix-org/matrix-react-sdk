@@ -135,21 +135,17 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.setState({ description: ev.target.value });
     };
 
-    private getGeoUri = () => {
-        if (!this.state.position) {
-            return;
-        }
-
-        return (`geo:${ this.state.position.coords.latitude }` +
-                `,${ this.state.position.coords.longitude }` +
-                ( this.state.position.coords.altitude != null ?
-                    `,${this.state.position.coords.altitude}` : '' ) +
-                `;u=${ this.state.position.coords.accuracy }`);
+    private getGeoUri = (position) => {
+        return (`geo:${ position.coords.latitude },` +
+                position.coords.longitude +
+                ( position.coords.altitude != null ?
+                    `,${ position.coords.altitude }` : '' ) +
+                `;u=${ position.coords.accuracy }`);
     };
 
     private onOk = () => {
         this.props.onChoose(
-            this.getGeoUri(),
+            this.state.position ? this.getGeoUri(this.state.position) : undefined,
             this.state.position ? this.state.position.timestamp : undefined,
             this.state.type,
             this.state.description,

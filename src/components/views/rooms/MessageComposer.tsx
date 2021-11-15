@@ -59,6 +59,8 @@ import RoomContext from '../../../contexts/RoomContext';
 import { POLL_START_EVENT_TYPE } from "../../../polls/consts";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -129,7 +131,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
 
 interface ILocationButtonProps {
     room: Room;
-    shareLocation: (uri: string, type: string, description: string, beacon: boolean) => boolean;
+    shareLocation: (uri: string, ts: int, type: LocationShareType, description: string) => boolean;
     menuPosition: any; // TODO: Types
     narrowMode: boolean;
 }
@@ -462,7 +464,20 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private shareLocation = (uri: string, ts: int, type: LocationShareType, description: string): boolean => {
-        console.log("Share location", uri, ts, type, description);
+        try {
+            const text = `${description ? description : 'Location'} at ${uri} at ${new Date(ts).toISOString()}`;
+            // noinspection ES6MissingAwait - we don't care if it fails, it'll get queued.
+            MatrixClientPeg.get().sendMessage(this.props.room.roomId, {
+                "body": text,
+                "msgtype": MsgType.Location,
+                "geo_uri": uri,
+                "org.matrix.msc3488.location": { uri, description },
+                "org.matrix.msc3488.ts": ts,
+                // TODO: MSC1767 fallbacks for text & thumbnail
+            });
+        } catch (e) {
+            logger.error("Error sending location:", e);
+        }
         return true;
     }
 
