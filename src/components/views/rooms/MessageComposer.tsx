@@ -464,8 +464,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private shareLocation = (uri: string, ts: int, type: LocationShareType, description: string): boolean => {
+        if (!uri) return false;
         try {
-            const text = `${description ? description : 'Location'} at ${uri} at ${new Date(ts).toISOString()}`;
+            const text = `${description ? description : 'Location'} at ${uri} as of ${new Date(ts).toISOString()}`;
             // noinspection ES6MissingAwait - we don't care if it fails, it'll get queued.
             MatrixClientPeg.get().sendMessage(this.props.room.roomId, {
                 "body": text,
