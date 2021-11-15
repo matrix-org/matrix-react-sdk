@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636976696575,
+  "lastUpdate": 1636977306484,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39008,6 +39008,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4462.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "431098b56b2f551285be9eac004a7fc63308b8b0",
+          "message": "Fixes element not remembering widget hidden state per room (#7136)",
+          "timestamp": "2021-11-15T12:49:34+01:00",
+          "tree_id": "c5a73c28fe19e24dd77e545ee97bdc1d36109d2a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/431098b56b2f551285be9eac004a7fc63308b8b0"
+        },
+        "date": 1636977303786,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5009.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 959.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1603.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4273,
             "unit": "ms",
             "extra": "type: measure"
           }
