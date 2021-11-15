@@ -231,13 +231,13 @@ $MinWidth: 240px;
         width: 10px;
         height: 12px;
         mask-size: auto 10px;
-        mask-image: url($collapse-button-url);
+        mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
     }
 
     &.mx_AppTileMenuBar_iconButton_maxWidget {
         width: 11px;
         height: 11px;
-        mask-image: url($expand-button-url);
+        mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
     }
 
     &.mx_AppTileMenuBar_iconButton_popout {

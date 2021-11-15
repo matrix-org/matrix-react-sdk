@@ -35,7 +35,7 @@ limitations under the License.
         mask-size: auto 12px;
         visibility: hidden;
         background-color: $accent;
-        mask-image: url($expand-button-url);
+        mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
     }
 
     &.mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle {
@@ -43,7 +43,7 @@ limitations under the License.
         margin-bottom: 7px;
         width: 10px;
         height: 10px;
-        mask-image: url($collapse-button-url);
+        mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
     }
 }
 

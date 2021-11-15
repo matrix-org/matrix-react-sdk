@@ -134,7 +134,7 @@ limitations under the License.
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
-            mask-image: url($expand-button-url);
+            mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
             background: $muted-fg-color;
         }
     }
