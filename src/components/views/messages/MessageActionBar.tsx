@@ -21,10 +21,8 @@ import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
@@ -42,6 +40,8 @@ import classNames from 'classnames';
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
+import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
+import ReactionPicker from "../emojipicker/ReactionPicker";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -107,7 +107,6 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
-        const ReactionPicker = sdk.getComponent('emojipicker.ReactionPicker');
         contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
             <ReactionPicker mxEvent={mxEvent} reactions={reactions} onFinished={closeMenu} />
         </ContextMenu>;
@@ -196,14 +195,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     };
 
     private onThreadClick = (): void => {
-        dis.dispatch({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.ThreadView,
-            allowClose: false,
-            refireParams: {
-                event: this.props.mxEvent,
-            },
-        });
+        dispatchShowThreadEvent(this.props.mxEvent);
     };
 
     private onEditClick = (ev: React.MouseEvent): void => {
@@ -302,7 +294,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             && this.context.timelineRenderingType !== TimelineRenderingType.Thread) && (
                             <RovingAccessibleTooltipButton
                                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                title={_t("Thread")}
+                                title={_t("Reply in thread")}
                                 onClick={this.onThreadClick}
                                 key="thread"
                             />
@@ -335,7 +327,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             ) {
                 toolbarOpts.unshift(<RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                    title={_t("Thread")}
+                    title={_t("Reply in thread")}
                     onClick={this.onThreadClick}
                     key="thread"
                 />);

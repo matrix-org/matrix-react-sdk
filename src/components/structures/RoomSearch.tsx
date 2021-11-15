@@ -28,11 +28,11 @@ import RoomListStore from "../../stores/room-list/RoomListStore";
 import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCondition";
 import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import SpaceStore, { UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES } from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
+import { UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES } from "../../stores/spaces";
 
 interface IProps {
     isMinimized: boolean;
-    onKeyDown(ev: React.KeyboardEvent): void;
     /**
      * @returns true if a room has been selected and the search field should be cleared
      */
@@ -133,11 +133,6 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
                 this.clearInput();
                 defaultDispatcher.fire(Action.FocusSendMessageComposer);
                 break;
-            case RoomListAction.NextRoom:
-            case RoomListAction.PrevRoom:
-                // we don't handle these actions here put pass the event on to the interested party (LeftPanel)
-                this.props.onKeyDown(ev);
-                break;
             case RoomListAction.SelectRoom: {
                 const shouldClear = this.props.onSelectRoom();
                 if (shouldClear) {
@@ -150,6 +145,10 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             }
         }
     };
+
+    public focus(): void {
+        this.inputRef.current?.focus();
+    }
 
     public render(): React.ReactNode {
         const classes = classNames({

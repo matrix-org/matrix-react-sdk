@@ -29,7 +29,7 @@ limitations under the License.
 
     &.mx_UserPill_me,
     &.mx_AtRoomPill {
-        background-color: $warning-color !important; // To override .markdown-body
+        background-color: $alert !important; // To override .markdown-body
     }
 
     &:hover {
@@ -42,7 +42,7 @@ limitations under the License.
 
     // We don't want to indicate clickability
     &.mx_AtRoomPill:hover {
-        background-color: $warning-color !important; // To override .markdown-body
+        background-color: $alert !important; // To override .markdown-body
         cursor: unset;
     }
 
