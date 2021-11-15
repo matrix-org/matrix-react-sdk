@@ -150,9 +150,15 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             className="mx_RoomSummaryCard_icon_app"
             onClick={onOpenWidgetClick}
             // only show a tooltip if the widget is pinned
-            title={isPinned ? _t("Unpin a widget to view it in this panel") : ""}
-            forceHide={!isPinned}
-            disabled={isPinned}
+            title={
+                isPinned
+                    ? _t("Unpin this widget to view it in this panel")
+                    : isMaximised
+                        ? _t("Close this widget to view it in this panel") :
+                        ""
+            }
+            forceHide={!(isPinned || isMaximised)}
+            disabled={isPinned || isMaximised}
             yOffset={-48}
         >
             <WidgetAvatar app={app} />
