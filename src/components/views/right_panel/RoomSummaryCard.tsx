@@ -145,18 +145,19 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
 
     const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise widget");
 
+    let openTitle = "";
+    if (isPinned) {
+        openTitle = _t("Unpin this widget to view it in this panel");
+    } else if (isMaximised) {
+        openTitle =_t("Close this widget to view it in this panel");
+    }
+
     return <div className={classes} ref={handle}>
         <AccessibleTooltipButton
             className="mx_RoomSummaryCard_icon_app"
             onClick={onOpenWidgetClick}
             // only show a tooltip if the widget is pinned
-            title={
-                isPinned
-                    ? _t("Unpin this widget to view it in this panel")
-                    : isMaximised
-                        ? _t("Close this widget to view it in this panel") :
-                        ""
-            }
+            title={openTitle}
             forceHide={!(isPinned || isMaximised)}
             disabled={isPinned || isMaximised}
             yOffset={-48}
