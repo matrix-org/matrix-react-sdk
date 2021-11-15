@@ -61,7 +61,7 @@ export const CHAT_EFFECTS: Array<Effect<{ [key: string]: any }>> = [
             maxCount: 600,
             speed: 10,
         },
-    },
+    } as Effect<RainfallOptions>,
     {
         emojis: ['❄', '🌨'],
         msgType: 'io.element.effect.snowfall',

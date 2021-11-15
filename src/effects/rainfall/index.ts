@@ -15,7 +15,7 @@
  limitations under the License.
  */
 import ICanvasEffect from '../ICanvasEffect';
-import {arrayFastClone } from "../../utils/arrays";
+import { arrayFastClone } from "../../utils/arrays";
 
 export type RainfallOptions = {
     /**
@@ -64,7 +64,7 @@ export default class Rainfall implements ICanvasEffect {
         this.particles = [];
         const count = this.options.maxCount;
         while (this.particles.length < count) {
-            this.particles.push(this.resetParticle({} as Snowflake, canvas.width, canvas.height));
+            this.particles.push(this.resetParticle({} as Raindrop, canvas.width, canvas.height));
         }
         this.isRunning = true;
         requestAnimationFrame(this.renderLoop);
