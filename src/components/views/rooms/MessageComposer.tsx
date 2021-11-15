@@ -141,7 +141,7 @@ const LocationButton: React.FC<ILocationButtonProps> = ({ shareLocation, menuPos
     if (menuDisplayed) {
         const position = menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect());
         contextMenu = <ContextMenu {...position} onFinished={closeMenu} managed={false}>
-            <LocationPicker onChoose={shareLocation} />
+            <LocationPicker onChoose={shareLocation} onFinished={closeMenu} />
         </ContextMenu>;
     }
 
@@ -461,8 +461,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private shareLocation = (uri: string, type: string, description: string, beacon: boolean): boolean => {
-        console.log("Share location", uri, type, description, beacon);
+    private shareLocation = (uri: string, ts: int, type: LocationShareType, description: string): boolean => {
+        console.log("Share location", uri, ts, type, description);
         return true;
     }
 

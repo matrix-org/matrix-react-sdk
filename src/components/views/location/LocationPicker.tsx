@@ -75,12 +75,14 @@ const LocationShareTypeDropdown = ({
 };
 
 interface IProps {
-    onChoose(uri: string, type: string, description: string, beacon: boolean): boolean;
+    onChoose(uri: string, ts: integer, type: LocationShareType, description: string): boolean;
+    onCancel();
 }
 
 interface IState {
     description: string;
     type: LocationShareType;
+    position: GeolocationPosition;
 }
 
 @replaceableComponent("views.location.LocationPicker")
@@ -92,29 +94,67 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.state = {
             description: "",
             type: LocationShareType.ONE_OFF,
+            position: undefined,
         };        
     }
 
     componentDidMount() {
         const config = SdkConfig.get();
-        var map = new maplibregl.Map({
+        this.map = new maplibregl.Map({
             container: 'mx_LocationPicker_map',
             style: config.map_style_url,
             center: [0, 0],
             zoom: 1,
         });
+
+        // Add geolocate control to the map.
+        this.geolocate = new maplibregl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true,
+        });
+        this.map.addControl(this.geolocate);
+
+        this.map.on('load', ()=>{
+            this.geolocate.trigger();
+        });
+
+        this.geolocate.on('geolocate', this.onGeolocate);
+    }
+
+    componentWillUnmount() {
+        this.geolocate.off('geolocate', this.onGeolocate);
+    }
+
+    private onGeolocate = (position) => {
+        this.setState({ position });
     }
 
     private onDescriptionChange = (ev: ChangeEvent<HTMLInputElement>) => {
         this.setState({ description: ev.target.value });
     };
 
-    private onOk = () => {
-        // TODO
+    private getGeoUri = () => {
+        if (!this.state.position) {
+            return;
+        }
+
+        return (`geo:${ this.state.position.coords.latitude }` +
+                `,${ this.state.position.coords.longitude }` +
+                ( this.state.position.coords.altitude != null ?
+                    `,${this.state.position.coords.altitude}` : '' ) +
+                `;u=${ this.state.position.coords.accuracy }`);
     };
 
-    private onCancel = () => {
-        // TODO        
+    private onOk = () => {
+        this.props.onChoose(
+            this.getGeoUri(),
+            this.state.position ? this.state.position.timestamp : undefined,
+            this.state.type,
+            this.state.description,
+        );
+        this.props.onFinished();
     };
 
     private onTypeChange= (type: LocationShareType) => {
@@ -144,7 +184,7 @@ class LocationPicker extends React.Component<IProps, IState> {
 
                         <DialogButtons primaryButton={_t('Share')}
                             onPrimaryButtonClick={this.onOk}
-                            onCancel={this.onCancel} />
+                            onCancel={this.props.onFinished} />
                     </form>
                 </div>
             </div>
