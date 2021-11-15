@@ -92,7 +92,6 @@ export default class Autocompleter {
     async getCompletions(
         query: string,
         selection: ISelectionRange,
-        renderingType: TimelineRenderingType,
         force = false,
         limit = -1,
     ): Promise<IProviderCompletions[]> {

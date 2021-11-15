@@ -138,7 +138,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
 
     private processQuery(query: string, selection: ISelectionRange): Promise<void> {
         return this.autocompleter.getCompletions(
-            query, selection, this.context.timelineRenderingType, this.state.forceComplete, MAX_PROVIDER_MATCHES,
+            query, selection, this.state.forceComplete, MAX_PROVIDER_MATCHES,
         ).then((completions) => {
             // Only ever process the completions for the most recent query being processed
             if (query !== this.queryRequested) {

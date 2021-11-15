@@ -28,7 +28,7 @@ import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji } from '../emoji';
 
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
-import { Room } from 'matrix-js-sdk';
+import { Room } from 'matrix-js-sdk/src/models/room';
 import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const LIMIT = 20;

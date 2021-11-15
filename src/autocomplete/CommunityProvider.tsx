@@ -28,7 +28,7 @@ import { ICompletion, ISelectionRange } from "./Autocompleter";
 import FlairStore from "../stores/FlairStore";
 import { mediaFromMxc } from "../customisations/Media";
 import BaseAvatar from '../components/views/avatars/BaseAvatar';
-import { Room } from 'matrix-js-sdk';
+import { Room } from 'matrix-js-sdk/src/models/room';
 import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const COMMUNITY_REGEX = /\B\+\S*/g;
