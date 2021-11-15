@@ -233,22 +233,21 @@ $MinWidth: 240px;
         mask-size: auto 10px;
         mask-image: url($collapse-button-url);
     }
-    
+
     &.mx_AppTileMenuBar_iconButton_maxWidget {
         width: 11px;
         height: 11px;
         mask-image: url($expand-button-url);
     }
-    
+
     &.mx_AppTileMenuBar_iconButton_popout {
         mask-image: url('$(res)/img/feather-customised/widget/external-link.svg');
     }
-    
+
     &.mx_AppTileMenuBar_iconButton_menu {
         mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
     }
 }
-
 
 .mx_AppTileBody {
     height: 100%;

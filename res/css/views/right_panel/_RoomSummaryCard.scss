@@ -178,7 +178,6 @@ limitations under the License.
             }
             .mx_RoomSummaryCard_app_maximise {
                 right: 48px;
-
                 &::before {
                     mask-size: 14px;
                     mask-image: url($expand-button-url);
@@ -186,7 +185,6 @@ limitations under the License.
             }
             .mx_RoomSummaryCard_app_minimise {
                 right: 48px;
-                
                 &::before {
                     mask-size: 14px;
                     mask-image: url($collapse-button-url);
