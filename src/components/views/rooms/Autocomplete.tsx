@@ -58,12 +58,10 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     debounceCompletionsRequest: number;
     private containerRef = createRef<HTMLDivElement>();
 
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
 
     constructor(props) {
         super(props);
-
-        this.autocompleter = new Autocompleter(props.room, this.context.timelineRenderingType);
 
         this.state = {
             // list of completionResults, each containing completions
@@ -85,6 +83,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     }
 
     componentDidMount() {
+        this.autocompleter = new Autocompleter(this.props.room, this.context.timelineRenderingType);
         this.applyNewProps();
     }
 
@@ -139,7 +138,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
 
     private processQuery(query: string, selection: ISelectionRange): Promise<void> {
         return this.autocompleter.getCompletions(
-            query, selection, this.state.forceComplete, MAX_PROVIDER_MATCHES,
+            query, selection, this.context.timelineRenderingType, this.state.forceComplete, MAX_PROVIDER_MATCHES,
         ).then((completions) => {
             // Only ever process the completions for the most recent query being processed
             if (query !== this.queryRequested) {

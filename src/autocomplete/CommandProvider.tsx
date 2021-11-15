@@ -37,6 +37,7 @@ export default class CommandProvider extends AutocompleteProvider {
         this.matcher = new QueryMatcher(Commands, {
             keys: ['command', 'args', 'description'],
             funcs: [({ aliases }) => aliases.join(" ")], // aliases
+            context: renderingType,
         });
     }
 
@@ -49,7 +50,7 @@ export default class CommandProvider extends AutocompleteProvider {
         const { command, range } = this.getCurrentCommand(query, selection);
         if (!command) return [];
 
-        let matches = [];
+        let matches: Command[] = [];
         // check if the full match differs from the first word (i.e. returns false if the command has args)
         if (command[0] !== command[1]) {
             // The input looks like a command with arguments, perform exact match
@@ -70,7 +71,10 @@ export default class CommandProvider extends AutocompleteProvider {
             }
         }
 
-        return matches.filter(cmd => cmd.isEnabled()).map((result) => {
+        return matches.filter(cmd => {
+            const display = !cmd.renderingTypes || cmd.renderingTypes.includes(this.renderingType);
+            return cmd.isEnabled() && display;
+        }).map((result) => {
             let completion = result.getCommand() + ' ';
             const usedAlias = result.aliases.find(alias => `/${alias}` === command[1]);
             // If the command (or an alias) is the same as the one they entered, we don't want to discard their arguments

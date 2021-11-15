@@ -47,7 +47,6 @@ import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { IMinimalEvent } from "matrix-js-sdk";
 import SettingsStore from "../../settings/SettingsStore";
 
 // TODO: Purge this from the universe
