@@ -24,14 +24,16 @@ import QueryMatcher from './QueryMatcher';
 import { TextualCompletion } from './Components';
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import { Command, Commands, CommandMap } from '../SlashCommands';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const COMMAND_RE = /(^\/\w*)(?: .*)?/g;
 
 export default class CommandProvider extends AutocompleteProvider {
     matcher: QueryMatcher<Command>;
 
-    constructor() {
-        super(COMMAND_RE);
+    constructor(room: Room, renderingType?: TimelineRenderingType) {
+        super({ commandRegex: COMMAND_RE, renderingType });
         this.matcher = new QueryMatcher(Commands, {
             keys: ['command', 'args', 'description'],
             funcs: [({ aliases }) => aliases.join(" ")], // aliases
