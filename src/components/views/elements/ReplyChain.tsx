@@ -34,6 +34,7 @@ import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import SettingsStore from "../../../settings/SettingsStore";
 
 /**
  * This number is based on the previous behavior - if we have message of height
