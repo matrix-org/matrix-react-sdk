@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636977306484,
+  "lastUpdate": 1636997376454,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39056,6 +39056,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4273,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bafeb384721f57a4ab7618049d1f0fac6a374485",
+          "message": "Improve VoIP UI/UX (#7048)\n\n* Remove speaking indicator\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Remove mic icon for primary feed\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Remove caching as it doesn't seem to be neccessary\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Add call view buttons colors\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Refactor button code\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Update call view button icons\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Add dialpad icon\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix button sizing in PiP\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix secondary voice video feed color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-11-15T17:24:11Z",
+          "tree_id": "69b495ca548ed11de883dbed5bfe71131d37fc2f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bafeb384721f57a4ab7618049d1f0fac6a374485"
+        },
+        "date": 1636997373935,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5024.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 956.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1620.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4256.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
