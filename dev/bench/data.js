@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636739051212,
+  "lastUpdate": 1636967745996,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -38864,6 +38864,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 640,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "75c02a641b0ab676e1216c97f729a8cb34aee41d",
+          "message": "Fix look of emoji verification (#7133)",
+          "timestamp": "2021-11-15T09:09:19Z",
+          "tree_id": "c5e76bef1a047cdec5d659e7d2f3f0e858210c36",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/75c02a641b0ab676e1216c97f729a8cb34aee41d"
+        },
+        "date": 1636967743243,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4836.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1031.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1712.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4607.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
