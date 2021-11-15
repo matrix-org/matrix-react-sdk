@@ -50,7 +50,7 @@ import NotificationPanel from "./NotificationPanel";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PinnedMessagesCard from "../views/right_panel/PinnedMessagesCard";
 import { throttle } from 'lodash';
-import SpaceStore from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
@@ -75,6 +75,9 @@ interface IState {
     groupRoomId?: string;
     groupId?: string;
     event: MatrixEvent;
+    initialEvent?: MatrixEvent;
+    initialEventHighlighted?: boolean;
+    searchQuery: string;
 }
 
 @replaceableComponent("structures.RightPanel")
@@ -90,6 +93,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             phase: this.getPhaseFromProps(),
             isUserPrivilegedInGroup: null,
             member: this.getUserForPanel(),
+            searchQuery: "",
         };
     }
 
@@ -209,6 +213,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 groupId: payload.groupId,
                 member: payload.member,
                 event: payload.event,
+                initialEvent: payload.initialEvent,
+                initialEventHighlighted: payload.highlighted,
                 verificationRequest: payload.verificationRequest,
                 verificationRequestPromise: payload.verificationRequestPromise,
                 widgetId: payload.widgetId,
@@ -244,14 +250,24 @@ export default class RightPanel extends React.Component<IProps, IState> {
         }
     };
 
-    render() {
+    private onSearchQueryChanged = (searchQuery: string): void => {
+        this.setState({ searchQuery });
+    };
+
+    public render(): JSX.Element {
         let panel = <div />;
         const roomId = this.props.room ? this.props.room.roomId : undefined;
 
         switch (this.state.phase) {
             case RightPanelPhases.RoomMemberList:
                 if (roomId) {
-                    panel = <MemberList roomId={roomId} key={roomId} onClose={this.onClose} />;
+                    panel = <MemberList
+                        roomId={roomId}
+                        key={roomId}
+                        onClose={this.onClose}
+                        searchQuery={this.state.searchQuery}
+                        onSearchQueryChanged={this.onSearchQueryChanged}
+                    />;
                 }
                 break;
             case RightPanelPhases.SpaceMemberList:
@@ -259,6 +275,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     roomId={this.state.space ? this.state.space.roomId : roomId}
                     key={this.state.space ? this.state.space.roomId : roomId}
                     onClose={this.onClose}
+                    searchQuery={this.state.searchQuery}
+                    onSearchQueryChanged={this.onSearchQueryChanged}
                 />;
                 break;
 
@@ -327,6 +345,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     onClose={this.onClose}
                     mxEvent={this.state.event}
+                    initialEvent={this.state.initialEvent}
+                    initialEventHighlighted={this.state.initialEventHighlighted}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus} />;
                 break;
@@ -335,7 +355,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 panel = <ThreadPanel
                     roomId={roomId}
                     resizeNotifier={this.props.resizeNotifier}
-                    onClose={this.onClose} />;
+                    onClose={this.onClose}
+                    permalinkCreator={this.props.permalinkCreator}
+                />;
                 break;
 
             case RightPanelPhases.RoomSummary:

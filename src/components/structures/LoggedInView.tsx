@@ -64,7 +64,7 @@ import MyGroups from "./MyGroups";
 import UserView from "./UserView";
 import GroupView from "./GroupView";
 import BackdropPanel from "./BackdropPanel";
-import SpaceStore from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
 import classNames from 'classnames';
 import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
@@ -108,6 +108,7 @@ interface IProps {
     currentGroupIsNew?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
+    forceTimeline?: boolean; // see props on MatrixChat
 }
 
 interface IUsageLimit {
@@ -611,6 +612,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     key={this.props.currentRoomId || 'roomview'}
                     resizeNotifier={this.props.resizeNotifier}
                     justCreatedOpts={this.props.roomJustCreatedOpts}
+                    forceTimeline={this.props.forceTimeline}
                 />;
                 break;
 

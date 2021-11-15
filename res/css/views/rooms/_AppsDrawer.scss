@@ -310,7 +310,7 @@ $MinWidth: 240px;
 
 .mx_AppPermissionWarning_helpIcon::before {
     display: inline-block;
-    background-color: $accent-color;
+    background-color: $accent;
     mask-repeat: no-repeat;
     mask-size: 12px;
     width: 12px;
@@ -364,7 +364,6 @@ $MinWidth: 240px;
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
 
 .mx_AppLoading iframe {
     display: none;
