@@ -85,14 +85,8 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             return 1;
         }
         const widthMulti = thumbWidth / fullWidth;
-        const heightMulti = thumbHeight / fullHeight;
-        if (widthMulti < heightMulti) {
-            // width is the dominant dimension so scaling will be fixed on that
-            return widthMulti;
-        } else {
-            // height is the dominant dimension so scaling will be fixed on that
-            return heightMulti;
-        }
+        // always scale the videos based on their width.
+        return widthMulti;
     }
 
     private getContentUrl(): string|null {
