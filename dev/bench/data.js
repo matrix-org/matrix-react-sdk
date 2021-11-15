@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1636997376454,
+  "lastUpdate": 1637012607114,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39104,6 +39104,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4256.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "aaron@raim.ist",
+            "name": "Aaron R",
+            "username": "aaronraimist"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6d79b9587690c404f115b3bb8d1e5c0fcb4a8d65",
+          "message": "Add root folder to zip file created by export chat feature (#7097)\n\nSigned-off-by: Aaron Raimist <aaron@raim.ist>",
+          "timestamp": "2021-11-15T14:37:16-07:00",
+          "tree_id": "c62ea6b55d6c2b48ecf320b15615a15e7c889bc8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6d79b9587690c404f115b3bb8d1e5c0fcb4a8d65"
+        },
+        "date": 1637012604518,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4905.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1704.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4567,
             "unit": "ms",
             "extra": "type: measure"
           }
