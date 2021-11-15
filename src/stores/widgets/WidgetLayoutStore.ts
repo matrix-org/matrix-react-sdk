@@ -205,7 +205,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             const manualContainer = userLayout?.widgets?.[widget.id]?.container;
             const isLegacyPinned = !!legacyPinned?.[widget.id];
             const defaultContainer = WidgetType.JITSI.matches(widget.type) ? Container.Top : Container.Right;
-            if (stateContainer === Container.Center || manualContainer === Container.Center) {
+            if ((manualContainer) ? manualContainer === Container.Center : stateContainer === Container.Center) {
                 if (centerWidgets.length) {
                     console.error("Tried to push a second widget into the center container");
                 } else {
