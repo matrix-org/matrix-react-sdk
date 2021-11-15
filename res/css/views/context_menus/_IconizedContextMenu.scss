@@ -142,14 +142,6 @@ limitations under the License.
         }
     }
 
-    .mx_IconizedContextMenu_option_red {
-        color: $alert !important;
-
-        .mx_IconizedContextMenu_icon::before {
-            background-color: $alert;
-        }
-    }
-
     .mx_IconizedContextMenu_active {
         &.mx_AccessibleButton, .mx_AccessibleButton {
             color: $accent !important;
