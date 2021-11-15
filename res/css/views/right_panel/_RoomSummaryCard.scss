@@ -170,21 +170,21 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_app_pinToggle {
-                right: 24px;
+                right: 0px;
 
                 &::before {
                     mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
                 }
             }
             .mx_RoomSummaryCard_app_maximise {
-                right: 48px;
+                right: 24px;
 
                 &::before {
                     mask-image: url('$(res)/img/feather-customised/maximise.svg');
                 }
             }
             .mx_RoomSummaryCard_app_minimise {
-                right: 48px;
+                right: 24px;
                 &::before {
                     mask-image: url('$(res)/img/feather-customised/minimise.svg');
                     background-color: $accent;
@@ -192,14 +192,14 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_app_options {
-                right: 48px;
+                right: 24px;
                 display: none;
 
                 &::before {
                     mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
                 }
                 &.mx_RoomSummaryCard_maximised_widget {
-                    right: 72px;
+                    right: 48px;
                 }
             }
 
