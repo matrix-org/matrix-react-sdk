@@ -180,13 +180,15 @@ limitations under the License.
                 right: 24px;
 
                 &::before {
-                    mask-image: url('$(res)/img/feather-customised/maximise.svg');
+                    mask-size: 14px;
+                    mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
                 }
             }
             .mx_RoomSummaryCard_app_minimise {
                 right: 24px;
                 &::before {
-                    mask-image: url('$(res)/img/feather-customised/minimise.svg');
+                    mask-size: 14px;
+                    mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
                     background-color: $accent;
                 }
             }
