@@ -95,6 +95,7 @@ import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threads';
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
+import AppsDrawer from '../views/rooms/AppsDrawer';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -119,6 +120,13 @@ interface IRoomProps extends MatrixClientProps {
     onRegistered?(credentials: IMatrixClientCreds): void;
 }
 
+// This defines the content of the mainSplit.
+// If the mainSplit does not contain the Timeline, the chat is shown in the right panel.
+enum MainSplitContentType {
+    Timeline,
+    MaximisedWidget,
+    // Video
+}
 export interface IRoomState {
     room?: Room;
     roomId?: string;
@@ -188,6 +196,7 @@ export interface IRoomState {
     rejecting?: boolean;
     rejectError?: Error;
     hasPinnedWidgets?: boolean;
+    mainSplitContentType?: MainSplitContentType;
     dragCounter: number;
     // whether or not a spaces context switch brought us here,
     // if it did we don't want the room to be marked as read as soon as it is loaded.
@@ -254,6 +263,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showAvatarChanges: true,
             showDisplaynameChanges: true,
             matrixClientIsReady: this.context && this.context.isInitialSyncComplete(),
+            mainSplitContentType: MainSplitContentType.Timeline,
             dragCounter: 0,
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
@@ -306,16 +316,33 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private onWidgetStoreUpdate = () => {
-        if (this.state.room) {
-            this.checkWidgets(this.state.room);
-        }
+        if (!this.state.room) return;
+        this.checkWidgets(this.state.room);
+    };
+
+    private onWidgetEchoStoreUpdate = () => {
+        if (!this.state.room) return;
+        this.checkWidgets(this.state.room);
+    };
+
+    private onWidgetLayoutChange = () => {
+        if (!this.state.room) return;
+        this.checkWidgets(this.state.room);
     };
 
     private checkWidgets = (room) => {
         this.setState({
-            hasPinnedWidgets: WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top).length > 0,
-            showApps: this.shouldShowApps(room),
+            hasPinnedWidgets: WidgetLayoutStore.instance.hasPinnedWidgets(this.state.room),
+            mainSplitContentType: this.getMainSplitContentType(),
+            showApps: this.shouldShowApps(this.state.room),
         });
+    };
+
+    private getMainSplitContentType = () => {
+        // TODO-video check if video should be displayed in main panel
+        return (WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room))
+            ? MainSplitContentType.MaximisedWidget
+            : MainSplitContentType.Timeline;
     };
 
     private onReadReceiptsChange = () => {
@@ -504,18 +531,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     }
 
-    private onWidgetEchoStoreUpdate = () => {
-        if (!this.state.room) return;
-        this.setState({
-            hasPinnedWidgets: WidgetLayoutStore.instance.getContainerWidgets(this.state.room, Container.Top).length > 0,
-            showApps: this.shouldShowApps(this.state.room),
-        });
-    };
-
-    private onWidgetLayoutChange = () => {
-        this.onWidgetEchoStoreUpdate(); // we cheat here by calling the thing that matters
-    };
-
     private setupRoom(room: Room, roomId: string, joining: boolean, shouldPeek: boolean) {
         // if this is an unknown room then we're in one of three states:
         // - This is a room we can peek into (search engine) (we can /peek)
@@ -583,15 +598,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         // Check if user has previously chosen to hide the app drawer for this
         // room. If so, do not show apps
-        const hideWidgetDrawer = localStorage.getItem(
-            room.roomId + "_hide_widget_drawer");
+        const hideWidgetKey = room.roomId + "_hide_widget_drawer";
+        const hideWidgetDrawer = localStorage.getItem(hideWidgetKey);
 
-        // This is confusing, but it means to say that we default to the tray being
-        // hidden unless the user clicked to open it.
-        const isManuallyShown = hideWidgetDrawer === "false";
+        // If unset show the Tray
+        // Otherwise (in case the user set hideWidgetDrawer by clicking the button) follow the parameter.
+        const isManuallyShown = hideWidgetDrawer ? hideWidgetDrawer === "false": true;
 
         const widgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
-        return widgets.length > 0 || isManuallyShown;
+        return isManuallyShown && widgets.length > 0;
     }
 
     componentDidMount() {
@@ -972,7 +987,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (this.unmounted) return;
         // Attach a widget store listener only when we get a room
         WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.onWidgetLayoutChange);
-        this.onWidgetLayoutChange(); // provoke an update
 
         this.calculatePeekRules(room);
         this.updatePreviewUrlVisibility(room);
@@ -1484,10 +1498,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             type: type,
             room_id: this.state.room.roomId,
         });
-    };
-
-    private onSettingsClick = () => {
-        dis.dispatch({ action: "open_room_settings" });
     };
 
     private onAppsClick = () => {
@@ -2098,6 +2108,38 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');
 
+        // Decide what to show in the main split
+        let mainSplitBody = <React.Fragment>
+            { auxPanel }
+            <div className={timelineClasses}>
+                { fileDropTarget }
+                { topUnreadMessagesBar }
+                { jumpToBottom }
+                { messagePanel }
+                { searchResultsPanel }
+            </div>
+            { statusBarArea }
+            { previewBar }
+            { messageComposer }
+        </React.Fragment>;
+
+        switch (this.state.mainSplitContentType) {
+            case MainSplitContentType.Timeline:
+                // keep the timeline in as the mainSplitBody
+                break;
+            case MainSplitContentType.MaximisedWidget:
+                if (!SettingsStore.getValue("feature_maximised_widgets")) break;
+                mainSplitBody = <AppsDrawer
+                    room={this.state.room}
+                    userId={this.context.credentials.userId}
+                    resizeNotifier={this.props.resizeNotifier}
+                    showApps={true}
+                />;
+                break;
+            // TODO-video MainSplitContentType.Video:
+            //     break;
+        }
+
         return (
             <RoomContext.Provider value={this.state}>
                 <main className={mainClasses} ref={this.roomView} onKeyDown={this.onReactKeyDown}>
@@ -2111,7 +2153,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             oobData={this.props.oobData}
                             inRoom={myMembership === 'join'}
                             onSearchClick={this.onSearchClick}
-                            onSettingsClick={this.onSettingsClick}
                             onForgetClick={(myMembership === "leave") ? this.onForgetClick : null}
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? this.onAppsClick : null}
@@ -2120,17 +2161,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className="mx_RoomView_body">
-                                { auxPanel }
-                                <div className={timelineClasses}>
-                                    { fileDropTarget }
-                                    { topUnreadMessagesBar }
-                                    { jumpToBottom }
-                                    { messagePanel }
-                                    { searchResultsPanel }
-                                </div>
-                                { statusBarArea }
-                                { previewBar }
-                                { messageComposer }
+                                { mainSplitBody }
                             </div>
                         </MainSplit>
                     </ErrorBoundary>
