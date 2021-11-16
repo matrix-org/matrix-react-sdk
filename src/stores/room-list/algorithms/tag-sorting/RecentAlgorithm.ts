@@ -111,9 +111,10 @@ export const sortRooms = (rooms: Room[], debug = false): Room[] => {
         tsCache[r.roomId] = lastEvent === null ? Number.MAX_SAFE_INTEGER : lastEvent.getTs();
         // Extra debugging to diagnose https://github.com/vector-im/element-web/issues/19741
         if (debug) {
-            logger.debug(`Room ${r.name} (${r.roomId}) last event is ${lastEvent.getId()} at ts ${lastEvent.getTs()}`);
+            logger.debug(
+                `Room ${r.name} (${r.roomId}) last event is ${lastEvent?.getId()} at ts ${tsCache[r.roomId]}`);
         }
-        return lastEvent.getTs();
+        return tsCache[r.roomId];
     };
 
     return rooms.sort((a, b) => {
