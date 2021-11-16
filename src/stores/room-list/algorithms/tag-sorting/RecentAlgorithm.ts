@@ -22,6 +22,7 @@ import * as Unread from "../../../../Unread";
 import { EffectiveMembership, getEffectiveMembership } from "../../../../utils/membership";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 export function shouldCauseReorder(event: MatrixEvent): boolean {
     const type = event.getType();
@@ -42,7 +43,7 @@ export function shouldCauseReorder(event: MatrixEvent): boolean {
     return true;
 }
 
-export const sortRooms = (rooms: Room[]): Room[] => {
+export const sortRooms = (rooms: Room[], debug = false): Room[] => {
     // We cache the timestamp lookup to avoid iterating forever on the timeline
     // of events. This cache only survives a single sort though.
     // We wouldn't need this if `.sort()` didn't constantly try and compare all
@@ -67,11 +68,11 @@ export const sortRooms = (rooms: Room[]): Room[] => {
             return tsCache[r.roomId];
         }
 
-        const ts = (() => {
+        const lastEvent = (() => {
             // Apparently we can have rooms without timelines, at least under testing
             // environments. Just return MAX_INT when this happens.
             if (!r || !r.timeline) {
-                return Number.MAX_SAFE_INTEGER;
+                return null;
             }
 
             // If the room hasn't been joined yet, it probably won't have a timeline to
@@ -81,7 +82,7 @@ export const sortRooms = (rooms: Room[]): Room[] => {
             if (effectiveMembership !== EffectiveMembership.Join) {
                 const membershipEvent = r.currentState.getStateEvents("m.room.member", myUserId);
                 if (membershipEvent && !Array.isArray(membershipEvent)) {
-                    return membershipEvent.getTs();
+                    return membershipEvent;
                 }
             }
 
@@ -93,7 +94,7 @@ export const sortRooms = (rooms: Room[]): Room[] => {
                     (ev.getSender() === myUserId && shouldCauseReorder(ev)) ||
                     Unread.eventTriggersUnreadCount(ev)
                 ) {
-                    return ev.getTs();
+                    return ev;
                 }
             }
 
@@ -101,14 +102,18 @@ export const sortRooms = (rooms: Room[]): Room[] => {
             // in which case use the oldest event even if normally it wouldn't count.
             // This is better than just assuming the last event was forever ago.
             if (r.timeline.length && r.timeline[0].getTs()) {
-                return r.timeline[0].getTs();
+                return r.timeline[0];
             } else {
-                return Number.MAX_SAFE_INTEGER;
+                return null;
             }
         })();
 
-        tsCache[r.roomId] = ts;
-        return ts;
+        tsCache[r.roomId] = lastEvent.getTs();
+        // Extra debugging to diagnose https://github.com/vector-im/element-web/issues/19741
+        if (debug) {
+            logger.debug(`Room ${r.name} (${r.roomId}) last event is ${lastEvent.getId()} at ts ${lastEvent.getTs()}`);
+        }
+        return lastEvent.getTs();
     };
 
     return rooms.sort((a, b) => {
@@ -125,3 +130,9 @@ export class RecentAlgorithm implements IAlgorithm {
         return sortRooms(rooms);
     }
 }
+
+// User-callable function to gather debug logging to try & diagnose https://github.com/vector-im/element-web/issues/19741
+// @ts-ignore
+global.mx_debug_room_order = function() {
+    sortRooms(MatrixClientPeg.get().getRooms(), true);
+};
