@@ -375,7 +375,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         // The maximum size of the thumbnail as it is rendered as an <img>
-        //check for any height contraints
+        // check for any height constraints
         const imageSize = SettingsStore.getValue("Images.size") as ImageSize;
         const suggestedAndPossibleWidth = Math.min(suggestedImageSize(imageSize).w, infoWidth);
         const aspectRatio = infoWidth / infoHeight;
