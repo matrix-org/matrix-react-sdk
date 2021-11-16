@@ -18,20 +18,20 @@ import React from 'react';
 import { MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 
-import BaseCard from "../views/right_panel/BaseCard";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
+import BaseCard from "./BaseCard";
+import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 
-import ResizeNotifier from '../../utils/ResizeNotifier';
-import MessageComposer from '../views/rooms/MessageComposer';
-import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import { Layout } from '../../settings/Layout';
-import TimelinePanel from './TimelinePanel';
-import { E2EStatus } from '../../utils/ShieldUtils';
-import EditorStateTransfer from '../../utils/EditorStateTransfer';
-import RoomContext from '../../contexts/RoomContext';
+import ResizeNotifier from '../../../utils/ResizeNotifier';
+import MessageComposer from '../rooms/MessageComposer';
+import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
+import { Layout } from '../../../settings/Layout';
+import TimelinePanel from '../../structures/TimelinePanel';
+import { E2EStatus } from '../../../utils/ShieldUtils';
+import EditorStateTransfer from '../../../utils/EditorStateTransfer';
+import RoomContext from '../../../contexts/RoomContext';
 
-import { _t } from '../../languageHandler';
-import { replaceableComponent } from '../../utils/replaceableComponent';
+import { _t } from '../../../languageHandler';
+import { replaceableComponent } from '../../../utils/replaceableComponent';
 
 interface IProps {
     room: Room;
@@ -121,7 +121,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     public render(): JSX.Element {
         return (
             <BaseCard
-                className="mx_TimelineCard"
+                className="mx_ThreadPanel mx_TimelineCard"
                 onClose={this.props.onClose}
                 withoutScrollContainer={true}
                 header={this.renderTimelineCardHeader()}>

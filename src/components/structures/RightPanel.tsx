@@ -54,7 +54,7 @@ import SpaceStore from "../../stores/spaces/SpaceStore";
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
-import TimelineCard from './TimelineCard';
+import TimelineCard from '../views/right_panel/TimelineCard';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
