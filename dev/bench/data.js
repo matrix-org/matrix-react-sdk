@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637074165316,
+  "lastUpdate": 1637074270591,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39392,6 +39392,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4416,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "734ce971353beecfef7e15a11d5e645becbea5d3",
+          "message": "Fix timeline text when sharing room layout (#7140)",
+          "timestamp": "2021-11-16T15:44:19+01:00",
+          "tree_id": "5a5c8f86806ae7c136b1060fb00c8d801bd59d73",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/734ce971353beecfef7e15a11d5e645becbea5d3"
+        },
+        "date": 1637074267106,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4993.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1247.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1689.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4803.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
