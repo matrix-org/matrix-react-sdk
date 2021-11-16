@@ -29,10 +29,6 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { ListNotificationState } from '../../../../../stores/notifications/ListNotificationState';
-import { RoomNotificationStateStore } from '../../../../../stores/notifications/RoomNotificationStateStore';
-import { DefaultTagID } from '../../../../../stores/room-list/models';
-import { NOTIFICATION_STATE_UPDATE } from '../../../../../stores/notifications/NotificationState';
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
 import CountlyAnalytics from "../../../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
@@ -80,25 +76,24 @@ interface IState {
     ignoredUserIds: string[];
     waitingUnignored: string[];
     managingInvites: boolean;
-    invitedRoomAmt: number;
+    invitedRooms: Room[];
 }
 
 @replaceableComponent("views.settings.tabs.user.SecurityUserSettingsTab")
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
     private dispatcherRef: string;
-    private notificationState: ListNotificationState;
 
     constructor(props: IProps) {
         super(props);
 
-        // Get number of rooms we're invited to
-        this.notificationState = RoomNotificationStateStore.instance.getListState(DefaultTagID.Invite);
+        // Get rooms we're invited to
+        const invitedRooms = this.getInvitedRooms();
 
         this.state = {
             ignoredUserIds: MatrixClientPeg.get().getIgnoredUsers(),
             waitingUnignored: [],
             managingInvites: false,
-            invitedRoomAmt: this.notificationState.count,
+            invitedRooms,
         };
     }
 
@@ -112,12 +107,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        MatrixClientPeg.get().on("Room.myMembership", this.onMyMembership);
     }
 
     public componentWillUnmount(): void {
         dis.unregister(this.dispatcherRef);
-        this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        MatrixClientPeg.get().removeListener("Room.myMembership", this.onMyMembership);
     }
 
     private updateAnalytics = (checked: boolean): void => {
@@ -126,8 +121,29 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         PosthogAnalytics.instance.updateAnonymityFromSettings(MatrixClientPeg.get().getUserId());
     };
 
-    private onNotificationUpdate = () => {
-        this.setState({ invitedRoomAmt: this.notificationState.count });
+    private onMyMembership = (room: Room, membership: string): void => {
+        const { invitedRooms } = this.state;
+
+        if (room.isSpaceRoom()) {
+            return;
+        }
+
+        if (membership === "invite") {
+            this.addInvitedRoom(room);
+        } else if (invitedRooms.some(invitedRoom => invitedRoom.roomId === room.roomId)) {
+            // The user isn't invited anymore
+            this.removeInvitedRoom(room.roomId);
+        }
+    };
+
+    private addInvitedRoom = (room: Room): void => {
+        this.setState(({ invitedRooms }) => ({ invitedRooms: [...invitedRooms, room] }));
+    };
+
+    private removeInvitedRoom = (roomId: string): void => {
+        this.setState((prevState) => ({
+            invitedRooms: prevState.invitedRooms.filter(room => room.roomId !== roomId),
+        }));
     };
 
     private onGoToUserProfileClick = (): void => {
@@ -162,7 +178,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         });
 
         // Compile array of invitation room ids
-        const invitedRoomIds = this.getInvitedRooms().map((room) => {
+        const invitedRoomIds = this.state.invitedRooms.map((room) => {
             return room.roomId;
         });
 
@@ -173,7 +189,10 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             const roomId = invitedRoomIds[i];
 
             // Accept/reject invite
-            await action(roomId).catch(async (e) => {
+            await action(roomId).then(() => {
+                // No error, update invited rooms button
+                this.removeInvitedRoom(roomId);
+            }, async (e) => {
                 // Action failure
                 if (e.errcode === "M_LIMIT_EXCEEDED") {
                     // Add a delay between each invite change in order to avoid rate
@@ -229,20 +248,23 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     private renderManageInvites(): JSX.Element {
-        if (this.state.invitedRoomAmt === 0) {
+        const { invitedRooms } = this.state;
+
+        if (invitedRooms.length === 0) {
             return null;
         }
 
         const onClickAccept = this.onAcceptAllInvitesClicked.bind(this);
         const onClickReject = this.onRejectAllInvitesClicked.bind(this);
+
         return (
             <div className='mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions'>
                 <span className='mx_SettingsTab_subheading'>{ _t('Bulk options') }</span>
                 <AccessibleButton onClick={onClickAccept} kind='primary' disabled={this.state.managingInvites}>
-                    { _t("Accept all %(invitedRooms)s invites", { invitedRooms: this.state.invitedRoomAmt }) }
+                    { _t("Accept all %(invitedRooms)s invites", { invitedRooms: invitedRooms.length }) }
                 </AccessibleButton>
                 <AccessibleButton onClick={onClickReject} kind='danger' disabled={this.state.managingInvites}>
-                    { _t("Reject all %(invitedRooms)s invites", { invitedRooms: this.state.invitedRoomAmt }) }
+                    { _t("Reject all %(invitedRooms)s invites", { invitedRooms: invitedRooms.length }) }
                 </AccessibleButton>
                 { this.state.managingInvites ? <InlineSpinner /> : <div /> }
             </div>
