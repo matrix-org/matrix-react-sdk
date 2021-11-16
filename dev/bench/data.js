@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637063402719,
+  "lastUpdate": 1637067610196,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39296,6 +39296,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4394.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "me@josias.dev",
+            "name": "Josias",
+            "username": "justjosias"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f4f3f2a8c7b713c26db2c2b6a79399fca91a6e7",
+          "message": "Add rainfall effect (#7086)\n\nJust got approval from product.  Thanks for the little bit of extra joy :-)",
+          "timestamp": "2021-11-16T12:54:40Z",
+          "tree_id": "9c886184e8b8c3f089156caa37b0e052880c0f5f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f4f3f2a8c7b713c26db2c2b6a79399fca91a6e7"
+        },
+        "date": 1637067607622,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5158.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 902.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1637.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4185.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
