@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637074270591,
+  "lastUpdate": 1637074354062,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39440,6 +39440,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4803.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "edfebdcdfba4221f6364013567d98aa9f4b92a71",
+          "message": "Don't reload the page when user hits enter when entering ban reason (#7145)",
+          "timestamp": "2021-11-16T14:45:59Z",
+          "tree_id": "4eeaa2f69d5d36eeb5b8ff19fee7d7865fe87004",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/edfebdcdfba4221f6364013567d98aa9f4b92a71"
+        },
+        "date": 1637074350810,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4842.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1058.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1720,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4616.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
