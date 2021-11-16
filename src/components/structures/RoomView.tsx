@@ -327,6 +327,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onWidgetLayoutChange = () => {
         if (!this.state.room) return;
+        dis.dispatch({
+            action: "appsDrawer",
+            show: true,
+        });
         this.checkWidgets(this.state.room);
     };
 
