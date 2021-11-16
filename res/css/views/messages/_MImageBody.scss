@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$timelineImageBorderRadius: 8px;
+$timeline-image-boarder-radius: 8px;
 
 .mx_MImageBody_thumbnail--blurhash {
     position: absolute;
@@ -25,7 +25,7 @@ $timelineImageBorderRadius: 8px;
 
 .mx_MImageBody_thumbnail {
     object-fit: contain;
-    border-radius: $timelineImageBorderRadius;
+    border-radius: $timeline-image-boarder-radius;
 
     display: flex;
     justify-content: center;
