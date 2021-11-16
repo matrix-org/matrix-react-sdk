@@ -254,16 +254,13 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             return null;
         }
 
-        const onClickAccept = this.onAcceptAllInvitesClicked.bind(this);
-        const onClickReject = this.onRejectAllInvitesClicked.bind(this);
-
         return (
             <div className='mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions'>
                 <span className='mx_SettingsTab_subheading'>{ _t('Bulk options') }</span>
-                <AccessibleButton onClick={onClickAccept} kind='primary' disabled={this.state.managingInvites}>
+                <AccessibleButton onClick={this.onAcceptAllInvitesClicked} kind='primary' disabled={this.state.managingInvites}>
                     { _t("Accept all %(invitedRooms)s invites", { invitedRooms: invitedRooms.length }) }
                 </AccessibleButton>
-                <AccessibleButton onClick={onClickReject} kind='danger' disabled={this.state.managingInvites}>
+                <AccessibleButton onClick={this.onRejectAllInvitesClicked} kind='danger' disabled={this.state.managingInvites}>
                     { _t("Reject all %(invitedRooms)s invites", { invitedRooms: invitedRooms.length }) }
                 </AccessibleButton>
                 { this.state.managingInvites ? <InlineSpinner /> : <div /> }
