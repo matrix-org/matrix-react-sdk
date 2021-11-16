@@ -52,70 +52,15 @@ interface IState {
 export default class TimelineCard extends React.Component<IProps, IState> {
     static contextType = RoomContext;
 
-    private messagePanel: TimelinePanel;
-
     constructor(props: IProps) {
         super(props);
         this.state = {};
-    }
-    public componentDidMount(): void {
-
-    }
-
-    public componentWillUnmount(): void {
-
-    }
-
-    public componentDidUpdate(prevProps) {
-
     }
 
     private renderTimelineCardHeader = (): JSX.Element => {
         return <div className="mx_TimelineCard__header">
             <span>{ _t("Chat") }</span>
         </div>;
-    };
-
-    private gatherTimelinePanelRef = r => {
-        this.messagePanel = r;
-    };
-
-    private onMessageListScroll = ev => {
-        // if (this.messagePanel.isAtEndOfLiveTimeline()) {
-        //     this.setState({
-        //         numUnreadMessages: 0,
-        //         atEndOfLiveTimeline: true,
-        //     });
-        // } else {
-        //     this.setState({
-        //         atEndOfLiveTimeline: false,
-        //     });
-        // }
-        // this.updateTopUnreadMessagesBar();
-    };
-
-    private onUserScroll = () => {
-        // if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
-        //     dis.dispatch({
-        //         action: 'view_room',
-        //         room_id: this.state.room.roomId,
-        //         event_id: this.state.initialEventId,
-        //         highlighted: false,
-        //         replyingToEvent: this.state.replyToEvent,
-        //     });
-        // }
-    };
-
-    // decide whether or not the top 'unread messages' bar should be shown
-    private updateTopUnreadMessagesBar = () => {
-        if (!this.messagePanel) {
-            return;
-        }
-
-        // const showBar = this.messagePanel.canJumpToReadMarker();
-        // if (this.state.showTopUnreadMessagesBar != showBar) {
-        //     this.setState({ showTopUnreadMessagesBar: showBar });
-        // }
     };
 
     public render(): JSX.Element {
@@ -126,11 +71,10 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 withoutScrollContainer={true}
                 header={this.renderTimelineCardHeader()}>
                 <TimelinePanel
-                    ref={this.gatherTimelinePanelRef}
-                    showReadReceipts={true} // No RR support in thread's MVP
-                    manageReadReceipts={true} // No RR support in thread's MVP
-                    manageReadMarkers={true} // No RM support in thread's MVP
-                    sendReadReceiptOnLoad={true} // No RR support in thread's MVP
+                    showReadReceipts={false} // No RR support in the TimelineCard
+                    manageReadReceipts={false} // No RR support in the TimelineCard
+                    manageReadMarkers={false} // No RM support in the TimelineCard
+                    sendReadReceiptOnLoad={false} // No RR support the TimelineCard
                     timelineSet={this.props.room.getUnfilteredTimelineSet()}
                     showUrlPreview={true}
                     threadViewPreviousCard={RightPanelPhases.TimelineCard}
@@ -144,28 +88,17 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                     editState={this.state.editState}
                     eventId={this.props.initialEvent?.getId()}
                     resizeNotifier={this.props.resizeNotifier}
-                    onScroll={this.onMessageListScroll}
-                    onUserScroll={this.onUserScroll}
-                    onReadMarkerUpdated={this.updateTopUnreadMessagesBar}
-                // highlightedEventId={highlightedEventId}
-                // onUserScroll={this.onScroll}
                 />
-
-                { /* { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
-                <UploadBar room={this.props.room} relation={threadRelation} />
-            ) } */ }
 
                 <MessageComposer
                     room={this.props.room}
                     resizeNotifier={this.props.resizeNotifier}
-                    // relation={threadRelation}
                     replyToEvent={this.state.replyToEvent}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus}
                     compact={true}
                 />
             </BaseCard>
-        // </RoomContext.Provider>
         );
     }
 }
