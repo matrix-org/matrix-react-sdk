@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637074354062,
+  "lastUpdate": 1637079288469,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39488,6 +39488,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4616.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "645f900a36ec45e53e4214dc7ea5d2331f666a6e",
+          "message": "Fix maximised / pinned widget state being loaded correctly (#7146)",
+          "timestamp": "2021-11-16T16:09:19Z",
+          "tree_id": "e4ec001d147a3166f07d93fc098164163fd45b4c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/645f900a36ec45e53e4214dc7ea5d2331f666a6e"
+        },
+        "date": 1637079285515,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4691.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 942.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1642.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4280.5,
             "unit": "ms",
             "extra": "type: measure"
           }
