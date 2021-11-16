@@ -40,7 +40,7 @@ import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
-import { ThreadListContextMenu } from '../views/context_menus/ThreadListContextMenu';
+import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 
 interface IProps {
     room: Room;
@@ -204,6 +204,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
             event_id: this.state.thread?.id,
         };
 
+        const previousPhase = (this.props.previousPhase) ? this.props.previousPhase : RightPanelPhases.ThreadPanel;
+
+        const previousPhaseLabels = {};
+        previousPhaseLabels[RightPanelPhases.ThreadPanel] = _t("All threads");
+        previousPhaseLabels[RightPanelPhases.TimelineCard] = _t("Chat");
+
         return (
             <RoomContext.Provider value={{
                 ...this.context,
@@ -214,7 +220,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 <BaseCard
                     className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
-                    previousPhase={(this.props.previousPhase) ? this.props.previousPhase : RightPanelPhases.ThreadPanel}
+                    previousPhase={previousPhase}
+                    previousPhaseLabel={previousPhaseLabels[previousPhase]}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
                 >

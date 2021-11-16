@@ -177,7 +177,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
     };
 
-    private recalculateRoom(room: Room) {
+    public recalculateRoom(room: Room) {
         const widgets = WidgetStore.instance.getApps(room.roomId);
         if (!widgets?.length) {
             this.byRoom[room.roomId] = {};
@@ -209,7 +209,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             const manualContainer = userLayout?.widgets?.[widget.id]?.container;
             const isLegacyPinned = !!legacyPinned?.[widget.id];
             const defaultContainer = WidgetType.JITSI.matches(widget.type) ? Container.Top : Container.Right;
-            if (stateContainer === Container.Center || manualContainer === Container.Center) {
+            if ((manualContainer) ? manualContainer === Container.Center : stateContainer === Container.Center) {
                 if (centerWidgets.length) {
                     console.error("Tried to push a second widget into the center container");
                 } else {
@@ -464,7 +464,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 break;
             case Container.Top:
                 // new "top" widget => the center widget moves into "right"
-                if (this.hasMaximisedWidget(room) && toContainer) {
+                if (this.hasMaximisedWidget(room)) {
                     this.moveToContainer(room, this.getContainerWidgets(room, Container.Center)[0], Container.Right);
                 }
                 break;
