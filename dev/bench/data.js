@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637079288469,
+  "lastUpdate": 1637096919612,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39536,6 +39536,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4280.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "renancleyson.f@gmail.com",
+            "name": "Renan Cleyson",
+            "username": "renancleyson-dev"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ac15661c3e04051d0e1e4a71be90f182f6202301",
+          "message": "Fix bulk invite button getting a negative count (#7122)\n\n* Fix bulk invite button getting a negative counter\r\n\r\nSigned-off-by: Renan <renancleyson.f@gmail.com>\r\n\r\n* Change invites to be count on membership events\r\n\r\nSigned-off-by: Renan <renancleyson.f@gmail.com>\r\n\r\n* Remove unnecessary bind\r\n\r\n* Change invitedRooms state to a set of ids\r\n\r\nSigned-off-by: Renan <renancleyson.f@gmail.com>",
+          "timestamp": "2021-11-16T21:03:08Z",
+          "tree_id": "033b9acf9b7df69054dca55eb47a95b6630856e0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ac15661c3e04051d0e1e4a71be90f182f6202301"
+        },
+        "date": 1637096916671,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4774.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 738.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
