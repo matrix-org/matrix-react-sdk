@@ -143,7 +143,9 @@ export class RoomNotificationState extends NotificationState implements IDestroy
                 const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
 
                 if (markUnreadEnabled && isRoomMarkedAsUnread(this.room)) {
-                    this._color = NotificationColor.Red;
+                    this._color = NotificationColor.Grey;
+                    this._symbol = "!";
+                    this._count = 1; // not used, technically
                 } else {
                     // We don't have any notified messages, but we might have unread messages. Let's
                     // find out.
@@ -154,11 +156,11 @@ export class RoomNotificationState extends NotificationState implements IDestroy
                     } else {
                         this._color = NotificationColor.None;
                     }
-                }
 
-                // no symbol or count for this state
-                this._count = 0;
-                this._symbol = null;
+                    // no symbol or count for this state
+                    this._count = 0;
+                    this._symbol = null;
+                }
             }
         }
 
