@@ -68,7 +68,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         fullHeight: number,
         thumbWidth?: number,
         thumbHeight?: number,
-    ) {
+    ): number {
         if (!thumbWidth || !thumbHeight) {
             const dims = this.suggestedDimensions;
             thumbWidth = dims.w;
