@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637149806833,
+  "lastUpdate": 1637153709419,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39812,6 +39812,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4557,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "816136de976441ae4bbfe01cd1cfa5b26a97630e",
+          "message": "Make double-clicking the PiP take you to the call room (#7142)",
+          "timestamp": "2021-11-17T12:49:43Z",
+          "tree_id": "30c854ad8a3c9baf814fdba6903f78f109b5c5fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/816136de976441ae4bbfe01cd1cfa5b26a97630e"
+        },
+        "date": 1637153707039,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5026.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 622.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
