@@ -67,7 +67,6 @@ import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
 import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 import ThreadListContextMenu from '../context_menus/ThreadListContextMenu';
 
 const eventTileTypes = {
@@ -323,7 +322,6 @@ interface IProps {
     showThreadInfo?: boolean;
 
     timelineRenderingType?: TimelineRenderingType;
-    threadViewPreviousCard?: RightPanelPhases;
 }
 
 interface IState {
@@ -623,7 +621,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                 onClick={() => {
                     dispatchShowThreadEvent(this.props.mxEvent);
                 }}>
-                <span className="mx_ThreadInfo_thread-icon" />
                 <span className="mx_ThreadInfo_threads-amount">
                     { _t("%(count)s reply", {
                         count: this.thread.length,

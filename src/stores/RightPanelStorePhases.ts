@@ -25,7 +25,7 @@ export enum RightPanelPhases {
     RoomSummary = 'RoomSummary',
     Widget = 'Widget',
     PinnedMessages = "PinnedMessages",
-    TimelineCard = "TimelineCard",
+    Timeline = "Timeline",
 
     Room3pidMemberInfo = 'Room3pidMemberInfo',
     // Group stuff
@@ -54,7 +54,7 @@ export const RIGHT_PANEL_PHASES_NO_ARGS = [
     RightPanelPhases.RoomMemberList,
     RightPanelPhases.GroupMemberList,
     RightPanelPhases.GroupRoomList,
-    RightPanelPhases.TimelineCard,
+    RightPanelPhases.Timeline,
 ];
 
 // Subset of phases visible in the Space View

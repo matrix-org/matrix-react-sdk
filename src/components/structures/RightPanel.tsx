@@ -335,8 +335,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     panel = <PinnedMessagesCard room={this.props.room} onClose={this.onClose} />;
                 }
                 break;
-            case RightPanelPhases.TimelineCard:
-                if (!SettingsStore.getValue("feature_maximised_widgets")) { break; }
+            case RightPanelPhases.Timeline:
+                if (!SettingsStore.getValue("feature_maximised_widgets")) break;
                 panel = <TimelineCard
                     room={this.props.room}
                     resizeNotifier={this.props.resizeNotifier}
@@ -355,8 +355,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     initialEvent={this.state.initialEvent}
                     initialEventHighlighted={this.state.initialEventHighlighted}
                     permalinkCreator={this.props.permalinkCreator}
-                    e2eStatus={this.props.e2eStatus}
-                    previousPhase={RightPanelStore.getSharedInstance().previousPhase} />;
+                    e2eStatus={this.props.e2eStatus} />;
                 break;
 
             case RightPanelPhases.ThreadPanel:

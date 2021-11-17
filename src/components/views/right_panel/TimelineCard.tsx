@@ -69,7 +69,8 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 className="mx_ThreadPanel mx_TimelineCard"
                 onClose={this.props.onClose}
                 withoutScrollContainer={true}
-                header={this.renderTimelineCardHeader()}>
+                header={this.renderTimelineCardHeader()}
+            >
                 <TimelinePanel
                     showReadReceipts={true}
                     manageReadReceipts={true}
@@ -77,7 +78,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                     sendReadReceiptOnLoad={true}
                     timelineSet={this.props.room.getUnfilteredTimelineSet()}
                     showUrlPreview={true}
-                    threadViewPreviousCard={RightPanelPhases.TimelineCard}
+                    threadViewPreviousCard={RightPanelPhases.Timeline}
                     layout={Layout.Group}
                     hideThreadedMessages={false}
                     hidden={false}
