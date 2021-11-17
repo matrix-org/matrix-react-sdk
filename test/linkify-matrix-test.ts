@@ -16,215 +16,257 @@ limitations under the License.
 import { linkify } from '../src/linkify-matrix';
 
 describe('linkify-matrix', () => {
-    describe('roomalias', () => {
-        it('properly parses #_foonetic_xkcd:matrix.org', () => {
-            const test = '#_foonetic_xkcd:matrix.org';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#_foonetic_xkcd:matrix.org",
-                type: "roomalias",
-                value: "#_foonetic_xkcd:matrix.org",
-            }]));
-        });
-        it('properly parses #foo:localhost', () => {
-            const test = "#foo:localhost";
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo:localhost",
-                type: "roomalias",
-                value: "#foo:localhost",
-            }]));
-        });
-        it('accept #foo:bar.com', () => {
-            const test = '#foo:bar.com';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo:bar.com",
-                type: "roomalias",
-                value: "#foo:bar.com",
-            }]));
-        });
-        it('accept #foo:com (mostly for (TLD|DOMAIN)+ mixing)', () => {
-            const test = '#foo:com';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo:com",
-                type: "roomalias",
-                value: "#foo:com",
-            }]));
-        });
-        it('accept repeated TLDs (e.g .org.uk)', () => {
-            const test = '#foo:bar.org.uk';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo:bar.org.uk",
-                type: "roomalias",
-                value: "#foo:bar.org.uk",
-            }]));
-        });
-        it('ignores trailing `:`', () => {
-            const test = '#foo:bar.com:';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo:bar.com",
-                type: "roomalias",
-                value: "#foo:bar.com",
-            }]));
-        });
-        it('accept :NUM (port specifier)', () => {
-            const test = '#foo:bar.com:2225';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo:bar.com:2225",
-                type: "roomalias",
-                value: "#foo:bar.com:2225",
-            }]));
-        });
-        it('ignores all the trailing :', () => {
-            const test = '#foo:bar.com::::';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo:bar.com",
-                type: "roomalias",
-                value: "#foo:bar.com",
-            }]));
-        });
-        it('properly parses room alias with dots in name', () => {
-            const test = '#foo.asdf:bar.com::::';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "#foo.asdf:bar.com",
-                type: "roomalias",
-                value: "#foo.asdf:bar.com",
-            }]));
-        });
-        it('does not parse room alias with too many separators', () => {
-            const test = '#foo:::bar.com';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "http://bar.com",
-                type: "url",
-                value: "bar.com",
-            }]));
-        });
-        it('does not parse multiple room aliases in one string', () => {
-            const test = '#foo:bar.com-baz.com';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                "href": "#foo:bar.com-baz.com",
-                "type": "roomalias",
-                "value": "#foo:bar.com-baz.com",
-            }]));
-        });
-    });
+    const linkTypesByInitialCharacter = {
+        '#': 'roomalias',
+        '@': 'userid',
+        '+': 'groupid',
+    };
 
-    describe('groupid', () => {
-        it('properly parses +foo:localhost', () => {
-            const test = "+foo:localhost";
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "+foo:localhost",
-                type: "groupid",
-                value: "+foo:localhost",
-            }]));
-        });
-        it('accept +foo:bar.com', () => {
-            const test = '+foo:bar.com';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "+foo:bar.com",
-                type: "groupid",
-                value: "+foo:bar.com",
-            }]));
-        });
-        it('accept +foo:com (mostly for (TLD|DOMAIN)+ mixing)', () => {
-            const test = '+foo:com';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "+foo:com",
-                type: "groupid",
-                value: "+foo:com",
-            }]));
-        });
-        it('accept repeated TLDs (e.g .org.uk)', () => {
-            const test = '+foo:bar.org.uk';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "+foo:bar.org.uk",
-                type: "groupid",
-                value: "+foo:bar.org.uk",
-            }]));
-        });
-        it('ignore trailing `:`', () => {
-            const test = '+foo:bar.com:';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                "href": "+foo:bar.com",
-                "type": "groupid",
-                "value": "+foo:bar.com",
-            }]));
-        });
-        it('accept :NUM (port specifier)', () => {
-            const test = '+foo:bar.com:2225';
-            const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "+foo:bar.com:2225",
-                type: "groupid",
-                value: "+foo:bar.com:2225",
-            }]));
-        });
-    });
-
-    describe('userid', () => {
-        it('should not parse @foo without domain', () => {
-            const test = "@foo";
+    /**
+     *
+     * @param testName Due to all the tests using the same logic underneath, it makes to generate it in a bit smarter way
+     * @param char
+     */
+    function genTests(char: '#' | '@' | '+') {
+        const type = linkTypesByInitialCharacter[char];
+        it('should not parse ' + char + 'foo without domain', () => {
+            const test = char + "foo";
             const found = linkify.find(test);
             expect(found).toEqual(([]));
         });
-        it('accept @foo:bar.com', () => {
-            const test = '@foo:bar.com';
+        describe('ip v4 tests', () => {
+            it('should properly parse IPs v4 as the domain name', () => {
+                const test = char + 'potato:1.2.3.4';
+                const found = linkify.find(test);
+                expect(found).toEqual(([{
+                    href: char + 'potato:1.2.3.4',
+                    type,
+                    isLink: true,
+                    start: 0,
+                    end: test.length,
+                    value: char + 'potato:1.2.3.4',
+                }]));
+            });
+            it('should properly parse IPs v4 with port as the domain name with attached', () => {
+                const test = char + 'potato:1.2.3.4:1337';
+                const found = linkify.find(test);
+                expect(found).toEqual(([{
+                    href: char + 'potato:1.2.3.4:1337',
+                    type,
+                    isLink: true,
+                    start: 0,
+                    end: test.length,
+                    value: char + 'potato:1.2.3.4:1337',
+                }]));
+            });
+            it('should properly parse IPs v4 as the domain name while ignoring missing port', () => {
+                const test = char + 'potato:1.2.3.4:';
+                const found = linkify.find(test);
+                expect(found).toEqual(([{
+                    href: char + 'potato:1.2.3.4',
+                    type,
+                    isLink: true,
+                    start: 0,
+                    end: test.length - 1,
+                    value: char + 'potato:1.2.3.4',
+                }]));
+            });
+        });
+        // Currently those tests are failing, as there's missing implementation.
+        describe.skip('ip v6 tests', () => {
+            it('should properly parse IPs v6 as the domain name', () => {
+                const test = char + "username:[1234:5678::abcd]";
+                const found = linkify.find(test);
+                expect(found).toEqual([{
+                    href: char + 'username:[1234:5678::abcd]',
+                    type,
+                    isLink: true,
+                    start: 0,
+                    end: test.length,
+                    value: char + 'username:[1234:5678::abcd]',
+                },
+                ]);
+            });
+
+            it('should properly parse IPs v6 with port as the domain name', () => {
+                const test = char + "username:[1234:5678::abcd]:1337";
+                const found = linkify.find(test);
+                expect(found).toEqual([{
+                    href: char + 'username:[1234:5678::abcd]:1337',
+                    type,
+                    isLink: true,
+                    start: 0,
+                    end: test.length,
+                    value: char + 'username:[1234:5678::abcd]:1337',
+                },
+                ]);
+            });
+            // eslint-disable-next-line max-len
+            it('should properly parse IPs v6 while ignoring dangling comma when without port name as the domain name', () => {
+                const test = char + "username:[1234:5678::abcd]:";
+                const found = linkify.find(test);
+                expect(found).toEqual([{
+                    href: char + 'username:[1234:5678::abcd]:',
+                    type,
+                    isLink: true,
+                    start: 0,
+                    end: test.length - 1,
+                    value: char + 'username:[1234:5678::abcd]:',
+                },
+                ]);
+            });
+        });
+        it('properly parses ' + char + '_foonetic_xkcd:matrix.org', () => {
+            const test = '' + char + '_foonetic_xkcd:matrix.org';
             const found = linkify.find(test);
             expect(found).toEqual(([{
-                href: "@foo:bar.com",
-                type: "userid",
-                value: "@foo:bar.com",
+                href: char + "_foonetic_xkcd:matrix.org",
+                type,
+                value: char + "_foonetic_xkcd:matrix.org",
+                start: 0,
+                end: test.length,
+                isLink: true,
             }]));
         });
-        it('accept @foo:com (mostly for (TLD|DOMAIN)+ mixing)', () => {
-            const test = '@foo:com';
+        it('properly parses ' + char + 'foo:localhost', () => {
+            const test = char + "foo:localhost";
             const found = linkify.find(test);
             expect(found).toEqual(([{
-                href: "@foo:com",
-                type: "userid",
-                value: "@foo:com",
+                href: char + "foo:localhost",
+                type,
+                value: char + "foo:localhost",
+                start: 0,
+                end: test.length,
+                isLink: true,
+            }]));
+        });
+        it('accept ' + char + 'foo:bar.com', () => {
+            const test = '' + char + 'foo:bar.com';
+            const found = linkify.find(test);
+            expect(found).toEqual(([{
+                href: char + "foo:bar.com",
+                type,
+                value: char + "foo:bar.com",
+                start: 0,
+                end: test.length,
+
+                isLink: true,
+            }]));
+        });
+        it('accept ' + char + 'foo:com (mostly for (TLD|DOMAIN)+ mixing)', () => {
+            const test = '' + char + 'foo:com';
+            const found = linkify.find(test);
+            expect(found).toEqual(([{
+                href: char + "foo:com",
+                type,
+                value: char + "foo:com",
+                start: 0,
+                end: test.length,
+                isLink: true,
             }]));
         });
         it('accept repeated TLDs (e.g .org.uk)', () => {
-            const test = '@foo:bar.org.uk';
+            const test = '' + char + 'foo:bar.org.uk';
             const found = linkify.find(test);
             expect(found).toEqual(([{
-                href: "@foo:bar.org.uk",
-                type: "userid",
-                value: "@foo:bar.org.uk",
+                href: char + "foo:bar.org.uk",
+                type,
+                value: char + "foo:bar.org.uk",
+                start: 0,
+                end: test.length,
+                isLink: true,
             }]));
         });
-        it('do not accept trailing `:`', () => {
-            const test = '@foo:bar.com:';
+        it('ignores trailing `:`', () => {
+            const test = '' + char + 'foo:bar.com:';
             const found = linkify.find(test);
             expect(found).toEqual(([{
-                href: "@foo:bar.com",
-                type: "userid",
-                value: "@foo:bar.com",
+                type,
+                value: char + "foo:bar.com",
+                href: char + 'foo:bar.com',
+                start: 0,
+                end: test.length - ":".length,
+
+                isLink: true,
             }]));
         });
         it('accept :NUM (port specifier)', () => {
-            const test = '@foo:bar.com:2225';
+            const test = '' + char + 'foo:bar.com:2225';
             const found = linkify.find(test);
             expect(found).toEqual(([{
-                href: "@foo:bar.com:2225",
-                type: "userid",
-                value: "@foo:bar.com:2225",
+                href: char + "foo:bar.com:2225",
+                type,
+                value: char + "foo:bar.com:2225",
+                start: 0,
+                end: test.length,
+                isLink: true,
             }]));
         });
+        it('ignores all the trailing :', () => {
+            const test = '' + char + 'foo:bar.com::::';
+            const found = linkify.find(test);
+            expect(found).toEqual(([{
+                href: char + "foo:bar.com",
+                type: "roomalias",
+                value: char + "foo:bar.com",
+            }]));
+        });
+        it('properly parses room alias with dots in name', () => {
+            const test = '' + char + 'foo.asdf:bar.com::::';
+            const found = linkify.find(test);
+            expect(found).toEqual(([{
+                href: char + "foo.asdf:bar.com",
+                type,
+                value: char + "foo.asdf:bar.com",
+                start: 0,
+                end: test.length - ":".repeat(4).length,
+
+                isLink: true,
+            }]));
+        });
+        it('does not parse room alias with too many separators', () => {
+            const test = '' + char + 'foo:::bar.com';
+            const found = linkify.find(test);
+            expect(found).toEqual(([{
+                href: char + "foo",
+                type,
+                value: '' + char + 'foo',
+                isLink: true,
+                start: 0,
+                end: test.indexOf("::"),
+            },
+            {
+                href: "http://bar.com",
+                type: "url",
+                value: "bar.com",
+                isLink: true,
+                start: 7,
+                end: test.length,
+            }]));
+        });
+        it('does not parse multiple room aliases in one string', () => {
+            const test = '' + char + 'foo:bar.com-baz.com';
+            const found = linkify.find(test);
+            expect(found).toEqual(([{
+                href: char + "foo:bar.com-baz.com",
+                type,
+                value: char + "foo:bar.com-baz.com",
+                end: 20,
+                start: 0,
+                isLink: true,
+            }]));
+        });
+    }
+
+    describe('roomalias plugin', () => {
+        genTests('#');
+    });
+
+    describe('groupid plugin', () => {
+        genTests('+');
+    });
+
+    describe('userid plugin', () => {
+        genTests('@');
     });
 });

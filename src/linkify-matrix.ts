@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import * as linkifyjs from 'linkifyjs';
-import linkifyElement from 'linkifyjs/element';
-import linkifyString from 'linkifyjs/string';
+import linkifyElement from 'linkify-element';
+import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
@@ -28,6 +28,7 @@ import {
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
+import { registerPlugin } from 'linkifyjs';
 
 enum Type {
     URL = "url",
@@ -36,73 +37,75 @@ enum Type {
     GroupId = "groupid"
 }
 
-// Linkifyjs types don't have parser, which really makes this harder.
-const linkifyTokens = (linkifyjs as any).scanner.TOKENS;
-enum MatrixLinkInitialToken {
-    POUND = linkifyTokens.POUND,
-    PLUS = linkifyTokens.PLUS,
-    AT = linkifyTokens.AT,
-}
+// Linkify stuff doesn't type scanner/parser/utils properly :/
+function matrixOpaqueIdLinkifyParser({
+    scanner,
+    parser,
+    utils,
+    token,
+    name,
+}: {
+    scanner: any;
+    parser: any;
+    utils: any;
+    token: '#' | '+' | '@';
+    name: Type;
+}) {
+    const {
+        DOMAIN,
+        DOT,
+        // A generic catchall text token
+        TEXT,
+        NUM,
+        TLD,
+        COLON,
+        SYM,
+        UNDERSCORE,
+        // because 'localhost' is tokenised to the localhost token,
+        // usernames @localhost:foo.com are otherwise not matched!
+        LOCALHOST,
+    } = scanner.tokens;
 
-/**
- * Token should be one of the type of linkify.parser.TOKENS[AT | PLUS | POUND]
- * but due to typing issues it's just not a feasible solution.
- * This problem kind of gets solved in linkify 3.0
- */
-function parseFreeformMatrixLinks(linkify, token: MatrixLinkInitialToken, type: Type): void {
-    // Text tokens
-    const TT = linkify.scanner.TOKENS;
-    // Multi tokens
-    const MT = linkify.parser.TOKENS;
-    const MultiToken = MT.Base;
-    const S_START = linkify.parser.start;
+    const S_START = parser.start;
+    const Localpart = utils.createTokenClass(name, { isLink: true });
 
-    const TOKEN = function(value) {
-        MultiToken.call(this, value);
-        this.type = type;
-        this.isLink = true;
-    };
-    TOKEN.prototype = new MultiToken();
-
-    const S_TOKEN = S_START.jump(token);
-    const S_TOKEN_NAME = new linkify.parser.State();
-    const S_TOKEN_NAME_COLON = new linkify.parser.State();
-    const S_TOKEN_NAME_COLON_DOMAIN = new linkify.parser.State(TOKEN);
-    const S_TOKEN_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_MX_LINK = new linkify.parser.State(TOKEN);
-    const S_MX_LINK_COLON = new linkify.parser.State();
-    const S_MX_LINK_COLON_NUM = new linkify.parser.State(TOKEN);
-
-    const allowedFreeformTokens = [
-        TT.DOT,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-        TT.UNDERSCORE,
-        token,
+    const localpartTokens = [
+        DOMAIN,
+        // IPV4 necessity
+        NUM,
+        TLD,
 
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
-        TT.LOCALHOST,
+        LOCALHOST,
+        SYM,
+        UNDERSCORE,
+        TEXT,
     ];
 
-    S_TOKEN.on(allowedFreeformTokens, S_TOKEN_NAME);
-    S_TOKEN_NAME.on(allowedFreeformTokens, S_TOKEN_NAME);
-    S_TOKEN_NAME.on(TT.DOMAIN, S_TOKEN_NAME);
+    const INITIAL_TOKEN_STATE = S_START.tt(token);
+    const LOCALPART_STATE = INITIAL_TOKEN_STATE.tt(DOMAIN, Localpart);
 
-    S_TOKEN_NAME.on(TT.COLON, S_TOKEN_NAME_COLON);
+    for (const token of localpartTokens) {
+        INITIAL_TOKEN_STATE.tt(token, LOCALPART_STATE);
+        LOCALPART_STATE.tt(token, LOCALPART_STATE);
+    }
 
-    S_TOKEN_NAME_COLON.on(TT.DOMAIN, S_TOKEN_NAME_COLON_DOMAIN);
-    S_TOKEN_NAME_COLON.on(TT.LOCALHOST, S_MX_LINK); // accept #foo:localhost
-    S_TOKEN_NAME_COLON.on(TT.TLD, S_MX_LINK); // accept #foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_TOKEN_NAME_COLON_DOMAIN.on(TT.DOT, S_TOKEN_NAME_COLON_DOMAIN_DOT);
-    S_TOKEN_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_TOKEN_NAME_COLON_DOMAIN);
-    S_TOKEN_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_MX_LINK);
+    const COLON_STATE = LOCALPART_STATE.tt(COLON);
 
-    S_MX_LINK.on(TT.DOT, S_TOKEN_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_MX_LINK.on(TT.COLON, S_MX_LINK_COLON); // do not accept trailing `:`
-    S_MX_LINK_COLON.on(TT.NUM, S_MX_LINK_COLON_NUM); // but do accept :NUM (port specifier)
+    COLON_STATE.tt(LOCALHOST, LOCALPART_STATE);
+    COLON_STATE.tt(TLD, LOCALPART_STATE);
+    COLON_STATE.tt(DOMAIN, LOCALPART_STATE);
+
+    const TLD_STATE = LOCALPART_STATE.tt(TLD);
+    TLD_STATE.tt(DOMAIN, LOCALPART_STATE);
+    TLD_STATE.tt(TLD, LOCALPART_STATE);
+
+    const DOT_STATE = LOCALPART_STATE.tt(DOT, TLD_STATE);
+    LOCALPART_STATE.tt(COLON, COLON_STATE);
+    LOCALPART_STATE.tt(DOT, DOT_STATE); // accept repeated TLDs (e.g .org.uk)
+    const PORT_STATE = LOCALPART_STATE.tt(COLON);
+    PORT_STATE.tt(NUM, LOCALPART_STATE);
 }
 
 function onUserClick(event: MouseEvent, userId: string) {
@@ -217,12 +220,36 @@ export const options = {
 };
 
 // Run the plugins
-// Linkify room aliases
-parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.POUND, Type.RoomAlias);
-// Linkify group IDs
-parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.PLUS, Type.GroupId);
-// Linkify user IDs
-parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.AT, Type.UserId);
+registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.POUND as '#';
+    return matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.RoomAlias,
+    });
+});
+registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.PLUS as '+';
+    return matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.GroupId,
+    });
+});
+registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.AT as '@';
+    return matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.UserId,
+    });
+});
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;
