@@ -1488,6 +1488,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                         src={require("../../../res/img/element-icons/ia-design-changes.png")}
                                         width="636"
                                         height="303"
+                                        alt=""
                                     />
                                     <p>{ _t("We've been listening to recent feedback and we're testing out some " +
                                         "small layout changes. Your ongoing feedback would be very welcome, so if " +
