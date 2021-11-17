@@ -37,6 +37,7 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
         },
       },
       "event_id": "$mypoll",
+      "room_id": "#myroom:example.com",
     }
   }
 >
@@ -76,6 +77,7 @@ exports[`MPollBody renders a poll with local, non-local and invalid votes 1`] = 
           },
         },
         "event_id": "$mypoll",
+        "room_id": "#myroom:example.com",
       }
     }
   >
@@ -368,6 +370,7 @@ exports[`MPollBody renders a poll with no votes 1`] = `
         },
       },
       "event_id": "$mypoll",
+      "room_id": "#myroom:example.com",
     }
   }
 >
@@ -407,6 +410,7 @@ exports[`MPollBody renders a poll with no votes 1`] = `
           },
         },
         "event_id": "$mypoll",
+        "room_id": "#myroom:example.com",
       }
     }
   >
@@ -699,6 +703,7 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
         },
       },
       "event_id": "$mypoll",
+      "room_id": "#myroom:example.com",
     }
   }
 >
@@ -738,6 +743,7 @@ exports[`MPollBody renders a poll with only non-local votes 1`] = `
           },
         },
         "event_id": "$mypoll",
+        "room_id": "#myroom:example.com",
       }
     }
   >

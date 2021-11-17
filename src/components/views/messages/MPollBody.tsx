@@ -104,6 +104,27 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     };
 
     private selectOption(answerId: string) {
+        if (answerId === this.state.selected) {
+            return;
+        }
+
+        const responseContent: IPollResponse = {
+            [POLL_RESPONSE_EVENT_TYPE.name]: {
+                "answers": [answerId],
+            },
+            "m.relates_to": {
+                "event_id": this.props.mxEvent.getId(),
+                "rel_type": "m.reference",
+            },
+        };
+        MatrixClientPeg.get().sendEvent(
+            this.props.mxEvent.getRoomId(),
+            POLL_RESPONSE_EVENT_TYPE.name,
+            responseContent,
+        ).catch(e => {
+            console.error("Failed to submit poll response event:", e);
+        });
+
         this.setState({ selected: answerId });
     }
 

@@ -20,8 +20,9 @@ import { mount, ReactWrapper } from "enzyme";
 import sdk from "../../../skinned-sdk";
 import * as TestUtils from "../../../test-utils";
 
+import { Callback, IContent, MatrixEvent } from "matrix-js-sdk";
+import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { MatrixEvent } from "matrix-js-sdk";
 import { IPollAnswer, IPollContent } from "../../../../src/polls/consts";
 import { UserVote, allVotes } from "../../../../src/components/views/messages/MPollBody";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -29,7 +30,10 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 const _MPollBody = sdk.getComponent("views.messages.MPollBody");
 const MPollBody = TestUtils.wrapInMatrixClientContext(_MPollBody);
 
-MatrixClientPeg.matrixClient = { getUserId: () => "@me:example.com" };
+MatrixClientPeg.matrixClient = {
+    getUserId: () => "@me:example.com",
+    sendEvent: () => Promise.resolve({ "event_id": "fake_send_id" }),
+};
 
 describe("MPollBody", () => {
     it("finds no votes if there are none", () => {
@@ -233,6 +237,76 @@ describe("MPollBody", () => {
         expect(body.html()).toBe("");
     });
 
+    it("sends a vote event when I choose an option", () => {
+        const receivedEvents = [];
+        MatrixClientPeg.matrixClient.sendEvent = (
+            roomId: string,
+            eventType: string,
+            content: IContent,
+            txnId?: string,
+            callback?: Callback,
+        ): Promise<ISendEventResponse> => {
+            receivedEvents.push( { roomId, eventType, content, txnId, callback } );
+            return Promise.resolve({ "event_id": "fake_tracked_send_id" });
+        };
+
+        const votes = [];
+        const body = newMPollBody(votes);
+        clickRadio(body, "wings");
+        expect(receivedEvents).toEqual([
+            expectedResponseEvent("wings"),
+        ]);
+    });
+
+    it("sends only one vote event when I click several times", () => {
+        const receivedEvents = [];
+        MatrixClientPeg.matrixClient.sendEvent = (
+            roomId: string,
+            eventType: string,
+            content: IContent,
+            txnId?: string,
+            callback?: Callback,
+        ): Promise<ISendEventResponse> => {
+            receivedEvents.push( { roomId, eventType, content, txnId, callback } );
+            return Promise.resolve({ "event_id": "fake_tracked_send_id" });
+        };
+
+        const votes = [];
+        const body = newMPollBody(votes);
+        clickRadio(body, "wings");
+        clickRadio(body, "wings");
+        clickRadio(body, "wings");
+        clickRadio(body, "wings");
+        expect(receivedEvents).toEqual([
+            expectedResponseEvent("wings"),
+        ]);
+    });
+
+    it("sends several events when I click different options", () => {
+        const receivedEvents = [];
+        MatrixClientPeg.matrixClient.sendEvent = (
+            roomId: string,
+            eventType: string,
+            content: IContent,
+            txnId?: string,
+            callback?: Callback,
+        ): Promise<ISendEventResponse> => {
+            receivedEvents.push( { roomId, eventType, content, txnId, callback } );
+            return Promise.resolve({ "event_id": "fake_tracked_send_id" });
+        };
+
+        const votes = [];
+        const body = newMPollBody(votes);
+        clickRadio(body, "wings");
+        clickRadio(body, "italian");
+        clickRadio(body, "poutine");
+        expect(receivedEvents).toEqual([
+            expectedResponseEvent("wings"),
+            expectedResponseEvent("italian"),
+            expectedResponseEvent("poutine"),
+        ]);
+    });
+
     it("renders a poll with no votes", () => {
         const votes = [];
         const body = newMPollBody(votes);
@@ -288,6 +362,7 @@ function newMPollBody(
     return mount(<MPollBody
         mxEvent={new MatrixEvent({
             "event_id": "$mypoll",
+            "room_id": "#myroom:example.com",
             "content": newPollStart(answers),
         })}
         getRelationsForEvent={
@@ -359,6 +434,7 @@ function responseEvent(
     return new MatrixEvent(
         {
             "event_id": nextId(),
+            "room_id": "#myroom:example.com",
             "origin_server_ts": ts,
             "type": "org.matrix.msc3381.poll.response",
             "sender": sender,
@@ -373,6 +449,24 @@ function responseEvent(
             },
         },
     );
+}
+
+function expectedResponseEvent(answer: string) {
+    return {
+        "content": {
+            "org.matrix.msc3381.poll.response": {
+                "answers": [answer],
+            },
+            "m.relates_to": {
+                "event_id": "$mypoll",
+                "rel_type": "m.reference",
+            },
+        },
+        "eventType": "org.matrix.msc3381.poll.response",
+        "roomId": "#myroom:example.com",
+        "txnId": undefined,
+        "callback": undefined,
+    };
 }
 
 let EVENT_ID = 0;
