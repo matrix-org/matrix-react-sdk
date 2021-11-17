@@ -69,7 +69,8 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 className="mx_ThreadPanel mx_TimelineCard"
                 onClose={this.props.onClose}
                 withoutScrollContainer={true}
-                header={this.renderTimelineCardHeader()}>
+                header={this.renderTimelineCardHeader()}
+            >
                 <TimelinePanel
                     showReadReceipts={true}
                     manageReadReceipts={true}
