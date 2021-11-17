@@ -19,7 +19,6 @@ import { MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import BaseCard from "./BaseCard";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 
 import ResizeNotifier from '../../../utils/ResizeNotifier';
 import MessageComposer from '../rooms/MessageComposer';
