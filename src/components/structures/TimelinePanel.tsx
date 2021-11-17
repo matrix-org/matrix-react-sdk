@@ -134,7 +134,6 @@ interface IProps {
     onPaginationRequest?(timelineWindow: TimelineWindow, direction: string, size: number): Promise<boolean>;
 
     hideThreadedMessages?: boolean;
-    threadViewPreviousCard?: RightPanelPhases;
 }
 
 interface IState {
@@ -1538,7 +1537,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 layout={this.props.layout}
                 enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                 hideThreadedMessages={this.props.hideThreadedMessages}
-                threadViewPreviousCard={this.props.threadViewPreviousCard}
             />
         );
     }

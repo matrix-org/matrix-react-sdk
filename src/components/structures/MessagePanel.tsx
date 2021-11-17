@@ -180,7 +180,6 @@ interface IProps {
     getRelationsForEvent?(eventId: string, relationType: string, eventType: string): Relations;
 
     hideThreadedMessages?: boolean;
-    threadViewPreviousCard?: RightPanelPhases;
 }
 
 interface IState {
@@ -791,7 +790,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     callEventGrouper={callEventGrouper}
                     hideSender={this.membersCount <= 2 && this.props.layout === Layout.Bubble}
                     timelineRenderingType={this.context.timelineRenderingType}
-                    threadViewPreviousCard={this.props.threadViewPreviousCard}
                 />
             </TileErrorBoundary>,
         );
