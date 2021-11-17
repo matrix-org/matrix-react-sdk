@@ -513,7 +513,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     {(markUnreadEnabled && !isUnread) ? (<IconizedContextMenuOption
                         onClick={this.onMarkUnreadClick}
                         label={_t("Mark as unread")}
-                        iconClassName="mx_RoomTile_iconStar"
+                        iconClassName="mx_RoomTile_markAsUnread"
                     />) : null }
                     <IconizedContextMenuCheckbox
                         onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
