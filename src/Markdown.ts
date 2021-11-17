@@ -18,7 +18,7 @@ limitations under the License.
 import * as commonmark from 'commonmark';
 import { escape } from "lodash";
 import { logger } from 'matrix-js-sdk/src/logger';
-import * as linkify from 'linkifyjs';
+import { linkify } from './linkify-matrix';
 
 const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
 
@@ -29,7 +29,7 @@ const TEXT_NODES = ['text', 'softbreak', 'linebreak', 'paragraph', 'document'];
 interface CommonmarkHtmlRendererInternal extends commonmark.HtmlRenderer {
     paragraph: (node: commonmark.Node, entering: boolean) => void;
     link: (node: commonmark.Node, entering: boolean) => void;
-    html_inline: (node: commonmark.Node) => void; // eslint-disable-line camelcazse
+    html_inline: (node: commonmark.Node) => void; // eslint-disable-line camelcase
     html_block: (node: commonmark.Node) => void; // eslint-disable-line camelcase
     text: (node: commonmark.Node) => void;
     out: (text: string) => void;
@@ -239,6 +239,9 @@ export default class Markdown {
                 realParagraph.call(this, node, entering);
             }
         };
+        renderer.text = (node: commonmark.Node) => {
+            renderer.out(node.literal);
+        };
 
         renderer.link = function(node, entering) {
             const attrs = this.attrs(node);
@@ -271,7 +274,7 @@ export default class Markdown {
         renderer.html_block = function(node: commonmark.Node) {
             /*
             // as with `paragraph`, we only insert line breaks
-            // if there are multiple lines in the markdown.
+            // if there are multiple lines in the markdownode.
             const isMultiLine = is_multi_line(node);
             if (isMultiLine) this.cr();
             */
@@ -301,7 +304,7 @@ export default class Markdown {
      * markdown syntax
      * (to fix https://github.com/vector-im/element-web/issues/2870).
      *
-     * N.B. this does **NOT** render arbitrary MD to plain text - only MD
+     * node.B. this does **NOT** render arbitrary MD to plain text - only MD
      * which has no formatting.  Otherwise it emits HTML(!).
      */
     toPlaintext(): string {

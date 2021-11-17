@@ -15,12 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import * as linkifyjs from 'linkifyjs';
+import { registerPlugin } from 'linkifyjs';
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
     tryTransformPermalinkToLocalHref,
 } from "./utils/permalinks/Permalinks";
+import { RoomMember } from 'matrix-js-sdk';
+import dis from './dispatcher/dispatcher';
+import { Action } from './dispatcher/actions';
+import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
 
 enum Type {
     URL = "url",
@@ -29,160 +35,159 @@ enum Type {
     GroupId = "groupid"
 }
 
-function matrixLinkify(linkify): void {
-    // Text tokens
-    const TT = linkify.scanner.TOKENS;
-    // Multi tokens
-    const MT = linkify.parser.TOKENS;
-    const MultiToken = MT.Base;
-    const S_START = linkify.parser.start;
+// Linkify stuff doesn't type scanner/parser/utils properly :/
+function matrixOpaqueIdLinkifyParser({
+    scanner,
+    parser,
+    utils,
+    token,
+    name,
+}: {
+    scanner: any;
+    parser: any;
+    utils: any;
+    token: '#' | '+';
+    name: Type;
+}) {
+    const {
+        DOMAIN,
+        DOT,
+        // A generic catchall text token
+        TEXT,
+        NUM,
+        TLD,
+        COLON,
+        SYM,
+        UNDERSCORE,
+        // because 'localhost' is tokenised to the localhost token,
+        // usernames @localhost:foo.com are otherwise not matched!
+        LOCALHOST,
+    } = scanner.tokens;
 
-    if (TT.UNDERSCORE === undefined) {
-        throw new Error("linkify-matrix requires linkifyjs 2.1.1: this version is too old.");
-    }
+    const S_START = parser.start;
+    const Localpart = utils.createTokenClass(name, { isLink: true });
 
-    const ROOMALIAS = function(value) {
-        MultiToken.call(this, value);
-        this.type = 'roomalias';
-        this.isLink = true;
-    };
-    ROOMALIAS.prototype = new MultiToken();
-
-    const S_HASH = S_START.jump(TT.POUND);
-    const S_HASH_NAME = new linkify.parser.State();
-    const S_HASH_NAME_COLON = new linkify.parser.State();
-    const S_HASH_NAME_COLON_DOMAIN = new linkify.parser.State(ROOMALIAS);
-    const S_HASH_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_ROOMALIAS = new linkify.parser.State(ROOMALIAS);
-    const S_ROOMALIAS_COLON = new linkify.parser.State();
-    const S_ROOMALIAS_COLON_NUM = new linkify.parser.State(ROOMALIAS);
-
-    const roomnameTokens = [
-        TT.DOT,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-        TT.UNDERSCORE,
-        TT.POUND,
+    const localpartTokens = [
+        DOMAIN,
+        NUM,
+        TLD,
 
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
-        TT.LOCALHOST,
+        LOCALHOST,
+        SYM,
+        UNDERSCORE,
+        TEXT,
     ];
 
-    S_HASH.on(roomnameTokens, S_HASH_NAME);
-    S_HASH_NAME.on(roomnameTokens, S_HASH_NAME);
-    S_HASH_NAME.on(TT.DOMAIN, S_HASH_NAME);
+    const HASH_STATE = S_START.tt(token);
+    const LOCALPART_STATE = HASH_STATE.tt(DOMAIN, Localpart);
 
-    S_HASH_NAME.on(TT.COLON, S_HASH_NAME_COLON);
+    for (const token of localpartTokens) {
+        HASH_STATE.tt(token, LOCALPART_STATE);
+        LOCALPART_STATE.tt(token, LOCALPART_STATE);
+    }
 
-    S_HASH_NAME_COLON.on(TT.DOMAIN, S_HASH_NAME_COLON_DOMAIN);
-    S_HASH_NAME_COLON.on(TT.LOCALHOST, S_ROOMALIAS); // accept #foo:localhost
-    S_HASH_NAME_COLON.on(TT.TLD, S_ROOMALIAS); // accept #foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_HASH_NAME_COLON_DOMAIN.on(TT.DOT, S_HASH_NAME_COLON_DOMAIN_DOT);
-    S_HASH_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_HASH_NAME_COLON_DOMAIN);
-    S_HASH_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_ROOMALIAS);
+    const TLD_STATE = LOCALPART_STATE.tt(TLD);
+    TLD_STATE.tt(DOMAIN, LOCALPART_STATE);
+    TLD_STATE.tt(TLD, LOCALPART_STATE);
 
-    S_ROOMALIAS.on(TT.DOT, S_HASH_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_ROOMALIAS.on(TT.COLON, S_ROOMALIAS_COLON); // do not accept trailing `:`
-    S_ROOMALIAS_COLON.on(TT.NUM, S_ROOMALIAS_COLON_NUM); // but do accept :NUM (port specifier)
+    const DOT_STATE = LOCALPART_STATE.tt(DOT, TLD_STATE);
 
-    const USERID = function(value) {
-        MultiToken.call(this, value);
-        this.type = 'userid';
-        this.isLink = true;
-    };
-    USERID.prototype = new MultiToken();
+    const COLON_STATE = LOCALPART_STATE.tt(COLON);
 
-    const S_AT = S_START.jump(TT.AT);
-    const S_AT_NAME = new linkify.parser.State();
-    const S_AT_NAME_COLON = new linkify.parser.State();
-    const S_AT_NAME_COLON_DOMAIN = new linkify.parser.State(USERID);
-    const S_AT_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_USERID = new linkify.parser.State(USERID);
-    const S_USERID_COLON = new linkify.parser.State();
-    const S_USERID_COLON_NUM = new linkify.parser.State(USERID);
+    COLON_STATE.tt(LOCALHOST, LOCALPART_STATE);
+    COLON_STATE.tt(TLD, LOCALPART_STATE);
+    COLON_STATE.tt(DOMAIN, LOCALPART_STATE);
 
-    const usernameTokens = [
-        TT.DOT,
-        TT.UNDERSCORE,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-
-        // as in roomnameTokens
-        TT.LOCALHOST,
-    ];
-
-    S_AT.on(usernameTokens, S_AT_NAME);
-    S_AT_NAME.on(usernameTokens, S_AT_NAME);
-    S_AT_NAME.on(TT.DOMAIN, S_AT_NAME);
-
-    S_AT_NAME.on(TT.COLON, S_AT_NAME_COLON);
-
-    S_AT_NAME_COLON.on(TT.DOMAIN, S_AT_NAME_COLON_DOMAIN);
-    S_AT_NAME_COLON.on(TT.LOCALHOST, S_USERID); // accept @foo:localhost
-    S_AT_NAME_COLON.on(TT.TLD, S_USERID); // accept @foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_AT_NAME_COLON_DOMAIN.on(TT.DOT, S_AT_NAME_COLON_DOMAIN_DOT);
-    S_AT_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_AT_NAME_COLON_DOMAIN);
-    S_AT_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_USERID);
-
-    S_USERID.on(TT.DOT, S_AT_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_USERID.on(TT.COLON, S_USERID_COLON); // do not accept trailing `:`
-    S_USERID_COLON.on(TT.NUM, S_USERID_COLON_NUM); // but do accept :NUM (port specifier)
-
-    const GROUPID = function(value) {
-        MultiToken.call(this, value);
-        this.type = 'groupid';
-        this.isLink = true;
-    };
-    GROUPID.prototype = new MultiToken();
-
-    const S_PLUS = S_START.jump(TT.PLUS);
-    const S_PLUS_NAME = new linkify.parser.State();
-    const S_PLUS_NAME_COLON = new linkify.parser.State();
-    const S_PLUS_NAME_COLON_DOMAIN = new linkify.parser.State(GROUPID);
-    const S_PLUS_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_GROUPID = new linkify.parser.State(GROUPID);
-    const S_GROUPID_COLON = new linkify.parser.State();
-    const S_GROUPID_COLON_NUM = new linkify.parser.State(GROUPID);
-
-    const groupIdTokens = [
-        TT.DOT,
-        TT.UNDERSCORE,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-
-        // as in roomnameTokens
-        TT.LOCALHOST,
-    ];
-
-    S_PLUS.on(groupIdTokens, S_PLUS_NAME);
-    S_PLUS_NAME.on(groupIdTokens, S_PLUS_NAME);
-    S_PLUS_NAME.on(TT.DOMAIN, S_PLUS_NAME);
-
-    S_PLUS_NAME.on(TT.COLON, S_PLUS_NAME_COLON);
-
-    S_PLUS_NAME_COLON.on(TT.DOMAIN, S_PLUS_NAME_COLON_DOMAIN);
-    S_PLUS_NAME_COLON.on(TT.LOCALHOST, S_GROUPID); // accept +foo:localhost
-    S_PLUS_NAME_COLON.on(TT.TLD, S_GROUPID); // accept +foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_PLUS_NAME_COLON_DOMAIN.on(TT.DOT, S_PLUS_NAME_COLON_DOMAIN_DOT);
-    S_PLUS_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_PLUS_NAME_COLON_DOMAIN);
-    S_PLUS_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_GROUPID);
-
-    S_GROUPID.on(TT.DOT, S_PLUS_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_GROUPID.on(TT.COLON, S_GROUPID_COLON); // do not accept trailing `:`
-    S_GROUPID_COLON.on(TT.NUM, S_GROUPID_COLON_NUM); // but do accept :NUM (port specifier)
+    LOCALPART_STATE.tt(COLON, COLON_STATE);
+    LOCALPART_STATE.tt(DOT, DOT_STATE); // accept repeated TLDs (e.g .org.uk)
+    const PORT_STATE = LOCALPART_STATE.tt(COLON);
+    PORT_STATE.tt(NUM, LOCALPART_STATE);
 }
 
-// stubs, overwritten in MatrixChat's componentDidMount
-matrixLinkify.onUserClick = function(e: MouseEvent, userId: string) { e.preventDefault(); };
-matrixLinkify.onAliasClick = function(e: MouseEvent, roomAlias: string) { e.preventDefault(); };
-matrixLinkify.onGroupClick = function(e: MouseEvent, groupId: string) { e.preventDefault(); };
+function matrixUserIdLinkifyPlugin({ scanner, parser, utils }) {
+    const {
+        AT,
+        DOMAIN,
+        DOT,
+        UNDERSCORE,
+        EQUALS,
+        MINUS,
+        SLASH,
+        NUM,
+        TLD,
+        COLON,
+        // because 'localhost' is tokenised to the localhost token,
+        // usernames @localhost:foo.com are otherwise not matched!
+        LOCALHOST,
+    } = scanner.tokens;
+
+    const S_START = parser.start;
+    const UserId = utils.createTokenClass(Type.UserId, { isLink: true });
+
+    // Slightly more defined tokens list than for OpaqueID
+    const localpartTokens = [
+        DOMAIN,
+        NUM,
+        TLD,
+        NUM,
+        DOT,
+        UNDERSCORE,
+        EQUALS,
+        MINUS,
+        SLASH,
+
+        // because 'localhost' is tokenised to the localhost token,
+        // usernames @localhost:foo.com are otherwise not matched!
+        LOCALHOST,
+    ];
+
+    const HASH_STATE = S_START.tt(AT);
+    const LOCALPART_STATE = HASH_STATE.tt(DOMAIN, UserId);
+
+    for (const token of localpartTokens) {
+        HASH_STATE.tt(token, LOCALPART_STATE);
+        LOCALPART_STATE.tt(token, LOCALPART_STATE);
+    }
+
+    const TLD_STATE = LOCALPART_STATE.tt(TLD);
+    TLD_STATE.tt(DOMAIN, LOCALPART_STATE);
+    TLD_STATE.tt(TLD, LOCALPART_STATE);
+
+    const DOT_STATE = LOCALPART_STATE.tt(DOT, TLD_STATE);
+
+    const COLON_STATE = LOCALPART_STATE.tt(COLON);
+
+    COLON_STATE.tt(LOCALHOST, LOCALPART_STATE);
+    COLON_STATE.tt(TLD, LOCALPART_STATE);
+    COLON_STATE.tt(DOMAIN, LOCALPART_STATE);
+
+    LOCALPART_STATE.tt(COLON, COLON_STATE);
+    LOCALPART_STATE.tt(DOT, DOT_STATE); // accept repeated TLDs (e.g .org.uk)
+    const PORT_STATE = LOCALPART_STATE.tt(COLON);
+    PORT_STATE.tt(NUM, LOCALPART_STATE);
+}
+
+export const matrixLinkify: Record<any, any> = {
+    // stubs, overwritten in MatrixChat's componentDidMount
+    onUserClick: function(e: MouseEvent, userId: string) {
+        const member = new RoomMember(null, userId);
+        if (!member) { return; }
+        dis.dispatch<ViewUserPayload>({
+            action: Action.ViewUser,
+            member: member,
+        });
+    },
+    onAliasClick: function(e: MouseEvent, roomAlias: string) {
+        event.preventDefault();
+        dis.dispatch({ action: 'view_room', room_alias: roomAlias });
+    },
+    onGroupClick: function(e: MouseEvent, groupId: string) {
+        event.preventDefault();
+        dis.dispatch({ action: 'view_group', group_id: groupId });
+    },
+};
 
 const escapeRegExp = function(string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -190,19 +195,19 @@ const escapeRegExp = function(string): string {
 
 // Recognise URLs from both our local and official Element deployments.
 // Anyone else really should be using matrix.to.
-matrixLinkify.ELEMENT_URL_PATTERN =
+export const ELEMENT_URL_PATTERN =
     "^(?:https?://)?(?:" +
         escapeRegExp(window.location.host + window.location.pathname) + "|" +
         "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
         "(?:app|beta|staging|develop)\\.element\\.io/" +
     ")(#.*)";
 
-matrixLinkify.MATRIXTO_URL_PATTERN = "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
-matrixLinkify.MATRIXTO_MD_LINK_PATTERN =
+export const MATRIXTO_URL_PATTERN = "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
+export const MATRIXTO_MD_LINK_PATTERN =
     '\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
-matrixLinkify.MATRIXTO_BASE_URL= baseUrl;
+export const MATRIXTO_BASE_URL= baseUrl;
 
-matrixLinkify.options = {
+export const options = {
     events: function(href: string, type: Type | string): Partial<GlobalEventHandlers> {
         switch (type) {
             case Type.URL: {
@@ -278,4 +283,25 @@ matrixLinkify.options = {
     },
 };
 
-export default matrixLinkify;
+registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.POUND as '#';
+    return matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.RoomAlias,
+    });
+});
+registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.PLUS as '+';
+    return matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.GroupId,
+    });
+});
+registerPlugin(Type.UserId, matrixUserIdLinkifyPlugin);
+export const linkify = linkifyjs;
