@@ -26,10 +26,6 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { compare } from "../../utils/strings";
-import dis from '../../dispatcher/dispatcher';
-import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
-import { Action } from "../../dispatcher/actions";
-import { RightPanelPhases } from "../RightPanelStorePhases";
 
 export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
 
