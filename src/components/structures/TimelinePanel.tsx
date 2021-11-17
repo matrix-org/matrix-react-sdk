@@ -50,7 +50,6 @@ import ErrorDialog from '../views/dialogs/ErrorDialog';
 import { debounce } from 'lodash';
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { RightPanelPhases } from '../../stores/RightPanelStorePhases';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
