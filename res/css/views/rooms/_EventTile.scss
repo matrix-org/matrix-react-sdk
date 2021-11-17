@@ -424,8 +424,6 @@ $left-gutter: 64px;
     }
 
     &::before {
-        background-color: #ffffff;
-        mask-image: url('$(res)/img/e2e/normal.svg');
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: 80%;
@@ -855,10 +853,6 @@ $left-gutter: 64px;
         .mx_EventTile_line {
             padding-left: $selected-message-border-width !important;
             order: 10 !important;
-        }
-
-        &:hover .mx_EventTile_line {
-            padding-left: 0 !important;
         }
 
         .mx_MessageTimestamp {
