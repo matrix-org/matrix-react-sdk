@@ -29,12 +29,12 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
+import dis from "../../../dispatcher/dispatcher";
 import { shouldShowSpaceInvite, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import EditCommunityPrototypeDialog from "../dialogs/EditCommunityPrototypeDialog";
-import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import ErrorDialog from "../dialogs/ErrorDialog";
@@ -334,8 +334,9 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
         </InlineSpinner>;
     }
 
-    return <div className="mx_RoomListHeader">
-        <ContextMenuTooltipButton
+    let contextMenuButton: JSX.Element = <div className="mx_RoomListHeader_contextLessTitle">{ title }</div>;
+    if (activeSpace || spaceKey === MetaSpace.Home) {
+        contextMenuButton = <ContextMenuTooltipButton
             inputRef={mainMenuHandle}
             onClick={openMainMenu}
             isExpanded={mainMenuDisplayed}
@@ -343,7 +344,11 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             title={activeSpace ? _t("Space menu") : _t("Space options")}
         >
             { title }
-        </ContextMenuTooltipButton>
+        </ContextMenuTooltipButton>;
+    }
+
+    return <div className="mx_RoomListHeader">
+        { contextMenuButton }
         { pendingRoomJoinSpinner }
         <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
