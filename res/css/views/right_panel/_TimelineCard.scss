@@ -15,11 +15,6 @@ limitations under the License.
 */
 
 .mx_TimelineCard {
-    display: flex;
-    flex-direction: column;
-
-    padding-right: 0;
-
     .mx_TimelineCard__header {
         width: calc(100% - 60px);
         margin-left: 6px;
@@ -35,30 +30,5 @@ limitations under the License.
             line-height: 18px;
             color: $secondary-content;
         }
-    }
-
-    .mx_AutoHideScrollbar {
-        border-radius: 8px;
-    }
-
-    .mx_RoomView_messageListWrapper {
-        background-color: $background;
-        padding: 8px;
-        border-radius: inherit;
-    }
-
-    .mx_ScrollPanel {
-        .mx_RoomView_MessageList {
-            padding: 0;
-        }
-    }
-
-    .mx_MessageComposer {
-        background-color: $background;
-        border-radius: 8px;
-        margin-top: 8px;
-        width: calc(100% - 8px);
-        padding: 0 8px;
-        box-sizing: border-box;
     }
 }

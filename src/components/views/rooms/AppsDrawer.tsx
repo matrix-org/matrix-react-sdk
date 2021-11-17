@@ -149,8 +149,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         if (prevProps.userId !== this.props.userId || prevProps.room !== this.props.room) {
             // Room has changed, update apps
             this.updateApps();
-        } else if (this.getAppsHash(this.topApps())
-        !== this.getAppsHash(prevState.apps[Container.Top])) {
+        } else if (this.getAppsHash(this.topApps()) !== this.getAppsHash(prevState.apps[Container.Top])) {
             this.loadResizerPreferences();
         }
     }

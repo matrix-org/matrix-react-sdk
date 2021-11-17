@@ -88,7 +88,7 @@ import RoomStatusBar from "./RoomStatusBar";
 import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
-import SpaceStore from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
@@ -332,15 +332,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private checkWidgets = (room) => {
         this.setState({
-            hasPinnedWidgets: WidgetLayoutStore.instance.hasPinnedWidgets(this.state.room),
-            mainSplitContentType: this.getMainSplitContentType(),
-            showApps: this.shouldShowApps(this.state.room),
+            hasPinnedWidgets: WidgetLayoutStore.instance.hasPinnedWidgets(room),
+            mainSplitContentType: this.getMainSplitContentType(room),
+            showApps: this.shouldShowApps(room),
         });
     };
 
-    private getMainSplitContentType = () => {
+    private getMainSplitContentType = (room) => {
         // TODO-video check if video should be displayed in main panel
-        return (WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room))
+        return (WidgetLayoutStore.instance.hasMaximisedWidget(room))
             ? MainSplitContentType.MaximisedWidget
             : MainSplitContentType.Timeline;
     };
@@ -598,15 +598,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         // Check if user has previously chosen to hide the app drawer for this
         // room. If so, do not show apps
-        const hideWidgetDrawer = localStorage.getItem(
-            room.roomId + "_hide_widget_drawer");
+        const hideWidgetKey = room.roomId + "_hide_widget_drawer";
+        const hideWidgetDrawer = localStorage.getItem(hideWidgetKey);
 
-        // This is confusing, but it means to say that we default to the tray being
-        // hidden unless the user clicked to open it.
-        const isManuallyShown = hideWidgetDrawer === "false";
+        // If unset show the Tray
+        // Otherwise (in case the user set hideWidgetDrawer by clicking the button) follow the parameter.
+        const isManuallyShown = hideWidgetDrawer ? hideWidgetDrawer === "false": true;
 
         const widgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
-        return widgets.length > 0 || isManuallyShown;
+        return isManuallyShown && widgets.length > 0;
     }
 
     componentDidMount() {
@@ -1500,10 +1500,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onSettingsClick = () => {
-        dis.dispatch({ action: "open_room_settings" });
-    };
-
     private onAppsClick = () => {
         dis.dispatch({
             action: "appsDrawer",
@@ -2132,7 +2128,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 // keep the timeline in as the mainSplitBody
                 break;
             case MainSplitContentType.MaximisedWidget:
-                if (!SettingsStore.getValue("feature_maximised_widgets")) {break;}
+                if (!SettingsStore.getValue("feature_maximised_widgets")) break;
                 mainSplitBody = <AppsDrawer
                     room={this.state.room}
                     userId={this.context.credentials.userId}
@@ -2157,7 +2153,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             oobData={this.props.oobData}
                             inRoom={myMembership === 'join'}
                             onSearchClick={this.onSearchClick}
-                            onSettingsClick={this.onSettingsClick}
                             onForgetClick={(myMembership === "leave") ? this.onForgetClick : null}
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? this.onAppsClick : null}
