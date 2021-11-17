@@ -41,6 +41,7 @@ import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
+import RightPanelStore from '../../stores/RightPanelStore';
 
 interface IProps {
     room: Room;
@@ -51,7 +52,6 @@ interface IProps {
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     initialEventHighlighted?: boolean;
-    previousPhase?: RightPanelPhases;
 }
 interface IState {
     thread?: Thread;
@@ -204,11 +204,14 @@ export default class ThreadView extends React.Component<IProps, IState> {
             event_id: this.state.thread?.id,
         };
 
-        const previousPhase = (this.props.previousPhase) ? this.props.previousPhase : RightPanelPhases.ThreadPanel;
-
+        let previousPhase = RightPanelStore.getSharedInstance().previousPhase;
+        // Make sure the previous Phase is always one of the two: Timeline or ThreadPanel
+        if (![RightPanelPhases.ThreadPanel, RightPanelPhases.Timeline].includes(previousPhase)) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
         const previousPhaseLabels = {};
         previousPhaseLabels[RightPanelPhases.ThreadPanel] = _t("All threads");
-        previousPhaseLabels[RightPanelPhases.TimelineCard] = _t("Chat");
+        previousPhaseLabels[RightPanelPhases.Timeline] = _t("Chat");
 
         return (
             <RoomContext.Provider value={{

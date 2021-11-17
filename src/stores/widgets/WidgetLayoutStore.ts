@@ -456,11 +456,6 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 for (const w of this.getContainerWidgets(room, Container.Center)) {
                     this.moveToContainer(room, w, Container.Right);
                 }
-                // Additionally change the right panel phase to chat:
-                dis.dispatch<SetRightPanelPhasePayload>({
-                    action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.TimelineCard,
-                });
                 break;
             case Container.Top:
                 // new "top" widget => the center widget moves into "right"

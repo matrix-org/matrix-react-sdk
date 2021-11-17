@@ -16,19 +16,21 @@ limitations under the License.
 
 .mx_TimelineCard {
     .mx_TimelineCard__header {
-        width: calc(100% - 60px);
         margin-left: 6px;
-        margin-bottom: 4px;
         display: flex;
         flex: 1;
-        justify-content: space-between;
-        align-items: center;
 
         span:first-of-type {
             font-weight: 600;
             font-size: 15px;
             line-height: 18px;
             color: $secondary-content;
+        }
+    }
+    .mx_BaseCardHeader {
+        margin: 5px 0 9px 0;
+        .mx_BaseCard_close {
+            margin: 8px;
         }
     }
 }

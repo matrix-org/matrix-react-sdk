@@ -410,7 +410,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             : Container.Center;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
         if (targetContainer === Container.Right
-            && RightPanelStore.getSharedInstance().visibleRoomPanelPhase === RightPanelPhases.TimelineCard) {
+            && RightPanelStore.getSharedInstance().visibleRoomPanelPhase === RightPanelPhases.Timeline) {
             // If the widget gets closed also close the RightPanel chat.
             dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomSummary });
         }
