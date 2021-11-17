@@ -57,7 +57,7 @@ import {
 } from "../../utils/space";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import MemberAvatar from "../views/avatars/MemberAvatar";
-import SpaceStore from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
 import FacePile from "../views/elements/FacePile";
 import {
     AddExistingToSpace,
@@ -668,10 +668,6 @@ const SpaceSetupPrivateScope = ({ space, justCreatedOpts, onFinished }) => {
             <h3>{ _t("Me and my teammates") }</h3>
             <div>{ _t("A private space for you and your teammates") }</div>
         </AccessibleButton>
-        <div className="mx_SpaceRoomView_betaWarning">
-            <h3>{ _t("Teammates might not be able to view or join any private rooms you make.") }</h3>
-            <p>{ _t("We're working on this, but just want to let you know.") }</p>
-        </div>
     </div>;
 };
 

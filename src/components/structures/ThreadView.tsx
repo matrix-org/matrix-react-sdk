@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MatrixEvent, Room } from 'matrix-js-sdk/src';
+import { IEventRelation, MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
@@ -37,6 +37,10 @@ import { MatrixClientPeg } from '../../MatrixClientPeg';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
+import ContentMessages from '../../ContentMessages';
+import UploadBar from './UploadBar';
+import { _t } from '../../languageHandler';
+import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 
 interface IProps {
     room: Room;
@@ -48,7 +52,6 @@ interface IProps {
     initialEvent?: MatrixEvent;
     initialEventHighlighted?: boolean;
 }
-
 interface IState {
     thread?: Thread;
     editState?: EditorStateTransfer;
@@ -66,7 +69,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
         super(props);
         this.state = {};
     }
-
     public componentDidMount(): void {
         this.setupThread(this.props.mxEvent);
         this.dispatcherRef = dis.register(this.onAction);
@@ -98,10 +100,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.phase == RightPanelPhases.ThreadView && payload.event) {
-            if (payload.event !== this.props.mxEvent) {
-                this.teardownThread();
-                this.setupThread(payload.event);
-            }
+            this.teardownThread();
+            this.setupThread(payload.event);
         }
         switch (payload.action) {
             case Action.EditEvent:
@@ -130,15 +130,18 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private setupThread = (mxEv: MatrixEvent) => {
-        let thread = mxEv.getThread();
+        let thread = this.props.room.threads.get(mxEv.getId());
         if (!thread) {
             const client = MatrixClientPeg.get();
+            // Do not attach this thread object to the event for now
+            // TODO: When local echo gets reintroduced it will be important
+            // to add that back in, and the threads model should go through the
+            // same reconciliation algorithm as events
             thread = new Thread(
                 [mxEv],
                 this.props.room,
                 client,
             );
-            mxEv.setThread(thread);
         }
         thread.on(ThreadEvent.Update, this.updateThread);
         thread.once(ThreadEvent.Ready, this.updateThread);
@@ -181,10 +184,25 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private renderThreadViewHeader = (): JSX.Element => {
+        return <div className="mx_ThreadPanel__header">
+            <span>{ _t("Thread") }</span>
+            <ThreadListContextMenu
+                mxEvent={this.props.mxEvent}
+                permalinkCreator={this.props.permalinkCreator} />
+        </div>;
+    };
+
     public render(): JSX.Element {
         const highlightedEventId = this.props.initialEventHighlighted
             ? this.props.initialEvent?.getId()
             : null;
+
+        const threadRelation: IEventRelation = {
+            rel_type: RelationType.Thread,
+            event_id: this.state.thread?.id,
+        };
+
         return (
             <RoomContext.Provider value={{
                 ...this.context,
@@ -193,10 +211,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
             }}>
 
                 <BaseCard
-                    className="mx_ThreadView"
+                    className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
                     previousPhase={RightPanelPhases.ThreadPanel}
+                    previousPhaseLabel={_t("All threads")}
                     withoutScrollContainer={true}
+                    header={this.renderThreadViewHeader()}
                 >
                     { this.state.thread && (
                         <TimelinePanel
@@ -208,8 +228,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             timelineSet={this.state?.thread?.timelineSet}
                             showUrlPreview={true}
                             tileShape={TileShape.Thread}
-                            empty={<div>empty</div>}
-                            alwaysShowTimestamps={true}
                             layout={Layout.Group}
                             hideThreadedMessages={false}
                             hidden={false}
@@ -224,13 +242,14 @@ export default class ThreadView extends React.Component<IProps, IState> {
                         />
                     ) }
 
+                    { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
+                        <UploadBar room={this.props.room} relation={threadRelation} />
+                    ) }
+
                     { this.state?.thread?.timelineSet && (<MessageComposer
                         room={this.props.room}
                         resizeNotifier={this.props.resizeNotifier}
-                        relation={{
-                            rel_type: RelationType.Thread,
-                            event_id: this.state.thread.id,
-                        }}
+                        relation={threadRelation}
                         replyToEvent={this.state.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator}
                         e2eStatus={this.props.e2eStatus}

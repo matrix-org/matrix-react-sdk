@@ -41,7 +41,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CallHandler from '../../../CallHandler';
 import { Room } from "matrix-js-sdk/src/models/room";
 import { IApp } from "../../../stores/WidgetStore";
-
+import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
 interface IProps {
     app: IApp;
     // If room is not specified then it is an account level widget
@@ -85,6 +85,7 @@ interface IState {
     error: Error;
     menuDisplayed: boolean;
     widgetPageTitle: string;
+    requiresClient: boolean;
 }
 
 import { logger } from "matrix-js-sdk/src/logger";
@@ -115,8 +116,10 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.persistKey = getPersistKey(this.props.app.id);
         try {
             this.sgWidget = new StopGapWidget(this.props);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
+            // emits when the capabilites have been setup or changed
+            this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
         } catch (e) {
             logger.log("Failed to construct widget", e);
             this.sgWidget = null;
@@ -156,6 +159,10 @@ export default class AppTile extends React.Component<IProps, IState> {
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
+            // requiresClient is initially set to true. This avoids the broken state of the popout
+            // button being visible (for an instance) and then disappearing when the widget is loaded.
+            // requiresClient <-> hide the popout button
+            requiresClient: true,
         };
     }
 
@@ -217,11 +224,11 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
         try {
             this.sgWidget = new StopGapWidget(newProps);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
             this.startWidget();
         } catch (e) {
-            logger.log("Failed to construct widget", e);
+            logger.error("Failed to construct widget", e);
             this.sgWidget = null;
         }
     }
@@ -235,7 +242,13 @@ export default class AppTile extends React.Component<IProps, IState> {
     private iframeRefChange = (ref: HTMLIFrameElement): void => {
         this.iframe = ref;
         if (ref) {
-            if (this.sgWidget) this.sgWidget.start(ref);
+            try {
+                if (this.sgWidget) {
+                    this.sgWidget.start(ref);
+                }
+            } catch (e) {
+                logger.error("Failed to start widget", e);
+            }
         } else {
             this.resetWidget(this.props);
         }
@@ -288,7 +301,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.sgWidget) this.sgWidget.stop({ forceDestroy: true });
     }
 
-    private onWidgetPrepared = (): void => {
+    private onWidgetPreparing = (): void => {
         this.setState({ loading: false });
     };
 
@@ -296,6 +309,12 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (WidgetType.JITSI.matches(this.props.app.type)) {
             this.sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
         }
+    };
+
+    private onWidgetCapabilitiesNotified = (): void => {
+        this.setState({
+            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
+        });
     };
 
     private onAction = (payload): void => {
@@ -380,6 +399,14 @@ export default class AppTile extends React.Component<IProps, IState> {
         // window.open(this._getPopoutUrl(), '_blank', 'noopener=yes');
         Object.assign(document.createElement('a'),
             { target: '_blank', href: this.sgWidget.popoutUrl, rel: 'noreferrer noopener' }).click();
+    };
+
+    private onMaxMinWidgetClick = (): void => {
+        const targetContainer =
+        WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
+            ? Container.Right
+            : Container.Center;
+        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 
     private onContextMenuClick = (): void => {
@@ -504,6 +531,23 @@ export default class AppTile extends React.Component<IProps, IState> {
                 />
             );
         }
+        let maxMinButton;
+        if (SettingsStore.getValue("feature_maximised_widgets")) {
+            const widgetIsMaximised = WidgetLayoutStore.instance.
+                isInContainer(this.props.room, this.props.app, Container.Center);
+            maxMinButton = <AccessibleButton
+                className={
+                    "mx_AppTileMenuBar_iconButton"
+                                    + (widgetIsMaximised
+                                        ? " mx_AppTileMenuBar_iconButton_minWidget"
+                                        : " mx_AppTileMenuBar_iconButton_maxWidget")
+                }
+                title={
+                    widgetIsMaximised ? _t('Close'): _t('Maximise widget')
+                }
+                onClick={this.onMaxMinWidgetClick}
+            />;
+        }
 
         return <React.Fragment>
             <div className={appTileClasses} id={this.props.app.id}>
@@ -513,7 +557,8 @@ export default class AppTile extends React.Component<IProps, IState> {
                             { this.props.showTitle && this.getTileTitle() }
                         </span>
                         <span className="mx_AppTileMenuBarWidgets">
-                            { this.props.showPopout && <AccessibleButton
+                            { maxMinButton }
+                            { (this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
                                 className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                                 title={_t('Popout widget')}
                                 onClick={this.onPopoutWidgetClick}
