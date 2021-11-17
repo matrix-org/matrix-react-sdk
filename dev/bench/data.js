@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637096919612,
+  "lastUpdate": 1637139854016,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39572,6 +39572,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 738.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1cb0e9276810f219e181ac32a5f9b6d1ec39276f",
+          "message": "Remove CSS override for event line on thread view (#7141)",
+          "timestamp": "2021-11-17T08:58:32Z",
+          "tree_id": "b40d8967b1cac87ba884446337374b537e2bcafb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1cb0e9276810f219e181ac32a5f9b6d1ec39276f"
+        },
+        "date": 1637139851161,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5039.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 995.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1663.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4590.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
