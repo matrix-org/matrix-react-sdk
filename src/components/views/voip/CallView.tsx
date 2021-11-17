@@ -620,7 +620,6 @@ export default class CallView extends React.Component<IProps, IState> {
             <CallViewHeader
                 onPipMouseDown={this.props.onMouseDownOnHeader}
                 pipMode={this.props.pipMode}
-                type={this.props.call.type}
                 callRooms={[callRoom, secCallRoom]}
             />
             { contentView }
