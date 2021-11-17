@@ -1498,11 +1498,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                         "Click your avatar to find a quick feedback link.",
                                         {},
                                         {
-                                            a: sub => <AccessibleButton kind="link" onClick={(ev) => {
-                                                ev.preventDefault();
-                                                ev.stopPropagation();
-                                                Modal.createTrackedDialog('Feedback Dialog', '', FeedbackDialog);
-                                            }}>
+                                            a: sub => <AccessibleButton
+                                                kind="link"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    ev.stopPropagation();
+                                                    Modal.createTrackedDialog('Feedback Dialog', '', FeedbackDialog);
+                                                }}
+                                            >
                                                 { sub }
                                             </AccessibleButton>,
                                         },
