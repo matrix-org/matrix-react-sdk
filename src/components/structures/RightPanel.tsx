@@ -335,7 +335,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     panel = <PinnedMessagesCard room={this.props.room} onClose={this.onClose} />;
                 }
                 break;
-            case RightPanelPhases.TimelineCard:
+            case RightPanelPhases.Timeline:
                 if (!SettingsStore.getValue("feature_maximised_widgets")) { break; }
                 panel = <TimelineCard
                     room={this.props.room}

@@ -208,7 +208,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         const previousPhaseLabels = {};
         previousPhaseLabels[RightPanelPhases.ThreadPanel] = _t("All threads");
-        previousPhaseLabels[RightPanelPhases.TimelineCard] = _t("Chat");
+        previousPhaseLabels[RightPanelPhases.Timeline] = _t("Chat");
 
         return (
             <RoomContext.Provider value={{

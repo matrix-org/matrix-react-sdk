@@ -142,7 +142,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         this.setPhase(RightPanelPhases.PinnedMessages);
     };
     private onTimelineCardClicked = () => {
-        this.setPhase(RightPanelPhases.TimelineCard);
+        this.setPhase(RightPanelPhases.Timeline);
     };
 
     private onThreadsPanelClicked = () => {
@@ -165,7 +165,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             />
             <TimelineCardHeaderButton
                 room={this.props.room}
-                isHighlighted={this.isPhase(RightPanelPhases.TimelineCard)}
+                isHighlighted={this.isPhase(RightPanelPhases.Timeline)}
                 showNewMessage={false}
                 onClick={this.onTimelineCardClicked}
             />

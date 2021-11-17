@@ -333,7 +333,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // Show chat in right panel when a widget is maximised
             dis.dispatch<SetRightPanelPhasePayload>({
                 action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.TimelineCard,
+                phase: RightPanelPhases.Timeline,
             });
         }
         this.checkWidgets(this.state.room);
