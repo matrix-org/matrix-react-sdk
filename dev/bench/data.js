@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637142133245,
+  "lastUpdate": 1637142181052,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39716,6 +39716,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4456.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f13f3882f7b68396f291daf55c158a8fac6dda7",
+          "message": "Cleanup `E2ePadlock` code (#7144)",
+          "timestamp": "2021-11-17T09:36:10Z",
+          "tree_id": "2588b5f5330752dcd54a847627d46d4974ae0d94",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f13f3882f7b68396f291daf55c158a8fac6dda7"
+        },
+        "date": 1637142178099,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5177.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1179.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1699.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4945.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
