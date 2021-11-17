@@ -321,10 +321,6 @@ $activeBorderColor: $secondary-content;
         line-height: $font-18px;
     }
 
-    .mx_SpacePanel_iconHome::before {
-        mask-image: url('$(res)/img/element-icons/home.svg');
-    }
-
     .mx_SpacePanel_iconInvite::before {
         mask-image: url('$(res)/img/element-icons/room/invite.svg');
     }
@@ -341,16 +337,12 @@ $activeBorderColor: $secondary-content;
         mask-image: url('$(res)/img/element-icons/room/members.svg');
     }
 
-    .mx_SpacePanel_iconCreateRoom::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/hash-plus.svg');
-    }
-
-    .mx_SpacePanel_iconAddSpace::before {
-        mask-image: url('$(res)/img/element-icons/leave.svg');
+    .mx_SpacePanel_iconPlus::before {
+        mask-image: url('$(res)/img/element-icons/plus.svg');
     }
 
     .mx_SpacePanel_iconExplore::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/hash-search.svg');
+        mask-image: url('$(res)/img/element-icons/roomlist/search.svg');
     }
 
     .mx_SpacePanel_noIcon {
@@ -359,6 +351,14 @@ $activeBorderColor: $secondary-content;
         & + .mx_IconizedContextMenu_label {
             padding-left: 5px !important; // override default iconized label style to align with header
         }
+    }
+
+    .mx_SpacePanel_contextMenu_separatorLabel {
+        color: $tertiary-content;
+        font-size: $font-10px;
+        line-height: $font-12px;
+        font-weight: $font-semi-bold;
+        //margin-left: 8px;
     }
 }
 
