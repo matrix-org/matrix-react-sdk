@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637153709419,
+  "lastUpdate": 1637162752712,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39848,6 +39848,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 622.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c06e7f7a098aa78afe1b4ecc11459be0543a954",
+          "message": "Add option to change the size of images/videos in the timeline (#7017)\n\nCo-authored-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>\r\nCo-authored-by: Timo K <toger5@hotmail.de>",
+          "timestamp": "2021-11-17T15:19:30Z",
+          "tree_id": "cc104cd4145214a611308656b635d10efcfab7e2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c06e7f7a098aa78afe1b4ecc11459be0543a954"
+        },
+        "date": 1637162750334,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5117.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1066.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4571.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
