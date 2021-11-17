@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637162752712,
+  "lastUpdate": 1637186879411,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39896,6 +39896,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4571.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e549438e2af0d4ff3ed03953de58960e9735442b",
+          "message": "Add logging for a bunch of silently swallowed errors (#7148)",
+          "timestamp": "2021-11-18T09:01:45+11:00",
+          "tree_id": "c4ecf84a31f0cae58681e5c982cbc664d21d2fc1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e549438e2af0d4ff3ed03953de58960e9735442b"
+        },
+        "date": 1637186875959,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5667.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1223.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1624.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4631.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
