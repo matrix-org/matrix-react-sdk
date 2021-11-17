@@ -34,6 +34,8 @@ import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
 import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -44,6 +46,12 @@ const ROOM_INFO_PHASES = [
     RightPanelPhases.EncryptionPanel,
     RightPanelPhases.Room3pidMemberInfo,
 ];
+const UnreadIndicator = ({ className }) => {
+    return <React.Fragment>
+        <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
+        <div className={className} />
+    </React.Fragment>;
+};
 
 const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
     const pinningEnabled = useSettingValue("feature_pinning");
@@ -53,7 +61,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
 
     let unreadIndicator;
     if (pinnedEvents.some(id => !readPinnedEvents.has(id))) {
-        unreadIndicator = <div className="mx_RightPanel_pinnedMessagesButton_unreadIndicator" />;
+        unreadIndicator = <UnreadIndicator className="mx_RightPanel_headerButton_unreadIndicator" />;
     }
 
     return <HeaderButton
@@ -69,19 +77,25 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
 
 const TimelineCardHeaderButton = ({ room, isHighlighted, showNewMessage, onClick }) => {
     if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
-
     let unreadIndicator;
-    if (/*pinnedEvents.some(id => !readPinnedEvents.has(id)*/ showNewMessage) {
-        unreadIndicator = <div className="mx_RightPanel_pinnedMessagesButton_unreadIndicator" />;
+    switch (RoomNotificationStateStore.instance.getRoomState(room).color) {
+        case NotificationColor.Grey:
+            unreadIndicator =
+            <UnreadIndicator className="mx_RightPanel_headerButton_unreadIndicator mx_Indicator_gray" />;
+            break;
+        case NotificationColor.Red:
+            unreadIndicator =
+            <UnreadIndicator className="mx_RightPanel_headerButton_unreadIndicator" />;
+            break;
+        default:
+            break;
     }
-
     return <HeaderButton
         name="timelineCardButton"
         title={_t("Chat")}
         isHighlighted={isHighlighted}
         onClick={onClick}
-        analytics={["Right Panel", "Timeline Panel Button", "click"]}
-    >
+        analytics={["Right Panel", "Timeline Panel Button", "click"]}>
         { unreadIndicator }
     </HeaderButton>;
 };
