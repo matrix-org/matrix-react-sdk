@@ -286,7 +286,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             // Technically not possible with the UI as of April 2019 because there's no
             // options for the user to change this. However, it's not a bad thing to report
             // the error to the user for if/when the UI is available.
-            description = _t("The server does not support the room version specified.");
+            description = _t("The homeserver does not support the room version specified.");
         }
         Modal.createTrackedDialog('Failure to create room', '', ErrorDialog, {
             title: _t("Failure to create room"),

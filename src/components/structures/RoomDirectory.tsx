@@ -342,7 +342,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                         title: _t('Error'),
                         description: (err && err.message)
                             ? err.message
-                            : _t('The server may be unavailable or overloaded'),
+                            : _t('The homeserver may be unavailable or overloaded.'),
                     });
                 });
             },

@@ -115,7 +115,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         }
 
         logger.error("Error during UI Auth:", { result });
-        this.setState({ errStr: _t("There was a problem communicating with the server. Please try again.") });
+        this.setState({ errStr: _t("There was a problem communicating with the homeserver, please try again.") });
     };
 
     private onUIAuthComplete = (auth: IAuthData): void => {
@@ -129,7 +129,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             this.props.onFinished(true);
         }).catch(e => {
             logger.error(e);
-            this.setState({ errStr: _t("There was a problem communicating with the server. Please try again.") });
+            this.setState({ errStr: _t("There was a problem communicating with the homeserver, please try again.") });
         });
     };
 

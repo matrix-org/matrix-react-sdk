@@ -94,7 +94,7 @@ export default class IntegrationManager extends React.Component<IProps, IState> 
         if (!this.props.connected || this.state.errored) {
             return (
                 <div className='mx_IntegrationManager_error'>
-                    <h3>{ _t("Cannot connect to integration manager") }</h3>
+                    <h3>{ _t("Failed to connect to integration manager") }</h3>
                     <p>{ _t("The integration manager is offline or it cannot reach your homeserver.") }</p>
                 </div>
             );

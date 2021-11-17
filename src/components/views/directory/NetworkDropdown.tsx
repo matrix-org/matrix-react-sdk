@@ -184,7 +184,7 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
             if (server === hsName) {
                 subtitle = (
                     <div className="mx_NetworkDropdown_server_subtitle">
-                        { _t("Your server") }
+                        { _t("Your homeserver") }
                     </div>
                 );
             }
