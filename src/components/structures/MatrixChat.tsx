@@ -830,7 +830,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     hideToSRUsers: false,
                 });
                 break;
-            case 'accept_cookies':
+            case 'analytics_accept':
                 hideAnalyticsToast();
                 this.setCookieAccountData(true);
                 if (Analytics.canEnable()) {
@@ -840,7 +840,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     CountlyAnalytics.instance.enable(/* anonymous = */ false);
                 }
                 break;
-            case 'reject_cookies':
+            case 'analytics_reject':
                 hideAnalyticsToast();
                 this.setCookieAccountData(false);
                 break;
@@ -1345,7 +1345,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (SettingsStore.getValue("showCookieBar") &&
                 (Analytics.canEnable() || CountlyAnalytics.instance.canEnable())
             ) {
-                showAnonymousAnalyticsOptInToast(this.props.config.piwik?.policyUrl);
+                showAnonymousAnalyticsOptInToast(SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
             }
         }
 

@@ -23,17 +23,39 @@ import Analytics from "../Analytics";
 import AccessibleButton from "../components/views/elements/AccessibleButton";
 import GenericToast from "../components/views/toasts/GenericToast";
 import ToastStore from "../stores/ToastStore";
+import Modal from "../Modal";
+import AnalyticsLearnMoreDialog from "../components/views/dialogs/AnalyticsLearnMoreDialog";
 
 const onAccept = () => {
     dis.dispatch({
-        action: 'accept_cookies',
+        action: 'analytics_accept',
     });
 };
 
 const onReject = () => {
     dis.dispatch({
-        action: "reject_cookies",
+        action: "analytics_reject",
     });
+};
+
+const onLearnMore = (analyticsOwner: string) => {
+    Modal.createTrackedDialog(
+        "Analytics Learn More",
+        "",
+        AnalyticsLearnMoreDialog,
+        {
+            analyticsOwner,
+            onFinished: (analyticsEnabled?: boolean) => {
+                if (analyticsEnabled === true) {
+                    onAccept();
+                } else if (analyticsEnabled === false) {
+                    onReject();
+                }
+                // otherwise, the user closed the dialog without making a choice, leave the toast open
+            },
+        },
+        "mx_AnalyticsLearnMoreDialog_wrapper",
+    );
 };
 
 const onUsageDataClicked = () => {
@@ -42,55 +64,7 @@ const onUsageDataClicked = () => {
 
 const TOAST_KEY = "analytics";
 
-type IDescriptions = {
-    reOptInDescription: ReactNode;
-    optInDescription: ReactNode;
-};
-
-const getPseudonymousDescriptions = (policyUrl: string, analyticsOwner: string): IDescriptions => {
-    // Get toast descriptions for a user when pseudonymous tracking is enabled (i.e. the new scheme used by posthog).
-    const usageDataLink = (sub) => (
-        <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
-    );
-
-    // The user previously opted into our old analytics system - let them know things have changed and ask
-    // them to opt in again.
-    const reOptInDescription = _t(
-        "To allow us to understand how people use multiple devices, we've enhanced our " +
-        "analytics data to include a randomly generated identifier associated " +
-        "with your account that will be shared across your devices." + "<Linebreak/><Linebreak/>" +
-        "We don't record or profile any personal data, and we don't share information with third " +
-        "parties." + "<Linebreak/><Linebreak/>" + "<UsageDataLink>More information</UsageDataLink>" +
-        "<Linebreak/><Linebreak/>" +
-        "You previously agreed to send anonymous usage data to %(analyticsOwner)s - is this still okay?",
-        {
-            analyticsOwner: analyticsOwner,
-        },
-        {
-            "UsageDataLink": usageDataLink,
-            "Linebreak": (sub) => <br />,
-        });
-
-    // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
-    // explaining any change.
-    const optInDescription = _t(
-        "Would you like to send analytics data to %(analyticsOwner)s to help improve the app? " +
-        "<Linebreak/><Linebreak/>" +
-        "We don't record or profile any personal data, and we don't share information " +
-        "with third parties." + "<Linebreak/><Linebreak/>" + "<UsageDataLink>More information</UsageDataLink>",
-        {
-            analyticsOwner: analyticsOwner,
-        },
-        {
-            "UsageDataLink": usageDataLink,
-            "Linebreak": (sub) => <br />,
-        },
-    );
-
-    return { reOptInDescription, optInDescription };
-};
-
-const getAnonymousDescription = (policyUrl): ReactNode => {
+const getAnonymousDescription = (): ReactNode => {
     // get toast description for anonymous tracking (the previous scheme pre-posthog)
     const brand = SdkConfig.get().brand;
     return _t(
@@ -106,18 +80,11 @@ const getAnonymousDescription = (policyUrl): ReactNode => {
     );
 };
 
-const showToast = (description: ReactNode) => {
-    const brand = SdkConfig.get().brand;
+const showToast = (props: Omit<React.ComponentProps<typeof GenericToast>, "toastKey">, analyticsOwner: string) => {
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
-        title: _t("Help us improve %(brand)s", { brand }),
-        props: {
-            description: description,
-            acceptLabel: _t("Yes"),
-            onAccept,
-            rejectLabel: _t("No"),
-            onReject,
-        },
+        title: _t("Help improve %(analyticsOwner)s", { analyticsOwner }),
+        props,
         component: GenericToast,
         className: "mx_AnalyticsToast",
         priority: 10,
@@ -126,21 +93,49 @@ const showToast = (description: ReactNode) => {
 
 export const showPseudonymousAnalyticsOptInToast = (policyUrl: string, analyticsOptIn: boolean,
     analyticsOwner: string): void => {
-    let description;
-    const descriptions = getPseudonymousDescriptions(policyUrl, analyticsOwner);
+    const learnMoreLink = (sub) => (
+        <AccessibleButton kind="link" onClick={() => onLearnMore(analyticsOwner)}>{ sub }</AccessibleButton>
+    );
+    let props;
     if (analyticsOptIn) {
-        description = descriptions.reOptInDescription;
+        // The user previously opted into our old analytics system - let them know things have changed and ask
+        // them to opt in again.
+        props = {
+            description: _t(
+                "You previously consented to share anonymous usage data with us. We're updating how that works."),
+            acceptLabel: _t("Learn more"),
+            onAccept,
+            rejectLabel: _t("That's fine"),
+            onReject: onLearnMore(analyticsOwner),
+        };
     } else if (analyticsOptIn === null || analyticsOptIn === undefined) {
-        description = descriptions.optInDescription;
+        // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
+        // explaining any change.
+        props = {
+            description: _t(
+                "Share anonymous data to help us identify issues. Nothing personal. No third parties. " +
+                "<LearnMoreLink>Learn More</LearnMoreLink>", {}, { "LearnMoreLink": learnMoreLink }),
+            acceptLabel: _t("Yes"),
+            onAccept,
+            rejectLabel: _t("No"),
+            onReject,
+        };
     } else { // false
         // The user previously opted out of analytics, don't ask again
         return;
     }
-    showToast(description);
+    showToast(props, analyticsOwner);
 };
 
-export const showAnonymousAnalyticsOptInToast = (policyUrl: string): void => {
-    showToast(getAnonymousDescription(policyUrl));
+export const showAnonymousAnalyticsOptInToast = (analyticsOwner: string): void => {
+    const props = {
+        description: getAnonymousDescription(),
+        acceptLabel: _t("Yes"),
+        onAccept,
+        rejectLabel: _t("No"),
+        onReject,
+    };
+    showToast(props, analyticsOwner);
 };
 
 export const hideToast = () => {
