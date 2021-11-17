@@ -355,8 +355,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     initialEvent={this.state.initialEvent}
                     initialEventHighlighted={this.state.initialEventHighlighted}
                     permalinkCreator={this.props.permalinkCreator}
-                    e2eStatus={this.props.e2eStatus}
-                    previousPhase={RightPanelStore.getSharedInstance().previousPhase} />;
+                    e2eStatus={this.props.e2eStatus} />;
                 break;
 
             case RightPanelPhases.ThreadPanel:
