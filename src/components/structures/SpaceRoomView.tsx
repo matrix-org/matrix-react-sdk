@@ -156,7 +156,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
         memberSection = <span className="mx_SpaceRoomView_info_memberCount">
             { _t("%(count)s members", { count: summary.num_joined_members }) }
         </span>;
-    } else if (summary === null) {
+    } else if (summary !== undefined) {
         memberSection = <RoomMemberCount room={space}>
             { (count) => count > 0 ? (
                 <AccessibleButton
