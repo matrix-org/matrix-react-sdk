@@ -15,12 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import * as linkifyjs from 'linkifyjs';
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
     tryTransformPermalinkToLocalHref,
 } from "./utils/permalinks/Permalinks";
+import { RoomMember } from 'matrix-js-sdk';
+import dis from './dispatcher/dispatcher';
+import { Action } from './dispatcher/actions';
+import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
 
 enum Type {
     URL = "url",
@@ -179,10 +184,25 @@ function matrixLinkify(linkify): void {
     S_GROUPID_COLON.on(TT.NUM, S_GROUPID_COLON_NUM); // but do accept :NUM (port specifier)
 }
 
-// stubs, overwritten in MatrixChat's componentDidMount
-matrixLinkify.onUserClick = function(e: MouseEvent, userId: string) { e.preventDefault(); };
-matrixLinkify.onAliasClick = function(e: MouseEvent, roomAlias: string) { e.preventDefault(); };
-matrixLinkify.onGroupClick = function(e: MouseEvent, groupId: string) { e.preventDefault(); };
+export const matrixLinkify: Record<any, any> = {
+    // stubs, overwritten in MatrixChat's componentDidMount
+    onUserClick: function(e: MouseEvent, userId: string) {
+        const member = new RoomMember(null, userId);
+        if (!member) { return; }
+        dis.dispatch<ViewUserPayload>({
+            action: Action.ViewUser,
+            member: member,
+        });
+    },
+    onAliasClick: function(e: MouseEvent, roomAlias: string) {
+        event.preventDefault();
+        dis.dispatch({ action: 'view_room', room_alias: roomAlias });
+    },
+    onGroupClick: function(e: MouseEvent, groupId: string) {
+        event.preventDefault();
+        dis.dispatch({ action: 'view_group', group_id: groupId });
+    },
+};
 
 const escapeRegExp = function(string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -190,19 +210,19 @@ const escapeRegExp = function(string): string {
 
 // Recognise URLs from both our local and official Element deployments.
 // Anyone else really should be using matrix.to.
-matrixLinkify.ELEMENT_URL_PATTERN =
+export const ELEMENT_URL_PATTERN =
     "^(?:https?://)?(?:" +
         escapeRegExp(window.location.host + window.location.pathname) + "|" +
         "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
         "(?:app|beta|staging|develop)\\.element\\.io/" +
     ")(#.*)";
 
-matrixLinkify.MATRIXTO_URL_PATTERN = "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
-matrixLinkify.MATRIXTO_MD_LINK_PATTERN =
+export const MATRIXTO_URL_PATTERN = "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
+export const MATRIXTO_MD_LINK_PATTERN =
     '\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
-matrixLinkify.MATRIXTO_BASE_URL= baseUrl;
+export const MATRIXTO_BASE_URL= baseUrl;
 
-matrixLinkify.options = {
+export const options = {
     events: function(href: string, type: Type | string): Partial<GlobalEventHandlers> {
         switch (type) {
             case Type.URL: {
@@ -278,4 +298,4 @@ matrixLinkify.options = {
     },
 };
 
-export default matrixLinkify;
+export const linkify = linkifyjs;

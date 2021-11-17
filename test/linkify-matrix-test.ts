@@ -13,12 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import * as linkify from "linkifyjs";
-import linkifyMatrix from '../src/linkify-matrix';
+import linkify from '../src/linkify-matrix';
 
-beforeAll(() => {
-    linkifyMatrix(linkify);
-});
 
 describe('linkify-matrix', () => {
     describe('roomalias', () => {
@@ -74,7 +70,6 @@ describe('linkify-matrix', () => {
                 href: "#foo:bar.com",
                 type: "roomalias",
                 value: "#foo:bar.com",
-
             }]));
         });
         it('accept :NUM (port specifier)', () => {
@@ -93,7 +88,6 @@ describe('linkify-matrix', () => {
                 href: "#foo:bar.com",
                 type: "roomalias",
                 value: "#foo:bar.com",
-
             }]));
         });
         it('properly parses room alias with dots in name', () => {
@@ -103,7 +97,6 @@ describe('linkify-matrix', () => {
                 href: "#foo.asdf:bar.com",
                 type: "roomalias",
                 value: "#foo.asdf:bar.com",
-
             }]));
         });
         it('does not parse room alias with too many separators', () => {
