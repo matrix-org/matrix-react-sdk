@@ -294,6 +294,23 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.setState({ generalMenuPosition: null }); // hide the menu
     };
 
+    private onMarkReadClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        // Clear manually marked as unread
+        const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
+        if (markUnreadEnabled) {
+            setRoomMarkedAsUnread(this.props.room, false);
+        }
+        // Update read receipt
+        const events = this.props.room.getLiveTimeline().getEvents();
+        if (events.length) {
+            // noinspection JSIgnoredPromiseFromCall
+            MatrixClientPeg.get().sendReadReceipt(events[events.length - 1]);
+        }
+        this.setState({ generalMenuPosition: null }); // hide the menu
+    };
+
     private onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
         ev.preventDefault();
         ev.stopPropagation();
@@ -514,6 +531,11 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                         onClick={this.onMarkUnreadClick}
                         label={_t("Mark as unread")}
                         iconClassName="mx_RoomTile_markAsUnread"
+                    />) : null }
+                    {(markUnreadEnabled && isUnread) ? (<IconizedContextMenuOption
+                        onClick={this.onMarkReadClick}
+                        label={_t("Mark as read")}
+                        iconClassName="mx_RoomTile_markAsRead"
                     />) : null }
                     <IconizedContextMenuCheckbox
                         onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
