@@ -111,6 +111,10 @@ import { initSentry } from "../../sentry";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { showSpaceInvite } from "../../utils/space";
+import GenericToast from "../views/toasts/GenericToast";
+import InfoDialog from "../views/dialogs/InfoDialog";
+import FeedbackDialog from "../views/dialogs/FeedbackDialog";
+import AccessibleButton from "../views/elements/AccessibleButton";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -1466,6 +1470,55 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
+            }
+
+            if (!localStorage.getItem("mx_seen_ia_1.1_changes_toast")) {
+                const key = "IA_1.1_TOAST";
+                ToastStore.sharedInstance().addOrReplaceToast({
+                    key,
+                    title: _t("Testing small changes"),
+                    props: {
+                        description: _t("Your feedback is wanted as we try out some design changes."),
+                        acceptLabel: _t("More info"),
+                        onAccept: () => {
+                            Modal.createDialog(InfoDialog, {
+                                title: _t("We're testing some design changes"),
+                                description: <>
+                                    <img
+                                        src={require("../../../res/img/element-icons/ia-design-changes.png")}
+                                        width="636"
+                                        height="303"
+                                    />
+                                    <p>{ _t("We've been listening to recent feedback and we're testing out some " +
+                                        "small layout changes. Your ongoing feedback would be very welcome, so if " +
+                                        "you see anything different you want to comment on, " +
+                                        "<a>please do feedback</a>. " +
+                                        "Click your avatar to find a quick feedback link.", {}, {
+                                            a: sub => <AccessibleButton kind="link" onClick={(ev) => {
+                                                ev.preventDefault();
+                                                ev.stopPropagation();
+                                                Modal.createTrackedDialog('Feedback Dialog', '', FeedbackDialog);
+                                            }}>
+                                                { sub }
+                                            </AccessibleButton>,
+                                    }) }</p>
+                                    <p>{ _t("If you'd like to preview or test some potentially upcoming changes, " +
+                                        "there's an option in feedback to let us contact you.") }</p>
+                                </>,
+                            }, "mx_DialogDesignChanges_wrapper");
+                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
+                            ToastStore.sharedInstance().dismissToast(key);
+                        },
+                        rejectLabel: _t("Dismiss"),
+                        onReject: () => {
+                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
+                            ToastStore.sharedInstance().dismissToast(key);
+                        },
+                    },
+                    icon: "labs",
+                    component: GenericToast,
+                    priority: 15,
+                });
             }
 
             dis.fire(Action.FocusSendMessageComposer);
