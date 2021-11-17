@@ -1525,7 +1525,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     },
                     icon: "labs",
                     component: GenericToast,
-                    priority: 15,
+                    priority: 9,
                 });
             }
 
