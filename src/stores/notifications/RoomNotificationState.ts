@@ -104,12 +104,15 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     private updateNotificationState() {
         const snapshot = this.snapshot();
 
+        const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
+        const markedUnread = markUnreadEnabled && isRoomMarkedAsUnread(this.room);
+
         if (getUnsentMessages(this.room).length > 0) {
             // When there are unsent messages we show a red `!`
             this._color = NotificationColor.Unsent;
             this._symbol = "!";
             this._count = 1; // not used, technically
-        } else if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.RoomNotifState.Mute) {
+        } else if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.RoomNotifState.Mute && !markedUnread) {
             // When muted we suppress all notification states, even if we have context on them.
             this._color = NotificationColor.None;
             this._symbol = null;
@@ -139,28 +142,24 @@ export class RoomNotificationState extends NotificationState implements IDestroy
                 this._color = NotificationColor.Grey;
                 this._count = trueCount;
                 this._symbol = null; // symbol calculated by component
+            } else if (markedUnread) {
+                this._color = NotificationColor.Grey;
+                this._symbol = "!";
+                this._count = 1; // not used, technically
             } else {
-                const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
+                // We don't have any notified messages, but we might have unread messages. Let's
+                // find out.
+                const hasUnread = Unread.doesRoomHaveUnreadMessages(this.room);
 
-                if (markUnreadEnabled && isRoomMarkedAsUnread(this.room)) {
-                    this._color = NotificationColor.Grey;
-                    this._symbol = "!";
-                    this._count = 1; // not used, technically
+                if (hasUnread) {
+                    this._color = NotificationColor.Bold;
                 } else {
-                    // We don't have any notified messages, but we might have unread messages. Let's
-                    // find out.
-                    const hasUnread = Unread.doesRoomHaveUnreadMessages(this.room);
-
-                    if (hasUnread) {
-                        this._color = NotificationColor.Bold;
-                    } else {
-                        this._color = NotificationColor.None;
-                    }
-
-                    // no symbol or count for this state
-                    this._count = 0;
-                    this._symbol = null;
+                    this._color = NotificationColor.None;
                 }
+
+                // no symbol or count for this state
+                this._count = 0;
+                this._symbol = null;
             }
         }
 
