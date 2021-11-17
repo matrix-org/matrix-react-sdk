@@ -1490,11 +1490,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                         height="303"
                                         alt=""
                                     />
-                                    <p>{ _t("We've been listening to recent feedback and we're testing out some " +
+                                    <p>{ _t(
+                                        "We've been listening to recent feedback and we're testing out some " +
                                         "small layout changes. Your ongoing feedback would be very welcome, so if " +
                                         "you see anything different you want to comment on, " +
                                         "<a>please do feedback</a>. " +
-                                        "Click your avatar to find a quick feedback link.", {}, {
+                                        "Click your avatar to find a quick feedback link.",
+                                        {},
+                                        {
                                             a: sub => <AccessibleButton kind="link" onClick={(ev) => {
                                                 ev.preventDefault();
                                                 ev.stopPropagation();
@@ -1502,7 +1505,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                             }}>
                                                 { sub }
                                             </AccessibleButton>,
-                                    }) }</p>
+                                        },
+                                    ) }</p>
                                     <p>{ _t("If you'd like to preview or test some potentially upcoming changes, " +
                                         "there's an option in feedback to let us contact you.") }</p>
                                 </>,
