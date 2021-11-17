@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637186879411,
+  "lastUpdate": 1637186896449,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39944,6 +39944,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4631.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8b6778e1d3b4a2c0cf22d666a21a668bd5a9af66",
+          "message": "Pass advanced_disable_decide to stop posthog contacting its decide endpoint (#7149)",
+          "timestamp": "2021-11-18T09:01:32+11:00",
+          "tree_id": "1647fc4dcf418a63050a1bf50bf9566cf4430faa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8b6778e1d3b4a2c0cf22d666a21a668bd5a9af66"
+        },
+        "date": 1637186893823,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4996.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1097,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1675.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4684.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
