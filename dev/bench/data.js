@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637139854016,
+  "lastUpdate": 1637142045807,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39620,6 +39620,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4590.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "mail@michael-weimann.eu",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f27eb04133e86ba4d21d823f77d7ed67cecf1151",
+          "message": "Adjust recovery key button sizes depending on text width (#7134)",
+          "timestamp": "2021-11-17T09:34:59Z",
+          "tree_id": "90273192d17e8d5f3b0290508e2487d9b1fd6e67",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f27eb04133e86ba4d21d823f77d7ed67cecf1151"
+        },
+        "date": 1637142043230,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5287.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 967,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1611.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4495.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
