@@ -347,35 +347,38 @@ export default class CallView extends React.Component<IProps, IState> {
     };
 
     private renderCallControls(): JSX.Element {
-        // We don't support call upgrades (yet) so hide the video mute button in voice calls
-        const vidMuteButtonShown = this.props.call.hasLocalUserMediaVideoTrack;
+        const { call, pipMode } = this.props;
+        const { primaryFeed, callState, micMuted, vidMuted, screensharing, sidebarShown } = this.state;
+
+        // If SDPStreamMetadata isn't supported don't show video mute button in voice calls
+        const vidMuteButtonShown = call.opponentSupportsSDPStreamMetadata() || call.hasLocalUserMediaVideoTrack;
         // Screensharing is possible, if we can send a second stream and
         // identify it using SDPStreamMetadata or if we can replace the already
         // existing usermedia track by a screensharing track. We also need to be
         // connected to know the state of the other side
         const screensharingButtonShown = (
-            (this.props.call.opponentSupportsSDPStreamMetadata() || this.props.call.hasLocalUserMediaVideoTrack) &&
-            this.props.call.state === CallState.Connected
+            (call.opponentSupportsSDPStreamMetadata() || call.hasLocalUserMediaVideoTrack) &&
+            call.state === CallState.Connected
         );
         // To show the sidebar we need secondary feeds, if we don't have them,
         // we can hide this button. If we are in PiP, sidebar is also hidden, so
         // we can hide the button too
         const sidebarButtonShown = (
-            this.state.primaryFeed?.purpose === SDPStreamMetadataPurpose.Screenshare ||
-            this.props.call.isScreensharing()
+            primaryFeed?.purpose === SDPStreamMetadataPurpose.Screenshare ||
+            call.isScreensharing()
         );
         // The dial pad & 'more' button actions are only relevant in a connected call
-        const contextMenuButtonShown = this.state.callState === CallState.Connected;
+        const contextMenuButtonShown = callState === CallState.Connected;
         const dialpadButtonShown = (
-            this.state.callState === CallState.Connected &&
-            this.props.call.opponentSupportsDTMF()
+            callState === CallState.Connected &&
+            call.opponentSupportsDTMF()
         );
 
         return (
             <CallViewButtons
                 ref={this.buttonsRef}
-                call={this.props.call}
-                pipMode={this.props.pipMode}
+                call={call}
+                pipMode={pipMode}
                 handlers={{
                     onToggleSidebarClick: this.onToggleSidebar,
                     onScreenshareClick: this.onScreenshareClick,
@@ -384,10 +387,10 @@ export default class CallView extends React.Component<IProps, IState> {
                     onVidMuteClick: this.onVidMuteClick,
                 }}
                 buttonsState={{
-                    micMuted: this.state.micMuted,
-                    vidMuted: this.state.vidMuted,
-                    sidebarShown: this.state.sidebarShown,
-                    screensharing: this.state.screensharing,
+                    micMuted: micMuted,
+                    vidMuted: vidMuted,
+                    sidebarShown: sidebarShown,
+                    screensharing: screensharing,
                 }}
                 buttonsVisibility={{
                     vidMute: vidMuteButtonShown,
