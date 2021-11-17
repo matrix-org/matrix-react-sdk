@@ -71,10 +71,10 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 withoutScrollContainer={true}
                 header={this.renderTimelineCardHeader()}>
                 <TimelinePanel
-                    showReadReceipts={false} // No RR support in the TimelineCard
-                    manageReadReceipts={false} // No RR support in the TimelineCard
+                    showReadReceipts={true}
+                    manageReadReceipts={true}
                     manageReadMarkers={false} // No RM support in the TimelineCard
-                    sendReadReceiptOnLoad={false} // No RR support the TimelineCard
+                    sendReadReceiptOnLoad={true}
                     timelineSet={this.props.room.getUnfilteredTimelineSet()}
                     showUrlPreview={true}
                     threadViewPreviousCard={RightPanelPhases.TimelineCard}
