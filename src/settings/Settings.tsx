@@ -37,10 +37,12 @@ import { isMac } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
-import { Layout } from "./Layout";
+import { Layout } from "./enums/Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
 import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
+import { ImageSize } from "./enums/ImageSize";
+import { MetaSpace } from "../stores/spaces";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -171,6 +173,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_maximised_widgets": {
+        isFeature: true,
+        displayName: _td("Maximised widgets"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_thread": {
         isFeature: true,
         // Requires a reload as we change an option flag on the `js-sdk`
@@ -269,6 +277,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new NewLayoutSwitcherController(),
     },
+    "feature_spaces_metaspaces": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Meta Spaces"),
+        default: false,
+        controller: new OrderedMultiController([
+            new IncompatibleController("showCommunitiesInsteadOfSpaces"),
+            new ReloadOnChangeController(),
+        ]),
+    },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
@@ -309,7 +327,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td('Use a more compact ‘Modern’ layout'),
+        displayName: _td("Use a more compact 'Modern' layout"),
         default: false,
     },
     "showRedactions": {
@@ -717,6 +735,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: Layout.Group,
     },
+    "Images.size": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: ImageSize.Normal,
+    },
     "showChatEffects": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td("Show chat effects (animations when receiving e.g. confetti)"),
@@ -745,6 +767,15 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
         controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
+    },
+    "Spaces.enabledMetaSpaces": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            [MetaSpace.Home]: true,
+        },
+        controller: new IncompatibleController("feature_spaces_metaspaces", {
+            [MetaSpace.Home]: true,
+        }, false),
     },
     "showCommunitiesInsteadOfSpaces": {
         displayName: _td("Display Communities instead of Spaces"),
