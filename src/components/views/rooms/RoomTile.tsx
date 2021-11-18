@@ -518,7 +518,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             const userId = MatrixClientPeg.get().getUserId();
             const canInvite = this.props.room.canInvite(userId) && !isDm; // hide invite in DMs from this quick menu
             const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
-            const isUnread = this.notificationState.isUnread || (markUnreadEnabled && isRoomMarkedAsUnread(this.props.room));
+            const isUnread = this.notificationState.isUnread ||
+                (markUnreadEnabled && isRoomMarkedAsUnread(this.props.room));
 
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
@@ -527,12 +528,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 compact
             >
                 <IconizedContextMenuOptionList>
-                    {(markUnreadEnabled && !isUnread) ? (<IconizedContextMenuOption
+                    { (markUnreadEnabled && !isUnread) ? (<IconizedContextMenuOption
                         onClick={this.onMarkUnreadClick}
                         label={_t("Mark as unread")}
                         iconClassName="mx_RoomTile_markAsUnread"
                     />) : null }
-                    {(markUnreadEnabled && isUnread) ? (<IconizedContextMenuOption
+                    { (markUnreadEnabled && isUnread) ? (<IconizedContextMenuOption
                         onClick={this.onMarkReadClick}
                         label={_t("Mark as read")}
                         iconClassName="mx_RoomTile_markAsRead"
