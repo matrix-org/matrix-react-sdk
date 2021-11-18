@@ -2098,7 +2098,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             />);
         }
 
-        const showRightPanel = this.state.room && this.state.showRightPanel;
+        let showRightPanel = this.state.room && this.state.showRightPanel;
+        // This is a hack to hide the chat. This should not be necassary once the right panel
+        // phase is stored per room.
+        if (RightPanelStore.getSharedInstance().roomPanelPhase === RightPanelPhases.Timeline
+            && this.state.mainSplitContentType === MainSplitContentType.Timeline ) {
+            // Two timelines are shown prevent this by hiding the right panel
+            showRightPanel = false;
+        }
         const rightPanel = showRightPanel
             ? <RightPanel
                 room={this.state.room}
