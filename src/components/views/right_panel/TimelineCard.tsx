@@ -23,7 +23,7 @@ import BaseCard from "./BaseCard";
 import ResizeNotifier from '../../../utils/ResizeNotifier';
 import MessageComposer from '../rooms/MessageComposer';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import { Layout } from '../../../settings/Layout';
+import { Layout } from '../../../settings/enums/Layout';
 import TimelinePanel from '../../structures/TimelinePanel';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import EditorStateTransfer from '../../../utils/EditorStateTransfer';

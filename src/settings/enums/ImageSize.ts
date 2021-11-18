@@ -14,22 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_TimelineCard {
-    .mx_TimelineCard__header {
-        margin-left: 6px;
+const SIZE_LARGE = { w: 480, h: 360 };
+const SIZE_NORMAL = { w: 324, h: 220 };
 
-        span:first-of-type {
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 18px;
-            color: $secondary-content;
-        }
-    }
-    .mx_BaseCard_header {
-        margin: 5px 0 9px 0;
-        .mx_BaseCard_close {
-            margin: 8px;
-            right: 0;
-        }
+export enum ImageSize {
+    Normal = "normal",
+    Large = "large",
+}
+
+export function suggestedSize(size: ImageSize): { w: number, h: number } {
+    switch (size) {
+        case ImageSize.Large:
+            return SIZE_LARGE;
+        case ImageSize.Normal:
+        default:
+            return SIZE_NORMAL;
     }
 }
