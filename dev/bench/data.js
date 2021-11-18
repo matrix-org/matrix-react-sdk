@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637186896449,
+  "lastUpdate": 1637240024740,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -39992,6 +39992,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4684.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "256c468c15a3f2af8e7c52098dee5813173d8500",
+          "message": "Chat Effects & Commands in thread context (#7138)",
+          "timestamp": "2021-11-18T12:47:11Z",
+          "tree_id": "db78235b71427561479e4dc3141ef6b91f6d8fa6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/256c468c15a3f2af8e7c52098dee5813173d8500"
+        },
+        "date": 1637240021462,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4806.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1083,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1705.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4829.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
