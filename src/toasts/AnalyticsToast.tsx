@@ -38,7 +38,7 @@ const onReject = () => {
     });
 };
 
-const onLearnMore = (privacyPolicyUrl?: string, analyticsOwner: string) => {
+const onLearnMore = (privacyPolicyUrl: string, analyticsOwner: string) => {
     Modal.createTrackedDialog(
         "Analytics Learn More",
         "",
@@ -92,7 +92,7 @@ const showToast = (props: Omit<React.ComponentProps<typeof GenericToast>, "toast
     });
 };
 
-export const showPseudonymousAnalyticsOptInToast = (privacyPolicyUrl?: string, analyticsOptIn: boolean,
+export const showPseudonymousAnalyticsOptInToast = (privacyPolicyUrl: string, analyticsOptIn: boolean,
     analyticsOwner: string): void => {
     const learnMoreLink = (sub) => (
         <AccessibleButton kind="link" onClick={() => onLearnMore(privacyPolicyUrl, analyticsOwner)}>{ sub }</AccessibleButton>
