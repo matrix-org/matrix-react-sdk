@@ -27,7 +27,7 @@ import {
 } from '../../../polls/consts';
 import StyledRadioButton from '../elements/StyledRadioButton';
 import { MatrixEvent } from 'matrix-js-sdk';
-import { Relations } from '../../../../../matrix-js-sdk/src/models/relations';
+import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 
 // TODO: [andyb] Use extensible events library when ready
