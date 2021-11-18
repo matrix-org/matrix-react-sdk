@@ -223,15 +223,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             </span>;
         }
 
-        /**
-         * In the room timeline or the thread context we don't need the download
-         * link as the message action bar will fullfil that
-         */
-        const hasMessageActionBar = !this.props.tileShape
-            || this.props.tileShape === TileShape.Thread
-            || this.props.tileShape === TileShape.ThreadPanel;
-
-        const showDownloadLink = !hasMessageActionBar;
+        const showDownloadLink = this.props.tileShape || !this.props.showGenericPlaceholder;
 
         if (isEncrypted) {
             if (!this.state.decryptedBlob) {
