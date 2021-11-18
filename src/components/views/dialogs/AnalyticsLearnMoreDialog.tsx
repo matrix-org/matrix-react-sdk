@@ -28,7 +28,6 @@ interface IProps {
 
 const AnalyticsLearnMoreDialog: React.FC<IProps> = ({ analyticsOwner, privacyPolicyUrl, onFinished }) => {
     const onPrimaryButtonClick = () => onFinished(true);
-    const _tBold = (s) => _t(s, {}, { "Bold": (sub) => <b>{ sub }</b> });
     const privacyPolicyLink = privacyPolicyUrl ?
         <span>
             {
@@ -60,8 +59,10 @@ const AnalyticsLearnMoreDialog: React.FC<IProps> = ({ analyticsOwner, privacyPol
                 ) }
             </div>
             <ul className="mx_AnalyticsLearnMore_bullets">
-                <li>{ _tBold("We <Bold>don't</Bold> record or profile any personal data") }</li>
-                <li>{ _tBold("We <Bold>don't</Bold> share information with third parties") }</li>
+                <li>{ _t("We <Bold>don't</Bold> record or profile any personal data",
+                    {}, { "Bold": (sub) => <b>{ sub }</b> }) }</li>
+                <li>{ _t("We <Bold>don't</Bold> share information with third parties",
+                    {}, { "Bold": (sub) => <b>{ sub }</b> }) }</li>
                 <li>{ _t("You can turn this off anytime in settings") }</li>
             </ul>
             { privacyPolicyLink }
