@@ -42,6 +42,7 @@ import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 import RightPanelStore from '../../stores/RightPanelStore';
+import SettingsStore from '../../settings/SettingsStore';
 
 interface IProps {
     room: Room;
@@ -205,6 +206,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
         };
 
         let previousPhase = RightPanelStore.getSharedInstance().previousPhase;
+        if (SettingsStore.getValue("feature_maximised_widgets")) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
         // Make sure the previous Phase is always one of the two: Timeline or ThreadPanel
         if (![RightPanelPhases.ThreadPanel, RightPanelPhases.Timeline].includes(previousPhase)) {
             previousPhase = RightPanelPhases.ThreadPanel;
