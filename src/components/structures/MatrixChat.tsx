@@ -1491,10 +1491,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                         alt=""
                                     />
                                     <p>{ _t(
-                                        "We've been listening to recent feedback and we're testing out some " +
-                                        "small layout changes. Your ongoing feedback would be very welcome, so if " +
-                                        "you see anything different you want to comment on, " +
-                                        "<a>please do feedback</a>. " +
+                                        "Your ongoing feedback would be very welcome, so if you see anything " +
+                                        "different you want to comment on, <a>please let us know about it</a>. " +
                                         "Click your avatar to find a quick feedback link.",
                                         {},
                                         {
