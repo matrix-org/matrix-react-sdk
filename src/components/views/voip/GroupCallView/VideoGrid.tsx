@@ -618,7 +618,7 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
                     shadow: 15,
                     immediate: (key) =>
                         disableAnimations || key === "zIndex" || key === "x" || key === "y" ||
-                            key === "shadow" || key === "width" || key === "height",
+                            key === "shadow",
                     from: {
                         shadow: 0,
                         scale: 0,
@@ -639,8 +639,7 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
                         opacity: 0,
                     },
                     reset: false,
-                    immediate: (key) => disableAnimations || key === "zIndex" || key === "shadow" ||
-                        key === "width" || key === "height",
+                    immediate: (key) => disableAnimations || key === "zIndex" || key === "shadow",
                 };
             }
         },
