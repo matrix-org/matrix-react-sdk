@@ -20,7 +20,7 @@ import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 
 import dis from './dispatcher/dispatcher';
 import * as sdk from './index';
@@ -518,7 +518,12 @@ export default class ContentMessages {
                     uploadAll = true;
                 }
             }
-            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, promBefore);
+            let compoundId = roomId;
+            if (relation?.rel_type === RelationType.Thread) {
+                compoundId += `::${relation.event_id}`;
+            }
+
+            promBefore = this.sendContentToRoom(file, compoundId, relation, matrixClient, promBefore);
         }
     }
 
