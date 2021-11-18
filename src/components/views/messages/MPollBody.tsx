@@ -26,7 +26,7 @@ import {
     POLL_START_EVENT_TYPE,
 } from '../../../polls/consts';
 import StyledRadioButton from '../elements/StyledRadioButton';
-import { MatrixEvent } from 'matrix-js-sdk';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 
