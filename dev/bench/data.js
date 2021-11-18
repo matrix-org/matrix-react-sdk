@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637240024740,
+  "lastUpdate": 1637269009897,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40040,6 +40040,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4829.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "28d7a51bb9d7963222db9ce51949cced50fde322",
+          "message": "Fix improper splice when determining vias for tombstones (#7159)\n\n`splice` takes one element from the array whereas `slice` takes all after a given point. We want `slice` so we can pick up ipv6 addresses and port numbers.",
+          "timestamp": "2021-11-18T13:50:37-07:00",
+          "tree_id": "b2d5fe0327abfa8e917b712d3c41c3cb06ee298f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/28d7a51bb9d7963222db9ce51949cced50fde322"
+        },
+        "date": 1637269007171,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4848.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1012.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1648.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4500.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
