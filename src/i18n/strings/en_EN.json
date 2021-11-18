@@ -2445,7 +2445,6 @@
     "Tell us below how you feel about %(brand)s so far.": "Tell us below how you feel about %(brand)s so far.",
     "Please go into as much detail as you like, so we can track down the problem.": "Please go into as much detail as you like, so we can track down the problem.",
     "Add comment": "Add comment",
-    "There are two ways you can provide feedback and help us improve %(brand)s.": "There are two ways you can provide feedback and help us improve %(brand)s.",
     "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
     "Report a bug": "Report a bug",
     "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.",

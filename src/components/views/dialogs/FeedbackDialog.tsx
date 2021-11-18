@@ -85,6 +85,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 onChange={(ev) => {
                     setComment(ev.target.value);
                 }}
+                autoFocus={true}
             />
 
             <StyledCheckbox
@@ -125,15 +126,9 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 onChange={(ev) => {
                     setComment(ev.target.value);
                 }}
+                autoFocus={true}
             />
         </div>;
-    }
-
-    let subheading;
-    if (hasFeedback) {
-        subheading = (
-            <h2>{ _t("There are two ways you can provide feedback and help us improve %(brand)s.", { brand }) }</h2>
-        );
     }
 
     let bugReports = null;
@@ -155,8 +150,6 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
         hasCancelButton={!!hasFeedback}
         title={_t("Feedback")}
         description={<React.Fragment>
-            { subheading }
-
             <div className="mx_FeedbackDialog_section mx_FeedbackDialog_reportBug">
                 <h3>{ _t("Report a bug") }</h3>
                 <p>{
