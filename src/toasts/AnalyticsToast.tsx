@@ -38,13 +38,14 @@ const onReject = () => {
     });
 };
 
-const onLearnMore = (analyticsOwner: string) => {
+const onLearnMore = (privacyPolicyUrl?: string, analyticsOwner: string) => {
     Modal.createTrackedDialog(
         "Analytics Learn More",
         "",
         AnalyticsLearnMoreDialog,
         {
             analyticsOwner,
+            privacyPolicyUrl,
             onFinished: (analyticsEnabled?: boolean) => {
                 if (analyticsEnabled === true) {
                     onAccept();
@@ -91,10 +92,10 @@ const showToast = (props: Omit<React.ComponentProps<typeof GenericToast>, "toast
     });
 };
 
-export const showPseudonymousAnalyticsOptInToast = (policyUrl: string, analyticsOptIn: boolean,
+export const showPseudonymousAnalyticsOptInToast = (privacyPolicyUrl?: string, analyticsOptIn: boolean,
     analyticsOwner: string): void => {
     const learnMoreLink = (sub) => (
-        <AccessibleButton kind="link" onClick={() => onLearnMore(analyticsOwner)}>{ sub }</AccessibleButton>
+        <AccessibleButton kind="link" onClick={() => onLearnMore(privacyPolicyUrl, analyticsOwner)}>{ sub }</AccessibleButton>
     );
     let props;
     if (analyticsOptIn) {
@@ -106,7 +107,7 @@ export const showPseudonymousAnalyticsOptInToast = (policyUrl: string, analytics
             acceptLabel: _t("Learn more"),
             onAccept,
             rejectLabel: _t("That's fine"),
-            onReject: onLearnMore(analyticsOwner),
+            onReject: onLearnMore(privacyPolicyUrl, analyticsOwner),
         };
     } else if (analyticsOptIn === null || analyticsOptIn === undefined) {
         // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than

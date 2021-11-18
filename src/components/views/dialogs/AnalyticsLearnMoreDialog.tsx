@@ -23,17 +23,49 @@ interface IProps {
     onEnable(): void;
     onFinished(enableAnalytics?: boolean): void;
     analyticsOwner: string;
+    privacyPolicyUrl?: string;
 }
 
-const AnalyticsLearnMoreDialog: React.FC<IProps> = ({ analyticsOwner, onFinished }) => {
+const AnalyticsLearnMoreDialog: React.FC<IProps> = ({ analyticsOwner, privacyPolicyUrl, onFinished }) => {
     const onPrimaryButtonClick = () => onFinished(true);
+    const _tBold = (s) => _t(s, {}, { "Bold": (sub) => <b>{ sub }</b> });
+    const privacyPolicyLink = privacyPolicyUrl ?
+        <span>
+            {
+                _t("You can read all our terms <PrivacyPolicyUrl>here</PrivacyPolicyUrl>", {}, {
+                    "PrivacyPolicyUrl": (sub) => {
+                        return <a href={privacyPolicyUrl}
+                            rel="norefferer noopener"
+                            target="_blank"
+                        >
+                            { sub }
+                            <span className="mx_AnalyticsPolicyLink" />
+                        </a>;
+                    },
+                })
+            }
+        </span> : "";
     return <BaseDialog
         className="mx_AnalyticsLearnMoreDialog"
+        contentId="mx_AnalyticsLearnMore"
         title={_t("Help improve %(analyticsOwner)s", { analyticsOwner })}
         onFinished={onFinished}
     >
-        <div className="mx_Dialog_content" />
-        { _t("Help us identify issues and improve Element by sharing anonymous usage data.") }
+        <div className="mx_Dialog_content">
+            <div className="mx_AnalyticsLearnMore_image_holder" />
+            <div className="mx_AnalyticsLearnMore_copy">
+                { _t("Help us identify issues and improve Element by sharing anonymous usage data. " +
+                    "To understand how people use multiple devices, we'll generate a random identifier, " +
+                    "shared by your devices.",
+                ) }
+            </div>
+            <ul className="mx_AnalyticsLearnMore_bullets">
+                <li>{ _tBold("We <Bold>don't</Bold> record or profile any personal data") }</li>
+                <li>{ _tBold("We <Bold>don't</Bold> share information with third parties") }</li>
+                <li>{ _t("You can turn this off anytime in settings") }</li>
+            </ul>
+            { privacyPolicyLink }
+        </div>
         <DialogButtons
             primaryButton={_t("Enable")}
             onPrimaryButtonClick={onPrimaryButtonClick}
