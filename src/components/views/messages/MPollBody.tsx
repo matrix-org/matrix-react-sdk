@@ -64,7 +64,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         this.removeListeners(this.state.pollRelations);
     }
 
-    addListeners(pollRelations?: Relations) {
+    private addListeners(pollRelations?: Relations) {
         if (pollRelations) {
             pollRelations.on("Relations.add", this.onRelationsChange);
             pollRelations.on("Relations.remove", this.onRelationsChange);
@@ -72,7 +72,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
     }
 
-    removeListeners(pollRelations?: Relations) {
+    private removeListeners(pollRelations?: Relations) {
         if (pollRelations) {
             pollRelations.off("Relations.add", this.onRelationsChange);
             pollRelations.off("Relations.remove", this.onRelationsChange);
