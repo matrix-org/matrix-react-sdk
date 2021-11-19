@@ -479,12 +479,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 decorateStartSendingTime(content);
             }
 
-            let compoundId = roomId;
-            if (this.props.relation?.rel_type === RelationType.Thread) {
-                compoundId += `::${this.props.relation.event_id}`;
-            }
+            const threadId = this.props.relation?.rel_type === RelationType.Thread
+                ? this.props.relation.event_id
+                : null;
 
-            const prom = this.props.mxClient.sendMessage(compoundId, content);
+            const prom = this.props.mxClient.sendMessage(roomId, threadId, content);
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
