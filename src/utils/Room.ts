@@ -21,18 +21,18 @@ import DMRoomMap from "./DMRoomMap";
 import { _t } from "../languageHandler";
 
 export function roomContextDetailsText(room: Room): string {
-    if (!room.isSpaceRoom()) {
-        const dmPartner = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-        if (dmPartner) {
-            return room.getMember(dmPartner)?.name;
-        }
+    if (room.isSpaceRoom()) return undefined;
 
-        const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(room.roomId);
-        if (parent) {
-            return _t("%(spaceName)s and %(count)s others", {
-                spaceName: room.client.getRoom(parent).name,
-                count: otherParents.length,
-            });
-        }
+    const dmPartner = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+    if (dmPartner) {
+        return room.getMember(dmPartner)?.name;
+    }
+
+    const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(room.roomId);
+    if (parent) {
+        return _t("%(spaceName)s and %(count)s others", {
+            spaceName: room.client.getRoom(parent).name,
+            count: otherParents.length,
+        });
     }
 }
