@@ -71,7 +71,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 header={this.renderTimelineCardHeader()}
             >
                 <TimelinePanel
-                    showReadReceipts={true}
+                    showReadReceipts={false}
                     manageReadReceipts={true}
                     manageReadMarkers={false} // No RM support in the TimelineCard
                     sendReadReceiptOnLoad={true}
