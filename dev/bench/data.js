@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637317385587,
+  "lastUpdate": 1637319342754,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40268,6 +40268,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 675.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe4d834c7248063d5aa09664b4b43693cd6f706a",
+          "message": "Disable op/deop commands where user has no permissions (#7161)",
+          "timestamp": "2021-11-19T10:49:34Z",
+          "tree_id": "26ae1a0e95e6807493b835361654eff835b7d6c5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe4d834c7248063d5aa09664b4b43693cd6f706a"
+        },
+        "date": 1637319339695,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5526.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1000.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1672.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4554.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
