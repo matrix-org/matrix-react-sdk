@@ -21,6 +21,7 @@ import AliasCustomisations from './customisations/Alias';
 import DMRoomMap from "./utils/DMRoomMap";
 import SpaceStore from "./stores/spaces/SpaceStore";
 import { _t } from "./languageHandler";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 /**
  * Given a room object, return the alias we should use for it,
@@ -175,17 +176,16 @@ export function roomContextDetailsText(room: Room): string {
 
     return room.getCanonicalAlias();
 }
-
-export const UNSTABLE_MSC2867_MARKED_UNREAD_TYPE = 'com.famedly.marked_unread';
+export const MARKED_UNREAD_TYPE = new UnstableValue("m.marked_unread", "com.famedly.marked_unread");
 
 export function isRoomMarkedAsUnread(room: Room): boolean {
-    return room?.getAccountData(UNSTABLE_MSC2867_MARKED_UNREAD_TYPE)?.getContent()?.unread;
+    return room?.getAccountData(MARKED_UNREAD_TYPE.name)?.getContent()?.unread;
 }
 
 export async function setRoomMarkedAsUnread(room: Room, value = true): Promise<void> {
     await MatrixClientPeg.get().setRoomAccountData(
         room.roomId,
-        UNSTABLE_MSC2867_MARKED_UNREAD_TYPE,
+        MARKED_UNREAD_TYPE.name,
         {
             unread: value,
         },

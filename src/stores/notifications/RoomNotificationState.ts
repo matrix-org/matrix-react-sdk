@@ -26,7 +26,7 @@ import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
 import { NotificationState } from "./NotificationState";
 import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
-import { isRoomMarkedAsUnread, UNSTABLE_MSC2867_MARKED_UNREAD_TYPE } from "../../Rooms";
+import { isRoomMarkedAsUnread, MARKED_UNREAD_TYPE } from "../../Rooms";
 import SettingsStore from "../../settings/SettingsStore";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
@@ -96,7 +96,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     };
 
     private handleRoomAccountDataUpdate = (ev: MatrixEvent) => {
-        if (ev.getType() === UNSTABLE_MSC2867_MARKED_UNREAD_TYPE) {
+        if (ev.getType() === MARKED_UNREAD_TYPE.name) {
             this.updateNotificationState();
         }
     };
@@ -112,7 +112,8 @@ export class RoomNotificationState extends NotificationState implements IDestroy
             this._color = NotificationColor.Unsent;
             this._symbol = "!";
             this._count = 1; // not used, technically
-        } else if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.RoomNotifState.Mute && !markedUnread) {
+        } else if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.RoomNotifState.Mute &&
+            !markedUnread) {
             // When muted we suppress all notification states, even if we have context on them.
             this._color = NotificationColor.None;
             this._symbol = null;
