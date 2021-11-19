@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637330874257,
+  "lastUpdate": 1637331927776,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40460,6 +40460,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4842.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "21c142c19d7cfa03fd9e901b5df74cce93ef6087",
+          "message": "Make the Add option button look disabled when it is (#7164)",
+          "timestamp": "2021-11-19T14:19:53Z",
+          "tree_id": "80ed19a887b8d24e839042374459c1e273c3cd8d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/21c142c19d7cfa03fd9e901b5df74cce93ef6087"
+        },
+        "date": 1637331925475,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4821.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 904.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1635.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4392.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
