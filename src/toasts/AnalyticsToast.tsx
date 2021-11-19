@@ -30,13 +30,13 @@ import {
 
 const onAccept = () => {
     dis.dispatch({
-        action: 'analytics_accept',
+        action: 'pseudonymous_analytics_accept',
     });
 };
 
 const onReject = () => {
     dis.dispatch({
-        action: "analytics_reject",
+        action: "pseudonymous_analytics_reject",
     });
 };
 
@@ -144,9 +144,13 @@ export const showAnonymousAnalyticsOptInToast = (): void => {
     const props = {
         description: getAnonymousDescription(),
         acceptLabel: _t("Yes"),
-        onAccept,
+        onAccept: () => dis.dispatch({
+            action: 'anonymous_analytics_accept',
+        }),
         rejectLabel: _t("No"),
-        onReject,
+        onReject: () => dis.dispatch({
+            action: "anonymous_analytics_reject",
+        }),
     };
     showToast(props);
 };
