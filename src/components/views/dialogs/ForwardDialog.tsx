@@ -44,7 +44,7 @@ import TruncatedList from "../elements/TruncatedList";
 import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
-import { roomContextDetailsText } from "../../../utils/Room";
+import { roomContextDetailsText } from "../../../Rooms";
 
 const AVATAR_SIZE = 30;
 
