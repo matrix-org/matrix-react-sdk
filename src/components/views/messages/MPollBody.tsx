@@ -246,8 +246,9 @@ export function allVotes(pollRelations: Relations): Array<UserVote> {
     }
 
     if (pollRelations) {
-        return pollRelations.getRelations().filter(isPollResponse).map(
-            userResponseFromPollResponseEvent);
+        return pollRelations.getRelations()
+            .filter(isPollResponse)
+            .map(userResponseFromPollResponseEvent);
     } else {
         return [];
     }
