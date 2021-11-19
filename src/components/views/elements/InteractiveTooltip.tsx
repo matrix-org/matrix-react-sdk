@@ -101,6 +101,188 @@ export enum Direction {
     Right,
 }
 
+// exported for tests
+export function mouseWithinRegion(
+    x: number,
+    y: number,
+    direction: Direction,
+    targetRect: DOMRect,
+    contentRect: DOMRect,
+): boolean {
+    // When moving the mouse from the target to the tooltip, we create a safe area
+    // that includes the tooltip, the target, and the trapezoid ABCD between them:
+    //                            ┌───────────┐
+    //                            │           │
+    //                            │           │
+    //                          A └───E───F───┘ B
+    //                                  V
+    //                                 ┌─┐
+    //                                 │ │
+    //                                C└─┘D
+    //
+    // As long as the mouse remains inside the safe area, the tooltip will stay open.
+    const buffer = 50;
+    if (isInRect(x, y, targetRect)) {
+        return true;
+    }
+
+    switch (direction) {
+        case Direction.Left: {
+            const contentRectWithBuffer = {
+                top: contentRect.top - buffer,
+                right: contentRect.right,
+                bottom: contentRect.bottom + buffer,
+                left: contentRect.left - buffer,
+            };
+            const trapezoidTop = {
+                top: contentRect.top - buffer,
+                right: targetRect.right,
+                bottom: targetRect.top,
+                left: contentRect.right,
+            };
+            const trapezoidCenter = {
+                top: targetRect.top,
+                right: targetRect.left,
+                bottom: targetRect.bottom,
+                left: contentRect.right,
+            };
+            const trapezoidBottom = {
+                top: targetRect.bottom,
+                right: targetRect.right,
+                bottom: contentRect.bottom + buffer,
+                left: contentRect.right,
+            };
+
+            if (
+                isInRect(x, y, contentRectWithBuffer) ||
+                isInLowerLeftHalf(x, y, trapezoidTop) ||
+                isInRect(x, y, trapezoidCenter) ||
+                isInUpperLeftHalf(x, y, trapezoidBottom)
+            ) {
+                return true;
+            }
+
+            break;
+        }
+
+        case Direction.Right: {
+            const contentRectWithBuffer = {
+                top: contentRect.top - buffer,
+                right: contentRect.right + buffer,
+                bottom: contentRect.bottom + buffer,
+                left: contentRect.left,
+            };
+            const trapezoidTop = {
+                top: contentRect.top - buffer,
+                right: contentRect.left,
+                bottom: targetRect.top,
+                left: targetRect.left,
+            };
+            const trapezoidCenter = {
+                top: targetRect.top,
+                right: contentRect.left,
+                bottom: targetRect.bottom,
+                left: targetRect.right,
+            };
+            const trapezoidBottom = {
+                top: targetRect.bottom,
+                right: contentRect.left,
+                bottom: contentRect.bottom + buffer,
+                left: targetRect.left,
+            };
+
+            if (
+                isInRect(x, y, contentRectWithBuffer) ||
+                isInLowerRightHalf(x, y, trapezoidTop) ||
+                isInRect(x, y, trapezoidCenter) ||
+                isInUpperRightHalf(x, y, trapezoidBottom)
+            ) {
+                return true;
+            }
+
+            break;
+        }
+
+        case Direction.Top: {
+            const contentRectWithBuffer = {
+                top: contentRect.top - buffer,
+                right: contentRect.right + buffer,
+                bottom: contentRect.bottom,
+                left: contentRect.left - buffer,
+            };
+            const trapezoidLeft = {
+                top: targetRect.bottom,
+                right: targetRect.left,
+                bottom: contentRect.top,
+                left: contentRect.left - buffer,
+            };
+            const trapezoidCenter = {
+                top: targetRect.bottom,
+                right: targetRect.right,
+                bottom: contentRect.top,
+                left: targetRect.left,
+            };
+            const trapezoidRight = {
+                top: targetRect.bottom,
+                right: contentRect.right + buffer,
+                bottom: contentRect.top,
+                left: targetRect.right,
+            };
+
+            if (
+                isInRect(x, y, contentRectWithBuffer) ||
+                isInUpperRightHalf(x, y, trapezoidLeft) ||
+                isInRect(x, y, trapezoidCenter) ||
+                isInUpperLeftHalf(x, y, trapezoidRight)
+            ) {
+                return true;
+            }
+
+            break;
+        }
+
+        case Direction.Bottom: {
+            const contentRectWithBuffer = {
+                top: contentRect.top,
+                right: contentRect.right + buffer,
+                bottom: contentRect.bottom + buffer,
+                left: contentRect.left - buffer,
+            };
+            const trapezoidLeft = {
+                top: targetRect.top,
+                right: targetRect.left,
+                bottom: contentRect.top,
+                left: contentRect.left - buffer,
+            };
+            const trapezoidCenter = {
+                top: targetRect.top,
+                right: targetRect.right,
+                bottom: contentRect.top,
+                left: targetRect.left,
+            };
+            const trapezoidRight = {
+                top: targetRect.top,
+                right: contentRect.right + buffer,
+                bottom: contentRect.top,
+                left: targetRect.right,
+            };
+
+            if (
+                isInRect(x, y, contentRectWithBuffer) ||
+                isInLowerRightHalf(x, y, trapezoidLeft) ||
+                isInRect(x, y, trapezoidCenter) ||
+                isInLowerLeftHalf(x, y, trapezoidRight)
+            ) {
+                return true;
+            }
+
+            break;
+        }
+    }
+
+    return false;
+}
+
 interface IProps {
     children(props: {
         ref: RefCallback<HTMLElement>;
@@ -202,168 +384,16 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         const { contentRect } = this.state;
         const targetRect = this.target.getBoundingClientRect();
 
-        // When moving the mouse from the target to the tooltip, we create a
-        // safe area that includes the tooltip, the target, and the trapezoid
-        // ABCD between them:
-        //                            ┌───────────┐
-        //                            │           │
-        //                            │           │
-        //                          A └───E───F───┘ B
-        //                                  V
-        //                                 ┌─┐
-        //                                 │ │
-        //                                C└─┘D
-        //
-        // As long as the mouse remains inside the safe area, the tooltip will
-        // stay open.
-        const buffer = 50;
-        if (isInRect(x, y, targetRect)) {
-            return;
-        }
-
+        let direction: Direction;
         if (this.isOnTheSide) {
-            if (this.onLeftOfTarget()) {
-                const contentRectWithBuffer = {
-                    top: contentRect.top - buffer,
-                    right: contentRect.right + buffer,
-                    bottom: contentRect.bottom + buffer,
-                    left: contentRect.left,
-                };
-                const trapezoidTop = {
-                    top: contentRect.top - buffer,
-                    right: contentRect.left,
-                    bottom: targetRect.top,
-                    left: targetRect.left,
-                };
-                const trapezoidCenter = {
-                    top: targetRect.top,
-                    right: contentRect.left,
-                    bottom: targetRect.bottom,
-                    left: targetRect.left,
-                };
-                const trapezoidBottom = {
-                    top: targetRect.bottom,
-                    right: contentRect.left,
-                    bottom: contentRect.bottom + buffer,
-                    left: targetRect.left,
-                };
-
-                if (
-                    isInRect(x, y, contentRectWithBuffer) ||
-                    isInLowerLeftHalf(x, y, trapezoidTop) ||
-                    isInRect(x, y, trapezoidCenter) ||
-                    isInUpperLeftHalf(x, y, trapezoidBottom)
-                ) {
-                    return;
-                }
-            } else {
-                const contentRectWithBuffer = {
-                    top: contentRect.top - buffer,
-                    right: contentRect.right,
-                    bottom: contentRect.bottom + buffer,
-                    left: contentRect.left - buffer,
-                };
-                const trapezoidTop = {
-                    top: targetRect.top,
-                    right: targetRect.left,
-                    bottom: contentRect.top,
-                    left: contentRect.left - buffer,
-                };
-                const trapezoidCenter = {
-                    top: targetRect.top,
-                    right: targetRect.right,
-                    bottom: contentRect.top,
-                    left: targetRect.left,
-                };
-                const trapezoidBottom = {
-                    top: targetRect.top,
-                    right: contentRect.right + buffer,
-                    bottom: contentRect.top,
-                    left: targetRect.right,
-                };
-
-                if (
-                    isInRect(x, y, contentRectWithBuffer) ||
-                    isInLowerRightHalf(x, y, trapezoidTop) ||
-                    isInRect(x, y, trapezoidCenter) ||
-                    isInUpperRightHalf(x, y, trapezoidBottom)
-                ) {
-                    return;
-                }
-            }
+            direction = this.onLeftOfTarget() ? Direction.Left : Direction.Right;
         } else {
-            if (this.aboveTarget()) {
-                const contentRectWithBuffer = {
-                    top: contentRect.top - buffer,
-                    right: contentRect.right + buffer,
-                    bottom: contentRect.bottom,
-                    left: contentRect.left - buffer,
-                };
-                const trapezoidLeft = {
-                    top: contentRect.bottom,
-                    right: targetRect.left,
-                    bottom: targetRect.bottom,
-                    left: contentRect.left - buffer,
-                };
-                const trapezoidCenter = {
-                    top: contentRect.bottom,
-                    right: targetRect.right,
-                    bottom: targetRect.bottom,
-                    left: targetRect.left,
-                };
-                const trapezoidRight = {
-                    top: contentRect.bottom,
-                    right: contentRect.right + buffer,
-                    bottom: targetRect.bottom,
-                    left: targetRect.right,
-                };
-
-                if (
-                    isInRect(x, y, contentRectWithBuffer) ||
-                    isInUpperRightHalf(x, y, trapezoidLeft) ||
-                    isInRect(x, y, trapezoidCenter) ||
-                    isInUpperLeftHalf(x, y, trapezoidRight)
-                ) {
-                    return;
-                }
-            } else {
-                const contentRectWithBuffer = {
-                    top: contentRect.top,
-                    right: contentRect.right + buffer,
-                    bottom: contentRect.bottom + buffer,
-                    left: contentRect.left - buffer,
-                };
-                const trapezoidLeft = {
-                    top: targetRect.top,
-                    right: targetRect.left,
-                    bottom: contentRect.top,
-                    left: contentRect.left - buffer,
-                };
-                const trapezoidCenter = {
-                    top: targetRect.top,
-                    right: targetRect.right,
-                    bottom: contentRect.top,
-                    left: targetRect.left,
-                };
-                const trapezoidRight = {
-                    top: targetRect.top,
-                    right: contentRect.right + buffer,
-                    bottom: contentRect.top,
-                    left: targetRect.right,
-                };
-
-                if (
-                    isInRect(x, y, contentRectWithBuffer) ||
-                    isInLowerRightHalf(x, y, trapezoidLeft) ||
-                    isInRect(x, y, trapezoidCenter) ||
-                    isInLowerLeftHalf(x, y, trapezoidRight)
-                ) {
-                    return;
-                }
-            }
+            direction = this.aboveTarget() ? Direction.Top : Direction.Bottom;
         }
 
-        this.hideTooltip();
+        if (!mouseWithinRegion(x, y, direction, targetRect, contentRect)) {
+            this.hideTooltip();
+        }
     };
 
     private onTargetMouseOver = (): void => {
