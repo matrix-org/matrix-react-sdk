@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637269009897,
+  "lastUpdate": 1637313196582,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40088,6 +40088,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4500.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e4d645e36002ad98d39a671cc0b3f9a2b7a1a302",
+          "message": "Hide MFileBody download link for threaded messages (#7127)\n\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2021-11-19T09:07:12Z",
+          "tree_id": "c721f6bb45f77fd5b159990b92ee9cee26d762de",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e4d645e36002ad98d39a671cc0b3f9a2b7a1a302"
+        },
+        "date": 1637313193852,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5277.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1104.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1705,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4627.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
