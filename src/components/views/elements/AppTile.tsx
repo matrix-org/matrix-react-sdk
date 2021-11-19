@@ -88,9 +88,6 @@ interface IState {
 }
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
-import { Action } from '../../../dispatcher/actions';
-import RightPanelStore from '../../../stores/RightPanelStore';
 
 @replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component<IProps, IState> {
