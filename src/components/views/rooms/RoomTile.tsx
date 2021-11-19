@@ -297,6 +297,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private onMarkUnreadClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
+
+        // Show home if current room is marked unread
+        if (this.state.selected) {
+            dis.dispatch({ action: 'view_home_page' });
+        }
+
         setRoomMarkedAsUnread(this.props.room);
         this.setState({ generalMenuPosition: null }); // hide the menu
     };
