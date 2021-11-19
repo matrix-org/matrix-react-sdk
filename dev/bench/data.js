@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637331927776,
+  "lastUpdate": 1637342508825,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40508,6 +40508,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4392.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ddbfebbaa0e17827e2517eccb1f6d2dbe287c579",
+          "message": "Fix automatic composer focus, regressed by threads work (#7167)",
+          "timestamp": "2021-11-19T17:15:15Z",
+          "tree_id": "cdf9b8a365a74ac7073226a00d0a7feb37730b27",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ddbfebbaa0e17827e2517eccb1f6d2dbe287c579"
+        },
+        "date": 1637342505504,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4781.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1154.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1665.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4573.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
