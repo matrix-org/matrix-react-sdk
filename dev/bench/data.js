@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637330863172,
+  "lastUpdate": 1637330874257,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40412,6 +40412,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4636.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a2c662272ec6bb4f4b167b850d0e6c67305d8ee9",
+          "message": "When we only show one compose button, show upload (#7165)",
+          "timestamp": "2021-11-19T14:01:07Z",
+          "tree_id": "ca087c193190dfd2b077166d3cdb09272b5674a1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a2c662272ec6bb4f4b167b850d0e6c67305d8ee9"
+        },
+        "date": 1637330871598,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5087.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1160.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1748,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4842.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
