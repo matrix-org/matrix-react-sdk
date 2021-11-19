@@ -1345,7 +1345,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (SettingsStore.getValue("showCookieBar") &&
                 (Analytics.canEnable() || CountlyAnalytics.instance.canEnable())
             ) {
-                showAnonymousAnalyticsOptInToast(SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
+                showAnonymousAnalyticsOptInToast();
             }
         }
 
@@ -1357,8 +1357,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private showPosthogToast(analyticsOptIn: boolean) {
-        showPseudonymousAnalyticsOptInToast(this.props.config.piwik?.policyUrl, analyticsOptIn,
-            SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand);
+        showPseudonymousAnalyticsOptInToast(analyticsOptIn);
     }
 
     private initPosthogAnalyticsToast() {

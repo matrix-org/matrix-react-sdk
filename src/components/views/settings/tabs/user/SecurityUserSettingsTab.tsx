@@ -19,7 +19,6 @@ import React from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
 
 import { _t } from "../../../../../languageHandler";
-import SdkConfig from "../../../../../SdkConfig";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Analytics from "../../../../../Analytics";
@@ -43,6 +42,7 @@ import InlineSpinner from "../../../elements/InlineSpinner";
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -310,23 +310,28 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
         let privacySection;
         if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable() || PosthogAnalytics.instance.isEnabled()) {
+            const onClickAnalyticsLearnMore = () => {
+                if (PosthogAnalytics.instance.isEnabled()) {
+                    showAnalyticsLearnMoreDialog({
+                        primaryButton: _t("Okay"),
+                        hasCancel: false,
+                    });
+                } else {
+                    Analytics.showDetailsModal();
+                }
+            };
             privacySection = <React.Fragment>
                 <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
                     <div className="mx_SettingsTab_subsectionText">
                         <p>
-                            { _t(
-                                "%(analyticsOwner)s collects analytics to allow us to improve the application.",
-                                { analyticsOwner: SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand },
-                            ) }
-                            &nbsp;
-                            { _t("We don't record or profile any personal data, and we don't share information with " +
-                                "third parties.") }
+                            { _t("Share anonymous data to help us identify issues. Nothing personal. " +
+                                 "No third parties.") }
                         </p>
                         <p>
-                            <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
-                                { _t("Learn more about how we use analytics.") }
+                            <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
+                                { _t("Learn more.") }
                             </AccessibleButton>
                         </p>
                     </div>

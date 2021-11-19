@@ -23,8 +23,10 @@ import Analytics from "../Analytics";
 import AccessibleButton from "../components/views/elements/AccessibleButton";
 import GenericToast from "../components/views/toasts/GenericToast";
 import ToastStore from "../stores/ToastStore";
-import Modal from "../Modal";
-import AnalyticsLearnMoreDialog from "../components/views/dialogs/AnalyticsLearnMoreDialog";
+import {
+    ButtonClicked,
+    showDialog as showAnalyticsLearnMoreDialog,
+} from "../components/views/dialogs/AnalyticsLearnMoreDialog";
 
 const onAccept = () => {
     dis.dispatch({
@@ -38,25 +40,35 @@ const onReject = () => {
     });
 };
 
-const onLearnMore = (privacyPolicyUrl: string, analyticsOwner: string) => {
-    Modal.createTrackedDialog(
-        "Analytics Learn More",
-        "",
-        AnalyticsLearnMoreDialog,
-        {
-            analyticsOwner,
-            privacyPolicyUrl,
-            onFinished: (analyticsEnabled?: boolean) => {
-                if (analyticsEnabled === true) {
-                    onAccept();
-                } else if (analyticsEnabled === false) {
-                    onReject();
-                }
-                // otherwise, the user closed the dialog without making a choice, leave the toast open
-            },
+const onLearnMoreNoOptIn = () => {
+    showAnalyticsLearnMoreDialog({
+        onFinished: (buttonClicked?: ButtonClicked) => {
+            if (buttonClicked === ButtonClicked.Primary) {
+                // user clicked "Enable"
+                onAccept();
+            }
+            // otherwise, the user either clicked "Cancel", or closed the dialog without making a choice,
+            // leave the toast open
         },
-        "mx_AnalyticsLearnMoreDialog_wrapper",
-    );
+        primaryButton: _t("Enable"),
+    });
+};
+
+const onLearnMorePreviouslyOptedIn = () => {
+    showAnalyticsLearnMoreDialog({
+        onFinished: (buttonClicked?: ButtonClicked) => {
+            if (buttonClicked === ButtonClicked.Primary) {
+                // user clicked "That's fine"
+                onAccept();
+            } else if (buttonClicked === ButtonClicked.Cancel) {
+                // user clicked "Stop"
+                onReject();
+            }
+            // otherwise, the user closed the dialog without making a choice, leave the toast open
+        },
+        primaryButton: _t("That's fine"),
+        cancelButton: _t("Stop"),
+    });
 };
 
 const onUsageDataClicked = () => {
@@ -81,7 +93,8 @@ const getAnonymousDescription = (): ReactNode => {
     );
 };
 
-const showToast = (props: Omit<React.ComponentProps<typeof GenericToast>, "toastKey">, analyticsOwner: string) => {
+const showToast = (props: Omit<React.ComponentProps<typeof GenericToast>, "toastKey">) => {
+    const analyticsOwner = SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand;
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
         title: _t("Help improve %(analyticsOwner)s", { analyticsOwner }),
@@ -92,11 +105,7 @@ const showToast = (props: Omit<React.ComponentProps<typeof GenericToast>, "toast
     });
 };
 
-export const showPseudonymousAnalyticsOptInToast = (privacyPolicyUrl: string, analyticsOptIn: boolean,
-    analyticsOwner: string): void => {
-    const learnMoreLink = (sub) => (
-        <AccessibleButton kind="link" onClick={() => onLearnMore(privacyPolicyUrl, analyticsOwner)}>{ sub }</AccessibleButton>
-    );
+export const showPseudonymousAnalyticsOptInToast = (analyticsOptIn: boolean): void => {
     let props;
     if (analyticsOptIn) {
         // The user previously opted into our old analytics system - let them know things have changed and ask
@@ -104,14 +113,17 @@ export const showPseudonymousAnalyticsOptInToast = (privacyPolicyUrl: string, an
         props = {
             description: _t(
                 "You previously consented to share anonymous usage data with us. We're updating how that works."),
-            acceptLabel: _t("Learn more"),
+            acceptLabel: _t("That's fine"),
             onAccept,
-            rejectLabel: _t("That's fine"),
-            onReject: onLearnMore(privacyPolicyUrl, analyticsOwner),
+            rejectLabel: _t("Learn more"),
+            onReject: onLearnMorePreviouslyOptedIn,
         };
     } else if (analyticsOptIn === null || analyticsOptIn === undefined) {
         // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
         // explaining any change.
+        const learnMoreLink = (sub) => (
+            <AccessibleButton kind="link" onClick={onLearnMoreNoOptIn}>{ sub }</AccessibleButton>
+        );
         props = {
             description: _t(
                 "Share anonymous data to help us identify issues. Nothing personal. No third parties. " +
@@ -125,10 +137,10 @@ export const showPseudonymousAnalyticsOptInToast = (privacyPolicyUrl: string, an
         // The user previously opted out of analytics, don't ask again
         return;
     }
-    showToast(props, analyticsOwner);
+    showToast(props);
 };
 
-export const showAnonymousAnalyticsOptInToast = (analyticsOwner: string): void => {
+export const showAnonymousAnalyticsOptInToast = (): void => {
     const props = {
         description: getAnonymousDescription(),
         acceptLabel: _t("Yes"),
@@ -136,7 +148,7 @@ export const showAnonymousAnalyticsOptInToast = (analyticsOwner: string): void =
         rejectLabel: _t("No"),
         onReject,
     };
-    showToast(props, analyticsOwner);
+    showToast(props);
 };
 
 export const hideToast = () => {

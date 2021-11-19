@@ -18,16 +18,34 @@ import BaseDialog from "./BaseDialog";
 import { _t } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 import React from "react";
+import Modal from "../../../Modal";
+import SdkConfig from "../../../SdkConfig";
 
-interface IProps {
-    onEnable(): void;
-    onFinished(enableAnalytics?: boolean): void;
-    analyticsOwner: string;
-    privacyPolicyUrl?: string;
+export enum ButtonClicked {
+    Primary,
+    Cancel,
 }
 
-const AnalyticsLearnMoreDialog: React.FC<IProps> = ({ analyticsOwner, privacyPolicyUrl, onFinished }) => {
-    const onPrimaryButtonClick = () => onFinished(true);
+interface IProps {
+    onFinished?(buttonClicked?: ButtonClicked): void;
+    analyticsOwner: string;
+    privacyPolicyUrl?: string;
+    primaryButton?: string;
+    cancelButton?: string;
+    hasCancel?: boolean;
+}
+
+const AnalyticsLearnMoreDialog: React.FC<IProps> = (
+    {
+        onFinished,
+        analyticsOwner,
+        privacyPolicyUrl,
+        primaryButton,
+        cancelButton,
+        hasCancel,
+    }) => {
+    const onPrimaryButtonClick = () => onFinished && onFinished(ButtonClicked.Primary);
+    const onCancelButtonClick = () => onFinished && onFinished(ButtonClicked.Cancel);
     const privacyPolicyLink = privacyPolicyUrl ?
         <span>
             {
@@ -68,10 +86,25 @@ const AnalyticsLearnMoreDialog: React.FC<IProps> = ({ analyticsOwner, privacyPol
             { privacyPolicyLink }
         </div>
         <DialogButtons
-            primaryButton={_t("Enable")}
+            primaryButton={primaryButton}
+            cancelButton={cancelButton}
             onPrimaryButtonClick={onPrimaryButtonClick}
-            onCancel={onFinished} />
+            onCancel={onCancelButtonClick}
+            hasCancel={hasCancel}
+        />
     </BaseDialog>;
+};
+
+export const showDialog = (props: Omit<IProps, "cookiePolicyUrl" | "analyticsOwner">): void => {
+    const cookiePolicyUrl = SdkConfig.get().piwik?.policyUrl;
+    const analyticsOwner = SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand;
+    Modal.createTrackedDialog(
+        "Analytics Learn More",
+        "",
+        AnalyticsLearnMoreDialog,
+        { cookiePolicyUrl, analyticsOwner, ...props },
+        "mx_AnalyticsLearnMoreDialog_wrapper",
+    );
 };
 
 export default AnalyticsLearnMoreDialog;
