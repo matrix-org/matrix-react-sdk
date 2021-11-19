@@ -166,7 +166,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const pollStart: IPollContent = this.props.mxEvent.getContent();
         const pollInfo = pollStart[POLL_START_EVENT_TYPE.name];
 
-        if (pollInfo.answers.length < 1 || pollInfo.answers.length> 20) {
+        if (pollInfo.answers.length < 1 || pollInfo.answers.length > 20) {
             return null;
         }
 
