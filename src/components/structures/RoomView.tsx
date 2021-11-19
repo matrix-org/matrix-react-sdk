@@ -2155,7 +2155,21 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // TODO-video MainSplitContentType.Video:
             //     break;
         }
-
+        let excludedRighPanelPhaseButtons = [RightPanelPhases.Timeline];
+        let onAppsClick = this.onAppsClick;
+        let onForgetClick = this.onForgetClick;
+        let onSearchClick = this.onSearchClick;
+        if (this.state.mainSplitContentType === MainSplitContentType.MaximisedWidget) {
+            // Disable phase buttons and action button to have a simplified header when a widget is maximised
+            // and enable (not disable) the RightPanelPhases.Timeline button
+            excludedRighPanelPhaseButtons = [
+                RightPanelPhases.ThreadPanel,
+                RightPanelPhases.PinnedMessages,
+            ];
+            onAppsClick = null;
+            onForgetClick = null;
+            onSearchClick = null;
+        }
         return (
             <RoomContext.Provider value={this.state}>
                 <main className={mainClasses} ref={this.roomView} onKeyDown={this.onReactKeyDown}>
@@ -2168,13 +2182,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             searchInfo={searchInfo}
                             oobData={this.props.oobData}
                             inRoom={myMembership === 'join'}
-                            onSearchClick={this.onSearchClick}
-                            onForgetClick={(myMembership === "leave") ? this.onForgetClick : null}
+                            onSearchClick={onSearchClick}
+                            onForgetClick={(myMembership === "leave") ? onForgetClick : null}
                             e2eStatus={this.state.e2eStatus}
-                            onAppsClick={this.state.hasPinnedWidgets ? this.onAppsClick : null}
+                            onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
                             appsShown={this.state.showApps}
                             onCallPlaced={this.onCallPlaced}
-                            coreElementsOnly={this.state.mainSplitContentType === MainSplitContentType.MaximisedWidget}
+                            excludedRighPanelPhaseButtons={excludedRighPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className="mx_RoomView_body">
