@@ -58,7 +58,7 @@ interface IProps {
     e2eStatus: E2EStatus;
     appsShown: boolean;
     searchInfo: ISearchInfo;
-    excludedRighPanelPhaseButtons?: Array<RightPanelPhases>;
+    excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
 interface IState {
@@ -70,7 +70,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
         inRoom: false,
-        excludedRighPanelPhaseButtons: [],
+        excludedRightPanelPhaseButtons: [],
     };
 
     constructor(props, context) {
@@ -266,7 +266,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { searchStatus }
                     { topicElement }
                     { rightRow }
-                    <RoomHeaderButtons room={this.props.room} excludedRighPanelPhaseButtons={this.props.excludedRighPanelPhaseButtons} />
+                    <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
             </div>
         );

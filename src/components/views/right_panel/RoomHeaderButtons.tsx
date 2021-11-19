@@ -88,7 +88,7 @@ const TimelineCardHeaderButton = ({ room, isHighlighted, showNewMessage, onClick
 
 interface IProps {
     room?: Room;
-    excludedRighPanelPhaseButtons?: Array<RightPanelPhases>;
+    excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
 @replaceableComponent("views.right_panel.RoomHeaderButtons")
@@ -203,7 +203,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         return <>
             {
                 Array.from(rightPanelPhaseButtons.keys()).map((phase) =>
-                    ( this.props.excludedRighPanelPhaseButtons.includes(phase)
+                    ( this.props.excludedRightPanelPhaseButtons.includes(phase)
                         ? null
                         : rightPanelPhaseButtons.get(phase)))
             }

@@ -2155,14 +2155,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // TODO-video MainSplitContentType.Video:
             //     break;
         }
-        let excludedRighPanelPhaseButtons = [RightPanelPhases.Timeline];
+        let excludedRightPanelPhaseButtons = [RightPanelPhases.Timeline];
         let onAppsClick = this.onAppsClick;
         let onForgetClick = this.onForgetClick;
         let onSearchClick = this.onSearchClick;
         if (this.state.mainSplitContentType === MainSplitContentType.MaximisedWidget) {
             // Disable phase buttons and action button to have a simplified header when a widget is maximised
             // and enable (not disable) the RightPanelPhases.Timeline button
-            excludedRighPanelPhaseButtons = [
+            excludedRightPanelPhaseButtons = [
                 RightPanelPhases.ThreadPanel,
                 RightPanelPhases.PinnedMessages,
             ];
@@ -2188,7 +2188,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
                             appsShown={this.state.showApps}
                             onCallPlaced={this.onCallPlaced}
-                            excludedRighPanelPhaseButtons={excludedRighPanelPhaseButtons}
+                            excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className="mx_RoomView_body">
