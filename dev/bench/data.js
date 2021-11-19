@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637316800617,
+  "lastUpdate": 1637316931576,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40184,6 +40184,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4478.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c2ab59381682dde79e6a6266da7f69ca91d00456",
+          "message": "Prevent custom power levels from breaking roles & permissions tab (#7160)",
+          "timestamp": "2021-11-19T10:08:57Z",
+          "tree_id": "4bc75ec3212cafd470382a0a1e35da81bdd19d70",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c2ab59381682dde79e6a6266da7f69ca91d00456"
+        },
+        "date": 1637316928621,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4997.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1173.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1672,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4826.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
