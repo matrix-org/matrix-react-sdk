@@ -139,10 +139,12 @@ $pulse-color: $alert;
     box-shadow: 0 0 0 0 rgba($pulse-color, 1);
     animation: mx_RightPanel_indicator_pulse 2s infinite;
     animation-iteration-count: 1;
+
     &.mx_Indicator_gray {
         background: rgba($input-darker-fg-color, 1);
         box-shadow: rgba($input-darker-fg-color, 1);
     }
+
     &::after {
         content: "";
         position: absolute;
