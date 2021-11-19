@@ -497,7 +497,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     // Overidden by MStickerBody
     protected getFileBody(): string | JSX.Element {
         if (this.props.forExport) return null;
-        /**
+        /*
          * In the room timeline or the thread context we don't need the download
          * link as the message action bar will fullfil that
          */
