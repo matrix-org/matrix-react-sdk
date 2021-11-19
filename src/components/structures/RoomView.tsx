@@ -356,7 +356,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private checkRightPanel = (room) => {
-        // This is a hack to hide the chat. This should not be necassary once the right panel
+        // This is a hack to hide the chat. This should not be necessary once the right panel
         // phase is stored per room. (need to be done after check widget so that mainSplitContentType is updated)
         if (RightPanelStore.getSharedInstance().roomPanelPhase === RightPanelPhases.Timeline
             && this.state.showRightPanel
