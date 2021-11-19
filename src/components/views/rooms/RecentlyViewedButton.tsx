@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from "react";
+import React from "react";
 
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
@@ -23,30 +23,17 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import dis from "../../../dispatcher/dispatcher";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import InteractiveTooltip, { Direction } from "../elements/InteractiveTooltip";
+import { roomContextDetailsText } from "../../../utils/Room";
 
 const RecentlyViewedButton = () => {
-    const cli = useContext(MatrixClientContext);
     const crumbs = useEventEmitterState(BreadcrumbsStore.instance, UPDATE_EVENT, () => BreadcrumbsStore.instance.rooms);
 
     const content = <div className="mx_RecentlyViewedButton_ContextMenu">
         <h4>{ _t("Recently viewed") }</h4>
         <div>
             { crumbs.map(crumb => {
-                let parentsSection: JSX.Element;
-                if (!crumb.isSpaceRoom()) {
-                    const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(crumb.roomId);
-                    if (parent) {
-                        parentsSection = <div className="mx_RecentlyViewedButton_entry_spaces">
-                            { _t("%(spaceName)s and %(count)s others", {
-                                spaceName: cli.getRoom(parent).name,
-                                count: otherParents.length,
-                            }) }
-                        </div>;
-                    }
-                }
+                const contextDetails = roomContextDetailsText(crumb);
 
                 return <MenuItem
                     key={crumb.roomId}
@@ -57,14 +44,12 @@ const RecentlyViewedButton = () => {
                         });
                     }}
                 >
-                    <RoomAvatar
-                        room={crumb}
-                        width={24}
-                        height={24}
-                    />
+                    <RoomAvatar room={crumb} width={24} height={24} />
                     <span className="mx_RecentlyViewedButton_entry_label">
                         <div>{ crumb.name }</div>
-                        { parentsSection }
+                        { contextDetails && <div className="mx_RecentlyViewedButton_entry_spaces">
+                            { contextDetails }
+                        </div> }
                     </span>
                 </MenuItem>;
             }) }
