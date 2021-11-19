@@ -154,6 +154,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             prevProps.room?.off("Room.name", this.onRoomNameUpdate);
             this.props.room?.on("Room.name", this.onRoomNameUpdate);
         }
+
+        // SC: Remove focus from room tile after hiding menu
+        if ((!!prevState.generalMenuPosition && !this.state.generalMenuPosition) ||
+            (!!prevState.notificationsMenuPosition && this.state.notificationsMenuPosition)) {
+            this.roomTileRef?.current?.focus();
+            this.roomTileRef?.current?.blur();
+        }
     }
 
     public componentDidMount() {
