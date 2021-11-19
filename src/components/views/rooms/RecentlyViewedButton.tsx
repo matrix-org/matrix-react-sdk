@@ -24,7 +24,7 @@ import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import dis from "../../../dispatcher/dispatcher";
 import InteractiveTooltip, { Direction } from "../elements/InteractiveTooltip";
-import { roomContextDetailsText } from "../../../utils/Room";
+import { roomContextDetailsText } from "../../../Rooms";
 
 const RecentlyViewedButton = () => {
     const crumbs = useEventEmitterState(BreadcrumbsStore.instance, UPDATE_EVENT, () => BreadcrumbsStore.instance.rooms);
