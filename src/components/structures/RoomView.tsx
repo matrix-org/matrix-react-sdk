@@ -337,6 +337,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }
         this.checkWidgets(this.state.room);
+        this.checkRightPanel(this.state.room);
     };
 
     private checkWidgets = (room) => {
@@ -352,6 +353,20 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return (WidgetLayoutStore.instance.hasMaximisedWidget(room))
             ? MainSplitContentType.MaximisedWidget
             : MainSplitContentType.Timeline;
+    };
+
+    private checkRightPanel = (room) => {
+        // This is a hack to hide the chat. This should not be necassary once the right panel
+        // phase is stored per room. (need to be done after check widget so that mainSplitContentType is updated)
+        if (RightPanelStore.getSharedInstance().roomPanelPhase === RightPanelPhases.Timeline
+            && this.state.showRightPanel
+            && !WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)) {
+            // Two timelines are shown prevent this by hiding the right panel
+            dis.dispatch({
+                action: Action.ToggleRightPanel,
+                type: "room",
+            });
+        }
     };
 
     private onReadReceiptsChange = () => {
@@ -1004,6 +1019,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
+        this.checkRightPanel(room);
 
         this.setState({
             liveTimeline: room.getLiveTimeline(),
@@ -2098,14 +2114,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             />);
         }
 
-        let showRightPanel = this.state.room && this.state.showRightPanel;
-        // This is a hack to hide the chat. This should not be necassary once the right panel
-        // phase is stored per room.
-        if (RightPanelStore.getSharedInstance().roomPanelPhase === RightPanelPhases.Timeline
-            && this.state.mainSplitContentType === MainSplitContentType.Timeline ) {
-            // Two timelines are shown prevent this by hiding the right panel
-            showRightPanel = false;
-        }
+        const showRightPanel = this.state.room && this.state.showRightPanel;
+
         const rightPanel = showRightPanel
             ? <RightPanel
                 room={this.state.room}
