@@ -424,8 +424,6 @@ $left-gutter: 64px;
     }
 
     &::before {
-        background-color: #ffffff;
-        mask-image: url('$(res)/img/e2e/normal.svg');
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: 80%;
@@ -443,7 +441,7 @@ $left-gutter: 64px;
 .mx_EventTile_e2eIcon_normal {
     &::after {
         mask-image: url('$(res)/img/e2e/normal.svg');
-        background-color: $composer-e2e-icon-color;
+        background-color: $header-panel-text-primary-color;
     }
     opacity: 1;
 }
@@ -546,13 +544,13 @@ $left-gutter: 64px;
     mask-size: 75%;
     mask-position: center;
     mask-repeat: no-repeat;
-    mask-image: url($collapse-button-url);
+    mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
 }
 .mx_EventTile_expandButton {
     mask-size: 75%;
     mask-position: center;
     mask-repeat: no-repeat;
-    mask-image: url($expand-button-url);
+    mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
 }
 
 .mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_copyButton,
@@ -855,10 +853,6 @@ $left-gutter: 64px;
         .mx_EventTile_line {
             padding-left: $selected-message-border-width !important;
             order: 10 !important;
-        }
-
-        &:hover .mx_EventTile_line {
-            padding-left: 0 !important;
         }
 
         .mx_MessageTimestamp {
