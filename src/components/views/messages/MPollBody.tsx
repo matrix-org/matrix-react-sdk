@@ -222,14 +222,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 }
 
 export class UserVote {
-    ts: number;
-    sender: string;
-    answers: Array<string>;
-
-    constructor(ts: number, sender: string, answers: string[]) {
-        this.ts = ts;
-        this.sender = sender;
-        this.answers = answers;
+    constructor(public readonly ts: number, public readonly sender: string, public readonly answers: string[]) {
     }
 }
 
