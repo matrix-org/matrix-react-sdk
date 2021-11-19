@@ -331,7 +331,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                         </p>
                         <p>
                             <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
-                                { _t("Learn more.") }
+                                { _t("Learn more") }
                             </AccessibleButton>
                         </p>
                     </div>
