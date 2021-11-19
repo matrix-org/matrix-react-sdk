@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637319342754,
+  "lastUpdate": 1637319813844,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40316,6 +40316,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4554.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bd09fc22312be9fd7df79275d1037609ac08317f",
+          "message": "Remove chevrons from RoomSummaryCard_Button (#7137)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2021-11-19T11:57:35+01:00",
+          "tree_id": "4fcc0cf8c3b4fc159b4a0260c38e5d59774fd61c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bd09fc22312be9fd7df79275d1037609ac08317f"
+        },
+        "date": 1637319811078,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4866,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 941.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1676.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4537.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
