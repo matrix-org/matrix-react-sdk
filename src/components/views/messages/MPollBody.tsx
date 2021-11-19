@@ -83,7 +83,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     private onPollRelationsCreated = (relationType: string, eventType: string) => {
         if (
             relationType === "m.reference" &&
-            eventType === POLL_RESPONSE_EVENT_TYPE.name
+            POLL_RESPONSE_EVENT_TYPE.matches(eventType)
         ) {
             this.props.mxEvent.removeListener(
                 "Event.relationsCreated", this.onPollRelationsCreated);
