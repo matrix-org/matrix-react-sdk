@@ -211,21 +211,21 @@ export function mouseWithinRegion(
                 left: contentRect.left - buffer,
             };
             const trapezoidLeft = {
-                top: targetRect.bottom,
+                top: contentRect.bottom,
                 right: targetRect.left,
-                bottom: contentRect.top,
+                bottom: targetRect.bottom,
                 left: contentRect.left - buffer,
             };
             const trapezoidCenter = {
-                top: targetRect.bottom,
+                top: contentRect.bottom,
                 right: targetRect.right,
-                bottom: contentRect.top,
+                bottom: targetRect.top,
                 left: targetRect.left,
             };
             const trapezoidRight = {
-                top: targetRect.bottom,
+                top: contentRect.bottom,
                 right: contentRect.right + buffer,
-                bottom: contentRect.top,
+                bottom: targetRect.bottom,
                 left: targetRect.right,
             };
 
@@ -255,7 +255,7 @@ export function mouseWithinRegion(
                 left: contentRect.left - buffer,
             };
             const trapezoidCenter = {
-                top: targetRect.top,
+                top: targetRect.bottom,
                 right: targetRect.right,
                 bottom: contentRect.top,
                 left: targetRect.left,

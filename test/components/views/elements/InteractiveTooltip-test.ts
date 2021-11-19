@@ -102,26 +102,26 @@ describe("InteractiveTooltip", () => {
             const contentRect = {
                 width: 400,
                 height: 100,
-                top: 50,
-                right: 600,
+                top: 100,
+                right: 550,
                 bottom: 200,
-                left: 100,
+                left: 150,
             } as DOMRect;
 
             // just within top right corner of contentRect
-            expect(mouseWithinRegion(599, 51, Direction.Top, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(549, 101, Direction.Top, targetRect, contentRect)).toBe(true);
             // just outside top right corner of contentRect, within buffer
-            expect(mouseWithinRegion(599, 49, Direction.Top, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(549, 99, Direction.Top, targetRect, contentRect)).toBe(true);
             // just within bottom left corner of targetRect
             expect(mouseWithinRegion(351, 319, Direction.Top, targetRect, contentRect)).toBe(true);
             // within the left triangular portion of the trapezoid
-            expect(mouseWithinRegion(260, 240, Direction.Top, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(240, 260, Direction.Top, targetRect, contentRect)).toBe(true);
             // within the right triangular portion of the trapezoid
-            expect(mouseWithinRegion(260, 480, Direction.Top, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(480, 260, Direction.Top, targetRect, contentRect)).toBe(true);
             // outside the left triangular portion of the trapezoid
-            expect(mouseWithinRegion(260, 220, Direction.Top, targetRect, contentRect)).toBe(false);
+            expect(mouseWithinRegion(220, 260, Direction.Top, targetRect, contentRect)).toBe(false);
             // outside the right triangular portion of the trapezoid
-            expect(mouseWithinRegion(260, 500, Direction.Top, targetRect, contentRect)).toBe(false);
+            expect(mouseWithinRegion(500, 260, Direction.Top, targetRect, contentRect)).toBe(false);
         });
 
         it("direction=bottom", () => {
@@ -138,25 +138,25 @@ describe("InteractiveTooltip", () => {
                 width: 400,
                 height: 100,
                 top: 420,
-                right: 600,
-                bottom: 570,
-                left: 100,
+                right: 550,
+                bottom: 520,
+                left: 150,
             } as DOMRect;
 
             // just within bottom left corner of contentRect
-            expect(mouseWithinRegion(101, 569, Direction.Bottom, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(101, 519, Direction.Bottom, targetRect, contentRect)).toBe(true);
             // just outside bottom left corner of contentRect, within buffer
-            expect(mouseWithinRegion(101, 571, Direction.Bottom, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(101, 521, Direction.Bottom, targetRect, contentRect)).toBe(true);
             // just within top left corner of targetRect
             expect(mouseWithinRegion(351, 301, Direction.Bottom, targetRect, contentRect)).toBe(true);
             // within the left triangular portion of the trapezoid
-            expect(mouseWithinRegion(360, 240, Direction.Bottom, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(240, 360, Direction.Bottom, targetRect, contentRect)).toBe(true);
             // within the right triangular portion of the trapezoid
-            expect(mouseWithinRegion(360, 480, Direction.Bottom, targetRect, contentRect)).toBe(true);
+            expect(mouseWithinRegion(480, 360, Direction.Bottom, targetRect, contentRect)).toBe(true);
             // outside the left triangular portion of the trapezoid
-            expect(mouseWithinRegion(360, 220, Direction.Bottom, targetRect, contentRect)).toBe(false);
+            expect(mouseWithinRegion(220, 360, Direction.Bottom, targetRect, contentRect)).toBe(false);
             // outside the right triangular portion of the trapezoid
-            expect(mouseWithinRegion(360, 500, Direction.Bottom, targetRect, contentRect)).toBe(false);
+            expect(mouseWithinRegion(500, 360, Direction.Bottom, targetRect, contentRect)).toBe(false);
         });
     });
 });
