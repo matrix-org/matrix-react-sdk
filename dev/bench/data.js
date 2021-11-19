@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637313196582,
+  "lastUpdate": 1637316800617,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40136,6 +40136,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4627.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c457da4c6b60853defeb1d8958ea23352551d4e2",
+          "message": "Room Context Menu should respond to tag changes (#7154)",
+          "timestamp": "2021-11-19T10:07:55Z",
+          "tree_id": "f6c8bda213911747be0af80e38091bd6d012311a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c457da4c6b60853defeb1d8958ea23352551d4e2"
+        },
+        "date": 1637316798559,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5089.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 856.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4478.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
