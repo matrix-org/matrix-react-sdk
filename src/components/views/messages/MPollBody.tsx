@@ -238,7 +238,7 @@ function userResponseFromPollResponseEvent(event: MatrixEvent): UserVote {
 }
 
 export function allVotes(pollRelations: Relations): Array<UserVote> {
-    function isPollResponse(responseEvent: MatrixEvent) {
+    function isPollResponse(responseEvent: MatrixEvent): boolean {
         return (
             responseEvent.getType() === POLL_RESPONSE_EVENT_TYPE.name &&
             responseEvent.getContent().hasOwnProperty(POLL_RESPONSE_EVENT_TYPE.name)
