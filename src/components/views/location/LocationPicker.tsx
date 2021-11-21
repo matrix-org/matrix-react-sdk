@@ -47,20 +47,21 @@ interface IDropdownProps {
 
 const LocationShareTypeDropdown = ({
     value,
+    label,
     width,
     onChange,
-}: IDropDownProps) => {
+}: IDropdownProps) => {
     const options = [
-        <div key={ LocationShareType.CUSTOM }>{ _t("Share custom location") }</div>,
-        <div key={ LocationShareType.ONE_OFF }>{ _t("Share my current location as a one off") }</div>,
-        <div key={ LocationShareType.ONE_MIN }>{ _t("Share my current location for one minute") }</div>,
-        <div key={ LocationShareType.FIVE_MINS }>{ _t("Share my current location for five minutes") }</div>,
-        <div key={ LocationShareType.THIRTY_MINS }>{ _t("Share my current location for thirty minutes") }</div>,
-        <div key={ LocationShareType.ONE_HOUR }>{ _t("Share my current location for one hour") }</div>,
-        <div key={ LocationShareType.THREE_HOURS }>{ _t("Share my current location for three hours") }</div>,
-        <div key={ LocationShareType.SIX_HOURS }>{ _t("Share my current location for six hours") }</div>,
-        <div key={ LocationShareType.ONE_DAY }>{ _t("Share my current location for one day") }</div>,
-        <div key={ LocationShareType.FOREVER }>{ _t("Share my current location until I disable it") }</div>,
+        <div key={LocationShareType.CUSTOM}>{ _t("Share custom location") }</div>,
+        <div key={LocationShareType.ONE_OFF}>{ _t("Share my current location as a one off") }</div>,
+        <div key={LocationShareType.ONE_MIN}>{ _t("Share my current location for one minute") }</div>,
+        <div key={LocationShareType.FIVE_MINS}>{ _t("Share my current location for five minutes") }</div>,
+        <div key={LocationShareType.THIRTY_MINS}>{ _t("Share my current location for thirty minutes") }</div>,
+        <div key={LocationShareType.ONE_HOUR}>{ _t("Share my current location for one hour") }</div>,
+        <div key={LocationShareType.THREE_HOURS}>{ _t("Share my current location for three hours") }</div>,
+        <div key={LocationShareType.SIX_HOURS}>{ _t("Share my current location for six hours") }</div>,
+        <div key={LocationShareType.ONE_DAY}>{ _t("Share my current location for one day") }</div>,
+        <div key={LocationShareType.FOREVER}>{ _t("Share my current location until I disable it") }</div>,
     ];
 
     return <Dropdown
@@ -87,7 +88,6 @@ interface IState {
 
 @replaceableComponent("views.location.LocationPicker")
 class LocationPicker extends React.Component<IProps, IState> {
-
     constructor(props) {
         super(props);
 
@@ -95,7 +95,7 @@ class LocationPicker extends React.Component<IProps, IState> {
             description: "",
             type: LocationShareType.ONE_OFF,
             position: undefined,
-        };        
+        };
     }
 
     componentDidMount() {
@@ -110,7 +110,7 @@ class LocationPicker extends React.Component<IProps, IState> {
         // Add geolocate control to the map.
         this.geolocate = new maplibregl.GeolocateControl({
             positionOptions: {
-                enableHighAccuracy: true
+                enableHighAccuracy: true,
             },
             trackUserLocation: true,
         });
@@ -129,7 +129,7 @@ class LocationPicker extends React.Component<IProps, IState> {
 
     private onGeolocate = (position) => {
         this.setState({ position });
-    }
+    };
 
     private onDescriptionChange = (ev: ChangeEvent<HTMLInputElement>) => {
         this.setState({ description: ev.target.value });
@@ -160,8 +160,7 @@ class LocationPicker extends React.Component<IProps, IState> {
     render() {
         return (
             <div className="mx_LocationPicker">
-                <div id ="mx_LocationPicker_map">
-                </div>
+                <div id="mx_LocationPicker_map" />
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk} onKeyDown={this.onKeyDown}>
                         <LocationShareTypeDropdown

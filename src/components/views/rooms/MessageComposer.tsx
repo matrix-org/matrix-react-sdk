@@ -169,7 +169,6 @@ const LocationButton: React.FC<ILocationButtonProps> = ({ shareLocation, menuPos
     </React.Fragment>;
 };
 
-
 interface IUploadButtonProps {
     roomId: string;
     relation?: IEventRelation | null;
@@ -480,7 +479,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             logger.error("Error sending location:", e);
         }
         return true;
-    }
+    };
 
     private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {

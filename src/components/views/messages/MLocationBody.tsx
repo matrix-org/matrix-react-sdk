@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import maplibregl from 'maplibre-gl';
 import SdkConfig from '../../../SdkConfig';
-import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 
@@ -26,10 +25,14 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     constructor(props: IBodyProps) {
         super(props);
 
+        // unfortunately we're stuck supporting legacy `content.geo_uri`
+        // events until the end of days, or until we figure out mutable
+        // events - so folks can read their old chat history correctly.
+        // https://github.com/matrix-org/matrix-doc/issues/3516
         const content = this.props.mxEvent.getContent();
         const uri = content['org.matrix.msc3488.location'] ?
-                    content['org.matrix.msc3488.location'].uri :
-                    content['geo_uri'];
+            content['org.matrix.msc3488.location'].uri :
+            content['geo_uri'];
 
         this.coords = this.parseGeoUri(uri);
     }
@@ -61,7 +64,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             zoom: 13,
         });
 
-        var marker = new maplibregl.Marker()
+        new maplibregl.Marker()
             .setLngLat([this.coords.longitude, this.coords.latitude])
             .addTo(this.map);
     }
@@ -71,7 +74,6 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     render() {
-        return <div id={ this.getBodyId() } className="mx_MLocationBody">
-        </div>;
+        return <div id={this.getBodyId()} className="mx_MLocationBody" />;
     }
 }
