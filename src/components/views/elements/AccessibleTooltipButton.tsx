@@ -29,6 +29,7 @@ interface ITooltipProps extends React.ComponentProps<typeof AccessibleButton> {
     forceHide?: boolean;
     yOffset?: number;
     alignment?: Alignment;
+    onHover?: (hovering: boolean) => void;
 }
 
 interface IState {
@@ -53,6 +54,7 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
     }
 
     showTooltip = () => {
+        if (this.props.onHover) this.props.onHover(true);
         if (this.props.forceHide) return;
         this.setState({
             hover: true,
@@ -60,6 +62,7 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
     };
 
     hideTooltip = () => {
+        if (this.props.onHover) this.props.onHover(false);
         this.setState({
             hover: false,
         });
