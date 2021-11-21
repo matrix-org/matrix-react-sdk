@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637343700089,
+  "lastUpdate": 1637504552587,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40604,6 +40604,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4821.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b6b7511fd938117479411f703098e7cd4ff7b61f",
+          "message": "Restore 'large' thumbnails to be 800x600 (#7172)\n\nIn order to restore the original behaviour for those who want it, redefine \"large\" thumbnails to be fit within 800x600px.\r\nThis means that timeline screenshots end up typically not being downscaled (which is important given screenshots are our easiest way of copying chunks of history between rooms currently :/).  It also means that photos end up nice and big, which was a deliberate aesthetic choice for the app in the past, which some users will want to retain.",
+          "timestamp": "2021-11-21T14:16:12Z",
+          "tree_id": "45fdbac1cfe181063194ff6297fe53391b868f06",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b6b7511fd938117479411f703098e7cd4ff7b61f"
+        },
+        "date": 1637504549426,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4864.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1049.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1750,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4607.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
