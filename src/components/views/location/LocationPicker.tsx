@@ -55,7 +55,7 @@ const LocationShareTypeDropdown = ({
     return <Dropdown
         id="mx_LocationShareTypeDropdown"
         className="mx_LocationShareTypeDropdown"
-        onOptionChange={(key: string)=>{ onChange(LocationShareType[LocationShareType[parseInt(key)]]) }}
+        onOptionChange={(key: string)=>{ onChange(LocationShareType[LocationShareType[parseInt(key)]]); }}
         menuWidth={width}
         label={label}
         value={value.toString()}
@@ -78,8 +78,8 @@ interface IState {
 
 @replaceableComponent("views.location.LocationPicker")
 class LocationPicker extends React.Component<IProps, IState> {
-    private map : maplibregl.Map;
-    private geolocate : maplibregl.GeolocateControl;
+    private map: maplibregl.Map;
+    private geolocate: maplibregl.GeolocateControl;
 
     constructor(props) {
         super(props);

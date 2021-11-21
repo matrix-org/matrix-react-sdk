@@ -19,15 +19,14 @@ import maplibregl from 'maplibre-gl';
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
-import { LocationShareType } from "../location/LocationShareType";
 
 interface IState {
 }
 
 @replaceableComponent("views.messages.MLocationBody")
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
-    private map : maplibregl.Map;
-    private coords : GeolocationCoordinates;
+    private map: maplibregl.Map;
+    private coords: GeolocationCoordinates;
 
     constructor(props: IBodyProps) {
         super(props);
@@ -44,12 +43,12 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         this.coords = this.parseGeoUri(uri);
     }
 
-    private parseGeoUri = (uri: string) : GeolocationCoordinates => {
+    private parseGeoUri = (uri: string): GeolocationCoordinates => {
         const m = uri.match(/^\s*geo:(.*?)\s*$/);
         if (!m) return;
         const parts = m[1].split(';');
         const coords = parts[0].split(',');
-        let uncertainty : number;
+        let uncertainty: number;
         for (const param of parts.slice(1)) {
             const m = param.match(/u=(.*)/);
             if (m) uncertainty = parseFloat(m[1]);
