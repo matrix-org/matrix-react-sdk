@@ -46,6 +46,8 @@ limitations under the License.
         justify-content: center;
         align-items: center;
 
+        box-shadow: 0px 4px 4px 0px #00000026; // Same on both themes
+
         &::before {
             content: '';
             display: inline-block;
