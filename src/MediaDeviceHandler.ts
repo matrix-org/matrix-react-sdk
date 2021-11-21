@@ -124,4 +124,17 @@ export default class MediaDeviceHandler extends EventEmitter {
     public static getVideoInput(): string {
         return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_videoinput");
     }
+
+    /**
+     * Returns the current set deviceId for a device kind
+     * @param {MediaDeviceKindEnum} kind of the device that will be returned
+     * @returns {string} the deviceId
+     */
+    public static getDevice(kind: MediaDeviceKindEnum): string {
+        switch (kind) {
+            case MediaDeviceKindEnum.AudioOutput: return this.getAudioOutput();
+            case MediaDeviceKindEnum.AudioInput: return this.getAudioInput();
+            case MediaDeviceKindEnum.VideoInput: return this.getVideoInput();
+        }
+    }
 }
