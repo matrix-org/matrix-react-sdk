@@ -21,25 +21,13 @@ import SdkConfig from '../../../SdkConfig';
 import Field from "../elements/Field";
 import DialogButtons from "../elements/DialogButtons";
 import Dropdown from "../elements/Dropdown";
+import { LocationShareType } from "./LocationShareType";
 
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
-enum LocationShareType {
-    CUSTOM = -1,
-    ONE_OFF = 0,
-    ONE_MIN = 60,
-    FIVE_MINS = 5 * 60,
-    THIRTY_MINS = 30 * 60,
-    ONE_HOUR = 60 * 60,
-    THREE_HOURS = 3 * 60 * 60,
-    SIX_HOURS = 6 * 60 * 60,
-    ONE_DAY = 24 * 60 * 60,
-    FOREVER = Number.MAX_SAFE_INTEGER,
-}
-
 interface IDropdownProps {
-    value: JoinRule;
+    value: LocationShareType;
     label: string;
     width?: number;
     onChange(type: LocationShareType): void;
@@ -67,17 +55,18 @@ const LocationShareTypeDropdown = ({
     return <Dropdown
         id="mx_LocationShareTypeDropdown"
         className="mx_LocationShareTypeDropdown"
-        onOptionChange={onChange}
-        width={width}
-        value={value}
+        onOptionChange={(key: string)=>{ onChange(LocationShareType[LocationShareType[parseInt(key)]]) }}
+        menuWidth={width}
+        label={label}
+        value={value.toString()}
     >
         { options }
     </Dropdown>;
 };
 
 interface IProps {
-    onChoose(uri: string, ts: integer, type: LocationShareType, description: string): boolean;
-    onCancel();
+    onChoose(uri: string, ts: number, type: LocationShareType, description: string): boolean;
+    onFinished();
 }
 
 interface IState {
@@ -88,6 +77,9 @@ interface IState {
 
 @replaceableComponent("views.location.LocationPicker")
 class LocationPicker extends React.Component<IProps, IState> {
+    private map : maplibregl.Map;
+    private geolocate : maplibregl.GeolocateControl;
+
     constructor(props) {
         super(props);
 
@@ -131,7 +123,7 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.setState({ position });
     };
 
-    private onDescriptionChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    private onDescriptionChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ description: ev.target.value });
     };
 
@@ -162,9 +154,10 @@ class LocationPicker extends React.Component<IProps, IState> {
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
                 <div className="mx_LocationPicker_footer">
-                    <form onSubmit={this.onOk} onKeyDown={this.onKeyDown}>
+                    <form onSubmit={this.onOk}>
                         <LocationShareTypeDropdown
                             value={this.state.type}
+                            label={_t("Type of location share")}
                             onChange={this.onTypeChange}
                             width={400}
                         />

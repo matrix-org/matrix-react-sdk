@@ -19,9 +19,16 @@ import maplibregl from 'maplibre-gl';
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
+import { LocationShareType } from "../location/LocationShareType";
+
+interface IState {
+}
 
 @replaceableComponent("views.messages.MLocationBody")
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
+    private map : maplibregl.Map;
+    private coords : GeolocationCoordinates;
+
     constructor(props: IBodyProps) {
         super(props);
 
@@ -37,21 +44,24 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         this.coords = this.parseGeoUri(uri);
     }
 
-    private parseGeoUri = (uri) => {
+    private parseGeoUri = (uri: string) : GeolocationCoordinates => {
         const m = uri.match(/^\s*geo:(.*?)\s*$/);
         if (!m) return;
         const parts = m[1].split(';');
         const coords = parts[0].split(',');
-        let uncertainty;
+        let uncertainty : number;
         for (const param of parts.slice(1)) {
             const m = param.match(/u=(.*)/);
-            if (m) uncertainty = m[1];
+            if (m) uncertainty = parseFloat(m[1]);
         }
         return {
-            'latitude': coords[0],
-            'longitude': coords[1],
-            'altitude': coords[2],
-            'accuracy': uncertainty,
+            latitude: parseFloat(coords[0]),
+            longitude: parseFloat(coords[1]),
+            altitude: parseFloat(coords[2]),
+            accuracy: uncertainty,
+            altitudeAccuracy: undefined,
+            heading: undefined,
+            speed: undefined,
         };
     };
 

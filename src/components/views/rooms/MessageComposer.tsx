@@ -61,6 +61,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import { LocationShareType } from "../location/LocationShareType";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -131,7 +132,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
 
 interface ILocationButtonProps {
     room: Room;
-    shareLocation: (uri: string, ts: int, type: LocationShareType, description: string) => boolean;
+    shareLocation: (uri: string, ts: number, type: LocationShareType, description: string) => boolean;
     menuPosition: any; // TODO: Types
     narrowMode: boolean;
 }
@@ -462,7 +463,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private shareLocation = (uri: string, ts: int, type: LocationShareType, description: string): boolean => {
+    private shareLocation = (uri: string, ts: number, type: LocationShareType, description: string): boolean => {
         if (!uri) return false;
         try {
             const text = `${description ? description : 'Location'} at ${uri} as of ${new Date(ts).toISOString()}`;

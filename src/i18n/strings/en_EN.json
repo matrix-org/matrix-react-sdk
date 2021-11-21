@@ -2077,6 +2077,7 @@
     "Share my current location for six hours": "Share my current location for six hours",
     "Share my current location for one day": "Share my current location for one day",
     "Share my current location until I disable it": "Share my current location until I disable it",
+    "Type of location share": "Type of location share",
     "Failed to load group members": "Failed to load group members",
     "Filter community members": "Filter community members",
     "Are you sure you want to remove '%(roomName)s' from %(groupId)s?": "Are you sure you want to remove '%(roomName)s' from %(groupId)s?",
