@@ -27,6 +27,7 @@ interface IState {
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
     private map: maplibregl.Map;
     private coords: GeolocationCoordinates;
+    private description: string;
 
     constructor(props: IBodyProps) {
         super(props);
@@ -41,6 +42,12 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             content['geo_uri'];
 
         this.coords = this.parseGeoUri(uri);
+
+        this.description =
+            (content['org.matrix.msc3488.location'] &&
+                content['org.matrix.msc3488.location'].description !== undefined) ?
+                content['org.matrix.msc3488.location'].description :
+                content['body'];
     }
 
     private parseGeoUri = (uri: string): GeolocationCoordinates => {
@@ -83,6 +90,9 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     render() {
-        return <div id={this.getBodyId()} className="mx_MLocationBody" />;
+        return <div className="mx_MLocationBody">
+            <div id={this.getBodyId()} className="mx_MLocationBody_map" />
+            <span className="mx_EventTile_body">{ this.description }</span>
+        </div>;
     }
 }
