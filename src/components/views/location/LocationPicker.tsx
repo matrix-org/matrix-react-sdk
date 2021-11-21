@@ -73,6 +73,7 @@ interface IState {
     description: string;
     type: LocationShareType;
     position: GeolocationPosition;
+    manual: boolean;
 }
 
 @replaceableComponent("views.location.LocationPicker")
@@ -84,9 +85,10 @@ class LocationPicker extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            description: "",
+            description: _t("My location"),
             type: LocationShareType.ONE_OFF,
             position: undefined,
+            manual: false,
         };
     }
 
@@ -172,7 +174,8 @@ class LocationPicker extends React.Component<IProps, IState> {
 
                         <DialogButtons primaryButton={_t('Share')}
                             onPrimaryButtonClick={this.onOk}
-                            onCancel={this.props.onFinished} />
+                            onCancel={this.props.onFinished}
+                            disabled={!this.state.position} />
                     </form>
                 </div>
             </div>
