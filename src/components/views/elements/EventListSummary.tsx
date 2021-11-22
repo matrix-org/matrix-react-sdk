@@ -22,7 +22,7 @@ import MemberAvatar from '../avatars/MemberAvatar';
 import { _t } from '../../../languageHandler';
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import AccessibleButton from "./AccessibleButton";
-import { Layout } from '../../../settings/Layout';
+import { Layout } from '../../../settings/enums/Layout';
 
 interface IProps {
     // An array of member events to summarise
@@ -34,7 +34,7 @@ interface IProps {
     // The list of room members for which to show avatars next to the summary
     summaryMembers?: RoomMember[];
     // The text to show as the summary of this event list
-    summaryText?: string;
+    summaryText?: string | JSX.Element;
     // An array of EventTiles to render when expanded
     children: ReactNode[];
     // Called when the event list expansion is toggled

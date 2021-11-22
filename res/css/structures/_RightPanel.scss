@@ -22,7 +22,7 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    padding: 4px 0;
+    padding: $container-border-width 0;
     box-sizing: border-box;
     height: 100%;
     contain: strict;
@@ -43,7 +43,7 @@ limitations under the License.
 .mx_RightPanel_headerButtonGroup {
     height: 100%;
     display: flex;
-    background-color: $primary-bg-color;
+    background-color: $background;
     padding: 0 9px;
     align-items: center;
 }
@@ -71,12 +71,16 @@ limitations under the License.
     }
 
     &:hover {
-        background: rgba($accent-color, 0.1);
+        background: rgba($accent, 0.1);
 
         &::before {
-            background-color: $accent-color;
+            background-color: $accent;
         }
     }
+}
+
+.mx_RightPanel_threadsButton::before {
+    mask-image: url('$(res)/img/element-icons/room/thread.svg');
 }
 
 .mx_RightPanel_notifsButton::before {
@@ -100,7 +104,7 @@ limitations under the License.
 }
 
 $dot-size: 8px;
-$pulse-color: $pinned-unread-color;
+$pulse-color: $alert;
 
 .mx_RightPanel_pinnedMessagesButton {
     &::before {
@@ -171,7 +175,7 @@ $pulse-color: $pinned-unread-color;
 
 .mx_RightPanel_headerButton_highlight {
     &::before {
-        background-color: $accent-color !important;
+        background-color: $accent !important;
     }
 }
 
@@ -179,7 +183,7 @@ $pulse-color: $pinned-unread-color;
     font-size: $font-8px;
     border-radius: 8px;
     color: $accent-fg-color;
-    background-color: $accent-color;
+    background-color: $accent;
     font-weight: bold;
     position: absolute;
     top: -4px;
@@ -225,7 +229,7 @@ $pulse-color: $pinned-unread-color;
         margin: 11px auto 29px auto;
         height: 42px;
         width: 42px;
-        background-color: $rightpanel-button-color;
+        background-color: $header-panel-text-primary-color;
         mask-repeat: no-repeat;
         mask-size: contain;
         mask-position: center;

@@ -34,7 +34,7 @@ limitations under the License.
     box-sizing: border-box;
     border-radius: 4px;
     border: 1px solid $dialog-close-fg-color;
-    background-color: $primary-bg-color;
+    background-color: $background;
     max-height: calc(100vh - 20px); // allow 10px padding on both top and bottom
     overflow-y: auto;
 }
@@ -73,7 +73,7 @@ limitations under the License.
                 mask-position: center;
                 mask-size: contain;
                 mask-image: url('$(res)/img/feather-customised/x.svg');
-                background-color: $notice-primary-color;
+                background-color: $alert;
             }
         }
     }
@@ -108,7 +108,7 @@ limitations under the License.
             mask-position: center;
             mask-size: contain;
             mask-image: url('$(res)/img/feather-customised/check.svg');
-            background-color: $input-valid-border-color;
+            background-color: $accent;
         }
     }
 }
@@ -153,7 +153,7 @@ limitations under the License.
         mask-position: center;
         mask-size: contain;
         mask-image: url('$(res)/img/feather-customised/chevron-down-thin.svg');
-        background-color: $primary-fg-color;
+        background-color: $primary-content;
     }
 
     .mx_NetworkDropdown_handle_server {

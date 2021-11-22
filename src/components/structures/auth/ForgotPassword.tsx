@@ -18,7 +18,6 @@ limitations under the License.
 
 import React from 'react';
 import { _t, _td } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
@@ -26,11 +25,18 @@ import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 import ServerPicker from "../../views/elements/ServerPicker";
+import EmailField from "../../views/auth/EmailField";
 import PassphraseField from '../../views/auth/PassphraseField';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
-
-import { IValidationResult } from "../../views/elements/Validation";
+import InlineSpinner from '../../views/elements/InlineSpinner';
+import { logger } from "matrix-js-sdk/src/logger";
+import Spinner from "../../views/elements/Spinner";
+import QuestionDialog from "../../views/dialogs/QuestionDialog";
+import ErrorDialog from "../../views/dialogs/ErrorDialog";
+import AuthHeader from "../../views/auth/AuthHeader";
+import AuthBody from "../../views/auth/AuthBody";
+import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
 
 enum Phase {
     // Show the forgot password inputs
@@ -65,14 +71,20 @@ interface IState {
     serverErrorIsFatal: boolean;
     serverDeadError: string;
 
-    passwordFieldValid: boolean;
+    currentHttpRequest?: Promise<any>;
+}
+
+enum ForgotPasswordField {
+    Email = 'field_email',
+    Password = 'field_password',
+    PasswordConfirm = 'field_password_confirm',
 }
 
 @replaceableComponent("structures.auth.ForgotPassword")
 export default class ForgotPassword extends React.Component<IProps, IState> {
     private reset: PasswordReset;
 
-    state = {
+    state: IState = {
         phase: Phase.Forgot,
         email: "",
         password: "",
@@ -86,7 +98,6 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         serverIsAlive: true,
         serverErrorIsFatal: false,
         serverDeadError: "",
-        passwordFieldValid: false,
     };
 
     constructor(props: IProps) {
@@ -145,11 +156,13 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     private onVerify = async (ev: React.MouseEvent): Promise<void> => {
         ev.preventDefault();
         if (!this.reset) {
-            console.error("onVerify called before submitPasswordReset!");
+            logger.error("onVerify called before submitPasswordReset!");
             return;
         }
+        if (this.state.currentHttpRequest) return;
+
         try {
-            await this.reset.checkEmailLinkClicked();
+            await this.handleHttpRequest(this.reset.checkEmailLinkClicked());
             this.setState({ phase: Phase.Done });
         } catch (err) {
             this.showErrorDialog(err.message);
@@ -158,42 +171,62 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
 
     private onSubmitForm = async (ev: React.FormEvent): Promise<void> => {
         ev.preventDefault();
+        if (this.state.currentHttpRequest) return;
 
         // refresh the server errors, just in case the server came back online
-        await this.checkServerLiveliness(this.props.serverConfig);
+        await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
 
-        await this['password_field'].validate({ allowEmpty: false });
-
-        if (!this.state.email) {
-            this.showErrorDialog(_t('The email address linked to your account must be entered.'));
-        } else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog(_t('A new password must be entered.'));
-        } else if (!this.state.passwordFieldValid) {
-            this.showErrorDialog(_t('Please choose a strong password'));
-        } else if (this.state.password !== this.state.password2) {
-            this.showErrorDialog(_t('New passwords must match each other.'));
-        } else {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
-                title: _t('Warning!'),
-                description:
-                    <div>
-                        { _t(
-                            "Changing your password will reset any end-to-end encryption keys " +
-                            "on all of your sessions, making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another session before resetting your " +
-                            "password.",
-                        ) }
-                    </div>,
-                button: _t('Continue'),
-                onFinished: (confirmed) => {
-                    if (confirmed) {
-                        this.submitPasswordReset(this.state.email, this.state.password);
-                    }
-                },
-            });
+        const allFieldsValid = await this.verifyFieldsBeforeSubmit();
+        if (!allFieldsValid) {
+            return;
         }
+
+        Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
+            title: _t('Warning!'),
+            description:
+                <div>
+                    { _t(
+                        "Changing your password will reset any end-to-end encryption keys " +
+                        "on all of your sessions, making encrypted chat history unreadable. Set up " +
+                        "Key Backup or export your room keys from another session before resetting your " +
+                        "password.",
+                    ) }
+                </div>,
+            button: _t('Continue'),
+            onFinished: (confirmed) => {
+                if (confirmed) {
+                    this.submitPasswordReset(this.state.email, this.state.password);
+                }
+            },
+        });
     };
+
+    private async verifyFieldsBeforeSubmit() {
+        const fieldIdsInDisplayOrder = [
+            ForgotPasswordField.Email,
+            ForgotPasswordField.Password,
+            ForgotPasswordField.PasswordConfirm,
+        ];
+
+        const invalidFields = [];
+        for (const fieldId of fieldIdsInDisplayOrder) {
+            const valid = await this[fieldId].validate({ allowEmpty: false });
+            if (!valid) {
+                invalidFields.push(this[fieldId]);
+            }
+        }
+
+        if (invalidFields.length === 0) {
+            return true;
+        }
+
+        // Focus on the first invalid field, then re-validate,
+        // which will result in the error tooltip being displayed for that field.
+        invalidFields[0].focus();
+        invalidFields[0].validate({ allowEmpty: false, focused: true });
+
+        return false;
+    }
 
     private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
         this.setState({
@@ -208,22 +241,24 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     };
 
     public showErrorDialog(description: string, title?: string) {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Forgot Password Error', '', ErrorDialog, {
             title,
             description,
         });
     }
 
-    private onPasswordValidate(result: IValidationResult) {
+    private handleHttpRequest<T = unknown>(request: Promise<T>): Promise<T> {
         this.setState({
-            passwordFieldValid: result.valid,
+            currentHttpRequest: request,
+        });
+        return request.finally(() => {
+            this.setState({
+                currentHttpRequest: undefined,
+            });
         });
     }
 
     renderForgot() {
-        const Field = sdk.getComponent('elements.Field');
-
         let errorText = null;
         const err = this.state.errorText;
         if (err) {
@@ -253,13 +288,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             />
             <form onSubmit={this.onSubmitForm}>
                 <div className="mx_AuthBody_fieldRow">
-                    <Field
+                    <EmailField
                         name="reset_email" // define a name so browser's password autofill gets less confused
-                        type="text"
-                        label={_t('Email')}
+                        labelRequired={_t('The email address linked to your account must be entered.')}
+                        labelInvalid={_t("The email address doesn't appear to be valid.")}
                         value={this.state.email}
+                        fieldRef={field => this[ForgotPasswordField.Email] = field}
+                        autoFocus={true}
                         onChange={this.onInputChanged.bind(this, "email")}
-                        autoFocus
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_blur")}
                     />
@@ -271,18 +307,20 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         label={_td('New Password')}
                         value={this.state.password}
                         minScore={PASSWORD_MIN_SCORE}
+                        fieldRef={field => this[ForgotPasswordField.Password] = field}
                         onChange={this.onInputChanged.bind(this, "password")}
-                        fieldRef={field => this['password_field'] = field}
-                        onValidate={(result) => this.onPasswordValidate(result)}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_blur")}
                         autoComplete="new-password"
                     />
-                    <Field
+                    <PassphraseConfirmField
                         name="reset_password_confirm"
-                        type="password"
                         label={_t('Confirm')}
+                        labelRequired={_t("A new password must be entered.")}
+                        labelInvalid={_t("New passwords must match each other.")}
                         value={this.state.password2}
+                        password={this.state.password}
+                        fieldRef={field => this[ForgotPasswordField.PasswordConfirm] = field}
                         onChange={this.onInputChanged.bind(this, "password2")}
                         onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_focus")}
                         onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_blur")}
@@ -306,7 +344,6 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     renderSendingEmail() {
-        const Spinner = sdk.getComponent("elements.Spinner");
         return <Spinner />;
     }
 
@@ -320,6 +357,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 type="button"
                 onClick={this.onVerify}
                 value={_t('I have verified my email address')} />
+            { this.state.currentHttpRequest && (
+                <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>)
+            }
         </div>;
     }
 
@@ -340,9 +380,6 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     render() {
-        const AuthHeader = sdk.getComponent("auth.AuthHeader");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
-
         let resetPasswordJsx;
         switch (this.state.phase) {
             case Phase.Forgot:
@@ -357,6 +394,8 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             case Phase.Done:
                 resetPasswordJsx = this.renderDone();
                 break;
+            default:
+                resetPasswordJsx = <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>;
         }
 
         return (

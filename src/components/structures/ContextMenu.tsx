@@ -19,6 +19,7 @@ limitations under the License.
 import React, { CSSProperties, RefObject, SyntheticEvent, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
+import FocusLock from "react-focus-lock";
 
 import { Key } from "../../Keyboard";
 import { Writeable } from "../../@types/common";
@@ -43,13 +44,13 @@ function getOrCreateContainer(): HTMLDivElement {
     return container;
 }
 
-const ARIA_MENU_ITEM_ROLES = new Set(["menuitem", "menuitemcheckbox", "menuitemradio"]);
-
-interface IPosition {
+export interface IPosition {
     top?: number;
     bottom?: number;
     left?: number;
     right?: number;
+    rightAligned?: boolean;
+    bottomAligned?: boolean;
 }
 
 export enum ChevronFace {
@@ -84,6 +85,10 @@ export interface IProps extends IPosition {
     // it will be mounted to a container at the root of the DOM.
     mountAsChild?: boolean;
 
+    // If specified, contents will be wrapped in a FocusLock, this is only needed if the context menu is being rendered
+    // within an existing FocusLock e.g inside a modal.
+    focusLock?: boolean;
+
     // Function to be called on menu close
     onFinished();
     // on resize callback
@@ -99,7 +104,7 @@ interface IState {
 // this will allow the ContextMenu to manage its own focus using arrow keys as per the ARIA guidelines.
 @replaceableComponent("structures.ContextMenu")
 export class ContextMenu extends React.PureComponent<IProps, IState> {
-    private initialFocus: HTMLElement;
+    private readonly initialFocus: HTMLElement;
 
     static defaultProps = {
         hasBackground: true,
@@ -108,6 +113,7 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
 
     constructor(props, context) {
         super(props, context);
+
         this.state = {
             contextMenuElem: null,
         };
@@ -121,14 +127,13 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
         this.initialFocus.focus();
     }
 
-    private collectContextMenuRect = (element) => {
+    private collectContextMenuRect = (element: HTMLDivElement) => {
         // We don't need to clean up when unmounting, so ignore
         if (!element) return;
 
-        let first = element.querySelector('[role^="menuitem"]');
-        if (!first) {
-            first = element.querySelector('[tab-index]');
-        }
+        const first = element.querySelector<HTMLElement>('[role^="menuitem"]')
+            || element.querySelector<HTMLElement>('[tab-index]');
+
         if (first) {
             first.focus();
         }
@@ -205,7 +210,7 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
                     descending = true;
                 }
             }
-        } while (element && !ARIA_MENU_ITEM_ROLES.has(element.getAttribute("role")));
+        } while (element && !element.getAttribute("role")?.startsWith("menuitem"));
 
         if (element) {
             (element as HTMLElement).focus();
@@ -226,6 +231,11 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
         }
     };
 
+    private onClick = (ev: React.MouseEvent) => {
+        // Don't allow clicks to escape the context menu wrapper
+        ev.stopPropagation();
+    };
+
     private onKeyDown = (ev: React.KeyboardEvent) => {
         // don't let keyboard handling escape the context menu
         ev.stopPropagation();
@@ -241,6 +251,8 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
         let handled = true;
 
         switch (ev.key) {
+            // XXX: this is imitating roving behaviour, it should really use the RovingTabIndex utils
+            // to inherit proper handling of unmount edge cases
             case Key.TAB:
             case Key.ESCAPE:
             case Key.ARROW_LEFT: // close on left and right arrows too for when it is a context menu on a <Toolbar />
@@ -322,14 +334,22 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
 
         const menuClasses = classNames({
             'mx_ContextualMenu': true,
-            'mx_ContextualMenu_left': !hasChevron && position.left,
-            'mx_ContextualMenu_right': !hasChevron && position.right,
-            'mx_ContextualMenu_top': !hasChevron && position.top,
-            'mx_ContextualMenu_bottom': !hasChevron && position.bottom,
+            /**
+             * In some cases we may get the number of 0, which still means that we're supposed to properly
+             * add the specific position class, but as it was falsy things didn't work as intended.
+             * In addition, defensively check for counter cases where we may get more than one value,
+             * even if we shouldn't.
+             */
+            'mx_ContextualMenu_left': !hasChevron && position.left !== undefined && !position.right,
+            'mx_ContextualMenu_right': !hasChevron && position.right !== undefined && !position.left,
+            'mx_ContextualMenu_top': !hasChevron && position.top !== undefined && !position.bottom,
+            'mx_ContextualMenu_bottom': !hasChevron && position.bottom !== undefined && !position.top,
             'mx_ContextualMenu_withChevron_left': chevronFace === ChevronFace.Left,
             'mx_ContextualMenu_withChevron_right': chevronFace === ChevronFace.Right,
             'mx_ContextualMenu_withChevron_top': chevronFace === ChevronFace.Top,
             'mx_ContextualMenu_withChevron_bottom': chevronFace === ChevronFace.Bottom,
+            'mx_ContextualMenu_rightAligned': this.props.rightAligned === true,
+            'mx_ContextualMenu_bottomAligned': this.props.bottomAligned === true,
         });
 
         const menuStyle: CSSProperties = {};
@@ -372,11 +392,23 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
             );
         }
 
+        let body = <>
+            { chevron }
+            { props.children }
+        </>;
+
+        if (props.focusLock) {
+            body = <FocusLock>
+                { body }
+            </FocusLock>;
+        }
+
         return (
             <div
                 className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}
                 style={{ ...position, ...wrapperStyle }}
                 onKeyDown={this.onKeyDown}
+                onClick={this.onClick}
                 onContextMenu={this.onContextMenuPreventBubbling}
             >
                 <div
@@ -385,8 +417,7 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
                     ref={this.collectContextMenuRect}
                     role={this.props.managed ? "menu" : undefined}
                 >
-                    { chevron }
-                    { props.children }
+                    { body }
                 </div>
                 { background }
             </div>
@@ -404,17 +435,31 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
     }
 }
 
+export type ToRightOf = {
+    left: number;
+    top: number;
+    chevronOffset: number;
+};
+
 // Placement method for <ContextMenu /> to position context menu to right of elementRect with chevronOffset
-export const toRightOf = (elementRect: Pick<DOMRect, "right" | "top" | "height">, chevronOffset = 12) => {
+export const toRightOf = (elementRect: Pick<DOMRect, "right" | "top" | "height">, chevronOffset = 12): ToRightOf => {
     const left = elementRect.right + window.pageXOffset + 3;
     let top = elementRect.top + (elementRect.height / 2) + window.pageYOffset;
     top -= chevronOffset + 8; // where 8 is half the height of the chevron
     return { left, top, chevronOffset };
 };
 
+export type AboveLeftOf = IPosition & {
+    chevronFace: ChevronFace;
+};
+
 // Placement method for <ContextMenu /> to position context menu right-aligned and flowing to the left of elementRect,
 // and either above or below: wherever there is more space (maybe this should be aboveOrBelowLeftOf?)
-export const aboveLeftOf = (elementRect: DOMRect, chevronFace = ChevronFace.None, vPadding = 0) => {
+export const aboveLeftOf = (
+    elementRect: DOMRect,
+    chevronFace = ChevronFace.None,
+    vPadding = 0,
+): AboveLeftOf => {
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonRight = elementRect.right + window.pageXOffset;

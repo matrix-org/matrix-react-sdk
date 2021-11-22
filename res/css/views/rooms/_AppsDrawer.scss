@@ -18,11 +18,12 @@ limitations under the License.
 $MiniAppTileHeight: 200px;
 
 .mx_AppsDrawer {
-    margin: 5px 5px 5px 18px;
+    margin: 5px 5px 5px 13px;
     position: relative;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    flex-grow: 1;
 
     .mx_AppsContainer_resizerHandleContainer {
         width: 100%;
@@ -64,7 +65,7 @@ $MiniAppTileHeight: 200px;
     &:hover {
         .mx_AppsContainer_resizerHandle::after {
             opacity: 0.8;
-            background: $primary-fg-color;
+            background: $primary-content;
         }
 
         .mx_ResizeHandle_horizontal::before {
@@ -79,7 +80,7 @@ $MiniAppTileHeight: 200px;
 
             content: '';
 
-            background-color: $primary-fg-color;
+            background-color: $primary-content;
             opacity: 0.8;
         }
     }
@@ -100,11 +101,11 @@ $MiniAppTileHeight: 200px;
     min-height: 0;
 
     .mx_AppTile:first-of-type {
-        border-left-width: 8px;
+        border-left-width: $container-border-width;
         border-radius: 10px 0 0 10px;
     }
     .mx_AppTile:last-of-type {
-        border-right-width: 8px;
+        border-right-width: $container-border-width;
         border-radius: 0 10px 10px 0;
     }
 
@@ -142,7 +143,7 @@ $MinWidth: 240px;
 .mx_AppTile {
     width: 50%;
     min-width: $MinWidth;
-    border: 8px solid $widget-menu-bar-bg-color;
+    border: $container-border-width solid $widget-menu-bar-bg-color;
     border-left-width: 5px;
     border-right-width: 5px;
     display: flex;
@@ -155,7 +156,7 @@ $MinWidth: 240px;
     width: 100% !important; // to override the inline style set by the resizer
     margin: 0;
     padding: 0;
-    border: 5px solid $widget-menu-bar-bg-color;
+    border: $container-border-width solid $widget-menu-bar-bg-color;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -224,15 +225,25 @@ $MinWidth: 240px;
     mask-position: 0 center;
     mask-size: auto 12px;
     background-color: $topleftmenu-color;
-    margin: 0 3px;
-}
+    margin: 0 5px;
 
-.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_popout {
-    mask-image: url('$(res)/img/feather-customised/widget/external-link.svg');
-}
+    &.mx_AppTileMenuBar_iconButton_minWidget {
+        mask-size: auto 10px;
+        mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
+    }
 
-.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_menu {
-    mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
+    &.mx_AppTileMenuBar_iconButton_maxWidget {
+        mask-size: auto 10px;
+        mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
+    }
+
+    &.mx_AppTileMenuBar_iconButton_popout {
+        mask-image: url('$(res)/img/feather-customised/widget/external-link.svg');
+    }
+
+    &.mx_AppTileMenuBar_iconButton_menu {
+        mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
+    }
 }
 
 .mx_AppTileBody {
@@ -310,7 +321,7 @@ $MinWidth: 240px;
 
 .mx_AppPermissionWarning_helpIcon::before {
     display: inline-block;
-    background-color: $accent-color;
+    background-color: $accent;
     mask-repeat: no-repeat;
     mask-size: 12px;
     width: 12px;
@@ -364,7 +375,6 @@ $MinWidth: 240px;
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
 
 .mx_AppLoading iframe {
     display: none;

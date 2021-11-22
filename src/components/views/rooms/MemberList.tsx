@@ -43,7 +43,10 @@ import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
 import { throttle } from 'lodash';
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -55,7 +58,9 @@ const SORT_REGEX = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]+/g;
 
 interface IProps {
     roomId: string;
+    searchQuery: string;
     onClose(): void;
+    onSearchQueryChanged: (query: string) => void;
 }
 
 interface IState {
@@ -66,7 +71,6 @@ interface IState {
     canInvite: boolean;
     truncateAtJoined: number;
     truncateAtInvited: number;
-    searchQuery: string;
 }
 
 @replaceableComponent("views.rooms.MemberList")
@@ -167,7 +171,11 @@ export default class MemberList extends React.Component<IProps, IState> {
     private get canInvite(): boolean {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
-        return room && room.canInvite(cli.getUserId());
+
+        return (
+            room?.canInvite(cli.getUserId()) ||
+            (room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public)
+        );
     }
 
     private getMembersState(members: Array<RoomMember>): IState {
@@ -176,15 +184,14 @@ export default class MemberList extends React.Component<IProps, IState> {
         return {
             loading: false,
             members: members,
-            filteredJoinedMembers: this.filterMembers(members, 'join'),
-            filteredInvitedMembers: this.filterMembers(members, 'invite'),
+            filteredJoinedMembers: this.filterMembers(members, 'join', this.props.searchQuery),
+            filteredInvitedMembers: this.filterMembers(members, 'invite', this.props.searchQuery),
             canInvite: this.canInvite,
 
             // ideally we'd size this to the page height, but
             // in practice I find that a little constraining
             truncateAtJoined: INITIAL_LOAD_NUM_MEMBERS,
             truncateAtInvited: INITIAL_LOAD_NUM_INVITED,
-            searchQuery: "",
         };
     }
 
@@ -248,8 +255,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.setState({
             loading: false,
             members: members,
-            filteredJoinedMembers: this.filterMembers(members, 'join', this.state.searchQuery),
-            filteredInvitedMembers: this.filterMembers(members, 'invite', this.state.searchQuery),
+            filteredJoinedMembers: this.filterMembers(members, 'join', this.props.searchQuery),
+            filteredInvitedMembers: this.filterMembers(members, 'invite', this.props.searchQuery),
         });
     }
 
@@ -414,8 +421,8 @@ export default class MemberList extends React.Component<IProps, IState> {
     };
 
     private onSearchQueryChanged = (searchQuery: string): void => {
+        this.props.onSearchQueryChanged(searchQuery);
         this.setState({
-            searchQuery,
             filteredJoinedMembers: this.filterMembers(this.state.members, 'join', searchQuery),
             filteredInvitedMembers: this.filterMembers(this.state.members, 'invite', searchQuery),
         });
@@ -515,7 +522,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         const room = cli.getRoom(this.props.roomId);
         let inviteButton;
 
-        if (room && room.getMyMembership() === 'join') {
+        if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
             const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
             if (chat && chat.roomId === this.props.roomId) {
@@ -554,7 +561,9 @@ export default class MemberList extends React.Component<IProps, IState> {
             <SearchBox
                 className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
                 placeholder={_t('Filter room members')}
-                onSearch={this.onSearchQueryChanged} />
+                onSearch={this.onSearchQueryChanged}
+                initialValue={this.props.searchQuery}
+            />
         );
 
         let previousPhase = RightPanelPhases.RoomSummary;

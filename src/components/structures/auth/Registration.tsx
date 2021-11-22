@@ -37,6 +37,8 @@ import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     serverConfig: ValidatedServerConfig;
     defaultDeviceDisplayName: string;
@@ -193,7 +195,7 @@ export default class Registration extends React.Component<IProps, IState> {
             const loginFlows = await this.loginLogic.getFlows();
             ssoFlow = loginFlows.find(f => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
         } catch (e) {
-            console.error("Failed to get login flows to check for SSO support", e);
+            logger.error("Failed to get login flows to check for SSO support", e);
         }
 
         this.setState({
@@ -215,7 +217,7 @@ export default class Registration extends React.Component<IProps, IState> {
             if (!this.state.doingUIAuth) {
                 await this.makeRegisterRequest(null);
                 // This should never succeed since we specified no auth object.
-                console.log("Expecting 401 from register request but got success!");
+                logger.log("Expecting 401 from register request but got success!");
             }
         } catch (e) {
             if (e.httpStatus === 401) {
@@ -239,7 +241,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     });
                 }
             } else {
-                console.log("Unable to query for supported registration methods.", e);
+                logger.log("Unable to query for supported registration methods.", e);
                 showGenericError(e);
             }
         }
@@ -270,7 +272,7 @@ export default class Registration extends React.Component<IProps, IState> {
 
     private onUIAuthFinished = async (success: boolean, response: any) => {
         if (!success) {
-            let msg = response.message || response.toString();
+            let errorText = response.message || response.toString();
             // can we give a better error message?
             if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
@@ -289,7 +291,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         '': _td("Please <a>contact your service administrator</a> to continue using this service."),
                     },
                 );
-                msg = <div>
+                errorText = <div>
                     <p>{ errorTop }</p>
                     <p>{ errorDetail }</p>
                 </div>;
@@ -299,15 +301,18 @@ export default class Registration extends React.Component<IProps, IState> {
                     msisdnAvailable = msisdnAvailable || flow.stages.includes('m.login.msisdn');
                 }
                 if (!msisdnAvailable) {
-                    msg = _t('This server does not support authentication with a phone number.');
+                    errorText = _t('This server does not support authentication with a phone number.');
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
-                msg = _t("That username already exists, please try another.");
+                errorText = _t("Someone already has that username, please try another.");
+            } else if (response.errcode === "M_THREEPID_IN_USE") {
+                errorText = _t("That e-mail address is already in use.");
             }
+
             this.setState({
                 busy: false,
                 doingUIAuth: false,
-                errorText: msg,
+                errorText,
             });
             return;
         }
@@ -330,7 +335,7 @@ export default class Registration extends React.Component<IProps, IState> {
         // the user had a separate guest session they didn't actually mean to replace.
         const [sessionOwner, sessionIsGuest] = await Lifecycle.getStoredSessionOwner();
         if (sessionOwner && !sessionIsGuest && sessionOwner !== response.userId) {
-            console.log(
+            logger.log(
                 `Found a session for ${sessionOwner} but ${response.userId} has just registered.`,
             );
             newState.differentLoggedInUserId = sessionOwner;
@@ -366,14 +371,14 @@ export default class Registration extends React.Component<IProps, IState> {
                     const emailPusher = pushers[i];
                     emailPusher.data = { brand: this.props.brand };
                     matrixClient.setPusher(emailPusher).then(() => {
-                        console.log("Set email branding to " + this.props.brand);
+                        logger.log("Set email branding to " + this.props.brand);
                     }, (error) => {
-                        console.error("Couldn't set email branding: " + error);
+                        logger.error("Couldn't set email branding: " + error);
                     });
                 }
             }
         }, (error) => {
-            console.error("Couldn't get pushers: " + error);
+            logger.error("Couldn't get pushers: " + error);
         });
     }
 
@@ -505,6 +510,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     flows={this.state.flows}
                     serverConfig={this.props.serverConfig}
                     canSubmit={!this.state.serverErrorIsFatal}
+                    matrixClient={this.state.matrixClient}
                 />
             </React.Fragment>;
         }

@@ -16,12 +16,13 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
-import React, { createRef } from "react";
+import React from "react";
 import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import Spinner from "../elements/Spinner";
 import classNames from "classnames";
-import { _t } from "../../../languageHandler";
+import { _t, _td } from "../../../languageHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { FileDownloader } from "../../../utils/FileDownloader";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -35,48 +36,48 @@ interface IProps {
 interface IState {
     loading: boolean;
     blob?: Blob;
+    tooltip: string;
 }
 
 @replaceableComponent("views.messages.DownloadActionButton")
 export default class DownloadActionButton extends React.PureComponent<IProps, IState> {
-    private iframe: React.RefObject<HTMLIFrameElement> = createRef();
+    private downloader = new FileDownloader();
 
     public constructor(props: IProps) {
         super(props);
 
         this.state = {
             loading: false,
+            tooltip: _td("Downloading"),
         };
     }
 
     private onDownloadClick = async () => {
         if (this.state.loading) return;
 
+        if (this.props.mediaEventHelperGet().media.isEncrypted) {
+            this.setState({ tooltip: _td("Decrypting") });
+        }
+
         this.setState({ loading: true });
 
         if (this.state.blob) {
             // Cheat and trigger a download, again.
-            return this.onFrameLoad();
+            return this.doDownload();
         }
 
         const blob = await this.props.mediaEventHelperGet().sourceBlob.value;
         this.setState({ blob });
+        await this.doDownload();
     };
 
-    private onFrameLoad = () => {
-        this.setState({ loading: false });
-
-        // we aren't showing the iframe, so we can send over the bare minimum styles and such.
-        this.iframe.current.contentWindow.postMessage({
-            imgSrc: "", // no image
-            imgStyle: null,
-            style: "",
+    private async doDownload() {
+        await this.downloader.download({
             blob: this.state.blob,
-            download: this.props.mediaEventHelperGet().fileName,
-            textContent: "",
-            auto: true, // autodownload
-        }, '*');
-    };
+            name: this.props.mediaEventHelperGet().fileName,
+        });
+        this.setState({ loading: false });
+    }
 
     public render() {
         let spinner: JSX.Element;
@@ -92,18 +93,11 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
 
         return <RovingAccessibleTooltipButton
             className={classes}
-            title={spinner ? _t("Downloading") : _t("Download")}
+            title={spinner ? _t(this.state.tooltip) : _t("Download")}
             onClick={this.onDownloadClick}
             disabled={!!spinner}
         >
             { spinner }
-            { this.state.blob && <iframe
-                src="usercontent/" // XXX: Like MFileBody, this should come from the skin
-                ref={this.iframe}
-                onLoad={this.onFrameLoad}
-                sandbox="allow-scripts allow-downloads allow-downloads-without-user-activation"
-                style={{ display: "none" }}
-            /> }
         </RovingAccessibleTooltipButton>;
     }
 }

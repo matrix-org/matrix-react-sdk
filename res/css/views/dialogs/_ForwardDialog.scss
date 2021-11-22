@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_ForwardDialog {
     width: 520px;
-    color: $primary-fg-color;
+    color: $primary-content;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -25,7 +25,7 @@ limitations under the License.
 
     > h3 {
         margin: 0 0 6px;
-        color: $secondary-fg-color;
+        color: $secondary-content;
         font-size: $font-12px;
         font-weight: $font-semi-bold;
         line-height: $font-15px;
@@ -138,7 +138,7 @@ limitations under the License.
                     }
 
                     &.mx_ForwardList_sending .mx_ForwardList_sendIcon {
-                        background-color: $button-primary-bg-color;
+                        background-color: $accent;
                         mask-image: url('$(res)/img/element-icons/circle-sending.svg');
                         mask-position: center;
                         mask-repeat: no-repeat;
@@ -148,7 +148,7 @@ limitations under the License.
                     }
 
                     &.mx_ForwardList_sent .mx_ForwardList_sendIcon {
-                        background-color: $button-primary-bg-color;
+                        background-color: $accent;
                         mask-image: url('$(res)/img/element-icons/circle-sent.svg');
                         mask-position: center;
                         mask-repeat: no-repeat;
