@@ -70,20 +70,13 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
 const TimelineCardHeaderButton = ({ room, isHighlighted, showNewMessage, onClick }) => {
     if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
 
-    let unreadIndicator;
-    if (/*pinnedEvents.some(id => !readPinnedEvents.has(id)*/ showNewMessage) {
-        unreadIndicator = <div className="mx_RightPanel_pinnedMessagesButton_unreadIndicator" />;
-    }
-
     return <HeaderButton
         name="timelineCardButton"
         title={_t("Chat")}
         isHighlighted={isHighlighted}
         onClick={onClick}
         analytics={["Right Panel", "Timeline Panel Button", "click"]}
-    >
-        { unreadIndicator }
-    </HeaderButton>;
+    />;
 };
 
 interface IProps {
