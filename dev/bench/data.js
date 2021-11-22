@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637591663169,
+  "lastUpdate": 1637601402829,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40832,6 +40832,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4742.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "76581871862b452e78e5d583df6b55621d7d55b6",
+          "message": "Fix composer focus after pasting (#7181)",
+          "timestamp": "2021-11-22T17:09:16Z",
+          "tree_id": "9e4a49601e05b30d51281af8519b34c30d4c32d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/76581871862b452e78e5d583df6b55621d7d55b6"
+        },
+        "date": 1637601399759,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5066.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 857.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1594.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4035.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
