@@ -56,7 +56,7 @@ Override both the content body and the TextForEvent handler for specific msgtype
 This is useful when the content body contains fallback text that would explain that the client can't handle a particular
 type of tile.
 */
-const typehandlers = {
+const msgTypeHandlers = {
     [MsgType.KeyVerificationRequest]: (event) => {
         const name = (event.sender || {}).name;
         return _t("%(name)s is requesting verification", { name });
@@ -72,8 +72,8 @@ export const Notifier = {
     pendingEncryptedEventIds: [],
 
     notificationMessageForEvent: function(ev: MatrixEvent): string {
-        if (typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
-            return typehandlers[ev.getContent().msgtype](ev);
+        if (msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
+            return msgTypeHandlers[ev.getContent().msgtype](ev);
         }
         return TextForEvent.textForEvent(ev);
     },
@@ -98,7 +98,7 @@ export const Notifier = {
             title = room.name;
             // notificationMessageForEvent includes sender,
             // but we already have the sender here
-            if (ev.getContent().body && !typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
+            if (ev.getContent().body && !msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
                 msg = ev.getContent().body;
             }
         } else if (ev.getType() === 'm.room.member') {
@@ -109,7 +109,7 @@ export const Notifier = {
             title = ev.sender.name + " (" + room.name + ")";
             // notificationMessageForEvent includes sender,
             // but we've just out sender in the title
-            if (ev.getContent().body && !typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
+            if (ev.getContent().body && !msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
                 msg = ev.getContent().body;
             }
         }
