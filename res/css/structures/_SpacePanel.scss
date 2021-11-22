@@ -20,7 +20,7 @@ $gutterSize: 16px;
 $activeBorderTransparentGap: 1px;
 
 $activeBackgroundColor: $panel-actions;
-$activeBorderColor: $secondary-content;
+$activeBorderColor: $primary-content;
 
 .mx_SpacePanel {
     background-color: $groupFilterPanel-bg-color;
@@ -194,10 +194,10 @@ $activeBorderColor: $secondary-content;
         &.mx_SpaceButton_people,
         &.mx_SpaceButton_orphans {
             .mx_SpaceButton_icon {
-                background-color: #ffffff;
+                background-color: $panel-actions;
 
                 &::before {
-                    background-color: #3f3d3d;
+                    background-color: $secondary-content;
                 }
             }
         }
@@ -255,6 +255,30 @@ $activeBorderColor: $secondary-content;
                 mask-repeat: no-repeat;
                 mask-image: url('$(res)/img/element-icons/context-menu.svg');
                 background: $primary-content;
+            }
+        }
+    }
+
+    .mx_SpaceTreeLevel {
+        .mx_BaseAvatar_initial {
+            color: $secondary-content;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background-color: $panel-actions;
+            font-size: $font-15px !important; // override inline style
+            font-weight: $font-semi-bold;
+            line-height: $font-18px;
+
+            & + .mx_BaseAvatar_image {
+                visibility: hidden;
+            }
+        }
+
+        .mx_SpaceTreeLevel {
+            .mx_BaseAvatar_initial {
+                width: 24px;
+                height: 24px;
             }
         }
     }
