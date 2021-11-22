@@ -1,5 +1,5 @@
 /*
-Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-span.mx_MVideoBody {
-    video.mx_MVideoBody {
-        max-width: 100%;
-        height: auto;
-        border-radius: $timeline-image-border-radius;
-    }
+import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
+import { TimelineRenderingType } from "../../contexts/RoomContext";
+
+export interface FocusComposerPayload extends ActionPayload {
+    action: Action.FocusEditMessageComposer | Action.FocusSendMessageComposer | "reply_to_event";
+
+    context?: TimelineRenderingType; // defaults to Room type for backwards compatibility
 }

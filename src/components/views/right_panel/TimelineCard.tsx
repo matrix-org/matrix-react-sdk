@@ -23,7 +23,7 @@ import BaseCard from "./BaseCard";
 import ResizeNotifier from '../../../utils/ResizeNotifier';
 import MessageComposer from '../rooms/MessageComposer';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import { Layout } from '../../../settings/Layout';
+import { Layout } from '../../../settings/enums/Layout';
 import TimelinePanel from '../../structures/TimelinePanel';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import EditorStateTransfer from '../../../utils/EditorStateTransfer';
@@ -71,7 +71,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 header={this.renderTimelineCardHeader()}
             >
                 <TimelinePanel
-                    showReadReceipts={true}
+                    showReadReceipts={false}
                     manageReadReceipts={true}
                     manageReadMarkers={false} // No RM support in the TimelineCard
                     sendReadReceiptOnLoad={true}

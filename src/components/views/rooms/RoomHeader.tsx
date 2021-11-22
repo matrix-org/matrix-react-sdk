@@ -41,6 +41,7 @@ import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NOTIFICATION_STATE_UPDATE } from '../../../stores/notifications/NotificationState';
+import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -59,7 +60,7 @@ interface IProps {
     e2eStatus: E2EStatus;
     appsShown: boolean;
     searchInfo: ISearchInfo;
-    coreElementsOnly?: boolean;
+    excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
 interface IState {
@@ -71,7 +72,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
         inRoom: false,
-        coreElementsOnly: false,
+        excludedRightPanelPhaseButtons: [],
     };
 
     constructor(props, context) {
@@ -234,7 +235,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             buttons.push(forgetButton);
         }
 
-        if (this.props.onAppsClick && !this.props.coreElementsOnly) {
+        if (this.props.onAppsClick) {
             const appsButton = <AccessibleTooltipButton
                 className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
                     mx_RoomHeader_appsButton_highlight: this.props.appsShown,
@@ -246,7 +247,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             buttons.push(appsButton);
         }
 
-        if (this.props.onSearchClick && this.props.inRoom && !this.props.coreElementsOnly) {
+        if (this.props.onSearchClick && this.props.inRoom) {
             const searchButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_searchButton"
                 onClick={this.props.onSearchClick}
@@ -272,7 +273,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { searchStatus }
                     { topicElement }
                     { rightRow }
-                    <RoomHeaderButtons room={this.props.room} coreElementsOnly={this.props.coreElementsOnly} />
+                    <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
             </div>
         );
