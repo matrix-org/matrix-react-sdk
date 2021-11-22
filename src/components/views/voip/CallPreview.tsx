@@ -119,7 +119,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         const room = MatrixClientPeg.get().getRoom(this.state.roomId);
-        WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
+        WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
     }
 
     public componentWillUnmount() {
