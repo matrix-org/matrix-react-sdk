@@ -39,6 +39,7 @@ import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 /*
  * Dispatches:
@@ -56,7 +57,7 @@ This is useful when the content body contains fallback text that would explain t
 type of tile.
 */
 const typehandlers = {
-    "m.key.verification.request": (event) => {
+    [MsgType.KeyVerificationRequest]: (event) => {
         const name = (event.sender || {}).name;
         return _t("%(name)s is requesting verification", { name });
     },
