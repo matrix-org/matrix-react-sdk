@@ -118,7 +118,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
-        const room = MatrixClientPeg.get().getRoom(this.state.roomId);
+        const room = MatrixClientPeg.get()?.getRoom(this.state.roomId);
         if (room) {
             WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
@@ -142,12 +142,15 @@ export default class CallPreview extends React.Component<IProps, IState> {
         if (newRoomId === oldRoomId) return;
         // The WidgetLayoutStore observer always tracks the currently viewed Room,
         // so we don't end up with multiple observers and know what observer to remove on unmount
-        const newRoom = MatrixClientPeg.get().getRoom(newRoomId);
-        const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
+        const oldRoom = MatrixClientPeg.get()?.getRoom(oldRoomId);
         if (oldRoom) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(oldRoom), this.updateCalls);
         }
-        WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(newRoom), this.updateCalls);
+        const newRoom = MatrixClientPeg.get()?.getRoom(newRoomId);
+        if (newRoom) {
+            WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(newRoom), this.updateCalls);
+        }
+        if (!newRoomId) return;
 
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(newRoomId);
         this.setState({
@@ -170,6 +173,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
     };
 
     private updateCalls = () => {
+        if (!this.state.roomId) return;
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
 
         this.setState({
@@ -179,6 +183,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
     };
 
     private onCallRemoteHold = () => {
+        if (!this.state.roomId) return;
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
 
         this.setState({
