@@ -46,7 +46,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
@@ -321,7 +321,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private async runSlashCommand(cmd: Command, args: string, roomId: string): Promise<void> {
-        const result = cmd.run(roomId, args);
+        const threadId = this.props.editState?.getEvent()?.getThread()?.id || null;
+
+        const result = cmd.run(roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {

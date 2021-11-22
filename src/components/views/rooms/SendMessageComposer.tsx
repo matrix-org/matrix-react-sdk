@@ -350,7 +350,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private async runSlashCommand(cmd: Command, args: string): Promise<void> {
-        const result = cmd.run(this.props.room.roomId, args);
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation?.event_id
+            : null;
+
+        const result = cmd.run(this.props.room.roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
