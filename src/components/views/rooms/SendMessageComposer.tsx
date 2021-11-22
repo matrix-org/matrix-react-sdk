@@ -499,7 +499,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     // For initial threads launch, chat effects are disabled
                     // see #19731
                     const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
-                    if (!SettingsStore.getValue("feature_thread") || !isNotThread) {
+                    if (!SettingsStore.getValue("feature_thread") || isNotThread) {
                         dis.dispatch({ action: `effects.${effect.command}` });
                     }
                 }
