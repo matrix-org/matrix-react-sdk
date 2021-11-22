@@ -46,7 +46,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import RoomContext from '../../../contexts/RoomContext';
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
