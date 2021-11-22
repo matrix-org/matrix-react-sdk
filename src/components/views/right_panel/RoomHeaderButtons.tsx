@@ -46,6 +46,7 @@ const ROOM_INFO_PHASES = [
     RightPanelPhases.EncryptionPanel,
     RightPanelPhases.Room3pidMemberInfo,
 ];
+
 const UnreadIndicator = ({ className }) => {
     return <React.Fragment>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
