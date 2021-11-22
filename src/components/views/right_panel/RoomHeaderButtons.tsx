@@ -47,22 +47,24 @@ const ROOM_INFO_PHASES = [
     RightPanelPhases.Room3pidMemberInfo,
 ];
 
-type UnreadIndicatorProps = {className: string};
+interface IUnreadIndicatorProps {
+    className: string;
+}
 
-const UnreadIndicator = ({ className }: UnreadIndicatorProps) => {
+const UnreadIndicator = ({ className }: IUnreadIndicatorProps) => {
     return <React.Fragment>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
         <div className={className} />
     </React.Fragment>;
 };
 
-type HeaderButtonProps = {
+interface IHeaderButtonProps {
     room: Room;
     isHighlighted: boolean;
     onClick: () => void;
-};
+}
 
-const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: HeaderButtonProps) => {
+const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButtonProps) => {
     const pinningEnabled = useSettingValue("feature_pinning");
     const pinnedEvents = usePinnedEvents(pinningEnabled && room);
     const readPinnedEvents = useReadPinnedEvents(pinningEnabled && room);
@@ -84,7 +86,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: HeaderButt
     </HeaderButton>;
 };
 
-const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: HeaderButtonProps) => {
+const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButtonProps) => {
     if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
     let unreadIndicator;
     switch (RoomNotificationStateStore.instance.getRoomState(room).color) {
