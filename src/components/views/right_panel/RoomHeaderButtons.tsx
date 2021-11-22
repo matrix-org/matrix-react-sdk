@@ -47,14 +47,22 @@ const ROOM_INFO_PHASES = [
     RightPanelPhases.Room3pidMemberInfo,
 ];
 
-const UnreadIndicator = ({ className }) => {
+type UnreadIndicatorProps = {className: string};
+
+const UnreadIndicator = ({ className }: UnreadIndicatorProps) => {
     return <React.Fragment>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
         <div className={className} />
     </React.Fragment>;
 };
 
-const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
+type HeaderButtonProps = {
+    room: Room;
+    isHighlighted: boolean;
+    onClick: () => void;
+};
+
+const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: HeaderButtonProps) => {
     const pinningEnabled = useSettingValue("feature_pinning");
     const pinnedEvents = usePinnedEvents(pinningEnabled && room);
     const readPinnedEvents = useReadPinnedEvents(pinningEnabled && room);
@@ -76,7 +84,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
     </HeaderButton>;
 };
 
-const TimelineCardHeaderButton = ({ room, isHighlighted, showNewMessage, onClick }) => {
+const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: HeaderButtonProps) => {
     if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
     let unreadIndicator;
     switch (RoomNotificationStateStore.instance.getRoomState(room).color) {
@@ -96,7 +104,8 @@ const TimelineCardHeaderButton = ({ room, isHighlighted, showNewMessage, onClick
         title={_t("Chat")}
         isHighlighted={isHighlighted}
         onClick={onClick}
-        analytics={["Right Panel", "Timeline Panel Button", "click"]}>
+        analytics={["Right Panel", "Timeline Panel Button", "click"]}
+    >
         { unreadIndicator }
     </HeaderButton>;
 };
@@ -185,7 +194,6 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             <TimelineCardHeaderButton
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.Timeline)}
-                showNewMessage={false}
                 onClick={this.onTimelineCardClicked} />,
         );
         rightPanelPhaseButtons.set(RightPanelPhases.ThreadPanel,

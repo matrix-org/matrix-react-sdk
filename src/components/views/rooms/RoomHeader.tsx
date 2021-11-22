@@ -104,9 +104,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         // redisplay the room name, topic, etc.
         this.rateLimitedUpdate();
     };
+
     private onNotificationUpdate = () => {
         this.forceUpdate();
     };
+
     private rateLimitedUpdate = throttle(() => {
         this.forceUpdate();
     }, 500, { leading: true, trailing: true });
