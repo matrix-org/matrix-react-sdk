@@ -341,7 +341,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             onClick={openMainMenu}
             isExpanded={mainMenuDisplayed}
             className="mx_RoomListHeader_contextMenuButton"
-            title={activeSpace ? _t("Space menu") : _t("Space options")}
+            title={activeSpace ? _t("Space menu") : _t("Home options")}
         >
             { title }
         </ContextMenuTooltipButton>;

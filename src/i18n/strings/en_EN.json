@@ -1727,6 +1727,7 @@
     "Currently joining %(count)s rooms|other": "Currently joining %(count)s rooms",
     "Currently joining %(count)s rooms|one": "Currently joining %(count)s room",
     "Space menu": "Space menu",
+    "Home options": "Home options",
     "Add to %(spaceName)s": "Add to %(spaceName)s",
     "Add to space": "Add to space",
     "This room": "This room",
