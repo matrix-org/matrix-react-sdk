@@ -119,7 +119,9 @@ export default class CallPreview extends React.Component<IProps, IState> {
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         const room = MatrixClientPeg.get().getRoom(this.state.roomId);
-        WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
+        if (room) {
+            WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
+        }
     }
 
     public componentWillUnmount() {
@@ -142,7 +144,9 @@ export default class CallPreview extends React.Component<IProps, IState> {
         // so we don't end up with multiple observers and know what observer to remove on unmount
         const newRoom = MatrixClientPeg.get().getRoom(newRoomId);
         const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
-        WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(oldRoom), this.updateCalls);
+        if (oldRoom) {
+            WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(oldRoom), this.updateCalls);
+        }
         WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(newRoom), this.updateCalls);
 
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(newRoomId);
