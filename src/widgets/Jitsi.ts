@@ -92,7 +92,7 @@ export class Jitsi {
         const parsed = new URL(url);
         if (parsed.hostname !== this.preferredDomain) return null; // invalid
         return {
-            conferenceId: parsed.pathname,
+            conferenceId: parsed.pathname.substr(1),
             domain: parsed.hostname,
             isAudioOnly: false,
         };
