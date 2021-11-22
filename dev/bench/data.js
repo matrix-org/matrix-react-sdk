@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637517755486,
+  "lastUpdate": 1637586559721,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40700,6 +40700,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4760.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9e7b407bf7ec7e6d5eab666716228816e4b9c391",
+          "message": "Add spacing between right panel and main timeline (#7176)",
+          "timestamp": "2021-11-22T13:02:48Z",
+          "tree_id": "c5716ffc63c6295d6205062fc12bad4eecfcb532",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9e7b407bf7ec7e6d5eab666716228816e4b9c391"
+        },
+        "date": 1637586557155,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5009.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 683.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
