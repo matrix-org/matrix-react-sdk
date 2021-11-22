@@ -474,8 +474,8 @@ async function setBotPower(
         if (ignoreIfGreater === true) {
             // As per https://matrix.org/docs/spec/client_server/r0.6.0#m-room-power-levels
             const currentPl = (
-                powerLevels.content.users && powerLevels.content.users[userId]
-            ) || powerLevels.content.users_default || 0;
+                powerLevels.users && powerLevels.users[userId]
+            ) || powerLevels.users_default || 0;
 
             if (currentPl >= level) {
                 return sendResponse(event, {
