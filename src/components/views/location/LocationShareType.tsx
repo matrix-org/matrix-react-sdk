@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 export enum LocationShareType {
-    CUSTOM = -1,
-    ONE_OFF = 0,
-    ONE_MIN = 60,
-    FIVE_MINS = 5 * 60,
-    THIRTY_MINS = 30 * 60,
-    ONE_HOUR = 60 * 60,
-    THREE_HOURS = 3 * 60 * 60,
-    SIX_HOURS = 6 * 60 * 60,
-    ONE_DAY = 24 * 60 * 60,
-    FOREVER = Number.MAX_SAFE_INTEGER,
+    Custom = -1,
+    OnceOff = 0,
+    OneMine = 60,
+    FiveMins = 5 * 60,
+    ThirtyMins = 30 * 60,
+    OneHour = 60 * 60,
+    ThreeHours = 3 * 60 * 60,
+    SixHours = 6 * 60 * 60,
+    OneDay = 24 * 60 * 60,
+    Forever = Number.MAX_SAFE_INTEGER,
 }

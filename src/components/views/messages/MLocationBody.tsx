@@ -20,11 +20,8 @@ import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 
-interface IState {
-}
-
 @replaceableComponent("views.messages.MLocationBody")
-export default class MLocationBody extends React.Component<IBodyProps, IState> {
+export default class MLocationBody extends React.Component<IBodyProps> {
     private map: maplibregl.Map;
     private coords: GeolocationCoordinates;
     private description: string;

@@ -40,16 +40,16 @@ const LocationShareTypeDropdown = ({
     onChange,
 }: IDropdownProps) => {
     const options = [
-        // <div key={LocationShareType.CUSTOM}>{ _t("Share custom location") }</div>,
-        <div key={LocationShareType.ONE_OFF}>{ _t("Share my current location as a one off") }</div>,
-        // <div key={LocationShareType.ONE_MIN}>{ _t("Share my current location for one minute") }</div>,
-        // <div key={LocationShareType.FIVE_MINS}>{ _t("Share my current location for five minutes") }</div>,
-        // <div key={LocationShareType.THIRTY_MINS}>{ _t("Share my current location for thirty minutes") }</div>,
-        // <div key={LocationShareType.ONE_HOUR}>{ _t("Share my current location for one hour") }</div>,
-        // <div key={LocationShareType.THREE_HOURS}>{ _t("Share my current location for three hours") }</div>,
-        // <div key={LocationShareType.SIX_HOURS}>{ _t("Share my current location for six hours") }</div>,
-        // <div key={LocationShareType.ONE_DAY}>{ _t("Share my current location for one day") }</div>,
-        // <div key={LocationShareType.FOREVER}>{ _t("Share my current location until I disable it") }</div>,
+        // <div key={LocationShareType.Custom}>{ _t("Share custom location") }</div>,
+        <div key={LocationShareType.OnceOff}>{ _t("Share my current location as a once off") }</div>,
+        // <div key={LocationShareType.OneMin}>{ _t("Share my current location for one minute") }</div>,
+        // <div key={LocationShareType.FiveMins}>{ _t("Share my current location for five minutes") }</div>,
+        // <div key={LocationShareType.ThirtyMins}>{ _t("Share my current location for thirty minutes") }</div>,
+        // <div key={LocationShareType.OneHour}>{ _t("Share my current location for one hour") }</div>,
+        // <div key={LocationShareType.ThreeHours}>{ _t("Share my current location for three hours") }</div>,
+        // <div key={LocationShareType.SixHours}>{ _t("Share my current location for six hours") }</div>,
+        // <div key={LocationShareType.OneDay}>{ _t("Share my current location for one day") }</div>,
+        // <div key={LocationShareType.Forever}>{ _t("Share my current location until I disable it") }</div>,
     ];
 
     return <Dropdown
@@ -72,7 +72,7 @@ interface IProps {
 interface IState {
     description: string;
     type: LocationShareType;
-    position: GeolocationPosition;
+    position?: GeolocationPosition;
     manual: boolean;
 }
 
@@ -86,7 +86,7 @@ class LocationPicker extends React.Component<IProps, IState> {
 
         this.state = {
             description: _t("My location"),
-            type: LocationShareType.ONE_OFF,
+            type: LocationShareType.OnceOff,
             position: undefined,
             manual: false,
         };

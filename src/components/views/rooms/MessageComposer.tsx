@@ -93,7 +93,7 @@ function SendButton(props: ISendButtonProps) {
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
-    menuPosition: any; // TODO: Types
+    menuPosition: AboveLeftOf;
     narrowMode: boolean;
 }
 
@@ -133,7 +133,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
 interface ILocationButtonProps {
     room: Room;
     shareLocation: (uri: string, ts: number, type: LocationShareType, description: string) => boolean;
-    menuPosition: any; // TODO: Types
+    menuPosition: AboveLeftOf;
     narrowMode: boolean;
 }
 
