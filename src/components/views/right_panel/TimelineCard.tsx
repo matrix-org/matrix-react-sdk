@@ -71,7 +71,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 header={this.renderTimelineCardHeader()}
             >
                 <TimelinePanel
-                    showReadReceipts={false}
+                    showReadReceipts={false} // TODO: RR's cause issues with limited horizontal space
                     manageReadReceipts={true}
                     manageReadMarkers={false} // No RM support in the TimelineCard
                     sendReadReceiptOnLoad={true}

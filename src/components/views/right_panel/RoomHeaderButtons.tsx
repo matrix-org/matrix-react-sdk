@@ -67,7 +67,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
     </HeaderButton>;
 };
 
-const TimelineCardHeaderButton = ({ room, isHighlighted, showNewMessage, onClick }) => {
+const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }) => {
     if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
 
     return <HeaderButton
@@ -163,7 +163,6 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             <TimelineCardHeaderButton
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.Timeline)}
-                showNewMessage={false}
                 onClick={this.onTimelineCardClicked} />,
         );
         rightPanelPhaseButtons.set(RightPanelPhases.ThreadPanel,
