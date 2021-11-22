@@ -77,13 +77,6 @@ $activeBorderColor: $primary-content;
         }
     }
 
-    .mx_SpaceTreeLevel {
-        display: flex;
-        flex-direction: column;
-        max-width: 250px;
-        flex-grow: 1;
-    }
-
     .mx_SpaceItem {
         display: inline-flex;
         flex-flow: wrap;
@@ -260,6 +253,11 @@ $activeBorderColor: $primary-content;
     }
 
     .mx_SpaceTreeLevel {
+        display: flex;
+        flex-direction: column;
+        max-width: 250px;
+        flex-grow: 1;
+
         .mx_BaseAvatar_initial {
             color: $secondary-content;
             width: 32px;
