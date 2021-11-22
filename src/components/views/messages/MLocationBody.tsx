@@ -41,10 +41,7 @@ export default class MLocationBody extends React.Component<IBodyProps> {
         this.coords = this.parseGeoUri(uri);
 
         this.description =
-            (content['org.matrix.msc3488.location'] &&
-                content['org.matrix.msc3488.location'].description !== undefined) ?
-                content['org.matrix.msc3488.location'].description :
-                content['body'];
+            content['org.matrix.msc3488.location']?.description ?? content['body'];
     }
 
     private parseGeoUri = (uri: string): GeolocationCoordinates => {
