@@ -147,9 +147,9 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 className="mx_PollCreateDialog_addOption"
                 inputRef={this.addOptionRef}
             >{ _t("Add option") }</AccessibleButton>
-            { this.state.busy ?
-                <div className="mx_PollCreateDialog_busy"><Spinner /></div> :
-                null
+            {
+                this.state.busy &&
+                    <div className="mx_PollCreateDialog_busy"><Spinner /></div>
             }
         </div>;
     }
