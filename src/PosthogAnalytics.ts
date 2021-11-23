@@ -52,7 +52,7 @@ export enum Anonymity {
     Pseudonymous
 }
 
-interface ScreenChange extends IEvent {
+export interface ScreenChange extends IEvent {
     eventName: "ScreenChange";
     durationMs?: number;
     screen: "Home" |
@@ -75,24 +75,6 @@ const whitelistedScreens = new Set([
     "register", "login", "forgot_password", "soft_logout", "new", "settings", "welcome", "home", "start", "directory",
     "start_sso", "start_cas", "groups", "complete_security", "post_registration", "room", "user", "group",
 ]);
-
-const notLoggedInMap = {};
-notLoggedInMap[Views.LOADING] = "WebLoading";
-notLoggedInMap[Views.WELCOME] = "WebWelcome";
-notLoggedInMap[Views.LOGIN] = "WebLogin";
-notLoggedInMap[Views.REGISTER] = "WebRegister";
-notLoggedInMap[Views.FORGOT_PASSWORD] = "WebForgotPassword";
-notLoggedInMap[Views.COMPLETE_SECURITY] = "WebCompleteSecurity";
-notLoggedInMap[Views.E2E_SETUP] = "WebE2ESetup";
-notLoggedInMap[Views.SOFT_LOGOUT] = "WebSoftLogout";
-
-const loggedInPageTypeMap = {};
-loggedInPageTypeMap[PageType.HomePage] = "Home";
-loggedInPageTypeMap[PageType.RoomView] = "Room";
-loggedInPageTypeMap[PageType.RoomDirectory] = "RoomDirectory";
-loggedInPageTypeMap[PageType.UserView] = "User";
-loggedInPageTypeMap[PageType.GroupView] = "Group";
-loggedInPageTypeMap[PageType.MyGroups] = "MyGroups";
 
 export function getRedactedCurrentLocation(
     origin: string,
@@ -328,15 +310,6 @@ export class PosthogAnalytics {
         const eventWithoutName = { ...event };
         delete eventWithoutName.eventName;
         this.capture(event.eventName, eventWithoutName);
-    }
-
-    public trackScreenChange(view: Views, pageType: PageType, durationMs: number): void {
-        const screenName = view === Views.LOGGED_IN ? loggedInPageTypeMap[pageType] : notLoggedInMap[view];
-        return this.trackEvent<ScreenChange>({
-            eventName: "ScreenChange",
-            screen: screenName,
-            durationMs,
-        });
     }
 
     public async updatePlatformSuperProperties(): Promise<void> {

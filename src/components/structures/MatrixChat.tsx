@@ -108,7 +108,7 @@ import UIStore, { UI_EVENTS } from "../../stores/UIStore";
 import SoftLogout from './auth/SoftLogout';
 import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
-import { PosthogAnalytics } from '../../PosthogAnalytics';
+import { PosthogAnalytics, ScreenChange } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
 
 import { logger } from "matrix-js-sdk/src/logger";
@@ -459,7 +459,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             const durationMs = this.stopPageChangeTimer();
             Analytics.trackPageChange(durationMs);
             CountlyAnalytics.instance.trackPageChange(durationMs);
-            PosthogAnalytics.instance.trackScreenChange(this.state.view, this.state.page_type, durationMs);
+            this.trackScreenChange(durationMs);
         }
         if (this.focusComposer) {
             dis.fire(Action.FocusSendMessageComposer);
@@ -476,6 +476,36 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.state.resizeNotifier.removeListener("middlePanelResized", this.dispatchTimelineResize);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
+    }
+
+    trackScreenChange(durationMs: number): void {
+        const notLoggedInMap = {};
+        notLoggedInMap[Views.LOADING] = "WebLoading";
+        notLoggedInMap[Views.WELCOME] = "WebWelcome";
+        notLoggedInMap[Views.LOGIN] = "WebLogin";
+        notLoggedInMap[Views.REGISTER] = "WebRegister";
+        notLoggedInMap[Views.FORGOT_PASSWORD] = "WebForgotPassword";
+        notLoggedInMap[Views.COMPLETE_SECURITY] = "WebCompleteSecurity";
+        notLoggedInMap[Views.E2E_SETUP] = "WebE2ESetup";
+        notLoggedInMap[Views.SOFT_LOGOUT] = "WebSoftLogout";
+
+        const loggedInPageTypeMap = {};
+        loggedInPageTypeMap[PageType.HomePage] = "Home";
+        loggedInPageTypeMap[PageType.RoomView] = "Room";
+        loggedInPageTypeMap[PageType.RoomDirectory] = "RoomDirectory";
+        loggedInPageTypeMap[PageType.UserView] = "User";
+        loggedInPageTypeMap[PageType.GroupView] = "Group";
+        loggedInPageTypeMap[PageType.MyGroups] = "MyGroups";
+
+        const screenName = this.state.view === Views.LOGGED_IN ?
+            loggedInPageTypeMap[this.state.page_type] :
+            notLoggedInMap[this.state.view];
+
+        return PosthogAnalytics.instance.trackEvent<ScreenChange>({
+            eventName: "ScreenChange",
+            screen: screenName,
+            durationMs,
+        });
     }
 
     getFallbackHsUrl() {
