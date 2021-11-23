@@ -21,6 +21,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { sleep, defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { Error as ErrorEvent } from "matrix-analytics-events/types/typescript/Error";
+import { Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/Screen";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -108,7 +109,7 @@ import UIStore, { UI_EVENTS } from "../../stores/UIStore";
 import SoftLogout from './auth/SoftLogout';
 import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
-import { PosthogAnalytics, ScreenChange } from '../../PosthogAnalytics';
+import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
 
 import { logger } from "matrix-js-sdk/src/logger";
@@ -501,9 +502,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             loggedInPageTypeMap[this.state.page_type] :
             notLoggedInMap[this.state.view];
 
-        return PosthogAnalytics.instance.trackEvent<ScreenChange>({
-            eventName: "ScreenChange",
-            screen: screenName,
+        return PosthogAnalytics.instance.trackEvent<ScreenEvent>({
+            eventName: "Screen",
+            screenName,
             durationMs,
         });
     }

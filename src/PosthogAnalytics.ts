@@ -52,25 +52,6 @@ export enum Anonymity {
     Pseudonymous
 }
 
-export interface ScreenChange extends IEvent {
-    eventName: "ScreenChange";
-    durationMs?: number;
-    screen: "Home" |
-            "Room" |
-            "RoomDirectory" |
-            "User" |
-            "Group" |
-            "MyGroups" |
-            "WebLoading" |
-            "WebWelcome" |
-            "WebLogin" |
-            "WebRegister" |
-            "WebForgotPassword" |
-            "WebCompleteSecurity" |
-            "WebE2ESetup" |
-            "WebSoftLogout";
-}
-
 const whitelistedScreens = new Set([
     "register", "login", "forgot_password", "soft_logout", "new", "settings", "welcome", "home", "start", "directory",
     "start_sso", "start_cas", "groups", "complete_security", "post_registration", "room", "user", "group",
