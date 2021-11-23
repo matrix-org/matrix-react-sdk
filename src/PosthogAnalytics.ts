@@ -285,7 +285,7 @@ export class PosthogAnalytics {
     public trackEvent<E extends IEvent>(
         event: E,
     ): void {
-        if (this.anonymity == Anonymity.Disabled) return;
+        if (this.anonymity == Anonymity.Disabled || this.anonymity == Anonymity.Anonymous) return;
         const eventWithoutName = { ...event };
         delete eventWithoutName.eventName;
         this.capture(event.eventName, eventWithoutName);
