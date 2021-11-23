@@ -94,7 +94,7 @@ loggedInPageTypeMap[PageType.UserView] = "User";
 loggedInPageTypeMap[PageType.GroupView] = "Group";
 loggedInPageTypeMap[PageType.MyGroups] = "MyGroups";
 
-export async function getRedactedCurrentLocation(
+export function getRedactedCurrentLocation(
     origin: string,
     hash: string,
     pathname: string,
@@ -254,12 +254,12 @@ export class PosthogAnalytics {
         };
     }
 
-    private async capture(eventName: string, properties: posthog.Properties) {
+    private capture(eventName: string, properties: posthog.Properties) {
         if (!this.enabled) {
             return;
         }
         const { origin, hash, pathname } = window.location;
-        properties['$redacted_current_url'] = await getRedactedCurrentLocation(
+        properties['$redacted_current_url'] = getRedactedCurrentLocation(
             origin, hash, pathname, this.anonymity);
         this.posthog.capture(eventName, properties);
     }
@@ -322,18 +322,18 @@ export class PosthogAnalytics {
         this.setAnonymity(Anonymity.Anonymous);
     }
 
-    public async trackEvent<E extends IEvent>(
+    public trackEvent<E extends IEvent>(
         event: E,
-    ): Promise<void> {
+    ): void {
         if (this.anonymity == Anonymity.Disabled) return;
         const eventWithoutName = { ...event };
         delete eventWithoutName.eventName;
-        await this.capture(event.eventName, eventWithoutName);
+        this.capture(event.eventName, eventWithoutName);
     }
 
-    public async trackScreenChange(view: Views, pageType: PageType, durationMs: number): Promise<void> {
+    public trackScreenChange(view: Views, pageType: PageType, durationMs: number): void {
         const screenName = view === Views.LOGGED_IN ? loggedInPageTypeMap[pageType] : notLoggedInMap[view];
-        return await this.trackEvent<ScreenChange>({
+        return this.trackEvent<ScreenChange>({
             eventName: "ScreenChange",
             screen: screenName,
             durationMs,
