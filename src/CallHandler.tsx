@@ -380,7 +380,7 @@ export default class CallHandler extends EventEmitter {
         return callsNotInThatRoom;
     }
 
-    getAllActiveCallsForPip(roomId) {
+    public getAllActiveCallsForPip(roomId: string) {
         const room = MatrixClientPeg.get().getRoom(roomId);
         if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
             // This checks if there is space for the call view in the aux panel

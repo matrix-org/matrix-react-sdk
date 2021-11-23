@@ -60,7 +60,7 @@ interface IState {
 // (which should be a single element) of other calls.
 // The primary will be the one not on hold, or an arbitrary one
 // if they're all on hold)
-function getPrimarySecondaryCallsForPip(roomId): [MatrixCall, MatrixCall[]] {
+function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall[]] {
     const calls = CallHandler.sharedInstance().getAllActiveCallsForPip(roomId);
 
     let primary: MatrixCall = null;
