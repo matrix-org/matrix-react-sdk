@@ -170,7 +170,7 @@ describe('DecryptionFailureTracker', function() {
         const counts = {};
         const tracker = new DecryptionFailureTracker(
             (total, errorCode) => counts[errorCode] = (counts[errorCode] || 0) + total,
-            (error) =>  error === "UnknownError" ? "UnknownError" : "OlmKeysNotSentError"
+            (error) => error === "UnknownError" ? "UnknownError" : "OlmKeysNotSentError",
         );
 
         // One failure of ERROR_CODE_1, and effectively two for ERROR_CODE_2
