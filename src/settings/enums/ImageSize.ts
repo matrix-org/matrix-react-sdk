@@ -14,8 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// For Large the image gets drawn as big as possible.
+// constraint by: timeline width, manual heigh overrides, SIZE_LARGE.h
 const SIZE_LARGE = { w: 800, h: 600 };
-const SIZE_NORMAL = { w: 324, h: 220 };
+
+// For Normal the image gets drawn to never exceed SIZE_NORMAL.w, SIZE_NORMAL.h
+// constraint by: timeline width, manual heigh overrides
+const SIZE_NORMAL = { w: 324, h: 324 * (16/9) }; // Portrait images should be the same width than landscape
 
 export enum ImageSize {
     Normal = "normal",
