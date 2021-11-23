@@ -98,8 +98,7 @@ export function getRedactedCurrentLocation(
     origin: string,
     hash: string,
     pathname: string,
-    anonymity: Anonymity,
-): Promise<string> {
+): string {
     // Redact PII from the current location.
     // For known screens, assumes a URL structure of /<screen name>/might/be/pii
     if (origin.startsWith('file://')) {
@@ -259,8 +258,7 @@ export class PosthogAnalytics {
             return;
         }
         const { origin, hash, pathname } = window.location;
-        properties['$redacted_current_url'] = getRedactedCurrentLocation(
-            origin, hash, pathname, this.anonymity);
+        properties['$redacted_current_url'] = getRedactedCurrentLocation(origin, hash, pathname);
         this.posthog.capture(eventName, properties);
     }
 
