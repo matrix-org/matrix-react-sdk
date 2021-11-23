@@ -17,7 +17,7 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -28,7 +28,7 @@ import { _t } from '../../../languageHandler';
 import { hasText } from "../../../TextForEvent";
 import * as sdk from "../../../index";
 import dis from '../../../dispatcher/dispatcher';
-import { Layout } from "../../../settings/Layout";
+import { Layout } from "../../../settings/enums/Layout";
 import { formatTime } from "../../../DateUtils";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { ALL_RULE_TYPES } from "../../../mjolnir/BanList";
@@ -66,12 +66,14 @@ import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
+import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
-import { ThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
+import ThreadListContextMenu from '../context_menus/ThreadListContextMenu';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
     [EventType.Sticker]: 'messages.MessageEvent',
+    [POLL_START_EVENT_TYPE.name]: 'messages.MessageEvent',
     [EventType.KeyVerificationCancel]: 'messages.MKeyVerificationConclusion',
     [EventType.KeyVerificationDone]: 'messages.MKeyVerificationConclusion',
     [EventType.CallInvite]: 'messages.CallEvent',
@@ -129,7 +131,7 @@ export function getHandlerTile(ev) {
     // not even when showing hidden events
     if (type === "m.room.message") {
         const content = ev.getContent();
-        if (content && content.msgtype === "m.key.verification.request") {
+        if (content && content.msgtype === MsgType.KeyVerificationRequest) {
             const client = MatrixClientPeg.get();
             const me = client && client.getUserId();
             if (ev.getSender() !== me && content.to !== me) {
@@ -551,7 +553,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     };
 
-    private renderThreadLastMessagePreview(): JSX.Element | null {
+    private get thread(): Thread | null {
         if (!SettingsStore.getValue("feature_thread")) {
             return null;
         }
@@ -569,7 +571,28 @@ export default class EventTile extends React.Component<IProps, IState> {
             return null;
         }
 
-        const [lastEvent] = thread.events
+        return thread;
+    }
+
+    private renderThreadPanelSummary(): JSX.Element | null {
+        if (!this.thread) {
+            return null;
+        }
+
+        return <div className="mx_ThreadPanel_replies">
+            <span className="mx_ThreadPanel_repliesSummary">
+                { this.thread.length }
+            </span>
+            { this.renderThreadLastMessagePreview() }
+        </div>;
+    }
+
+    private renderThreadLastMessagePreview(): JSX.Element | null {
+        if (!this.thread) {
+            return null;
+        }
+
+        const [lastEvent] = this.thread.events
             .filter(event => event.isThreadRelation)
             .slice(-1);
         const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(lastEvent);
@@ -589,24 +612,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadInfo(): React.ReactNode {
-        if (!SettingsStore.getValue("feature_thread")) {
-            return null;
-        }
-
-        /**
-         * Accessing the threads value through the room due to a race condition
-         * that will be solved when there are proper backend support for threads
-         * We currently have no reliable way to discover than an event is a thread
-         * when we are at the sync stage
-         */
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.threads.get(this.props.mxEvent.getId());
-
-        if (thread && !thread.ready) {
-            thread.addEvent(this.props.mxEvent, true);
-        }
-
-        if (!thread || this.props.showThreadInfo === false || thread.length === 0) {
+        if (!this.thread) {
             return null;
         }
 
@@ -619,10 +625,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                     );
                 }}
             >
-                <span className="mx_ThreadInfo_thread-icon" />
                 <span className="mx_ThreadInfo_threads-amount">
                     { _t("%(count)s reply", {
-                        count: thread.length,
+                        count: this.thread.length,
                     }) }
                 </span>
                 { this.renderThreadLastMessagePreview() }
@@ -1076,6 +1081,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
             mx_EventTile_noSender: this.props.hideSender,
+            mx_EventTile_clamp: this.props.tileShape === TileShape.ThreadPanel,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -1174,11 +1180,19 @@ export default class EventTile extends React.Component<IProps, IState> {
             || this.state.hover
             || this.state.actionBarFocused);
 
-        const timestamp = showTimestamp ?
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        const thread = room?.findThreadForEvent?.(this.props.mxEvent);
+
+        // Thread panel shows the timestamp of the last reply in that thread
+        const ts = this.props.tileShape !== TileShape.ThreadPanel
+            ? this.props.mxEvent.getTs()
+            : thread?.lastReply.getTs();
+
+        const timestamp = showTimestamp && ts ?
             <MessageTimestamp
                 showRelative={this.props.tileShape === TileShape.ThreadPanel}
                 showTwelveHour={this.props.isTwelveHour}
-                ts={this.props.mxEvent.getTs()}
+                ts={ts}
             /> : null;
 
         const keyRequestHelpText =
@@ -1354,11 +1368,15 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent),
+
                     }, <>
                         { sender }
                         { avatar }
-                        <div className={lineClasses} key="mx_EventTile_line">
+                        <div
+                            className={lineClasses}
+                            onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                            key="mx_EventTile_line"
+                        >
                             { linkedTimestamp }
                             { this.renderE2EPadlock() }
                             { replyChain }
@@ -1376,19 +1394,21 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 tileShape={this.props.tileShape}
                             />
                             { keyRequestInfo }
-                            <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
-                                <RovingAccessibleTooltipButton
-                                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                    title={_t("Thread")}
-                                    onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
-                                    key="thread"
-                                />
-                                <ThreadListContextMenu
-                                    mxEvent={this.props.mxEvent}
-                                    permalinkCreator={this.props.permalinkCreator} />
-                            </Toolbar>
-                            { this.renderThreadLastMessagePreview() }
+                            { this.renderThreadPanelSummary() }
                         </div>
+                        <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+                            <RovingAccessibleTooltipButton
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                                title={_t("Reply in thread")}
+                                onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                                key="thread"
+                            />
+                            <ThreadListContextMenu
+                                mxEvent={this.props.mxEvent}
+                                permalinkCreator={this.props.permalinkCreator}
+                                onMenuToggle={this.onActionBarFocusChange}
+                            />
+                        </Toolbar>
                         { msgOption }
                     </>)
                 );
@@ -1511,25 +1531,25 @@ export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean) {
 
 function E2ePadlockUndecryptable(props) {
     return (
-        <E2ePadlock title={_t("This message cannot be decrypted")} icon="warning" {...props} />
+        <E2ePadlock title={_t("This message cannot be decrypted")} icon={E2ePadlockIcon.Warning} {...props} />
     );
 }
 
 function E2ePadlockUnverified(props) {
     return (
-        <E2ePadlock title={_t("Encrypted by an unverified session")} icon="warning" {...props} />
+        <E2ePadlock title={_t("Encrypted by an unverified session")} icon={E2ePadlockIcon.Warning} {...props} />
     );
 }
 
 function E2ePadlockUnencrypted(props) {
     return (
-        <E2ePadlock title={_t("Unencrypted")} icon="warning" {...props} />
+        <E2ePadlock title={_t("Unencrypted")} icon={E2ePadlockIcon.Warning} {...props} />
     );
 }
 
 function E2ePadlockUnknown(props) {
     return (
-        <E2ePadlock title={_t("Encrypted by a deleted session")} icon="normal" {...props} />
+        <E2ePadlock title={_t("Encrypted by a deleted session")} icon={E2ePadlockIcon.Normal} {...props} />
     );
 }
 
@@ -1537,14 +1557,19 @@ function E2ePadlockUnauthenticated(props) {
     return (
         <E2ePadlock
             title={_t("The authenticity of this encrypted message can't be guaranteed on this device.")}
-            icon="unauthenticated"
+            icon={E2ePadlockIcon.Normal}
             {...props}
         />
     );
 }
 
+enum E2ePadlockIcon {
+    Normal = "normal",
+    Warning = "warning",
+}
+
 interface IE2ePadlockProps {
-    icon: string;
+    icon: E2ePadlockIcon;
     title: string;
 }
 
@@ -1553,7 +1578,7 @@ interface IE2ePadlockState {
 }
 
 class E2ePadlock extends React.Component<IE2ePadlockProps, IE2ePadlockState> {
-    constructor(props) {
+    constructor(props: IE2ePadlockProps) {
         super(props);
 
         this.state = {
@@ -1561,15 +1586,15 @@ class E2ePadlock extends React.Component<IE2ePadlockProps, IE2ePadlockState> {
         };
     }
 
-    onHoverStart = () => {
+    private onHoverStart = (): void => {
         this.setState({ hover: true });
     };
 
-    onHoverEnd = () => {
+    private onHoverEnd = (): void => {
         this.setState({ hover: false });
     };
 
-    render() {
+    public render(): JSX.Element {
         let tooltip = null;
         if (this.state.hover) {
             tooltip = <Tooltip className="mx_EventTile_e2eIcon_tooltip" label={this.props.title} />;

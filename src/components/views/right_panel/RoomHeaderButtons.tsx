@@ -35,6 +35,7 @@ import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-acti
 import SettingsStore from "../../../settings/SettingsStore";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import NotificationBadge, { NotificationCountDisplay } from "../rooms/NotificationBadge";
+import dis from "../../../dispatcher/dispatcher";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -74,6 +75,11 @@ interface IProps {
 
 @replaceableComponent("views.right_panel.RoomHeaderButtons")
 export default class RoomHeaderButtons extends HeaderButtons<IProps> {
+    private static readonly THREAD_PHASES = [
+        RightPanelPhases.ThreadPanel,
+        RightPanelPhases.ThreadView,
+    ];
+
     constructor(props: IProps) {
         super(props, HeaderKind.Room);
     }
@@ -117,6 +123,17 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     private onPinnedMessagesClicked = () => {
         // This toggles for us, if needed
         this.setPhase(RightPanelPhases.PinnedMessages);
+    };
+
+    private onThreadsPanelClicked = () => {
+        if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
+            dis.dispatch({
+                action: Action.ToggleRightPanel,
+                type: "room",
+            });
+        } else {
+            dispatchShowThreadsPanelEvent();
+        }
     };
 
     public renderButtons() {

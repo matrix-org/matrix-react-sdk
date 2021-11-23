@@ -70,11 +70,8 @@ const BaseCard: React.FC<IProps> = ({
                 refireParams: refireParams,
             });
         };
-        backButton = <AccessibleButton
-            className="mx_BaseCard_back"
-            onClick={onBackClick}
-            title={previousPhaseLabel || _t("Back")}
-        />;
+        const label = previousPhaseLabel ?? _t("Back");
+        backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;
     }
 
     let closeButton;

@@ -27,7 +27,7 @@ import ResizeNotifier from '../../utils/ResizeNotifier';
 import { TileShape } from '../views/rooms/EventTile';
 import MessageComposer from '../views/rooms/MessageComposer';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import { Layout } from '../../settings/Layout';
+import { Layout } from '../../settings/enums/Layout';
 import TimelinePanel from './TimelinePanel';
 import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from '../../dispatcher/payloads';
@@ -40,7 +40,7 @@ import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
-import { ThreadListContextMenu } from '../views/context_menus/ThreadListContextMenu';
+import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 
 interface IProps {
     room: Room;

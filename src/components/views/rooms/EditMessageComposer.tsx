@@ -321,7 +321,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private async runSlashCommand(cmd: Command, args: string, roomId: string): Promise<void> {
-        const result = cmd.run(roomId, args);
+        const threadId = this.props.editState?.getEvent()?.getThread()?.id || null;
+
+        const result = cmd.run(roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -533,6 +535,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 ref={this.editorRef}
                 model={this.model}
                 room={this.getRoom()}
+                threadId={this.props.editState?.getEvent()?.getThread()?.id}
                 initialCaret={this.props.editState.getCaret()}
                 label={_t("Edit message")}
                 onChange={this.onChange}
