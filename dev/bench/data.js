@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637631648929,
+  "lastUpdate": 1637655845079,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40964,6 +40964,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4670.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "87201c8bfbe9dac2a60ffc51d03aeb116a7ab516",
+          "message": "Chat effects fixes for threads (#7183)",
+          "timestamp": "2021-11-23T08:17:30Z",
+          "tree_id": "59c43c6cc6ccf2e01b56c656e40c55646379f2d8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/87201c8bfbe9dac2a60ffc51d03aeb116a7ab516"
+        },
+        "date": 1637655841400,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5282.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1111.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4715.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
