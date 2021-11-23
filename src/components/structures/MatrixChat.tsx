@@ -458,7 +458,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             const durationMs = this.stopPageChangeTimer();
             Analytics.trackPageChange(durationMs);
             CountlyAnalytics.instance.trackPageChange(durationMs);
-            PosthogAnalytics.instance.trackPageView(durationMs);
+            PosthogAnalytics.instance.trackScreenChange(durationMs, this.state.view, this.state.page_type);
         }
         if (this.focusComposer) {
             dis.fire(Action.FocusSendMessageComposer);
