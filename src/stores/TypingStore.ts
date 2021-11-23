@@ -37,7 +37,7 @@ export default class TypingStore {
         this.reset();
     }
 
-    static sharedInstance(): TypingStore {
+    public static sharedInstance(): TypingStore {
         if (window.mxTypingStore === undefined) {
             window.mxTypingStore = new TypingStore();
         }
@@ -48,7 +48,7 @@ export default class TypingStore {
      * Clears all cached typing states. Intended to be called when the
      * MatrixClientPeg client changes.
      */
-    reset() {
+    public reset() {
         this.typingStates = {
             // "roomId": {
             //     isTyping: bool,     // Whether the user is typing or not
@@ -63,7 +63,7 @@ export default class TypingStore {
      * @param {string} roomId The room ID to set the typing state in.
      * @param {boolean} isTyping Whether the user is typing or not.
      */
-    setSelfTyping(roomId: string, threadId: string | null, isTyping: boolean): void {
+    public setSelfTyping(roomId: string, threadId: string | null, isTyping: boolean): void {
         if (!SettingsStore.getValue('sendTypingNotifications')) return;
         if (SettingsStore.getValue('lowBandwidth')) return;
         // Disable typing notification for threads for the initial launch
