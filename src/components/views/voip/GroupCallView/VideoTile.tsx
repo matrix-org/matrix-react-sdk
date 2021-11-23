@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { forwardRef, ReactNode, useState } from "react";
 import { animated } from "@react-spring/web";
 import classNames from "classnames";
 import { useCallFeed } from "../../../../hooks/useCallFeed";
@@ -6,26 +6,39 @@ import { useMediaStream } from "../../../../hooks/useMediaStream";
 import { useRoomMemberName } from "../../../../hooks/useRoomMemberName";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
+import { FluidValue } from "@react-spring/shared";
 
 const defaultColors = ['#0DBD8B', '#368bd6', '#ac3ba8'];
 
-interface IVideoTileProps {
-    style?: any;
-    callFeed: CallFeed;
+interface IVideoContainerProps {
+    as: React.ForwardRefExoticComponent<{ className: string | FluidValue<string, any>, children: ReactNode }>;
+    className?: string;
     disableSpeakingHighlight: boolean;
+    callFeed: CallFeed;
+    avatarBackgroundColor: string;
+    children: ReactNode;
 }
 
-export default function VideoTile({
-    style,
-    callFeed,
-    disableSpeakingHighlight,
-    ...rest
-}: IVideoTileProps) {
-    const [avatarBackgroundColor] = useState(() => {
-        const avatarBackgroundColorIndex = Math.round(Math.random() * (defaultColors.length - 1));
-        return defaultColors[avatarBackgroundColorIndex];
-    });
-    const { isLocal, audioMuted, videoMuted, speaking, stream, member, purpose } = useCallFeed(callFeed);
+const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
+    {
+        as: Component,
+        className,
+        disableSpeakingHighlight,
+        callFeed,
+        avatarBackgroundColor,
+        children,
+        ...rest
+    },
+    ref) => {
+    const {
+        isLocal,
+        audioMuted,
+        videoMuted,
+        speaking,
+        stream,
+        purpose,
+        member,
+    } = useCallFeed(callFeed);
     const name = useRoomMemberName(member);
     const mediaRef = useMediaStream<HTMLVideoElement>(stream, isLocal);
 
@@ -33,12 +46,12 @@ export default function VideoTile({
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1611831
 
     return (
-        <animated.div
-            className={classNames("mx_videoTile", {
+        <Component
+            className={classNames("mx_videoTile", className, {
                 "mx_speaking": speaking && !disableSpeakingHighlight,
                 "mx_muted": audioMuted,
+                "mx_screenshare": purpose === SDPStreamMetadataPurpose.Screenshare,
             })}
-            style={style}
             {...rest}
         >
             { videoMuted && (
@@ -52,13 +65,57 @@ export default function VideoTile({
                     </svg>
                 </>
             ) }
-            { purpose === SDPStreamMetadataPurpose.Usermedia && (
+            { purpose !== SDPStreamMetadataPurpose.Screenshare && (
                 <div className="mx_memberName">
                     <i className={audioMuted ? "mx_muteMicIcon" : "mx_micIcon"} />
                     <span title={name}>{ name }</span>
                 </div>
             ) }
             <video ref={mediaRef} playsInline disablePictureInPicture />
-        </animated.div>
+            { children }
+        </Component>
+    );
+});
+
+interface IVideoTileProps {
+    style?: any;
+    usermediaCallFeed: CallFeed;
+    screenshareCallFeed?: CallFeed;
+    disableSpeakingHighlight: boolean;
+}
+
+export default function VideoTile({
+    style,
+    usermediaCallFeed,
+    screenshareCallFeed,
+    disableSpeakingHighlight,
+    ...rest
+}: IVideoTileProps) {
+    const [avatarBackgroundColor] = useState(() => {
+        const avatarBackgroundColorIndex = Math.round(Math.random() * (defaultColors.length - 1));
+        return defaultColors[avatarBackgroundColorIndex];
+    });
+
+    return (
+        <VideoContainer
+            as={animated.div}
+            style={style}
+            disableSpeakingHighlight={disableSpeakingHighlight}
+            avatarBackgroundColor={avatarBackgroundColor}
+            callFeed={screenshareCallFeed || usermediaCallFeed}
+            {...rest}
+        >
+            {
+                screenshareCallFeed && (
+                    <VideoContainer
+                        as="div"
+                        className="mx_screensharePIP"
+                        avatarBackgroundColor={avatarBackgroundColor}
+                        callFeed={usermediaCallFeed}
+                        disableSpeakingHighlight={disableSpeakingHighlight}
+                    />
+                )
+            }
+        </VideoContainer>
     );
 }

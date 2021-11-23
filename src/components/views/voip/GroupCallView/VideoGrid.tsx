@@ -446,7 +446,8 @@ function getSubGridPositions(tileCount: number, gridWidth: number, gridHeight: n
 
 interface IVideoGridItem {
     id: string;
-    callFeed: CallFeed;
+    usermediaCallFeed: CallFeed;
+    screenshareCallFeed?: CallFeed;
     isActiveSpeaker: boolean;
 }
 
@@ -809,7 +810,8 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
                             ...style,
                         }}
                         disableSpeakingHighlight={springs.length < 3}
-                        callFeed={tile.item.callFeed}
+                        usermediaCallFeed={tile.item.usermediaCallFeed}
+                        screenshareCallFeed={tile.item.screenshareCallFeed}
                     />
                 );
             }) }
