@@ -22,8 +22,6 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import PageType from "./PageTypes";
-import { Views } from "./components/structures/MatrixChat";
 
 /* Posthog analytics tracking.
  *
