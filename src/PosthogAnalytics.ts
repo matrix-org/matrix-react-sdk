@@ -22,6 +22,8 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import PageType from "./PageTypes";
+import { Views } from "./components/structures/MatrixChat";
 
 /* Posthog analytics tracking.
  *
@@ -40,12 +42,8 @@ import { logger } from "matrix-js-sdk/src/logger";
  */
 
 interface IEvent {
-    // The event name that will be used by PostHog. Event names should use snake_case.
+    // The event name that will be used by PostHog. Event names should use camelCase.
     eventName: string;
-
-    // The properties of the event that will be stored in PostHog. This is just a placeholder,
-    // extending interfaces must override this with a concrete definition to do type validation.
-    properties: {};
 }
 
 export enum Anonymity {
@@ -54,32 +52,47 @@ export enum Anonymity {
     Pseudonymous
 }
 
-// If an event extends IPseudonymousEvent, the event contains pseudonymous data
-// that won't be sent unless the user has explicitly consented to pseudonymous tracking.
-// For example, it might contain hashed user IDs or room IDs.
-// Such events will be automatically dropped if PosthogAnalytics.anonymity isn't set to Pseudonymous.
-export interface IPseudonymousEvent extends IEvent {}
-
-// If an event extends IAnonymousEvent, the event strictly contains *only* anonymous data;
-// i.e. no identifiers that can be associated with the user.
-export interface IAnonymousEvent extends IEvent {}
-
-export interface IRoomEvent extends IPseudonymousEvent {
-    hashedRoomId: string;
-}
-
-interface IPageView extends IAnonymousEvent {
-    eventName: "$pageview";
-    properties: {
-        durationMs?: number;
-        screen?: string;
-    };
+interface ScreenChange extends IEvent {
+    eventName: "ScreenChange";
+    durationMs?: number;
+    screen: "Home" |
+            "Room" |
+            "RoomDirectory" |
+            "User" |
+            "Group" |
+            "MyGroups" |
+            "WebLoading" |
+            "WebWelcome" |
+            "WebLogin" |
+            "WebRegister" |
+            "WebForgotPassword" |
+            "WebCompleteSecurity" |
+            "WebE2ESetup" |
+            "WebSoftLogout";
 }
 
 const whitelistedScreens = new Set([
     "register", "login", "forgot_password", "soft_logout", "new", "settings", "welcome", "home", "start", "directory",
     "start_sso", "start_cas", "groups", "complete_security", "post_registration", "room", "user", "group",
 ]);
+
+const notLoggedInMap = {};
+notLoggedInMap[Views.LOADING] = "WebLoading";
+notLoggedInMap[Views.WELCOME] = "WebWelcome";
+notLoggedInMap[Views.LOGIN] = "WebLogin";
+notLoggedInMap[Views.REGISTER] = "WebRegister";
+notLoggedInMap[Views.FORGOT_PASSWORD] = "WebForgotPassword";
+notLoggedInMap[Views.COMPLETE_SECURITY] = "WebCompleteSecurity";
+notLoggedInMap[Views.E2E_SETUP] = "WebE2ESetup";
+notLoggedInMap[Views.SOFT_LOGOUT] = "WebSoftLogout";
+
+const loggedInPageTypeMap = {};
+loggedInPageTypeMap[PageType.HomePage] = "Home";
+loggedInPageTypeMap[PageType.RoomView] = "Room";
+loggedInPageTypeMap[PageType.RoomDirectory] = "RoomDirectory";
+loggedInPageTypeMap[PageType.UserView] = "User";
+loggedInPageTypeMap[PageType.GroupView] = "Group";
+loggedInPageTypeMap[PageType.MyGroups] = "MyGroups";
 
 export async function getRedactedCurrentLocation(
     origin: string,
@@ -309,34 +322,21 @@ export class PosthogAnalytics {
         this.setAnonymity(Anonymity.Anonymous);
     }
 
-    public async trackPseudonymousEvent<E extends IPseudonymousEvent>(
-        eventName: E["eventName"],
-        properties: E["properties"] = {},
-    ) {
-        if (this.anonymity == Anonymity.Anonymous || this.anonymity == Anonymity.Disabled) return;
-        await this.capture(eventName, properties);
-    }
-
-    public async trackAnonymousEvent<E extends IAnonymousEvent>(
-        eventName: E["eventName"],
-        properties: E["properties"] = {},
+    public async trackEvent<E extends IEvent>(
+        event: E,
     ): Promise<void> {
         if (this.anonymity == Anonymity.Disabled) return;
-        await this.capture(eventName, properties);
+        const eventWithoutName = { ...event };
+        delete eventWithoutName.eventName;
+        await this.capture(event.eventName, eventWithoutName);
     }
 
-    public async trackPageView(durationMs: number): Promise<void> {
-        const hash = window.location.hash;
-
-        let screen = null;
-        const split = hash.split("/");
-        if (split.length >= 2) {
-            screen = split[1];
-        }
-
-        await this.trackAnonymousEvent<IPageView>("$pageview", {
+    public async trackScreenChange(view: Views, pageType: PageType, durationMs: number): Promise<void> {
+        const screenName = view === Views.LOGGED_IN ? loggedInPageTypeMap[pageType] : notLoggedInMap[view];
+        return await this.trackEvent<ScreenChange>({
+            eventName: "ScreenChange",
+            screen: screenName,
             durationMs,
-            screen,
         });
     }
 
