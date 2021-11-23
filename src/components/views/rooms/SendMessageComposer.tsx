@@ -56,7 +56,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
@@ -350,7 +350,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private async runSlashCommand(cmd: Command, args: string): Promise<void> {
-        const result = cmd.run(this.props.room.roomId, args);
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation?.event_id
+            : null;
+
+        const result = cmd.run(this.props.room.roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -495,7 +499,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     // For initial threads launch, chat effects are disabled
                     // see #19731
                     const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
-                    if (!SettingsStore.getValue("feature_thread") || !isNotThread) {
+                    if (!SettingsStore.getValue("feature_thread") || isNotThread) {
                         dis.dispatch({ action: `effects.${effect.command}` });
                     }
                 }
@@ -597,7 +601,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         switch (payload.action) {
             case 'reply_to_event':
             case Action.FocusSendMessageComposer:
-                if (payload.context === this.context.timelineRenderingType) {
+                if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
                     this.editorRef.current?.focus();
                 }
                 break;
@@ -639,6 +643,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     };
 
     render() {
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation.event_id
+            : null;
         return (
             <div className="mx_SendMessageComposer" onClick={this.focusComposer} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
@@ -646,6 +653,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     ref={this.editorRef}
                     model={this.model}
                     room={this.props.room}
+                    threadId={threadId}
                     label={this.props.placeholder}
                     placeholder={this.props.placeholder}
                     onPaste={this.onPaste}

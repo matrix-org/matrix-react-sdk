@@ -14,20 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const SIZE_LARGE = { w: 800, h: 600 };
-const SIZE_NORMAL = { w: 324, h: 220 };
+import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
+import { TimelineRenderingType } from "../../contexts/RoomContext";
 
-export enum ImageSize {
-    Normal = "normal",
-    Large = "large",
-}
+export interface FocusComposerPayload extends ActionPayload {
+    action: Action.FocusEditMessageComposer | Action.FocusSendMessageComposer | "reply_to_event";
 
-export function suggestedSize(size: ImageSize): { w: number, h: number } {
-    switch (size) {
-        case ImageSize.Large:
-            return SIZE_LARGE;
-        case ImageSize.Normal:
-        default:
-            return SIZE_NORMAL;
-    }
+    context?: TimelineRenderingType; // defaults to Room type for backwards compatibility
 }
