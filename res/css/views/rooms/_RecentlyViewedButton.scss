@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_RecentlyViewedButton_ContextMenu {
-    padding: 16px;
+    padding: 16px 8px 16px 16px;
     width: max-content;
     max-width: 240px;
     max-height: 400px;
@@ -31,6 +31,10 @@ limitations under the License.
 
     > div {
         overflow-y: auto;
+
+        * {
+            margin-right: 4px;
+        }
     }
 
     .mx_AccessibleButton {
