@@ -1,5 +1,5 @@
 /*
-Copyright 2018 New Vector Ltd
+Copyright 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_MessageComposer_avatar .mx_BaseAvatar {
-    padding: 2px;
-    border: 1px solid transparent;
-    border-radius: 100%;
-}
+import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
+import { TimelineRenderingType } from "../../contexts/RoomContext";
 
-.mx_MessageComposer_avatar .mx_BaseAvatar_initial {
-    left: 2px;
-}
+export interface FocusComposerPayload extends ActionPayload {
+    action: Action.FocusEditMessageComposer | Action.FocusSendMessageComposer | "reply_to_event";
 
-.mx_MemberStatusMessageAvatar_hasStatus .mx_BaseAvatar {
-    border-color: $accent;
+    context?: TimelineRenderingType; // defaults to Room type for backwards compatibility
 }

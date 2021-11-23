@@ -59,13 +59,11 @@
 @import "./views/auth/_Welcome.scss";
 @import "./views/avatars/_BaseAvatar.scss";
 @import "./views/avatars/_DecoratedRoomAvatar.scss";
-@import "./views/avatars/_MemberStatusMessageAvatar.scss";
 @import "./views/avatars/_WidgetAvatar.scss";
 @import "./views/beta/_BetaCard.scss";
 @import "./views/context_menus/_CallContextMenu.scss";
 @import "./views/context_menus/_IconizedContextMenu.scss";
 @import "./views/context_menus/_MessageContextMenu.scss";
-@import "./views/context_menus/_StatusMessageContextMenu.scss";
 @import "./views/context_menus/_TagTileContextMenu.scss";
 @import "./views/dialogs/_AddExistingToSpaceDialog.scss";
 @import "./views/dialogs/_AddressPickerDialog.scss";
@@ -237,6 +235,7 @@
 @import "./views/rooms/_RoomBreadcrumbs.scss";
 @import "./views/rooms/_RoomHeader.scss";
 @import "./views/rooms/_RoomList.scss";
+@import "./views/rooms/_RoomListHeader.scss";
 @import "./views/rooms/_RoomPreviewBar.scss";
 @import "./views/rooms/_RoomSublist.scss";
 @import "./views/rooms/_RoomTile.scss";
@@ -254,6 +253,7 @@
 @import "./views/settings/_E2eAdvancedPanel.scss";
 @import "./views/settings/_EmailAddresses.scss";
 @import "./views/settings/_FontScalingPanel.scss";
+@import "./views/settings/_ImageSizePanel.scss";
 @import "./views/settings/_IntegrationManager.scss";
 @import "./views/settings/_JoinRuleSettings.scss";
 @import "./views/settings/_LayoutSwitcher.scss";
@@ -268,6 +268,7 @@
 @import "./views/settings/_UpdateCheckButton.scss";
 @import "./views/settings/tabs/_SettingsTab.scss";
 @import "./views/settings/tabs/room/_GeneralRoomSettingsTab.scss";
+@import "./views/settings/tabs/room/_NotificationSettingsTab.scss";
 @import "./views/settings/tabs/room/_RolesRoomSettingsTab.scss";
 @import "./views/settings/tabs/room/_SecurityRoomSettingsTab.scss";
 @import "./views/settings/tabs/user/_AppearanceUserSettingsTab.scss";

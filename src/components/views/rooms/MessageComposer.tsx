@@ -50,7 +50,6 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
 import EmojiPicker from '../emojipicker/EmojiPicker';
-import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import Modal from "../../../Modal";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
@@ -61,16 +60,6 @@ import PollCreateDialog from "../elements/PollCreateDialog";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
-
-interface IComposerAvatarProps {
-    me: RoomMember;
-}
-
-function ComposerAvatar(props: IComposerAvatarProps) {
-    return <div className="mx_MessageComposer_avatar">
-        <MemberStatusMessageAvatar member={props.me} width={24} height={24} />
-    </div>;
-}
 
 interface ISendButtonProps {
     onClick: () => void;
@@ -370,7 +359,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.state.tombstone.getSender().split(':').splice(1).join(':')];
+        const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
         dis.dispatch({
             action: 'view_room',
             highlighted: true,
@@ -472,6 +461,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private renderButtons(menuPosition): JSX.Element | JSX.Element[] {
+        let uploadButtonIndex = 0;
         const buttons: JSX.Element[] = [];
         if (!this.state.haveRecording) {
             if (SettingsStore.getValue("feature_polls")) {
@@ -479,6 +469,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     <PollButton key="polls" room={this.props.room} />,
                 );
             }
+            uploadButtonIndex = buttons.length;
             buttons.push(
                 <UploadButton
                     key="controls_upload"
@@ -528,7 +519,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             });
 
             return <>
-                { buttons[0] }
+                { buttons[uploadButtonIndex] }
                 <AccessibleTooltipButton
                     className={classnames}
                     onClick={this.toggleButtonMenu}
@@ -558,7 +549,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     render() {
         const controls = [
-            this.state.me && !this.props.compact ? <ComposerAvatar key="controls_avatar" me={this.state.me} /> : null,
             this.props.e2eStatus ?
                 <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
                 null,

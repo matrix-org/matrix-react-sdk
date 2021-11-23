@@ -56,7 +56,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
@@ -64,7 +64,6 @@ function addReplyToMessageContent(
     content: IContent,
     replyToEvent: MatrixEvent,
     permalinkCreator: RoomPermalinkCreator,
-    relation?: IEventRelation,
 ): void {
     const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
@@ -78,7 +77,12 @@ function addReplyToMessageContent(
         }
         content.body = nestedReply.body + content.body;
     }
+}
 
+export function attachRelation(
+    content: IContent,
+    relation?: IEventRelation,
+): void {
     if (relation) {
         content['m.relates_to'] = {
             ...relation, // the composer can have a default
@@ -417,9 +421,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                             content,
                             replyToEvent,
                             this.props.permalinkCreator,
-                            this.props.relation,
                         );
                     }
+                    attachRelation(content, this.props.relation);
                 } else {
                     this.runSlashCommand(cmd, args);
                     shouldSend = false;
@@ -488,7 +492,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             dis.dispatch({ action: "message_sent" });
             CHAT_EFFECTS.forEach((effect) => {
                 if (containsEmoji(content, effect.emojis)) {
-                    dis.dispatch({ action: `effects.${effect.command}` });
+                    // For initial threads launch, chat effects are disabled
+                    // see #19731
+                    const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
+                    if (!SettingsStore.getValue("feature_thread") || !isNotThread) {
+                        dis.dispatch({ action: `effects.${effect.command}` });
+                    }
                 }
             });
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
@@ -588,7 +597,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         switch (payload.action) {
             case 'reply_to_event':
             case Action.FocusSendMessageComposer:
-                if (payload.context === this.context.timelineRenderingType) {
+                if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
                     this.editorRef.current?.focus();
                 }
                 break;
