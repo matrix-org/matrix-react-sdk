@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637660473999,
+  "lastUpdate": 1637662813871,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41156,6 +41156,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4624.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a156ba8be92cc442f37b770092776b1db65ec218",
+          "message": "Fix video call container size inconsistencies (#7170)",
+          "timestamp": "2021-11-23T11:13:51+01:00",
+          "tree_id": "bdbfe5dd9b4bd5397bffe5c24214f3f5912fd164",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a156ba8be92cc442f37b770092776b1db65ec218"
+        },
+        "date": 1637662811354,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4782.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1094.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4686.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
