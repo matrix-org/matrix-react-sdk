@@ -35,7 +35,6 @@ import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager"
 import UIStore from "../../stores/UIStore";
 import { findSiblingElement, IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
 import RoomListHeader from "../views/rooms/RoomListHeader";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RecentlyViewedButton from "../views/rooms/RecentlyViewedButton";
 import SettingsStore from "../../settings/SettingsStore";
 import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
