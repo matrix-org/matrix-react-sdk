@@ -83,7 +83,7 @@
     "katex": "^0.12.0",
     "linkifyjs": "^2.1.9",
     "lodash": "^4.17.20",
-    "matrix-analytics-events": "github:matrix-org/matrix-analytics-events",
+    "matrix-analytics-events": "https://github.com/matrix-org/matrix-analytics-events.git",
     "matrix-js-sdk": "github:matrix-org/matrix-js-sdk#develop",
     "matrix-widget-api": "^0.1.0-beta.17",
     "minimist": "^1.2.5",
