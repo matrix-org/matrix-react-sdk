@@ -28,7 +28,7 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
 
     const items = useMemo(() => userMediaFeeds.map((callFeed) => ({
         id: callFeed.userId,
-        callFeed,
+        usermediaCallFeed: callFeed,
         isActiveSpeaker: callFeed.userId === activeSpeaker,
     })), [userMediaFeeds, activeSpeaker]);
 
