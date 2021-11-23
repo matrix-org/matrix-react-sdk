@@ -64,7 +64,6 @@ function addReplyToMessageContent(
     content: IContent,
     replyToEvent: MatrixEvent,
     permalinkCreator: RoomPermalinkCreator,
-    relation?: IEventRelation,
 ): void {
     const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
@@ -78,7 +77,12 @@ function addReplyToMessageContent(
         }
         content.body = nestedReply.body + content.body;
     }
+}
 
+export function attachRelation(
+    content: IContent,
+    relation?: IEventRelation,
+): void {
     if (relation) {
         content['m.relates_to'] = {
             ...relation, // the composer can have a default
@@ -417,9 +421,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                             content,
                             replyToEvent,
                             this.props.permalinkCreator,
-                            this.props.relation,
                         );
                     }
+                    attachRelation(content, this.props.relation);
                 } else {
                     this.runSlashCommand(cmd, args);
                     shouldSend = false;
@@ -615,7 +619,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.props.mxClient,
+                Array.from(clipboardData.files), this.props.room.roomId, this.props.relation, this.props.mxClient,
             );
             return true; // to skip internal onPaste handler
         }

@@ -25,7 +25,7 @@ import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { useSettingValue, useFeatureEnabled } from "../../../hooks/useSettings";
 import { UIFeature } from "../../../settings/UIFeature";
-import { Layout } from "../../../settings/Layout";
+import { Layout } from "../../../settings/enums/Layout";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import { avatarUrlForUser } from "../../../Avatar";
@@ -43,7 +43,7 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import TruncatedList from "../elements/TruncatedList";
 import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 
 const AVATAR_SIZE = 30;
 

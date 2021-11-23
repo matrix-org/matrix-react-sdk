@@ -40,7 +40,7 @@ import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { IApp } from "../../../stores/WidgetStore";
-
+import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
 interface IProps {
     app: IApp;
     // If room is not specified then it is an account level widget
@@ -227,7 +227,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             this.sgWidget.on("ready", this.onWidgetReady);
             this.startWidget();
         } catch (e) {
-            logger.log("Failed to construct widget", e);
+            logger.error("Failed to construct widget", e);
             this.sgWidget = null;
         }
     }
@@ -241,7 +241,13 @@ export default class AppTile extends React.Component<IProps, IState> {
     private iframeRefChange = (ref: HTMLIFrameElement): void => {
         this.iframe = ref;
         if (ref) {
-            if (this.sgWidget) this.sgWidget.start(ref);
+            try {
+                if (this.sgWidget) {
+                    this.sgWidget.start(ref);
+                }
+            } catch (e) {
+                logger.error("Failed to start widget", e);
+            }
         } else {
             this.resetWidget(this.props);
         }
@@ -394,6 +400,14 @@ export default class AppTile extends React.Component<IProps, IState> {
             { target: '_blank', href: this.sgWidget.popoutUrl, rel: 'noreferrer noopener' }).click();
     };
 
+    private onMaxMinWidgetClick = (): void => {
+        const targetContainer =
+        WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
+            ? Container.Right
+            : Container.Center;
+        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
+    };
+
     private onContextMenuClick = (): void => {
         this.setState({ menuDisplayed: true });
     };
@@ -516,6 +530,23 @@ export default class AppTile extends React.Component<IProps, IState> {
                 />
             );
         }
+        let maxMinButton;
+        if (SettingsStore.getValue("feature_maximised_widgets")) {
+            const widgetIsMaximised = WidgetLayoutStore.instance.
+                isInContainer(this.props.room, this.props.app, Container.Center);
+            maxMinButton = <AccessibleButton
+                className={
+                    "mx_AppTileMenuBar_iconButton"
+                                    + (widgetIsMaximised
+                                        ? " mx_AppTileMenuBar_iconButton_minWidget"
+                                        : " mx_AppTileMenuBar_iconButton_maxWidget")
+                }
+                title={
+                    widgetIsMaximised ? _t('Close'): _t('Maximise widget')
+                }
+                onClick={this.onMaxMinWidgetClick}
+            />;
+        }
 
         return <React.Fragment>
             <div className={appTileClasses} id={this.props.app.id}>
@@ -525,6 +556,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                             { this.props.showTitle && this.getTileTitle() }
                         </span>
                         <span className="mx_AppTileMenuBarWidgets">
+                            { maxMinButton }
                             { (this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
                                 className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                                 title={_t('Popout widget')}
