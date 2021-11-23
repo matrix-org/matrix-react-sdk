@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637601753136,
+  "lastUpdate": 1637631648929,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -40916,6 +40916,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 649.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "AndrewFerr@users.noreply.github.com",
+            "name": "AndrewFerr",
+            "username": "AndrewFerr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a8a34ea756a40c313883fe23c12022b1c1e66ca7",
+          "message": "Remove leading slash from /addwidget Jitsi confs (#7175)\n\n* Remove leading slash from /addwidget Jitsi confs\r\n\r\nFixes https://github.com/vector-im/element-web/issues/19839\r\n\r\nSigned-off-by: Andrew Ferrazzutti <fair@miscworks.net>\r\n\r\n* Make requested changes\r\n\r\nSigned-off-by: Andrew Ferrazzutti <fair@miscworks.net>",
+          "timestamp": "2021-11-22T18:34:55-07:00",
+          "tree_id": "9cb2f197d3a1dec37a12b0c95e9c09a228ae117b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a8a34ea756a40c313883fe23c12022b1c1e66ca7"
+        },
+        "date": 1637631646727,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5286.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1230.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4670.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
