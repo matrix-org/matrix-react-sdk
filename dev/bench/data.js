@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637743589745,
+  "lastUpdate": 1637762025403,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41492,6 +41492,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4729.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d7f3d2791a8980ba88dc42df5c883e3ea76210ca",
+          "message": "Basic tests for PollCreateDialog (#7193)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2021-11-24T13:48:07Z",
+          "tree_id": "cce3e6d22ff1c4175976fe7919eb84d25a074923",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d7f3d2791a8980ba88dc42df5c883e3ea76210ca"
+        },
+        "date": 1637762022741,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4670.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 661.5,
             "unit": "ms",
             "extra": "type: measure"
           }
