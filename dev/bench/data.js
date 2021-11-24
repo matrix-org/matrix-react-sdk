@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637693152043,
+  "lastUpdate": 1637743589745,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41444,6 +41444,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4548.399999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "392c4ad8d90f0ecdf724d171b7f656077d46e1b6",
+          "message": "Make local echo work for threads (#7157)",
+          "timestamp": "2021-11-24T08:40:15Z",
+          "tree_id": "1bee07dddfc882338b7bf1f26c0d3363f90fcde2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/392c4ad8d90f0ecdf724d171b7f656077d46e1b6"
+        },
+        "date": 1637743587028,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5834.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1199.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1704.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4729.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
