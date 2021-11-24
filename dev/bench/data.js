@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637762025403,
+  "lastUpdate": 1637764762446,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41528,6 +41528,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 661.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a0e8c29d85f0d7943c0cf181b03447cc57d316bf",
+          "message": "Make image size constrained by height when using the ImageSize.Large option (#7171)",
+          "timestamp": "2021-11-24T15:32:47+01:00",
+          "tree_id": "6f1f205a1a9dd225bc413d21f6d9f952eeac4cb3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a0e8c29d85f0d7943c0cf181b03447cc57d316bf"
+        },
+        "date": 1637764759828,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5199.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1232.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1724.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4902.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
