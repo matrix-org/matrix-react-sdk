@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IContent, MatrixEvent } from "matrix-js-sdk";
 import { _t } from "../../languageHandler";
 
 export enum ExportFormat {
@@ -55,6 +56,47 @@ export const textForType = (type: ExportType): string => {
         // case exportTypes.START_DATE:
         //     return _t("From a specific date");
     }
+};
+
+export const textForReplyEvent = (content: IContent) => {
+    const REPLY_REGEX = /> <(.*?)>(.*?)\n\n(.*)/s;
+    const REPLY_SOURCE_MAX_LENGTH = 32;
+
+    const match = REPLY_REGEX.exec(content.body);
+
+    // if the reply format is invalid, then return the body
+    if (!match) return content.body;
+
+    let rplSource: string;
+    const rplName = match[1];
+    const rplText = match[3];
+
+    rplSource = match[2].substring(1);
+    // Get the first non-blank line from the source.
+    const lines = rplSource.split('\n').filter((line) => !/^\s*$/.test(line));
+    if (lines.length > 0) {
+        // Cut to a maximum length.
+        rplSource = lines[0].substring(0, REPLY_SOURCE_MAX_LENGTH);
+        // Ellipsis if needed.
+        if (lines[0].length > REPLY_SOURCE_MAX_LENGTH) {
+            rplSource = rplSource + "...";
+        }
+        // Wrap in formatting
+        rplSource = ` "${rplSource}"`;
+    } else {
+        // Don't show a source because we couldn't format one.
+        rplSource = "";
+    }
+
+    return `<${rplName}${rplSource}> ${rplText}`;
+};
+
+export const isReply = (event: MatrixEvent): boolean => {
+    const isEncrypted = event.isEncrypted();
+    // If encrypted, in_reply_to lies in event.event.content
+    const content = isEncrypted ? event.event.content : event.getContent();
+    const relatesTo = content["m.relates_to"];
+    return !!(relatesTo && relatesTo["m.in_reply_to"]);
 };
 
 export interface IExportOptions {

@@ -50,6 +50,8 @@ import ErrorDialog from '../views/dialogs/ErrorDialog';
 import { debounce } from 'lodash';
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { isReply, textForReplyEvent } from '../../utils/exportUtils/exportUtils';
+import { textForEvent } from '../../TextForEvent';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -282,6 +284,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         cli.on("Event.decrypted", this.onEventDecrypted);
         cli.on("Event.replaced", this.onEventReplaced);
         cli.on("sync", this.onSync);
+        document.addEventListener("copy", this.formatCopy);
     }
 
     // TODO: [REACT-WARNING] Move into constructor
@@ -354,6 +357,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener("Event.replaced", this.onEventReplaced);
             client.removeListener("sync", this.onSync);
         }
+        document.removeEventListener("copy", this.formatCopy);
     }
 
     private onMessageListUnfillRequest = (backwards: boolean, scrollToken: string): void => {
@@ -1393,6 +1397,72 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         return null;
     }
+
+    private createFormattedText = (events: MatrixEvent[]) => {
+        let content = "";
+        for (let i = 0; i < events.length; i++) {
+            const mxEv = events[i];
+            if (!mxEv || !haveTileForEvent(mxEv)) continue;
+            const senderDisplayName = mxEv.sender && mxEv.sender.name ? mxEv.sender.name : mxEv.getSender();
+            let text = "";
+            if (isReply(mxEv)) text = senderDisplayName + ": " + textForReplyEvent(mxEv.getContent());
+            else text = textForEvent(mxEv);
+            content += text && `${new Date(mxEv.getTs()).toLocaleString()} - ${text}\n`;
+        }
+        return content;
+    };
+
+    private getClosestEvent = (el: HTMLElement, fromTop: boolean): string => {
+        const messageList = document.querySelector("ol.mx_RoomView_MessageList");
+        let requiredElement: Element;
+        // if the selected element belongs to a date separator, assign its neighbouring element as the required element
+        if (el.parentElement.classList.contains("mx_DateSeparator")) {
+            while (el.parentElement != messageList) el = el.parentElement;
+            if (fromTop) requiredElement = el.nextElementSibling;
+            else requiredElement = el.previousElementSibling;
+        } else {
+            while (!el.getAttribute("data-scroll-tokens")) el = el.parentElement;
+            requiredElement = el;
+        }
+        // if the element is a part of EventListSummary, and we're selecting from the top
+        // return the first event else return the last event of the list
+        if (requiredElement.classList.contains("mx_EventListSummary")) {
+            const eventsList = requiredElement.getAttribute("data-scroll-tokens").split(',');
+            return fromTop ? eventsList[0] : eventsList[eventsList.length - 1];
+        }
+        return requiredElement.getAttribute("data-scroll-tokens");
+    };
+
+    private formatCopy = (e: ClipboardEvent) => {
+        const range = window.getSelection();
+        let anchorEl = range.anchorNode.parentElement;
+        let focusEl = range.focusNode.parentElement;
+        const messageList = document.querySelector("ol.mx_RoomView_MessageList");
+        // if both the elements are not inside messageList, then let the default behaviour continue
+        if (!messageList.contains(anchorEl) || !messageList.contains(focusEl)) return;
+        if (focusEl.getBoundingClientRect().top > anchorEl.getBoundingClientRect().top) {
+            // make anchorEl to be always at the bottom
+            [focusEl, anchorEl] = [anchorEl, focusEl];
+        }
+        // get closest eventIds to the bottom and top selected elements
+        const closestTopEvent = this.getClosestEvent(focusEl, true);
+        const closestBottomEvent = this.getClosestEvent(anchorEl, false);
+        // if both the eventIds are same, then the user is copying with in a single event. So, no need of any processing
+        if (closestTopEvent === closestBottomEvent) return;
+
+        e.preventDefault();
+
+        const events = this.getEvents().events;
+        const filteredEvents = [];
+
+        const closestTopEventIdx = events.findIndex(ev => ev.getId() === closestTopEvent);
+
+        for (let i = closestTopEventIdx; i < events.length; i++) {
+            filteredEvents.push(events[i]);
+            if (events[i] && events[i].getId() === closestBottomEvent) break;
+        }
+        e.clipboardData.setData("text/plain", this.createFormattedText(filteredEvents));
+    };
 
     /**
      * Get the id of the event corresponding to our user's latest read-receipt.
