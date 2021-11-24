@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637764762446,
+  "lastUpdate": 1637771395956,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41576,6 +41576,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4902.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ea97c416f5a7e288780aa8aa8bc137306fa99a43",
+          "message": "Test for showing a spinner after submitting a new poll (#7194)",
+          "timestamp": "2021-11-24T16:24:19Z",
+          "tree_id": "c1083059c4bf9bfd2b19fcee6dd568c7d0289d42",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ea97c416f5a7e288780aa8aa8bc137306fa99a43"
+        },
+        "date": 1637771393715,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4733.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 934.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1641.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4322.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
