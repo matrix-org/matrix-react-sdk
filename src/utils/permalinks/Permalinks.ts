@@ -19,7 +19,7 @@ import * as utils from "matrix-js-sdk/src/utils";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember, RoomMemberEvents } from "matrix-js-sdk/src/models/room-member";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import SpecPermalinkConstructor, { baseUrl as matrixtoBaseUrl } from "./SpecPermalinkConstructor";
@@ -29,6 +29,7 @@ import matrixLinkify from "../../linkify-matrix";
 import SdkConfig from "../../SdkConfig";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvents } from "matrix-js-sdk";
 
 // The maximum number of servers to pick when working out which servers
 // to add to permalinks. The servers are appended as ?via=example.org
@@ -122,14 +123,14 @@ export class RoomPermalinkCreator {
 
     start() {
         this.load();
-        this.room.on("RoomMember.membership", this.onMembership);
-        this.room.on("RoomState.events", this.onRoomState);
+        this.room.on(RoomMemberEvents.Membership, this.onMembership);
+        this.room.on(RoomStateEvents.Events, this.onRoomState);
         this.started = true;
     }
 
     stop() {
-        this.room.removeListener("RoomMember.membership", this.onMembership);
-        this.room.removeListener("RoomState.events", this.onRoomState);
+        this.room.removeListener(RoomMemberEvents.Membership, this.onMembership);
+        this.room.removeListener(RoomStateEvents.Events, this.onRoomState);
         this.started = false;
     }
 

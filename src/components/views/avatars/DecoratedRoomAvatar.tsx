@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvents } from "matrix-js-sdk/src/models/room";
 import { User } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
@@ -85,7 +85,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public componentWillUnmount() {
         this.isUnmounted = true;
-        if (this.isWatchingTimeline) this.props.room.off('Room.timeline', this.onRoomTimeline);
+        if (this.isWatchingTimeline) this.props.room.off(RoomEvents.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
 
@@ -168,7 +168,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             // Track publicity
             icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             if (!this.isWatchingTimeline) {
-                this.props.room.on('Room.timeline', this.onRoomTimeline);
+                this.props.room.on(RoomEvents.Timeline, this.onRoomTimeline);
                 this.isWatchingTimeline = true;
             }
         }

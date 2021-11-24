@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvents } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
@@ -146,8 +146,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 CommunityPrototypeStore.getUpdateEventName(this.props.room?.roomId),
                 this.onCommunityUpdate,
             );
-            prevProps.room?.off("Room.name", this.onRoomNameUpdate);
-            this.props.room?.on("Room.name", this.onRoomNameUpdate);
+            prevProps.room?.off(RoomEvents.Name, this.onRoomNameUpdate);
+            this.props.room?.on(RoomEvents.Name, this.onRoomNameUpdate);
         }
     }
 
@@ -165,7 +165,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
         this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        this.props.room?.on("Room.name", this.onRoomNameUpdate);
+        this.props.room?.on(RoomEvents.Name, this.onRoomNameUpdate);
         CommunityPrototypeStore.instance.on(
             CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
             this.onCommunityUpdate,
@@ -183,7 +183,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
                 this.onCommunityUpdate,
             );
-            this.props.room.off("Room.name", this.onRoomNameUpdate);
+            this.props.room.off(RoomEvents.Name, this.onRoomNameUpdate);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);

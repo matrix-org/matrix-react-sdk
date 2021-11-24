@@ -50,6 +50,7 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { Action } from '../../dispatcher/actions';
+import { RoomStateEvents } from 'matrix-js-sdk';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -271,13 +272,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.calculateRoomMembersCount();
-        this.props.room?.on("RoomState.members", this.calculateRoomMembersCount);
+        this.props.room?.on(RoomStateEvents.Members, this.calculateRoomMembersCount);
         this.isMounted = true;
     }
 
     componentWillUnmount() {
         this.isMounted = false;
-        this.props.room?.off("RoomState.members", this.calculateRoomMembersCount);
+        this.props.room?.off(RoomStateEvents.Members, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
     }
 

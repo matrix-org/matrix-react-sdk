@@ -26,6 +26,7 @@ import RoomViewStore from "./stores/RoomViewStore";
 import { Action } from "./dispatcher/actions";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomEvents } from "matrix-js-sdk";
 
 const INACTIVITY_TIME = 20; // seconds
 const HEARTBEAT_INTERVAL = 5_000; // ms
@@ -886,12 +887,12 @@ export default class CountlyAnalytics {
             await new Promise<void>(resolve => {
                 const handler = (ev) => {
                     if (ev.getId() === eventId) {
-                        room.off("Room.localEchoUpdated", handler);
+                        room.off(RoomEvents.LocalEchoUpdated, handler);
                         resolve();
                     }
                 };
 
-                room.on("Room.localEchoUpdated", handler);
+                room.on(RoomEvents.LocalEchoUpdated, handler);
             });
             endTime = CountlyAnalytics.getTimestamp();
         }

@@ -20,7 +20,7 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvents } from "matrix-js-sdk/src/models/room";
 import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
 import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
@@ -28,15 +28,16 @@ import { NotificationState } from "./NotificationState";
 import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 import SettingsStore from "../../settings/SettingsStore";
+import { ReceiptEvents } from "matrix-js-sdk/src/models/receipt";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
     constructor(public readonly room: Room) {
         super();
-        this.room.on("Room.receipt", this.handleReadReceipt);
-        this.room.on("Room.timeline", this.handleRoomEventUpdate);
-        this.room.on("Room.redaction", this.handleRoomEventUpdate);
-        this.room.on("Room.myMembership", this.handleMembershipUpdate);
-        this.room.on("Room.localEchoUpdated", this.handleLocalEchoUpdated);
+        this.room.on(ReceiptEvents.Receipt, this.handleReadReceipt);
+        this.room.on(RoomEvents.Timeline, this.handleRoomEventUpdate);
+        this.room.on(RoomEvents.Redaction, this.handleRoomEventUpdate);
+        this.room.on(RoomEvents.MyMembership, this.handleMembershipUpdate);
+        this.room.on(RoomEvents.LocalEchoUpdated, this.handleLocalEchoUpdated);
         MatrixClientPeg.get().on("Event.decrypted", this.handleRoomEventUpdate);
         MatrixClientPeg.get().on("accountData", this.handleAccountDataUpdate);
         if (SettingsStore.getValue("feature_thread")) {
@@ -51,11 +52,11 @@ export class RoomNotificationState extends NotificationState implements IDestroy
 
     public destroy(): void {
         super.destroy();
-        this.room.removeListener("Room.receipt", this.handleReadReceipt);
-        this.room.removeListener("Room.timeline", this.handleRoomEventUpdate);
-        this.room.removeListener("Room.redaction", this.handleRoomEventUpdate);
-        this.room.removeListener("Room.myMembership", this.handleMembershipUpdate);
-        this.room.removeListener("Room.localEchoUpdated", this.handleLocalEchoUpdated);
+        this.room.removeListener(ReceiptEvents.Receipt, this.handleReadReceipt);
+        this.room.removeListener(RoomEvents.Timeline, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvents.Redaction, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvents.MyMembership, this.handleMembershipUpdate);
+        this.room.removeListener(RoomEvents.LocalEchoUpdated, this.handleLocalEchoUpdated);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Event.decrypted", this.handleRoomEventUpdate);
             MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);
