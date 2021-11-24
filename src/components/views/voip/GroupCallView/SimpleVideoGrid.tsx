@@ -20,7 +20,7 @@ export default function SimpleVideoGrid({ items }: ISimpleVideoGridProps) {
                     <VideoTile
                         key={id}
                         disableSpeakingHighlight={items.length < 3}
-                        callFeed={callFeed}
+                        usermediaCallFeed={callFeed}
                     />
                 );
             }) }
