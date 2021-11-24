@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactNode, useState } from "react";
+import React, { forwardRef, PropsWithChildren, ReactNode, useState } from "react";
 import { animated } from "@react-spring/web";
 import classNames from "classnames";
 import { useCallFeed } from "../../../../hooks/useCallFeed";
@@ -6,17 +6,17 @@ import { useMediaStream } from "../../../../hooks/useMediaStream";
 import { useRoomMemberName } from "../../../../hooks/useRoomMemberName";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
-import { FluidValue } from "@react-spring/shared";
 
 const defaultColors = ['#0DBD8B', '#368bd6', '#ac3ba8'];
 
 interface IVideoContainerProps {
-    as: React.ForwardRefExoticComponent<{ className: string | FluidValue<string, any>, children: ReactNode }>;
+    as: React.ElementType<PropsWithChildren<any>>;
     className?: string;
     disableSpeakingHighlight: boolean;
     callFeed: CallFeed;
     avatarBackgroundColor: string;
-    children: ReactNode;
+    children?: ReactNode;
+    style?: any;
 }
 
 const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
