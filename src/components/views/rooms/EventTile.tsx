@@ -592,7 +592,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             return null;
         }
 
-        const [lastEvent] = this.thread.events
+        const [lastEvent] = this.thread.timeline
             .filter(event => event.isThreadRelation)
             .slice(-1);
         const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(lastEvent);
