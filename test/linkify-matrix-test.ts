@@ -47,7 +47,6 @@ describe('linkify-matrix', () => {
                 href: "#foo:bar.com",
                 type: "roomalias",
                 value: "#foo:bar.com",
-
             }]));
         });
         it('accept #foo:com (mostly for (TLD|DOMAIN)+ mixing)', () => {
