@@ -20,19 +20,19 @@ const SIZE_LARGE = { w: 800, h: 600 };
 
 // For Normal the image gets drawn to never exceed SIZE_NORMAL.w, SIZE_NORMAL.h
 // constraint by: timeline width, manual heigh overrides
-const SIZE_NORMAL = { w: 324, h: 324 * (16/9) }; // Portrait images should be the same width than landscape
-
+const SIZE_NORMAL_LANDSCAPE = { w: 324, h: 324 }; // for w > h
+const SIZE_NORMAL_PORTRAIT = { w: 324 * (9/16), h: 324 }; // for h > w
 export enum ImageSize {
     Normal = "normal",
     Large = "large",
 }
 
-export function suggestedSize(size: ImageSize): { w: number, h: number } {
+export function suggestedSize(size: ImageSize, portrait = false): { w: number, h: number} {
     switch (size) {
         case ImageSize.Large:
             return SIZE_LARGE;
         case ImageSize.Normal:
         default:
-            return SIZE_NORMAL;
+            return portrait ? SIZE_NORMAL_PORTRAIT : SIZE_NORMAL_LANDSCAPE;
     }
 }
