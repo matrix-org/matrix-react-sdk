@@ -92,7 +92,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         if (!this.roomMap.has(room)) {
             this.roomMap.set(room, new RoomNotificationState(room));
             if (SettingsStore.getValue("feature_thread")) {
-                this.roomMap.set(room, new RoomThreadsNotificationState(room));
+                this.roomThreadsMap.set(room, new RoomThreadsNotificationState(room));
             }
         }
         return this.roomMap.get(room);
@@ -135,3 +135,5 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         return Promise.resolve();
     }
 }
+
+window.mxRoomNotificationStateStore = RoomNotificationStateStore.instance;
