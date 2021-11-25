@@ -115,11 +115,14 @@ describe('linkify-matrix', () => {
                 value: "bar.com",
             }]));
         });
-        // This should not parse correctly, but it's been working this way in the previous version too
-        it.skip('does not parse multiple room aliases in one string', () => {
+        it('does not parse multiple room aliases in one string', () => {
             const test = '#foo:bar.com-baz.com';
             const found = linkify.find(test);
-            expect(found).toEqual(([]));
+            expect(found).toEqual(([{
+                "href": "#foo:bar.com-baz.com",
+                "type": "roomalias",
+                "value": "#foo:bar.com-baz.com",
+            }]));
         });
     });
 
