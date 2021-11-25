@@ -30,18 +30,18 @@ import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import LeftPanelWidget from "./LeftPanelWidget";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import { SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
+import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
 import { findSiblingElement, IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
 import RoomListHeader from "../views/rooms/RoomListHeader";
 import RecentlyViewedButton from "../views/rooms/RecentlyViewedButton";
-import SettingsStore from "../../settings/SettingsStore";
 import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import IndicatorScrollbar from "./IndicatorScrollbar";
 import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
+import SettingsStore from "../../settings/SettingsStore";
 
 interface IProps {
     isMinimized: boolean;
@@ -350,7 +350,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         let rightButton: JSX.Element;
         if (this.state.showBreadcrumbs === BreadcrumbsMode.Labs) {
             rightButton = <RecentlyViewedButton />;
-        } else {
+        } else if (this.state.activeSpace === MetaSpace.Home) {
             rightButton = <AccessibleTooltipButton
                 className="mx_LeftPanel_exploreButton"
                 onClick={this.onExplore}

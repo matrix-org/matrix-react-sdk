@@ -487,7 +487,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 .mx_DialogDesignChanges_wrapper .mx_Dialog_fixedWidth {
-    max-width: 636px;
+    max-width: 636px; // match splash image width
 
     .mx_AccessibleButton_kind_link {
         font-size: inherit;

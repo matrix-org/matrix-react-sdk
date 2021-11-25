@@ -117,14 +117,14 @@ $roomListCollapsedWidth: 68px;
 
             .mx_RoomSearch_shortcutPrompt {
                 border-radius: 6px;
-                background-color: $quinary-content;
+                background-color: $roomlist-button-bg-color;
                 padding: 2px 4px;
                 user-select: none;
                 pointer-events: none;
                 font-size: $font-12px;
                 line-height: $font-15px;
                 font-weight: $font-semi-bold;
-                color: $tertiary-content;
+                color: $light-fg-color;
                 margin-right: 6px;
             }
 
@@ -152,7 +152,7 @@ $roomListCollapsedWidth: 68px;
                 width: 32px;
                 height: 32px;
                 border-radius: 8px;
-                background-color: $background;
+                background-color: $roomlist-button-bg-color;
                 position: relative;
                 margin-left: 8px;
 
@@ -176,7 +176,7 @@ $roomListCollapsedWidth: 68px;
                 width: 32px;
                 height: 32px;
                 border-radius: 8px;
-                background-color: $background;
+                background-color: $roomlist-button-bg-color;
                 position: relative;
                 margin-left: 8px;
 
