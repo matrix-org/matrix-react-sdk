@@ -24,7 +24,7 @@ import RoomSettingsHandler from "./handlers/RoomSettingsHandler";
 import ConfigSettingsHandler from "./handlers/ConfigSettingsHandler";
 import { _t } from '../languageHandler';
 import dis from '../dispatcher/dispatcher';
-import { ISetting, LabGroup, SETTINGS } from "./Settings";
+import { IFeature, ISetting, LabGroup, SETTINGS } from "./Settings";
 import LocalEchoWrapper from "./handlers/LocalEchoWrapper";
 import { WatchManager, CallbackFn as WatchCallbackFn } from "./WatchManager";
 import { SettingLevel } from "./SettingLevel";
@@ -284,7 +284,7 @@ export default class SettingsStore {
 
     public static getLabGroup(settingName: string): LabGroup {
         if (SettingsStore.isFeature(settingName)) {
-            return SETTINGS[settingName]?.labsGroup;
+            return (<IFeature>SETTINGS[settingName]).labsGroup;
         }
     }
 

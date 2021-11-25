@@ -118,7 +118,6 @@ export const labGroupNames: Record<LabGroup, string> = {
 
 interface IBaseSetting {
     isFeature?: false | undefined;
-    labsGroup?: void;
 
     // Display names are strongly recommended for clarity.
     // Display name can also be an object for different levels.
@@ -168,7 +167,7 @@ interface IBaseSetting {
     };
 }
 
-interface IFeature extends Omit<IBaseSetting, "isFeature" | "labsGroup"> {
+export interface IFeature extends Omit<IBaseSetting, "isFeature"> {
     // Must be set to true for features.
     isFeature: true;
     labsGroup: LabGroup;
