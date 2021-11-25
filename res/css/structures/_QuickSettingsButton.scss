@@ -45,7 +45,7 @@ limitations under the License.
     min-width: 200px;
     contain: unset; // let the dropdown paint beyond the context menu
 
-    > h2 {
+    > div > h2 {
         font-weight: $font-semi-bold;
         font-size: $font-15px;
         line-height: $font-24px;
@@ -57,7 +57,7 @@ limitations under the License.
         display: block;
     }
 
-    > h4 {
+    > div > h4 {
         font-weight: $font-semi-bold;
         font-size: $font-12px;
         line-height: $font-15px;
