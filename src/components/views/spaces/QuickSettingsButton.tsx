@@ -88,11 +88,10 @@ const QuickSettingsButton = () => {
                 { _t("More options") }
             </AccessibleButton>
 
-            <div>
+            <div className="mx_QuickSettingsButton_themePicker">
                 <h4>{ _t("Theme") }</h4>
                 <Dropdown
-                    id="mx_SpaceSelectDropdown"
-                    className="mx_SpaceSelectDropdown"
+                    id="mx_QuickSettingsButton_themePickerDropdown"
                     onOptionChange={async (newTheme: string) => {
                         // XXX: mostly copied from ThemeChoicePanel
                         // doing getValue in the .catch will still return the value we failed to set,
