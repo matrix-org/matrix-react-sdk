@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import QuestionDialog from './QuestionDialog';
 import { _t } from '../../../languageHandler';
 import Field from "../elements/Field";
@@ -37,9 +37,15 @@ const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose"
 interface IProps extends IDialogProps {}
 
 const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
+    const feedbackRef = useRef<Field>();
     const [rating, setRating] = useState<Rating>();
     const [comment, setComment] = useState<string>("");
     const [canContact, toggleCanContact] = useStateToggle(false);
+
+    useEffect(() => {
+        // autofocus doesn't work on textareas
+        feedbackRef.current?.focus();
+    }, []);
 
     const onDebugLogsLinkClick = (): void => {
         props.onFinished();
@@ -85,7 +91,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 onChange={(ev) => {
                     setComment(ev.target.value);
                 }}
-                autoFocus={true}
+                ref={feedbackRef}
             />
 
             <StyledCheckbox
@@ -126,7 +132,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                 onChange={(ev) => {
                     setComment(ev.target.value);
                 }}
-                autoFocus={true}
+                ref={feedbackRef}
             />
         </div>;
     }

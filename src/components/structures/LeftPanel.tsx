@@ -35,7 +35,7 @@ import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import LeftPanelWidget from "./LeftPanelWidget";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import { SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
+import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
 import { findSiblingElement, IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
@@ -349,11 +349,11 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
                 { dialPadButton }
 
-                <AccessibleTooltipButton
+                { this.state.activeSpace === MetaSpace.Home && <AccessibleTooltipButton
                     className="mx_LeftPanel_exploreButton"
                     onClick={this.onExplore}
                     title={_t("Explore rooms")}
-                />
+                /> }
             </div>
         );
     }
