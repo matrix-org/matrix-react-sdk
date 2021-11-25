@@ -59,7 +59,16 @@ const QuickSettingsButton = () => {
         >
             <h2>{ _t("Quick settings") }</h2>
 
-            <AccessibleButton onClick={() => {}} kind="primary_outline">
+            <AccessibleButton
+                onClick={() => {
+                    closeMenu();
+                    defaultDispatcher.dispatch({
+                        action: Action.ViewUserSettings,
+                        initialTabId: UserTab.Sidebar,
+                    });
+                }}
+                kind="primary_outline"
+            >
                 { _t("All settings") }
             </AccessibleButton>
 
