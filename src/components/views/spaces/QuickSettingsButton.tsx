@@ -79,13 +79,16 @@ const QuickSettingsButton = () => {
             >
                 { _t("People") }
             </StyledCheckbox>
-            <AccessibleButton className="mx_QuickSettingsButton_moreOptionsButton" onClick={() => {
-                closeMenu();
-                defaultDispatcher.dispatch({
-                    action: Action.ViewUserSettings,
-                    initialTabId: UserTab.Sidebar,
-                });
-            }}>
+            <AccessibleButton
+                className="mx_QuickSettingsButton_moreOptionsButton"
+                onClick={() => {
+                    closeMenu();
+                    defaultDispatcher.dispatch({
+                        action: Action.ViewUserSettings,
+                        initialTabId: UserTab.Sidebar,
+                    });
+                }}
+            >
                 { _t("More options") }
             </AccessibleButton>
 
