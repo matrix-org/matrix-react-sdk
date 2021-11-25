@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637771395956,
+  "lastUpdate": 1637855007269,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41624,6 +41624,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4322.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "508d4d70b6cb16ca74e595b4e23c65ae505828e2",
+          "message": "Fix wrongly showing unpin in pinned messages tile with no perms (#7197)",
+          "timestamp": "2021-11-25T15:38:11Z",
+          "tree_id": "79ef10ec8dc16b2b6eff5217a0e2ce2a276b8c51",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/508d4d70b6cb16ca74e595b4e23c65ae505828e2"
+        },
+        "date": 1637855004752,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4470.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 620,
             "unit": "ms",
             "extra": "type: measure"
           }
