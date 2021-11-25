@@ -173,10 +173,8 @@ export default class Markdown {
                             }
                         }
                     } else {
-                        node.firstChild.literal = '';
                         // Empty string is a sign that we should ignore it in HTML rendering
                         node.literal = '';
-                        // node.unlink();
                     }
                 }
             }
