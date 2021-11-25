@@ -15,11 +15,32 @@ limitations under the License.
 */
 
 import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 import * as RoomNotifs from '../../RoomNotifs';
+import SettingsStore from "../../settings/SettingsStore";
+import { NOTIFICATION_STATE_UPDATE } from "./NotificationState";
 import { RoomNotificationState } from "./RoomNotificationState";
+import { RoomNotificationStateStore } from "./RoomNotificationStateStore";
 
 export class RoomThreadsNotificationState extends RoomNotificationState {
-    protected updateNotificationState(): void {
+    constructor(room: Room) {
+        super(room);
+
+        if (SettingsStore.getValue("feature_thread")) {
+            for (const [, thread] of room.threads) {
+                this.listenToThreadNotification(thread);
+            }
+            room.on(ThreadEvent.New, this.listenToThreadNotification);
+        }
+    }
+
+    private listenToThreadNotification = (thread: Thread): void => {
+        const notificationState = RoomNotificationStateStore.instance.getThreadState(thread);
+        notificationState.on(NOTIFICATION_STATE_UPDATE, this.updateNotificationState);
+    };
+
+    protected updateNotificationState = (): void => {
         const snapshot = this.snapshot();
 
         if (this.isRoomMuted) {
@@ -32,5 +53,5 @@ export class RoomThreadsNotificationState extends RoomNotificationState {
 
         // finally, publish an update if needed
         this.emitIfUpdated(snapshot);
-    }
+    };
 }

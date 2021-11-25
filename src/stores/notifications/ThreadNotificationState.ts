@@ -19,10 +19,16 @@ import { NotificationCountType } from "matrix-js-sdk/src/@types/receipt";
 import { NotificationState } from "./NotificationState";
 import { IDestroyable } from "../../utils/IDestroyable";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import { ReceiptEvents } from "matrix-js-sdk/src/models/receipt";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 export class ThreadNotificationState extends NotificationState implements IDestroyable {
+    private room: Room;
     constructor(public readonly thread: Thread) {
         super();
+        this.room = this.thread.room;
+        this.thread.on(ReceiptEvents.Receipt, this.handleReadReceipt);
         this.thread.room.on(ThreadEvent.Update, this.updateNotificationState);
         this.updateNotificationState();
     }
@@ -31,6 +37,11 @@ export class ThreadNotificationState extends NotificationState implements IDestr
         super.destroy();
         this.thread.room.removeListener(ThreadEvent.Update, this.updateNotificationState);
     }
+
+    private handleReadReceipt = (event: MatrixEvent, thread: Thread) => {
+        if (thread.id !== this.thread.id) return; // not for us - ignore
+        this.updateNotificationState();
+    };
 
     protected updateNotificationState = (): void => {
         const snapshot = this.snapshot();

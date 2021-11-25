@@ -69,6 +69,8 @@ import Toolbar from '../../../accessibility/Toolbar';
 import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
 import ThreadListContextMenu from '../context_menus/ThreadListContextMenu';
+import { NOTIFICATION_STATE_UPDATE } from '../../../stores/notifications/NotificationState';
+import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -341,6 +343,7 @@ interface IState {
     hover: boolean;
     isQuoteExpanded?: boolean;
     thread?: Thread;
+    threadNotificationState?: ThreadNotificationState;
 }
 
 @replaceableComponent("views.rooms.EventTile")
@@ -487,11 +490,26 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.once(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
+
+            if (this.props.tileShape === TileShape.ThreadPanel) {
+                const thread = this.props.mxEvent.getThread();
+                const notificationState = RoomNotificationStateStore.instance.getThreadState(thread);
+                this.setState({
+                    threadNotificationState: notificationState,
+                });
+                notificationState?.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdated);
+            }
         }
 
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         room?.on(ThreadEvent.New, this.onNewThread);
     }
+
+    private onNotificationUpdated = (notificationState: ThreadNotificationState): void => {
+        this.setState({
+            threadNotificationState: notificationState,
+        });
+    };
 
     private updateThread = (thread) => {
         this.setState({
@@ -535,6 +553,12 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         room?.off(ThreadEvent.New, this.onNewThread);
+
+        if (this.props.tileShape === TileShape.ThreadPanel) {
+            const thread = this.props.mxEvent.getThread();
+            const notificationState = RoomNotificationStateStore.instance.getThreadState(thread);
+            notificationState?.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdated);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -928,16 +952,11 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     private renderThreadNotificationBadge(): JSX.Element {
-        if (this.props.tileShape === TileShape.ThreadPanel) {
-            const thread = this.props.mxEvent.getThread();
-            const notificationState = RoomNotificationStateStore.instance.getThreadState(thread);
-
+        if (this.state.threadNotificationState) {
             return <NotificationBadge
                 displayCount={NotificationCountDisplay.Hide}
-                notification={notificationState}
+                notification={this.state.threadNotificationState}
             />;
-        } else {
-            return null;
         }
     }
 
@@ -1380,6 +1399,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             key="mx_EventTile_line"
                         >
                             { linkedTimestamp }
+                            { this.renderThreadNotificationBadge() }
                             { this.renderE2EPadlock() }
                             { replyChain }
                             <EventTileType ref={this.tile}
@@ -1470,7 +1490,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "key": eventId,
                     }, <>
                         { ircTimestamp }
-                        { this.renderThreadNotificationBadge() }
                         { sender }
                         { ircPadlock }
                         { avatar }

@@ -63,7 +63,7 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
 
     protected emitIfUpdated(snapshot: NotificationStateSnapshot) {
         if (snapshot.isDifferentFrom(this)) {
-            this.emit(NOTIFICATION_STATE_UPDATE);
+            this.emit(NOTIFICATION_STATE_UPDATE, this);
         }
     }
 
