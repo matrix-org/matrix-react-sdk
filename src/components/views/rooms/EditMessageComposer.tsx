@@ -207,7 +207,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                         event: null,
                         timelineRenderingType: this.context.timelineRenderingType,
                     });
-                    dis.fire(Action.FocusSendMessageComposer);
+                    dis.dispatch({
+                        action: Action.FocusSendMessageComposer,
+                        context: this.context.timelineRenderingType,
+                    });
                 }
                 event.preventDefault();
                 break;
@@ -237,7 +240,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             event: null,
             timelineRenderingType: this.context.timelineRenderingType,
         });
-        dis.fire(Action.FocusSendMessageComposer);
+        dis.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: this.context.timelineRenderingType,
+        });
     };
 
     private get shouldSaveStoredEditorState(): boolean {
@@ -315,7 +321,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private async runSlashCommand(cmd: Command, args: string, roomId: string): Promise<void> {
-        const result = cmd.run(roomId, args);
+        const threadId = this.props.editState?.getEvent()?.getThread()?.id || null;
+
+        const result = cmd.run(roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -418,7 +426,11 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             }
             if (shouldSend) {
                 this.cancelPreviousPendingEdit();
-                const prom = this.props.mxClient.sendMessage(roomId, editContent);
+
+                const event = this.props.editState.getEvent();
+                const threadId = event.threadRootId || null;
+
+                const prom = this.props.mxClient.sendMessage(roomId, threadId, editContent);
                 this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
                 CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, true, false, editContent);
@@ -431,7 +443,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             event: null,
             timelineRenderingType: this.context.timelineRenderingType,
         });
-        dis.fire(Action.FocusSendMessageComposer);
+        dis.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: this.context.timelineRenderingType,
+        });
     };
 
     private cancelPreviousPendingEdit(): void {
@@ -524,6 +539,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 ref={this.editorRef}
                 model={this.model}
                 room={this.getRoom()}
+                threadId={this.props.editState?.getEvent()?.getThread()?.id}
                 initialCaret={this.props.editState.getCaret()}
                 label={_t("Edit message")}
                 onChange={this.onChange}

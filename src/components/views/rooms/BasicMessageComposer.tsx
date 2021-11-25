@@ -95,6 +95,7 @@ function selectionEquals(a: Partial<Selection>, b: Selection): boolean {
 interface IProps {
     model: EditorModel;
     room: Room;
+    threadId: string;
     placeholder?: string;
     label?: string;
     initialCaret?: DocumentOffset;
@@ -243,7 +244,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 isTyping = false;
             }
         }
-        TypingStore.sharedInstance().setSelfTyping(this.props.room.roomId, isTyping);
+        TypingStore.sharedInstance().setSelfTyping(
+            this.props.room.roomId,
+            this.props.threadId,
+            isTyping,
+        );
 
         if (this.props.onChange) {
             this.props.onChange();
@@ -478,6 +483,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             switch (autocompleteAction) {
                 case AutocompleteAction.ForceComplete:
                 case AutocompleteAction.Complete:
+                    this.historyManager.ensureLastChangesPushed(this.props.model);
+                    this.modifiedFlag = true;
                     autoComplete.confirmCompletion();
                     handled = true;
                     break;

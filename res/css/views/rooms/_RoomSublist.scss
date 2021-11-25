@@ -187,6 +187,7 @@ limitations under the License.
         .mx_RoomSublist_tiles {
             flex: 1 0 0;
             overflow: hidden;
+            overflow: clip;
             // need this to be flex otherwise the overflow hidden from above
             // sometimes vertically centers the clipped list ... no idea why it would do this
             // as the box model should be top aligned. Happens in both FF and Chromium
@@ -379,7 +380,7 @@ limitations under the License.
         margin-bottom: 4px;
     }
 
-    .mx_RadioButton, .mx_Checkbox {
+    .mx_StyledRadioButton, .mx_Checkbox {
         margin-top: 8px;
     }
 }
