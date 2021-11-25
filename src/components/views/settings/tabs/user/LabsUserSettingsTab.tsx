@@ -83,8 +83,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
         if (SdkConfig.get()['showLabsSettings']) {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
             labs.forEach(f => {
-                const group = SettingsStore.getLabGroup(f);
-                groups.getOrCreate(group ?? LabGroup.Other, []).push(
+                groups.getOrCreate(SettingsStore.getLabGroup(f), []).push(
                     <LabsSettingToggle featureId={f} key={f} />,
                 );
             });

@@ -94,8 +94,10 @@ export enum LabGroup {
     Rooms,
     Moderation,
     Analytics,
+    MessagePreviews,
+    Themes,
+    Encryption,
     Experimental,
-    Other,
     Developer,
 }
 
@@ -107,15 +109,16 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Rooms]: _td("Rooms"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
+    [LabGroup.MessagePreviews]: _td("Message Previews"),
+    [LabGroup.Themes]: _td("Themes"),
+    [LabGroup.Encryption]: _td("Encryption"),
     [LabGroup.Experimental]: _td("Experimental"),
-    [LabGroup.Other]: _td("Other"),
     [LabGroup.Developer]: _td("Developer"),
 };
 
-export interface ISetting {
-    // Must be set to true for features. Default is 'false'.
-    isFeature?: boolean;
-    labsGroup?: LabGroup;
+interface IBaseSetting {
+    isFeature?: false | undefined;
+    labsGroup?: void;
 
     // Display names are strongly recommended for clarity.
     // Display name can also be an object for different levels.
@@ -164,6 +167,15 @@ export interface ISetting {
         extraSettings?: string[];
     };
 }
+
+interface IFeature extends Omit<IBaseSetting, "isFeature" | "labsGroup"> {
+    // Must be set to true for features.
+    isFeature: true;
+    labsGroup: LabGroup;
+}
+
+// Type using I-identifier for backwards compatibility from before it became a discriminated union
+export type ISetting = IBaseSetting | IFeature;
 
 export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_report_to_moderators": {
@@ -262,12 +274,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_custom_themes": {
         isFeature: true,
+        labsGroup: LabGroup.Themes,
         displayName: _td("Support adding custom themes"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_roomlist_preview_reactions_dms": {
         isFeature: true,
+        labsGroup: LabGroup.MessagePreviews,
         displayName: _td("Show message previews for reactions in DMs"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -276,12 +290,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_roomlist_preview_reactions_all": {
         isFeature: true,
+        labsGroup: LabGroup.MessagePreviews,
         displayName: _td("Show message previews for reactions in all rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_dehydration": {
         isFeature: true,
+        labsGroup: LabGroup.Encryption,
         displayName: _td("Offline encrypted messaging using dehydrated devices"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
