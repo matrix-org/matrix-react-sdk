@@ -116,6 +116,7 @@ export default class Markdown {
         let text = '';
         let isInPara = false;
         let previousNode: commonmark.Node | null = null;
+        let shouldUnlinkEmphasisNode = false;
         while ((event = walker.next())) {
             const { node } = event;
             if (node.type === 'paragraph') {
@@ -158,8 +159,11 @@ export default class Markdown {
                                     emphasisTextNode.literal = nonEmphasizedText;
                                     previousNode.insertAfter(emphasisTextNode);
                                     node.firstChild.literal = '';
-                                    // Empty string is a sign that we should ignore it in HTML rendering
-                                    node.literal = '';
+                                    event = node.walker().next();
+                                    // Remove `em` opening and closing nodes
+                                    node.unlink();
+                                    previousNode.insertAfter(event.node);
+                                    shouldUnlinkEmphasisNode = true;
                                 } else {
                                     logger.error(
                                         "Markdown links escaping found too many links for following text: ",
@@ -173,8 +177,10 @@ export default class Markdown {
                             }
                         }
                     } else {
-                        // Empty string is a sign that we should ignore it in HTML rendering
-                        node.literal = '';
+                        if (shouldUnlinkEmphasisNode) {
+                            node.unlink();
+                            shouldUnlinkEmphasisNode = false;
+                        }
                     }
                 }
             }
@@ -277,17 +283,6 @@ export default class Markdown {
             /*
             if (isMultiLine) this.cr();
             */
-        };
-
-        const realEmph = renderer.emph;
-
-        renderer.emph = function(node: commonmark.Node) {
-            // We're escaping links with emphasis in the middle of it to act like a real link
-            // This empty string check here is to verify that we have modified the emphasis node properly
-            if (node.type === 'emph' && node.literal === "") {
-                return;
-            }
-            return realEmph(node);
         };
 
         return renderer.render(this.parsed);
