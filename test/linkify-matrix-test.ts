@@ -163,12 +163,14 @@ describe('linkify-matrix', () => {
                 value: "+foo:bar.org.uk",
             }]));
         });
-        // This test should not be failing according to the linkify-matrix code
-        // TODO: Fix the implementation so the test properly ignores trailing ':'
-        it.skip('do not accept trailing `:`', () => {
+        it('ignore trailing `:`', () => {
             const test = '+foo:bar.com:';
             const found = linkify.find(test);
-            expect(found).toEqual(([]));
+            expect(found).toEqual(([{
+                "href": "+foo:bar.com",
+                "type": "groupid",
+                "value": "+foo:bar.com",
+            }]));
         });
         it('accept :NUM (port specifier)', () => {
             const test = '+foo:bar.com:2225';
@@ -219,12 +221,14 @@ describe('linkify-matrix', () => {
                 value: "@foo:bar.org.uk",
             }]));
         });
-        // This test should not be failing according to the linkify-matrix code
-        // TODO: Fix the implementation so the test properly ignores trailing ':'
-        it.skip('do not accept trailing `:`', () => {
+        it('do not accept trailing `:`', () => {
             const test = '@foo:bar.com:';
             const found = linkify.find(test);
-            expect(found).toEqual(([]));
+            expect(found).toEqual(([{
+                href: "@foo:bar.com",
+                type: "userid",
+                value: "@foo:bar.com",
+            }]));
         });
         it('accept :NUM (port specifier)', () => {
             const test = '@foo:bar.com:2225';
