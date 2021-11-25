@@ -2045,6 +2045,8 @@
     "Declining …": "Declining …",
     "%(name)s wants to verify": "%(name)s wants to verify",
     "You sent a verification request": "You sent a verification request",
+    "Vote not registered": "Vote not registered",
+    "Sorry, your vote was not registered. Please try again.": "Sorry, your vote was not registered. Please try again.",
     "%(count)s votes|other": "%(count)s votes",
     "%(count)s votes|one": "%(count)s vote",
     "Based on %(count)s votes|other": "Based on %(count)s votes",
