@@ -224,8 +224,8 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                     room: this.props.room,
                 },
                 'mx_CompoundDialog',
-                false,  // isPriorityModal
-                true,   // isStaticModal
+                false, // isPriorityModal
+                true,  // isStaticModal
             );
         }
     };
