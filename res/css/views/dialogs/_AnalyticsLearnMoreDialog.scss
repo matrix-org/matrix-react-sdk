@@ -5,8 +5,13 @@
         background-repeat: no-repeat;
         background-position: center top;
         height: 112px;
-        padding-bottom: 20px;
+        padding: 20px 0px;
     }
+
+    .mx_Dialog_content {
+        margin-bottom: 0px;
+    }
+
     .mx_AnalyticsLearnMore_copy {
         border-bottom: 1px solid $menu-border-color;
         padding-bottom: 20px;
