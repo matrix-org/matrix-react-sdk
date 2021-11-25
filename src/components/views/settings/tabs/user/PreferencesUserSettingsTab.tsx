@@ -26,7 +26,6 @@ import PlatformPeg from "../../../../../PlatformPeg";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SettingsFlag from '../../../elements/SettingsFlag';
-import * as KeyboardShortcuts from "../../../../../accessibility/KeyboardShortcuts";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import GroupAvatar from "../../../avatars/GroupAvatar";
 import dis from "../../../../../dispatcher/dispatcher";
@@ -36,6 +35,9 @@ import { useDispatcher } from "../../../../../hooks/useDispatcher";
 import { CreateEventField, IGroupSummary } from "../../../dialogs/CreateSpaceFromCommunityDialog";
 import { createSpaceFromCommunity } from "../../../../../utils/space";
 import Spinner from "../../../elements/Spinner";
+import { UserTab } from "../../../dialogs/UserSettingsDialog";
+import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
+import { Action } from "../../../../../dispatcher/actions";
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
@@ -295,6 +297,13 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     }
 
+    private onKeyboardShortcutsClicked = (): void => {
+        dis.dispatch<OpenToTabPayload>({
+            action: Action.ViewUserSettings,
+            initialTabId: UserTab.Keyboard,
+        });
+    };
+
     render() {
         let autoLaunchOption = null;
         if (this.state.autoLaunchSupported) {
@@ -357,7 +366,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Keyboard shortcuts") }</span>
-                    <AccessibleButton className="mx_SettingsFlag" onClick={KeyboardShortcuts.toggleDialog}>
+                    <AccessibleButton className="mx_SettingsFlag" onClick={this.onKeyboardShortcutsClicked}>
                         { _t("To view all keyboard shortcuts, click here.") }
                     </AccessibleButton>
                     { this.renderGroup(PreferencesUserSettingsTab.KEYBINDINGS_SETTINGS) }
