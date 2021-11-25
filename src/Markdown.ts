@@ -29,7 +29,7 @@ const TEXT_NODES = ['text', 'softbreak', 'linebreak', 'paragraph', 'document'];
 interface CommonmarkHtmlRendererInternal extends commonmark.HtmlRenderer {
     paragraph: (node: commonmark.Node, entering: boolean) => void;
     link: (node: commonmark.Node, entering: boolean) => void;
-    html_inline: (node: commonmark.Node) => void; // eslint-disable-line camelcazse
+    html_inline: (node: commonmark.Node) => void; // eslint-disable-line camelcase
     html_block: (node: commonmark.Node) => void; // eslint-disable-line camelcase
     text: (node: commonmark.Node) => void;
     out: (text: string) => void;
