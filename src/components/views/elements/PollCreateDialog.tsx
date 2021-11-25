@@ -101,7 +101,8 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
             this.props.room.roomId,
             POLL_START_EVENT_TYPE.name,
             makePollContent(
-                this.state.question, this.state.options, POLL_KIND_DISCLOSED.name),
+                this.state.question, this.state.options, POLL_KIND_DISCLOSED.name,
+            ),
         ).then(
             () => this.props.onFinished(true),
         ).catch(e => {
