@@ -17,8 +17,8 @@ limitations under the License.
 import "../skinned-sdk"; // Must be first for skinning to work
 import WidgetStore, { IApp } from "../../src/stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../src/stores/widgets/WidgetLayoutStore";
-import { Room } from "matrix-js-sdk";
 import { stubClient } from "../test-utils";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 // setup test env values
 const roomId = "!room:server";

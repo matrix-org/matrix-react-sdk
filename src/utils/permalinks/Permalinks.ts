@@ -29,7 +29,7 @@ import matrixLinkify from "../../linkify-matrix";
 import SdkConfig from "../../SdkConfig";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvents } from "matrix-js-sdk";
+import { RoomStateEvents } from "matrix-js-sdk/src/models/room-state";
 
 // The maximum number of servers to pick when working out which servers
 // to add to permalinks. The servers are appended as ?via=example.org

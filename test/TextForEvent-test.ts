@@ -1,7 +1,7 @@
 import './skinned-sdk';
 
 import { textForEvent } from "../src/TextForEvent";
-import { MatrixEvent } from "matrix-js-sdk";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import SettingsStore from "../src/settings/SettingsStore";
 import { SettingLevel } from "../src/settings/SettingLevel";
 import renderer from 'react-test-renderer';

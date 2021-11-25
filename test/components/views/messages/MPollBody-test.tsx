@@ -20,12 +20,13 @@ import { mount, ReactWrapper } from "enzyme";
 import sdk from "../../../skinned-sdk";
 import * as TestUtils from "../../../test-utils";
 
-import { Callback, IContent, MatrixEvent } from "matrix-js-sdk";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { IPollAnswer, IPollContent } from "../../../../src/polls/consts";
 import { UserVote, allVotes } from "../../../../src/components/views/messages/MPollBody";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Callback } from "matrix-js-sdk/src/matrix";
 
 const _MPollBody = sdk.getComponent("views.messages.MPollBody");
 const MPollBody = TestUtils.wrapInMatrixClientContext(_MPollBody);

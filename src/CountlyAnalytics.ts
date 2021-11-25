@@ -26,7 +26,7 @@ import RoomViewStore from "./stores/RoomViewStore";
 import { Action } from "./dispatcher/actions";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomEvents } from "matrix-js-sdk";
+import { RoomEvents } from "matrix-js-sdk/src/models/room";
 
 const INACTIVITY_TIME = 20; // seconds
 const HEARTBEAT_INTERVAL = 5_000; // ms

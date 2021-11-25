@@ -50,7 +50,7 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { Action } from '../../dispatcher/actions';
-import { RoomStateEvents } from 'matrix-js-sdk';
+import { RoomStateEvents } from 'matrix-js-sdk/src/models/room-state';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
