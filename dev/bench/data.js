@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637860019038,
+  "lastUpdate": 1637873742541,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41804,6 +41804,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4974.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "renancleyson.f@gmail.com",
+            "name": "Renan Cleyson",
+            "username": "renancleyson-dev"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ae0dba4e874834d050643ab5eb4e4fb6f929f339",
+          "message": "Add `view_room` to `Action` enum (#7203)\n\n* Add ViewRoom action to Action enum\r\n\r\nSigned-off-by: Renan <renancleyson.f@gmail.com>\r\n\r\n* Change view_room occurrences to Action.ViewRoom\r\n\r\nSigned-off-by: Renan <renancleyson.f@gmail.com>\r\n\r\n* Add missing Action import",
+          "timestamp": "2021-11-25T21:49:43+01:00",
+          "tree_id": "9b99db8db6224ade92b7e966b1070041237ebbf4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ae0dba4e874834d050643ab5eb4e4fb6f929f339"
+        },
+        "date": 1637873739931,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5598.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1014.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1654.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4564.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
