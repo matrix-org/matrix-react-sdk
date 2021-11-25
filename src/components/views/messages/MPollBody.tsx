@@ -127,7 +127,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
             console.error("Failed to submit poll response event:", e);
 
             Modal.createTrackedDialog(
-                'Failed to post poll',
+                'Vote not registered',
                 '',
                 ErrorDialog,
                 {
