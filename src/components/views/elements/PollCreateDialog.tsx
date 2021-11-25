@@ -16,7 +16,9 @@ limitations under the License.
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
+import QuestionDialog from "../dialogs/QuestionDialog";
 import React, { ChangeEvent, createRef } from "react";
+import Modal from '../../../Modal';
 import { _t } from "../../../languageHandler";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { arrayFastClone, arraySeed } from "../../../utils/arrays";
@@ -27,6 +29,8 @@ import Spinner from "./Spinner";
 
 interface IProps extends IDialogProps {
     room: Room;
+    initialQuestion?: string;
+    initialOptions?: string[];
 }
 
 interface IState extends IScrollableBaseState {
@@ -47,24 +51,33 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     public constructor(props: IProps) {
         super(props);
 
+        const question = props.initialQuestion ?? "";
+        const options = props.initialOptions ?? arraySeed("", DEFAULT_NUM_OPTIONS);
+        const busy = false;
+
         this.state = {
             title: _t("Create poll"),
             actionLabel: _t("Create Poll"),
-            canSubmit: false, // need to add a question and at least one option first
-
-            question: "",
-            options: arraySeed("", DEFAULT_NUM_OPTIONS),
-            busy: false,
+            canSubmit: this.calcCanSubmit(question, options, busy),
+            question,
+            options,
+            busy,
         };
     }
 
     private checkCanSubmit() {
         this.setState({
-            canSubmit:
-                !this.state.busy &&
-                this.state.question.trim().length > 0 &&
-                this.state.options.filter(op => op.trim().length > 0).length >= MIN_OPTIONS,
+            canSubmit: this.calcCanSubmit(
+                this.state.question, this.state.options, this.state.busy),
         });
+    }
+
+    private calcCanSubmit(question: string, options: string[], busy: boolean) {
+        return (
+            !busy &&
+            question.trim().length > 0 &&
+            options.filter(op => op.trim().length > 0).length >= MIN_OPTIONS
+        );
     }
 
     private onQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,15 +106,55 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         });
     };
 
+    /**
+     * Called when we've failed to create a poll, and might relaunch it.
+     */
+    private afterFailure(tryAgain: boolean) {
+        // Close the old instance of ourself.  We can't re-use it since the
+        // default behaviour of the dialog stack is to re-initialise it.
+        this.cancel();
+
+        if (tryAgain) {
+            // Instead, we launch a new dialog with the question and
+            // options from our state.
+            Modal.createTrackedDialog(
+                'Polls',
+                'create',
+                PollCreateDialog,
+                {
+                    room: this.props.room,
+                    initialQuestion: this.state.question,
+                    initialOptions: this.state.options,
+                },
+                'mx_CompoundDialog',
+            );
+        }
+    }
+
     protected submit(): void {
         this.setState({ busy: true, canSubmit: false });
         this.matrixClient.sendEvent(
             this.props.room.roomId,
             POLL_START_EVENT_TYPE.name,
-            makePollContent(this.state.question, this.state.options, POLL_KIND_DISCLOSED.name),
-        ).then(() => this.props.onFinished(true)).catch(e => {
-            console.error("Failed to submit poll event:", e);
-            this.setState({ busy: false, canSubmit: true });
+            makePollContent(
+                this.state.question, this.state.options, POLL_KIND_DISCLOSED.name),
+        ).then(
+            () => this.props.onFinished(true),
+        ).catch(e => {
+            console.error("Failed to post poll:", e);
+            Modal.createTrackedDialog(
+                'Failed to post poll',
+                '',
+                QuestionDialog,
+                {
+                    title: _t("Failed to post poll"),
+                    description: _t(
+                        "Sorry, the poll you tried to create was not posted."),
+                    button: _t('Try again'),
+                    cancelButton: _t('Cancel'),
+                    onFinished: (tryAgain) => this.afterFailure(tryAgain),
+                },
+            );
         });
     }
 

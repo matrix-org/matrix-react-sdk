@@ -2201,6 +2201,8 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.|other": "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.",
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.|other": "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.",
     "Create Poll": "Create Poll",
+    "Failed to post poll": "Failed to post poll",
+    "Sorry, the poll you tried to create was not posted.": "Sorry, the poll you tried to create was not posted.",
     "What is your poll question or topic?": "What is your poll question or topic?",
     "Question or topic": "Question or topic",
     "Write something...": "Write something...",
