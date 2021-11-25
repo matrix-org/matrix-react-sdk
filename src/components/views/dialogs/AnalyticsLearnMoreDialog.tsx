@@ -96,13 +96,13 @@ const AnalyticsLearnMoreDialog: React.FC<IProps> = (
 };
 
 export const showDialog = (props: Omit<IProps, "cookiePolicyUrl" | "analyticsOwner">): void => {
-    const cookiePolicyUrl = SdkConfig.get().piwik?.policyUrl;
+    const privacyPolicyUrl = SdkConfig.get().piwik?.policyUrl;
     const analyticsOwner = SdkConfig.get().analyticsOwner ?? SdkConfig.get().brand;
     Modal.createTrackedDialog(
         "Analytics Learn More",
         "",
         AnalyticsLearnMoreDialog,
-        { cookiePolicyUrl, analyticsOwner, ...props },
+        { privacyPolicyUrl, analyticsOwner, ...props },
         "mx_AnalyticsLearnMoreDialog_wrapper",
     );
 };
