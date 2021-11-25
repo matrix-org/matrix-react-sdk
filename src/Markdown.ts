@@ -17,6 +17,8 @@ limitations under the License.
 
 import * as commonmark from 'commonmark';
 import { escape } from "lodash";
+import { logger } from 'matrix-js-sdk/src/logger';
+import * as linkify from 'linkifyjs';
 
 const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
 
@@ -27,8 +29,11 @@ const TEXT_NODES = ['text', 'softbreak', 'linebreak', 'paragraph', 'document'];
 interface CommonmarkHtmlRendererInternal extends commonmark.HtmlRenderer {
     paragraph: (node: commonmark.Node, entering: boolean) => void;
     link: (node: commonmark.Node, entering: boolean) => void;
-    html_inline: (node: commonmark.Node) => void; // eslint-disable-line camelcase
+    html_inline: (node: commonmark.Node) => void; // eslint-disable-line camelcazse
     html_block: (node: commonmark.Node) => void; // eslint-disable-line camelcase
+    text: (node: commonmark.Node) => void;
+    out: (text: string) => void;
+    emph: (node: commonmark.Node) => void;
 }
 
 function isAllowedHtmlTag(node: commonmark.Node): boolean {
@@ -61,6 +66,33 @@ function isMultiLine(node: commonmark.Node): boolean {
     return par.firstChild != par.lastChild;
 }
 
+function getTextUntilEndOrLinebreak(node: commonmark.Node) {
+    let currentNode = node;
+    let text = '';
+    while (currentNode !== null && currentNode.type !== 'softbreak' && currentNode.type !== 'linebreak') {
+        const { literal, type } = currentNode;
+        if (type === 'text' && literal) {
+            let n = 0;
+            let char = literal[n];
+            while (char !== ' ' && char !== null && n <= literal.length) {
+                if (char === ' ') {
+                    break;
+                }
+                if (char) {
+                    text += char;
+                }
+                n += 1;
+                char = literal[n];
+            }
+            if (char === ' ') {
+                break;
+            }
+        }
+        currentNode = currentNode.next;
+    }
+    return text;
+}
+
 /**
  * Class that wraps commonmark, adding the ability to see whether
  * a given message actually uses any markdown syntax or whether
@@ -70,11 +102,87 @@ export default class Markdown {
     private input: string;
     private parsed: commonmark.Node;
 
-    constructor(input) {
+    constructor(input: string) {
         this.input = input;
 
         const parser = new commonmark.Parser();
         this.parsed = parser.parse(this.input);
+        this.parsed = this.escapeLinks(this.parsed);
+    }
+
+    private escapeLinks(parsed: commonmark.Node) {
+        const walker = parsed.walker();
+        let event: commonmark.NodeWalkingStep = null;
+        let text = '';
+        let isInPara = false;
+        let previousNode: commonmark.Node | null = null;
+        while ((event = walker.next())) {
+            const { node } = event;
+            if (node.type === 'paragraph') {
+                if (event.entering) {
+                    isInPara = true;
+                } else {
+                    isInPara = false;
+                }
+            }
+            if (isInPara) {
+                // Clear saved string when line ends
+                if (
+                    node.type === 'softbreak' ||
+                    node.type === 'linebreak' ||
+                    // Also start calculating the text from the beginning on any spaces
+                    (node.type === 'text' && node.literal === ' ')
+                ) {
+                    text = '';
+                }
+                if (node.type === 'text') {
+                    text += node.literal;
+                }
+                // We should not do this if previous node was not a textnode, as we can't combine it then.
+                if (node.type === 'emph' && previousNode.type === 'text') {
+                    if (event.entering) {
+                        const foundLinks = linkify.find(text);
+                        for (const { value } of foundLinks) {
+                            if (node.firstChild.literal) {
+                                /**
+                                 * NOTE: This technically should unlink the emph node and create LINK nodes instead, adding all the next elements as siblings
+                                 * but this solution seems to work well and is hopefully slightly easier to understand too
+                                 */
+                                const nonEmphasizedText = `_${node.firstChild.literal}_`;
+                                const f = getTextUntilEndOrLinebreak(node);
+                                const newText = value + nonEmphasizedText + f;
+                                const newLinks = linkify.find(newText);
+                                // Should always find only one link here, if it finds more it means that the algorithm is broken
+                                if (newLinks.length === 1) {
+                                    const emphasisTextNode = new commonmark.Node('text');
+                                    emphasisTextNode.literal = nonEmphasizedText;
+                                    previousNode.insertAfter(emphasisTextNode);
+                                    node.firstChild.literal = '';
+                                    // Empty string is a sign that we should ignore it in HTML rendering
+                                    node.literal = '';
+                                } else {
+                                    logger.error(
+                                        "Markdown links escaping found too many links for following text: ",
+                                        text,
+                                    );
+                                    logger.error(
+                                        "Markdown links escaping found too many links for modified text: ",
+                                        newText,
+                                    );
+                                }
+                            }
+                        }
+                    } else {
+                        node.firstChild.literal = '';
+                        // Empty string is a sign that we should ignore it in HTML rendering
+                        node.literal = '';
+                        // node.unlink();
+                    }
+                }
+            }
+            previousNode = node;
+        }
+        return parsed;
     }
 
     isPlainText(): boolean {
@@ -120,9 +228,7 @@ export default class Markdown {
         // you can nest them.
         //
         // Let's try sending with <p/>s anyway for now, though.
-
         const realParagraph = renderer.paragraph;
-
         renderer.paragraph = function(node: commonmark.Node, entering: boolean) {
             // If there is only one top level node, just return the
             // bare text: it's a single line of text and so should be
@@ -175,6 +281,17 @@ export default class Markdown {
             */
         };
 
+        const realEmph = renderer.emph;
+
+        renderer.emph = function(node: commonmark.Node) {
+            // We're escaping links with emphasis in the middle of it to act like a real link
+            // This empty string check here is to verify that we have modified the emphasis node properly
+            if (node.type === 'emph' && node.literal === "") {
+                return;
+            }
+            return realEmph(node);
+        };
+
         return renderer.render(this.parsed);
     }
 
@@ -203,6 +320,16 @@ export default class Markdown {
         renderer.html_block = function(node: commonmark.Node) {
             this.lit(node.literal);
             if (isMultiLine(node) && node.next) this.lit('\n\n');
+        };
+
+        const realEmph = renderer.emph;
+        renderer.emph = function(node: commonmark.Node) {
+            // We're escaping links with emphasis in the middle of it to act like a real link
+            // This empty string check here is to verify that we have modified the emphasis node properly
+            if (node.type === 'emph' && node.literal === "") {
+                return;
+            }
+            return realEmph(node);
         };
 
         return renderer.render(this.parsed);
