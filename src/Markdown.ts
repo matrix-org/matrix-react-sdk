@@ -315,16 +315,6 @@ export default class Markdown {
             if (isMultiLine(node) && node.next) this.lit('\n\n');
         };
 
-        const realEmph = renderer.emph;
-        renderer.emph = function(node: commonmark.Node) {
-            // We're escaping links with emphasis in the middle of it to act like a real link
-            // This empty string check here is to verify that we have modified the emphasis node properly
-            if (node.type === 'emph' && node.literal === "") {
-                return;
-            }
-            return realEmph(node);
-        };
-
         return renderer.render(this.parsed);
     }
 }
