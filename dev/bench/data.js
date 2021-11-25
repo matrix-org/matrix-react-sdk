@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637873742541,
+  "lastUpdate": 1637875311635,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41852,6 +41852,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4564.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "37828ab0842560712f8fb884f4e25cef9f5a1fa0",
+          "message": "Maximised widgets always force a call to be shown in PIP mode (#7163)",
+          "timestamp": "2021-11-25T22:14:19+01:00",
+          "tree_id": "4c0bb547bbf0e1e60e99c0d0731c72fcbc31b0f6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/37828ab0842560712f8fb884f4e25cef9f5a1fa0"
+        },
+        "date": 1637875309173,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5310.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 892.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1650.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4353.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
