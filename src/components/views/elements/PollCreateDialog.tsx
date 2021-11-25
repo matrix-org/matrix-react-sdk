@@ -117,7 +117,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                         "Sorry, the poll you tried to create was not posted."),
                     button: _t('Try again'),
                     cancelButton: _t('Cancel'),
-                    onFinished: (tryAgain) => {
+                    onFinished: (tryAgain: boolean) => {
                         if (!tryAgain) {
                             this.cancel();
                         } else {
