@@ -107,10 +107,10 @@ export default class Markdown {
 
         const parser = new commonmark.Parser();
         this.parsed = parser.parse(this.input);
-        this.parsed = this.escapeLinks(this.parsed);
+        this.parsed = this.repairLinks(this.parsed);
     }
 
-    private escapeLinks(parsed: commonmark.Node) {
+    private repairLinks(parsed: commonmark.Node) {
         const walker = parsed.walker();
         let event: commonmark.NodeWalkingStep = null;
         let text = '';

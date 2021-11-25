@@ -1,10 +1,17 @@
 /**
  * @jest-environment jsdom
  */
+import * as linkifyjs from 'linkifyjs';
 import Markdown from "../src/Markdown";
+import matrixLinkify from '../src/linkify-matrix';
+
+beforeAll(() => {
+    // We need to call linkifier plugins before running those tests
+    matrixLinkify(linkifyjs);
+});
 
 describe("Markdown parser test", () => {
-    describe("autolinks", () => {
+    describe("fixing HTML links", () => {
         const testString = [
             "Test1:",
             "#_foonetic_xkcd:matrix.org",
@@ -103,6 +110,21 @@ describe("Markdown parser test", () => {
                 '',
             ].join('\n');
             const md = new Markdown("```" + testString + "```");
+            expect(md.toHTML()).toEqual(expectedResult);
+        });
+
+        it('expects that links in one line will be "escaped" properly', () => {
+            /* eslint-disable max-len */
+            const testString = [
+                'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg' + " " + 'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg',
+                'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg' + " " + 'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg',
+            ].join('\n');
+            const expectedResult = [
+                "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
+                "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
+            ].join('<br />');
+            /* eslint-enable max-len */
+            const md = new Markdown(testString);
             expect(md.toHTML()).toEqual(expectedResult);
         });
     });
