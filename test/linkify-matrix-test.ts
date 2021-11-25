@@ -184,15 +184,10 @@ describe('linkify-matrix', () => {
     });
 
     describe('userid', () => {
-        // It does not parse a single user ID without domain
-        it.skip('properly parses @foo', () => {
+        it('should not parse @foo without domain', () => {
             const test = "@foo";
             const found = linkify.find(test);
-            expect(found).toEqual(([{
-                href: "@foo",
-                type: "userid",
-                value: "@foo",
-            }]));
+            expect(found).toEqual(([]));
         });
         it('accept @foo:bar.com', () => {
             const test = '@foo:bar.com';
