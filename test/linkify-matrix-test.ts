@@ -16,10 +16,11 @@ limitations under the License.
 import * as linkify from "linkifyjs";
 import linkifyMatrix from '../src/linkify-matrix';
 
+beforeAll(() => {
+    linkifyMatrix(linkify);
+});
+
 describe('linkify-matrix', () => {
-    beforeAll(() => {
-        linkifyMatrix(linkify);
-    });
     describe('roomalias', () => {
         it('properly parses #_foonetic_xkcd:matrix.org', () => {
             const test = '#_foonetic_xkcd:matrix.org';
