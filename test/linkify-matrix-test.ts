@@ -106,16 +106,10 @@ describe('linkify-matrix', () => {
 
             }]));
         });
-        // This test does not work and does not parse the room
-        it.skip('does not parse room alias with too many separators', () => {
+        it('does not parse room alias with too many separators', () => {
             const test = '#foo:::bar.com';
             const found = linkify.find(test);
             expect(found).toEqual(([{
-                href: "#foo",
-                type: 'roomalias',
-                value: '#foo',
-            },
-            {
                 href: "http://bar.com",
                 type: "url",
                 value: "bar.com",
