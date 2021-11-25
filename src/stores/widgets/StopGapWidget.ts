@@ -291,7 +291,7 @@ export class StopGapWidget extends EventEmitter {
 
             // at this point we can change rooms, so do that
             defaultDispatcher.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: targetRoomId,
             });
 
