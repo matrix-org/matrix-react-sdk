@@ -830,8 +830,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     hideToSRUsers: false,
                 });
                 break;
-            case 'anonymous_analytics_accept':
-                // accepted analytics toast with non-posthog (this path can be removed once posthog has rolled out)
+            case Action.AnonymousAnalyticsAccept:
                 hideAnalyticsToast();
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, true);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
@@ -842,17 +841,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     CountlyAnalytics.instance.enable(/* anonymous = */ false);
                 }
                 break;
-            case 'anonymous_analytics_reject':
+            case Action.AnonymousAnalyticsReject:
                 hideAnalyticsToast();
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, false);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
                 break;
-            case 'pseudonymous_analytics_accept':
-                // accepted analytics toast with posthog
+            case Action.PseudonymousAnalyticsAccept:
                 hideAnalyticsToast();
                 SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, true);
                 break;
-            case 'pseudonymous_analytics_reject':
+            case Action.PseudonymousAnalyticsReject:
                 hideAnalyticsToast();
                 SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, false);
                 break;

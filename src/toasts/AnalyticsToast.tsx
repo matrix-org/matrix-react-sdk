@@ -27,16 +27,17 @@ import {
     ButtonClicked,
     showDialog as showAnalyticsLearnMoreDialog,
 } from "../components/views/dialogs/AnalyticsLearnMoreDialog";
+import { Action } from "../dispatcher/actions";
 
 const onAccept = () => {
     dis.dispatch({
-        action: 'pseudonymous_analytics_accept',
+        action: Action.PseudonymousAnalyticsAccept,
     });
 };
 
 const onReject = () => {
     dis.dispatch({
-        action: "pseudonymous_analytics_reject",
+        action: Action.PseudonymousAnalyticsReject,
     });
 };
 
@@ -145,11 +146,11 @@ export const showAnonymousAnalyticsOptInToast = (): void => {
         description: getAnonymousDescription(),
         acceptLabel: _t("Yes"),
         onAccept: () => dis.dispatch({
-            action: 'anonymous_analytics_accept',
+            action: Action.AnonymousAnalyticsAccept,
         }),
         rejectLabel: _t("No"),
         onReject: () => dis.dispatch({
-            action: "anonymous_analytics_reject",
+            action: Action.AnonymousAnalyticsReject,
         }),
     };
     showToast(props);

@@ -210,4 +210,25 @@ export enum Action {
      * Fires when a user starts to edit event (e.g. up arrow in compositor)
      */
     EditEvent = "edit_event",
+
+    /**
+     * The user accepted pseudonymous analytics (i.e. posthog) from the toast
+     */
+    PseudonymousAnalyticsAccept = "pseudonymous_analytics_accept",
+
+    /**
+     * The user rejected pseudonymous analytics (i.e. posthog) from the toast
+     */
+    PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
+
+    /**
+     * The user accepted anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     * (this action and its handler can be removed once posthog is rolled out)
+     */
+    AnonymousAnalyticsAccept = "anonymous_analytics_accept",
+
+    /**
+     * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     */
+    AnonymousAnalyticsReject = "anonymous_analytics_reject"
 }
