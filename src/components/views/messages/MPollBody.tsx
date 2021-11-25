@@ -43,17 +43,10 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     constructor(props: IBodyProps) {
         super(props);
 
-        const pollRelations = this.fetchPollRelations();
-        let selected = null;
-
-        const userVotes = collectUserVotes(allVotes(pollRelations), null);
-        const userId = MatrixClientPeg.get().getUserId();
-        const currentVote = userVotes.get(userId);
-        if (currentVote) {
-            selected = currentVote.answers[0];
-        }
-
-        this.state = { selected, pollRelations };
+        this.state = {
+            selected: null,
+            pollRelations: this.fetchPollRelations(),
+        };
 
         this.addListeners(this.state.pollRelations);
         this.props.mxEvent.on("Event.relationsCreated", this.onPollRelationsCreated);
@@ -145,12 +138,11 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 
     /**
-     * @returns answer-id -> number-of-votes
+     * @returns userId -> UserVote
      */
-    private collectVotes(): Map<string, number> {
-        return countVotes(
-            collectUserVotes(allVotes(this.state.pollRelations), this.state.selected),
-            this.props.mxEvent.getContent(),
+    private collectUserVotes(): Map<string, UserVote> {
+        return collectUserVotes(
+            allVotes(this.state.pollRelations), this.state.selected,
         );
     }
 
@@ -171,15 +163,18 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
 
         const pollId = this.props.mxEvent.getId();
-        const votes = this.collectVotes();
+        const userVotes = this.collectUserVotes();
+        const votes = countVotes(userVotes, this.props.mxEvent.getContent());
         const totalVotes = this.totalVotes(votes);
+        const userId = MatrixClientPeg.get().getUserId();
+        const myVote = userVotes.get(userId)?.answers[0];
 
         return <div className="mx_MPollBody">
             <h2>{ pollInfo.question[TEXT_NODE_TYPE] }</h2>
             <div className="mx_MPollBody_allOptions">
                 {
                     pollInfo.answers.map((answer: IPollAnswer) => {
-                        const checked = this.state.selected === answer.id;
+                        const checked = myVote === answer.id;
                         const classNames = `mx_MPollBody_option${
                             checked ? " mx_MPollBody_option_checked": ""
                         }`;
@@ -194,7 +189,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                             <StyledRadioButton
                                 name={`poll_answer_select-${pollId}`}
                                 value={answer.id}
-                                checked={this.state.selected === answer.id}
+                                checked={checked}
                                 onChange={this.onOptionSelected}
                             >
                                 <div className="mx_MPollBody_optionDescription">
