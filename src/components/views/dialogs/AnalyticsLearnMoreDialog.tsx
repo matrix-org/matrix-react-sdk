@@ -35,15 +35,14 @@ interface IProps {
     hasCancel?: boolean;
 }
 
-const AnalyticsLearnMoreDialog: React.FC<IProps> = (
-    {
-        onFinished,
-        analyticsOwner,
-        privacyPolicyUrl,
-        primaryButton,
-        cancelButton,
-        hasCancel,
-    }) => {
+const AnalyticsLearnMoreDialog: React.FC<IProps> = ({
+    onFinished,
+    analyticsOwner,
+    privacyPolicyUrl,
+    primaryButton,
+    cancelButton,
+    hasCancel,
+}) => {
     const onPrimaryButtonClick = () => onFinished && onFinished(ButtonClicked.Primary);
     const onCancelButtonClick = () => onFinished && onFinished(ButtonClicked.Cancel);
     const privacyPolicyLink = privacyPolicyUrl ?
