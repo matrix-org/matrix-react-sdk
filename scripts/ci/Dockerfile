@@ -59,3 +59,5 @@ RUN apt-get -y install \
     lsb-release \
     wget \
     xdg-utils
+
+RUN npm install -g typescript
