@@ -26,13 +26,17 @@ limitations under the License.
 
 .mx_CallView_large {
     padding-bottom: 10px;
-    margin: 5px 5px 5px 18px;
+    margin: 5px 5px 5px 13px;
     display: flex;
     flex-direction: column;
     flex: 1;
 
     .mx_CallView_voice {
         flex: 1;
+    }
+
+    &.mx_CallView_belowWidget {
+        margin-top: 0;
     }
 }
 
@@ -49,13 +53,16 @@ limitations under the License.
     }
 
     .mx_CallViewButtons {
-        bottom: 0px;
+        bottom: 13px;
     }
 
     .mx_CallViewButtons_button {
+        width: 34px;
+        height: 34px;
+
         &::before {
-            width: 36px;
-            height: 36px;
+            width: 22px;
+            height: 22px;
         }
     }
 
@@ -74,7 +81,6 @@ limitations under the License.
     > .mx_VideoFeed {
         width: 100%;
         height: 100%;
-        border-width: 0 !important; // Override mx_VideoFeed_speaking
 
         &.mx_VideoFeed_voice {
             display: flex;
@@ -126,6 +132,8 @@ limitations under the License.
     padding-top: 20px;
     padding-bottom: 15px;
     color: $accent-fg-color;
+    user-select: none;
+
     .mx_AccessibleButton_hasKind {
         padding: 0px;
         font-weight: bold;

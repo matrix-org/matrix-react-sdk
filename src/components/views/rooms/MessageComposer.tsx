@@ -216,9 +216,17 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 description: _t("You do not have permission to start polls in this room."),
             });
         } else {
-            Modal.createTrackedDialog('Polls', 'create', PollCreateDialog, {
-                room: this.props.room,
-            }, 'mx_CompoundDialog');
+            Modal.createTrackedDialog(
+                'Polls',
+                'create',
+                PollCreateDialog,
+                {
+                    room: this.props.room,
+                },
+                'mx_CompoundDialog',
+                false, // isPriorityModal
+                true,  // isStaticModal
+            );
         }
     };
 
@@ -370,9 +378,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.state.tombstone.getSender().split(':').splice(1).join(':')];
+        const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             highlighted: true,
             event_id: createEventId,
             room_id: replacementRoomId,
@@ -472,6 +480,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private renderButtons(menuPosition): JSX.Element | JSX.Element[] {
+        let uploadButtonIndex = 0;
         const buttons: JSX.Element[] = [];
         if (!this.state.haveRecording) {
             if (SettingsStore.getValue("feature_polls")) {
@@ -479,6 +488,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     <PollButton key="polls" room={this.props.room} />,
                 );
             }
+            uploadButtonIndex = buttons.length;
             buttons.push(
                 <UploadButton
                     key="controls_upload"
@@ -528,7 +538,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             });
 
             return <>
-                { buttons[0] }
+                { buttons[uploadButtonIndex] }
                 <AccessibleTooltipButton
                     className={classnames}
                     onClick={this.toggleButtonMenu}
