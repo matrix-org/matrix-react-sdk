@@ -54,6 +54,7 @@ import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
@@ -149,14 +150,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
             SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
         }
 
-        this.dndWatcherRef = SettingsStore.watchSetting("doNotDisturb", null, this.onDndChanged);
+        SettingsStore.monitorSetting("feature_dnd", null);
+        SettingsStore.monitorSetting("doNotDisturb", null);
     }
-
-    private onDndChanged = () => {
-        this.setState({
-            dndEnabled: this.doNotDisturb,
-        });
-    };
 
     private get doNotDisturb(): boolean {
         return SettingsStore.getValue("doNotDisturb");
@@ -231,8 +227,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
             });
     };
 
-    private onAction = (ev: ActionPayload) => {
-        switch (ev.action) {
+    private onAction = (payload: ActionPayload) => {
+        switch (payload.action) {
             case Action.ToggleUserMenu:
                 if (this.state.contextMenuPosition) {
                     this.setState({ contextMenuPosition: null });
@@ -240,6 +236,20 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     if (this.buttonRef.current) this.buttonRef.current.click();
                 }
                 break;
+
+            case Action.SettingUpdated: {
+                const settingUpdatedPayload = payload as SettingUpdatedPayload;
+                switch (settingUpdatedPayload.settingName) {
+                    case "feature_dnd":
+                    case "doNotDisturb": {
+                        const dndEnabled = this.doNotDisturb;
+                        if (this.state.dndEnabled !== dndEnabled) {
+                            this.setState({ dndEnabled });
+                        }
+                        break;
+                    }
+                }
+            }
         }
     };
 
@@ -532,7 +542,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         width={avatarSize}
                         height={avatarSize}
                         resizeMethod="crop"
-                        className=""
+                        className="mx_UserMenu_userAvatar_BaseAvatar"
                     />
                     { badge }
                 </div>

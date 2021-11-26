@@ -258,7 +258,7 @@ $activeBorderColor: $primary-content;
         max-width: 250px;
         flex-grow: 1;
 
-        .mx_BaseAvatar_initial {
+        .mx_BaseAvatar:not(.mx_UserMenu_userAvatar_BaseAvatar) .mx_BaseAvatar_initial {
             color: $secondary-content;
             width: 32px;
             height: 32px;
