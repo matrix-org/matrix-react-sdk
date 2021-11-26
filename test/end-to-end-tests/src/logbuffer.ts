@@ -20,7 +20,8 @@ import { Page, PageEventObject } from "puppeteer";
 type EventMapperSync = (string) => string;
 type EventMapperAsync = (string) => Promise<string>;
 
-function eventMapperIsAsync(eventMapper: EventMapperSync | EventMapperAsync, reduceAsync: boolean): eventMapper is EventMapperAsync {
+function eventMapperIsAsync(eventMapper: EventMapperSync | EventMapperAsync,
+    reduceAsync: boolean): eventMapper is EventMapperAsync {
     return reduceAsync;
 }
 
