@@ -212,7 +212,10 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     closeMenu();
-                    defaultDispatcher.fire(Action.ViewRoomDirectory);
+                    defaultDispatcher.dispatch({
+                        action: "view_room",
+                        room_id: activeSpace.roomId,
+                    });
                 }}
             />
             {
