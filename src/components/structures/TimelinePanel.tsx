@@ -1413,7 +1413,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     private getClosestEvent = (el: HTMLElement, fromTop: boolean): string => {
-        const messageList = document.querySelector("ol.mx_RoomView_MessageList");
+        const timelinePanel = ReactDOM.findDOMNode(this) as Element;
+        const messageList = timelinePanel.querySelector(".mx_RoomView_MessageList");
         let requiredElement: Element;
         // if the selected element belongs to a date separator, assign its neighbouring element as the required element
         if (el.parentElement.classList.contains("mx_DateSeparator")) {
@@ -1421,8 +1422,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (fromTop) requiredElement = el.nextElementSibling;
             else requiredElement = el.previousElementSibling;
         } else {
-            while (!el.getAttribute("data-scroll-tokens")) el = el.parentElement;
-            requiredElement = el;
+            requiredElement = el.closest("[data-scroll-tokens]");
         }
         // if the element is a part of EventListSummary, and we're selecting from the top
         // return the first event else return the last event of the list
@@ -1437,7 +1437,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const range = window.getSelection();
         let anchorEl = range.anchorNode.parentElement;
         let focusEl = range.focusNode.parentElement;
-        const messageList = document.querySelector("ol.mx_RoomView_MessageList");
+        const timelinePanel = ReactDOM.findDOMNode(this) as Element;
+        const messageList = timelinePanel.querySelector(".mx_RoomView_MessageList");
         // if both the elements are not inside messageList, then let the default behaviour continue
         if (!messageList.contains(anchorEl) || !messageList.contains(focusEl)) return;
         if (focusEl.getBoundingClientRect().top > anchorEl.getBoundingClientRect().top) {

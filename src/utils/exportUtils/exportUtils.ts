@@ -79,7 +79,7 @@ export const textForReplyEvent = (content: IContent) => {
         rplSource = lines[0].substring(0, REPLY_SOURCE_MAX_LENGTH);
         // Ellipsis if needed.
         if (lines[0].length > REPLY_SOURCE_MAX_LENGTH) {
-            rplSource = rplSource + "...";
+            rplSource = rplSource + "…";
         }
         // Wrap in formatting
         rplSource = ` "${rplSource}"`;
@@ -92,11 +92,7 @@ export const textForReplyEvent = (content: IContent) => {
 };
 
 export const isReply = (event: MatrixEvent): boolean => {
-    const isEncrypted = event.isEncrypted();
-    // If encrypted, in_reply_to lies in event.event.content
-    const content = isEncrypted ? event.event.content : event.getContent();
-    const relatesTo = content["m.relates_to"];
-    return !!(relatesTo && relatesTo["m.in_reply_to"]);
+    return !!event.replyEventId;
 };
 
 export interface IExportOptions {
