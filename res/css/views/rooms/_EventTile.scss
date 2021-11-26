@@ -802,7 +802,7 @@ $left-gutter: 64px;
     }
     .mx_MessageTimestamp {
         right: 0;
-        left: auto;
+        left: auto !important;
         top: -23px;
     }
 }
