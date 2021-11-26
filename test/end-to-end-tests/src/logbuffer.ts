@@ -27,7 +27,8 @@ function eventMapperIsAsync(eventMapper: EventMapperSync | EventMapperAsync, red
 export class LogBuffer {
     buffer: string;
 
-    constructor(page: Page, eventName: keyof PageEventObject, eventMapper: EventMapperSync | EventMapperAsync, reduceAsync = false, initialValue = "") {
+    constructor(page: Page, eventName: keyof PageEventObject, eventMapper: EventMapperSync | EventMapperAsync,
+        reduceAsync = false, initialValue = "") {
         this.buffer = initialValue;
         page.on(eventName, (arg) => {
             if (eventMapperIsAsync(eventMapper, reduceAsync)) {
