@@ -250,7 +250,7 @@ describe('export', function() {
             {
                 "msgtype": "m.text",
                 "body": "> <@me:here> The source is more than 32 characters\n\nReply",
-                "expectedText": "<@me:here \"The source is more than 32 chara...\"> Reply",
+                "expectedText": "<@me:here \"The source is more than 32 chara…\"> Reply",
             },
             {
                 "msgtype": "m.text",

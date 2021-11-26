@@ -1413,12 +1413,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     private getClosestEvent = (el: HTMLElement, fromTop: boolean): string => {
-        const timelinePanel = ReactDOM.findDOMNode(this) as Element;
-        const messageList = timelinePanel.querySelector(".mx_RoomView_MessageList");
         let requiredElement: Element;
         // if the selected element belongs to a date separator, assign its neighbouring element as the required element
         if (el.parentElement.classList.contains("mx_DateSeparator")) {
-            while (el.parentElement != messageList) el = el.parentElement;
+            el = el.closest("li");
             if (fromTop) requiredElement = el.nextElementSibling;
             else requiredElement = el.previousElementSibling;
         } else {
