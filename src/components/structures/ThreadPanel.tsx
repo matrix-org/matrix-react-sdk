@@ -27,7 +27,7 @@ import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuB
 import ContextMenu, { ChevronFace, useContextMenu } from './ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import TimelinePanel from './TimelinePanel';
-import { Layout } from '../../settings/Layout';
+import { Layout } from '../../settings/enums/Layout';
 import { useEventEmitter } from '../../hooks/useEventEmitter';
 import AccessibleButton from '../views/elements/AccessibleButton';
 import { TileShape } from '../views/rooms/EventTile';
@@ -73,15 +73,13 @@ const useFilteredThreadsTimelinePanel = ({
     const buildThreadList = useCallback(function(timelineSet: EventTimelineSet) {
         timelineSet.resetLiveTimeline("");
         Array.from(threads)
-            .map(([, thread]) => thread)
-            .forEach(thread => {
-                const ownEvent = thread.rootEvent.getSender() === userId;
-                if (filterOption !== ThreadFilterType.My || ownEvent) {
+            .forEach(([, thread]) => {
+                if (filterOption !== ThreadFilterType.My || thread.hasCurrentUserParticipated) {
                     timelineSet.addLiveEvent(thread.rootEvent);
                 }
             });
         updateTimeline();
-    }, [filterOption, threads, updateTimeline, userId]);
+    }, [filterOption, threads, updateTimeline]);
 
     useEffect(() => { buildThreadList(timelineSet); }, [timelineSet, buildThreadList]);
 

@@ -22,7 +22,7 @@ import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { makeUserPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { Layout } from "../../../settings/Layout";
+import { Layout } from "../../../settings/enums/Layout";
 import escapeHtml from "escape-html";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
