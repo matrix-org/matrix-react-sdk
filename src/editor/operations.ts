@@ -38,7 +38,7 @@ export function formatRange(range: Range, action: Formatting): void {
 
     // Edgecase when just selecting whitespace or new line.
     // There should be no reason to format whitespace, so we can just return.
-    if (range.length == 0) {
+    if (range.length === 0) {
         return;
     }
 
