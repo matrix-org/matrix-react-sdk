@@ -408,7 +408,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
                 defaultDispatcher.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     room_id: room.roomId,
                     show_room_tile: true, // to make sure the room gets scrolled into view
                 });
