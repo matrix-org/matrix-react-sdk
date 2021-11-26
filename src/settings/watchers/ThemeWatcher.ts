@@ -15,17 +15,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsStore from '../SettingsStore';
-import dis from '../../dispatcher/dispatcher';
 import { Action } from '../../dispatcher/actions';
-import ThemeController from "../controllers/ThemeController";
-import { findHighContrastTheme, setTheme } from "../../theme";
 import { ActionPayload } from '../../dispatcher/payloads';
-import { SettingLevel } from "../SettingLevel";
+import dis from '../../dispatcher/dispatcher';
+import { CustomTheme } from "../../Theme";
+import { SETTINGS } from '../Settings';
+import SettingsStore from '../SettingsStore';
+import { SettingLevel } from '../SettingLevel';
+import { _t } from '../../languageHandler';
+import { Theme } from '../../Theme';
+import ThemeController from '../controllers/ThemeController';
 
-import { logger } from "matrix-js-sdk/src/logger";
+import { logger } from 'matrix-js-sdk/src/logger';
+
+interface IThemeWatcherOpts {
+    sanitized?: boolean
+    newInstance?: boolean
+}
 
 export default class ThemeWatcher {
+
+    private static instance_: ThemeWatcher;
+
     private themeWatchRef: string;
     private systemThemeWatchRef: string;
     private dispatcherRef: string;
@@ -34,9 +45,156 @@ export default class ThemeWatcher {
     private preferLight: MediaQueryList;
     private preferHighContrast: MediaQueryList;
 
-    private currentTheme: string;
+    private initialTheme: string;
 
-    constructor() {
+    static BUILTIN_THEMES = {
+        'light': _t('Light'),
+        'light-high-contrast': _t('Light high contrast'),
+        'dark': _t('Dark'),
+    };
+
+    public static get availableThemes(): {[key: string]: string} {
+        const customThemes = SettingsStore.getValue('custom_themes');
+        const customThemeNames = {};
+        for (const { name } of customThemes) {
+            customThemeNames[`custom-${name}`] = name;
+        }
+        return Object.assign({}, customThemeNames, ThemeWatcher.BUILTIN_THEMES);
+    }
+
+    public static get customThemes() {
+        return SettingsStore.getValue('custom_themes')
+    }
+
+    public static currentTheme(opts: IThemeWatcherOpts = {}): string {
+        // Dev note: Much of this logic is replicated in the AppearanceUserSettingsTab
+
+        // If the user has specifically enabled the system matching option (excluding default),
+        // then use that over anything else. We pick the lowest possible level for the setting
+        // to ensure the ordering otherwise works.
+        if (ThemeWatcher.instance(opts).useSystemTheme) {
+            logger.log('returning explicit system theme');
+            const theme = ThemeWatcher.instance(opts).systemTheme();
+            if (theme) {
+                return theme;
+            }
+        }
+
+        // If the user has specifically enabled the theme (without the system matching option being
+        // enabled specifically and excluding the default), use that theme. We pick the lowest possible
+        // level for the setting to ensure the ordering otherwise works.
+        const settingsTheme = ThemeWatcher.instance(opts).settingsTheme();
+        if (settingsTheme) {
+            logger.log('returning explicit theme: ' + settingsTheme);
+            return settingsTheme;
+        }
+
+        // If the above didn't work, try again sanitized
+        if (!opts.sanitized) {
+            return ThemeWatcher.currentTheme({ sanitized: true });
+        }
+
+        // You really shouldn't be able to get this far,
+        // since 'sanitized' returns default values
+    }
+
+    public static instance(opts: IThemeWatcherOpts = {}): ThemeWatcher {
+        if (opts.newInstance || !ThemeWatcher.instance_) {
+            ThemeWatcher.instance_ = new ThemeWatcher();
+        }
+        return ThemeWatcher.instance_;
+    }
+
+    public static newInstance(opts: IThemeWatcherOpts = {}): ThemeWatcher {
+        return ThemeWatcher.instance({ newInstance: true });
+    }
+
+    public static isDarkTheme(opts: IThemeWatcherOpts = {}): boolean {
+        if (ThemeWatcher.instance(opts).useSystemTheme) {
+            return ThemeWatcher.instance(opts).preferDark.matches;
+        } else {
+            const theme = ThemeWatcher.instance(opts).settingsTheme();
+            if (theme.startsWith('custom-')) {
+                return new CustomTheme(theme.substring('custom-'.length)).is_dark;
+            }
+            return theme === ThemeWatcher.instance(opts).settingsDarkTheme();
+        }
+    }
+
+    public static isHighContrast(opts: IThemeWatcherOpts = {}): boolean {
+        if (ThemeWatcher.instance(opts).useSystemTheme) {
+            return ThemeWatcher.instance(opts).preferHighContrast.matches;
+        } else {
+            const theme = ThemeWatcher.instance(opts).settingsTheme();
+            if (theme.startsWith('custom-')) {
+                return false;
+            }
+            return new Theme(theme).isHighContrast;
+        }
+    }
+
+    // This allows both:
+    // * deferring the default dark theme to the settings schema
+    // * adding alternate dark themes later
+    private settingsDarkTheme(opts: IThemeWatcherOpts = {}): string {
+        if (opts.sanitized) {
+            return SETTINGS['dark_theme'].default;
+        }
+        return SettingsStore.getValue('dark_theme');
+    }
+
+    // This allows both:
+    // * deferring the default dark theme to the settings schema
+    // * adding alternate dark themes later
+    private settingsLightTheme(opts: IThemeWatcherOpts = {}): string {
+        if (opts.sanitized) {
+            return SETTINGS['light_theme'].default;
+        }
+        return SettingsStore.getValue('light_theme');
+    }
+
+    private settingsTheme(opts: IThemeWatcherOpts = {}): string {
+        let theme = SettingsStore.getValueAt(
+            SettingLevel.DEVICE, 'theme', null, false, true);
+
+        if (theme.startsWith('custom-')) {
+            if (theme.contains('light') || !new CustomTheme(theme.substr(7)).is_dark) {
+                return ThemeWatcher.instance(opts).settingsLightTheme();
+            } else {
+                return ThemeWatcher.instance(opts).settingsDarkTheme();
+            }
+        }
+
+        return theme;
+    }
+
+    public static supportsSystemTheme(opts: IThemeWatcherOpts = {}): boolean {
+        return ThemeWatcher.instance(opts).preferDark.matches || ThemeWatcher.instance(opts).preferLight.matches;
+    }
+
+    private systemTheme(opts: IThemeWatcherOpts = {}): string {
+        let newTheme: string;
+        // default to dark for historical reasons
+        // preferHighContrast only supports light for now
+        if (ThemeWatcher.instance(opts).preferLight.matches || ThemeWatcher.instance(opts).preferHighContrast.matches) {
+            newTheme = ThemeWatcher.instance(opts).settingsLightTheme();
+        } else {
+            newTheme = ThemeWatcher.instance(opts).settingsDarkTheme();
+        }
+        if (ThemeWatcher.instance(opts).preferHighContrast.matches && !opts.sanitized) {
+            const hcTheme = new Theme(newTheme).highContrast;
+            if (hcTheme) {
+                newTheme = hcTheme;
+            }
+        }
+        return newTheme;
+    }
+
+    private get useSystemTheme(): boolean {
+        return SettingsStore.getValueAt(SettingLevel.DEVICE, 'use_system_theme', null, false, true)
+    }
+
+    private constructor() {
         this.themeWatchRef = null;
         this.systemThemeWatchRef = null;
         this.dispatcherRef = null;
@@ -47,116 +205,49 @@ export default class ThemeWatcher {
         this.preferLight = (<any>global).matchMedia("(prefers-color-scheme: light)");
         this.preferHighContrast = (<any>global).matchMedia("(prefers-contrast: more)");
 
-        this.currentTheme = this.getEffectiveTheme();
+        this.initialTheme = ThemeWatcher.currentTheme();
     }
 
-    public start() {
-        this.themeWatchRef = SettingsStore.watchSetting("theme", null, this.onChange);
-        this.systemThemeWatchRef = SettingsStore.watchSetting("use_system_theme", null, this.onChange);
-        if (this.preferDark.addEventListener) {
-            this.preferDark.addEventListener('change', this.onChange);
-            this.preferLight.addEventListener('change', this.onChange);
-            this.preferHighContrast.addEventListener('change', this.onChange);
+    public start(opts: IThemeWatcherOpts = {}) {
+        ThemeWatcher.instance(opts).themeWatchRef = SettingsStore.watchSetting('theme', null, ThemeWatcher.instance(opts).onChange);
+        ThemeWatcher.instance(opts).systemThemeWatchRef = SettingsStore.watchSetting('use_system_theme', null, ThemeWatcher.instance(opts).onChange);
+        if (ThemeWatcher.instance(opts).preferDark.addEventListener) {
+            ThemeWatcher.instance(opts).preferDark.addEventListener('change', ThemeWatcher.instance(opts).onChange);
+            ThemeWatcher.instance(opts).preferLight.addEventListener('change', ThemeWatcher.instance(opts).onChange);
+            ThemeWatcher.instance(opts).preferHighContrast.addEventListener('change', ThemeWatcher.instance(opts).onChange);
         }
-        this.dispatcherRef = dis.register(this.onAction);
+        ThemeWatcher.instance(opts).dispatcherRef = dis.register(ThemeWatcher.instance(opts).onAction);
     }
 
     public stop() {
-        if (this.preferDark.addEventListener) {
-            this.preferDark.removeEventListener('change', this.onChange);
-            this.preferLight.removeEventListener('change', this.onChange);
-            this.preferHighContrast.removeEventListener('change', this.onChange);
+        if (ThemeWatcher.instance().preferDark.addEventListener) {
+            ThemeWatcher.instance().preferDark.removeEventListener('change', ThemeWatcher.instance().onChange);
+            ThemeWatcher.instance().preferLight.removeEventListener('change', ThemeWatcher.instance().onChange);
+            ThemeWatcher.instance().preferHighContrast.removeEventListener('change', ThemeWatcher.instance().onChange);
         }
-        SettingsStore.unwatchSetting(this.systemThemeWatchRef);
-        SettingsStore.unwatchSetting(this.themeWatchRef);
-        dis.unregister(this.dispatcherRef);
+        SettingsStore.unwatchSetting(ThemeWatcher.instance().systemThemeWatchRef);
+        SettingsStore.unwatchSetting(ThemeWatcher.instance().themeWatchRef);
+        dis.unregister(ThemeWatcher.instance().dispatcherRef);
     }
-
-    private onChange = () => {
-        this.recheck();
-    };
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === Action.RecheckTheme) {
             // XXX forceTheme
-            this.recheck(payload.forceTheme);
+            ThemeWatcher.instance().recheck(payload.forceTheme);
         }
+    };
+
+    private onChange = () => {
+        ThemeWatcher.instance().recheck();
     };
 
     // XXX: forceTheme param added here as local echo appears to be unreliable
     // https://github.com/vector-im/element-web/issues/11443
     public recheck(forceTheme?: string) {
-        const oldTheme = this.currentTheme;
-        this.currentTheme = forceTheme === undefined ? this.getEffectiveTheme() : forceTheme;
-        if (oldTheme !== this.currentTheme) {
-            setTheme(this.currentTheme);
+        const oldTheme = ThemeWatcher.instance().initialTheme;
+        ThemeWatcher.instance().initialTheme = forceTheme === undefined ? ThemeWatcher.currentTheme() : forceTheme;
+        if (oldTheme !== ThemeWatcher.instance().initialTheme) {
+            ThemeController.setTheme(ThemeWatcher.instance().initialTheme);
         }
-    }
-
-    public getEffectiveTheme(): string {
-        // Dev note: Much of this logic is replicated in the AppearanceUserSettingsTab
-
-        // XXX: checking the isLight flag here makes checking it in the ThemeController
-        // itself completely redundant since we just override the result here and we're
-        // now effectively just using the ThemeController as a place to store the static
-        // variable. The system theme setting probably ought to have an equivalent
-        // controller that honours the same flag, although probablt better would be to
-        // have the theme logic in one place rather than split between however many
-        // different places.
-        if (ThemeController.isLogin) return 'light';
-
-        // If the user has specifically enabled the system matching option (excluding default),
-        // then use that over anything else. We pick the lowest possible level for the setting
-        // to ensure the ordering otherwise works.
-        const systemThemeExplicit = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "use_system_theme", null, false, true);
-        if (systemThemeExplicit) {
-            logger.log("returning explicit system theme");
-            const theme = this.themeBasedOnSystem();
-            if (theme) {
-                return theme;
-            }
-        }
-
-        // If the user has specifically enabled the theme (without the system matching option being
-        // enabled specifically and excluding the default), use that theme. We pick the lowest possible
-        // level for the setting to ensure the ordering otherwise works.
-        const themeExplicit = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "theme", null, false, true);
-        if (themeExplicit) {
-            logger.log("returning explicit theme: " + themeExplicit);
-            return themeExplicit;
-        }
-
-        // If the user hasn't really made a preference in either direction, assume the defaults of the
-        // settings and use those.
-        if (SettingsStore.getValue('use_system_theme')) {
-            const theme = this.themeBasedOnSystem();
-            if (theme) {
-                return theme;
-            }
-        }
-        logger.log("returning theme value");
-        return SettingsStore.getValue('theme');
-    }
-
-    private themeBasedOnSystem() {
-        let newTheme: string;
-        if (this.preferDark.matches) {
-            newTheme = 'dark';
-        } else if (this.preferLight.matches) {
-            newTheme = 'light';
-        }
-        if (this.preferHighContrast.matches) {
-            const hcTheme = findHighContrastTheme(newTheme);
-            if (hcTheme) {
-                newTheme = hcTheme;
-            }
-        }
-        return newTheme;
-    }
-
-    public isSystemThemeSupported() {
-        return this.preferDark.matches || this.preferLight.matches;
     }
 }

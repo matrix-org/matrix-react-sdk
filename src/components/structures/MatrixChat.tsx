@@ -891,7 +891,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         this.setStateForNewView(newState);
-        ThemeController.isLogin = true;
         this.themeWatcher.recheck();
         this.notifyNewScreen('register');
     }
@@ -1020,7 +1019,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             view: Views.WELCOME,
         });
         this.notifyNewScreen('welcome');
-        ThemeController.isLogin = true;
         this.themeWatcher.recheck();
     }
 
@@ -1030,7 +1028,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             ...otherState,
         });
         this.notifyNewScreen('login');
-        ThemeController.isLogin = true;
         this.themeWatcher.recheck();
     }
 
@@ -1043,7 +1040,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
         this.setPage(PageType.HomePage);
         this.notifyNewScreen('home');
-        ThemeController.isLogin = false;
         this.themeWatcher.recheck();
     }
 
@@ -1301,7 +1297,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
      * Called when a new logged in session has started
      */
     private async onLoggedIn() {
-        ThemeController.isLogin = false;
         this.themeWatcher.recheck();
         this.setStateForNewView({ view: Views.LOGGED_IN });
         // If a specific screen is set to be shown after login, show that above
