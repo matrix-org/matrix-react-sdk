@@ -430,7 +430,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 { dndButton }
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconBell"
-                    label={_t("Notification settings")}
+                    label={_t("Notifications")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Notifications)}
                 />
                 <IconizedContextMenuOption
