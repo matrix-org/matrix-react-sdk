@@ -2,3 +2,4 @@ node_modules
 *.png
 element/env
 performance-entries.json
+dist

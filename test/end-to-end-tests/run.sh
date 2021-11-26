@@ -35,5 +35,5 @@ trap 'handle_error' ERR
 if [ $has_custom_app -ne "1" ]; then
     ./element/start.sh
 fi
-node start.js $@
+node dist/start.js $@
 stop_servers
