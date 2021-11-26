@@ -36,6 +36,7 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { BetaPill } from "../beta/BetaCard";
 import SettingsStore from "../../../settings/SettingsStore";
+import { Action } from "../../../dispatcher/actions";
 
 interface IProps extends IContextMenuProps {
     space: Room;
