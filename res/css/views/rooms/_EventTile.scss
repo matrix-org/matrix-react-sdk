@@ -872,9 +872,15 @@ $left-gutter: 64px;
     }
 
     .mx_EventTile_content,
-    .mx_RedactedBody {
+    .mx_RedactedBody,
+    .mx_ReplyChain_wrapper {
         margin-left: 36px;
         margin-right: 50px;
+
+        .mx_EventTile_content,
+        .mx_RedactedBody {
+            margin: 0;
+        }
     }
 
     .mx_MessageComposer_sendMessage {
