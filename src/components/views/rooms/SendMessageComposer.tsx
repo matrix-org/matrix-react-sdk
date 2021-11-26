@@ -350,7 +350,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private async runSlashCommand(cmd: Command, args: string): Promise<void> {
-        const result = cmd.run(this.props.room.roomId, args);
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation?.event_id
+            : null;
+
+        const result = cmd.run(this.props.room.roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -479,7 +483,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 decorateStartSendingTime(content);
             }
 
-            const prom = this.props.mxClient.sendMessage(roomId, content);
+            const threadId = this.props.relation?.rel_type === RelationType.Thread
+                ? this.props.relation.event_id
+                : null;
+
+            const prom = this.props.mxClient.sendMessage(roomId, threadId, content);
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
@@ -495,7 +503,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     // For initial threads launch, chat effects are disabled
                     // see #19731
                     const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
-                    if (!SettingsStore.getValue("feature_thread") || !isNotThread) {
+                    if (!SettingsStore.getValue("feature_thread") || isNotThread) {
                         dis.dispatch({ action: `effects.${effect.command}` });
                     }
                 }
@@ -639,6 +647,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     };
 
     render() {
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation.event_id
+            : null;
         return (
             <div className="mx_SendMessageComposer" onClick={this.focusComposer} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
@@ -646,6 +657,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     ref={this.editorRef}
                     model={this.model}
                     room={this.props.room}
+                    threadId={threadId}
                     label={this.props.placeholder}
                     placeholder={this.props.placeholder}
                     onPaste={this.onPaste}
