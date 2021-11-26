@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637919044648,
+  "lastUpdate": 1637923523727,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -41948,6 +41948,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4596.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d256af775d2934719aaa5de45e48de0b43acdb71",
+          "message": "Add basic linkify-matrix tests (#7199)\n\nAdd basic linkify-matrix tests",
+          "timestamp": "2021-11-26T10:39:07Z",
+          "tree_id": "b0518708240956cfb402c58c9d094a372e862862",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d256af775d2934719aaa5de45e48de0b43acdb71"
+        },
+        "date": 1637923521254,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5028.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1206.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1740.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4701.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
