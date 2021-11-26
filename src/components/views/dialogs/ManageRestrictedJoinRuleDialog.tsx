@@ -66,8 +66,15 @@ const Entry = ({ room, checked, onChange }) => {
     </label>;
 };
 
-const getAllParents = (roomId: string): string[] => {
-    return [...SpaceStore.instance.getKnownParents(roomId)].flatMap(parentId => [parentId, ...getAllParents(parentId)]);
+const addAllParents = (set: Set<Room>, room: Room): void => {
+    const cli = room.client;
+    const parents = Array.from(SpaceStore.instance.getKnownParents(room.roomId)).map(parentId => cli.getRoom(parentId));
+
+    parents.forEach(parent => {
+        if (set.has(parent)) return;
+        set.add(parent);
+        addAllParents(set, parent);
+    });
 };
 
 const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [], onFinished }) => {
@@ -77,8 +84,10 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
     const lcQuery = query.toLowerCase().trim();
 
     const [spacesContainingRoom, otherEntries] = useMemo(() => {
+        const parents = new Set<Room>();
+        addAllParents(parents, room);
         return [
-            Array.from(new Set(getAllParents(room.roomId))).map(roomId => cli.getRoom(roomId)),
+            Array.from(parents),
             selected.map(roomId => {
                 const room = cli.getRoom(roomId);
                 if (!room) {
