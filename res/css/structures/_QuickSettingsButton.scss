@@ -36,6 +36,10 @@ limitations under the License.
 
     &:hover {
         background-color: $quaternary-content;
+
+        &::before {
+            background-color: $primary-content;
+        }
     }
 }
 
@@ -64,6 +68,26 @@ limitations under the License.
         text-transform: uppercase;
         color: $tertiary-content;
         margin: 20px 0 12px;
+    }
+
+    .mx_QuickSettingsButton_pinToSidebarHeading {
+        padding-right: 24px;
+        position: relative;
+
+        &::before {
+            background-color: $secondary-content;
+            content: "";
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     }
 
     .mx_Checkbox {

@@ -72,7 +72,7 @@ const QuickSettingsButton = () => {
                 { _t("All settings") }
             </AccessibleButton>
 
-            <h4>{ _t("Pin to sidebar") }</h4>
+            <h4 className="mx_QuickSettingsButton_pinToSidebarHeading">{ _t("Pin to sidebar") }</h4>
 
             <StyledCheckbox
                 className="mx_QuickSettingsButton_favouritesCheckbox"
