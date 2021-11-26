@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637927491038,
+  "lastUpdate": 1637941631191,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42044,6 +42044,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4702.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9fefeefc8c8c3ad68828c52d0b61ea92be2c94e0",
+          "message": "Spaces quick settings (#7196)",
+          "timestamp": "2021-11-26T15:41:04Z",
+          "tree_id": "f910b82c0c0ce4b1e30d7ae1f8c57207f8d7be45",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9fefeefc8c8c3ad68828c52d0b61ea92be2c94e0"
+        },
+        "date": 1637941628788,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5059.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 969,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1644.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4525,
             "unit": "ms",
             "extra": "type: measure"
           }
