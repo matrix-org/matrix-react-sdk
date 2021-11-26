@@ -35,5 +35,6 @@ trap 'handle_error' ERR
 if [ $has_custom_app -ne "1" ]; then
     ./element/start.sh
 fi
+yarn build
 node dist/start.js $@
 stop_servers
