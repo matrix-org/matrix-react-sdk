@@ -40,7 +40,7 @@ export async function e2eEncryptionScenarios(alice: ElementSession, bob: Element
     // wait in parallel, so they don't deadlock on each other
     // the logs get a bit messy here, but that's fine enough for debugging (hopefully)
     const [bobSas, aliceSas] = await Promise.all([bobSasPromise, aliceSasPromise]);
-    assert.deepStrictEqual(bobSas, aliceSas);
+    assert.deepEqual(bobSas, aliceSas);
     await measureStop(bob, "mx_VerifyE2EEUser");
     bob.log.done(`done (match for ${bobSas.join(", ")})`);
     const aliceMessage = "Guess what I just heard?!";
