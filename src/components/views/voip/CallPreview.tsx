@@ -27,8 +27,11 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { EventSubscription } from 'fbemitter';
 import PictureInPictureDragger from './PictureInPictureDragger';
+import dis from '../../../dispatcher/dispatcher';
+import { Action } from "../../../dispatcher/actions";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -57,7 +60,9 @@ interface IState {
 // (which should be a single element) of other calls.
 // The primary will be the one not on hold, or an arbitrary one
 // if they're all on hold)
-function getPrimarySecondaryCalls(calls: MatrixCall[]): [MatrixCall, MatrixCall[]] {
+function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall[]] {
+    const calls = CallHandler.instance.getAllActiveCallsForPip(roomId);
+
     let primary: MatrixCall = null;
     let secondaries: MatrixCall[] = [];
 
@@ -99,9 +104,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
 
         const roomId = RoomViewStore.getRoomId();
 
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.instance.getAllActiveCallsNotInRoom(roomId),
-        );
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(roomId);
 
         this.state = {
             roomId,
@@ -115,6 +118,10 @@ export default class CallPreview extends React.Component<IProps, IState> {
         CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCalls);
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
+        const room = MatrixClientPeg.get()?.getRoom(this.state.roomId);
+        if (room) {
+            WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
+        }
     }
 
     public componentWillUnmount() {
@@ -125,27 +132,37 @@ export default class CallPreview extends React.Component<IProps, IState> {
             this.roomStoreToken.remove();
         }
         SettingsStore.unwatchSetting(this.settingsWatcherRef);
+        const room = MatrixClientPeg.get().getRoom(this.state.roomId);
+        WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
     }
 
     private onRoomViewStoreUpdate = () => {
-        if (RoomViewStore.getRoomId() === this.state.roomId) return;
+        const newRoomId = RoomViewStore.getRoomId();
+        const oldRoomId = this.state.roomId;
+        if (newRoomId === oldRoomId) return;
+        // The WidgetLayoutStore observer always tracks the currently viewed Room,
+        // so we don't end up with multiple observers and know what observer to remove on unmount
+        const oldRoom = MatrixClientPeg.get()?.getRoom(oldRoomId);
+        if (oldRoom) {
+            WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(oldRoom), this.updateCalls);
+        }
+        const newRoom = MatrixClientPeg.get()?.getRoom(newRoomId);
+        if (newRoom) {
+            WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(newRoom), this.updateCalls);
+        }
+        if (!newRoomId) return;
 
-        const roomId = RoomViewStore.getRoomId();
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.instance.getAllActiveCallsNotInRoom(roomId),
-        );
-
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(newRoomId);
         this.setState({
-            roomId,
+            roomId: newRoomId,
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
         });
     };
 
     private updateCalls = (): void => {
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.instance.getAllActiveCallsNotInRoom(this.state.roomId),
-        );
+        if (!this.state.roomId) return;
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
 
         this.setState({
             primaryCall: primaryCall,
@@ -154,13 +171,19 @@ export default class CallPreview extends React.Component<IProps, IState> {
     };
 
     private onCallRemoteHold = () => {
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.instance.getAllActiveCallsNotInRoom(this.state.roomId),
-        );
+        if (!this.state.roomId) return;
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
 
         this.setState({
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
+        });
+    };
+
+    private onDoubleClick = (): void => {
+        dis.dispatch({
+            action: Action.ViewRoom,
+            room_id: this.state.primaryCall.roomId,
         });
     };
 
@@ -171,6 +194,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
                 <PictureInPictureDragger
                     className="mx_CallPreview"
                     draggable={pipMode}
+                    onDoubleClick={this.onDoubleClick}
                 >
                     { ({ onStartMoving, onResize }) => <CallView
                         onMouseDownOnHeader={onStartMoving}
