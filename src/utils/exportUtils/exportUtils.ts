@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IContent, MatrixEvent } from "matrix-js-sdk";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { _t } from "../../languageHandler";
 
 export enum ExportFormat {
