@@ -324,7 +324,9 @@ export default abstract class BasePlatform {
         let data;
         try {
             data = await idbLoad("pickleKey", [userId, deviceId]);
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbLoad for pickleKey failed", e);
+        }
         if (!data) {
             return null;
         }
@@ -403,6 +405,8 @@ export default abstract class BasePlatform {
     async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
             await idbDelete("pickleKey", [userId, deviceId]);
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbDelete failed in destroyPickleKey", e);
+        }
     }
 }

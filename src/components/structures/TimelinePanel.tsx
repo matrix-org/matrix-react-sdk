@@ -25,13 +25,14 @@ import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { SyncState } from 'matrix-js-sdk/src/sync.api';
 
 import SettingsStore from "../../settings/SettingsStore";
-import { Layout } from "../../settings/Layout";
+import { Layout } from "../../settings/enums/Layout";
 import { _t } from '../../languageHandler';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import RoomContext from "../../contexts/RoomContext";
 import UserActivity from "../../UserActivity";
 import Modal from "../../Modal";
 import dis from "../../dispatcher/dispatcher";
+import { Action } from '../../dispatcher/actions';
 import { Key } from '../../Keyboard';
 import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
@@ -1135,7 +1136,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 onFinished = () => {
                     // go via the dispatcher so that the URL is updated
                     dis.dispatch({
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         room_id: this.props.timelineSet.room.roomId,
                     });
                 };

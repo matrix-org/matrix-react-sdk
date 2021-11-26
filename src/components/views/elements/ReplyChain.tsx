@@ -23,7 +23,7 @@ import dis from '../../../dispatcher/dispatcher';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { makeUserPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import SettingsStore from "../../../settings/SettingsStore";
-import { Layout } from "../../../settings/Layout";
+import { Layout } from "../../../settings/enums/Layout";
 import escapeHtml from "escape-html";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
@@ -110,6 +110,8 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         if (mRelatesTo && mRelatesTo['m.in_reply_to']) {
             const mInReplyTo = mRelatesTo['m.in_reply_to'];
             if (mInReplyTo && mInReplyTo['event_id']) return mInReplyTo['event_id'];
+        } else if (!SettingsStore.getValue("feature_thread") && ev.isThreadRelation) {
+            return ev.threadRootId;
         }
     }
 

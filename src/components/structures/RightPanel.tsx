@@ -50,7 +50,7 @@ import NotificationPanel from "./NotificationPanel";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PinnedMessagesCard from "../views/right_panel/PinnedMessagesCard";
 import { throttle } from 'lodash';
-import SpaceStore from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
@@ -200,7 +200,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     };
 
     private onAction = (payload: ActionPayload) => {
-        const isChangingRoom = payload.action === 'view_room' && payload.room_id !== this.props.room.roomId;
+        const isChangingRoom = payload.action === Action.ViewRoom && payload.room_id !== this.props.room.roomId;
         const isViewingThread = this.state.phase === RightPanelPhases.ThreadView;
         if (isChangingRoom && isViewingThread) {
             dispatchShowThreadsPanelEvent();
@@ -355,7 +355,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 panel = <ThreadPanel
                     roomId={roomId}
                     resizeNotifier={this.props.resizeNotifier}
-                    onClose={this.onClose} />;
+                    onClose={this.onClose}
+                    permalinkCreator={this.props.permalinkCreator}
+                />;
                 break;
 
             case RightPanelPhases.RoomSummary:
