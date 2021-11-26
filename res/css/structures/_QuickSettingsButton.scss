@@ -71,7 +71,7 @@ limitations under the License.
     }
 
     .mx_QuickSettingsButton_pinToSidebarHeading {
-        padding-right: 24px;
+        padding-left: 24px;
         position: relative;
 
         &::before {
@@ -84,7 +84,7 @@ limitations under the License.
             width: 16px;
             height: 16px;
             position: absolute;
-            right: 0;
+            left: 0;
             top: 50%;
             transform: translateY(-50%);
         }
