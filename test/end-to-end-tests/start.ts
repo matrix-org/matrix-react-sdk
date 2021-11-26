@@ -18,7 +18,6 @@ import { ElementSession } from './src/session';
 import { scenario } from './src/scenario';
 import { RestSessionCreator } from './src/rest/creator';
 import * as fs from "fs";
-import 'src/@types/global';
 
 import * as program from 'commander';
 program
@@ -33,6 +32,14 @@ program
     .parse(process.argv);
 
 const hsUrl = 'http://localhost:5005';
+
+// XXX: why is this not located in @types/global.d.ts?
+declare global {
+    interface Window {
+        mxPerformanceMonitor: any;
+        mxPerformanceEntryNames: any;
+    }
+}
 
 async function runTests() {
     const sessions = [];

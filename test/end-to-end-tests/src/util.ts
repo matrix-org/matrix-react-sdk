@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "./@types/global";
 import { ElementSession } from "./session";
 
 export const range = function(start: number, amount: number, step = 1): Array<number> {
@@ -32,12 +31,12 @@ export const delay = function(ms): Promise<void> {
 
 export const measureStart = function(session: ElementSession, name: string): Promise<void> {
     return session.page.evaluate(_name => {
-        window.mxPerformanceMonitor.start(_name);
+        window['mxPerformanceMonitor'].start(_name);
     }, name);
 };
 
 export const measureStop = function(session: ElementSession, name: string): Promise<void> {
     return session.page.evaluate(_name => {
-        window.mxPerformanceMonitor.stop(_name);
+        window['mxPerformanceMonitor'].stop(_name);
     }, name);
 };
