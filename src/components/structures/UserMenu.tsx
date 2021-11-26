@@ -352,10 +352,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        let bottomSection;
+        let topSection;
         const hostSignupConfig: IHostSignupConfig = SdkConfig.get().hostSignup;
         if (MatrixClientPeg.get().isGuest()) {
-            bottomSection = (
+            topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
                     { _t("Got an account? <a>Sign in</a>", {}, {
                         a: sub => (
@@ -381,7 +381,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 const mxDomain = MatrixClientPeg.get().getDomain();
                 const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
                 if (!hostSignupConfig.domains || validDomains.length > 0) {
-                    bottomSection = <HostSignupAction onClick={this.onCloseMenu} />;
+                    topSection = <HostSignupAction onClick={this.onCloseMenu} />;
                 }
             }
         }
@@ -499,8 +499,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 </AccessibleTooltipButton>
             </div>
             { customStatusSection }
+            { topSection }
             { primaryOptionList }
-            { bottomSection }
         </IconizedContextMenu>;
     };
 
