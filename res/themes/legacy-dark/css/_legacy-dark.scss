@@ -116,8 +116,7 @@ $call-view-button-off-background: $primary-content;
 
 $video-feed-secondary-background: $system;
 
-$roomlist-button-bg-color: #1A1D23; // Buttons include the filter box, explore button, and sublist buttons
-$roomlist-filter-active-bg-color: $roomlist-button-bg-color;
+$roomlist-filter-active-bg-color: $panel-actions;
 $roomlist-bg-color: $header-panel-bg-color;
 
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, #3e444c 0%, #3e444c00 100%);
