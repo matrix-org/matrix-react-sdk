@@ -155,13 +155,13 @@ $dialog-close-fg-color: #c1c1c1;
 // ********************
 $imagebody-giflabel: rgba(0, 0, 0, 0.7);
 $imagebody-giflabel-border: rgba(0, 0, 0, 0.2);
-$imagebody-giflabel-color: rgba(255, 255, 255, 1);
+$imagebody-giflabel-color: $background;
 // ********************
 
 // RoomList
 // ********************
 $roomlist-bg-color: rgba(245, 245, 245, 0.90);
-$roomsublist-skeleton-ui-bg: linear-gradient(180deg, #ffffff 0%, #ffffff00 100%);
+$roomsublist-skeleton-ui-bg: linear-gradient(180deg, $background 0%, #ffffff00 100%);
 $roomtile-default-badge-bg-color: $muted-fg-color;
 // ********************
 
