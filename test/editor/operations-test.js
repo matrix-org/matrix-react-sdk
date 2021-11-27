@@ -209,9 +209,6 @@ describe('editor/operations: formatting operations', () => {
 
             formatRange(range, Formatting.Bold); // Toggle
 
-            expect(range.getLastStartingPosition().index).toBe(1); // Without the final offset
-            expect(range.getLastStartingPosition().offset).toBe(2);
-
             expect(model.serializeParts()).toEqual([
                 SERIALIZED_NEWLINE,
                 { "text": "**hello!**", "type": "plain" },
@@ -260,20 +257,10 @@ describe('editor/operations: formatting operations', () => {
             const endOfFirstLine = 16;
             const range = model.startRange(model.positionForOffset(endOfFirstLine, true));
 
-            expect(range.getLastStartingPosition()).toEqual(range.start);
-            expect(range.getLastStartingPosition()).toEqual(range.end);
-
             formatRange(range, Formatting.Bold); // Untoggle
-
-            expect(range.start.index).toEqual(0);
-            expect(range.end.index).toEqual(0);
-
-            expect(range.getLastStartingPosition().index).toEqual(0);
-            expect(range.getLastStartingPosition().offset).toEqual(12);
-
             formatRange(range, Formatting.Italics); // Toggle
 
-            // We expected formatting to still happen in the first line as the caret should not jump down
+            // We expect formatting to still happen in the first line as the caret should not jump down
             expect(model.serializeParts()).toEqual([
                 { "text": "hello _hello!_", "type": "plain" },
                 SERIALIZED_NEWLINE,
@@ -287,27 +274,34 @@ describe('editor/operations: formatting operations', () => {
             const model = new EditorModel([
                 pc.plain("hello!"),
                 pc.newline(),
-                pc.newline(),
                 pc.plain("world!"),
+                pc.newline(),
             ], pc, renderer);
 
-            const range = model.startRange(model.positionForOffset(8, false), model.getPositionAtEnd()); // select-all
-
-            expect(range.parts.map(p => p.text).join("")).toBe("world!");
+            let range = model.startRange(model.getPositionAtEnd().asOffset(model).add(-1).asPosition(model)); // select-all
 
             expect(model.serializeParts()).toEqual([
                 { "text": "hello!", "type": "plain" },
                 SERIALIZED_NEWLINE,
-                SERIALIZED_NEWLINE,
                 { "text": "world!", "type": "plain" },
+                SERIALIZED_NEWLINE,
             ]);
 
             formatRange(range, Formatting.InsertLink); // Toggle
             expect(model.serializeParts()).toEqual([
                 { "text": "hello!", "type": "plain" },
                 SERIALIZED_NEWLINE,
-                SERIALIZED_NEWLINE,
                 { "text": "[world!]()", "type": "plain" },
+                SERIALIZED_NEWLINE,
+            ]);
+
+            range = model.startRange(model.getPositionAtEnd().asOffset(model).add(-1).asPosition(model)); // select-all
+            formatRange(range, Formatting.InsertLink); // Untoggle
+            expect(model.serializeParts()).toEqual([
+                { "text": "hello!", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                { "text": "world!", "type": "plain" },
+                SERIALIZED_NEWLINE,
             ]);
         });
 
@@ -321,7 +315,7 @@ describe('editor/operations: formatting operations', () => {
                 pc.plain("int y = 42;"),
             ], pc, renderer);
 
-            const range = model.startRange(model.positionForOffset(0, false), model.getPositionAtEnd()); // select-all
+            let range = model.startRange(model.positionForOffset(0), model.getPositionAtEnd()); // select-all
 
             expect(range.parts.map(p => p.text).join("")).toBe("int x = 1;\n\nint y = 42;");
 
@@ -343,6 +337,16 @@ describe('editor/operations: formatting operations', () => {
                 { "text": "int y = 42;", "type": "plain" },
                 SERIALIZED_NEWLINE,
                 { "text": "```", "type": "plain" },
+            ]);
+
+            range = model.startRange(model.positionForOffset(0, false), model.getPositionAtEnd()); // select-all
+            formatRange(range, Formatting.Code); // Untoggle
+
+            expect(model.serializeParts()).toEqual([
+                { "text": "int x = 1;", "type": "plain" },
+                SERIALIZED_NEWLINE,
+                SERIALIZED_NEWLINE,
+                { "text": "int y = 42;", "type": "plain" },
             ]);
         });
 
