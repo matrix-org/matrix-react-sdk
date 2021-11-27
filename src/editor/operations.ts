@@ -75,20 +75,20 @@ export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): 
     });
 }
 
-export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset = 0): void {
+export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset = 0, atNodeEnd = false): void {
     const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
         const addedLen = range.replace(newParts);
         const firstOffset = range.start.asOffset(model);
-        const lastOffset = firstOffset.add(oldLen + addedLen + offset);
+        const lastOffset = firstOffset.add(oldLen + addedLen + offset, atNodeEnd);
         return lastOffset.asPosition(model);
     });
 }
 
 /**
- * Replaces a range with formatting or removes existing formatting.
- * Then positions the cursor with respect to the prefix or suffix length.
+ * Replaces a range with formatting or removes existing formatting and
+ * positions the cursor with respect to the prefix and suffix length.
  * @param {Range} range the previous value
  * @param {Part[]} newParts the new value
  * @param {boolean} rangeHasFormatting the new value
@@ -98,42 +98,41 @@ export function replaceRangeAndAutoAdjustCaret(
     range: Range,
     newParts: Part[],
     rangeHasFormatting = false,
-    formatStringLength = 0,
+    prefixLength = 0,
+    suffixLength = prefixLength,
 ): void {
     const { model } = range;
-    model.transform(() => {
-        // Shift the initialPosition by the length amount of characters that are between the format string, if it exists
-        if (rangeHasFormatting) {
-            // getLastStartingPosition will always be after range.start.offset, we get a positive delta
-            const relativeOffset = range.getLastStartingPosition().offset - range.start.offset;
-            if (relativeOffset < formatStringLength) { // Was the caret at the left format string?
-                const correctionOffset = formatStringLength - relativeOffset;
-                const newStart = range.getLastStartingPosition().asOffset(model).add(correctionOffset);
-                range.setLastStartingPosition(newStart.asPosition(model));
-            }
-            if (range.length - relativeOffset < formatStringLength) { // Was the caret at the right format string?
-                const correctionOffset = (range.length - relativeOffset - formatStringLength);
-                const newStart = range.getLastStartingPosition().asOffset(model).add(correctionOffset);
-                range.setLastStartingPosition(newStart.asPosition(model));
-            }
+    const lastStartingPosition = range.getLastStartingPosition();
+    const relativeOffset = lastStartingPosition.offset - range.start.offset;
+    const distanceFromEnd = range.length - relativeOffset;
+    // Handle edge case were the caret is located within the suffix or prefix
+    if (rangeHasFormatting) {
+        if (relativeOffset < prefixLength) { // Was the caret at the left format string?
+            replaceRangeAndMoveCaret(range, newParts, -(range.length - 2 * suffixLength));
+            return;
         }
-        const offset = range.replace(newParts) / 2; // Works since all formatting that can be toggled is symmetric
-        const atEnd = range.getLastStartingPosition().asOffset(model).atNodeEnd;
-        const newStart = range.getLastStartingPosition().asOffset(model).add(offset, atEnd).asPosition(model);
-        range.setLastStartingPosition(newStart);
-        return range.getLastStartingPosition();
+        if (distanceFromEnd < suffixLength) { // Was the caret at the right format string?
+            replaceRangeAndMoveCaret(range, newParts, 0, true);
+            return;
+        }
+    }
+    // Calculate new position with respect to the previous position
+    model.transform(() => {
+        const offsetDirection = Math.sign(range.replace(newParts)); // Compensates for shrinkage or expansion
+        const atEnd = distanceFromEnd === suffixLength;
+        return lastStartingPosition.asOffset(model).add(offsetDirection * prefixLength, atEnd).asPosition(model);
     });
 }
 
-const isPlainWord = (_index: number, offset: number, part: Part) => {
+const isSameWord = (_index: number, offset: number, part: Part) => {
     return part.text[offset] !== " " && part.text[offset] !== "+" && part.type === Type.Plain;
 };
 
 export function selectRangeOfWordAtCaret(range: Range): void {
     // Select right side of word
-    range.expandForwardsWhile(isPlainWord);
+    range.expandForwardsWhile(isSameWord);
     // Select left side of word
-    range.expandBackwardsWhile(isPlainWord);
+    range.expandBackwardsWhile(isSameWord);
     // Trim possibly selected new lines
     range.trim();
 }
@@ -218,12 +217,20 @@ export function formatRangeAsCode(range: Range): void {
 }
 
 export function formatRangeAsLink(range: Range) {
-    const { model, parts } = range;
+    const { model } = range;
     const { partCreator } = model;
-    parts.unshift(partCreator.plain("["));
-    parts.push(partCreator.plain("]()"));
-    // We set offset to -1 here so that the caret lands between the brackets
-    replaceRangeAndMoveCaret(range, parts, -1);
+    const linkRegex = /\[(.*?)\]\(.*?\)/g;
+    const isFormattedAsLink = linkRegex.test(range.text);
+    if (isFormattedAsLink) {
+        const linkDescription = range.text.replace(linkRegex, "$1");
+        const newParts = [partCreator.plain(linkDescription)];
+        const prefixLength = 1;
+        const suffixLength = range.length - (linkDescription.length + 2);
+        replaceRangeAndAutoAdjustCaret(range, newParts, true, prefixLength, suffixLength);
+    } else {
+        // We set offset to -1 here so that the caret lands between the brackets
+        replaceRangeAndMoveCaret(range, [partCreator.plain("[" + range.text + "]" + "()")], -1);
+    }
 }
 
 // parts helper methods
