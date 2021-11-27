@@ -87,10 +87,9 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
         {
             action: MessageComposerAction.FormatLink,
             keyCombo: {
-                key: Key.K,
+                key: Key.L,
                 ctrlOrCmd: true,
-                altKey: !isMac,
-                shiftKey: isMac,
+                shiftKey: true,
             },
         },
         {
