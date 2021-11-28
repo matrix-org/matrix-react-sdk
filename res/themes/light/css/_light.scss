@@ -212,7 +212,7 @@ $message-action-bar-hover-border-color: $focus-bg-color;
 
 // Reaction row
 // ********************
-$reaction-row-button-border-color: #e9edf1;
+$reaction-row-button-border-color: $message-action-bar-border-color;
 $reaction-row-button-hover-border-color: $focus-bg-color;
 $reaction-row-button-selected-bg-color: #e9fff9;
 // ********************
