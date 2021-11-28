@@ -420,6 +420,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             } else {
                 newState.initialEventId = initialEventId;
                 newState.isInitialEventHighlighted = RoomViewStore.isInitialEventHighlighted();
+
+                if (thread && initialEvent?.isThreadRoot) {
+                    dispatchShowThreadEvent(
+                        thread.rootEvent,
+                        initialEvent,
+                        RoomViewStore.isInitialEventHighlighted(),
+                    );
+                }
             }
         }
 
@@ -737,7 +745,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private onUserScroll = () => {
         if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
                 event_id: this.state.initialEventId,
                 highlighted: false,
@@ -846,7 +854,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
                     setImmediate(() => {
                         dis.dispatch({
-                            action: 'view_room',
+                            action: Action.ViewRoom,
                             room_id: roomId,
                             deferred_action: payload,
                         });
@@ -1228,7 +1236,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             dis.dispatch({
                 action: 'do_after_sync_prepared',
                 deferred_action: {
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     room_id: this.getRoomId(),
                 },
             });
@@ -1604,7 +1612,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // an event will take care of both clearing the URL fragment and
             // jumping to the bottom
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
             });
         } else {
