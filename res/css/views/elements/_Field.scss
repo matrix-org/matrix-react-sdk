@@ -73,7 +73,7 @@ limitations under the License.
 }
 
 .mx_Field:focus-within {
-    border-color: $input-focused-border-color;
+    border-color: $accent-alt;
 }
 
 .mx_Field input:focus,
@@ -136,7 +136,7 @@ limitations under the License.
 .mx_Field input:focus + label,
 .mx_Field select:focus + label,
 .mx_Field textarea:focus + label {
-    color: $input-focused-border-color;
+    color: $accent-alt;
 }
 
 .mx_Field select:disabled,
