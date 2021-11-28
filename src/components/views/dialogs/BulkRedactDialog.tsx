@@ -39,58 +39,28 @@ interface IBulkRedactDialogProps extends IDialogProps {
 
 const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
     const { matrixClient: cli, room, member, onFinished } = props;
-    const [keepStateEvents, setKeepStateEvents] = useState(false);
+    const [keepStateEvents, setKeepStateEvents] = useState(true);
 
     let timeline = room.getLiveTimeline();
     let eventsToRedact = [];
     while (timeline) {
-        eventsToRedact = eventsToRedact.concat(timeline.getEvents().filter(event =>
+        eventsToRedact = [...eventsToRedact, ...timeline.getEvents().filter(event =>
             event.getSender() === member.userId &&
                 !event.isRedacted() && !event.isRedaction() &&
-                !(keepStateEvents && event.isState()) &&
                 event.getType() !== EventType.RoomCreate &&
                 // Don't redact ACLs because that'll obliterate the room
                 // See https://github.com/matrix-org/synapse/issues/4042 for details.
                 event.getType() !== EventType.RoomServerAcl &&
                 // Redacting encryption events is equally bad
                 event.getType() !== EventType.RoomEncryption,
-        ));
+        )];
         timeline = timeline.getNeighbouringTimeline(EventTimeline.BACKWARDS);
     }
-    const count = eventsToRedact.length;
-    const user = member.name;
 
-    const redact = async () => {
-        logger.info(`Started redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
-        dis.dispatch({
-            action: Action.BulkRedactStart,
-            room_id: room.roomId,
-        });
-
-        // Submitting a large number of redactions freezes the UI,
-        // so first yield to allow to rerender after closing the dialog.
-        await Promise.resolve();
-        await Promise.all(eventsToRedact.map(async event => {
-            try {
-                await cli.redactEvent(room.roomId, event.getId());
-            } catch (err) {
-                // log and swallow errors
-                logger.error("Could not redact", event.getId());
-                logger.error(err);
-            }
-        }));
-
-        logger.info(`Finished redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
-        dis.dispatch({
-            action: Action.BulkRedactEnd,
-            room_id: room.roomId,
-        });
-    };
-
-    if (count === 0 && !keepStateEvents) {
+    if (eventsToRedact.length === 0) {
         return <InfoDialog
             onFinished={onFinished}
-            title={_t("No recent messages by %(user)s found", { user })}
+            title={_t("No recent messages by %(user)s found", { user: member.name })}
             description={
                 <div>
                     <p>{ _t("Try scrolling up in the timeline to see if there are any earlier ones.") }</p>
@@ -98,7 +68,39 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
             }
         />;
     } else {
+        eventsToRedact = eventsToRedact.filter(event => !(keepStateEvents && event.isState()));
+        const count = eventsToRedact.length;
+        const user = member.name;
+
+        const redact = async () => {
+            logger.info(`Started redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
+            dis.dispatch({
+                action: Action.BulkRedactStart,
+                room_id: room.roomId,
+            });
+
+            // Submitting a large number of redactions freezes the UI,
+            // so first yield to allow to rerender after closing the dialog.
+            await Promise.resolve();
+            await Promise.all(eventsToRedact.map(async event => {
+                try {
+                    await cli.redactEvent(room.roomId, event.getId());
+                } catch (err) {
+                    // log and swallow errors
+                    logger.error("Could not redact", event.getId());
+                    logger.error(err);
+                }
+            }));
+
+            logger.info(`Finished redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
+            dis.dispatch({
+                action: Action.BulkRedactEnd,
+                room_id: room.roomId,
+            });
+        };
+
         return <BaseDialog
+            className="mx_BulkRedactDialog"
             onFinished={onFinished}
             title={_t("Remove recent messages by %(user)s", { user })}
             contentId="mx_Dialog_content"
@@ -113,8 +115,12 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
                     checked={keepStateEvents}
                     onChange={e => setKeepStateEvents(e.target.checked)}
                 >
-                    { _t("Keep state events (e.g. profile changes)") }
+                    { _t("Preserve system messages") }
                 </StyledCheckbox>
+                <div className="mx_BulkRedactDialog_checkboxMicrocopy">
+                    { _t("Uncheck if you also want to remove system messages on this user " +
+                     "(e.g. membership change, profile change…)") }
+                </div>
             </div>
             <DialogButtons
                 primaryButton={_t("Remove %(count)s messages", { count })}
@@ -122,8 +128,7 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
                 primaryDisabled={count === 0}
                 onPrimaryButtonClick={() => { setImmediate(redact); onFinished(true); }}
                 onCancel={() => onFinished(false)}
-            >
-            </DialogButtons>
+            />
         </BaseDialog>;
     }
 };
