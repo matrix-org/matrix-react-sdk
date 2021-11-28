@@ -84,14 +84,14 @@ $menu-selected-color: $room-highlight-color;
 // Dialogs
 // ********************
 $dialog-title-fg-color: $primary-content;
-$dialog-backdrop-color: #000;
+$dialog-backdrop-color: $menu-border-color;
 $dialog-shadow-color: rgba(0, 0, 0, 0.48);
 $dialog-close-fg-color: #9fa9ba;
 // ********************
 
 // Lightbox
 // ********************
-$lightbox-background-bg-color: #000;
+$lightbox-background-bg-color: $menu-border-color;
 $lightbox-background-bg-opacity: 0.85;
 // ********************
 
@@ -180,7 +180,7 @@ $video-feed-secondary-background: $system;
 
 // One-off colors
 // ********************
-$kbd-border-color: #000000;
+$kbd-border-color: $menu-border-color;
 $visual-bell-bg-color: #800;
 $avatar-initial-color: #ffffff;
 $theme-button-bg-color: #e3e8f0;
@@ -256,7 +256,7 @@ $appearance-tab-border-color: $room-highlight-color;
 .mx_EventTile_content .markdown-body {
     table {
         tr {
-            background-color: #000000;
+            background-color: $menu-border-color;
         }
 
         tr:nth-child(2n) {
