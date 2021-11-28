@@ -20,6 +20,7 @@ const toastScenarios = require('./scenarios/toast');
 const roomDirectoryScenarios = require('./scenarios/directory');
 const lazyLoadingScenarios = require('./scenarios/lazy-loading');
 const e2eEncryptionScenarios = require('./scenarios/e2e-encryption');
+const spacesScenarios = require('./scenarios/spaces');
 
 module.exports = async function scenario(createSession, restCreator) {
     let firstUser = true;
@@ -43,6 +44,8 @@ module.exports = async function scenario(createSession, restCreator) {
     console.log("create REST users:");
     const charlies = await createRestUsers(restCreator);
     await lazyLoadingScenarios(alice, bob, charlies);
+    // do spaces scenarios last as the rest of the tests may get confused by spaces
+    await spacesScenarios(alice, bob);
 };
 
 async function createRestUsers(restCreator) {

@@ -18,7 +18,7 @@ a.mx_Pill {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: calc(100% - 1ch);
+    max-width: 100%;
 }
 
 .mx_Pill {
@@ -43,12 +43,12 @@ a.mx_Pill {
 /* More specific to override `.markdown-body a` color */
 .mx_EventTile_content .markdown-body a.mx_UserPill,
 .mx_UserPill {
-    color: $primary-fg-color;
+    color: $primary-content;
     background-color: $other-user-pill-bg-color;
 }
 
 .mx_UserPill_selected {
-    background-color: $accent-color !important;
+    background-color: $accent !important;
 }
 
 /* More specific to override `.markdown-body a` color */
@@ -57,7 +57,7 @@ a.mx_Pill {
 .mx_EventTile_content .mx_AtRoomPill,
 .mx_MessageComposer_input .mx_AtRoomPill {
     color: $accent-fg-color;
-    background-color: $mention-user-pill-bg-color;
+    background-color: $alert;
 }
 
 /* More specific to override `.markdown-body a` color */

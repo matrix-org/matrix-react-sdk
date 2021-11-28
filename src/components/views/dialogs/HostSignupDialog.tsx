@@ -33,6 +33,8 @@ import {
 } from "./HostSignupDialogTypes";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 const HOST_SIGNUP_KEY = "host_signup";
 
 interface IProps {}
@@ -146,7 +148,7 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
     private async sendAccountDetails() {
         const openIdToken = await MatrixClientPeg.get().getOpenIdToken();
         if (!openIdToken || !openIdToken.access_token) {
-            console.warn("Failed to connect to homeserver for OpenID token.");
+            logger.warn("Failed to connect to homeserver for OpenID token.");
             this.setState({
                 completed: true,
                 error: _t("Failed to connect to your homeserver. Please close this dialog and try again."),
@@ -251,8 +253,8 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                     <AccessibleButton
                                         className="mx_HostSignup_maximize_button"
                                         onClick={this.maximizeDialog}
-                                        aria-label={_t("Maximize dialog")}
-                                        title={_t("Maximize dialog")}
+                                        aria-label={_t("Maximise dialog")}
+                                        title={_t("Maximise dialog")}
                                     />
                                 </div>
                             }
@@ -261,8 +263,8 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                     <AccessibleButton
                                         onClick={this.minimizeDialog}
                                         className="mx_HostSignup_minimize_button"
-                                        aria-label={_t("Minimize dialog")}
-                                        title={_t("Minimize dialog")}
+                                        aria-label={_t("Minimise dialog")}
+                                        title={_t("Minimise dialog")}
                                     />
                                     <AccessibleButton
                                         onClick={this.onCloseClick}

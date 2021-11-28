@@ -150,6 +150,7 @@ const BaseAvatar = (props: IProps) => {
             return (
                 <AccessibleButton
                     aria-label={_t("Avatar")}
+                    aria-live="off"
                     {...otherProps}
                     element="span"
                     className={classNames("mx_BaseAvatar", className)}
@@ -187,7 +188,8 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt={_t("Avatar")}
+                title={title}
+                alt={_t("Avatar")}
                 inputRef={inputRef}
                 {...otherProps} />
         );
@@ -201,7 +203,8 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt=""
+                title={title}
+                alt=""
                 ref={inputRef}
                 {...otherProps} />
         );

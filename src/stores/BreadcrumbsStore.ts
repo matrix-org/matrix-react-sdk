@@ -22,7 +22,9 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { arrayHasDiff } from "../utils/arrays";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { SettingLevel } from "../settings/SettingLevel";
-import SpaceStore from "./SpaceStore";
+import SpaceStore from "./spaces/SpaceStore";
+import { Action } from "../dispatcher/actions";
+import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 
 const MAX_ROOMS = 20; // arbitrary
 const AUTOJOIN_WAIT_THRESHOLD_MS = 90000; // 90s, the time we wait for an autojoined room to show up
@@ -63,13 +65,14 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     protected async onAction(payload: ActionPayload) {
         if (!this.matrixClient) return;
 
-        if (payload.action === 'setting_updated') {
-            if (payload.settingName === 'breadcrumb_rooms') {
+        if (payload.action === Action.SettingUpdated) {
+            const settingUpdatedPayload = payload as SettingUpdatedPayload;
+            if (settingUpdatedPayload.settingName === 'breadcrumb_rooms') {
                 await this.updateRooms();
-            } else if (payload.settingName === 'breadcrumbs') {
+            } else if (settingUpdatedPayload.settingName === 'breadcrumbs') {
                 await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
             }
-        } else if (payload.action === 'view_room') {
+        } else if (payload.action === Action.ViewRoom) {
             if (payload.auto_join && !this.matrixClient.getRoom(payload.room_id)) {
                 // Queue the room instead of pushing it immediately. We're probably just
                 // waiting for a room join to complete.

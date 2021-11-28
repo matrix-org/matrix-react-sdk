@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import RoomViewStore from './stores/RoomViewStore';
 import { EventSubscription } from 'fbemitter';
+import RoomViewStore from './stores/RoomViewStore';
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 type Listener = (isActive: boolean) => void;
 
@@ -54,7 +56,7 @@ export class ActiveRoomObserver {
                 this.listeners[roomId].splice(i, 1);
             }
         } else {
-            console.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
+            logger.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
         }
     }
 

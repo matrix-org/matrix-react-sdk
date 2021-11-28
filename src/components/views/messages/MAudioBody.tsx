@@ -16,14 +16,18 @@ limitations under the License.
 
 import React from "react";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Playback } from "../../../voice/Playback";
+import { Playback } from "../../../audio/Playback";
 import InlineSpinner from '../elements/InlineSpinner';
 import { _t } from "../../../languageHandler";
 import AudioPlayer from "../audio_messages/AudioPlayer";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import MFileBody from "./MFileBody";
 import { IBodyProps } from "./IBodyProps";
-import { PlaybackManager } from "../../../voice/PlaybackManager";
+import { PlaybackManager } from "../../../audio/PlaybackManager";
+import { isVoiceMessage } from "../../../utils/EventUtils";
+import { PlaybackQueue } from "../../../audio/PlaybackQueue";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IState {
     error?: Error;
@@ -47,12 +51,12 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
                 buffer = await blob.arrayBuffer();
             } catch (e) {
                 this.setState({ error: e });
-                console.warn("Unable to decrypt audio message", e);
+                logger.warn("Unable to decrypt audio message", e);
                 return; // stop processing the audio file
             }
         } catch (e) {
             this.setState({ error: e });
-            console.warn("Unable to decrypt/download audio message", e);
+            logger.warn("Unable to decrypt/download audio message", e);
             return; // stop processing the audio file
         }
 
@@ -67,6 +71,10 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         playback.clockInfo.populatePlaceholdersFrom(this.props.mxEvent);
         this.setState({ playback });
 
+        if (isVoiceMessage(this.props.mxEvent)) {
+            PlaybackQueue.forRoom(this.props.mxEvent.getRoomId()).unsortedEnqueue(this.props.mxEvent, playback);
+        }
+
         // Note: the components later on will handle preparing the Playback class for us.
     }
 
@@ -76,7 +84,6 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
 
     public render() {
         if (this.state.error) {
-            // TODO: @@TR: Verify error state
             return (
                 <span className="mx_MAudioBody">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
@@ -85,8 +92,18 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
             );
         }
 
+        if (this.props.forExport) {
+            const content = this.props.mxEvent.getContent();
+            // During export, the content url will point to the MSC, which will later point to a local url
+            const contentUrl = content.file?.url || content.url;
+            return (
+                <span className="mx_MAudioBody">
+                    <audio src={contentUrl} controls />
+                </span>
+            );
+        }
+
         if (!this.state.playback) {
-            // TODO: @@TR: Verify loading/decrypting state
             return (
                 <span className="mx_MAudioBody">
                     <InlineSpinner />

@@ -56,12 +56,12 @@ export enum Action {
     CheckUpdates = "check_updates",
 
     /**
-     * Focuses the user's cursor to the send message composer. No additional payload information required.
+     * Focuses the user's cursor to the send message composer. Should be used with a FocusComposerPayload.
      */
     FocusSendMessageComposer = "focus_send_message_composer",
 
     /**
-     * Focuses the user's cursor to the edit message composer. No additional payload information required.
+     * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
      */
     FocusEditMessageComposer = "focus_edit_message_composer",
 
@@ -86,6 +86,11 @@ export enum Action {
      * Sets a system font. Should be used with UpdateSystemFontPayload
      */
     UpdateSystemFont = "update_system_font",
+
+    /**
+     * Changes room based on payload parameters.
+     */
+    ViewRoom = "view_room",
 
     /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
@@ -128,7 +133,7 @@ export enum Action {
      * Start a call transfer to a phone number
      * payload: TransferCallPayload
      */
-     TransferCallToPhoneNumber = "transfer_call_to_phone_number",
+    TransferCallToPhoneNumber = "transfer_call_to_phone_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support
@@ -203,4 +208,21 @@ export enum Action {
      * Switches space. Should be used with SwitchSpacePayload.
      */
     SwitchSpace = "switch_space",
+
+    /**
+     * Signals to the visible space hierarchy that a change has occurred an that it should refresh.
+     */
+    UpdateSpaceHierarchy = "update_space_hierarchy",
+
+    /**
+     * Fires when a monitored setting is updated,
+     * see SettingsStore::monitorSetting for more details.
+     * Should be used with SettingUpdatedPayload.
+     */
+    SettingUpdated = "setting_updated",
+
+    /**
+     * Fires when a user starts to edit event (e.g. up arrow in compositor)
+     */
+    EditEvent = "edit_event",
 }

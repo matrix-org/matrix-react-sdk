@@ -23,10 +23,9 @@ import Modal from '../../../Modal';
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import QuestionDialog from "./QuestionDialog";
+import { IDialogProps } from "./IDialogProps";
 
-interface IProps {
-    onFinished: (success: boolean) => void;
-}
+interface IProps extends IDialogProps {}
 
 const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
     const brand = SdkConfig.get().brand;
@@ -72,7 +71,7 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
             hasCancel={false}
             onPrimaryButtonClick={props.onFinished}
         >
-            <button onClick={_onLogoutClicked} >
+            <button onClick={_onLogoutClicked}>
                 { _t('Sign out') }
             </button>
         </DialogButtons>

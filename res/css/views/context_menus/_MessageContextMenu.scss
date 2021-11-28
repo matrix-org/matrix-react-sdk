@@ -30,7 +30,7 @@ limitations under the License.
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
-            background: $primary-fg-color;
+            background: $primary-content;
         }
     }
 
@@ -80,5 +80,9 @@ limitations under the License.
 
     .mx_MessageContextMenu_iconUnpin::before {
         mask-image: url('$(res)/img/element-icons/room/pin.svg');
+    }
+
+    .mx_MessageContextMenu_iconViewInRoom::before {
+        mask-image: url('$(res)/img/element-icons/view-in-room.svg');
     }
 }

@@ -33,6 +33,7 @@ import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { makeUserPermalink } from "../utils/permalinks/Permalinks";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import MemberAvatar from '../components/views/avatars/MemberAvatar';
+import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const USER_REGEX = /\B@\S*/g;
 
@@ -50,8 +51,12 @@ export default class UserProvider extends AutocompleteProvider {
     users: RoomMember[];
     room: Room;
 
-    constructor(room: Room) {
-        super(USER_REGEX, FORCED_USER_REGEX);
+    constructor(room: Room, renderingType?: TimelineRenderingType) {
+        super({
+            commandRegex: USER_REGEX,
+            forcedCommandRegex: FORCED_USER_REGEX,
+            renderingType,
+        });
         this.room = room;
         this.matcher = new QueryMatcher([], {
             keys: ['name'],
@@ -181,7 +186,7 @@ export default class UserProvider extends AutocompleteProvider {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_pill"
-                role="listbox"
+                role="presentation"
                 aria-label={_t("User Autocomplete")}
             >
                 { completions }

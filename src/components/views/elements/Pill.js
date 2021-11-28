@@ -29,6 +29,8 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import Tooltip from './Tooltip';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 @replaceableComponent("views.elements.Pill")
 class Pill extends React.Component {
     static roomNotifPos(text) {
@@ -188,11 +190,12 @@ class Pill extends React.Component {
             };
             this.setState({ member });
         }).catch((err) => {
-            console.error('Could not retrieve profile data for ' + userId + ':', err);
+            logger.error('Could not retrieve profile data for ' + userId + ':', err);
         });
     }
 
-    onUserPillClicked = () => {
+    onUserPillClicked = (e) => {
+        e.preventDefault();
         dis.dispatch({
             action: Action.ViewUser,
             member: this.state.member,
@@ -258,7 +261,10 @@ class Pill extends React.Component {
                     linkText = groupId;
                     if (this.props.shouldShowPillAvatar) {
                         avatar = <BaseAvatar
-                            name={name || groupId} width={16} height={16} aria-hidden="true"
+                            name={name || groupId}
+                            width={16}
+                            height={16}
+                            aria-hidden="true"
                             url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(16) : null} />;
                     }
                     pillClass = 'mx_GroupPill';

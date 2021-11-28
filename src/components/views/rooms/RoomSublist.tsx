@@ -38,6 +38,7 @@ import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorith
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import NotificationBadge from "./NotificationBadge";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { Key } from "../../../Keyboard";
@@ -55,6 +56,8 @@ import { ListNotificationState } from "../../../stores/notifications/ListNotific
 import IconizedContextMenu from "../context_menus/IconizedContextMenu";
 import { getKeyBindingsManager, RoomListAction } from "../../../KeyBindingsManager";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -442,7 +445,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
         if (room) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: room.roomId,
                 show_room_tile: true, // to make sure the room gets scrolled into view
             });
@@ -670,11 +673,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             onClick={this.onBadgeClick}
                             tabIndex={tabIndex}
                             aria-label={ariaLabel}
+                            showUnsentTooltip={true}
                         />
                     );
 
                     let addRoomButton = null;
-                    if (!!this.props.onAddRoom) {
+                    if (!!this.props.onAddRoom && shouldShowComponent(UIComponent.CreateRooms)) {
                         addRoomButton = (
                             <AccessibleTooltipButton
                                 tabIndex={tabIndex}
@@ -686,6 +690,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             />
                         );
                     } else if (this.props.addRoomContextMenu) {
+                        // We assume that shouldShowComponent() is checked by the context menu itself.
                         addRoomButton = (
                             <ContextMenuTooltipButton
                                 tabIndex={tabIndex}

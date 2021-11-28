@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { useState } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -60,7 +61,7 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
     const user = member.name;
 
     const redact = async () => {
-        console.info(`Started redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
+        logger.info(`Started redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
         dis.dispatch({
             action: Action.BulkRedactStart,
             room_id: room.roomId,
@@ -74,12 +75,12 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
                 await cli.redactEvent(room.roomId, event.getId());
             } catch (err) {
                 // log and swallow errors
-                console.error("Could not redact", event.getId());
-                console.error(err);
+                logger.error("Could not redact", event.getId());
+                logger.error(err);
             }
         }));
 
-        console.info(`Finished redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
+        logger.info(`Finished redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
         dis.dispatch({
             action: Action.BulkRedactEnd,
             room_id: room.roomId,

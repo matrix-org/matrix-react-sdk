@@ -36,13 +36,13 @@ limitations under the License.
 
         &.mx_NotificationBadge_highlighted {
             // TODO: Use a more specific variable
-            background-color: $warning-color;
+            background-color: $alert;
         }
 
         // These are the 3 background types
 
         &.mx_NotificationBadge_dot {
-            background-color: $primary-fg-color; // increased visibility
+            background-color: $primary-content; // increased visibility
 
             width: 6px;
             height: 6px;

@@ -23,15 +23,13 @@ import { MatrixClientPeg } from '../MatrixClientPeg';
 import { PillCompletion } from './Components';
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import RoomAvatar from '../components/views/avatars/RoomAvatar';
+import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const AT_ROOM_REGEX = /@\S*/g;
 
 export default class NotifProvider extends AutocompleteProvider {
-    room: Room;
-
-    constructor(room) {
-        super(AT_ROOM_REGEX);
-        this.room = room;
+    constructor(public room: Room, renderingType?: TimelineRenderingType) {
+        super({ commandRegex: AT_ROOM_REGEX, renderingType });
     }
 
     async getCompletions(
@@ -70,7 +68,7 @@ export default class NotifProvider extends AutocompleteProvider {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate"
-                role="listbox"
+                role="presentation"
                 aria-label={_t("Notification Autocomplete")}
             >
                 { completions }

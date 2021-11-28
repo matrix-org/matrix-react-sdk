@@ -21,12 +21,13 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import { SpaceFeedbackPrompt } from "../../structures/SpaceRoomView";
 import SpaceBasicSettings from "./SpaceBasicSettings";
 import { avatarUrlForRoom } from "../../../Avatar";
 import { IDialogProps } from "../dialogs/IDialogProps";
 import { getTopic } from "../elements/RoomTopic";
-import { defaultDispatcher } from "../../../dispatcher/dispatcher";
+import { leaveSpace } from "../../../utils/space";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
@@ -84,7 +85,7 @@ const SpaceSettingsGeneralTab = ({ matrixClient: cli, space, onFinished }: IProp
         setBusy(false);
         const failures = results.filter(r => r.status === "rejected");
         if (failures.length > 0) {
-            console.error("Failed to save space settings: ", failures);
+            logger.error("Failed to save space settings: ", failures);
             setError(_t("Failed to save space settings."));
         }
     };
@@ -95,8 +96,6 @@ const SpaceSettingsGeneralTab = ({ matrixClient: cli, space, onFinished }: IProp
         <div>{ _t("Edit settings relating to your space.") }</div>
 
         { error && <div className="mx_SpaceRoomView_errorText">{ error }</div> }
-
-        <SpaceFeedbackPrompt />
 
         <div className="mx_SettingsTab_section">
             <SpaceBasicSettings
@@ -128,10 +127,7 @@ const SpaceSettingsGeneralTab = ({ matrixClient: cli, space, onFinished }: IProp
             <AccessibleButton
                 kind="danger"
                 onClick={() => {
-                    defaultDispatcher.dispatch({
-                        action: "leave_room",
-                        room_id: space.roomId,
-                    });
+                    leaveSpace(space);
                 }}
             >
                 { _t("Leave Space") }

@@ -32,7 +32,7 @@ import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import Modal from "../../Modal";
 import LogoutDialog from "../views/dialogs/LogoutDialog";
 import SettingsStore from "../../settings/SettingsStore";
-import { getCustomTheme } from "../../theme";
+import { findHighContrastTheme, getCustomTheme, isHighContrastTheme } from "../../theme";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
@@ -54,11 +54,13 @@ import EditCommunityPrototypeDialog from "../views/dialogs/EditCommunityPrototyp
 import { UIFeature } from "../../settings/UIFeature";
 import HostSignupAction from "./HostSignupAction";
 import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
-import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
+import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import RoomName from "../views/elements/RoomName";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import TooltipButton from "../views/elements/TooltipButton";
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     isMinimized: boolean;
@@ -74,6 +76,7 @@ enum PendingActionType {
 interface IState {
     contextMenuPosition: PartialDOMRect;
     isDarkTheme: boolean;
+    isHighContrast: boolean;
     selectedSpace?: Room;
     // Sets of long running actions which should trigger a spinner
     pendingActions: Map<PendingActionType, Set<string>>;
@@ -93,7 +96,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.state = {
             contextMenuPosition: null,
             isDarkTheme: this.isUserOnDarkTheme(),
+            isHighContrast: this.isUserOnHighContrastTheme(),
             pendingActions: new Map(),
+            selectedSpace: SpaceStore.instance.activeSpaceRoom,
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
@@ -148,18 +153,36 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
     }
 
+    private isUserOnHighContrastTheme(): boolean {
+        if (SettingsStore.getValue("use_system_theme")) {
+            return window.matchMedia("(prefers-contrast: more)").matches;
+        } else {
+            const theme = SettingsStore.getValue("theme");
+            if (theme.startsWith("custom-")) {
+                return false;
+            }
+            return isHighContrastTheme(theme);
+        }
+    }
+
     private onProfileUpdate = async () => {
         // the store triggered an update, so force a layout update. We don't
         // have any state to store here for that to magically happen.
         this.forceUpdate();
     };
 
-    private onSelectedSpaceUpdate = async (selectedSpace?: Room) => {
-        this.setState({ selectedSpace });
+    private onSelectedSpaceUpdate = async () => {
+        this.setState({
+            selectedSpace: SpaceStore.instance.activeSpaceRoom,
+        });
     };
 
     private onThemeChanged = () => {
-        this.setState({ isDarkTheme: this.isUserOnDarkTheme() });
+        this.setState(
+            {
+                isDarkTheme: this.isUserOnDarkTheme(),
+                isHighContrast: this.isUserOnHighContrastTheme(),
+            });
     };
 
     private onAction = (ev: ActionPayload) => {
@@ -252,7 +275,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
         // Disable system theme matching if the user hits this button
         SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
-        const newTheme = this.state.isDarkTheme ? "light" : "dark";
+        let newTheme = this.state.isDarkTheme ? "light" : "dark";
+        if (this.state.isHighContrast) {
+            const hcTheme = findHighContrastTheme(newTheme);
+            if (hcTheme) {
+                newTheme = hcTheme;
+            }
+        }
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
     };
 
@@ -271,7 +300,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
 
         // TODO: Archived room view: https://github.com/vector-im/element-web/issues/14038
         // Note: You'll need to uncomment the button too.
-        console.log("TODO: Show archived rooms");
+        logger.log("TODO: Show archived rooms");
     };
 
     private onProvideFeedback = (ev: ButtonEvent) => {
@@ -336,7 +365,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
         if (chat) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: chat.roomId,
             }, true);
             dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });

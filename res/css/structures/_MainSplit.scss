@@ -23,8 +23,8 @@ limitations under the License.
 }
 
 .mx_MainSplit > .mx_RightPanel_ResizeWrapper {
-    padding: 5px;
-    // margin left to not allow the handle to not encroach on the space for the scrollbar
+    // no padding on the left. The spacing is taken care of by the main split content.
+    padding: 5px 5px 5px 0px;
     margin-left: 8px;
     height: calc(100vh - 51px); // height of .mx_RoomHeader.light-panel
 
@@ -38,7 +38,7 @@ limitations under the License.
         width: 4px !important;
         border-radius: 4px !important;
 
-        background-color: $primary-fg-color;
+        background-color: $primary-content;
         opacity: 0.8;
     }
 }

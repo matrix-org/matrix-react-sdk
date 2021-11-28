@@ -15,12 +15,11 @@ limitations under the License.
 */
 
 import React from 'react';
-import { SAS } from "matrix-js-sdk/src/crypto/verification/SAS";
+import { IGeneratedSas } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { DeviceInfo } from "matrix-js-sdk/src//crypto/deviceinfo";
 import { _t, _td } from '../../../languageHandler';
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
 import AccessibleButton from "../elements/AccessibleButton";
-import DialogButtons from "../elements/DialogButtons";
 import { fixupColorFonts } from '../../../utils/FontManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -30,7 +29,7 @@ interface IProps {
     device?: DeviceInfo;
     onDone: () => void;
     onCancel: () => void;
-    sas: SAS.sas;
+    sas: IGeneratedSas;
     isSelf?: boolean;
     inDialog?: boolean; // whether this component is being shown in a dialog and to use DialogButtons
 }
@@ -114,54 +113,44 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
         } else {
             return <div>
                 { _t("Unable to find a supported verification method.") }
-                <AccessibleButton kind="primary" onClick={this.props.onCancel} className="mx_UserInfo_wideButton">
+                <AccessibleButton kind="primary" onClick={this.props.onCancel}>
                     { _t('Cancel') }
                 </AccessibleButton>
             </div>;
         }
 
         let confirm;
-        if (this.state.pending || this.state.cancelling) {
+        if (this.state.pending && this.props.isSelf) {
+            let text;
+            // device shouldn't be null in this situation but it can be, eg. if the device is
+            // logged out during verification
+            if (this.props.device) {
+                text = _t("Waiting for you to verify on your other session, %(deviceName)s (%(deviceId)s)…", {
+                    deviceName: this.props.device ? this.props.device.getDisplayName() : '',
+                    deviceId: this.props.device ? this.props.device.deviceId : '',
+                });
+            } else {
+                text = _t("Waiting for you to verify on your other session…");
+            }
+            confirm = <p>{ text }</p>;
+        } else if (this.state.pending || this.state.cancelling) {
             let text;
             if (this.state.pending) {
-                if (this.props.isSelf) {
-                    // device shouldn't be null in this situation but it can be, eg. if the device is
-                    // logged out during verification
-                    if (this.props.device) {
-                        text = _t("Waiting for your other session, %(deviceName)s (%(deviceId)s), to verify…", {
-                            deviceName: this.props.device ? this.props.device.getDisplayName() : '',
-                            deviceId: this.props.device ? this.props.device.deviceId : '',
-                        });
-                    } else {
-                        text = _t("Waiting for your other session to verify…");
-                    }
-                } else {
-                    const { displayName } = this.props;
-                    text = _t("Waiting for %(displayName)s to verify…", { displayName });
-                }
+                const { displayName } = this.props;
+                text = _t("Waiting for %(displayName)s to verify…", { displayName });
             } else {
                 text = _t("Cancelling…");
             }
             confirm = <PendingActionSpinner text={text} />;
-        } else if (this.props.inDialog) {
-            // FIXME: stop using DialogButtons here once this component is only used in the right panel verification
-            confirm = <DialogButtons
-                primaryButton={_t("They match")}
-                onPrimaryButtonClick={this.onMatchClick}
-                primaryButtonClass="mx_UserInfo_wideButton mx_VerificationShowSas_matchButton"
-                cancelButton={_t("They don't match")}
-                onCancel={this.onDontMatchClick}
-                cancelButtonClass="mx_UserInfo_wideButton mx_VerificationShowSas_noMatchButton"
-            />;
         } else {
-            confirm = <React.Fragment>
+            confirm = <div className="mx_VerificationShowSas_buttonRow">
                 <AccessibleButton onClick={this.onDontMatchClick} kind="danger">
                     { _t("They don't match") }
                 </AccessibleButton>
                 <AccessibleButton onClick={this.onMatchClick} kind="primary">
                     { _t("They match") }
                 </AccessibleButton>
-            </React.Fragment>;
+            </div>;
         }
 
         return <div className="mx_VerificationShowSas">
