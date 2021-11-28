@@ -318,6 +318,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_location_share": {
         isFeature: true,
+        labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Location sharing (under active development)"),
         default: false,

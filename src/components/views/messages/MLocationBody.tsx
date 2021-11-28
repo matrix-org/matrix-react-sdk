@@ -20,8 +20,12 @@ import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 
+interface IState {
+    fail: boolean;
+}
+
 @replaceableComponent("views.messages.MLocationBody")
-export default class MLocationBody extends React.Component<IBodyProps> {
+export default class MLocationBody extends React.Component<IBodyProps, IState> {
     private map: maplibregl.Map;
     private coords: GeolocationCoordinates;
     private description: string;
@@ -39,6 +43,9 @@ export default class MLocationBody extends React.Component<IBodyProps> {
             content['geo_uri'];
 
         this.coords = this.parseGeoUri(uri);
+        this.state = {
+            fail: false,
+        };
 
         this.description =
             content['org.matrix.msc3488.location']?.description ?? content['body'];
@@ -74,6 +81,12 @@ export default class MLocationBody extends React.Component<IBodyProps> {
             zoom: 13,
         });
 
+        try {
+            this.map.getStyle();
+        } catch (e) {
+            this.setState({ fail: true });
+        }
+
         new maplibregl.Marker()
             .setLngLat([this.coords.longitude, this.coords.latitude])
             .addTo(this.map);
@@ -84,8 +97,14 @@ export default class MLocationBody extends React.Component<IBodyProps> {
     };
 
     render() {
+        const error = this.state.fail ?
+            <div className="mx_EventTile_tileError mx_EventTile_body">
+                Failed to load map - check config.json has a valid API key
+            </div> : null;
+
         return <div className="mx_MLocationBody">
             <div id={this.getBodyId()} className="mx_MLocationBody_map" />
+            { error }
             <span className="mx_EventTile_body">{ this.description }</span>
         </div>;
     }
