@@ -258,7 +258,7 @@ $video-feed-secondary-background: #394049; // XXX: Color from dark theme
 // ********************
 $visual-bell-bg-color: #faa;
 $event-timestamp-color: #acacac;
-$slider-background-color: #c1c9d6;
+$slider-background-color: $togglesw-off-color;
 $breadcrumb-placeholder-bg-color: #e8eef5;
 $primary-hairline-color: transparent;
 $composer-shadow-color: rgba(0, 0, 0, 0.04);
