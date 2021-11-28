@@ -108,7 +108,7 @@ $menu-selected-color: #f5f8fa;
 // ********************
 $settings-grey-fg-color: #a2a2a2;
 $settings-profile-overlay-placeholder-fg-color: #2e2f32;
-$settings-profile-button-bg-color: #e7e7e7;
+$settings-profile-button-bg-color: $menu-border-color;
 $settings-subsection-fg-color: $muted-fg-color;
 // ********************
 
@@ -136,7 +136,7 @@ $presence-offline: $quinary-content;
 // ********************
 $input-underline-color: rgba(151, 151, 151, 0.5);
 $input-fg-color: rgba(74, 74, 74, 0.9);
-$input-border-color: #e7e7e7;
+$input-border-color: $menu-border-color;
 $input-darker-bg-color: $quinary-content;
 $input-darker-fg-color: #9fa9ba;
 $input-lighter-bg-color: $secondary-accent-color;
