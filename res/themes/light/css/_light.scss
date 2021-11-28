@@ -173,7 +173,7 @@ $e2e-warning-color: #ba6363;
 
 // Tabbed views
 // ********************
-$tab-label-fg-color: #45474a;
+$tab-label-fg-color: $dialog-title-fg-color;
 $tab-label-active-fg-color: $background;
 // ********************
 
