@@ -143,7 +143,7 @@ $message-action-bar-hover-border-color: $header-panel-text-primary-color;
 
 // Reaction row
 // ********************
-$reaction-row-button-border-color: #616b7f;
+$reaction-row-button-border-color: $message-action-bar-border-color;
 $reaction-row-button-hover-border-color: $header-panel-text-primary-color;
 $reaction-row-button-selected-bg-color: #1f6954;
 // ********************
