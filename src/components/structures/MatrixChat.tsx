@@ -1508,7 +1508,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                             </AccessibleButton>,
                                         },
                                     ) }</p>
-                                    <p>{ _t("If you'd like to preview or test some potentially upcoming changes, " +
+                                    <p>{ _t("If you'd like to preview or test some potential upcoming changes, " +
                                         "there's an option in feedback to let us contact you.") }</p>
                                 </>,
                             }, "mx_DialogDesignChanges_wrapper");
