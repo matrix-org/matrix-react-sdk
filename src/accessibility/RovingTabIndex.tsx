@@ -126,6 +126,7 @@ export const reducer = (state: IState, action: IAction) => {
                 // pick the ref which is now in the index the old ref was in
                 const len = state.refs.length;
                 state.activeRef = oldIndex >= len ? state.refs[len - 1] : state.refs[oldIndex];
+                state.activeRef.current?.focus();
             }
 
             // update the refs list
