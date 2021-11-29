@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638206296490,
+  "lastUpdate": 1638206340154,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42776,6 +42776,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4510.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "87e8e3d6ef3fe7c75d0ab73c26979d9aaf74b4c2",
+          "message": "Fix EmojiPicker lazy loaded rendering bug (#7225)",
+          "timestamp": "2021-11-29T17:12:56Z",
+          "tree_id": "6606f621bd776127ba88cd13704f0632e770fc5e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/87e8e3d6ef3fe7c75d0ab73c26979d9aaf74b4c2"
+        },
+        "date": 1638206337640,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5203,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 970.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1709.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4432.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
