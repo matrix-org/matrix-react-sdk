@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638205114888,
+  "lastUpdate": 1638205690293,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42644,6 +42644,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4836.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9d52c23e06f92e5705102ec58c1d50026e2112d2",
+          "message": "Add option to disable grouping in TimelinePanel (#7221)",
+          "timestamp": "2021-11-29T17:01:23Z",
+          "tree_id": "e7f351aac3b9fe710cf466ddffa338ee5838d26f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9d52c23e06f92e5705102ec58c1d50026e2112d2"
+        },
+        "date": 1638205687539,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4656.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 662.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
