@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638205838259,
+  "lastUpdate": 1638206296490,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42728,6 +42728,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4725.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "02d4bb517cd78508237fdac47a0c84c81c398cc6",
+          "message": "Prevent default avatar in UserInfo having pointer cursor (#7218)",
+          "timestamp": "2021-11-29T17:11:40Z",
+          "tree_id": "74c8480bc86538114de7d2b4c53277d55af0dd98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/02d4bb517cd78508237fdac47a0c84c81c398cc6"
+        },
+        "date": 1638206293168,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4830.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1083.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1698.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4510.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
