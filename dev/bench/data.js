@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638178151454,
+  "lastUpdate": 1638183201062,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42140,6 +42140,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4195,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "renancleyson.f@gmail.com",
+            "name": "Renan Cleyson",
+            "username": "renancleyson-dev"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d939e45d000cc0a8362949eb134563b9b84edd02",
+          "message": "Fix multiline paragraph rendering as single line (#7210)",
+          "timestamp": "2021-11-29T10:47:35Z",
+          "tree_id": "14f8db93e126b5ea7a9e794963f9600085919574",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d939e45d000cc0a8362949eb134563b9b84edd02"
+        },
+        "date": 1638183198786,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4986.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 914.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1679.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4355.5,
             "unit": "ms",
             "extra": "type: measure"
           }
