@@ -23,6 +23,7 @@ import { _t } from '../../../languageHandler';
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import AccessibleButton from "./AccessibleButton";
 import { Layout } from '../../../settings/enums/Layout';
+import { uniqBy } from "lodash";
 
 interface IProps {
     // An array of member events to summarise
@@ -80,7 +81,8 @@ const EventListSummary: React.FC<IProps> = ({
             { children }
         </React.Fragment>;
     } else {
-        const avatars = summaryMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
+        const uniqueMembers = uniqBy(summaryMembers, member => member.getMxcAvatarUrl());
+        const avatars = uniqueMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
         body = (
             <div className="mx_EventTile_line">
                 <div className="mx_EventTile_info">
