@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638206665853,
+  "lastUpdate": 1638208115544,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42920,6 +42920,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4205,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe24c8ad2a6989b674f9866fdf38401fa3583818",
+          "message": "Improve ThreadPanel ctx menu accessibility (#7217)",
+          "timestamp": "2021-11-29T17:42:53Z",
+          "tree_id": "bc74afd6a1c2b3893902b1ce535f5d565ade1108",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe24c8ad2a6989b674f9866fdf38401fa3583818"
+        },
+        "date": 1638208113448,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4721.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 622.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
