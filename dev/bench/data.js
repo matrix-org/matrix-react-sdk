@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638190862915,
+  "lastUpdate": 1638194917047,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42464,6 +42464,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4559.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "88609162250a13a1983da83cc4981d6c8a76b24c",
+          "message": "Fix size of portrait images with the SIZE_NORMAL setting. (#7188)",
+          "timestamp": "2021-11-29T15:01:54+01:00",
+          "tree_id": "8bdbd6544ebd6c8a691a623058f34aadae9c1d46",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/88609162250a13a1983da83cc4981d6c8a76b24c"
+        },
+        "date": 1638194913603,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5236.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1054,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1700.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4548.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
