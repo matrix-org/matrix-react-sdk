@@ -32,6 +32,7 @@ import RoomContext from "../../contexts/RoomContext";
 import UserActivity from "../../UserActivity";
 import Modal from "../../Modal";
 import dis from "../../dispatcher/dispatcher";
+import { Action } from '../../dispatcher/actions';
 import { Key } from '../../Keyboard';
 import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
@@ -503,7 +504,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // (and user is active), switch timeout
         const timeout = this.readMarkerTimeout(rmPosition);
         // NO-OP when timeout already has set to the given value
-        this.readMarkerActivityTimer.changeTimeout(timeout);
+        this.readMarkerActivityTimer?.changeTimeout(timeout);
     }, READ_MARKER_DEBOUNCE_MS, { leading: false, trailing: true });
 
     private onAction = (payload: ActionPayload): void => {
@@ -1132,7 +1133,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 onFinished = () => {
                     // go via the dispatcher so that the URL is updated
                     dis.dispatch({
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         room_id: this.props.timelineSet.room.roomId,
                     });
                 };

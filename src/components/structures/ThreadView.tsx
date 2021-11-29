@@ -43,6 +43,7 @@ import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 import RightPanelStore from '../../stores/RightPanelStore';
 import SettingsStore from '../../settings/SettingsStore';
+import { WidgetLayoutStore } from '../../stores/widgets/WidgetLayoutStore';
 
 interface IProps {
     room: Room;
@@ -83,7 +84,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         this.teardownThread();
         dis.unregister(this.dispatcherRef);
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        room.on(ThreadEvent.New, this.onNewThread);
+        room.removeListener(ThreadEvent.New, this.onNewThread);
     }
 
     public componentDidUpdate(prevProps) {
@@ -177,7 +178,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private onScroll = (): void => {
         if (this.props.initialEvent && this.props.initialEventHighlighted) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
                 event_id: this.props.initialEvent?.getId(),
                 highlighted: false,
@@ -209,6 +210,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
         if (!SettingsStore.getValue("feature_maximised_widgets")) {
             previousPhase = RightPanelPhases.ThreadPanel;
         }
+
+        // change the previous phase to the threadPanel in case there is no maximised widget anymore
+        if (!WidgetLayoutStore.instance.hasMaximisedWidget(this.props.room)) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+
         // Make sure the previous Phase is always one of the two: Timeline or ThreadPanel
         if (![RightPanelPhases.ThreadPanel, RightPanelPhases.Timeline].includes(previousPhase)) {
             previousPhase = RightPanelPhases.ThreadPanel;

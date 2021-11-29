@@ -48,7 +48,6 @@ $activeBorderColor: $secondary-content;
         mask-size: 32px;
         mask-repeat: no-repeat;
         margin-left: $gutterSize;
-        margin-bottom: 12px;
         background-color: $tertiary-content;
         mask-image: url('$(res)/img/element-icons/expand-space-panel.svg');
 
@@ -219,7 +218,7 @@ $activeBorderColor: $secondary-content;
         }
 
         &.mx_SpaceButton_new .mx_SpaceButton_icon {
-            background-color: $roomlist-button-bg-color;
+            background-color: $panel-actions;
 
             &::before {
                 background-color: $primary-content;
