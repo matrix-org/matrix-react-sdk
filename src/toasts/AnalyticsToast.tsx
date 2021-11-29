@@ -81,8 +81,10 @@ const TOAST_KEY = "analytics";
 const getAnonymousDescription = (): ReactNode => {
     // get toast description for anonymous tracking (the previous scheme pre-posthog)
     const brand = SdkConfig.get().brand;
+    const cookiePolicyUrl = SdkConfig.get().piwik?.policyUrl;
     return _t(
-        "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. ",
+        "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. " +
+        "This will use a <PolicyLink>cookie</PolicyLink>.",
         {
             brand,
         },
@@ -90,6 +92,9 @@ const getAnonymousDescription = (): ReactNode => {
             "UsageDataLink": (sub) => (
                 <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
             ),
+            "PolicyLink": (sub) => cookiePolicyUrl ? (
+                <a target="_blank" href={cookiePolicyUrl}>{ sub }</a>
+            ) : sub,
         },
     );
 };
