@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638208115544,
+  "lastUpdate": 1638209338809,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42956,6 +42956,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 622.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "82ae39435c3ec45fdb3cc1f65bdfd68960b76ebc",
+          "message": "Only show core navigation elements (call/chat/notification/info) when a widget is maximised (#7114)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2021-11-29T19:01:47+01:00",
+          "tree_id": "29a90917788428709c898f4e14555f733c6e4df4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/82ae39435c3ec45fdb3cc1f65bdfd68960b76ebc"
+        },
+        "date": 1638209335946,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5208,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1150,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1742.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4912.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
