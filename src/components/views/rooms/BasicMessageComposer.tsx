@@ -798,9 +798,20 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             member.rawDisplayName : userId;
         const caret = this.getCaret();
         const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-        // Insert suffix only if the caret is at the start of the composer
-        const parts = partCreator.createMentionParts(caret.offset === 0, displayName, userId);
+        // Insert suffix only if the caret is at the start of the composer or if this is a cluster of mention pills
+        const insertTrailingCharacter = caret.offset === 0 || (
+            (position.index + 1) % 2 === 0 &&
+            model.parts[0]?.type === Type.UserPill &&
+            model.parts[position.index]?.text === ": " &&
+            model.parts[position.index - 1]?.type === Type.UserPill
+        );
+        const parts = partCreator.createMentionParts(insertTrailingCharacter, displayName, userId);
         model.transform(() => {
+            if (insertTrailingCharacter && caret.offset !== 0) {
+                // replace : with , for earlier mention in this cluster
+                model.parts[position.index].remove(0, 1);
+                model.parts[position.index].validateAndInsert(0, ",", "");
+            }
             const addedLen = model.insert(parts, position);
             return model.positionForOffset(caret.offset + addedLen, true);
         });
