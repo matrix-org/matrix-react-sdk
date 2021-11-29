@@ -27,7 +27,7 @@ import ResizeNotifier from '../../utils/ResizeNotifier';
 import { TileShape } from '../views/rooms/EventTile';
 import MessageComposer from '../views/rooms/MessageComposer';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import { Layout } from '../../settings/Layout';
+import { Layout } from '../../settings/enums/Layout';
 import TimelinePanel from './TimelinePanel';
 import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from '../../dispatcher/payloads';
@@ -40,7 +40,10 @@ import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
-import { ThreadListContextMenu } from '../views/context_menus/ThreadListContextMenu';
+import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
+import RightPanelStore from '../../stores/RightPanelStore';
+import SettingsStore from '../../settings/SettingsStore';
+import { WidgetLayoutStore } from '../../stores/widgets/WidgetLayoutStore';
 
 interface IProps {
     room: Room;
@@ -81,7 +84,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         this.teardownThread();
         dis.unregister(this.dispatcherRef);
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        room.on(ThreadEvent.New, this.onNewThread);
+        room.removeListener(ThreadEvent.New, this.onNewThread);
     }
 
     public componentDidUpdate(prevProps) {
@@ -175,7 +178,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private onScroll = (): void => {
         if (this.props.initialEvent && this.props.initialEventHighlighted) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
                 event_id: this.props.initialEvent?.getId(),
                 highlighted: false,
@@ -203,6 +206,24 @@ export default class ThreadView extends React.Component<IProps, IState> {
             event_id: this.state.thread?.id,
         };
 
+        let previousPhase = RightPanelStore.getSharedInstance().previousPhase;
+        if (!SettingsStore.getValue("feature_maximised_widgets")) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+
+        // change the previous phase to the threadPanel in case there is no maximised widget anymore
+        if (!WidgetLayoutStore.instance.hasMaximisedWidget(this.props.room)) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+
+        // Make sure the previous Phase is always one of the two: Timeline or ThreadPanel
+        if (![RightPanelPhases.ThreadPanel, RightPanelPhases.Timeline].includes(previousPhase)) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+        const previousPhaseLabels = {};
+        previousPhaseLabels[RightPanelPhases.ThreadPanel] = _t("All threads");
+        previousPhaseLabels[RightPanelPhases.Timeline] = _t("Chat");
+
         return (
             <RoomContext.Provider value={{
                 ...this.context,
@@ -213,7 +234,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 <BaseCard
                     className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
-                    previousPhase={RightPanelPhases.ThreadPanel}
+                    previousPhase={previousPhase}
+                    previousPhaseLabel={previousPhaseLabels[previousPhase]}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
                 >

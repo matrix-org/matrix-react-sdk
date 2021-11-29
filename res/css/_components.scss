@@ -22,6 +22,7 @@
 @import "./structures/_MyGroups.scss";
 @import "./structures/_NonUrgentToastContainer.scss";
 @import "./structures/_NotificationPanel.scss";
+@import "./structures/_QuickSettingsButton.scss";
 @import "./structures/_RightPanel.scss";
 @import "./structures/_RoomDirectory.scss";
 @import "./structures/_RoomSearch.scss";
@@ -182,6 +183,7 @@
 @import "./views/messages/_MImageReplyBody.scss";
 @import "./views/messages/_MJitsiWidgetEvent.scss";
 @import "./views/messages/_MNoticeBody.scss";
+@import "./views/messages/_MPollBody.scss";
 @import "./views/messages/_MStickerBody.scss";
 @import "./views/messages/_MTextBody.scss";
 @import "./views/messages/_MVideoBody.scss";
@@ -203,6 +205,7 @@
 @import "./views/right_panel/_PinnedMessagesCard.scss";
 @import "./views/right_panel/_RoomSummaryCard.scss";
 @import "./views/right_panel/_ThreadPanel.scss";
+@import "./views/right_panel/_TimelineCard.scss";
 @import "./views/right_panel/_UserInfo.scss";
 @import "./views/right_panel/_VerificationPanel.scss";
 @import "./views/right_panel/_WidgetCard.scss";
@@ -251,6 +254,7 @@
 @import "./views/settings/_E2eAdvancedPanel.scss";
 @import "./views/settings/_EmailAddresses.scss";
 @import "./views/settings/_FontScalingPanel.scss";
+@import "./views/settings/_ImageSizePanel.scss";
 @import "./views/settings/_IntegrationManager.scss";
 @import "./views/settings/_JoinRuleSettings.scss";
 @import "./views/settings/_LayoutSwitcher.scss";
@@ -265,6 +269,7 @@
 @import "./views/settings/_UpdateCheckButton.scss";
 @import "./views/settings/tabs/_SettingsTab.scss";
 @import "./views/settings/tabs/room/_GeneralRoomSettingsTab.scss";
+@import "./views/settings/tabs/room/_NotificationSettingsTab.scss";
 @import "./views/settings/tabs/room/_RolesRoomSettingsTab.scss";
 @import "./views/settings/tabs/room/_SecurityRoomSettingsTab.scss";
 @import "./views/settings/tabs/user/_AppearanceUserSettingsTab.scss";
@@ -275,6 +280,7 @@
 @import "./views/settings/tabs/user/_NotificationUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_PreferencesUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_SecurityUserSettingsTab.scss";
+@import "./views/settings/tabs/user/_SidebarUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_VoiceUserSettingsTab.scss";
 @import "./views/spaces/_SpaceBasicSettings.scss";
 @import "./views/spaces/_SpaceChildrenPicker.scss";

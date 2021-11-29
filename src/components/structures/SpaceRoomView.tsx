@@ -55,9 +55,9 @@ import {
     showSpaceInvite,
     showSpaceSettings,
 } from "../../utils/space";
-import SpaceHierarchy, { joinRoom, showRoom } from "./SpaceHierarchy";
+import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import MemberAvatar from "../views/avatars/MemberAvatar";
-import SpaceStore from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
 import FacePile from "../views/elements/FacePile";
 import {
     AddExistingToSpace,
@@ -128,6 +128,7 @@ const useMyRoomMembership = (room: Room) => {
 };
 
 const SpaceInfo = ({ space }: { space: Room }) => {
+    // summary will begin as undefined whilst loading and go null if it fails to load.
     const summary = useAsyncMemo(async () => {
         if (space.getMyMembership() !== "invite") return;
         try {
@@ -156,7 +157,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
         memberSection = <span className="mx_SpaceRoomView_info_memberCount">
             { _t("%(count)s members", { count: summary.num_joined_members }) }
         </span>;
-    } else if (summary === null) {
+    } else if (summary !== undefined) { // summary is not still loading
         memberSection = <RoomMemberCount room={space}>
             { (count) => count > 0 ? (
                 <AccessibleButton
@@ -508,7 +509,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
             ) }
         </RoomTopic>
 
-        <SpaceHierarchy space={space} showRoom={showRoom} joinRoom={joinRoom} additionalButtons={addRoomButton} />
+        <SpaceHierarchy space={space} showRoom={showRoom} additionalButtons={addRoomButton} />
     </div>;
 };
 

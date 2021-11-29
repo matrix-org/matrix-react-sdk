@@ -26,9 +26,8 @@ import { _t } from "../../../languageHandler";
 import AccessibleButton from "../../views/elements/AccessibleButton";
 import RoomTile from "./RoomTile";
 import { ListLayout } from "../../../stores/room-list/ListLayout";
-import {
+import ContextMenu, {
     ChevronFace,
-    ContextMenu,
     ContextMenuTooltipButton,
     StyledMenuItemCheckbox,
     StyledMenuItemRadio,
@@ -38,6 +37,7 @@ import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorith
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import NotificationBadge from "./NotificationBadge";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { Key } from "../../../Keyboard";
@@ -444,7 +444,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
         if (room) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: room.roomId,
                 show_room_tile: true, // to make sure the room gets scrolled into view
             });
