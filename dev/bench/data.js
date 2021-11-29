@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638194917047,
+  "lastUpdate": 1638201918212,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42512,6 +42512,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4548.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f5f1f18007824af562c72e1ce82a1785b73e247d",
+          "message": "Task/colors 12 (reorganize theme files again) (#7212)",
+          "timestamp": "2021-11-29T15:59:21Z",
+          "tree_id": "c7e9945cf64ec8bd5ea1375370d9b014dd41247a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f5f1f18007824af562c72e1ce82a1785b73e247d"
+        },
+        "date": 1638201915454,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4909.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 629,
             "unit": "ms",
             "extra": "type: measure"
           }
