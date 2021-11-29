@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638184376195,
+  "lastUpdate": 1638185555186,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42368,6 +42368,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4588.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6d3865bdd5421132856f25e953553ec76716c0c8",
+          "message": "Respect the home page as a context for the Home space (#7216)",
+          "timestamp": "2021-11-29T11:26:10Z",
+          "tree_id": "c9934d48cc37ad91e148c0bcf49d74504dafcb3d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6d3865bdd5421132856f25e953553ec76716c0c8"
+        },
+        "date": 1638185552429,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5546.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1105.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1659.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4586.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
