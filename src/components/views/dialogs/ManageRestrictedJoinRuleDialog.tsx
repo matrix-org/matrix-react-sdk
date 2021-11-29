@@ -98,7 +98,7 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                 }
             }).filter(Boolean),
         ];
-    }, [cli, selected, room.roomId]);
+    }, [cli, selected, room]);
 
     const [filteredSpacesContainingRoom, filteredOtherEntries] = useMemo(() => [
         spacesContainingRoom.filter(r => r.name.toLowerCase().includes(lcQuery)),
