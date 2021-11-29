@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638184327283,
+  "lastUpdate": 1638184376195,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42320,6 +42320,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 634.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3ffe752730bfc8bb8b8e9930de807860c5ca02da",
+          "message": "Fix RoomUpgradeWarningBar exploding (#7214)",
+          "timestamp": "2021-11-29T11:06:19Z",
+          "tree_id": "98f7c0b6d19c983a0559ebc9d541878f86d40237",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3ffe752730bfc8bb8b8e9930de807860c5ca02da"
+        },
+        "date": 1638184373835,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4716.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1721.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4588.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
