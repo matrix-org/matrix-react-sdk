@@ -76,7 +76,7 @@ const AnalyticsLearnMoreDialog: React.FC<IProps> = ({
                 ) }
             </div>
             <ul className="mx_AnalyticsLearnMore_bullets">
-                <li>{ _t("We <Bold>don't</Bold> record or profile any personal data",
+                <li>{ _t("We <Bold>don't</Bold> record or profile any account data",
                     {}, { "Bold": (sub) => <b>{ sub }</b> }) }</li>
                 <li>{ _t("We <Bold>don't</Bold> share information with third parties",
                     {}, { "Bold": (sub) => <b>{ sub }</b> }) }</li>
