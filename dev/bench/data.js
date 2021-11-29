@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638205690293,
+  "lastUpdate": 1638205838259,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42680,6 +42680,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 662.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "065b65a764b74f4e6e8201ae3a364c29ef2dbb6c",
+          "message": "Hide scrollbar if content height is smaller than scroll node height (#7220)",
+          "timestamp": "2021-11-29T17:03:53Z",
+          "tree_id": "fbeac45966a308afec445f9191cfaf0bdfe2e4ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/065b65a764b74f4e6e8201ae3a364c29ef2dbb6c"
+        },
+        "date": 1638205835140,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4679.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1105.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1677.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4725.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
