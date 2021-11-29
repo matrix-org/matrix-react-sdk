@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638183201062,
+  "lastUpdate": 1638183786960,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42188,6 +42188,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4355.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "mail@michael-weimann.eu",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f5d32345f45444559c164304270c4d5266ea3dce",
+          "message": "Improve right panel resize handle usability (#7204)",
+          "timestamp": "2021-11-29T10:56:09Z",
+          "tree_id": "5950acf4ef35cb68f806b550ec303a94cdb73d22",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f5d32345f45444559c164304270c4d5266ea3dce"
+        },
+        "date": 1638183783773,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4896.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1135.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1653.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4592.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
