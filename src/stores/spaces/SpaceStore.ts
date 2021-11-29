@@ -230,6 +230,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             } else {
                 defaultDispatcher.dispatch({
                     action: "view_home_page",
+                    context_switch: true,
                 });
             }
         }
@@ -855,7 +856,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             }
 
             case "view_home_page":
-                if (this.enabledMetaSpaces.includes(MetaSpace.Home)) {
+                if (!payload.context_switch && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
                     this.setActiveSpace(MetaSpace.Home, false);
                     window.localStorage.setItem(getSpaceContextKey(this.activeSpace), "");
                 }
