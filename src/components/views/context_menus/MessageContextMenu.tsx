@@ -34,7 +34,7 @@ import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { copyPlaintext } from '../../../utils/strings';
-import { toRightOf, ContextMenu } from '../../structures/ContextMenu';
+import ContextMenu, { toRightOf } from '../../structures/ContextMenu';
 import ReactionPicker from '../emojipicker/ReactionPicker';
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import ReportEventDialog from '../dialogs/ReportEventDialog';
