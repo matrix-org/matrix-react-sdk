@@ -306,14 +306,11 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     };
 
     private onRoomListKeydown = (ev: React.KeyboardEvent) => {
+        // we cannot handle Space as that is an activation key for all focusable elements in this widget
         if (ev.key.length === 1) {
             ev.preventDefault();
             ev.stopPropagation();
             this.roomSearchRef.current?.appendChar(ev.key);
-        } else if (ev.key === Key.SPACE) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            this.roomSearchRef.current?.appendChar(" ");
         } else if (ev.key === Key.BACKSPACE) {
             ev.preventDefault();
             ev.stopPropagation();
