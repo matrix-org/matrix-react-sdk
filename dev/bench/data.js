@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1637941631191,
+  "lastUpdate": 1638178151454,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42092,6 +42092,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4525,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "35d4ec6e803978d8861b4f5205f90b264f56af3c",
+          "message": "Fix Manage Restricted Join Rule Dialog for Spaces (#7208)",
+          "timestamp": "2021-11-29T09:23:25Z",
+          "tree_id": "9a5d356f4abf2b4b54d3512b6c75dc43867e4d19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/35d4ec6e803978d8861b4f5205f90b264f56af3c"
+        },
+        "date": 1638178148571,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4984.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 861.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1615.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4195,
             "unit": "ms",
             "extra": "type: measure"
           }
