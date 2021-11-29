@@ -71,7 +71,7 @@ import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -677,7 +677,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
         if (existingRoom) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: existingRoom.roomId,
                 should_peek: false,
                 joining: false,

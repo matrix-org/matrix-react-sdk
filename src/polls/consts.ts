@@ -18,11 +18,17 @@ import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 import { IContent } from "matrix-js-sdk/src/models/event";
 
 export const POLL_START_EVENT_TYPE = new UnstableValue("m.poll.start", "org.matrix.msc3381.poll.start");
+export const POLL_RESPONSE_EVENT_TYPE = new UnstableValue("m.poll.response", "org.matrix.msc3381.poll.response");
 export const POLL_KIND_DISCLOSED = new UnstableValue("m.poll.disclosed", "org.matrix.msc3381.poll.disclosed");
 export const POLL_KIND_UNDISCLOSED = new UnstableValue("m.poll.undisclosed", "org.matrix.msc3381.poll.undisclosed");
 
 // TODO: [TravisR] Use extensible events library when ready
 const TEXT_NODE_TYPE = "org.matrix.msc1767.text";
+
+export interface IPollAnswer extends IContent {
+    id: string;
+    [TEXT_NODE_TYPE]: string;
+}
 
 export interface IPollContent extends IContent {
     [POLL_START_EVENT_TYPE.name]: {
@@ -30,12 +36,15 @@ export interface IPollContent extends IContent {
         question: {
             [TEXT_NODE_TYPE]: string;
         };
-        answers: {
-            id: string;
-            [TEXT_NODE_TYPE]: string;
-        }[];
+        answers: IPollAnswer[];
     };
     [TEXT_NODE_TYPE]: string;
+}
+
+export interface IPollResponse extends IContent {
+    [POLL_RESPONSE_EVENT_TYPE.name]: {
+        answers: string[];
+    };
 }
 
 export function makePollContent(question: string, answers: string[], kind: string): IPollContent {

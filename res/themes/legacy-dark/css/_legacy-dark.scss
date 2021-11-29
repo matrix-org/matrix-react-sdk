@@ -28,13 +28,10 @@ $focus-bg-color: $room-highlight-color;
 
 $other-user-pill-bg-color: $room-highlight-color;
 $rte-room-pill-color: $room-highlight-color;
-$rte-group-pill-color: $room-highlight-color;
 
 // informational plinth
 $info-plinth-bg-color: $header-panel-bg-color;
 $info-plinth-fg-color: #888;
-
-$preview-bar-bg-color: $header-panel-bg-color;
 
 $groupFilterPanel-bg-color: $base-color;
 $inverted-bg-color: $groupFilterPanel-bg-color;
@@ -53,7 +50,6 @@ $input-border-color: #e7e7e7;
 $input-darker-bg-color: #181b21;
 $input-darker-fg-color: #61708b;
 $input-lighter-bg-color: #f2f5f8;
-$input-focused-border-color: #238cf5;
 
 $resend-button-divider-color: $muted-fg-color;
 
@@ -84,17 +80,10 @@ $settings-profile-button-bg-color: #e7e7e7;
 $settings-subsection-fg-color: $text-secondary-color;
 
 $topleftmenu-color: $text-primary-color;
-$roomheader-color: $text-primary-color;
 $roomheader-addroom-bg-color: #3c4556;
 $roomheader-addroom-fg-color: $text-primary-color;
-$groupFilterPanel-button-color: $header-panel-text-primary-color;
-$groupheader-button-color: $header-panel-text-primary-color;
-$rightpanel-button-color: $header-panel-text-primary-color;
 $icon-button-color: $header-panel-text-primary-color;
 $roomtopic-color: $text-secondary-color;
-
-$header-divider-color: $header-panel-text-primary-color;
-$composer-e2e-icon-color: $header-panel-text-primary-color;
 
 // Legacy theme backports
 $accent: #0DBD8B;
@@ -118,10 +107,14 @@ $space-nav: rgba($panel-base, 0.1);
 
 // ********************
 
-$theme-button-bg-color: #e3e8f0;
+$call-view-button-on-foreground: $primary-content;
+$call-view-button-on-background: $system;
+$call-view-button-off-foreground: $system;
+$call-view-button-off-background: $primary-content;
 
-$roomlist-button-bg-color: #1A1D23; // Buttons include the filter box, explore button, and sublist buttons
-$roomlist-filter-active-bg-color: $roomlist-button-bg-color;
+$video-feed-secondary-background: $system;
+
+$roomlist-filter-active-bg-color: $panel-actions;
 $roomlist-bg-color: $header-panel-bg-color;
 
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, #3e444c 0%, #3e444c00 100%);
@@ -144,7 +137,6 @@ $event-timestamp-color: $text-secondary-color;
 // Tabbed views
 $tab-label-fg-color: $text-primary-color;
 $tab-label-active-fg-color: $text-primary-color;
-$tab-label-active-icon-bg-color: $text-primary-color;
 
 // Buttons
 $button-primary-fg-color: #ffffff;
@@ -206,7 +198,7 @@ $eventbubble-reply-color: #C1C6CD;
     font-family: $font-family;
     font-size: $font-14px;
     color: $button-fg-color;
-    background-color: $accent-color;
+    background-color: $accent;
     width: auto;
     padding: 7px;
     padding-left: 1.5em;
@@ -217,19 +209,19 @@ $eventbubble-reply-color: #C1C6CD;
 }
 
 @define-mixin mx_DialogButton_danger {
-    background-color: $accent-color;
+    background-color: $accent;
 }
 
 @define-mixin mx_DialogButton_secondary {
     // flip colours for the secondary ones
     font-weight: 600;
-    border: 1px solid $accent-color !important;
-    color: $accent-color;
+    border: 1px solid $accent !important;
+    color: $accent;
     background-color: $button-secondary-bg-color;
 }
 
 @define-mixin mx_Dialog_link {
-    color: $accent-color;
+    color: $accent;
     text-decoration: none;
 }
 
