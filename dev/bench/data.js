@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638209338809,
+  "lastUpdate": 1638217048652,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43004,6 +43004,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4912.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1d2965a11120d5da12ae47911bb8d7e75735e939",
+          "message": "Tweak bottom of space panel buttons in expanded state (#7213)",
+          "timestamp": "2021-11-29T20:10:34Z",
+          "tree_id": "eeb382500d5b6a836b26a52542bab196b6922b39",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1d2965a11120d5da12ae47911bb8d7e75735e939"
+        },
+        "date": 1638217045780,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4808.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 765.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
