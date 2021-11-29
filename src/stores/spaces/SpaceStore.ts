@@ -854,6 +854,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 break;
             }
 
+            case "view_home_page":
+                if (this.enabledMetaSpaces.includes(MetaSpace.Home)) {
+                    this.setActiveSpace(MetaSpace.Home, false);
+                    window.localStorage.setItem(getSpaceContextKey(this.activeSpace), "");
+                }
+                break;
+
             case "after_leave_room":
                 if (this._activeSpace[0] === "!" && payload.room_id === this._activeSpace) {
                     // User has left the current space, go to first space
