@@ -143,6 +143,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
         onFinished={closeMenu}
         managed={false}
         chevronFace={ChevronFace.Top}
+        mountAsChild={true}
     >
         { contextMenuOptions }
     </ContextMenu> : null;
