@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638183786960,
+  "lastUpdate": 1638183924558,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -42236,6 +42236,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4592.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a2aa9d96cea7bedeef51f2cacf89daca3bab434",
+          "message": "Polish threads misalignments and UI diversion (#7209)",
+          "timestamp": "2021-11-29T10:58:34Z",
+          "tree_id": "e6c8d0ac2fad4ddb2c27023852d07f86e6acd3a7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a2aa9d96cea7bedeef51f2cacf89daca3bab434"
+        },
+        "date": 1638183921530,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5356,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1103,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4757.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
