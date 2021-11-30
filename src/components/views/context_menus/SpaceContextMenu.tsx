@@ -36,6 +36,7 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { BetaPill } from "../beta/BetaCard";
 import SettingsStore from "../../../settings/SettingsStore";
+import { Action } from "../../../dispatcher/actions";
 
 interface IProps extends IContextMenuProps {
     space: Room;
@@ -110,7 +111,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             ev.stopPropagation();
 
             defaultDispatcher.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: space.roomId,
                 forceTimeline: true,
             });

@@ -55,6 +55,8 @@ import IconizedContextMenu, {
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import UIStore from "../../../stores/UIStore";
+import QuickSettingsButton from "./QuickSettingsButton";
+import { useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
@@ -284,6 +286,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
 });
 
 const SpacePanel = () => {
+    const metaSpacesEnabled = useSettingValue("feature_spaces_metaspaces");
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
     const ref = useRef<HTMLUListElement>();
     useLayoutEffect(() => {
@@ -328,7 +331,11 @@ const SpacePanel = () => {
                             className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                             onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                             title={isPanelCollapsed ? _t("Expand space panel") : _t("Collapse space panel")}
-                        />
+                            forceHide={!isPanelCollapsed}
+                        >
+                            { !isPanelCollapsed ? _t("Collapse") : null }
+                        </AccessibleTooltipButton>
+                        { metaSpacesEnabled && <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> }
                     </ul>
                 ) }
             </RovingTabIndexProvider>

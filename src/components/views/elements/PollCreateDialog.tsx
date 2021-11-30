@@ -16,13 +16,16 @@ limitations under the License.
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
+import QuestionDialog from "../dialogs/QuestionDialog";
 import React, { ChangeEvent, createRef } from "react";
+import Modal from '../../../Modal';
 import { _t } from "../../../languageHandler";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 import { makePollContent, POLL_KIND_DISCLOSED, POLL_START_EVENT_TYPE } from "../../../polls/consts";
+import Spinner from "./Spinner";
 
 interface IProps extends IDialogProps {
     room: Room;
@@ -88,7 +91,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         this.setState({ options: newOptions }, () => {
             // Scroll the button into view after the state update to ensure we don't experience
             // a pop-in effect, and to avoid the button getting cut off due to a mid-scroll render.
-            this.addOptionRef.current?.scrollIntoView();
+            this.addOptionRef.current?.scrollIntoView?.();
         });
     };
 
@@ -97,10 +100,32 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         this.matrixClient.sendEvent(
             this.props.room.roomId,
             POLL_START_EVENT_TYPE.name,
-            makePollContent(this.state.question, this.state.options, POLL_KIND_DISCLOSED.name),
-        ).then(() => this.props.onFinished(true)).catch(e => {
-            console.error("Failed to submit poll event:", e);
-            this.setState({ busy: false, canSubmit: true });
+            makePollContent(
+                this.state.question, this.state.options, POLL_KIND_DISCLOSED.name,
+            ),
+        ).then(
+            () => this.props.onFinished(true),
+        ).catch(e => {
+            console.error("Failed to post poll:", e);
+            Modal.createTrackedDialog(
+                'Failed to post poll',
+                '',
+                QuestionDialog,
+                {
+                    title: _t("Failed to post poll"),
+                    description: _t(
+                        "Sorry, the poll you tried to create was not posted."),
+                    button: _t('Try again'),
+                    cancelButton: _t('Cancel'),
+                    onFinished: (tryAgain: boolean) => {
+                        if (!tryAgain) {
+                            this.cancel();
+                        } else {
+                            this.setState({ busy: false, canSubmit: true });
+                        }
+                    },
+                },
+            );
         });
     }
 
@@ -118,6 +143,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 placeholder={_t("Write something...")}
                 onChange={this.onQuestionChange}
                 usePlaceholderAsHint={true}
+                disabled={this.state.busy}
             />
             <h2>{ _t("Create options") }</h2>
             {
@@ -129,20 +155,26 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                         placeholder={_t("Write an option")}
                         onChange={e => this.onOptionChange(i, e)}
                         usePlaceholderAsHint={true}
+                        disabled={this.state.busy}
                     />
                     <AccessibleButton
                         onClick={() => this.onOptionRemove(i)}
                         className="mx_PollCreateDialog_removeOption"
+                        disabled={this.state.busy}
                     />
                 </div>)
             }
             <AccessibleButton
                 onClick={this.onOptionAdd}
-                disabled={this.state.options.length >= MAX_OPTIONS}
+                disabled={this.state.busy || this.state.options.length >= MAX_OPTIONS}
                 kind="secondary"
                 className="mx_PollCreateDialog_addOption"
                 inputRef={this.addOptionRef}
             >{ _t("Add option") }</AccessibleButton>
+            {
+                this.state.busy &&
+                    <div className="mx_PollCreateDialog_busy"><Spinner /></div>
+            }
         </div>;
     }
 }

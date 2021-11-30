@@ -54,6 +54,7 @@ import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
@@ -149,14 +150,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
             SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
         }
 
-        this.dndWatcherRef = SettingsStore.watchSetting("doNotDisturb", null, this.onDndChanged);
+        SettingsStore.monitorSetting("feature_dnd", null);
+        SettingsStore.monitorSetting("doNotDisturb", null);
     }
-
-    private onDndChanged = () => {
-        this.setState({
-            dndEnabled: this.doNotDisturb,
-        });
-    };
 
     private get doNotDisturb(): boolean {
         return SettingsStore.getValue("doNotDisturb");
@@ -231,8 +227,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
             });
     };
 
-    private onAction = (ev: ActionPayload) => {
-        switch (ev.action) {
+    private onAction = (payload: ActionPayload) => {
+        switch (payload.action) {
             case Action.ToggleUserMenu:
                 if (this.state.contextMenuPosition) {
                     this.setState({ contextMenuPosition: null });
@@ -240,6 +236,20 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     if (this.buttonRef.current) this.buttonRef.current.click();
                 }
                 break;
+
+            case Action.SettingUpdated: {
+                const settingUpdatedPayload = payload as SettingUpdatedPayload;
+                switch (settingUpdatedPayload.settingName) {
+                    case "feature_dnd":
+                    case "doNotDisturb": {
+                        const dndEnabled = this.doNotDisturb;
+                        if (this.state.dndEnabled !== dndEnabled) {
+                            this.setState({ dndEnabled });
+                        }
+                        break;
+                    }
+                }
+            }
         }
     };
 
@@ -342,10 +352,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        let bottomSection;
+        let topSection;
         const hostSignupConfig: IHostSignupConfig = SdkConfig.get().hostSignup;
         if (MatrixClientPeg.get().isGuest()) {
-            bottomSection = (
+            topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
                     { _t("Got an account? <a>Sign in</a>", {}, {
                         a: sub => (
@@ -371,7 +381,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 const mxDomain = MatrixClientPeg.get().getDomain();
                 const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
                 if (!hostSignupConfig.domains || validDomains.length > 0) {
-                    bottomSection = <HostSignupAction onClick={this.onCloseMenu} />;
+                    topSection = <HostSignupAction onClick={this.onCloseMenu} />;
                 }
             }
         }
@@ -420,7 +430,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 { dndButton }
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconBell"
-                    label={_t("Notification settings")}
+                    label={_t("Notifications")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Notifications)}
                 />
                 <IconizedContextMenuOption
@@ -489,8 +499,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 </AccessibleTooltipButton>
             </div>
             { customStatusSection }
+            { topSection }
             { primaryOptionList }
-            { bottomSection }
         </IconizedContextMenu>;
     };
 
@@ -532,7 +542,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         width={avatarSize}
                         height={avatarSize}
                         resizeMethod="crop"
-                        className=""
+                        className="mx_UserMenu_userAvatar_BaseAvatar"
                     />
                     { badge }
                 </div>

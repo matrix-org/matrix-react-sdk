@@ -23,7 +23,7 @@ import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
-import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
+import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
@@ -42,6 +42,7 @@ import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
 import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
 import ReactionPicker from "../emojipicker/ReactionPicker";
+import { MsgType } from 'matrix-js-sdk/src/@types/event';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -196,6 +197,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     private onThreadClick = (): void => {
         dispatchShowThreadEvent(this.props.mxEvent);
+        dis.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: TimelineRenderingType.Thread,
+        });
     };
 
     private onEditClick = (ev: React.MouseEvent): void => {
@@ -205,6 +210,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             timelineRenderingType: this.context.timelineRenderingType,
         });
     };
+
+    private readonly forbiddenThreadHeadMsgType = [
+        MsgType.KeyVerificationRequest,
+    ];
+
+    private get showReplyInThreadAction(): boolean {
+        const isThreadEnabled = SettingsStore.getValue("feature_thread");
+        const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
+
+        const isAllowedMessageType = !this.forbiddenThreadHeadMsgType.includes(
+            this.props.mxEvent.getContent().msgtype as MsgType,
+        );
+
+        return isThreadEnabled && inNotThreadTimeline && isAllowedMessageType;
+    }
 
     /**
      * Runs a given fn on the set of possible events to test. The first event
@@ -290,8 +310,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             onClick={this.onReplyClick}
                             key="reply"
                         />
-                        { (SettingsStore.getValue("feature_thread")
-                            && this.context.timelineRenderingType !== TimelineRenderingType.Thread) && (
+                        { (this.showReplyInThreadAction) && (
                             <RovingAccessibleTooltipButton
                                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
                                 title={_t("Reply in thread")}

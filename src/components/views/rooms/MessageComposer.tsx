@@ -27,9 +27,8 @@ import { makeRoomPermalink, RoomPermalinkCreator } from '../../../utils/permalin
 import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
 import SettingsStore from "../../../settings/SettingsStore";
-import {
+import ContextMenu, {
     aboveLeftOf,
-    ContextMenu,
     useContextMenu,
     MenuItem,
     AboveLeftOf,
@@ -205,9 +204,17 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 description: _t("You do not have permission to start polls in this room."),
             });
         } else {
-            Modal.createTrackedDialog('Polls', 'create', PollCreateDialog, {
-                room: this.props.room,
-            }, 'mx_CompoundDialog');
+            Modal.createTrackedDialog(
+                'Polls',
+                'create',
+                PollCreateDialog,
+                {
+                    room: this.props.room,
+                },
+                'mx_CompoundDialog',
+                false, // isPriorityModal
+                true,  // isStaticModal
+            );
         }
     };
 
@@ -361,7 +368,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             highlighted: true,
             event_id: createEventId,
             room_id: replacementRoomId,

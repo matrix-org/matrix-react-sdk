@@ -120,7 +120,7 @@ limitations under the License.
 
         .mx_RoomSublist_auxButton:hover,
         .mx_RoomSublist_menuButton:hover {
-            background: $roomlist-button-bg-color;
+            background: $panel-actions;
         }
 
         // Hide the menu button by default
@@ -187,6 +187,7 @@ limitations under the License.
         .mx_RoomSublist_tiles {
             flex: 1 0 0;
             overflow: hidden;
+            overflow: clip;
             // need this to be flex otherwise the overflow hidden from above
             // sometimes vertically centers the clipped list ... no idea why it would do this
             // as the box model should be top aligned. Happens in both FF and Chromium
@@ -303,7 +304,7 @@ limitations under the License.
                 width: 32px !important; // !important to override hover styles
                 height: 32px !important; // !important to override hover styles
                 margin-left: 0 !important; // !important to override hover styles
-                background-color: $roomlist-button-bg-color;
+                background-color: $panel-actions;
                 margin-top: 8px;
 
                 &::before {

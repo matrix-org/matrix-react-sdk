@@ -212,7 +212,10 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     closeMenu();
-                    defaultDispatcher.fire(Action.ViewRoomDirectory);
+                    defaultDispatcher.dispatch({
+                        action: "view_room",
+                        room_id: activeSpace.roomId,
+                    });
                 }}
             />
             {
@@ -408,7 +411,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
                 defaultDispatcher.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     room_id: room.roomId,
                     show_room_tile: true, // to make sure the room gets scrolled into view
                 });
@@ -656,36 +659,9 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         kind="link"
                         onClick={this.onExplore}
                     >
-                        { this.props.activeSpace[0] === "!"
-                            ? _t("Explore rooms")
-                            : _t("Explore all public rooms") }
+                        { this.props.activeSpace[0] === "!" ? _t("Explore rooms") : _t("Explore all public rooms") }
                     </AccessibleButton>
                 </div>;
-            } else if (Object.values(this.state.sublists).some(list => list.length > 0)) {
-                const unfilteredLists = RoomListStore.instance.unfilteredLists;
-                const unfilteredRooms = unfilteredLists[DefaultTagID.Untagged] || [];
-                const unfilteredHistorical = unfilteredLists[DefaultTagID.Archived] || [];
-                const unfilteredFavourite = unfilteredLists[DefaultTagID.Favourite] || [];
-                // show a prompt to join/create rooms if the user is in 0 rooms and no historical
-                if (unfilteredRooms.length < 1 && unfilteredHistorical.length < 1 && unfilteredFavourite.length < 1) {
-                    explorePrompt = <div className="mx_RoomList_explorePrompt">
-                        <div>{ _t("Use the + to make a new room or explore existing ones below") }</div>
-                        <AccessibleButton
-                            className="mx_RoomList_explorePrompt_startChat"
-                            kind="link"
-                            onClick={this.onStartChat}
-                        >
-                            { _t("Start a new chat") }
-                        </AccessibleButton>
-                        <AccessibleButton
-                            className="mx_RoomList_explorePrompt_explore"
-                            kind="link"
-                            onClick={this.onExplore}
-                        >
-                            { _t("Explore all public rooms") }
-                        </AccessibleButton>
-                    </div>;
-                }
             }
         }
 
