@@ -731,7 +731,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         let shouldSendRR = true;
 
         const currentRREventId = this.getCurrentReadReceipt(true);
-        const currentRREventIndex = this.indexForEventId(currentRREventId);
         // We want to avoid sending out read receipts when we are looking at
         // events in the past which are before the latest RR.
         //
@@ -745,7 +744,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // RRs) - but that is a bit of a niche case. It will sort itself out when
         // the user eventually hits the live timeline.
         //
-        if (currentRREventId && currentRREventIndex === null &&
+        if (currentRREventId &&
                 this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             shouldSendRR = false;
         }
@@ -758,9 +757,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
         let lastReadEvent = this.state.events[lastReadEventIndex];
         shouldSendRR = shouldSendRR &&
-            // Only send a RR if the last read event is ahead in the timeline relative to
-            // the current RR event.
-            lastReadEventIndex > currentRREventIndex &&
             // Only send a RR if the last RR set != the one we would send
             this.lastRRSentEventId != lastReadEvent.getId();
 
