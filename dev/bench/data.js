@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638264803288,
+  "lastUpdate": 1638267132031,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43088,6 +43088,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4460.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8905c5d2bb2041872c11ad2a9546d7158d459f69",
+          "message": "Add unread indicator to the timelineCard header icon (#7156)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2021-11-30T11:06:20+01:00",
+          "tree_id": "ebd9bab23c2e82e75836dc3c1d8d0dbb5503c2f3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8905c5d2bb2041872c11ad2a9546d7158d459f69"
+        },
+        "date": 1638267129383,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5057.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 920.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1576.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4293.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
