@@ -51,11 +51,6 @@ class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
     };
 
     protected renderNewItemField() {
-        // if we don't need the RoomAliasField,
-        // we don't need to overriden version of renderNewItemField
-        if (!this.props.domain) {
-            return super.renderNewItemField();
-        }
         const onChange = (alias) => this.onNewItemChanged({ target: { value: alias } });
         return (
             <form
