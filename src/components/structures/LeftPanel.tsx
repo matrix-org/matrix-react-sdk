@@ -314,6 +314,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     };
 
     private onRoomListKeydown = (ev: React.KeyboardEvent) => {
+        if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
         // we cannot handle Space as that is an activation key for all focusable elements in this widget
         if (ev.key.length === 1) {
             ev.preventDefault();
@@ -352,7 +353,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
         // If we have dialer support, show a button to bring up the dial pad
         // to start a new call
-        if (CallHandler.sharedInstance().getSupportsPstnProtocol()) {
+        if (CallHandler.instance.getSupportsPstnProtocol()) {
             dialPadButton =
                 <AccessibleTooltipButton
                     className={classNames("mx_LeftPanel_dialPadButton", {})}
