@@ -12,7 +12,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
           PR_NUMBER: ${{github.event.number}}
-        container: vectorim/element-web-ci-e2etests-env:latest
+        container: vectorim/element-web-ci-e2etests-env:20210628-1
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
