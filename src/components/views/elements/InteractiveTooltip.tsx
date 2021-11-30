@@ -411,7 +411,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         document.addEventListener("mousemove", this.onMouseMove);
     }
 
-    private hideTooltip() {
+    public hideTooltip() {
         this.setState({
             visible: false,
         });

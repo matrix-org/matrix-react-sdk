@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useRef } from "react";
 
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
@@ -27,6 +27,7 @@ import InteractiveTooltip, { Direction } from "../elements/InteractiveTooltip";
 import { roomContextDetailsText } from "../../../Rooms";
 
 const RecentlyViewedButton = () => {
+    const tooltipRef = useRef<InteractiveTooltip>();
     const crumbs = useEventEmitterState(BreadcrumbsStore.instance, UPDATE_EVENT, () => BreadcrumbsStore.instance.rooms);
 
     const content = <div className="mx_RecentlyViewedButton_ContextMenu">
@@ -42,6 +43,7 @@ const RecentlyViewedButton = () => {
                             action: "view_room",
                             room_id: crumb.roomId,
                         });
+                        tooltipRef.current?.hideTooltip();
                     }}
                 >
                     <RoomAvatar room={crumb} width={24} height={24} />
@@ -56,7 +58,7 @@ const RecentlyViewedButton = () => {
         </div>
     </div>;
 
-    return <InteractiveTooltip content={content} direction={Direction.Right}>
+    return <InteractiveTooltip content={content} direction={Direction.Right} ref={tooltipRef}>
         { ({ ref, onMouseOver }) => (
             <span
                 className="mx_LeftPanel_recentsButton"
