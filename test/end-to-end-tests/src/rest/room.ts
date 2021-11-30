@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { uuidv4 } from 'uuid/v4';
+import uuidv4 = require('uuid/v4');
 import { RestSession } from "./session";
 import { Logger } from "../logger";
 

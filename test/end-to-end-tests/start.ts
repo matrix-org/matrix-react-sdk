@@ -19,7 +19,7 @@ import { scenario } from './src/scenario';
 import { RestSessionCreator } from './src/rest/creator';
 import * as fs from "fs";
 
-import * as program from 'commander';
+import program = require('commander');
 program
     .option('--no-logs', "don't output logs, document html on error", false)
     .option('--app-url [url]', "url to test", "http://localhost:5000")
@@ -114,7 +114,9 @@ async function runTests() {
         performanceEntries = JSON.parse(measurements);
         return session.close();
     }));
-    fs.writeFileSync(`performance-entries.json`, JSON.stringify(performanceEntries));
+    if (performanceEntries) {
+        fs.writeFileSync(`performance-entries.json`, JSON.stringify(performanceEntries));
+    }
     if (failure) {
         process.exit(-1);
     } else {

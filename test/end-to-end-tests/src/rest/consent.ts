@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { request } from 'request-promise-native';
+import request = require('request-promise-native');
 import * as cheerio from 'cheerio';
 import * as url from "url";
 

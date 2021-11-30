@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import { exec } from 'child_process';
-import { request } from 'request-promise-native';
+import request = require('request-promise-native');
 import { RestSession } from './session';
 import { RestMultiSession } from './multi';
 

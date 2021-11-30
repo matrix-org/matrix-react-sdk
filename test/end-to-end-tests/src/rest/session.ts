@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { request } from 'request-promise-native';
+import request = require('request-promise-native');
 import { Logger } from '../logger';
 import { RestRoom } from './room';
 import { approveConsent } from './consent';
@@ -120,6 +120,9 @@ export class RestSession {
                 body,
             });
         } catch (err) {
+            if (!err.response) {
+                throw err;
+            }
             const responseBody = err.response.body;
             if (responseBody.errcode === 'M_CONSENT_NOT_GIVEN') {
                 await approveConsent(responseBody.consent_uri);
