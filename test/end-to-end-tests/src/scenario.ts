@@ -23,6 +23,7 @@ import { e2eEncryptionScenarios } from './scenarios/e2e-encryption';
 import { ElementSession } from "./session";
 import { RestSessionCreator } from "./rest/creator";
 import { RestMultiSession } from "./rest/multi";
+import { spacesScenarios } from './scenarios/spaces';
 
 export async function scenario(createSession: (string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
@@ -48,8 +49,7 @@ export async function scenario(createSession: (string) => Promise<ElementSession
     const charlies = await createRestUsers(restCreator);
     await lazyLoadingScenarios(alice, bob, charlies);
     // do spaces scenarios last as the rest of the tests may get confused by spaces
-    // XXX: disabled for now as fails in CI but succeeds locally
-    // await spacesScenarios(alice, bob);
+    await spacesScenarios(alice, bob);
 }
 
 async function createRestUsers(restCreator: RestSessionCreator): Promise<RestMultiSession> {
