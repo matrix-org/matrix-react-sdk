@@ -1,6 +1,10 @@
 # Update on docker hub with the following commands in the directory of this file:
-# docker build -t vectorim/element-web-ci-e2etests-env:latest .
-# docker push vectorim/element-web-ci-e2etests-env:latest
+# If you're on linux amd64
+#   docker build -t vectorim/element-web-ci-e2etests-env:latest .
+# If you're on some other platform, you need to cross-compile
+#   docker buildx build --platform linux/amd64,linux/arm64 --push -t vectorim/element-web-ci-e2etests-env:latest .
+# Then:
+#   docker push vectorim/element-web-ci-e2etests-env:latest
 FROM node:14-buster
 RUN apt-get update
 RUN apt-get -y install \
