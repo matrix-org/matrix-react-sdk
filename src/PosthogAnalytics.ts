@@ -337,7 +337,7 @@ export class PosthogAnalytics {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
         }
 
-        if (anonymity != Anonymity.Disabled) {
+        if (anonymity !== Anonymity.Disabled) {
             await PosthogAnalytics.instance.updatePlatformSuperProperties();
         }
     }
