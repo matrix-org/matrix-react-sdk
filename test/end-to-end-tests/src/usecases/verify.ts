@@ -30,7 +30,7 @@ export async function startVerification(session: ElementSession, name: string): 
     await session.delay(1000);
 
     // click 'start verification'
-    const startVerifyButton = await session.query('.mx_UserInfo_container .mx_AccessibleButton_kind_primary');
+    const startVerifyButton = await session.query('.mx_UserInfo_container .mx_UserInfo_startVerification');
     await startVerifyButton.click();
     session.log.done();
 }
