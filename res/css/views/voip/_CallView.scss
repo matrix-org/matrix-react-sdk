@@ -26,7 +26,8 @@ limitations under the License.
 
 .mx_CallView_large {
     padding-bottom: 10px;
-    margin: 5px 5px 5px 13px;
+    margin: $container-gap-width calc($container-gap-width / 2);
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     flex: 1;

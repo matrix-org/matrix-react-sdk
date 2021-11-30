@@ -27,6 +27,7 @@ $roomListCollapsedWidth: 68px;
     display: flex;
     max-width: 50%;
     position: relative;
+    margin-right: calc($container-gap-width / 2);
 
     // Contain the amount of layers rendered by constraining what actually needs re-layering via css
     contain: layout paint;
