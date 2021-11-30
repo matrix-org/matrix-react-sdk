@@ -39,6 +39,9 @@ import { SearchScope } from './SearchBar';
 import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
+import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
+import { NOTIFICATION_STATE_UPDATE } from '../../../stores/notifications/NotificationState';
+import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -57,6 +60,7 @@ interface IProps {
     e2eStatus: E2EStatus;
     appsShown: boolean;
     searchInfo: ISearchInfo;
+    excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
 interface IState {
@@ -68,11 +72,13 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
         inRoom: false,
+        excludedRightPanelPhaseButtons: [],
     };
 
     constructor(props, context) {
         super(props, context);
-
+        const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
+        notiStore.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.state = {};
     }
 
@@ -86,6 +92,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (cli) {
             cli.removeListener("RoomState.events", this.onRoomStateEvents);
         }
+        const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
+        notiStore.removeListener(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
     }
 
     private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
@@ -95,6 +103,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         // redisplay the room name, topic, etc.
         this.rateLimitedUpdate();
+    };
+
+    private onNotificationUpdate = () => {
+        this.forceUpdate();
     };
 
     private rateLimitedUpdate = throttle(() => {
@@ -263,7 +275,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { searchStatus }
                     { topicElement }
                     { rightRow }
-                    <RoomHeaderButtons room={this.props.room} />
+                    <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
             </div>
         );

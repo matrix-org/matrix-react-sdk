@@ -18,7 +18,7 @@ import React, { useMemo } from "react";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { alwaysAboveRightOf, ChevronFace, ContextMenu, useContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { alwaysAboveRightOf, ChevronFace, useContextMenu } from "../../structures/ContextMenu";
 import AccessibleButton from "../elements/AccessibleButton";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import { MetaSpace } from "../../../stores/spaces";
@@ -34,8 +34,9 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import dis from "../../../dispatcher/dispatcher";
 import { RecheckThemePayload } from "../../../dispatcher/payloads/RecheckThemePayload";
+import classNames from "classnames";
 
-const QuickSettingsButton = () => {
+const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
     const orderedThemes = useMemo(getOrderedThemes, []);
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
 
@@ -137,11 +138,14 @@ const QuickSettingsButton = () => {
 
     return <>
         <AccessibleTooltipButton
-            className="mx_QuickSettingsButton"
+            className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed })}
             onClick={openMenu}
             title={_t("Quick settings")}
             inputRef={handle}
-        />
+            forceHide={!isPanelCollapsed}
+        >
+            { !isPanelCollapsed ? _t("Settings") : null }
+        </AccessibleTooltipButton>
 
         { contextMenu }
     </>;
