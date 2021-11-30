@@ -333,7 +333,7 @@ export class PosthogAnalytics {
         // Update this.anonymity based on the user's analytics opt-in settings
         const anonymity = pseudonymousOptIn ? Anonymity.Pseudonymous : Anonymity.Disabled;
         this.setAnonymity(anonymity);
-        if (anonymity == Anonymity.Pseudonymous) {
+        if (anonymity === Anonymity.Pseudonymous) {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
         }
 
