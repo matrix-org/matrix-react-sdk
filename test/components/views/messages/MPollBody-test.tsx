@@ -26,6 +26,7 @@ import { Relations } from "matrix-js-sdk/src/models/relations";
 import { IPollAnswer, IPollContent } from "../../../../src/polls/consts";
 import { UserVote, allVotes } from "../../../../src/components/views/messages/MPollBody";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { IBodyProps } from "../../../../src/components/views/messages/IBodyProps";
 
 const CHECKED = "mx_MPollBody_option_checked";
 
@@ -148,6 +149,55 @@ describe("MPollBody", () => {
         // And my vote is highlighted
         expect(voteButton(body, "wings").hasClass(CHECKED)).toBe(true);
         expect(voteButton(body, "italian").hasClass(CHECKED)).toBe(false);
+    });
+
+    it("cancels my local vote if another comes in", () => {
+        // Given I voted locally
+        const votes = [responseEvent("@me:example.com", "pizza", 100)];
+        const body = newMPollBody(votes);
+        const props: IBodyProps = body.instance().props as IBodyProps;
+        const pollRelations: Relations = props.getRelationsForEvent(
+            "$mypoll", "m.reference", "org.matrix.msc3381.poll.response");
+        clickRadio(body, "pizza");
+
+        // When a new vote from me comes in
+        pollRelations.addEvent(responseEvent("@me:example.com", "wings", 101));
+
+        // Then the new vote is counted, not the old one
+        expect(votesCount(body, "pizza")).toBe("0 votes");
+        expect(votesCount(body, "poutine")).toBe("0 votes");
+        expect(votesCount(body, "italian")).toBe("0 votes");
+        expect(votesCount(body, "wings")).toBe("1 vote");
+
+        expect(body.find(".mx_MPollBody_totalVotes").text()).toBe("Based on 1 vote");
+    });
+
+    it("doesn't cancel my local vote if someone else votes", () => {
+        // Given I voted locally
+        const votes = [responseEvent("@me:example.com", "pizza")];
+        const body = newMPollBody(votes);
+        const props: IBodyProps = body.instance().props as IBodyProps;
+        const pollRelations: Relations = props.getRelationsForEvent(
+            "$mypoll", "m.reference", "org.matrix.msc3381.poll.response");
+        clickRadio(body, "pizza");
+
+        // When a new vote from someone else comes in
+        pollRelations.addEvent(responseEvent("@xx:example.com", "wings", 101));
+
+        // Then my vote is still for pizza
+        // NOTE: the new event does not affect the counts for other people -
+        //       that is handled through the Relations, not by listening to
+        //       these timeline events.
+        expect(votesCount(body, "pizza")).toBe("1 vote");
+        expect(votesCount(body, "poutine")).toBe("0 votes");
+        expect(votesCount(body, "italian")).toBe("0 votes");
+        expect(votesCount(body, "wings")).toBe("1 vote");
+
+        expect(body.find(".mx_MPollBody_totalVotes").text()).toBe("Based on 2 votes");
+
+        // And my vote is highlighted
+        expect(voteButton(body, "pizza").hasClass(CHECKED)).toBe(true);
+        expect(voteButton(body, "wings").hasClass(CHECKED)).toBe(false);
     });
 
     it("highlights my vote even if I did it on another device", () => {
