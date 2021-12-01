@@ -76,6 +76,10 @@ limitations under the License.
     height: 100%;
 }
 
+// We'd like to remove this, but this makes matrixchat's resizehandle's
+// negative margin & greater than its positive padding. If it's the same
+// or less, Safari gets confused about overflows somehow and
+// https://github.com/vector-im/element-web/issues/19863 happens.
 .mx_MatrixChat > .mx_ResizeHandle.mx_ResizeHandle_horizontal {
     margin: 0 calc(-6px - $container-gap-width / 2) 0 calc(-6px + $container-gap-width / 2); 
     // This is required to make webpack not bleed the blurred bg of the leftPanel! 
