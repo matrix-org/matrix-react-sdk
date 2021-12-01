@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638379851387,
+  "lastUpdate": 1638380446066,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43772,6 +43772,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5214.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5e77822bccd3945cf1e247b97a06b5178f2e2404",
+          "message": "Fix broken i18n in Forgot & Change password (#7252)",
+          "timestamp": "2021-12-01T17:33:55Z",
+          "tree_id": "31222190981d161bae4988c5a3ac4f558331ce15",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5e77822bccd3945cf1e247b97a06b5178f2e2404"
+        },
+        "date": 1638380443218,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4842.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1228.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1766.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4815.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
