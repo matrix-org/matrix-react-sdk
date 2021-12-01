@@ -2678,6 +2678,8 @@
     "Share Room Message": "Share Room Message",
     "Link to selected message": "Link to selected message",
     "Command Help": "Command Help",
+    "Sections to show": "Sections to show",
+    "This groups your ongoing conversations with members of this space. Turning off will hide it from your view.": "This groups your ongoing conversations with members of this space. Turning off will hide it from your view.",
     "Space settings": "Space settings",
     "Settings - %(spaceName)s": "Settings - %(spaceName)s",
     "To help us prevent this in future, please <a>send us logs</a>.": "To help us prevent this in future, please <a>send us logs</a>.",

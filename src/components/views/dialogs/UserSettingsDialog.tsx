@@ -51,7 +51,7 @@ export enum UserTab {
 }
 
 interface IProps extends IDialogProps {
-    initialTabId?: string;
+    initialTabId?: UserTab;
 }
 
 interface IState {
