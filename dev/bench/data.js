@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638379717834,
+  "lastUpdate": 1638379851387,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43724,6 +43724,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 639.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "will@half-shot.uk",
+            "name": "Will Hunt",
+            "username": "Half-Shot"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "11aa362edae695048e56b077c96b05264bdc889b",
+          "message": "Fix setBotPower to not use `.content` (#7179)\n\n* Fix setBotPower to not use `.content`\r\n\r\n* Simplify currentPl",
+          "timestamp": "2021-12-01T17:23:26Z",
+          "tree_id": "b00b94cfbf767bfe276fd0a896c19868018194d8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/11aa362edae695048e56b077c96b05264bdc889b"
+        },
+        "date": 1638379847311,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5884.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1234.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1761.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5214.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
