@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638268261379,
+  "lastUpdate": 1638352776978,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43184,6 +43184,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4440.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e82887dc231a3209c9701fc9c64436516b19242",
+          "message": "Make e2e tests pass in CI by using an older Synapse version (#7246)",
+          "timestamp": "2021-12-01T09:53:57Z",
+          "tree_id": "f683d35ee7f88f2cb03edd5bef93a70a6eccc8e4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e82887dc231a3209c9701fc9c64436516b19242"
+        },
+        "date": 1638352773820,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4666.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 893.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1645.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4302.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
