@@ -28,7 +28,7 @@ import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from '../../languageHandler';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import RoomContext from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import UserActivity from "../../UserActivity";
 import Modal from "../../Modal";
 import dis from "../../dispatcher/dispatcher";
@@ -731,6 +731,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         let shouldSendRR = true;
 
         const currentRREventId = this.getCurrentReadReceipt(true);
+        const currentRREventIndex = this.indexForEventId(currentRREventId);
         // We want to avoid sending out read receipts when we are looking at
         // events in the past which are before the latest RR.
         //
@@ -744,7 +745,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // RRs) - but that is a bit of a niche case. It will sort itself out when
         // the user eventually hits the live timeline.
         //
-        if (currentRREventId &&
+        if (currentRREventId && currentRREventIndex === null &&
                 this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             shouldSendRR = false;
         }
@@ -757,6 +758,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
         let lastReadEvent = this.state.events[lastReadEventIndex];
         shouldSendRR = shouldSendRR &&
+            // Only send a RR if the last read event is ahead in the timeline relative to
+            // the current RR event.
+            lastReadEventIndex > currentRREventIndex &&
             // Only send a RR if the last RR set != the one we would send
             this.lastRRSentEventId != lastReadEvent.getId();
 
@@ -1306,12 +1310,17 @@ class TimelinePanel extends React.Component<IProps, IState> {
     }
 
     private indexForEventId(evId: string): number | null {
-        for (let i = 0; i < this.state.events.length; ++i) {
-            if (evId == this.state.events[i].getId()) {
-                return i;
-            }
+        /* Threads do not have server side support for read receipts and the concept
+        is very tied to the main room timeline, we are forcing the timeline to
+        send read receipts for threaded events */
+        const isThreadTimeline = this.context.timelineRenderingType === TimelineRenderingType.Thread;
+        if (SettingsStore.getValue("feature_thread") && isThreadTimeline) {
+            return 0;
         }
-        return null;
+        const index = this.state.events.findIndex(ev => ev.getId() === evId);
+        return index > -1
+            ? index
+            : null;
     }
 
     private getLastDisplayedEventIndex(opts: IEventIndexOpts = {}): number | null {
