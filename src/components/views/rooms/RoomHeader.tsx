@@ -40,8 +40,8 @@ import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
-import { NOTIFICATION_STATE_UPDATE } from '../../../stores/notifications/NotificationState';
 import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
+import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -78,7 +78,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
-        notiStore.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.state = {};
     }
 
@@ -93,7 +93,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             cli.removeListener("RoomState.events", this.onRoomStateEvents);
         }
         const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
-        notiStore.removeListener(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
     }
 
     private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
