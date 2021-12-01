@@ -44,7 +44,6 @@ import {
     UPDATE_SELECTED_SPACE,
     UPDATE_TOP_LEVEL_SPACES,
 } from "../../../stores/spaces";
-import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
