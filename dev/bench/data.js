@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638352776978,
+  "lastUpdate": 1638355453382,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43232,6 +43232,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4302.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "757d473971017e914f4bf4aad5bba697abb35728",
+          "message": "Fix automatic space switching wrongly going via Home for room aliases (#7247)",
+          "timestamp": "2021-12-01T10:38:32Z",
+          "tree_id": "6942dfd8d1a64c36b995aa4da6665688af11b021",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/757d473971017e914f4bf4aad5bba697abb35728"
+        },
+        "date": 1638355450634,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4939.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 690.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
