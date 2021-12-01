@@ -756,6 +756,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (lastReadEventIndex === null) {
             shouldSendRR = false;
         }
+        console.log('test');
         let lastReadEvent = this.state.events[lastReadEventIndex];
         shouldSendRR = shouldSendRR &&
             // Only send a RR if the last read event is ahead in the timeline relative to
