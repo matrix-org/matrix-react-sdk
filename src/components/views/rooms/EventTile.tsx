@@ -17,7 +17,7 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -130,7 +130,7 @@ export function getHandlerTile(ev) {
     // not even when showing hidden events
     if (type === "m.room.message") {
         const content = ev.getContent();
-        if (content && content.msgtype === "m.key.verification.request") {
+        if (content && content.msgtype === MsgType.KeyVerificationRequest) {
             const client = MatrixClientPeg.get();
             const me = client && client.getUserId();
             if (ev.getSender() !== me && content.to !== me) {
@@ -919,7 +919,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         // matrix.to, but also for it to enable routing within Element when clicked.
         e.preventDefault();
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
@@ -990,7 +990,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         return this.props.getRelationsForEvent(eventId, "m.annotation", "m.reaction");
     };
 
-    private onReactionsCreated = (relationType, eventType) => {
+    private onReactionsCreated = (relationType: string, eventType: string) => {
         if (relationType !== "m.annotation" || eventType !== "m.reaction") {
             return;
         }
@@ -1286,6 +1286,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             onHeightChanged={this.props.onHeightChanged}
                             tileShape={this.props.tileShape}
                             editState={this.props.editState}
+                            getRelationsForEvent={this.props.getRelationsForEvent}
                         />
                     </div>,
                 ]);
@@ -1293,6 +1294,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             case TileShape.Thread: {
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
+                    "ref": this.ref,
                     "className": classes,
                     "aria-live": ariaLive,
                     "aria-atomic": true,
@@ -1324,6 +1326,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             tileShape={this.props.tileShape}
                             editState={this.props.editState}
                             replacingEventId={this.props.replacingEventId}
+                            getRelationsForEvent={this.props.getRelationsForEvent}
                         />
                         { actionBar }
                         { timestamp }
@@ -1360,21 +1363,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                         >
                             { linkedTimestamp }
                             { this.renderE2EPadlock() }
-                            { replyChain }
-                            <EventTileType ref={this.tile}
-                                mxEvent={this.props.mxEvent}
-                                forExport={this.props.forExport}
-                                replacingEventId={this.props.replacingEventId}
-                                editState={this.props.editState}
-                                highlights={this.props.highlights}
-                                highlightLink={this.props.highlightLink}
-                                showUrlPreview={this.props.showUrlPreview}
-                                permalinkCreator={this.props.permalinkCreator}
-                                onHeightChanged={this.props.onHeightChanged}
-                                callEventGrouper={this.props.callEventGrouper}
-                                tileShape={this.props.tileShape}
-                            />
-                            { keyRequestInfo }
+                            <div className="mx_EventTile_body">
+                                { MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent) }
+                            </div>
                             { this.renderThreadPanelSummary() }
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
@@ -1410,6 +1401,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             tileShape={this.props.tileShape}
                             onHeightChanged={this.props.onHeightChanged}
                             editState={this.props.editState}
+                            getRelationsForEvent={this.props.getRelationsForEvent}
                         />
                     </div>,
                     <a
@@ -1463,6 +1455,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 permalinkCreator={this.props.permalinkCreator}
                                 onHeightChanged={this.props.onHeightChanged}
                                 callEventGrouper={this.props.callEventGrouper}
+                                getRelationsForEvent={this.props.getRelationsForEvent}
                             />
                             { keyRequestInfo }
                             { actionBar }

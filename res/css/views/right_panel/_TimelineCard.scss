@@ -14,10 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
+.mx_TimelineCard {
+    .mx_TimelineCard__header {
+        margin-left: 6px;
 
-export interface DialNumberPayload extends ActionPayload {
-    action: Action.DialNumber;
-    number: string;
+        span:first-of-type {
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 18px;
+            color: $secondary-content;
+        }
+    }
+
+    .mx_BaseCard_header {
+        margin: 5px 0 9px 0;
+        .mx_BaseCard_close {
+            margin: 8px;
+            right: 0;
+        }
+    }
 }

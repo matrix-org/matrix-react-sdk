@@ -88,6 +88,11 @@ export enum Action {
     UpdateSystemFont = "update_system_font",
 
     /**
+     * Changes room based on payload parameters.
+     */
+    ViewRoom = "view_room",
+
+    /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */
     ViewRoomDelta = "view_room_delta",
@@ -117,18 +122,6 @@ export enum Action {
      * payload: DialNumberPayload
      */
     DialNumber = "dial_number",
-
-    /**
-     * Start a call transfer to a Matrix ID
-     * payload: TransferCallPayload
-     */
-    TransferCallToMatrixID = "transfer_call_to_matrix_id",
-
-    /**
-     * Start a call transfer to a phone number
-     * payload: TransferCallPayload
-     */
-    TransferCallToPhoneNumber = "transfer_call_to_phone_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support
