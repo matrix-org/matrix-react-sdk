@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638356312629,
+  "lastUpdate": 1638356433691,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43400,6 +43400,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4955.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4511c47b1cff80f2ab6d249df9f99b236ca60622",
+          "message": "Fix wrongly sized default sub-space icons in space panel (#7243)",
+          "timestamp": "2021-12-01T10:54:44Z",
+          "tree_id": "75a00f9482b2ceb5502db756ccde1e90bc44ca5c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4511c47b1cff80f2ab6d249df9f99b236ca60622"
+        },
+        "date": 1638356430484,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5123.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1632.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4520.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
