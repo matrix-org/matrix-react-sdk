@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638356191185,
+  "lastUpdate": 1638356274820,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43316,6 +43316,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4645.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "82c125c1701bd5d79d014c1e7023d6693973c2e0",
+          "message": "Update Space Panel scrollable region (#7245)",
+          "timestamp": "2021-12-01T10:51:54Z",
+          "tree_id": "829d66fa9ccc6cdc47d66ba05539e44162ec132e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/82c125c1701bd5d79d014c1e7023d6693973c2e0"
+        },
+        "date": 1638356272438,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4885.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 663.5,
             "unit": "ms",
             "extra": "type: measure"
           }
