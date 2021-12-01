@@ -138,7 +138,7 @@ interface IState {
  * This is what our MatrixChat shows when we are logged in. The precise view is
  * determined by the page_type property.
  *
- * Currently it's very tightly coupled with MatrixChat. We should try to do
+ * Currently, it's very tightly coupled with MatrixChat. We should try to do
  * something about that.
  *
  * Components mounted below us can access the matrix client via the react context.
