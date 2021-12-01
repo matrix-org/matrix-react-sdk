@@ -110,9 +110,9 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                 <div className="mx_ErrorBoundary_body">
                     <h1>{ _t("Something went wrong!") }</h1>
                     { bugReportSection }
-                    <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
+                    { MatrixClientPeg.get() && <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
                         { _t("Clear cache and reload") }
-                    </AccessibleButton>
+                    </AccessibleButton> }
                 </div>
             </div>;
         }
