@@ -18,7 +18,8 @@ limitations under the License.
 $MiniAppTileHeight: 200px;
 
 .mx_AppsDrawer {
-    margin: $container-gap-width calc($container-gap-width/2);
+    margin: $container-gap-width;
+    margin-right: calc($container-gap-width / 2); // The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser.
     margin-bottom: 0; // No bottom margin for the correct gap to the CallView below.
     position: relative;
     display: flex;
