@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638355453382,
+  "lastUpdate": 1638356191185,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43268,6 +43268,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 690.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4a6d46b76adc5384d2a9431ac54a77322d0fee00",
+          "message": "Replace breadcrumbs with recently viewed menu (#7073)",
+          "timestamp": "2021-12-01T10:50:06Z",
+          "tree_id": "db056c16acbab57033f92f58ff7d8cfc092cd16e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4a6d46b76adc5384d2a9431ac54a77322d0fee00"
+        },
+        "date": 1638356188284,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4604.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1161,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1751.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4645.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
