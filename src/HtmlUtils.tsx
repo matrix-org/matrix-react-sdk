@@ -36,7 +36,6 @@ import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks"
 import { getEmojiFromUnicode } from "./emoji";
 import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
-import Markdown from './Markdown';
 
 linkifyMatrix(linkify);
 
@@ -412,8 +411,9 @@ export interface IOptsReturnString extends IOpts {
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnString): string;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnNode): ReactNode;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts = {}) {
-    const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
+    const isFormattedBody = content.format === "org.matrix.custom.html" && content.formatted_body;
     let bodyHasEmoji = false;
+    let isHtmlMessage = false;
 
     let sanitizeParams = sanitizeHtmlParams;
     if (opts.forComposerQuote) {
@@ -423,7 +423,6 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
     let strippedBody: string;
     let safeBody: string;
     let isDisplayedWithHtml: boolean;
-    let hasHtmlWithFormattedBody = false;
     // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying
     // to highlight HTML tags themselves.  However, this does mean that we don't highlight textnodes which
     // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
@@ -447,40 +446,41 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
-        const isPlainTextBody = new Markdown(plainBody).isPlainText();
-        hasHtmlWithFormattedBody = !isPlainTextBody && isHtmlMessage;
 
         if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyChain.stripHTMLReply(formattedBody);
         strippedBody = opts.stripReplyFallback ? ReplyChain.stripPlainReply(plainBody) : plainBody;
 
-        bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : plainBody);
+        bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
 
         // Only generate safeBody if the message was sent as org.matrix.custom.html
-        if (isHtmlMessage) {
+        if (isFormattedBody) {
             isDisplayedWithHtml = true;
-            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
-        }
 
-        if (hasHtmlWithFormattedBody && SettingsStore.getValue("feature_latex_maths")) {
+            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
             const phtml = cheerio.load(safeBody, {
                 // @ts-ignore: The `_useHtmlParser2` internal option is the
                 // simplest way to both parse and render using `htmlparser2`.
                 _useHtmlParser2: true,
                 decodeEntities: false,
             });
-            // @ts-ignore - The types for `replaceWith` wrongly expect
-            // Cheerio instance to be returned.
-            phtml('div, span[data-mx-maths!=""]').replaceWith(function(i, e) {
-                return katex.renderToString(
-                    AllHtmlEntities.decode(phtml(e).attr('data-mx-maths')),
-                    {
-                        throwOnError: false,
-                        // @ts-ignore - `e` can be an Element, not just a Node
-                        displayMode: e.name == 'div',
-                        output: "htmlAndMathml",
-                    });
-            });
-            safeBody = phtml.html();
+            const isPlainText = phtml.html() === phtml.root().text();
+            isHtmlMessage = isFormattedBody && !isPlainText;
+
+            if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
+                // @ts-ignore - The types for `replaceWith` wrongly expect
+                // Cheerio instance to be returned.
+                phtml('div, span[data-mx-maths!=""]').replaceWith(function(i, e) {
+                    return katex.renderToString(
+                        AllHtmlEntities.decode(phtml(e).attr('data-mx-maths')),
+                        {
+                            throwOnError: false,
+                            // @ts-ignore - `e` can be an Element, not just a Node
+                            displayMode: e.name == 'div',
+                            output: "htmlAndMathml",
+                        });
+                });
+                safeBody = phtml.html();
+            }
         }
     } finally {
         delete sanitizeParams.textFilter;
@@ -520,7 +520,7 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
     const className = classNames({
         'mx_EventTile_body': true,
         'mx_EventTile_bigEmoji': emojiBody,
-        'markdown-body': hasHtmlWithFormattedBody && !emojiBody,
+        'markdown-body': isHtmlMessage && !emojiBody,
     });
 
     return isDisplayedWithHtml ?
