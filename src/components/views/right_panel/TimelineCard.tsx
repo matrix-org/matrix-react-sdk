@@ -57,7 +57,7 @@ interface IState {
     initialEventId?: string;
     initialEventHighlighted?: boolean;
 
-    // settigns:
+    // settings:
     showReadReceipts?: boolean;
 }
 
