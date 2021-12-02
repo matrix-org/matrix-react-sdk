@@ -189,8 +189,8 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                 >
                     <div className="mx_EntityTile_avatar">
                         { av }
-                        { e2eIcon }
                     </div>
+                    { e2eIcon }
                     { nameEl }
                     { powerLabel }
                     { inviteButton }
