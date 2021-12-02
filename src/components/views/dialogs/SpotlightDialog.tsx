@@ -268,8 +268,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                 width={20}
                                 height={20}
                             />
-                            { room.name }
-                            { room.canonical_alias && <div className="mx_SpotlightDialog_result_details">
+                            { room.name || room.canonical_alias }
+                            { room.name && room.canonical_alias && <div className="mx_SpotlightDialog_result_details">
                                 { room.canonical_alias }
                             </div> }
                             <div className="mx_SpotlightDialog_enterPrompt">↵</div>

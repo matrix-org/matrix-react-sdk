@@ -145,6 +145,9 @@ limitations under the License.
                 position: relative;
                 display: flex;
                 align-items: center;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
 
                 .mx_BaseAvatar {
                     margin-right: 8px;
@@ -164,9 +167,13 @@ limitations under the License.
 
         .mx_SpotlightDialog_result_details {
             margin-left: 8px;
+            margin-right: 8px;
             color: $tertiary-content;
             font-size: $font-12px;
             line-height: $font-15px;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .mx_SpotlightDialog_recentSearches {
