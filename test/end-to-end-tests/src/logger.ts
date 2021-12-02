@@ -16,12 +16,12 @@ limitations under the License.
 */
 
 export class Logger {
-    indent = 0;
-    muted = false;
+    private indent = 0;
+    private muted = false;
 
     constructor(readonly username: string) {}
 
-    startGroup(description: string): Logger {
+    public startGroup(description: string): Logger {
         if (!this.muted) {
             const indent = " ".repeat(this.indent * 2);
             console.log(`${indent} * ${this.username} ${description}:`);
@@ -30,12 +30,12 @@ export class Logger {
         return this;
     }
 
-    endGroup(): Logger {
+    public endGroup(): Logger {
         this.indent -= 1;
         return this;
     }
 
-    step(description: string): Logger {
+    public step(description: string): Logger {
         if (!this.muted) {
             const indent = " ".repeat(this.indent * 2);
             process.stdout.write(`${indent} * ${this.username} ${description} ... `);
@@ -43,19 +43,19 @@ export class Logger {
         return this;
     }
 
-    done(status = "done"): Logger {
+    public done(status = "done"): Logger {
         if (!this.muted) {
             process.stdout.write(status + "\n");
         }
         return this;
     }
 
-    mute(): Logger {
+    public mute(): Logger {
         this.muted = true;
         return this;
     }
 
-    unmute(): Logger {
+    public unmute(): Logger {
         this.muted = false;
         return this;
     }

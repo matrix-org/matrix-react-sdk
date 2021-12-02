@@ -17,8 +17,8 @@ limitations under the License.
 
 import { Page, PageEventObject } from "puppeteer";
 
-type EventMapperSync = (string) => string;
-type EventMapperAsync = (string) => Promise<string>;
+type EventMapperSync = (s: string) => string;
+type EventMapperAsync = (s: string) => Promise<string>;
 
 function eventMapperIsAsync(eventMapper: EventMapperSync | EventMapperAsync,
     reduceAsync: boolean): eventMapper is EventMapperAsync {

@@ -25,7 +25,7 @@ import { RestSessionCreator } from "./rest/creator";
 import { RestMultiSession } from "./rest/multi";
 import { spacesScenarios } from './scenarios/spaces';
 
-export async function scenario(createSession: (string) => Promise<ElementSession>,
+export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
     let firstUser = true;
     async function createUser(username) {

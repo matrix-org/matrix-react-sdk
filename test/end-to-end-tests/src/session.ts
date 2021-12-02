@@ -42,7 +42,7 @@ export class ElementSession {
         this.log = new Logger(this.username);
     }
 
-    static async create(username: string, puppeteerOptions: Parameters<typeof puppeteer.launch>[0],
+    public static async create(username: string, puppeteerOptions: Parameters<typeof puppeteer.launch>[0],
         elementServer: string, hsUrl: string, throttleCpuFactor = 1): Promise<ElementSession> {
         const browser = await puppeteer.launch(puppeteerOptions);
         const page = await browser.newPage();
@@ -58,7 +58,7 @@ export class ElementSession {
         return new ElementSession(browser, page, username, elementServer, hsUrl);
     }
 
-    async tryGetInnertext(selector: string): Promise<string> {
+    public async tryGetInnertext(selector: string): Promise<string> {
         const field = await this.page.$(selector);
         if (field != null) {
             const textHandle = await field.getProperty('innerText');
@@ -67,32 +67,32 @@ export class ElementSession {
         return null;
     }
 
-    async getElementProperty(handle: puppeteer.ElementHandle, property: string): Promise<string> {
+    public async getElementProperty(handle: puppeteer.ElementHandle, property: string): Promise<string> {
         const propHandle = await handle.getProperty(property);
         return await propHandle.jsonValue();
     }
 
-    innerText(field: puppeteer.ElementHandle): Promise<string> {
+    public innerText(field: puppeteer.ElementHandle): Promise<string> {
         return this.getElementProperty(field, 'innerText');
     }
 
-    getOuterHTML(field: puppeteer.ElementHandle): Promise<string> {
+    public getOuterHTML(field: puppeteer.ElementHandle): Promise<string> {
         return this.getElementProperty(field, 'outerHTML');
     }
 
-    isChecked(field: puppeteer.ElementHandle): Promise<string> {
+    public isChecked(field: puppeteer.ElementHandle): Promise<string> {
         return this.getElementProperty(field, 'checked');
     }
 
-    consoleLogs(): string {
+    public consoleLogs(): string {
         return this.consoleLog.buffer;
     }
 
-    networkLogs(): string {
+    public networkLogs(): string {
         return this.networkLog.buffer;
     }
 
-    logXHRRequests(): XHRLogger {
+    public logXHRRequests(): XHRLogger {
         let buffer = "";
         this.page.on('requestfinished', async (req) => {
             const type = req.resourceType();
@@ -111,11 +111,11 @@ export class ElementSession {
         };
     }
 
-    async printElements(label: string, elements: puppeteer.ElementHandle[] ): Promise<void> {
+    public async printElements(label: string, elements: puppeteer.ElementHandle[] ): Promise<void> {
         console.log(label, await Promise.all(elements.map(this.getOuterHTML)));
     }
 
-    async replaceInputText(input: puppeteer.ElementHandle, text: string): Promise<void> {
+    public async replaceInputText(input: puppeteer.ElementHandle, text: string): Promise<void> {
         // click 3 times to select all text
         await input.click({ clickCount: 3 });
         // waiting here solves not having selected all the text by the 3x click above,
@@ -127,17 +127,18 @@ export class ElementSession {
         await input.type(text);
     }
 
-    query(selector: string, timeout: number = DEFAULT_TIMEOUT, hidden = false): Promise<puppeteer.ElementHandle> {
+    public query(selector: string, timeout: number = DEFAULT_TIMEOUT,
+        hidden = false): Promise<puppeteer.ElementHandle> {
         return this.page.waitForSelector(selector, { visible: true, timeout, hidden });
     }
 
-    async queryAll(selector: string): Promise<puppeteer.ElementHandle[]> {
+    public async queryAll(selector: string): Promise<puppeteer.ElementHandle[]> {
         const timeout = DEFAULT_TIMEOUT;
         await this.query(selector, timeout);
         return await this.page.$$(selector);
     }
 
-    waitForReload(): Promise<void> {
+    public waitForReload(): Promise<void> {
         const timeout = DEFAULT_TIMEOUT;
         return new Promise((resolve, reject) => {
             const timeoutHandle = setTimeout(() => {
@@ -154,7 +155,7 @@ export class ElementSession {
         });
     }
 
-    waitForNewPage(): Promise<void> {
+    public waitForNewPage(): Promise<void> {
         const timeout = DEFAULT_TIMEOUT;
         return new Promise((resolve, reject) => {
             const timeoutHandle = setTimeout(() => {
@@ -177,7 +178,7 @@ export class ElementSession {
     }
 
     /** wait for a /sync request started after this call that gets a 200 response */
-    async waitForNextSuccessfulSync(): Promise<void> {
+    public async waitForNextSuccessfulSync(): Promise<void> {
         const syncUrls = [];
         function onRequest(request) {
             if (request.url().indexOf("/sync") !== -1) {
@@ -194,30 +195,30 @@ export class ElementSession {
         this.page.off('request', onRequest);
     }
 
-    goto(url: string): Promise<puppeteer.HTTPResponse> {
+    public goto(url: string): Promise<puppeteer.HTTPResponse> {
         return this.page.goto(url);
     }
 
-    url(path: string): string {
+    public url(path: string): string {
         return this.elementServer + path;
     }
 
-    delay(ms: number) {
+    public delay(ms: number) {
         return delay(ms);
     }
 
-    async setOffline(enabled: boolean): Promise<void> {
+    public async setOffline(enabled: boolean): Promise<void> {
         const description = enabled ? "offline" : "back online";
         this.log.step(`goes ${description}`);
         await this.page.setOfflineMode(enabled);
         this.log.done();
     }
 
-    async close(): Promise<void> {
+    public async close(): Promise<void> {
         return this.browser.close();
     }
 
-    async poll(callback: () => Promise<boolean>, interval = 100): Promise<boolean> {
+    public async poll(callback: () => Promise<boolean>, interval = 100): Promise<boolean> {
         const timeout = DEFAULT_TIMEOUT;
         let waited = 0;
         while (waited < timeout) {

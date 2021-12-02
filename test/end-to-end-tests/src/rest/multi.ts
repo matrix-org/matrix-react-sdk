@@ -26,11 +26,11 @@ export class RestMultiSession {
         this.log = new Logger(groupName);
     }
 
-    slice(groupName: string, start: number, end?: number): RestMultiSession {
+    public slice(groupName: string, start: number, end?: number): RestMultiSession {
         return new RestMultiSession(this.sessions.slice(start, end), groupName);
     }
 
-    pop(userName: string): RestSession {
+    public pop(userName: string): RestSession {
         const idx = this.sessions.findIndex((s) => s.userName() === userName);
         if (idx === -1) {
             throw new Error(`user ${userName} not found`);
@@ -39,7 +39,7 @@ export class RestMultiSession {
         return session;
     }
 
-    async setDisplayName(fn: (string) => string): Promise<void> {
+    public async setDisplayName(fn: (s: string) => string): Promise<void> {
         this.log.step("set their display name");
         await Promise.all(this.sessions.map(async (s) => {
             s.log.mute();
@@ -49,7 +49,7 @@ export class RestMultiSession {
         this.log.done();
     }
 
-    async join(roomIdOrAlias: string): Promise<RestMultiRoom> {
+    public async join(roomIdOrAlias: string): Promise<RestMultiRoom> {
         this.log.step(`join ${roomIdOrAlias}`);
         const rooms = await Promise.all(this.sessions.map(async (s) => {
             s.log.mute();
@@ -61,7 +61,7 @@ export class RestMultiSession {
         return new RestMultiRoom(rooms, roomIdOrAlias, this.log);
     }
 
-    room(roomIdOrAlias: string): RestMultiRoom {
+    public room(roomIdOrAlias: string): RestMultiRoom {
         const rooms = this.sessions.map(s => s.room(roomIdOrAlias));
         return new RestMultiRoom(rooms, roomIdOrAlias, this.log);
     }
@@ -70,7 +70,7 @@ export class RestMultiSession {
 class RestMultiRoom {
     constructor(readonly rooms: RestRoom[], readonly roomIdOrAlias: string, readonly log: Logger) {}
 
-    async talk(message: string): Promise<void> {
+    public async talk(message: string): Promise<void> {
         this.log.step(`say "${message}" in ${this.roomIdOrAlias}`);
         await Promise.all(this.rooms.map(async (r: RestRoom) => {
             r.log.mute();
@@ -80,7 +80,7 @@ class RestMultiRoom {
         this.log.done();
     }
 
-    async leave() {
+    public async leave() {
         this.log.step(`leave ${this.roomIdOrAlias}`);
         await Promise.all(this.rooms.map(async (r) => {
             r.log.mute();

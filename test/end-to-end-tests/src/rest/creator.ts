@@ -48,13 +48,14 @@ export interface Credentials {
 export class RestSessionCreator {
     constructor(readonly synapseSubdir: string, readonly hsUrl: string, readonly cwd: string) {}
 
-    async createSessionRange(usernames: string[], password: string, groupName: string): Promise<RestMultiSession> {
+    public async createSessionRange(usernames: string[], password: string,
+        groupName: string): Promise<RestMultiSession> {
         const sessionPromises = usernames.map((username) => this.createSession(username, password));
         const sessions = await Promise.all(sessionPromises);
         return new RestMultiSession(sessions, groupName);
     }
 
-    async createSession(username: string, password: string): Promise<RestSession> {
+    public async createSession(username: string, password: string): Promise<RestSession> {
         await this.register(username, password);
         console.log(` * created REST user ${username} ... done`);
         const authResult = await this.authenticate(username, password);

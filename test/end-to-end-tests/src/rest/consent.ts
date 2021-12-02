@@ -19,7 +19,7 @@ import request = require('request-promise-native');
 import * as cheerio from 'cheerio';
 import * as url from "url";
 
-export const approveConsent = async function(consentUrl: string): Promise<any> {
+export const approveConsent = async function(consentUrl: string): Promise<void> {
     const body = await request.get(consentUrl);
     const doc = cheerio.load(body);
     const v = doc("input[name=v]").val();
