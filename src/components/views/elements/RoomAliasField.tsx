@@ -107,7 +107,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
 
     private validationRules = withValidation({
         rules: [
-            { key: "hasSingleDomain",
+            { key: "hasDomain",
                 test: async ({ value }) => {
                     if (!value) {
                         return true;
@@ -125,7 +125,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                 invalid: () => _t("Missing domain separator e.g. (:domain.org)"),
             },
             {
-                key: "hasMultipleDomains",
+                key: "hasRoomnameOrAtLeastASingleSeparator",
                 test: async ({ value }) => {
                     if (!value) {
                         return true;
@@ -135,12 +135,13 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                         return true;
                     }
                     const split = value.split(':');
-                    if (split.length > 2) {
+                    // Define the value invalid if there's no first part (roomname) or separator's missing
+                    if (split.length < 2 || split[0].length < 1) {
                         return false;
                     }
                     return true;
                 },
-                invalid: () => _t("Multiple domain separators (:) provided, provide an alias with a single domain."),
+                invalid: () => _t("Missing room name or separator e.g. (my-room:domain.org)"),
             },
             {
                 key: "safeLocalpart",
@@ -152,10 +153,12 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                         return true;
                     } else {
                         const fullAlias = this.asFullAlias(value);
+                        const hasColon = this.props.domain ? !value.includes(":") : true;
                         // XXX: FIXME https://github.com/matrix-org/matrix-doc/issues/668
+                        // NOTE: We could probably use linkifyjs to parse those aliases here?
                         return !value.includes("#") &&
-                        this.props.domain ? !value.includes(":") : true &&
-                        !value.includes(",") &&
+                            hasColon &&
+                            !value.includes(",") &&
                             encodeURI(fullAlias) === fullAlias;
                     }
                 },
