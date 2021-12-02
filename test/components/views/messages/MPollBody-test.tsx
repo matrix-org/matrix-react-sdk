@@ -23,7 +23,7 @@ import * as TestUtils from "../../../test-utils";
 import { Callback, IContent, MatrixEvent } from "matrix-js-sdk";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { IPollAnswer, IPollContent } from "../../../../src/polls/consts";
+import { IPollAnswer, IPollContent, POLL_RESPONSE_EVENT_TYPE } from "../../../../src/polls/consts";
 import { UserVote, allVotes } from "../../../../src/components/views/messages/MPollBody";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { IBodyProps } from "../../../../src/components/views/messages/IBodyProps";
@@ -53,12 +53,12 @@ describe("MPollBody", () => {
             new UserVote(
                 ev1.getTs(),
                 ev1.getSender(),
-                ev1.getContent()["org.matrix.msc3381.poll.response"].answers,
+                ev1.getContent()[POLL_RESPONSE_EVENT_TYPE.name].answers,
             ),
             new UserVote(
                 ev2.getTs(),
                 ev2.getSender(),
-                ev2.getContent()["org.matrix.msc3381.poll.response"].answers,
+                ev2.getContent()[POLL_RESPONSE_EVENT_TYPE.name].answers,
             ),
         ]);
     });
@@ -157,7 +157,7 @@ describe("MPollBody", () => {
         const body = newMPollBody(votes);
         const props: IBodyProps = body.instance().props as IBodyProps;
         const pollRelations: Relations = props.getRelationsForEvent(
-            "$mypoll", "m.reference", "org.matrix.msc3381.poll.response");
+            "$mypoll", "m.reference", POLL_RESPONSE_EVENT_TYPE.name);
         clickRadio(body, "pizza");
 
         // When a new vote from me comes in
@@ -178,7 +178,7 @@ describe("MPollBody", () => {
         const body = newMPollBody(votes);
         const props: IBodyProps = body.instance().props as IBodyProps;
         const pollRelations: Relations = props.getRelationsForEvent(
-            "$mypoll", "m.reference", "org.matrix.msc3381.poll.response");
+            "$mypoll", "m.reference", POLL_RESPONSE_EVENT_TYPE.name);
         clickRadio(body, "pizza");
 
         // When a new vote from someone else comes in
@@ -413,7 +413,7 @@ describe("MPollBody", () => {
 
 function newPollRelations(relationEvents: Array<MatrixEvent>): Relations {
     const pollRelations = new Relations(
-        "m.reference", "org.matrix.msc3381.poll.response", null);
+        "m.reference", POLL_RESPONSE_EVENT_TYPE.name, null);
     for (const ev of relationEvents) {
         pollRelations.addEvent(ev);
     }
@@ -425,7 +425,7 @@ function newMPollBody(
     answers?: IPollAnswer[],
 ): ReactWrapper {
     const pollRelations = new Relations(
-        "m.reference", "org.matrix.msc3381.poll.response", null);
+        "m.reference", POLL_RESPONSE_EVENT_TYPE.name, null);
     for (const ev of relationEvents) {
         pollRelations.addEvent(ev);
     }
@@ -440,7 +440,7 @@ function newMPollBody(
             (eventId: string, relationType: string, eventType: string) => {
                 expect(eventId).toBe("$mypoll");
                 expect(relationType).toBe("m.reference");
-                expect(eventType).toBe("org.matrix.msc3381.poll.response");
+                expect(eventType).toBe(POLL_RESPONSE_EVENT_TYPE.name);
                 return pollRelations;
             }
         }
@@ -490,7 +490,7 @@ function badResponseEvent(): MatrixEvent {
     return new MatrixEvent(
         {
             "event_id": nextId(),
-            "type": "org.matrix.msc3381.poll.response",
+            "type": POLL_RESPONSE_EVENT_TYPE.name,
             "content": {
                 "m.relates_to": {
                     "rel_type": "m.reference",
@@ -513,14 +513,14 @@ function responseEvent(
             "event_id": nextId(),
             "room_id": "#myroom:example.com",
             "origin_server_ts": ts,
-            "type": "org.matrix.msc3381.poll.response",
+            "type": POLL_RESPONSE_EVENT_TYPE.name,
             "sender": sender,
             "content": {
                 "m.relates_to": {
                     "rel_type": "m.reference",
                     "event_id": "$mypoll",
                 },
-                "org.matrix.msc3381.poll.response": {
+                [POLL_RESPONSE_EVENT_TYPE.name]: {
                     "answers": ans,
                 },
             },
@@ -531,7 +531,7 @@ function responseEvent(
 function expectedResponseEvent(answer: string) {
     return {
         "content": {
-            "org.matrix.msc3381.poll.response": {
+            [POLL_RESPONSE_EVENT_TYPE.name]: {
                 "answers": [answer],
             },
             "m.relates_to": {
@@ -539,7 +539,7 @@ function expectedResponseEvent(answer: string) {
                 "rel_type": "m.reference",
             },
         },
-        "eventType": "org.matrix.msc3381.poll.response",
+        "eventType": POLL_RESPONSE_EVENT_TYPE.name,
         "roomId": "#myroom:example.com",
         "txnId": undefined,
         "callback": undefined,
