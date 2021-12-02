@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638452926366,
+  "lastUpdate": 1638452931270,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44096,6 +44096,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4310.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "675901f629011614c6da85db67038e8c4c4ba6e0",
+          "message": "Fixes more instances of double-translation (#7259)",
+          "timestamp": "2021-12-02T13:42:47Z",
+          "tree_id": "42b296a5fe242de83ee53208ae2cf1ddbc5dc339",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/675901f629011614c6da85db67038e8c4c4ba6e0"
+        },
+        "date": 1638452928859,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4546.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 655.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
