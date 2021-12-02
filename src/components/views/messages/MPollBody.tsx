@@ -42,7 +42,7 @@ interface IState {
 
 @replaceableComponent("views.messages.MPollBody")
 export default class MPollBody extends React.Component<IBodyProps, IState> {
-    static contextType = MatrixClientContext;
+    public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
     private seenEventIds: string[] = []; // Events we have already seen
 
