@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638442918929,
+  "lastUpdate": 1638449416792,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44000,6 +44000,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4372.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "distinct": true,
+          "id": "16a58ef2dab37b0d755eb101e5df6daea4d7f597",
+          "message": "Upgrade matrix-widget-api to 0.1.0-beta.18",
+          "timestamp": "2021-12-02T12:41:21Z",
+          "tree_id": "1340436787988cd54c79169d59fec99fb4759a2d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/16a58ef2dab37b0d755eb101e5df6daea4d7f597"
+        },
+        "date": 1638449413888,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4641.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 923.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1585.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4421,
             "unit": "ms",
             "extra": "type: measure"
           }
