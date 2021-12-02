@@ -99,6 +99,7 @@ $settings-subsection-fg-color: var(--timeline-text-secondary-color);
 $roomheader-addroom-bg-color: var(--timeline-text-secondary-color);
 // was #747474
 $light-fg-color: var(--timeline-text-secondary-color);
+$focus-bg-color: var(--focus-bg-color, $focus-bg-color);
 // was #888888
 $info-plinth-fg-color: var(--timeline-text-secondary-color);
 //
