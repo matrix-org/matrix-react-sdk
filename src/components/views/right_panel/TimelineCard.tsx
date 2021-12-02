@@ -37,6 +37,7 @@ import { Action } from '../../../dispatcher/actions';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import ContentMessages from '../../../ContentMessages';
 import UploadBar from '../../structures/UploadBar';
+import SettingsStore from '../../../settings/SettingsStore';
 interface IProps {
     room: Room;
     onClose: () => void;
@@ -47,6 +48,7 @@ interface IProps {
     timelineRenderingType?: TimelineRenderingType;
     showComposer?: boolean;
     composerRelation?: IEventRelation;
+
 }
 interface IState {
     thread?: Thread;
@@ -54,6 +56,9 @@ interface IState {
     replyToEvent?: MatrixEvent;
     initialEventId?: string;
     initialEventHighlighted?: boolean;
+
+    // settigns:
+    showReadReceipts?: boolean;
 }
 
 @replaceableComponent("structures.TimelineCard")
@@ -63,9 +68,12 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
     private roomStoreToken: EventSubscription;
+    private settingWatchers: string[];
     constructor(props: IProps) {
         super(props);
-        this.state = {};
+        this.state = {
+            showReadReceipts: false,
+        };
     }
 
     public componentDidMount(): void {
@@ -79,9 +87,13 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             this.roomStoreToken.remove();
         }
         dis.unregister(this.dispatcherRef);
+        for (const watcher of this.settingWatchers) {
+            SettingsStore.unwatchSetting(watcher);
+        }
     }
 
     private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
+        const roomId = this.props.room.roomId;
         const newState: Pick<IState, any> = {
             // roomId,
             // roomAlias: RoomViewStore.getRoomAlias(),
@@ -91,16 +103,17 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             // replyToEvent: RoomViewStore.getQuotingEvent(),
             // // we should only peek once we have a ready client
             // shouldPeek: this.state.matrixClientIsReady && RoomViewStore.shouldPeek(),
-            // showReadReceipts: SettingsStore.getValue("showReadReceipts", roomId),
-            // showRedactions: SettingsStore.getValue("showRedactions", roomId),
-            // showJoinLeaves: SettingsStore.getValue("showJoinLeaves", roomId),
-            // showAvatarChanges: SettingsStore.getValue("showAvatarChanges", roomId),
-            // showDisplaynameChanges: SettingsStore.getValue("showDisplaynameChanges", roomId),
-            // wasContextSwitch: RoomViewStore.getWasContextSwitch(),
+            showReadReceipts: SettingsStore.getValue("showReadReceipts", roomId),
             initialEventId: RoomViewStore.getInitialEventId(),
             initialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
             replyToEvent: RoomViewStore.getQuotingEvent(),
         };
+
+        this.settingWatchers = this.settingWatchers.concat([
+            SettingsStore.watchSetting("showReadReceipts", roomId, (...[,,, value]) =>
+                this.setState({ showReadReceipts: value as boolean }),
+            ),
+        ]);
         this.setState(newState);
     };
 
@@ -157,7 +170,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 >
                     <TimelinePanel
                         ref={this.timelinePanelRef}
-                        showReadReceipts={false} // TODO: RR's cause issues with limited horizontal space
+                        showReadReceipts={/*this.state.showReadReceipts*/ false} // TODO: RR's cause issues with limited horizontal space
                         manageReadReceipts={true}
                         manageReadMarkers={false} // No RM support in the TimelineCard
                         sendReadReceiptOnLoad={true}
