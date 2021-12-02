@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638441060235,
+  "lastUpdate": 1638442346787,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43916,6 +43916,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4709.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ab750aefce544829a876564a51c476c10999400d",
+          "message": "Fix video calls (#7256)\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-12-02T10:46:48Z",
+          "tree_id": "cfe98a78f91c4a217bad2e98d60307ecb84cfe40",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ab750aefce544829a876564a51c476c10999400d"
+        },
+        "date": 1638442343504,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4697.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 628.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
