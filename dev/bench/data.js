@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638454425837,
+  "lastUpdate": 1638454533902,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44276,6 +44276,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4597.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f40291d408ccfa33bdfc577e29a39ac7baa0f653",
+          "message": "Make composer buttons react to settings without having to change room (#7264)",
+          "timestamp": "2021-12-02T14:09:57Z",
+          "tree_id": "29e4c98a13f45f5d96e7d0ef1c7568af5c2c7f90",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f40291d408ccfa33bdfc577e29a39ac7baa0f653"
+        },
+        "date": 1638454530771,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4944.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 903.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1560.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4113.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
