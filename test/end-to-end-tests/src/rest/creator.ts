@@ -46,7 +46,7 @@ export interface Credentials {
 }
 
 export class RestSessionCreator {
-    constructor(readonly synapseSubdir: string, readonly hsUrl: string, readonly cwd: string) {}
+    constructor(private readonly synapseSubdir: string, private readonly hsUrl: string, private readonly cwd: string) {}
 
     public async createSessionRange(usernames: string[], password: string,
         groupName: string): Promise<RestMultiSession> {
