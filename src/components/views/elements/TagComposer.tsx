@@ -20,6 +20,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Field, { IInputValidationProps } from "./Field";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
+import { IFieldState } from "./Validation";
 
 interface IProps extends IInputValidationProps {
     tags: string[];
@@ -32,6 +33,7 @@ interface IProps extends IInputValidationProps {
 
 interface IState {
     newTag: string;
+    isNewTagValid: boolean;
 }
 
 /**
@@ -45,6 +47,7 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
 
         this.state = {
             newTag: "",
+            isNewTagValid: false,
         };
     }
 
@@ -54,7 +57,7 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
 
     private onAdd = (ev: FormEvent) => {
         ev.preventDefault();
-        if (!this.state.newTag) return;
+        if (!this.state.newTag || !this.state.isNewTagValid) return;
 
         this.props.onAdd(this.state.newTag);
         this.setState({ newTag: "" });
@@ -64,6 +67,17 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
         // We probably don't need to proxy this, but for
         // sanity of `this` we'll do so anyways.
         this.props.onRemove(tag);
+    }
+
+    private onValidateKeyword = async (fieldState: IFieldState) => {
+        if (!this.props.onValidate) {
+            this.setState({ isNewTagValid: true });
+            return { };
+        };
+        const result = await this.props.onValidate(fieldState);
+        this.setState({ isNewTagValid: result.valid });
+
+        return result;
     }
 
     public render() {
@@ -76,13 +90,13 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
                     placeholder={this.props.placeholder || _t("New keyword")}
                     disabled={this.props.disabled}
                     autoComplete="off"
-                    onValidate={this.props.onValidate}
+                    onValidate={this.onValidateKeyword}
                     validateOnBlur={this.props.validateOnBlur}
                     validateOnChange={this.props.validateOnChange}
                     validateOnFocus={this.props.validateOnFocus}
                     forceValidity={this.props.forceValidity}
                 />
-                <AccessibleButton onClick={this.onAdd} kind='primary' disabled={this.props.disabled}>
+                <AccessibleButton onClick={this.onAdd} kind='primary' disabled={this.props.disabled || !this.state.isNewTagValid}>
                     { _t("Add") }
                 </AccessibleButton>
             </form>

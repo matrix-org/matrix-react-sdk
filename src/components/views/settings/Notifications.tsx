@@ -40,6 +40,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -469,6 +470,25 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         });
     };
 
+    private validateKeyword = withValidation({
+        description: () => undefined, //_t("Use an email address to recover your account"),
+        hideDescriptionIfValid: true,
+        rules: [
+            {
+                key: "keyword_starts_with_period",
+                test(this: Notifications, { value }) {
+                    return !value || !/^\./.test(value);
+                },
+                invalid: () => _t("Keywords cannot start with '.'"),
+            },
+            {
+                key: "keyword_contains_fslash",
+                test: ({ value }) => !value || !/\//.test(value),
+                invalid: () => _t("Keywords cannot contain '/'"),
+            },
+        ],
+    });
+
     private renderTopSection() {
         const masterSwitch = <LabelledToggleSwitch
             data-test-id='notif-master-switch'
@@ -558,9 +578,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 tags={this.state.vectorKeywordRuleInfo?.rules.map(r => r.pattern)}
                 onAdd={this.onKeywordAdd}
                 onRemove={this.onKeywordRemove}
+                onValidate={this.validateKeyword}
                 disabled={this.state.phase === Phase.Persisting}
                 label={_t("Keyword")}
-                placeholder={_t("New keyword" + ' hey')}
+                placeholder={_t("New keyword")}
             />;
         }
 
