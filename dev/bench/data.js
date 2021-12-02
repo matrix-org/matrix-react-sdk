@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638442346787,
+  "lastUpdate": 1638442918929,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43952,6 +43952,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 628.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fda0c2cf7913d9c36b22f5754fac8762e0094614",
+          "message": "Fix markdown formatting for bold (#7257)\n\n* Fix markdown formatting for bold\r\n\r\nFix https://github.com/vector-im/element-web/issues/4674\r\n\r\n* I hate you too eslint",
+          "timestamp": "2021-12-02T10:56:23Z",
+          "tree_id": "fb29671cefafef04fc87c93fb8270f975636665c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fda0c2cf7913d9c36b22f5754fac8762e0094614"
+        },
+        "date": 1638442916613,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4672.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 943.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1650,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4372.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
