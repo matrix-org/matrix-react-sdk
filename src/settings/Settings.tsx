@@ -319,6 +319,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,
+        controller: new IncompatibleController("feature_dnd", false, false),
     },
     "mjolnirRooms": {
         supportedLevels: [SettingLevel.ACCOUNT],
@@ -353,6 +354,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             new IncompatibleController("showCommunitiesInsteadOfSpaces"),
             new ReloadOnChangeController(),
         ]),
+    },
+    "feature_breadcrumbs_v2": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new room breadcrumbs"),
+        default: false,
     },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -710,6 +718,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
+        controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),

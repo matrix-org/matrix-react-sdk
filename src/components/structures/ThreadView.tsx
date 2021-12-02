@@ -43,6 +43,7 @@ import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 import RightPanelStore from '../../stores/RightPanelStore';
 import SettingsStore from '../../settings/SettingsStore';
+import { WidgetLayoutStore } from '../../stores/widgets/WidgetLayoutStore';
 
 interface IProps {
     room: Room;
@@ -209,6 +210,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
         if (!SettingsStore.getValue("feature_maximised_widgets")) {
             previousPhase = RightPanelPhases.ThreadPanel;
         }
+
+        // change the previous phase to the threadPanel in case there is no maximised widget anymore
+        if (!WidgetLayoutStore.instance.hasMaximisedWidget(this.props.room)) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+
         // Make sure the previous Phase is always one of the two: Timeline or ThreadPanel
         if (![RightPanelPhases.ThreadPanel, RightPanelPhases.Timeline].includes(previousPhase)) {
             previousPhase = RightPanelPhases.ThreadPanel;
@@ -235,10 +242,11 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     { this.state.thread && (
                         <TimelinePanel
                             ref={this.timelinePanelRef}
-                            showReadReceipts={false} // No RR support in thread's MVP
-                            manageReadReceipts={false} // No RR support in thread's MVP
-                            manageReadMarkers={false} // No RM support in thread's MVP
-                            sendReadReceiptOnLoad={false} // No RR support in thread's MVP
+                            showReadReceipts={false} // Hide the read receipts
+                            // until homeservers speak threads language
+                            manageReadReceipts={true}
+                            manageReadMarkers={true}
+                            sendReadReceiptOnLoad={true}
                             timelineSet={this.state?.thread?.timelineSet}
                             showUrlPreview={true}
                             tileShape={TileShape.Thread}

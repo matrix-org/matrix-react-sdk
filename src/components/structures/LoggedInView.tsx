@@ -53,7 +53,7 @@ import { getKeyBindingsManager, NavigationAction, RoomAction } from '../../KeyBi
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import CallHandler from '../../CallHandler';
+import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
 import { OwnProfileStore } from '../../stores/OwnProfileStore';
@@ -138,7 +138,7 @@ interface IState {
  * This is what our MatrixChat shows when we are logged in. The precise view is
  * determined by the page_type property.
  *
- * Currently it's very tightly coupled with MatrixChat. We should try to do
+ * Currently, it's very tightly coupled with MatrixChat. We should try to do
  * something about that.
  *
  * Components mounted below us can access the matrix client via the react context.
@@ -147,7 +147,6 @@ interface IState {
 class LoggedInView extends React.Component<IProps, IState> {
     static displayName = 'LoggedInView';
 
-    private dispatcherRef: string;
     protected readonly _matrixClient: MatrixClient;
     protected readonly _roomView: React.RefObject<any>;
     protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
@@ -164,7 +163,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
             usageLimitDismissed: false,
-            activeCalls: CallHandler.sharedInstance().getAllActiveCalls(),
+            activeCalls: CallHandler.instance.getAllActiveCalls(),
         };
 
         // stash the MatrixClient in case we log out before we are unmounted
@@ -181,7 +180,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     componentDidMount() {
         document.addEventListener('keydown', this.onNativeKeyDown, false);
-        this.dispatcherRef = dis.register(this.onAction);
+        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.onCallState);
 
         this.updateServerNoticeEvents();
 
@@ -212,7 +211,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.onNativeKeyDown, false);
-        dis.unregister(this.dispatcherRef);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.onCallState);
         this._matrixClient.removeListener("accountData", this.onAccountData);
         this._matrixClient.removeListener("sync", this.onSync);
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
@@ -221,6 +220,12 @@ class LoggedInView extends React.Component<IProps, IState> {
         SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
         this.resizer.detach();
     }
+
+    private onCallState = (): void => {
+        const activeCalls = CallHandler.instance.getAllActiveCalls();
+        if (activeCalls === this.state.activeCalls) return;
+        this.setState({ activeCalls });
+    };
 
     private refreshBackgroundImage = async (): Promise<void> => {
         let backgroundImage = SettingsStore.getValue("RoomList.backgroundImage");
@@ -231,18 +236,6 @@ class LoggedInView extends React.Component<IProps, IState> {
             backgroundImage = OwnProfileStore.instance.getHttpAvatarUrl();
         }
         this.setState({ backgroundImage });
-    };
-
-    private onAction = (payload): void => {
-        switch (payload.action) {
-            case 'call_state': {
-                const activeCalls = CallHandler.sharedInstance().getAllActiveCalls();
-                if (activeCalls !== this.state.activeCalls) {
-                    this.setState({ activeCalls });
-                }
-                break;
-            }
-        }
     };
 
     public canResetTimelineInRoom = (roomId: string) => {
