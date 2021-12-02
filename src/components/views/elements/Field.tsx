@@ -36,7 +36,21 @@ export interface IValidateOpts {
     allowEmpty?: boolean;
 }
 
-interface IProps {
+export interface IInputValidationProps {
+    // The callback called whenever the contents of the field
+    // changes.  Returns an object with `valid` boolean field
+    // and a `feedback` react component field to provide feedback
+    // to the user.
+    onValidate?: (input: IFieldState) => Promise<IValidationResult>;
+    // If specified, overrides the value returned by onValidate.
+    forceValidity?: boolean;
+    // On what events should validation occur; by default on all
+    validateOnFocus?: boolean;
+    validateOnBlur?: boolean;
+    validateOnChange?: boolean;
+}
+
+interface IProps extends IInputValidationProps {
     // The field's ID, which binds the input and label together. Immutable.
     id?: string;
     // The field's type (when used as an <input>). Defaults to "text".
@@ -54,13 +68,6 @@ interface IProps {
     prefixComponent?: React.ReactNode;
     // Optional component to include inside the field after the input.
     postfixComponent?: React.ReactNode;
-    // The callback called whenever the contents of the field
-    // changes.  Returns an object with `valid` boolean field
-    // and a `feedback` react component field to provide feedback
-    // to the user.
-    onValidate?: (input: IFieldState) => Promise<IValidationResult>;
-    // If specified, overrides the value returned by onValidate.
-    forceValidity?: boolean;
     // If specified, contents will appear as a tooltip on the element and
     // validation feedback tooltips will be suppressed.
     tooltipContent?: React.ReactNode;
@@ -71,10 +78,6 @@ interface IProps {
     tooltipClassName?: string;
     // If specified, an additional class name to apply to the field container
     className?: string;
-    // On what events should validation occur; by default on all
-    validateOnFocus?: boolean;
-    validateOnBlur?: boolean;
-    validateOnChange?: boolean;
     // All other props pass through to the <input>.
 }
 

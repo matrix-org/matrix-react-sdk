@@ -17,11 +17,11 @@ limitations under the License.
 import React, { ChangeEvent, FormEvent } from "react";
 
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Field from "./Field";
+import Field, { IInputValidationProps } from "./Field";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
 
-interface IProps {
+interface IProps extends IInputValidationProps {
     tags: string[];
     onAdd: (tag: string) => void;
     onRemove: (tag: string) => void;
@@ -76,6 +76,11 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
                     placeholder={this.props.placeholder || _t("New keyword")}
                     disabled={this.props.disabled}
                     autoComplete="off"
+                    onValidate={this.props.onValidate}
+                    validateOnBlur={this.props.validateOnBlur}
+                    validateOnChange={this.props.validateOnChange}
+                    validateOnFocus={this.props.validateOnFocus}
+                    forceValidity={this.props.forceValidity}
                 />
                 <AccessibleButton onClick={this.onAdd} kind='primary' disabled={this.props.disabled}>
                     { _t("Add") }

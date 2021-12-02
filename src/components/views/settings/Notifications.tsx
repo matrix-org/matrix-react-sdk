@@ -560,7 +560,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 onRemove={this.onKeywordRemove}
                 disabled={this.state.phase === Phase.Persisting}
                 label={_t("Keyword")}
-                placeholder={_t("New keyword")}
+                placeholder={_t("New keyword" + ' hey')}
             />;
         }
 
