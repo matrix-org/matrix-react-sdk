@@ -28,7 +28,7 @@ import { Layout } from '../../../settings/enums/Layout';
 import TimelinePanel from '../../structures/TimelinePanel';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import EditorStateTransfer from '../../../utils/EditorStateTransfer';
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from '../../../utils/replaceableComponent';
@@ -42,6 +42,7 @@ interface IProps {
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
     timelineSet?: EventTimelineSet;
+    timelineRenderingType?: TimelineRenderingType;
 }
 interface IState {
     thread?: Thread;
@@ -141,6 +142,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         return (
             <RoomContext.Provider value={{
                 ...this.context,
+                timelineRenderingType: this.props.timelineRenderingType || TimelineRenderingType.Room,
                 liveTimeline: this.props.timelineSet.getLiveTimeline(),
             }}>
                 <BaseCard
