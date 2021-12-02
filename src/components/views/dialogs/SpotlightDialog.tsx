@@ -291,17 +291,23 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
                 <h4>{ _t("Search for") }</h4>
                 <div>
-                    <AccessibleButton kind="primary_outline" onClick={() => {
-                        // TODO does not work when user is on Home, or a Space.
-                        defaultDispatcher.fire(Action.SearchRoomTimeline);
-                        onFinished();
-                    }}>
+                    <AccessibleButton
+                        kind="primary_outline"
+                        onClick={() => {
+                            // TODO does not work when user is on Home, or a Space.
+                            defaultDispatcher.fire(Action.SearchRoomTimeline);
+                            onFinished();
+                        }}
+                    >
                         { _t("Messages") }
                     </AccessibleButton>
-                    <AccessibleButton kind="primary_outline" onClick={() => {
-                        defaultDispatcher.fire(Action.ViewRoomDirectory);
-                        onFinished();
-                    }}>
+                    <AccessibleButton
+                        kind="primary_outline"
+                        onClick={() => {
+                            defaultDispatcher.fire(Action.ViewRoomDirectory);
+                            onFinished();
+                        }}
+                    >
                         { _t("Public Rooms") }
                     </AccessibleButton>
                 </div>

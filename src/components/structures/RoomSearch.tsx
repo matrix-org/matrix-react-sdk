@@ -84,7 +84,6 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.clearInput);
-        SpaceStore.instance.off(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
     }
 
     private openSpotlight() {
