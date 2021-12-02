@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638460182074,
+  "lastUpdate": 1638463026027,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44420,6 +44420,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4060.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "25c119dd5adccd9935c1ceb39e6720009e107e90",
+          "message": "Revert https://github.com/matrix-org/matrix-react-sdk/pull/7246 (#7268)\n\nThis is apprently fixed on synapse, so reverting the workaround",
+          "timestamp": "2021-12-02T16:31:23Z",
+          "tree_id": "000dbdd4f2984a0fa5b26df7dc8ef998b455c367",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/25c119dd5adccd9935c1ceb39e6720009e107e90"
+        },
+        "date": 1638463022928,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4719.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 947.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1610.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4327.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
