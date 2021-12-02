@@ -77,7 +77,7 @@ limitations under the License.
 }
 
 // We'd like to remove this, but this makes matrixchat's resizehandle's
-// negative margin & greater than its positive padding. If it's the same
+// negative margin greater than its positive padding. If it's the same
 // or less, Safari gets confused about overflows somehow and
 // https://github.com/vector-im/element-web/issues/19863 happens.
 .mx_MatrixChat > .mx_ResizeHandle.mx_ResizeHandle_horizontal {
