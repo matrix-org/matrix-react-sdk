@@ -48,7 +48,7 @@ import UserMenu from "./UserMenu";
 interface IProps {
     isMinimized: boolean;
     resizeNotifier: ResizeNotifier;
-    showUserMenu: boolean;
+    spacePanelDisabled: boolean;
 }
 
 enum BreadcrumbsMode {
@@ -382,7 +382,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onBlur={this.onBlur}
                 onKeyDown={this.onKeyDown}
             >
-                { this.props.showUserMenu && <UserMenu isPanelCollapsed={true} /> }
+                { this.props.spacePanelDisabled && <UserMenu isPanelCollapsed={true} /> }
 
                 <RoomSearch
                     isMinimized={this.props.isMinimized}
@@ -427,7 +427,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     { !this.props.isMinimized && (
                         <RoomListHeader
                             onVisibilityChange={this.refreshStickyHeaders}
-                            spacePanelDisabled={this.props.showUserMenu}
+                            spacePanelDisabled={this.props.spacePanelDisabled}
                         />
                     ) }
                     <div className="mx_LeftPanel_roomListWrapper">

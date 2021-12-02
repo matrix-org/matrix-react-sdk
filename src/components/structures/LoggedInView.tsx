@@ -70,8 +70,6 @@ import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
 import LegacyCommunityPreview from "./LegacyCommunityPreview";
-import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
-import { ActionPayload } from "../../dispatcher/payloads";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -702,7 +700,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                                 <LeftPanel
                                     isMinimized={this.props.collapseLhs || false}
                                     resizeNotifier={this.props.resizeNotifier}
-                                    showUserMenu={!this.state.spacePanelEnabled}
+                                    spacePanelDisabled={!this.state.spacePanelEnabled}
                                 />
                             </div>
                         </div>
