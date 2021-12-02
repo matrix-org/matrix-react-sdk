@@ -94,9 +94,9 @@ function getTextUntilEndOrLinebreak(node: commonmark.Node) {
 }
 
 const formattingChangesByNodeType = {
-    'emph' : '_',
-    'strong': '__'
-}
+    'emph': '_',
+    'strong': '__',
+};
 
 /**
  * Class that wraps commonmark, adding the ability to see whether
