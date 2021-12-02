@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638459786712,
+  "lastUpdate": 1638460182074,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44372,6 +44372,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4776.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0a99be3d6513dafb244acb84179786aac16f83b6",
+          "message": "Render mini user menu for when space panel is disabled (#7258)",
+          "timestamp": "2021-12-02T15:44:01Z",
+          "tree_id": "360c7dd643d144dc5854c7bb265a7a9df4d95254",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0a99be3d6513dafb244acb84179786aac16f83b6"
+        },
+        "date": 1638460178839,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5063.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 911.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1589.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4060.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
