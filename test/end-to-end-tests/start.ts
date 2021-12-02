@@ -33,14 +33,6 @@ program
 
 const hsUrl = 'http://localhost:5005';
 
-// XXX: why is this not located in @types/global.d.ts?
-declare global {
-    interface Window {
-        mxPerformanceMonitor: any;
-        mxPerformanceEntryNames: any;
-    }
-}
-
 async function runTests() {
     const sessions = [];
     const options = {

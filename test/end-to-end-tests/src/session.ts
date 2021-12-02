@@ -27,18 +27,20 @@ interface XHRLogger {
 }
 
 export class ElementSession {
-    readonly consoleLog: LogBuffer;
-    readonly networkLog: LogBuffer;
+    readonly consoleLog: LogBuffer<puppeteer.ConsoleMessage>;
+    readonly networkLog: LogBuffer<puppeteer.HTTPRequest>;
     readonly log: Logger;
 
     constructor(readonly browser: puppeteer.Browser, readonly page: puppeteer.Page, readonly username: string,
                 readonly elementServer: string, readonly hsUrl: string) {
-        this.consoleLog = new LogBuffer(page, "console", (msg) => `${msg.text()}\n`);
-        this.networkLog = new LogBuffer(page, "requestfinished", async (req) => {
-            const type = req.resourceType();
-            const response = await req.response();
-            return `${type} ${response.status()} ${req.method()} ${req.url()} \n`;
-        }, true);
+        this.consoleLog = new LogBuffer(page, "console",
+            async (msg: puppeteer.ConsoleMessage) => Promise.resolve(`${msg.text()}\n`));
+        this.networkLog = new LogBuffer(page,
+            "requestfinished", async (req: puppeteer.HTTPRequest) => {
+                const type = req.resourceType();
+                const response = await req.response();
+                return `${type} ${response.status()} ${req.method()} ${req.url()} \n`;
+            });
         this.log = new Logger(this.username);
     }
 

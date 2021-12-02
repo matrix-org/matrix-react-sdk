@@ -17,31 +17,18 @@ limitations under the License.
 
 import { Page, PageEventObject } from "puppeteer";
 
-type EventMapperSync = (s: string) => string;
-type EventMapperAsync = (s: string) => Promise<string>;
-
-function eventMapperIsAsync(eventMapper: EventMapperSync | EventMapperAsync,
-    reduceAsync: boolean): eventMapper is EventMapperAsync {
-    return reduceAsync;
-}
-
-export class LogBuffer {
+export class LogBuffer<EventMapperArg extends Parameters<Parameters<Page['on']>[1]>[0]> {
     buffer: string;
 
     constructor(
         page: Page,
         eventName: keyof PageEventObject,
-        eventMapper: EventMapperSync | EventMapperAsync,
-        reduceAsync = false,
+        eventMapper: (arg: EventMapperArg) => Promise<string>,
         initialValue = "",
     ) {
         this.buffer = initialValue;
-        page.on(eventName, (arg) => {
-            if (eventMapperIsAsync(eventMapper, reduceAsync)) {
-                eventMapper(arg).then((r) => this.buffer += r);
-            } else {
-                this.buffer += eventMapper(arg);
-            }
+        page.on(eventName, (arg: EventMapperArg) => {
+            eventMapper(arg).then((r) => this.buffer += r);
         });
     }
 }

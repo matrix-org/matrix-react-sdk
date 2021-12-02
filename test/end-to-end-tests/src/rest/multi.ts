@@ -39,9 +39,9 @@ export class RestMultiSession {
         return session;
     }
 
-    public async setDisplayName(fn: (s: string) => string): Promise<void> {
+    public async setDisplayName(fn: (s: RestSession) => string): Promise<void> {
         this.log.step("set their display name");
-        await Promise.all(this.sessions.map(async (s) => {
+        await Promise.all(this.sessions.map(async (s: RestSession) => {
             s.log.mute();
             await s.setDisplayName(fn(s));
             s.log.unmute();

@@ -24,6 +24,7 @@ import { ElementSession } from "./session";
 import { RestSessionCreator } from "./rest/creator";
 import { RestMultiSession } from "./rest/multi";
 import { spacesScenarios } from './scenarios/spaces';
+import { RestSession } from "./rest/session";
 
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
@@ -55,6 +56,6 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
 async function createRestUsers(restCreator: RestSessionCreator): Promise<RestMultiSession> {
     const usernames = range(1, 10).map((i) => `charly-${i}`);
     const charlies = await restCreator.createSessionRange(usernames, "testtest", "charly-1..10");
-    await charlies.setDisplayName((s) => `Charly #${s.userName().split('-')[1]}`);
+    await charlies.setDisplayName((s: RestSession) => `Charly #${s.userName().split('-')[1]}`);
     return charlies;
 }
