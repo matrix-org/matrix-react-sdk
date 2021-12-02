@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, {
+    ChangeEvent,
     ComponentProps,
     KeyboardEvent,
     useCallback,
@@ -31,7 +32,6 @@ import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { IDialogProps } from "./IDialogProps";
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
-import SearchBox from "../../structures/SearchBox";
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
 import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -53,6 +53,8 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from "../avatars/BaseAvatar";
 import Spinner from "../elements/Spinner";
 import { roomContextDetailsText } from "../../../Rooms";
+import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
+import { Action } from "../../../dispatcher/actions";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50;
@@ -147,7 +149,7 @@ const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boole
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
-    const [query, _setQuery] = useState("");
+    const [query, _setQuery] = useState(initialText);
     const recentSearches = useRecentSearches();
 
     const results = useMemo<Room[] | null>(() => {
@@ -165,7 +167,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const activeSpace = SpaceStore.instance.activeSpaceRoom;
     const [spaceResults, spaceResultsLoading] = useSpaceResults(activeSpace, query);
 
-    const setQuery = (newQuery: string): void => {
+    const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
+        const newQuery = e.currentTarget.value;
         _setQuery(newQuery);
         if (!query !== !newQuery) {
             setImmediate(() => {
@@ -285,10 +288,29 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         </>;
     } else {
         content = <>
+            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                <h4>{ _t("Search for") }</h4>
+                <div>
+                    <AccessibleButton kind="primary_outline" onClick={() => {
+                        // TODO does not work when user is on Home, or a Space.
+                        defaultDispatcher.fire(Action.SearchRoomTimeline);
+                        onFinished();
+                    }}>
+                        { _t("Messages") }
+                    </AccessibleButton>
+                    <AccessibleButton kind="primary_outline" onClick={() => {
+                        defaultDispatcher.fire(Action.ViewRoomDirectory);
+                        onFinished();
+                    }}>
+                        { _t("Public Rooms") }
+                    </AccessibleButton>
+                </div>
+            </div>
+
             <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentlyViewed" role="group">
                 <h4>{ _t("Recently viewed") }</h4>
                 <div>
-                    { BreadcrumbsStore.instance.rooms.map(room => (
+                    { BreadcrumbsStore.instance.rooms.slice(0, 10).map(room => (
                         <Option
                             id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
                             key={room.roomId}
@@ -296,7 +318,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                 viewRoom(room.roomId);
                             }}
                         >
-                            <RoomAvatar room={room} width={20} height={20} />
+                            <DecoratedRoomAvatar room={room} avatarSize={32} />
                             { room.name }
                         </Option>
                     )) }
@@ -383,15 +405,19 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             hasCancel={false}
             onKeyDown={onDialogKeyDown}
         >
-            <SearchBox
-                autoFocus
-                placeholder={_t("Search for anything")}
-                initialValue={initialText}
-                onSearch={setQuery}
-                onKeyDown={onKeyDown}
-                aria-owns="mx_SpotlightDialog_content"
-                aria-activedescendant={activeDescendant}
-            />
+            <div className="mx_SpotlightDialog_searchBox mx_textinput">
+                <input
+                    autoFocus
+                    type="text"
+                    autoComplete="off"
+                    placeholder={_t("Search for anything")}
+                    value={query}
+                    onChange={setQuery}
+                    onKeyDown={onKeyDown}
+                    aria-owns="mx_SpotlightDialog_content"
+                    aria-activedescendant={activeDescendant}
+                />
+            </div>
 
             <div id="mx_SpotlightDialog_content" role="listbox" aria-activedescendant={activeDescendant}>
                 { content }

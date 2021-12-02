@@ -188,7 +188,7 @@ export enum Action {
     SwitchSpace = "switch_space",
 
     /**
-     * Signals to the visible space hierarchy that a change has occurred an that it should refresh.
+     * Signals to the visible space hierarchy that a change has occurred and that it should refresh.
      */
     UpdateSpaceHierarchy = "update_space_hierarchy",
 
@@ -203,4 +203,9 @@ export enum Action {
      * Fires when a user starts to edit event (e.g. up arrow in compositor)
      */
     EditEvent = "edit_event",
+
+    /**
+     * Searches the currently open room. No additional payload information required.
+     */
+    SearchRoomTimeline = "search_room_timeline",
 }
