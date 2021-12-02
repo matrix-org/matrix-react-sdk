@@ -155,7 +155,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         return (
             <RoomContext.Provider value={{
                 ...this.context,
-                timelineRenderingType: this.props.timelineRenderingType || TimelineRenderingType.Room,
+                timelineRenderingType: this.props.timelineRenderingType ?? this.context.timelineRenderingType,
                 liveTimeline: this.props.timelineSet.getLiveTimeline(),
             }}>
                 <BaseCard
