@@ -25,12 +25,8 @@ module.exports = async function toastScenarios(alice, bob) {
     alice.log.done();
 
     alice.log.step(`accepts analytics toast`);
-<<<<<<< HEAD
     await acceptToast(alice, "Help improve Element");
-=======
-    await acceptToast(alice, "Help us improve Element");
     await rejectToast(alice, "Testing small changes");
->>>>>>> 5e77822bccd3945cf1e247b97a06b5178f2e2404
     alice.log.done();
 
     alice.log.step(`checks no remaining toasts`);
