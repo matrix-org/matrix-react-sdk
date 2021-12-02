@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638454533902,
+  "lastUpdate": 1638459786712,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44324,6 +44324,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4113.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d3c556bef70f1a56fa0cc482fff585008482ef32",
+          "message": "Remove the `Screen sharing is here!` dialog (#7266)",
+          "timestamp": "2021-12-02T15:36:36Z",
+          "tree_id": "329cd4fb62e5c7e6c10a56c7cc7184cbe38adbdc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d3c556bef70f1a56fa0cc482fff585008482ef32"
+        },
+        "date": 1638459784126,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4590.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1771.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4776.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
