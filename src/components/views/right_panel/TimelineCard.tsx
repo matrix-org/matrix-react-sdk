@@ -40,6 +40,7 @@ interface IProps {
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     initialEventHighlighted?: boolean;
+    classNames: string;
 }
 interface IState {
     thread?: Thread;
@@ -65,7 +66,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     public render(): JSX.Element {
         return (
             <BaseCard
-                className="mx_ThreadPanel mx_TimelineCard"
+                className={this.props.classNames}
                 onClose={this.props.onClose}
                 withoutScrollContainer={true}
                 header={this.renderTimelineCardHeader()}
