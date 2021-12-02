@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638452936425,
+  "lastUpdate": 1638453216211,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44180,6 +44180,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4226,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aa7cae08aa11e98d71400df9448a65aa0c2e4b41",
+          "message": "Add utility method mxLoginWithAccessToken to login with existing access token (#7261)",
+          "timestamp": "2021-12-02T13:46:44Z",
+          "tree_id": "81807b3697050d8dc5043178f667c7600abc9e26",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aa7cae08aa11e98d71400df9448a65aa0c2e4b41"
+        },
+        "date": 1638453213030,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5002.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1378.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1644.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4529.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
