@@ -298,7 +298,7 @@ export function allVotes(pollRelations: Relations): Array<UserVote> {
 
 function isPollResponse(responseEvent: MatrixEvent): boolean {
     return (
-        responseEvent.getType() === POLL_RESPONSE_EVENT_TYPE.name &&
+        POLL_RESPONSE_EVENT_TYPE.matches(responseEvent.getType()) &&
         responseEvent.getContent().hasOwnProperty(POLL_RESPONSE_EVENT_TYPE.name)
     );
 }
