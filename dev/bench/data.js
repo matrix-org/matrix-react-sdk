@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638380446066,
+  "lastUpdate": 1638437481918,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43820,6 +43820,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4815.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "renancleyson.f@gmail.com",
+            "name": "Renan Cleyson",
+            "username": "renancleyson-dev"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0afe1412661169e27098bdc998ddf4c1b5fd5f09",
+          "message": "Fix textual message stripping new line (#7239)",
+          "timestamp": "2021-12-02T09:25:12Z",
+          "tree_id": "4c44a217ab0fb3e0a8464cd5d321b904ac0ce261",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0afe1412661169e27098bdc998ddf4c1b5fd5f09"
+        },
+        "date": 1638437479244,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5534.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1035.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1719.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4704.5,
             "unit": "ms",
             "extra": "type: measure"
           }
