@@ -38,6 +38,7 @@ import RoomViewStore from '../../../stores/RoomViewStore';
 import ContentMessages from '../../../ContentMessages';
 import UploadBar from '../../structures/UploadBar';
 import SettingsStore from '../../../settings/SettingsStore';
+
 interface IProps {
     room: Room;
     onClose: () => void;
