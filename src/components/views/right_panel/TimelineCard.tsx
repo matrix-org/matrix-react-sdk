@@ -95,14 +95,9 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
         const roomId = this.props.room.roomId;
         const newState: Pick<IState, any> = {
-            // roomId,
-            // roomAlias: RoomViewStore.getRoomAlias(),
             // roomLoading: RoomViewStore.isRoomLoading(),
             // roomLoadError: RoomViewStore.getRoomLoadError(),
-            // joining: RoomViewStore.isJoining(),
-            // replyToEvent: RoomViewStore.getQuotingEvent(),
-            // // we should only peek once we have a ready client
-            // shouldPeek: this.state.matrixClientIsReady && RoomViewStore.shouldPeek(),
+
             showReadReceipts: SettingsStore.getValue("showReadReceipts", roomId),
             initialEventId: RoomViewStore.getInitialEventId(),
             initialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
