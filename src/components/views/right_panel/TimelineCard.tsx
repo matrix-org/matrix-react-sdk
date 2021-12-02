@@ -74,6 +74,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         this.state = {
             showReadReceipts: false,
         };
+        this.settingWatchers = [];
     }
 
     public componentDidMount(): void {
