@@ -22,7 +22,7 @@ import { RestRoom } from "./room";
 export class RestMultiSession {
     readonly log: Logger;
 
-    constructor(private readonly sessions: RestSession[], groupName: string) {
+    constructor(public readonly sessions: RestSession[], groupName: string) {
         this.log = new Logger(groupName);
     }
 
@@ -68,7 +68,7 @@ export class RestMultiSession {
 }
 
 class RestMultiRoom {
-    constructor(private readonly rooms: RestRoom[], private readonly roomIdOrAlias: string,
+    constructor(public readonly rooms: RestRoom[], private readonly roomIdOrAlias: string,
                 private readonly log: Logger) {}
 
     public async talk(message: string): Promise<void> {
