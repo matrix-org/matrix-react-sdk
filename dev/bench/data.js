@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638449416792,
+  "lastUpdate": 1638452926366,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44048,6 +44048,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4421,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5169bca5708eba7abd1483ff491e0e0bd61212a7",
+          "message": "Improve ease of focusing on Room list Search (#7255)",
+          "timestamp": "2021-12-02T13:43:02Z",
+          "tree_id": "a3dd254f9cefdaa5abcc1c9fd2b2dae1bfd24617",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5169bca5708eba7abd1483ff491e0e0bd61212a7"
+        },
+        "date": 1638452924037,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5114.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1118.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1587.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4310.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
