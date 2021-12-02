@@ -50,6 +50,7 @@ import {
     UPDATE_SUGGESTED_ROOMS,
     UPDATE_TOP_LEVEL_SPACES,
 } from ".";
+import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 
 interface IState {}
 
@@ -230,6 +231,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             } else {
                 defaultDispatcher.dispatch({
                     action: "view_home_page",
+                    context_switch: true,
                 });
             }
         }
@@ -833,8 +835,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 // Don't auto-switch rooms when reacting to a context-switch
                 // as this is not helpful and can create loops of rooms/space switching
                 if (payload.context_switch) break;
+                let roomId = payload.room_id;
 
-                const roomId = payload.room_id;
+                if (payload.room_alias && !roomId) {
+                    roomId = getCachedRoomIDForAlias(payload.room_alias);
+                }
+
+                if (!roomId) return; // we'll get re-fired with the room ID shortly
+
                 const room = this.matrixClient?.getRoom(roomId);
                 if (room?.isSpaceRoom()) {
                     // Don't context switch when navigating to the space room
@@ -853,6 +861,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 window.localStorage.setItem(getSpaceContextKey(this.activeSpace), payload.room_id);
                 break;
             }
+
+            case "view_home_page":
+                if (!payload.context_switch && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
+                    this.setActiveSpace(MetaSpace.Home, false);
+                    window.localStorage.setItem(getSpaceContextKey(this.activeSpace), "");
+                }
+                break;
 
             case "after_leave_room":
                 if (this._activeSpace[0] === "!" && payload.room_id === this._activeSpace) {

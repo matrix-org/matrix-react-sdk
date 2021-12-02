@@ -83,7 +83,6 @@ import SpaceStore from "../../stores/spaces/SpaceStore";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { RoomUpdateCause } from "../../stores/room-list/models";
-import defaultDispatcher from "../../dispatcher/dispatcher";
 import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
@@ -110,9 +109,14 @@ import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
 import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
+import CallHandler from "../../CallHandler";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { showSpaceInvite } from "../../utils/space";
+import GenericToast from "../views/toasts/GenericToast";
+import InfoDialog from "../views/dialogs/InfoDialog";
+import FeedbackDialog from "../views/dialogs/FeedbackDialog";
+import AccessibleButton from "../views/elements/AccessibleButton";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -597,7 +601,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             case 'logout':
-                dis.dispatch({ action: "hangup_all" });
+                CallHandler.instance.hangupAllCalls();
                 Lifecycle.logout();
                 break;
             case 'require_registration':
@@ -708,16 +712,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             }
             case Action.ViewRoomDirectory: {
-                if (SpaceStore.instance.activeSpace[0] === "!") {
-                    defaultDispatcher.dispatch({
-                        action: "view_room",
-                        room_id: SpaceStore.instance.activeSpace,
-                    });
-                } else {
-                    Modal.createTrackedDialog('Room directory', '', RoomDirectory, {
-                        initialText: payload.initialText,
-                    }, 'mx_RoomDirectory_dialogWrapper', false, true);
-                }
+                Modal.createTrackedDialog('Room directory', '', RoomDirectory, {
+                    initialText: payload.initialText,
+                }, 'mx_RoomDirectory_dialogWrapper', false, true);
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
@@ -1509,6 +1506,61 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
+            }
+
+            if (!localStorage.getItem("mx_seen_ia_1.1_changes_toast")) {
+                const key = "IA_1.1_TOAST";
+                ToastStore.sharedInstance().addOrReplaceToast({
+                    key,
+                    title: _t("Testing small changes"),
+                    props: {
+                        description: _t("Your feedback is wanted as we try out some design changes."),
+                        acceptLabel: _t("More info"),
+                        onAccept: () => {
+                            Modal.createDialog(InfoDialog, {
+                                title: _t("We're testing some design changes"),
+                                description: <>
+                                    <img
+                                        src={require("../../../res/img/ia-design-changes.png")}
+                                        width="636"
+                                        height="303"
+                                        alt=""
+                                    />
+                                    <p>{ _t(
+                                        "Your ongoing feedback would be very welcome, so if you see anything " +
+                                        "different you want to comment on, <a>please let us know about it</a>. " +
+                                        "Click your avatar to find a quick feedback link.",
+                                        {},
+                                        {
+                                            a: sub => <AccessibleButton
+                                                kind="link"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    ev.stopPropagation();
+                                                    Modal.createTrackedDialog('Feedback Dialog', '', FeedbackDialog);
+                                                }}
+                                            >
+                                                { sub }
+                                            </AccessibleButton>,
+                                        },
+                                    ) }</p>
+                                    <p>{ _t("If you'd like to preview or test some potential upcoming changes, " +
+                                        "there's an option in feedback to let us contact you.") }</p>
+                                </>,
+                            }, "mx_DialogDesignChanges_wrapper");
+                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
+                            ToastStore.sharedInstance().dismissToast(key);
+                        },
+                        rejectLabel: _t("Dismiss"),
+                        onReject: () => {
+                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
+                            ToastStore.sharedInstance().dismissToast(key);
+                        },
+                    },
+                    icon: "labs",
+                    component: GenericToast,
+                    priority: 9,
+                });
             }
 
             dis.fire(Action.FocusSendMessageComposer);
