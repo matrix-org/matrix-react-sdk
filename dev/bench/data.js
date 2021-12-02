@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638452931270,
+  "lastUpdate": 1638452936425,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44132,6 +44132,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 655.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b69ad0cd0b4628267e0282fa21b624c7de2e03aa",
+          "message": "Decorate view keyboard shortcuts link as a link (#7260)",
+          "timestamp": "2021-12-02T13:43:10Z",
+          "tree_id": "d69829fa99145a22b61ffc21be37f76315a1b294",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b69ad0cd0b4628267e0282fa21b624c7de2e03aa"
+        },
+        "date": 1638452933191,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4844.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 851.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1598.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4226,
             "unit": "ms",
             "extra": "type: measure"
           }
