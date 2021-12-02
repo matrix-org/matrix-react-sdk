@@ -27,7 +27,6 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { PlaceCallType } from "../../../CallHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Modal from '../../../Modal';
 import InfoDialog from "../dialogs/InfoDialog";
@@ -36,9 +35,12 @@ import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
+import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
+import { NOTIFICATION_STATE_UPDATE } from '../../../stores/notifications/NotificationState';
 import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 
 export interface ISearchInfo {
@@ -53,7 +55,7 @@ interface IProps {
     inRoom: boolean;
     onSearchClick: () => void;
     onForgetClick: () => void;
-    onCallPlaced: (type: PlaceCallType) => void;
+    onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
     e2eStatus: E2EStatus;
     appsShown: boolean;
@@ -75,7 +77,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
     constructor(props, context) {
         super(props, context);
-
+        const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
+        notiStore.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.state = {};
     }
 
@@ -89,6 +92,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (cli) {
             cli.removeListener("RoomState.events", this.onRoomStateEvents);
         }
+        const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
+        notiStore.removeListener(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
     }
 
     private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
@@ -98,6 +103,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         // redisplay the room name, topic, etc.
         this.rateLimitedUpdate();
+    };
+
+    private onNotificationUpdate = () => {
+        this.forceUpdate();
     };
 
     private rateLimitedUpdate = throttle(() => {
@@ -204,14 +213,14 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.inRoom && SettingsStore.getValue("showCallButtonsInComposer")) {
             const voiceCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
-                onClick={() => this.props.onCallPlaced(PlaceCallType.Voice)}
+                onClick={() => this.props.onCallPlaced(CallType.Voice)}
                 title={_t("Voice call")}
                 key="voice"
             />;
             const videoCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
                 onClick={(ev: React.MouseEvent<Element>) => ev.shiftKey ?
-                    this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(PlaceCallType.Video)}
+                    this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(CallType.Voice)}
                 title={_t("Video call")}
                 key="video"
             />;

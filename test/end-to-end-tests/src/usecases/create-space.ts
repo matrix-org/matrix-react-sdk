@@ -60,7 +60,7 @@ export async function inviteSpace(session: ElementSession, spaceName: string, us
         button: 'right',
     });
 
-    const inviteButton = await session.query('[aria-label="Invite people"]');
+    const inviteButton = await session.query('.mx_SpacePanel_contextMenu_inviteButton[aria-label="Invite"]');
     await inviteButton.click();
 
     try {
