@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638437481918,
+  "lastUpdate": 1638441060235,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -43868,6 +43868,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4704.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "68604e3505360f3badc316dd0029cfff1232c13f",
+          "message": "Tweak roving tab index focus behaviour (#7254)",
+          "timestamp": "2021-12-02T10:24:55Z",
+          "tree_id": "a12e8342f2f5b110bda56a2a3d46d003257afd0d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/68604e3505360f3badc316dd0029cfff1232c13f"
+        },
+        "date": 1638441057826,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4728.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 983.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1660.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4709.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
