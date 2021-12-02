@@ -2,7 +2,7 @@
 set -e
 
 # config
-SYNAPSE_BRANCH=release-v1.47
+SYNAPSE_BRANCH=squah/workaround_for_synctl_in_containers
 INSTALLATION_NAME=consent
 SERVER_DIR=installations/$INSTALLATION_NAME
 CONFIG_TEMPLATE=consent
