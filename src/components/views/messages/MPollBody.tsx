@@ -38,13 +38,13 @@ const TEXT_NODE_TYPE = "org.matrix.msc1767.text";
 interface IState {
     selected?: string; // Which option was clicked by the local user
     pollRelations: Relations; // Allows us to access voting events
-    seenEventIds: string[]; // Events we have already seen
 }
 
 @replaceableComponent("views.messages.MPollBody")
 export default class MPollBody extends React.Component<IBodyProps, IState> {
     static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
+    private seenEventIds: string[] = []; // Events we have already seen
 
     constructor(props: IBodyProps) {
         super(props);
@@ -52,7 +52,6 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         this.state = {
             selected: null,
             pollRelations: this.fetchPollRelations(),
-            seenEventIds: [],
         };
 
         this.addListeners(this.state.pollRelations);
@@ -179,7 +178,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const newEvents: MatrixEvent[] = this.state.pollRelations.getRelations()
             .filter(isPollResponse)
             .filter((mxEvent: MatrixEvent) =>
-                !this.state.seenEventIds.includes(mxEvent.getId()));
+                !this.seenEventIds.includes(mxEvent.getId()));
         let newSelected = this.state.selected;
 
         if (newEvents.length > 0) {
@@ -190,12 +189,8 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
             }
         }
         const newEventIds = newEvents.map((mxEvent: MatrixEvent) => mxEvent.getId());
-        this.setState(
-            {
-                seenEventIds: this.state.seenEventIds.concat(newEventIds),
-                selected: newSelected,
-            },
-        );
+        this.seenEventIds = this.seenEventIds.concat(newEventIds);
+        this.setState( { selected: newSelected } );
     }
 
     private totalVotes(collectedVotes: Map<string, number>): number {
