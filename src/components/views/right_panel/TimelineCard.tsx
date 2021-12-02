@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { EventSubscription } from "fbemitter";
-import { EventTimelineSet, MatrixEvent, Room } from 'matrix-js-sdk/src';
+import { EventTimelineSet, IEventRelation, MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import BaseCard from "./BaseCard";
@@ -35,6 +35,8 @@ import { replaceableComponent } from '../../../utils/replaceableComponent';
 import { ActionPayload } from '../../../dispatcher/payloads';
 import { Action } from '../../../dispatcher/actions';
 import RoomViewStore from '../../../stores/RoomViewStore';
+import ContentMessages from '../../../ContentMessages';
+import UploadBar from '../../structures/UploadBar';
 interface IProps {
     room: Room;
     onClose: () => void;
@@ -43,6 +45,8 @@ interface IProps {
     e2eStatus?: E2EStatus;
     timelineSet?: EventTimelineSet;
     timelineRenderingType?: TimelineRenderingType;
+    showComposer?: boolean;
+    composerRelation?: IEventRelation;
 }
 interface IState {
     thread?: Thread;
@@ -173,8 +177,13 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                         onUserScroll={this.onScroll}
                     />
 
+                    { ContentMessages.sharedInstance().getCurrentUploads(this.props.composerRelation).length > 0 && (
+                        <UploadBar room={this.props.room} relation={this.props.composerRelation} />
+                    ) }
+
                     <MessageComposer
                         room={this.props.room}
+                        relation={this.props.composerRelation}
                         resizeNotifier={this.props.resizeNotifier}
                         replyToEvent={this.state.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator}
