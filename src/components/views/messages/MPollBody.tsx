@@ -19,25 +19,76 @@ import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Modal from '../../../Modal';
 import { IBodyProps } from "./IBodyProps";
+import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import {
     IPollAnswer,
     IPollContent,
-    IPollResponse,
+    IPollResponseContent,
     POLL_RESPONSE_EVENT_TYPE,
     POLL_START_EVENT_TYPE,
+    TEXT_NODE_TYPE,
 } from '../../../polls/consts';
 import StyledRadioButton from '../elements/StyledRadioButton';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ErrorDialog from '../dialogs/ErrorDialog';
-
-// TODO: [andyb] Use extensible events library when ready
-const TEXT_NODE_TYPE = "org.matrix.msc1767.text";
+import { MatrixClient } from '../../../../../matrix-js-sdk/src/matrix';
 
 interface IState {
     selected?: string; // Which option was clicked by the local user
     pollRelations: Relations; // Allows us to access voting events
+}
+
+export function findTopAnswer(
+    pollEvent: MatrixEvent,
+    matrixClient: MatrixClient,
+    getRelationsForEvent?: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations,
+): string {
+    if (!getRelationsForEvent) {
+        return "";
+    }
+
+    const pollContents: IPollContent = pollEvent.getContent();
+
+    const findAnswerText = (answerId: string) => {
+        for (const answer of pollContents[POLL_START_EVENT_TYPE.name].answers) {
+            if (answer.id == answerId) {
+                return answer[TEXT_NODE_TYPE.name];
+            }
+        }
+        return "";
+    };
+
+    const pollRelations: Relations = getRelationsForEvent(
+        pollEvent.getId(),
+        "m.reference",
+        POLL_RESPONSE_EVENT_TYPE.name,
+    );
+
+    const userVotes: Map<string, UserVote> = collectUserVotes(
+        allVotes(pollRelations),
+        matrixClient.getUserId(),
+        null,
+    );
+
+    const votes: Map<string, number> = countVotes(userVotes, pollEvent.getContent());
+    const highestScore: number = Math.max(...votes.values());
+
+    const bestAnswerIds: string[] = [];
+    for (const [answerId, score] of votes) {
+        if (score == highestScore) {
+            bestAnswerIds.push(answerId);
+        }
+    }
+
+    const bestAnswerTexts = bestAnswerIds.map(findAnswerText);
+
+    return formatCommaSeparatedList(bestAnswerTexts, 3);
 }
 
 @replaceableComponent("views.messages.MPollBody")
@@ -107,7 +158,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
             return;
         }
 
-        const responseContent: IPollResponse = {
+        const responseContent: IPollResponseContent = {
             [POLL_RESPONSE_EVENT_TYPE.name]: {
                 "answers": [answerId],
             },
@@ -230,7 +281,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
 
         return <div className="mx_MPollBody">
-            <h2>{ pollInfo.question[TEXT_NODE_TYPE] }</h2>
+            <h2>{ pollInfo.question[TEXT_NODE_TYPE.name] }</h2>
             <div className="mx_MPollBody_allOptions">
                 {
                     pollInfo.answers.map((answer: IPollAnswer) => {
@@ -259,7 +310,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                             >
                                 <div className="mx_MPollBody_optionDescription">
                                     <div className="mx_MPollBody_optionText">
-                                        { answer[TEXT_NODE_TYPE] }
+                                        { answer[TEXT_NODE_TYPE.name] }
                                     </div>
                                     <div className="mx_MPollBody_optionVoteCount">
                                         { votesText }
@@ -289,7 +340,7 @@ export class UserVote {
 }
 
 function userResponseFromPollResponseEvent(event: MatrixEvent): UserVote {
-    const pr = event.getContent() as IPollResponse;
+    const pr = event.getContent() as IPollResponseContent;
     const answers = pr[POLL_RESPONSE_EVENT_TYPE.name].answers;
 
     return new UserVote(

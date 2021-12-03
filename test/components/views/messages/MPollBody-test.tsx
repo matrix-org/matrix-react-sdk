@@ -24,7 +24,7 @@ import { Callback, IContent, MatrixEvent } from "matrix-js-sdk";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { IPollAnswer, IPollContent, POLL_RESPONSE_EVENT_TYPE } from "../../../../src/polls/consts";
-import { UserVote, allVotes } from "../../../../src/components/views/messages/MPollBody";
+import { UserVote, allVotes, findTopAnswer } from "../../../../src/components/views/messages/MPollBody";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { IBodyProps } from "../../../../src/components/views/messages/IBodyProps";
 
@@ -407,6 +407,39 @@ describe("MPollBody", () => {
         ]);
     });
 
+    it("finds the top answer among several votes", () => {
+        // 2 votes for poutine, 1 for pizza.  "me" made an invalid vote.
+        const votes = [
+            responseEvent("@me:example.com", "pizza", 12),
+            responseEvent("@me:example.com", ["pizza", "doesntexist"], 13),
+            responseEvent("@uy:example.com", "italian", 14),
+            responseEvent("@uy:example.com", "doesntexist", 15),
+            responseEvent("@uy:example.com", "poutine", 16),
+            responseEvent("@ab:example.com", "pizza", 17),
+            responseEvent("@fa:example.com", "poutine", 18),
+        ];
+
+        expect(runFindTopAnswer(votes)).toEqual("Poutine");
+    });
+
+    it("finds all top answers when there is a draw", () => {
+        const votes = [
+            responseEvent("@uy:example.com", "italian", 14),
+            responseEvent("@ab:example.com", "pizza", 17),
+            responseEvent("@fa:example.com", "poutine", 18),
+        ];
+        expect(runFindTopAnswer(votes)).toEqual("Italian, Pizza and Poutine");
+    });
+
+    it("is silent about the top answer if there are no votes", () => {
+        expect(runFindTopAnswer([])).toEqual("");
+    });
+
+    // TODO: finished poll shows results and winner
+    // TODO: finished poll shows results even if I didn't vote
+    // TODO: don't count votes after first end, even if there are multiple ends
+    // TODO: renders a finished poll
+
     it("renders a poll with no votes", () => {
         const votes = [];
         const body = newMPollBody(votes);
@@ -585,6 +618,25 @@ function expectedResponseEvent(answer: string) {
         "txnId": undefined,
         "callback": undefined,
     };
+}
+
+function runFindTopAnswer(votes: MatrixEvent[]) {
+    const pollEvent = new MatrixEvent({
+        "event_id": "$mypoll",
+        "room_id": "#myroom:example.com",
+        "content": newPollStart(),
+    });
+
+    const pollRelations = newPollRelations(votes);
+    const getRelationsForEvent =
+        (eventId: string, relationType: string, eventType: string) => {
+            expect(eventId).toBe("$mypoll");
+            expect(relationType).toBe("m.reference");
+            expect(eventType).toBe(POLL_RESPONSE_EVENT_TYPE.name);
+            return pollRelations;
+        };
+
+    return findTopAnswer(pollEvent, MatrixClientPeg.get(), getRelationsForEvent);
 }
 
 let EVENT_ID = 0;

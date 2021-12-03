@@ -51,10 +51,22 @@ interface IOptionsButtonProps {
     getReplyChain: () => ReplyChain;
     permalinkCreator: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
+    getRelationsForEvent?: (
+            eventId: string,
+            relationType: string,
+            eventType: string
+        ) => Relations;
 }
 
 const OptionsButton: React.FC<IOptionsButtonProps> =
-    ({ mxEvent, getTile, getReplyChain, permalinkCreator, onFocusChange }) => {
+    ({
+        mxEvent,
+        getTile,
+        getReplyChain,
+        permalinkCreator,
+        onFocusChange,
+        getRelationsForEvent,
+    }) => {
         const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
         const [onFocus, isActive, ref] = useRovingTabIndex(button);
         useEffect(() => {
@@ -74,6 +86,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> =
                 eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
                 collapseReplyChain={replyChain && replyChain.canCollapse() ? replyChain.collapse : undefined}
                 onFinished={closeMenu}
+                getRelationsForEvent={getRelationsForEvent}
             />;
         }
 
@@ -138,6 +151,11 @@ interface IMessageActionBarProps {
     onFocusChange?: (menuDisplayed: boolean) => void;
     toggleThreadExpanded: () => void;
     isQuoteExpanded?: boolean;
+    getRelationsForEvent?: (
+            eventId: string,
+            relationType: string,
+            eventType: string
+        ) => Relations;
 }
 
 @replaceableComponent("views.messages.MessageActionBar")
@@ -378,6 +396,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 permalinkCreator={this.props.permalinkCreator}
                 onFocusChange={this.onFocusChange}
                 key="menu"
+                getRelationsForEvent={this.props.getRelationsForEvent}
             />);
         }
 
