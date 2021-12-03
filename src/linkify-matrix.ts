@@ -36,20 +36,22 @@ enum Type {
     GroupId = "groupid"
 }
 
+// Linkifyjs types don't have parser, which really makes this harder.
+const linkifyTokens = (linkifyjs as any).parser.TOKENS;
+enum MatrixLinkInitialToken {
+    POUND = linkifyTokens.POUND,
+    PLUS = linkifyTokens.PLUS,
+    AT = linkifyTokens.AT,
+}
+
 /**
  * Token should be one of the type of linkify.parser.TOKENS[AT | PLUS | POUND]
  * but due to typing issues it's just not a feasible solution.
  * This problem kind of gets solved in linkify 3.0
  */
-function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', type: Type): void {
+function parseFreeformMatrixLinks(linkify, token: MatrixLinkInitialToken, type: Type): void {
     // Text tokens
     const TT = linkify.scanner.TOKENS;
-    const tokens: Record<'#' | '+' | '@', any> = {
-        '#': TT.POUND,
-        '+': TT.PLUS,
-        '@': TT.AT,
-    };
-    const PARSER_TOKEN = tokens[token];
     // Multi tokens
     const MT = linkify.parser.TOKENS;
     const MultiToken = MT.Base;
@@ -62,14 +64,14 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', type: Type): 
     };
     TOKEN.prototype = new MultiToken();
 
-    const S_HASH = S_START.jump(PARSER_TOKEN);
-    const S_HASH_NAME = new linkify.parser.State();
-    const S_HASH_NAME_COLON = new linkify.parser.State();
-    const S_HASH_NAME_COLON_DOMAIN = new linkify.parser.State(TOKEN);
-    const S_HASH_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_ROOMALIAS = new linkify.parser.State(TOKEN);
-    const S_ROOMALIAS_COLON = new linkify.parser.State();
-    const S_ROOMALIAS_COLON_NUM = new linkify.parser.State(TOKEN);
+    const S_TOKEN = S_START.jump(token);
+    const S_TOKEN_NAME = new linkify.parser.State();
+    const S_TOKEN_NAME_COLON = new linkify.parser.State();
+    const S_TOKEN_NAME_COLON_DOMAIN = new linkify.parser.State(TOKEN);
+    const S_TOKEN_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
+    const S_MX_LINK = new linkify.parser.State(TOKEN);
+    const S_MX_LINK_COLON = new linkify.parser.State();
+    const S_MX_LINK_COLON_NUM = new linkify.parser.State(TOKEN);
 
     const allowedFreeformTokens = [
         TT.DOT,
@@ -78,29 +80,29 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', type: Type): 
         TT.DOMAIN,
         TT.TLD,
         TT.UNDERSCORE,
-        PARSER_TOKEN,
+        token,
 
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
         TT.LOCALHOST,
     ];
 
-    S_HASH.on(allowedFreeformTokens, S_HASH_NAME);
-    S_HASH_NAME.on(allowedFreeformTokens, S_HASH_NAME);
-    S_HASH_NAME.on(TT.DOMAIN, S_HASH_NAME);
+    S_TOKEN.on(allowedFreeformTokens, S_TOKEN_NAME);
+    S_TOKEN_NAME.on(allowedFreeformTokens, S_TOKEN_NAME);
+    S_TOKEN_NAME.on(TT.DOMAIN, S_TOKEN_NAME);
 
-    S_HASH_NAME.on(TT.COLON, S_HASH_NAME_COLON);
+    S_TOKEN_NAME.on(TT.COLON, S_TOKEN_NAME_COLON);
 
-    S_HASH_NAME_COLON.on(TT.DOMAIN, S_HASH_NAME_COLON_DOMAIN);
-    S_HASH_NAME_COLON.on(TT.LOCALHOST, S_ROOMALIAS); // accept #foo:localhost
-    S_HASH_NAME_COLON.on(TT.TLD, S_ROOMALIAS); // accept #foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_HASH_NAME_COLON_DOMAIN.on(TT.DOT, S_HASH_NAME_COLON_DOMAIN_DOT);
-    S_HASH_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_HASH_NAME_COLON_DOMAIN);
-    S_HASH_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_ROOMALIAS);
+    S_TOKEN_NAME_COLON.on(TT.DOMAIN, S_TOKEN_NAME_COLON_DOMAIN);
+    S_TOKEN_NAME_COLON.on(TT.LOCALHOST, S_MX_LINK); // accept #foo:localhost
+    S_TOKEN_NAME_COLON.on(TT.TLD, S_MX_LINK); // accept #foo:com (mostly for (TLD|DOMAIN)+ mixing)
+    S_TOKEN_NAME_COLON_DOMAIN.on(TT.DOT, S_TOKEN_NAME_COLON_DOMAIN_DOT);
+    S_TOKEN_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_TOKEN_NAME_COLON_DOMAIN);
+    S_TOKEN_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_MX_LINK);
 
-    S_ROOMALIAS.on(TT.DOT, S_HASH_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_ROOMALIAS.on(TT.COLON, S_ROOMALIAS_COLON); // do not accept trailing `:`
-    S_ROOMALIAS_COLON.on(TT.NUM, S_ROOMALIAS_COLON_NUM); // but do accept :NUM (port specifier)
+    S_MX_LINK.on(TT.DOT, S_TOKEN_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
+    S_MX_LINK.on(TT.COLON, S_MX_LINK_COLON); // do not accept trailing `:`
+    S_MX_LINK_COLON.on(TT.NUM, S_MX_LINK_COLON_NUM); // but do accept :NUM (port specifier)
 }
 
 function onUserClick(event: MouseEvent, userId: string) {
@@ -216,11 +218,11 @@ export const options = {
 
 // Run the plugins
 // Linkify room aliases
-parseFreeformMatrixLinks(linkifyjs, '#', Type.RoomAlias);
+parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.POUND, Type.RoomAlias);
 // Linkify group IDs
-parseFreeformMatrixLinks(linkifyjs, '+', Type.GroupId);
+parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.PLUS, Type.GroupId);
 // Linkify user IDs
-parseFreeformMatrixLinks(linkifyjs, '@', Type.UserId);
+parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.AT, Type.UserId);
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;
