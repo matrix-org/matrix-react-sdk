@@ -23,14 +23,8 @@ import moveArrItem from "lodash-move";
 import VideoTile from "./VideoTile";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 
-export function useVideoGridLayout(): [string, () => void] {
-    const [layout, setLayout] = useState("gallery");
-
-    const toggleLayout = useCallback(() => {
-        setLayout(layout === "spotlight" ? "gallery" : "spotlight");
-    }, [layout]);
-
-    return [layout, toggleLayout];
+export function useVideoGridLayout(): [string, (layout: string) => void] {
+    return useState("freedom");
 }
 
 function useIsMounted() {
@@ -726,7 +720,7 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
                 return;
             }
 
-            if (layout !== "gallery") {
+            if (layout !== "freedom") {
                 return;
             }
 
@@ -820,5 +814,5 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
 }
 
 VideoGrid.defaultProps = {
-    layout: "gallery",
+    layout: "freedom",
 };
