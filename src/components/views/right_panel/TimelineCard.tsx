@@ -70,6 +70,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
     private roomStoreToken: EventSubscription;
     private settingWatchers: string[];
+
     constructor(props: IProps) {
         super(props);
         this.state = {
