@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638529768663,
+  "lastUpdate": 1638530663191,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44792,6 +44792,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4817.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3b9e39ffcaa18ae510a7e33c142afa923739141d",
+          "message": "When accepting DM from People metaspace don't switch to Home (#7272)",
+          "timestamp": "2021-12-03T11:17:51Z",
+          "tree_id": "00d12130d476409ecee3a744548cf56055f44203",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3b9e39ffcaa18ae510a7e33c142afa923739141d"
+        },
+        "date": 1638530659811,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4649.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1044.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1722.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4860.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
