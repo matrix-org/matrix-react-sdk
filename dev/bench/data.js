@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638530663191,
+  "lastUpdate": 1638540401167,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44840,6 +44840,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4860.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "961fec90812aab4364b30133c7ebd59c070f7e3d",
+          "message": "Refactor matrix-linkify module (#7279)\n\nRefactor the module to make it easier for upgrade and proper separation of code contexts",
+          "timestamp": "2021-12-03T14:00:56Z",
+          "tree_id": "b12d3d5d6d3e87f5aa856c56e3e4d759f156b392",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/961fec90812aab4364b30133c7ebd59c070f7e3d"
+        },
+        "date": 1638540398419,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4669.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 954.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1606.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4406.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
