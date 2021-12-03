@@ -18,13 +18,13 @@ limitations under the License.
 import * as linkifyjs from 'linkifyjs';
 import linkifyElement from 'linkifyjs/element';
 import linkifyString from 'linkifyjs/string';
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
     tryTransformPermalinkToLocalHref,
 } from "./utils/permalinks/Permalinks";
-import { RoomMember } from 'matrix-js-sdk';
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
