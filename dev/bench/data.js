@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638523773958,
+  "lastUpdate": 1638527526303,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44696,6 +44696,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4368.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "494af883f3bcfac5179c8c4330a94f7ad8ab02bd",
+          "message": "Hide votes in a poll until you voted (#7269)",
+          "timestamp": "2021-12-03T10:26:28Z",
+          "tree_id": "2ce35eff772a2b70ba292a826afdb7a4e451dd41",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/494af883f3bcfac5179c8c4330a94f7ad8ab02bd"
+        },
+        "date": 1638527522813,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5069.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 876,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1651.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4148.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
