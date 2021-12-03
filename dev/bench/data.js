@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638522668387,
+  "lastUpdate": 1638523337311,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44600,6 +44600,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4212.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "76884959+ankur12-1610@users.noreply.github.com",
+            "name": "Ankur",
+            "username": "ankur12-1610"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4752cc184e9d1b6fe737d43c4db785a75ad07434",
+          "message": "Aligned labels with switches for Labs flags (#7232)",
+          "timestamp": "2021-12-03T09:16:37Z",
+          "tree_id": "cd45cf22725cf1bb039169b01b5aecce53390b54",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4752cc184e9d1b6fe737d43c4db785a75ad07434"
+        },
+        "date": 1638523334716,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4982.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 977.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1596.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4238.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
