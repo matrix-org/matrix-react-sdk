@@ -103,7 +103,7 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', name: Type): 
     S_ROOMALIAS_COLON.on(TT.NUM, S_ROOMALIAS_COLON_NUM); // but do accept :NUM (port specifier)
 }
 
-function onUserClick(e: MouseEvent, userId: string) {
+function onUserClick(event: MouseEvent, userId: string) {
     const member = new RoomMember(null, userId);
     if (!member) { return; }
     dis.dispatch<ViewUserPayload>({
@@ -111,11 +111,11 @@ function onUserClick(e: MouseEvent, userId: string) {
         member: member,
     });
 }
-function onAliasClick(e: MouseEvent, roomAlias: string) {
+function onAliasClick(event: MouseEvent, roomAlias: string) {
     event.preventDefault();
     dis.dispatch({ action: 'view_room', room_alias: roomAlias });
 }
-function onGroupClick(e: MouseEvent, groupId: string) {
+function onGroupClick(event: MouseEvent, groupId: string) {
     event.preventDefault();
     dis.dispatch({ action: 'view_group', group_id: groupId });
 }
