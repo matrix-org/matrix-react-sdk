@@ -63,7 +63,7 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '+', name: Type): void {
     const S_ROOMALIAS_COLON = new linkify.parser.State();
     const S_ROOMALIAS_COLON_NUM = new linkify.parser.State(TOKEN);
 
-    const roomnameTokens = [
+    const allowedFreeformTokens = [
         TT.DOT,
         TT.PLUS,
         TT.NUM,
@@ -77,8 +77,8 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '+', name: Type): void {
         TT.LOCALHOST,
     ];
 
-    S_HASH.on(roomnameTokens, S_HASH_NAME);
-    S_HASH_NAME.on(roomnameTokens, S_HASH_NAME);
+    S_HASH.on(allowedFreeformTokens, S_HASH_NAME);
+    S_HASH_NAME.on(allowedFreeformTokens, S_HASH_NAME);
     S_HASH_NAME.on(TT.DOMAIN, S_HASH_NAME);
 
     S_HASH_NAME.on(TT.COLON, S_HASH_NAME_COLON);
@@ -127,7 +127,7 @@ function parseMatrixUserId(linkify): void {
         TT.DOMAIN,
         TT.TLD,
 
-        // as in roomnameTokens
+        // as in allowedFreeformTokens
         TT.LOCALHOST,
     ];
 
