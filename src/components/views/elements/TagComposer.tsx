@@ -73,12 +73,12 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
         if (!this.props.onValidate) {
             this.setState({ isNewTagValid: true });
             return { };
-        };
+        }
         const result = await this.props.onValidate(fieldState);
         this.setState({ isNewTagValid: result.valid });
 
         return result;
-    }
+    };
 
     public render() {
         return <div className='mx_TagComposer'>

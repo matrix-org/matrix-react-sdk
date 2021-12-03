@@ -2,7 +2,12 @@
 // skinned-sdk should be the first import in most tests
 import '../../../skinned-sdk';
 import React from "react";
-import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate, scryRenderedDOMComponentsWithTag, scryRenderedDOMComponentsWithClass } from 'react-dom/test-utils';
+import {
+    renderIntoDocument,
+    findRenderedDOMComponentWithTag,
+    Simulate,
+    scryRenderedDOMComponentsWithClass,
+} from 'react-dom/test-utils';
 import { act } from "react-dom/test-utils";
 
 import TagComposer from "../../../../src/components/views/elements/TagComposer";
@@ -12,29 +17,28 @@ describe("<TagComposer />", () => {
         tags: [],
         onAdd: jest.fn(),
         onRemove: jest.fn(),
-    }
+    };
     const getComponent = (props = {}) => renderIntoDocument<React.Component>(
-                <TagComposer { ...defaultProps } { ...props} />
-            ) as React.Component;
+        <TagComposer {...defaultProps} {...props} />,
+    ) as React.Component;
 
-
-            const getForm = container => findRenderedDOMComponentWithTag(container, 'form');
+    const getForm = container => findRenderedDOMComponentWithTag(container, 'form');
     const getInput = container => {
         const form = getForm(container);
         return form.querySelector('input');
-    }
+    };
 
     const getAddButton = container => {
         const form = getForm(container);
         return form.querySelector('[role=button]');
-    }
+    };
 
-    const editNewTag = async (container, value: string) => act(async() => {
+    const editNewTag = async (container, value: string) => act(async () => {
         const input = getInput(container);
-        Simulate.change(input, { target: { value } as unknown as EventTarget});
+        Simulate.change(input, { target: { value } as unknown as EventTarget });
     });
 
-    const submitForm = async (container) => act(async() => {
+    const submitForm = async (container) => act(async () => {
         const form = getForm(container);
         Simulate.submit(form);
     });
@@ -42,13 +46,12 @@ describe("<TagComposer />", () => {
     // Field component debounces validate on change
     // jest@26 fake timers and lodash debounce are not friends
     // blur input to trigger a validation
-    const blurInput = async (container) => act(async() => {
+    const blurInput = async (container) => act(async () => {
         const input = getInput(container);
         Simulate.blur(input);
     });
 
-
-    const clickAddNewTag = async (container) => act(async() => {
+    const clickAddNewTag = async (container) => act(async () => {
         Simulate.click(getAddButton(container));
     });
 
@@ -69,91 +72,89 @@ describe("<TagComposer />", () => {
         act(() => {
             Simulate.click(tag1.querySelector('[role=button]'));
         });
-        expect(onRemove).toHaveBeenCalledWith('tag 1')
+        expect(onRemove).toHaveBeenCalledWith('tag 1');
     });
 
     describe('form', () => {
-
         it('renders form', () => {
             const container = getComponent();
-    
+
             const input = getInput(container);
             const addButton = getAddButton(container);
-    
+
             expect(input).toBeTruthy();
             expect(addButton).toBeTruthy();
         });
-    
+
         it('adds new tag when there is no validation', async () => {
             const onAdd = jest.fn();
             const container = getComponent({ onAdd });
             const newKeyword = "new keyword";
-    
+
             await editNewTag(container, newKeyword);
             const input = getInput(container);
             expect(input.value).toEqual(newKeyword);
-    
+
             await blurInput(container);
-    
+
             await clickAddNewTag(container);
-    
+
             expect(onAdd).toHaveBeenCalledWith(newKeyword);
-    
+
             // clears input
             expect(input.value).toEqual("");
         });
-    
+
         it('does not add tag with zero length', async () => {
             const onAdd = jest.fn();
             const container = getComponent({ onAdd });
-    
+
             await editNewTag(container, "");
             await blurInput(container);
-    
+
             await clickAddNewTag(container);
-    
+
             expect(onAdd).not.toHaveBeenCalled();
         });
-    
+
         describe('with validation', () => {
-            
-            it('adds tag on add button submission when validation passes', async () => {
+            it('adds tag on add button click when validation passes', async () => {
                 const onAdd = jest.fn();
-                const onValidate = jest.fn().mockResolvedValue({ valid: true })
+                const onValidate = jest.fn().mockResolvedValue({ valid: true });
                 const container = getComponent({ onAdd, onValidate });
                 const newKeyword = "new keyword";
-        
+
                 await editNewTag(container, newKeyword);
                 await blurInput(container);
-        
+
                 await clickAddNewTag(container);
-        
+
                 expect(onAdd).toHaveBeenCalledWith(newKeyword);
             });
-    
+
             it('disables add button when validation fails', async () => {
                 const onAdd = jest.fn();
-                const onValidate = jest.fn().mockResolvedValue({ valid: false })
+                const onValidate = jest.fn().mockResolvedValue({ valid: false });
                 const container = getComponent({ onAdd, onValidate });
                 const newKeyword = "new keyword";
-        
+
                 await editNewTag(container, newKeyword);
                 await blurInput(container);
-        
+
                 expect(getAddButton(container).className.includes('mx_AccessibleButton_disabled')).toBeTruthy();
             });
-    
-            it('disabled form submission when validation fails', async () => {
+
+            it('disables form submission when validation fails', async () => {
                 const onAdd = jest.fn();
-                const onValidate = jest.fn().mockResolvedValue({ valid: false })
+                const onValidate = jest.fn().mockResolvedValue({ valid: false });
                 const container = getComponent({ onAdd, onValidate });
                 const newKeyword = "new keyword";
-        
+
                 await editNewTag(container, newKeyword);
                 await blurInput(container);
                 await submitForm(container);
                 expect(onAdd).not.toHaveBeenCalled();
             });
-        })
+        });
     });
 });

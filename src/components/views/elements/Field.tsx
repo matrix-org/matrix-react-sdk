@@ -156,7 +156,6 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
     }, VALIDATION_THROTTLE_MS);
 
-
     constructor(props) {
         super(props);
         this.state = {
