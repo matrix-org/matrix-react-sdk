@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Properly import
-import '../src/linkify-matrix';
 import Markdown from "../src/Markdown";
 
 describe("Markdown parser test", () => {
