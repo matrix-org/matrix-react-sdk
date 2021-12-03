@@ -34,12 +34,18 @@ enum Type {
     GroupId = "groupid"
 }
 
-function parseFreeformMatrixLinks(linkify, token: '#' | '+', name: Type): void {
+/**
+ * Token should be one of the type of linkify.parser.TOKENS[AT | PLUS | POUND]
+ * but due to typing issues it's just not a feasible solution.
+ * This problem kind of gets solved in linkify 3.0
+ */
+function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', name: Type): void {
     // Text tokens
     const TT = linkify.scanner.TOKENS;
-    const tokens: Record<'#' | '+', any> = {
+    const tokens: Record<'#' | '+' | '@', any> = {
         '#': TT.POUND,
         '+': TT.PLUS,
+        '@': TT.AT,
     };
     const PARSER_TOKEN = tokens[token];
     // Multi tokens
@@ -93,60 +99,6 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '+', name: Type): void {
     S_ROOMALIAS.on(TT.DOT, S_HASH_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
     S_ROOMALIAS.on(TT.COLON, S_ROOMALIAS_COLON); // do not accept trailing `:`
     S_ROOMALIAS_COLON.on(TT.NUM, S_ROOMALIAS_COLON_NUM); // but do accept :NUM (port specifier)
-}
-
-function parseMatrixUserId(linkify): void {
-// Text tokens
-    const TT = linkify.scanner.TOKENS;
-    // Multi tokens
-    const MT = linkify.parser.TOKENS;
-    const MultiToken = MT.Base;
-    const S_START = linkify.parser.start;
-
-    const USERID = function(value) {
-        MultiToken.call(this, value);
-        this.type = 'userid';
-        this.isLink = true;
-    };
-    USERID.prototype = new MultiToken();
-
-    const S_AT = S_START.jump(TT.AT);
-    const S_AT_NAME = new linkify.parser.State();
-    const S_AT_NAME_COLON = new linkify.parser.State();
-    const S_AT_NAME_COLON_DOMAIN = new linkify.parser.State(USERID);
-    const S_AT_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_USERID = new linkify.parser.State(USERID);
-    const S_USERID_COLON = new linkify.parser.State();
-    const S_USERID_COLON_NUM = new linkify.parser.State(USERID);
-
-    const usernameTokens = [
-        TT.DOT,
-        TT.UNDERSCORE,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-
-        // as in allowedFreeformTokens
-        TT.LOCALHOST,
-    ];
-
-    S_AT.on(usernameTokens, S_AT_NAME);
-    S_AT_NAME.on(usernameTokens, S_AT_NAME);
-    S_AT_NAME.on(TT.DOMAIN, S_AT_NAME);
-
-    S_AT_NAME.on(TT.COLON, S_AT_NAME_COLON);
-
-    S_AT_NAME_COLON.on(TT.DOMAIN, S_AT_NAME_COLON_DOMAIN);
-    S_AT_NAME_COLON.on(TT.LOCALHOST, S_USERID); // accept @foo:localhost
-    S_AT_NAME_COLON.on(TT.TLD, S_USERID); // accept @foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_AT_NAME_COLON_DOMAIN.on(TT.DOT, S_AT_NAME_COLON_DOMAIN_DOT);
-    S_AT_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_AT_NAME_COLON_DOMAIN);
-    S_AT_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_USERID);
-
-    S_USERID.on(TT.DOT, S_AT_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_USERID.on(TT.COLON, S_USERID_COLON); // do not accept trailing `:`
-    S_USERID_COLON.on(TT.NUM, S_USERID_COLON_NUM); // but do accept :NUM (port specifier)
 }
 
 function onUserClick(e: MouseEvent, userId: string) {
@@ -266,6 +218,6 @@ parseFreeformMatrixLinks(linkifyjs, '#', Type.RoomAlias);
 // Linkify group IDs
 parseFreeformMatrixLinks(linkifyjs, '+', Type.GroupId);
 // Linkify user IDs
-parseMatrixUserId(linkifyjs);
+parseFreeformMatrixLinks(linkifyjs, '@', Type.UserId);
 
 export const linkify = linkifyjs;
