@@ -20,9 +20,7 @@ limitations under the License.
 import React, { ReactNode } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import cheerio from 'cheerio';
-import * as linkify from 'linkifyjs';
-import _linkifyElement from 'linkifyjs/element';
-import _linkifyString from 'linkifyjs/string';
+import { _linkifyElement, _linkifyString } from './linkify-matrix';
 import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
 import katex from 'katex';

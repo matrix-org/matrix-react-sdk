@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import * as linkifyjs from 'linkifyjs';
+import linkifyElement from 'linkifyjs/element';
+import linkifyString from 'linkifyjs/string';
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
     parsePermalink,
@@ -221,3 +223,5 @@ parseFreeformMatrixLinks(linkifyjs, '+', Type.GroupId);
 parseFreeformMatrixLinks(linkifyjs, '@', Type.UserId);
 
 export const linkify = linkifyjs;
+export const _linkifyElement = linkifyElement;
+export const _linkifyString = linkifyString;

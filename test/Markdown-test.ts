@@ -13,14 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import * as linkifyjs from 'linkifyjs';
-import Markdown from "../src/Markdown";
-import matrixLinkify from '../src/linkify-matrix';
 
-beforeAll(() => {
-    // We need to call linkifier plugins before running those tests
-    matrixLinkify(linkifyjs);
-});
+// Properly import
+import '../src/linkify-matrix';
+import Markdown from "../src/Markdown";
 
 describe("Markdown parser test", () => {
     describe("fixing HTML links", () => {
