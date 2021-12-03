@@ -207,8 +207,11 @@ describe('linkify-matrix', () => {
             const found = linkify.find(test);
             expect(found).toEqual(([{
                 href: char + "foo:bar.com",
-                type: "roomalias",
+                type,
                 value: char + "foo:bar.com",
+                end: test.length - 4,
+                start: 0,
+                isLink: true,
             }]));
         });
         it('properly parses room alias with dots in name', () => {
