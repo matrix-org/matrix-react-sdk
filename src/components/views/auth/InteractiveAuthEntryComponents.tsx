@@ -621,6 +621,93 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     }
 }
 
+interface IRegistrationTokenAuthEntryState {
+    registrationToken: string;
+}
+
+@replaceableComponent("views.auth.RegistrationTokenAuthEntry")
+export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps, IRegistrationTokenAuthEntryState> {
+    static LOGIN_TYPE = AuthType.RegistrationToken;
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            registrationToken: "",
+        };
+    }
+
+    componentDidMount() {
+        this.props.onPhaseChange(DEFAULT_PHASE);
+    }
+
+    private onSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if (this.props.busy) return;
+
+        this.props.submitAuthDict({
+            type: AuthType.RegistrationToken,
+            token: this.state.registrationToken,
+        });
+    };
+
+    private onRegistrationTokenFieldChange = (ev: ChangeEvent<HTMLInputElement>) => {
+        // enable the submit button if the registration token is non-empty
+        this.setState({
+            registrationToken: ev.target.value,
+        });
+    };
+
+    render() {
+        const registrationTokenBoxClass = classNames({
+            "error": this.props.errorText,
+        });
+
+        let submitButtonOrSpinner;
+        if (this.props.busy) {
+            submitButtonOrSpinner = <Spinner />;
+        } else {
+            submitButtonOrSpinner = (
+                <input type="submit"
+                    className="mx_Dialog_primary"
+                    disabled={!this.state.registrationToken}
+                    value={_t("Continue")}
+                />
+            );
+        }
+
+        let errorSection;
+        if (this.props.errorText) {
+            errorSection = (
+                <div className="error" role="alert">
+                    { this.props.errorText }
+                </div>
+            );
+        }
+
+        return (
+            <div>
+                <p>{ _t("Enter a registration token.") }</p>
+                <form onSubmit={this.onSubmit} className="mx_InteractiveAuthEntryComponents_registrationTokenSection">
+                    <Field
+                        className={registrationTokenBoxClass}
+                        type="text"
+                        name="registrationTokenField"
+                        label={_t("Registration token")}
+                        autoFocus={true}
+                        value={this.state.registrationToken}
+                        onChange={this.onRegistrationTokenFieldChange}
+                    />
+                    { errorSection }
+                    <div className="mx_button_row">
+                        { submitButtonOrSpinner }
+                    </div>
+                </form>
+            </div>
+        );
+    }
+}
+
 interface ISSOAuthEntryProps extends IAuthEntryProps {
     continueText?: string;
     continueKind?: string;
@@ -854,6 +941,8 @@ export default function getEntryComponentForLoginType(loginType: AuthType): ISta
             return MsisdnAuthEntry;
         case AuthType.Terms:
             return TermsAuthEntry;
+        case AuthType.RegistrationToken:
+            return RegistrationTokenAuthEntry;
         case AuthType.Sso:
         case AuthType.SsoUnstable:
             return SSOAuthEntry;
