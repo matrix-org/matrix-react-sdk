@@ -34,7 +34,7 @@ enum Type {
     GroupId = "groupid"
 }
 
-function matrixLinkify(linkify): void {
+function parseFreeformMatrixLinks(linkify, token: '#' | '@', name: Type): void {
     // Text tokens
     const TT = linkify.scanner.TOKENS;
     // Multi tokens
@@ -42,25 +42,21 @@ function matrixLinkify(linkify): void {
     const MultiToken = MT.Base;
     const S_START = linkify.parser.start;
 
-    if (TT.UNDERSCORE === undefined) {
-        throw new Error("linkify-matrix requires linkifyjs 2.1.1: this version is too old.");
-    }
-
-    const ROOMALIAS = function(value) {
+    const TOKEN = function(value) {
         MultiToken.call(this, value);
-        this.type = 'roomalias';
+        this.type = name;
         this.isLink = true;
     };
-    ROOMALIAS.prototype = new MultiToken();
+    TOKEN.prototype = new MultiToken();
 
-    const S_HASH = S_START.jump(TT.POUND);
+    const S_HASH = S_START.jump(token);
     const S_HASH_NAME = new linkify.parser.State();
     const S_HASH_NAME_COLON = new linkify.parser.State();
-    const S_HASH_NAME_COLON_DOMAIN = new linkify.parser.State(ROOMALIAS);
+    const S_HASH_NAME_COLON_DOMAIN = new linkify.parser.State(TOKEN);
     const S_HASH_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_ROOMALIAS = new linkify.parser.State(ROOMALIAS);
+    const S_ROOMALIAS = new linkify.parser.State(TOKEN);
     const S_ROOMALIAS_COLON = new linkify.parser.State();
-    const S_ROOMALIAS_COLON_NUM = new linkify.parser.State(ROOMALIAS);
+    const S_ROOMALIAS_COLON_NUM = new linkify.parser.State(TOKEN);
 
     const roomnameTokens = [
         TT.DOT,
@@ -69,7 +65,7 @@ function matrixLinkify(linkify): void {
         TT.DOMAIN,
         TT.TLD,
         TT.UNDERSCORE,
-        TT.POUND,
+        token,
 
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
@@ -92,6 +88,15 @@ function matrixLinkify(linkify): void {
     S_ROOMALIAS.on(TT.DOT, S_HASH_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
     S_ROOMALIAS.on(TT.COLON, S_ROOMALIAS_COLON); // do not accept trailing `:`
     S_ROOMALIAS_COLON.on(TT.NUM, S_ROOMALIAS_COLON_NUM); // but do accept :NUM (port specifier)
+}
+
+function parseMatrixUserId(linkify): void {
+// Text tokens
+    const TT = linkify.scanner.TOKENS;
+    // Multi tokens
+    const MT = linkify.parser.TOKENS;
+    const MultiToken = MT.Base;
+    const S_START = linkify.parser.start;
 
     const USERID = function(value) {
         MultiToken.call(this, value);
@@ -137,72 +142,24 @@ function matrixLinkify(linkify): void {
     S_USERID.on(TT.DOT, S_AT_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
     S_USERID.on(TT.COLON, S_USERID_COLON); // do not accept trailing `:`
     S_USERID_COLON.on(TT.NUM, S_USERID_COLON_NUM); // but do accept :NUM (port specifier)
-
-    const GROUPID = function(value) {
-        MultiToken.call(this, value);
-        this.type = 'groupid';
-        this.isLink = true;
-    };
-    GROUPID.prototype = new MultiToken();
-
-    const S_PLUS = S_START.jump(TT.PLUS);
-    const S_PLUS_NAME = new linkify.parser.State();
-    const S_PLUS_NAME_COLON = new linkify.parser.State();
-    const S_PLUS_NAME_COLON_DOMAIN = new linkify.parser.State(GROUPID);
-    const S_PLUS_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_GROUPID = new linkify.parser.State(GROUPID);
-    const S_GROUPID_COLON = new linkify.parser.State();
-    const S_GROUPID_COLON_NUM = new linkify.parser.State(GROUPID);
-
-    const groupIdTokens = [
-        TT.DOT,
-        TT.UNDERSCORE,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-
-        // as in roomnameTokens
-        TT.LOCALHOST,
-    ];
-
-    S_PLUS.on(groupIdTokens, S_PLUS_NAME);
-    S_PLUS_NAME.on(groupIdTokens, S_PLUS_NAME);
-    S_PLUS_NAME.on(TT.DOMAIN, S_PLUS_NAME);
-
-    S_PLUS_NAME.on(TT.COLON, S_PLUS_NAME_COLON);
-
-    S_PLUS_NAME_COLON.on(TT.DOMAIN, S_PLUS_NAME_COLON_DOMAIN);
-    S_PLUS_NAME_COLON.on(TT.LOCALHOST, S_GROUPID); // accept +foo:localhost
-    S_PLUS_NAME_COLON.on(TT.TLD, S_GROUPID); // accept +foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_PLUS_NAME_COLON_DOMAIN.on(TT.DOT, S_PLUS_NAME_COLON_DOMAIN_DOT);
-    S_PLUS_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_PLUS_NAME_COLON_DOMAIN);
-    S_PLUS_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_GROUPID);
-
-    S_GROUPID.on(TT.DOT, S_PLUS_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_GROUPID.on(TT.COLON, S_GROUPID_COLON); // do not accept trailing `:`
-    S_GROUPID_COLON.on(TT.NUM, S_GROUPID_COLON_NUM); // but do accept :NUM (port specifier)
 }
 
-export const matrixLinkify: Record<any, any> = {
-    // stubs, overwritten in MatrixChat's componentDidMount
-    onUserClick: function(e: MouseEvent, userId: string) {
-        const member = new RoomMember(null, userId);
-        if (!member) { return; }
-        dis.dispatch<ViewUserPayload>({
-            action: Action.ViewUser,
-            member: member,
-        });
-    },
-    onAliasClick: function(e: MouseEvent, roomAlias: string) {
-        event.preventDefault();
-        dis.dispatch({ action: 'view_room', room_alias: roomAlias });
-    },
-    onGroupClick: function(e: MouseEvent, groupId: string) {
-        event.preventDefault();
-        dis.dispatch({ action: 'view_group', group_id: groupId });
-    },
-};
+function onUserClick(e: MouseEvent, userId: string) {
+    const member = new RoomMember(null, userId);
+    if (!member) { return; }
+    dis.dispatch<ViewUserPayload>({
+        action: Action.ViewUser,
+        member: member,
+    });
+}
+function onAliasClick(e: MouseEvent, roomAlias: string) {
+    event.preventDefault();
+    dis.dispatch({ action: 'view_room', room_alias: roomAlias });
+}
+function onGroupClick(e: MouseEvent, groupId: string) {
+    event.preventDefault();
+    dis.dispatch({ action: 'view_group', group_id: groupId });
+}
 
 const escapeRegExp = function(string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -233,7 +190,7 @@ export const options = {
                         return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
                             click: function(e) {
-                                matrixLinkify.onUserClick(e, permalink.userId);
+                                onUserClick(e, permalink.userId);
                             },
                         };
                     }
@@ -246,21 +203,21 @@ export const options = {
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        matrixLinkify.onUserClick(e, href);
+                        onUserClick(e, href);
                     },
                 };
             case Type.RoomAlias:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        matrixLinkify.onAliasClick(e, href);
+                        onAliasClick(e, href);
                     },
                 };
             case Type.GroupId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        matrixLinkify.onGroupClick(e, href);
+                        onGroupClick(e, href);
                     },
                 };
         }
@@ -285,7 +242,7 @@ export const options = {
         if (type === Type.URL) {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
-                if (transformed !== href || decodeURIComponent(href).match(matrixLinkify.ELEMENT_URL_PATTERN)) {
+                if (transformed !== href || decodeURIComponent(href).match(ELEMENT_URL_PATTERN)) {
                     return null;
                 } else {
                     return '_blank';
@@ -297,5 +254,10 @@ export const options = {
         return null;
     },
 };
+
+// Run the plugins
+parseFreeformMatrixLinks(linkifyjs, '#', Type.RoomAlias);
+parseFreeformMatrixLinks(linkifyjs, '@', Type.GroupId);
+parseMatrixUserId(linkifyjs);
 
 export const linkify = linkifyjs;
