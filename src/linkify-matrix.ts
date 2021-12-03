@@ -37,7 +37,7 @@ enum Type {
 }
 
 // Linkifyjs types don't have parser, which really makes this harder.
-const linkifyTokens = (linkifyjs as any).parser.TOKENS;
+const linkifyTokens = (linkifyjs as any).scanner.TOKENS;
 enum MatrixLinkInitialToken {
     POUND = linkifyTokens.POUND,
     PLUS = linkifyTokens.PLUS,
