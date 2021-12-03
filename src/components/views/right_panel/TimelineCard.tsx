@@ -49,7 +49,6 @@ interface IProps {
     timelineRenderingType?: TimelineRenderingType;
     showComposer?: boolean;
     composerRelation?: IEventRelation;
-
 }
 interface IState {
     thread?: Thread;
