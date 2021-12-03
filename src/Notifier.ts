@@ -383,7 +383,10 @@ export const Notifier = {
         const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions && actions.notify) {
-            if (RoomViewStore.getRoomId() === room.roomId && UserActivity.sharedInstance().userActiveRecently()) {
+            if (RoomViewStore.getRoomId() === room.roomId &&
+                UserActivity.sharedInstance().userActiveRecently() &&
+                !Modal.hasDialogs()
+            ) {
                 // don't bother notifying as user was recently active in this room
                 return;
             }
