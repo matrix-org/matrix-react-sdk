@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638520068925,
+  "lastUpdate": 1638522668387,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44552,6 +44552,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 641.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe7f453b1f0170a6a2a0fa1f7ca3ebaaa8a0cd8a",
+          "message": "Make a few colors customizable (#7270)",
+          "timestamp": "2021-12-03T09:05:25Z",
+          "tree_id": "bb83218b6ce516ad553ac3a37a734bff0932cc87",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe7f453b1f0170a6a2a0fa1f7ca3ebaaa8a0cd8a"
+        },
+        "date": 1638522665810,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4841.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 890.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1642.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4212.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
