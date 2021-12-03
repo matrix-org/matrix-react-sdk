@@ -46,6 +46,9 @@ interface IProps {
         label: React.ReactNode;
         alignment?: Alignment; // defaults to Natural
         yOffset?: number;
+        // id describing tooltip
+        // used to associate tooltip with target for a11y
+        id?: string;
 }
 
 @replaceableComponent("views.elements.Tooltip")

@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Tooltip from './Tooltip';
+import { TooltipTarget } from './TooltipTarget';
 
 interface IProps {
     helpText: React.ReactNode | string;
@@ -36,29 +36,17 @@ export default class TooltipButton extends React.Component<IProps, IState> {
         };
     }
 
-    private onMouseOver = () => {
-        this.setState({
-            hover: true,
-        });
-    };
-
-    private onMouseLeave = () => {
-        this.setState({
-            hover: false,
-        });
-    };
-
     render() {
-        const tip = this.state.hover ? <Tooltip
-            className="mx_TooltipButton_container"
-            tooltipClassName="mx_TooltipButton_helpText"
-            label={this.props.helpText}
-        /> : <div />;
         return (
-            <div className="mx_TooltipButton" onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
+            <TooltipTarget
+                id='todo'
+                className="mx_TooltipButton"
+                tooltipClassName="mx_TooltipButton_helpText"
+                tooltipContainerClassName="mx_TooltipButton_container"
+                tooltip={this.props.helpText}
+            >
                 ?
-                { tip }
-            </div>
+            </TooltipTarget>
         );
     }
 }
