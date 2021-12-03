@@ -327,8 +327,8 @@ export default class AppTile extends React.Component<IProps, IState> {
                         dis.dispatch({
                             action: 'post_sticker_message',
                             data: {
-                                threadId: this.props.threadId,
                                 ...payload.data,
+                                threadId: this.props.threadId,
                             },
                         });
                         dis.dispatch({ action: 'stickerpicker_close' });
