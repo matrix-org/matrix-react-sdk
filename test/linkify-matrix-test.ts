@@ -13,8 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import linkify from '../src/linkify-matrix';
-
+import { linkify } from '../src/linkify-matrix';
 
 describe('linkify-matrix', () => {
     describe('roomalias', () => {

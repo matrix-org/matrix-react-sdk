@@ -34,9 +34,14 @@ enum Type {
     GroupId = "groupid"
 }
 
-function parseFreeformMatrixLinks(linkify, token: '#' | '@', name: Type): void {
+function parseFreeformMatrixLinks(linkify, token: '#' | '+', name: Type): void {
     // Text tokens
     const TT = linkify.scanner.TOKENS;
+    const tokens: Record<'#' | '+', any> = {
+        '#': TT.POUND,
+        '+': TT.PLUS,
+    };
+    const PARSER_TOKEN = tokens[token];
     // Multi tokens
     const MT = linkify.parser.TOKENS;
     const MultiToken = MT.Base;
@@ -49,7 +54,7 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '@', name: Type): void {
     };
     TOKEN.prototype = new MultiToken();
 
-    const S_HASH = S_START.jump(token);
+    const S_HASH = S_START.jump(PARSER_TOKEN);
     const S_HASH_NAME = new linkify.parser.State();
     const S_HASH_NAME_COLON = new linkify.parser.State();
     const S_HASH_NAME_COLON_DOMAIN = new linkify.parser.State(TOKEN);
@@ -65,7 +70,7 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '@', name: Type): void {
         TT.DOMAIN,
         TT.TLD,
         TT.UNDERSCORE,
-        token,
+        PARSER_TOKEN,
 
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
@@ -256,8 +261,11 @@ export const options = {
 };
 
 // Run the plugins
+// Linkify room aliases
 parseFreeformMatrixLinks(linkifyjs, '#', Type.RoomAlias);
-parseFreeformMatrixLinks(linkifyjs, '@', Type.GroupId);
+// Linkify group IDs
+parseFreeformMatrixLinks(linkifyjs, '+', Type.GroupId);
+// Linkify user IDs
 parseMatrixUserId(linkifyjs);
 
 export const linkify = linkifyjs;
