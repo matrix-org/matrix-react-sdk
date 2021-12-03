@@ -41,7 +41,7 @@ enum Type {
  * but due to typing issues it's just not a feasible solution.
  * This problem kind of gets solved in linkify 3.0
  */
-function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', name: Type): void {
+function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', type: Type): void {
     // Text tokens
     const TT = linkify.scanner.TOKENS;
     const tokens: Record<'#' | '+' | '@', any> = {
@@ -57,7 +57,7 @@ function parseFreeformMatrixLinks(linkify, token: '#' | '+' | '@', name: Type): 
 
     const TOKEN = function(value) {
         MultiToken.call(this, value);
-        this.type = name;
+        this.type = type;
         this.isLink = true;
     };
     TOKEN.prototype = new MultiToken();
