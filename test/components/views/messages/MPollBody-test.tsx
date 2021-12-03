@@ -40,7 +40,7 @@ MatrixClientPeg.matrixClient = {
 
 describe("MPollBody", () => {
     it("finds no votes if there are none", () => {
-        expect(allVotes(newPollRelations([]))).toEqual([]);
+        expect(allVotes(newVoteRelations([]))).toEqual([]);
     });
 
     it("can find all the valid responses to a poll", () => {
@@ -48,8 +48,8 @@ describe("MPollBody", () => {
         const ev2 = responseEvent();
         const badEvent = badResponseEvent();
 
-        const pollRelations = newPollRelations([ev1, badEvent, ev2]);
-        expect(allVotes(pollRelations)).toEqual([
+        const voteRelations = newVoteRelations([ev1, badEvent, ev2]);
+        expect(allVotes(voteRelations)).toEqual([
             new UserVote(
                 ev1.getTs(),
                 ev1.getSender(),
@@ -185,12 +185,12 @@ describe("MPollBody", () => {
         const votes = [responseEvent("@me:example.com", "pizza", 100)];
         const body = newMPollBody(votes);
         const props: IBodyProps = body.instance().props as IBodyProps;
-        const pollRelations: Relations = props.getRelationsForEvent(
+        const voteRelations: Relations = props.getRelationsForEvent(
             "$mypoll", "m.reference", POLL_RESPONSE_EVENT_TYPE.name);
         clickRadio(body, "pizza");
 
         // When a new vote from me comes in
-        pollRelations.addEvent(responseEvent("@me:example.com", "wings", 101));
+        voteRelations.addEvent(responseEvent("@me:example.com", "wings", 101));
 
         // Then the new vote is counted, not the old one
         expect(votesCount(body, "pizza")).toBe("0 votes");
@@ -206,12 +206,12 @@ describe("MPollBody", () => {
         const votes = [responseEvent("@me:example.com", "pizza")];
         const body = newMPollBody(votes);
         const props: IBodyProps = body.instance().props as IBodyProps;
-        const pollRelations: Relations = props.getRelationsForEvent(
+        const voteRelations: Relations = props.getRelationsForEvent(
             "$mypoll", "m.reference", POLL_RESPONSE_EVENT_TYPE.name);
         clickRadio(body, "pizza");
 
         // When a new vote from someone else comes in
-        pollRelations.addEvent(responseEvent("@xx:example.com", "wings", 101));
+        voteRelations.addEvent(responseEvent("@xx:example.com", "wings", 101));
 
         // Then my vote is still for pizza
         // NOTE: the new event does not affect the counts for other people -
@@ -485,23 +485,23 @@ describe("MPollBody", () => {
     });
 });
 
-function newPollRelations(relationEvents: Array<MatrixEvent>): Relations {
-    const pollRelations = new Relations(
+function newVoteRelations(relationEvents: Array<MatrixEvent>): Relations {
+    const voteRelations = new Relations(
         "m.reference", POLL_RESPONSE_EVENT_TYPE.name, null);
     for (const ev of relationEvents) {
-        pollRelations.addEvent(ev);
+        voteRelations.addEvent(ev);
     }
-    return pollRelations;
+    return voteRelations;
 }
 
 function newMPollBody(
     relationEvents: Array<MatrixEvent>,
     answers?: IPollAnswer[],
 ): ReactWrapper {
-    const pollRelations = new Relations(
+    const voteRelations = new Relations(
         "m.reference", POLL_RESPONSE_EVENT_TYPE.name, null);
     for (const ev of relationEvents) {
-        pollRelations.addEvent(ev);
+        voteRelations.addEvent(ev);
     }
 
     return mount(<MPollBody
@@ -515,7 +515,7 @@ function newMPollBody(
                 expect(eventId).toBe("$mypoll");
                 expect(relationType).toBe("m.reference");
                 expect(eventType).toBe(POLL_RESPONSE_EVENT_TYPE.name);
-                return pollRelations;
+                return voteRelations;
             }
         }
     />);
@@ -627,13 +627,13 @@ function runFindTopAnswer(votes: MatrixEvent[]) {
         "content": newPollStart(),
     });
 
-    const pollRelations = newPollRelations(votes);
+    const voteRelations = newVoteRelations(votes);
     const getRelationsForEvent =
         (eventId: string, relationType: string, eventType: string) => {
             expect(eventId).toBe("$mypoll");
             expect(relationType).toBe("m.reference");
             expect(eventType).toBe(POLL_RESPONSE_EVENT_TYPE.name);
-            return pollRelations;
+            return voteRelations;
         };
 
     return findTopAnswer(pollEvent, MatrixClientPeg.get(), getRelationsForEvent);

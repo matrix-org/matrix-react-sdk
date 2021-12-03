@@ -37,7 +37,7 @@ import { MatrixClient } from '../../../../../matrix-js-sdk/src/matrix';
 
 interface IState {
     selected?: string; // Which option was clicked by the local user
-    pollRelations: Relations; // Allows us to access voting events
+    voteRelations: Relations; // Allows us to access voting events
 }
 
 export function findTopAnswer(
@@ -64,14 +64,14 @@ export function findTopAnswer(
         return "";
     };
 
-    const pollRelations: Relations = getRelationsForEvent(
+    const voteRelations: Relations = getRelationsForEvent(
         pollEvent.getId(),
         "m.reference",
         POLL_RESPONSE_EVENT_TYPE.name,
     );
 
     const userVotes: Map<string, UserVote> = collectUserVotes(
-        allVotes(pollRelations),
+        allVotes(voteRelations),
         matrixClient.getUserId(),
         null,
     );
@@ -102,54 +102,54 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         this.state = {
             selected: null,
-            pollRelations: this.fetchPollRelations(),
+            voteRelations: this.fetchVoteRelations(),
         };
 
-        this.addListeners(this.state.pollRelations);
-        this.props.mxEvent.on("Event.relationsCreated", this.onPollRelationsCreated);
+        this.addListeners(this.state.voteRelations);
+        this.props.mxEvent.on("Event.relationsCreated", this.onVoteRelationsCreated);
     }
 
     componentWillUnmount() {
-        this.props.mxEvent.off("Event.relationsCreated", this.onPollRelationsCreated);
-        this.removeListeners(this.state.pollRelations);
+        this.props.mxEvent.off("Event.relationsCreated", this.onVoteRelationsCreated);
+        this.removeListeners(this.state.voteRelations);
     }
 
-    private addListeners(pollRelations?: Relations) {
-        if (pollRelations) {
-            pollRelations.on("Relations.add", this.onRelationsChange);
-            pollRelations.on("Relations.remove", this.onRelationsChange);
-            pollRelations.on("Relations.redaction", this.onRelationsChange);
+    private addListeners(voteRelations?: Relations) {
+        if (voteRelations) {
+            voteRelations.on("Relations.add", this.onRelationsChange);
+            voteRelations.on("Relations.remove", this.onRelationsChange);
+            voteRelations.on("Relations.redaction", this.onRelationsChange);
         }
     }
 
-    private removeListeners(pollRelations?: Relations) {
-        if (pollRelations) {
-            pollRelations.off("Relations.add", this.onRelationsChange);
-            pollRelations.off("Relations.remove", this.onRelationsChange);
-            pollRelations.off("Relations.redaction", this.onRelationsChange);
+    private removeListeners(voteRelations?: Relations) {
+        if (voteRelations) {
+            voteRelations.off("Relations.add", this.onRelationsChange);
+            voteRelations.off("Relations.remove", this.onRelationsChange);
+            voteRelations.off("Relations.redaction", this.onRelationsChange);
         }
     }
 
-    private onPollRelationsCreated = (relationType: string, eventType: string) => {
+    private onVoteRelationsCreated = (relationType: string, eventType: string) => {
         if (
             relationType === "m.reference" &&
             POLL_RESPONSE_EVENT_TYPE.matches(eventType)
         ) {
             this.props.mxEvent.removeListener(
-                "Event.relationsCreated", this.onPollRelationsCreated);
+                "Event.relationsCreated", this.onVoteRelationsCreated);
 
-            const newPollRelations = this.fetchPollRelations();
-            this.addListeners(newPollRelations);
-            this.removeListeners(this.state.pollRelations);
+            const newVoteRelations = this.fetchVoteRelations();
+            this.addListeners(newVoteRelations);
+            this.removeListeners(this.state.voteRelations);
 
             this.setState({
-                pollRelations: newPollRelations,
+                voteRelations: newVoteRelations,
             });
         }
     };
 
     private onRelationsChange = () => {
-        // We hold pollRelations in our state, and it has changed under us
+        // We hold voteRelations in our state, and it has changed under us
         this.unselectIfNewEventFromMe();
     };
 
@@ -194,7 +194,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         this.selectOption(e.currentTarget.value);
     };
 
-    private fetchPollRelations(): Relations | null {
+    private fetchVoteRelations(): Relations | null {
         if (this.props.getRelationsForEvent) {
             return this.props.getRelationsForEvent(
                 this.props.mxEvent.getId(),
@@ -211,7 +211,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      */
     private collectUserVotes(): Map<string, UserVote> {
         return collectUserVotes(
-            allVotes(this.state.pollRelations),
+            allVotes(this.state.voteRelations),
             this.context.getUserId(),
             this.state.selected,
         );
@@ -226,7 +226,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * have already seen.
      */
     private unselectIfNewEventFromMe() {
-        const newEvents: MatrixEvent[] = this.state.pollRelations.getRelations()
+        const newEvents: MatrixEvent[] = this.state.voteRelations.getRelations()
             .filter(isPollResponse)
             .filter((mxEvent: MatrixEvent) =>
                 !this.seenEventIds.includes(mxEvent.getId()));
@@ -350,9 +350,9 @@ function userResponseFromPollResponseEvent(event: MatrixEvent): UserVote {
     );
 }
 
-export function allVotes(pollRelations: Relations): Array<UserVote> {
-    if (pollRelations) {
-        return pollRelations.getRelations()
+export function allVotes(voteRelations: Relations): Array<UserVote> {
+    if (voteRelations) {
+        return voteRelations.getRelations()
             .filter(isPollResponse)
             .map(userResponseFromPollResponseEvent);
     } else {
