@@ -101,6 +101,10 @@ describe('MemberList', () => {
             defaultUsers.push(defaultUser);
         }
 
+        client.getUser = (userId: string) => [
+            ...adminUsers, ...moderatorUsers, defaultUsers,
+        ].find((member: RoomMember) => member.userId === userId)?.user;
+
         client.getRoom = (roomId) => {
             if (roomId === memberListRoom.roomId) return memberListRoom;
             else return null;
