@@ -21,6 +21,12 @@ limitations under the License.
     color: $primary-content;
     cursor: pointer;
 
+    border-radius: 8px;
+
+    &:hover {
+        background-color: $space-nav;
+    }
+
     .mx_E2EIcon {
         margin: 0;
     }
