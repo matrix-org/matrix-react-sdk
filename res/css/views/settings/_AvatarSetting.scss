@@ -37,7 +37,7 @@ limitations under the License.
         text-align: center;
 
         > span {
-            color: $primary-content; // hardcoded to contrast with background
+            color: $primary-content;
             position: relative; // tricks the layout engine into putting this on top of the bg
             font-weight: 500;
         }
