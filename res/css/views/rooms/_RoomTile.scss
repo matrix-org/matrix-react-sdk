@@ -34,7 +34,7 @@ limitations under the License.
         border-radius: 8px;
     }
 
-    .mx_DecoratedRoomAvatar, .mx_RoomTile_avatarContainer {
+    .mx_DecoratedAvatar, .mx_RoomTile_avatarContainer {
         margin-right: 8px;
     }
 
@@ -160,7 +160,7 @@ limitations under the License.
         align-items: center;
         position: relative;
 
-        .mx_DecoratedRoomAvatar, .mx_RoomTile_avatarContainer {
+        .mx_DecoratedAvatar, .mx_RoomTile_avatarContainer {
             margin-right: 0;
         }
     }

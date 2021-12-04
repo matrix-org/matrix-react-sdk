@@ -231,7 +231,7 @@ limitations under the License.
     display: flex;
     margin-top: 12px;
 
-    .mx_DecoratedRoomAvatar, // we can't target .mx_BaseAvatar here as it'll break the decorated avatar styling
+    .mx_DecoratedAvatar, // we can't target .mx_BaseAvatar here as it'll break the decorated avatar styling
     .mx_BaseAvatar.mx_RoomAvatar_isSpaceRoom {
         margin-right: 12px;
     }

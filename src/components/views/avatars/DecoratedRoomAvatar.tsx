@@ -189,12 +189,12 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.state.icon !== Icon.None) {
             icon = <TextWithTooltip
                 tooltip={tooltipText(this.state.icon)}
-                class={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
+                class={`mx_DecoratedAvatar_icon mx_DecoratedAvatar_icon_${this.state.icon.toLowerCase()}`}
             />;
         }
 
-        const classes = classNames("mx_DecoratedRoomAvatar", {
-            mx_DecoratedRoomAvatar_cutout: icon,
+        const classes = classNames("mx_DecoratedAvatar", {
+            mx_DecoratedAvatar_cutout: icon,
         });
 
         return <div className={classes}>

@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DecoratedRoomAvatar, .mx_ExtraTile {
+.mx_DecoratedAvatar, .mx_ExtraTile {
     position: relative;
     contain: content;
 
-    &.mx_DecoratedRoomAvatar_cutout .mx_BaseAvatar {
+    &.mx_DecoratedAvatar_cutout .mx_BaseAvatar {
         mask-image: url('$(res)/img/element-icons/roomlist/decorated-avatar-mask.svg');
         mask-position: center;
         mask-size: contain;
         mask-repeat: no-repeat;
     }
 
-    .mx_DecoratedRoomAvatar_icon {
+    .mx_DecoratedAvatar_icon {
         position: absolute;
         bottom: -2px;
         right: -2px;
@@ -35,7 +35,7 @@ limitations under the License.
         border-radius: 50%;
     }
 
-    .mx_DecoratedRoomAvatar_icon::before {
+    .mx_DecoratedAvatar_icon::before {
         content: '';
         width: 8px;
         height: 8px;
@@ -43,7 +43,7 @@ limitations under the License.
         border-radius: 8px;
     }
 
-    .mx_DecoratedRoomAvatar_icon_globe::before {
+    .mx_DecoratedAvatar_icon_globe::before {
         mask-position: center;
         mask-size: contain;
         mask-repeat: no-repeat;
@@ -51,15 +51,15 @@ limitations under the License.
         mask-image: url('$(res)/img/globe.svg');
     }
 
-    .mx_DecoratedRoomAvatar_icon_offline::before {
+    .mx_DecoratedAvatar_icon_offline::before {
         background-color: $presence-offline;
     }
 
-    .mx_DecoratedRoomAvatar_icon_online::before {
+    .mx_DecoratedAvatar_icon_online::before {
         background-color: $accent;
     }
 
-    .mx_DecoratedRoomAvatar_icon_away::before {
+    .mx_DecoratedAvatar_icon_away::before {
         background-color: $presence-away;
     }
 

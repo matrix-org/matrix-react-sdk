@@ -155,7 +155,7 @@ export default class HTMLExporter extends Exporter {
                         <div class="mx_RoomHeader light-panel">
                         <div class="mx_RoomHeader_wrapper" aria-owns="mx_RightPanel">
                             <div class="mx_RoomHeader_avatar">
-                            <div class="mx_DecoratedRoomAvatar">
+                            <div class="mx_DecoratedAvatar">
                                ${roomAvatar}
                             </div>
                             </div>
