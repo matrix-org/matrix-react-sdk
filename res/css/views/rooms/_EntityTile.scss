@@ -43,14 +43,6 @@ limitations under the License.
     background-color: $header-panel-text-primary-color;
 }
 
-.mx_EntityTile .mx_PresenceLabel {
-    display: none;
-}
-
-.mx_EntityTile:not(.mx_EntityTile_noHover):hover .mx_PresenceLabel {
-    display: block;
-}
-
 .mx_EntityTile_invite {
     display: table-cell;
     vertical-align: middle;

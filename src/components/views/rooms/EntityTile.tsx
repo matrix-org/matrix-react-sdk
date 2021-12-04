@@ -23,7 +23,6 @@ import classNames from "classnames";
 import E2EIcon, { E2EState } from './E2EIcon';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseAvatar from '../avatars/BaseAvatar';
-import PresenceLabel from "./PresenceLabel";
 
 export enum PowerStatus {
     Admin = "admin",
@@ -72,7 +71,6 @@ interface IProps {
     presenceCurrentlyActive?: boolean;
     showInviteButton?: boolean;
     onClick?(): void;
-    suppressOnHover?: boolean;
     showPresence?: boolean;
     subtextLabel?: string;
     e2eStatus?: E2EState;
@@ -92,54 +90,23 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         presenceLastTs: 0,
         showInviteButton: false,
         suppressOnHover: false,
-        showPresence: true,
     };
 
     constructor(props: IProps) {
         super(props);
-
-        this.state = {
-            hover: false,
-        };
     }
 
-    render() {
-        const mainClassNames = {
-            "mx_EntityTile": true,
-            "mx_EntityTile_noHover": this.props.suppressOnHover,
-        };
-        if (this.props.className) mainClassNames[this.props.className] = true;
-
-        const presenceClass = presenceClassForMember(
-            this.props.presenceState, this.props.presenceLastActiveAgo, this.props.showPresence,
+    public render(): JSX.Element {
+        const mainClassNames = classNames(
+            "mx_EntityTile",
+            this.props.className,
+            presenceClassForMember(this.props.presenceState, this.props.presenceLastActiveAgo, this.props.showPresence),
         );
-        mainClassNames[presenceClass] = true;
 
         let nameEl;
         const { name } = this.props;
 
-        if (!this.props.suppressOnHover) {
-            const activeAgo = this.props.presenceLastActiveAgo ?
-                (Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)) : -1;
-
-            let presenceLabel = null;
-            if (this.props.showPresence) {
-                presenceLabel = <PresenceLabel activeAgo={activeAgo}
-                    currentlyActive={this.props.presenceCurrentlyActive}
-                    presenceState={this.props.presenceState} />;
-            }
-            if (this.props.subtextLabel) {
-                presenceLabel = <span className="mx_EntityTile_subtext">{ this.props.subtextLabel }</span>;
-            }
-            nameEl = (
-                <div className="mx_EntityTile_details">
-                    <div className="mx_EntityTile_name" dir="auto">
-                        { name }
-                    </div>
-                    { presenceLabel }
-                </div>
-            );
-        } else if (this.props.subtextLabel) {
+        if (this.props.subtextLabel) {
             nameEl = (
                 <div className="mx_EntityTile_details">
                     <div className="mx_EntityTile_name" dir="auto">
