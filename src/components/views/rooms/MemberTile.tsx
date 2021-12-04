@@ -27,7 +27,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import EntityTile, { PowerStatus } from "./EntityTile";
-import MemberAvatar from "./../avatars/MemberAvatar";
+import DecoratedMemberAvatar from "../avatars/DecoratedMemberAvatar";
 
 interface IProps {
     member: RoomMember;
@@ -223,7 +223,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         }
 
         const av = (
-            <MemberAvatar member={member} width={36} height={36} aria-hidden="true" />
+            <DecoratedMemberAvatar member={member} width={36} height={36} aria-hidden="true" />
         );
 
         if (member.user) {
