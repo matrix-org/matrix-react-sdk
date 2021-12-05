@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638540401167,
+  "lastUpdate": 1638744339274,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44888,6 +44888,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4406.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5219b6be80d1ae8032b0fbc986d9bb487ef6a9d6",
+          "message": "Analytics opt in for posthog (#6936)\n\n* Add a new flag pseudonymousAnalyticsOptIn replacing analyticsOptIn, stored at account level, so people only need to opt in once.\r\n\r\n* Show a toast in login to users that have analyticsOptIn set but not yet pseudonymousAnalyticsOptIn prompting them confirm the new method is okay. Update the copy of the existing opt-in toast. Don't notify users that previously opted out.\r\n\r\n* Update the copy in settings\r\n\r\n* Add a new learn more dialog\r\n\r\n* Support a new config flag analyticsOwner which is used in these toasts when explaining which entity the data is sent to (\"Help improve %(analyticsOwner)\"). If unset, display brand. This allows deployments whose brand differs from the receiver of the analytics to explain the situation to their users (e.g. AcmeCorp badges their app, but explains the data is sent to Element, not them)\r\n\r\n* The new opt-in and flags are only used when posthog is configured; prior to that there are no changes to UX or tracking behaviour.",
+          "timestamp": "2021-12-06T09:39:33+11:00",
+          "tree_id": "1441e6b0e32615cb75640a08c3eccacf71a14b43",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5219b6be80d1ae8032b0fbc986d9bb487ef6a9d6"
+        },
+        "date": 1638744336570,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4916.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 955.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1645.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4552.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
