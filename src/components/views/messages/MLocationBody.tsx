@@ -23,7 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from '../../../languageHandler';
 
 interface IState {
-    fail: boolean;
+    error: Error;
 }
 
 @replaceableComponent("views.messages.MLocationBody")
@@ -46,7 +46,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
         this.coords = this.parseGeoUri(uri);
         this.state = {
-            fail: false,
+            error: undefined,
         };
 
         this.description =
@@ -89,7 +89,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
         this.map.on('error', (e)=>{
             logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
-            this.setState({ error: e });
+            this.setState({ error: e.error });
         });
     }
 

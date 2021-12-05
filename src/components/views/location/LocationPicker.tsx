@@ -115,7 +115,7 @@ class LocationPicker extends React.Component<IProps, IState> {
 
         this.map.on('error', (e)=>{
             logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
-            this.setState({ error: e });
+            this.setState({ error: e.error });
         });
 
         this.map.on('load', ()=>{
