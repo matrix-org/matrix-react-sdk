@@ -111,6 +111,11 @@ $roomListCollapsedWidth: 68px;
             display: flex;
             align-items: center;
 
+            .mx_UserMenu {
+                // mini-mode for when Space Panel is disabled
+                margin-right: 12px;
+            }
+
             & + .mx_RoomListHeader {
                 margin-top: 12px;
             }
@@ -120,7 +125,6 @@ $roomListCollapsedWidth: 68px;
                 background-color: $panel-actions;
                 padding: 2px 4px;
                 user-select: none;
-                pointer-events: none;
                 font-size: $font-12px;
                 line-height: $font-15px;
                 font-weight: $font-semi-bold;

@@ -17,9 +17,8 @@ limitations under the License.
 import React, { ComponentType, createRef } from 'react';
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { sleep, defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
+import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -38,7 +37,6 @@ import Notifier from '../../Notifier';
 import Modal from "../../Modal";
 import { showRoomInviteDialog, showStartChatInviteDialog } from '../../RoomInvite';
 import * as Rooms from '../../Rooms';
-import linkifyMatrix from "../../linkify-matrix";
 import * as Lifecycle from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
 import '../../stores/LifecycleStore';
@@ -59,11 +57,11 @@ import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import ToastStore from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
 import type LoggedInViewType from "./LoggedInView";
-import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
 import {
-    showToast as showAnalyticsToast,
     hideToast as hideAnalyticsToast,
+    showAnonymousAnalyticsOptInToast,
+    showPseudonymousAnalyticsOptInToast,
 } from "../../toasts/AnalyticsToast";
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
@@ -347,18 +345,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // we don't do it as react state as i'm scared about triggering needless react refreshes.
         this.subTitleStatus = '';
 
-        // this can technically be done anywhere but doing this here keeps all
-        // the routing url path logic together.
-        if (this.onAliasClick) {
-            linkifyMatrix.onAliasClick = this.onAliasClick;
-        }
-        if (this.onUserClick) {
-            linkifyMatrix.onUserClick = this.onUserClick;
-        }
-        if (this.onGroupClick) {
-            linkifyMatrix.onGroupClick = this.onGroupClick;
-        }
-
         // the first thing to do is to try the token params in the query-string
         // if the session isn't soft logged out (ie: is a clean session being logged in)
         if (!Lifecycle.isSoftLogout()) {
@@ -397,12 +383,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         }
 
-        if (SettingsStore.getValue("analyticsOptIn")) {
+        if (SettingsStore.getValue("pseudonymousAnalyticsOptIn")) {
             Analytics.enable();
         }
-
-        PosthogAnalytics.instance.updateAnonymityFromSettings();
-        PosthogAnalytics.instance.updatePlatformSuperProperties();
 
         CountlyAnalytics.instance.enable(/* anonymous = */ true);
 
@@ -515,8 +498,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 } else {
                     dis.dispatch({ action: "view_welcome_page" });
                 }
-            } else if (SettingsStore.getValue("analyticsOptIn")) {
-                CountlyAnalytics.instance.enable(/* anonymous = */ false);
             }
         });
         // Note we don't catch errors from this: we catch everything within
@@ -831,10 +812,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     hideToSRUsers: false,
                 });
                 break;
-            case 'accept_cookies':
+            case Action.AnonymousAnalyticsAccept:
+                hideAnalyticsToast();
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, true);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
-                hideAnalyticsToast();
                 if (Analytics.canEnable()) {
                     Analytics.enable();
                 }
@@ -842,10 +823,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     CountlyAnalytics.instance.enable(/* anonymous = */ false);
                 }
                 break;
-            case 'reject_cookies':
+            case Action.AnonymousAnalyticsReject:
+                hideAnalyticsToast();
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, false);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
+                break;
+            case Action.PseudonymousAnalyticsAccept:
                 hideAnalyticsToast();
+                SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, true);
+                break;
+            case Action.PseudonymousAnalyticsReject:
+                hideAnalyticsToast();
+                SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, false);
                 break;
         }
     };
@@ -1338,18 +1327,49 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        // defer the following actions by 30 seconds to not throw them at the user immediately
-        await sleep(30);
-        if (SettingsStore.getValue("showCookieBar") &&
-            (Analytics.canEnable() || CountlyAnalytics.instance.canEnable())
-        ) {
-            showAnalyticsToast(this.props.config.piwik?.policyUrl);
+        if (PosthogAnalytics.instance.isEnabled()) {
+            this.initPosthogAnalyticsToast();
+        } else if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
+            if (SettingsStore.getValue("showCookieBar") &&
+                (Analytics.canEnable() || CountlyAnalytics.instance.canEnable())
+            ) {
+                showAnonymousAnalyticsOptInToast();
+            }
         }
+
         if (SdkConfig.get().mobileGuideToast) {
             // The toast contains further logic to detect mobile platforms,
             // check if it has been dismissed before, etc.
             showMobileGuideToast();
         }
+    }
+
+    private showPosthogToast(analyticsOptIn: boolean) {
+        showPseudonymousAnalyticsOptInToast(analyticsOptIn);
+    }
+
+    private initPosthogAnalyticsToast() {
+        // Show the analytics toast if necessary
+        if (SettingsStore.getValue("pseudonymousAnalyticsOptIn") === null) {
+            this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
+        }
+
+        // Listen to changes in settings and show the toast if appropriate - this is necessary because account
+        // settings can still be changing at this point in app init (due to the initial sync being cached, then
+        // subsequent syncs being received from the server)
+        SettingsStore.watchSetting("pseudonymousAnalyticsOptIn", null,
+            (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+                if (newValue === null) {
+                    this.showPosthogToast(SettingsStore.getValue("analyticsOptIn", null, true));
+                } else {
+                    // It's possible for the value to change if a cached sync loads at page load, but then network
+                    // sync contains a new value of the flag with it set to false (e.g. another device set it since last
+                    // loading the page); so hide the toast.
+                    // (this flipping usually happens before first render so the user won't notice it; anyway flicker
+                    // on/off is probably better than showing the toast again when the user already dismissed it)
+                    hideAnalyticsToast();
+                }
+            });
     }
 
     private showScreenAfterLogin() {
@@ -1898,28 +1918,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
         this.setPageSubtitle();
     }
-
-    onAliasClick(event: MouseEvent, alias: string) {
-        event.preventDefault();
-        dis.dispatch({ action: Action.ViewRoom, room_alias: alias });
-    }
-
-    onUserClick(event: MouseEvent, userId: string) {
-        event.preventDefault();
-
-        const member = new RoomMember(null, userId);
-        if (!member) { return; }
-        dis.dispatch<ViewUserPayload>({
-            action: Action.ViewUser,
-            member: member,
-        });
-    }
-
-    onGroupClick(event: MouseEvent, groupId: string) {
-        event.preventDefault();
-        dis.dispatch({ action: 'view_group', group_id: groupId });
-    }
-
     onLogoutClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
         dis.dispatch({
             action: 'logout',
