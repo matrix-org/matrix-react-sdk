@@ -54,6 +54,7 @@ import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
+import { SyncState } from "matrix-js-sdk/src/sync.api";
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -779,6 +780,14 @@ export default class CallHandler extends EventEmitter {
             Modal.createTrackedDialog('Call Handler', 'VoIP is unsupported', ErrorDialog, {
                 title: _t('VoIP is unsupported'),
                 description: _t('You cannot place VoIP calls in this browser.'),
+            });
+            return;
+        }
+
+        if (MatrixClientPeg.get().getSyncState() === SyncState.Error) {
+            Modal.createTrackedDialog('Call Handler', 'Sync error', ErrorDialog, {
+                title: _t('Connectivity to the server has been lost'),
+                description: _t('You cannot place VoIP calls without a connection to the server.'),
             });
             return;
         }

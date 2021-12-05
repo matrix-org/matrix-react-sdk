@@ -56,6 +56,8 @@
     "You're already in a call with this person.": "You're already in a call with this person.",
     "VoIP is unsupported": "VoIP is unsupported",
     "You cannot place VoIP calls in this browser.": "You cannot place VoIP calls in this browser.",
+    "Connectivity to the server has been lost": "Connectivity to the server has been lost",
+    "You cannot place VoIP calls without a connection to the server.": "You cannot place VoIP calls without a connection to the server.",
     "Too Many Calls": "Too Many Calls",
     "You've reached the maximum number of simultaneous calls.": "You've reached the maximum number of simultaneous calls.",
     "You cannot place a call with yourself.": "You cannot place a call with yourself.",
