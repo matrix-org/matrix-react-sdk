@@ -26,7 +26,7 @@ export interface IEmoji {
     tags?: string[];
     unicode: string;
     skins?: Omit<IEmoji, "shortcodes" | "tags">[]; // Currently unused
-    emoticon?: string;
+    emoticon?: string | string[];
 }
 
 // The unicode is stored without the variant selector
@@ -102,7 +102,9 @@ export const EMOJI: IEmoji[] = EMOJIBASE.map((emojiData: Omit<IEmoji, "shortcode
 
     if (emoji.emoticon) {
         // Add mapping from emoticon to Emoji object
-        EMOTICON_TO_EMOJI.set(emoji.emoticon, emoji);
+        Array.isArray(emoji.emoticon)
+            ? emoji.emoticon.forEach((x) => EMOTICON_TO_EMOJI.set(x, emoji))
+            : EMOTICON_TO_EMOJI.set(emoji.emoticon, emoji);
     }
 
     return emoji;
