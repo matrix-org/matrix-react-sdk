@@ -40,6 +40,7 @@ import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { IPosition, ChevronFace } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
+import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 
 export function canCancel(eventStatus: EventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -234,7 +235,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private viewInRoom = () => {
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
@@ -404,9 +405,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         );
         const isThreadRootEvent = isThread && this.props.mxEvent?.getThread()?.rootEvent === this.props.mxEvent;
 
+        const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
+            MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
+        );
         const commonItemsList = (
             <IconizedContextMenuOptionList>
-                { isThreadRootEvent && <IconizedContextMenuOption
+                { (isThreadRootEvent && isMainSplitTimelineShown) && <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconViewInRoom"
                     label={_t("View in room")}
                     onClick={this.viewInRoom}

@@ -248,10 +248,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     color: $secondary-accent-color;
 }
 
-#mx_theme_tertiaryAccentColor {
-    color: $tertiary-accent-color;
-}
-
 /* Expected z-indexes for dialogs:
     4000 - Default wrapper index
     4009 - Static dialog background
@@ -484,6 +480,15 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     /* Don't show scroll-bars on spinner dialogs */
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.mx_DialogDesignChanges_wrapper .mx_Dialog_fixedWidth {
+    max-width: 636px; // match splash image width
+
+    .mx_AccessibleButton_kind_link {
+        font-size: inherit;
+        padding: 0;
+    }
 }
 
 // TODO: Review mx_GeneralButton usage to see if it can use a different class

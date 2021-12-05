@@ -528,7 +528,7 @@ export const Commands = [
                     }
 
                     dis.dispatch({
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         room_alias: roomAlias,
                         auto_join: true,
                         _type: "slash_command", // instrumentation
@@ -538,7 +538,7 @@ export const Commands = [
                     const [roomId, ...viaServers] = params;
 
                     dis.dispatch({
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         room_id: roomId,
                         opts: {
                             // These are passed down to the js-sdk's /join call
@@ -569,7 +569,7 @@ export const Commands = [
                     const eventId = permalinkParts.eventId;
 
                     const dispatch = {
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         auto_join: true,
                         _type: "slash_command", // instrumentation
                     };
@@ -1037,7 +1037,7 @@ export const Commands = [
 
             return success((async () => {
                 if (isPhoneNumber) {
-                    const results = await CallHandler.sharedInstance().pstnLookup(this.state.value);
+                    const results = await CallHandler.instance.pstnLookup(this.state.value);
                     if (!results || results.length === 0 || !results[0].userid) {
                         throw new Error("Unable to find Matrix ID for phone number");
                     }
@@ -1047,7 +1047,7 @@ export const Commands = [
                 const roomId = await ensureDMExists(MatrixClientPeg.get(), userId);
 
                 dis.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     room_id: roomId,
                 });
             })());
@@ -1069,7 +1069,7 @@ export const Commands = [
                             const cli = MatrixClientPeg.get();
                             const roomId = await ensureDMExists(cli, userId);
                             dis.dispatch({
-                                action: 'view_room',
+                                action: Action.ViewRoom,
                                 room_id: roomId,
                             });
                             if (msg) {
@@ -1089,7 +1089,7 @@ export const Commands = [
         description: _td("Places the call in the current room on hold"),
         category: CommandCategories.other,
         runFn: function(roomId, args) {
-            const call = CallHandler.sharedInstance().getCallForRoom(roomId);
+            const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject("No active call in this room");
             }
@@ -1103,7 +1103,7 @@ export const Commands = [
         description: _td("Takes the call in the current room off hold"),
         category: CommandCategories.other,
         runFn: function(roomId, args) {
-            const call = CallHandler.sharedInstance().getCallForRoom(roomId);
+            const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject("No active call in this room");
             }

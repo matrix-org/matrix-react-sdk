@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Modal from '../../../Modal';
 import { IBodyProps } from "./IBodyProps";
 import {
     IPollAnswer,
@@ -28,32 +29,30 @@ import {
 import StyledRadioButton from '../elements/StyledRadioButton';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import ErrorDialog from '../dialogs/ErrorDialog';
 
 // TODO: [andyb] Use extensible events library when ready
 const TEXT_NODE_TYPE = "org.matrix.msc1767.text";
 
 interface IState {
-    selected?: string;
-    pollRelations: Relations;
+    selected?: string; // Which option was clicked by the local user
+    pollRelations: Relations; // Allows us to access voting events
 }
 
 @replaceableComponent("views.messages.MPollBody")
 export default class MPollBody extends React.Component<IBodyProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+    private seenEventIds: string[] = []; // Events we have already seen
+
     constructor(props: IBodyProps) {
         super(props);
 
-        const pollRelations = this.fetchPollRelations();
-        let selected = null;
-
-        const userVotes = collectUserVotes(allVotes(pollRelations), null);
-        const userId = MatrixClientPeg.get().getUserId();
-        const currentVote = userVotes.get(userId);
-        if (currentVote) {
-            selected = currentVote.answers[0];
-        }
-
-        this.state = { selected, pollRelations };
+        this.state = {
+            selected: null,
+            pollRelations: this.fetchPollRelations(),
+        };
 
         this.addListeners(this.state.pollRelations);
         this.props.mxEvent.on("Event.relationsCreated", this.onPollRelationsCreated);
@@ -100,7 +99,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
     private onRelationsChange = () => {
         // We hold pollRelations in our state, and it has changed under us
-        this.forceUpdate();
+        this.unselectIfNewEventFromMe();
     };
 
     private selectOption(answerId: string) {
@@ -117,12 +116,24 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 "rel_type": "m.reference",
             },
         };
-        MatrixClientPeg.get().sendEvent(
+
+        this.context.sendEvent(
             this.props.mxEvent.getRoomId(),
             POLL_RESPONSE_EVENT_TYPE.name,
             responseContent,
-        ).catch(e => {
+        ).catch((e: any) => {
             console.error("Failed to submit poll response event:", e);
+
+            Modal.createTrackedDialog(
+                'Vote not registered',
+                '',
+                ErrorDialog,
+                {
+                    title: _t("Vote not registered"),
+                    description: _t(
+                        "Sorry, your vote was not registered. Please try again."),
+                },
+            );
         });
 
         this.setState({ selected: answerId });
@@ -145,13 +156,41 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 
     /**
-     * @returns answer-id -> number-of-votes
+     * @returns userId -> UserVote
      */
-    private collectVotes(): Map<string, number> {
-        return countVotes(
-            collectUserVotes(allVotes(this.state.pollRelations), this.state.selected),
-            this.props.mxEvent.getContent(),
+    private collectUserVotes(): Map<string, UserVote> {
+        return collectUserVotes(
+            allVotes(this.state.pollRelations),
+            this.context.getUserId(),
+            this.state.selected,
         );
+    }
+
+    /**
+     * If we've just received a new event that we hadn't seen
+     * before, and that event is me voting (e.g. from a different
+     * device) then forget when the local user selected.
+     *
+     * Either way, calls setState to update our list of events we
+     * have already seen.
+     */
+    private unselectIfNewEventFromMe() {
+        const newEvents: MatrixEvent[] = this.state.pollRelations.getRelations()
+            .filter(isPollResponse)
+            .filter((mxEvent: MatrixEvent) =>
+                !this.seenEventIds.includes(mxEvent.getId()));
+        let newSelected = this.state.selected;
+
+        if (newEvents.length > 0) {
+            for (const mxEvent of newEvents) {
+                if (mxEvent.getSender() === this.context.getUserId()) {
+                    newSelected = null;
+                }
+            }
+        }
+        const newEventIds = newEvents.map((mxEvent: MatrixEvent) => mxEvent.getId());
+        this.seenEventIds = this.seenEventIds.concat(newEventIds);
+        this.setState( { selected: newSelected } );
     }
 
     private totalVotes(collectedVotes: Map<string, number>): number {
@@ -171,19 +210,40 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
 
         const pollId = this.props.mxEvent.getId();
-        const votes = this.collectVotes();
+        const userVotes = this.collectUserVotes();
+        const votes = countVotes(userVotes, this.props.mxEvent.getContent());
         const totalVotes = this.totalVotes(votes);
+        const userId = this.context.getUserId();
+        const myVote = userVotes.get(userId)?.answers[0];
+        let totalText: string;
+        if (myVote === undefined) {
+            if (totalVotes === 0) {
+                totalText = _t("No votes cast");
+            } else {
+                totalText = _t(
+                    "%(count)s votes cast. Vote to see the results",
+                    { count: totalVotes },
+                );
+            }
+        } else {
+            totalText = _t( "Based on %(count)s votes", { count: totalVotes } );
+        }
 
         return <div className="mx_MPollBody">
             <h2>{ pollInfo.question[TEXT_NODE_TYPE] }</h2>
             <div className="mx_MPollBody_allOptions">
                 {
                     pollInfo.answers.map((answer: IPollAnswer) => {
-                        const checked = this.state.selected === answer.id;
+                        const checked = myVote === answer.id;
                         const classNames = `mx_MPollBody_option${
                             checked ? " mx_MPollBody_option_checked": ""
                         }`;
-                        const answerVotes = votes.get(answer.id) ?? 0;
+                        let answerVotes = 0;
+                        let votesText = "";
+                        if (myVote !== undefined) { // Votes hidden if I didn't vote
+                            answerVotes = votes.get(answer.id) ?? 0;
+                            votesText = _t("%(count)s votes", { count: answerVotes });
+                        }
                         const answerPercent = Math.round(
                             100.0 * answerVotes / totalVotes);
                         return <div
@@ -194,7 +254,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                             <StyledRadioButton
                                 name={`poll_answer_select-${pollId}`}
                                 value={answer.id}
-                                checked={this.state.selected === answer.id}
+                                checked={checked}
                                 onChange={this.onOptionSelected}
                             >
                                 <div className="mx_MPollBody_optionDescription">
@@ -202,7 +262,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                                         { answer[TEXT_NODE_TYPE] }
                                     </div>
                                     <div className="mx_MPollBody_optionVoteCount">
-                                        { _t("%(count)s votes", { count: answerVotes }) }
+                                        { votesText }
                                     </div>
                                 </div>
                             </StyledRadioButton>
@@ -217,7 +277,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 }
             </div>
             <div className="mx_MPollBody_totalVotes">
-                { _t( "Based on %(count)s votes", { count: totalVotes } ) }
+                { totalText }
             </div>
         </div>;
     }
@@ -240,13 +300,6 @@ function userResponseFromPollResponseEvent(event: MatrixEvent): UserVote {
 }
 
 export function allVotes(pollRelations: Relations): Array<UserVote> {
-    function isPollResponse(responseEvent: MatrixEvent): boolean {
-        return (
-            responseEvent.getType() === POLL_RESPONSE_EVENT_TYPE.name &&
-            responseEvent.getContent().hasOwnProperty(POLL_RESPONSE_EVENT_TYPE.name)
-        );
-    }
-
     if (pollRelations) {
         return pollRelations.getRelations()
             .filter(isPollResponse)
@@ -256,12 +309,20 @@ export function allVotes(pollRelations: Relations): Array<UserVote> {
     }
 }
 
+function isPollResponse(responseEvent: MatrixEvent): boolean {
+    return (
+        POLL_RESPONSE_EVENT_TYPE.matches(responseEvent.getType()) &&
+        POLL_RESPONSE_EVENT_TYPE.findIn(responseEvent.getContent())
+    );
+}
+
 /**
  * Figure out the correct vote for each user.
  * @returns a Map of user ID to their vote info
  */
 function collectUserVotes(
     userResponses: Array<UserVote>,
+    userId: string,
     selected?: string,
 ): Map<string, UserVote> {
     const userVotes: Map<string, UserVote> = new Map();
@@ -274,8 +335,6 @@ function collectUserVotes(
     }
 
     if (selected) {
-        const client = MatrixClientPeg.get();
-        const userId = client.getUserId();
         userVotes.set(userId, new UserVote(0, userId, [selected]));
     }
 
