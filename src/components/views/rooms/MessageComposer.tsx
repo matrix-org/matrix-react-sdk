@@ -58,7 +58,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { LocationShareType } from "../location/LocationShareType";
+import LocationShareType from "../location/LocationShareType";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 
 let instanceCount = 0;
