@@ -56,7 +56,9 @@ const LocationShareTypeDropdown = ({
     return <Dropdown
         id="mx_LocationShareTypeDropdown"
         className="mx_LocationShareTypeDropdown"
-        onOptionChange={(key: string)=>{ onChange(LocationShareType[LocationShareType[parseInt(key)]]); }}
+        onOptionChange={(key: string) => {
+            onChange(LocationShareType[LocationShareType[parseInt(key)]]);
+        }}
         menuWidth={width}
         label={label}
         value={value.toString()}
@@ -114,16 +116,16 @@ class LocationPicker extends React.Component<IProps, IState> {
         });
         this.map.addControl(this.geolocate);
 
-        this.map.on('error', (e)=>{
+        this.map.on('error', (e) => {
             logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
             this.setState({ error: e.error });
         });
 
-        this.map.on('load', ()=>{
+        this.map.on('load', () => {
             this.geolocate.trigger();
         });
 
-        this.map.on('click', (e)=>{
+        this.map.on('click', (e) => {
             this.addMarker(e.lngLat);
             this.storeManualPosition(e.lngLat);
             this.setState({ type: LocationShareType.Custom });
@@ -132,14 +134,16 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.geolocate.on('geolocate', this.onGeolocate);
     }
 
-    private addMarker(lngLat: LngLat): void {
+    private addMarker(lngLat: maplibregl.LngLat): void {
         if (this.marker) return;
         this.marker = new maplibregl.Marker({
             draggable: true,
         })
             .setLngLat(lngLat)
             .addTo(this.map)
-            .on('dragend', ()=>{ this.storeManualPosition(this.marker.getLngLat()); });
+            .on('dragend', () => {
+                this.storeManualPosition(this.marker.getLngLat());
+            });
     }
 
     private removeMarker(): void {
@@ -148,7 +152,7 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.marker = undefined;
     }
 
-    private storeManualPosition(lngLat: LngLat): void {
+    private storeManualPosition(lngLat: maplibregl.LngLat): void {
         const manualPosition: GeolocationPosition = {
             coords: {
                 longitude: lngLat.lng,
@@ -203,10 +207,10 @@ class LocationPicker extends React.Component<IProps, IState> {
                 this.setState({ manualPosition: this.state.position });
             }
             if (this.state.manualPosition) {
-                this.addMarker({
-                    lng: this.state.manualPosition?.coords.longitude,
-                    lat: this.state.manualPosition?.coords.latitude,
-                });
+                this.addMarker(new maplibregl.LngLat(
+                    this.state.manualPosition?.coords.longitude,
+                    this.state.manualPosition?.coords.latitude,
+                ));
             }
         } else {
             this.removeMarker();
