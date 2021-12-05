@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638744339274,
+  "lastUpdate": 1638746582478,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -44936,6 +44936,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4552.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d4813f7a1aec4fd1d66cb25866a87e3c987d6829",
+          "message": "Convert end-to-end tests to Typescript (#7206)",
+          "timestamp": "2021-12-06T09:59:06+11:00",
+          "tree_id": "c9001029dd8b204e48a272755e7c274da77840ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d4813f7a1aec4fd1d66cb25866a87e3c987d6829"
+        },
+        "date": 1638746578735,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4714.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 720.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
