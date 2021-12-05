@@ -24,12 +24,11 @@ import ResizeNotifier from '../../utils/ResizeNotifier';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
 import { _t } from '../../languageHandler';
 import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuButton';
-import ContextMenu, { ChevronFace, useContextMenu } from './ContextMenu';
+import ContextMenu, { ChevronFace, MenuItemRadio, useContextMenu } from './ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import TimelinePanel from './TimelinePanel';
-import { Layout } from '../../settings/Layout';
+import { Layout } from '../../settings/enums/Layout';
 import { useEventEmitter } from '../../hooks/useEventEmitter';
-import AccessibleButton from '../views/elements/AccessibleButton';
 import { TileShape } from '../views/rooms/EventTile';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 
@@ -73,15 +72,13 @@ const useFilteredThreadsTimelinePanel = ({
     const buildThreadList = useCallback(function(timelineSet: EventTimelineSet) {
         timelineSet.resetLiveTimeline("");
         Array.from(threads)
-            .map(([, thread]) => thread)
-            .forEach(thread => {
-                const ownEvent = thread.rootEvent.getSender() === userId;
-                if (filterOption !== ThreadFilterType.My || ownEvent) {
+            .forEach(([, thread]) => {
+                if (filterOption !== ThreadFilterType.My || thread.hasCurrentUserParticipated) {
                     timelineSet.addLiveEvent(thread.rootEvent);
                 }
             });
         updateTimeline();
-    }, [filterOption, threads, updateTimeline, userId]);
+    }, [filterOption, threads, updateTimeline]);
 
     useEffect(() => { buildThreadList(timelineSet); }, [timelineSet, buildThreadList]);
 
@@ -100,14 +97,14 @@ export const ThreadPanelHeaderFilterOptionItem = ({
     onClick: () => void;
     isSelected: boolean;
 }) => {
-    return <AccessibleButton
-        aria-selected={isSelected}
+    return <MenuItemRadio
+        active={isSelected}
         className="mx_ThreadPanel_Header_FilterOptionItem"
         onClick={onClick}
     >
         <span>{ label }</span>
         <span>{ description }</span>
-    </AccessibleButton>;
+    </MenuItemRadio>;
 };
 
 export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
@@ -143,8 +140,8 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
         top={0}
         right={25}
         onFinished={closeMenu}
-        managed={false}
         chevronFace={ChevronFace.Top}
+        mountAsChild={true}
     >
         { contextMenuOptions }
     </ContextMenu> : null;
@@ -230,6 +227,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                     membersLoaded={true}
                     permalinkCreator={permalinkCreator}
                     tileShape={TileShape.ThreadPanel}
+                    disableGrouping={true}
                 />
             </BaseCard>
         </RoomContext.Provider>

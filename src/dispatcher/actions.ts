@@ -56,12 +56,12 @@ export enum Action {
     CheckUpdates = "check_updates",
 
     /**
-     * Focuses the user's cursor to the send message composer. No additional payload information required.
+     * Focuses the user's cursor to the send message composer. Should be used with a FocusComposerPayload.
      */
     FocusSendMessageComposer = "focus_send_message_composer",
 
     /**
-     * Focuses the user's cursor to the edit message composer. No additional payload information required.
+     * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
      */
     FocusEditMessageComposer = "focus_edit_message_composer",
 
@@ -86,6 +86,11 @@ export enum Action {
      * Sets a system font. Should be used with UpdateSystemFontPayload
      */
     UpdateSystemFont = "update_system_font",
+
+    /**
+     * Changes room based on payload parameters.
+     */
+    ViewRoom = "view_room",
 
     /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
@@ -117,18 +122,6 @@ export enum Action {
      * payload: DialNumberPayload
      */
     DialNumber = "dial_number",
-
-    /**
-     * Start a call transfer to a Matrix ID
-     * payload: TransferCallPayload
-     */
-    TransferCallToMatrixID = "transfer_call_to_matrix_id",
-
-    /**
-     * Start a call transfer to a phone number
-     * payload: TransferCallPayload
-     */
-    TransferCallToPhoneNumber = "transfer_call_to_phone_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support

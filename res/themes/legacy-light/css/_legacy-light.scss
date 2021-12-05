@@ -41,11 +41,8 @@ $focus-brightness: 105%;
 $info-plinth-bg-color: #f7f7f7;
 $info-plinth-fg-color: #888;
 
-$preview-bar-bg-color: #f7f7f7;
-
 // left-panel style muted accent color
 $secondary-accent-color: #f2f5f8;
-$tertiary-accent-color: #d3efe1;
 
 $groupFilterPanel-bg-color: #27303a;
 $inverted-bg-color: $groupFilterPanel-bg-color;
@@ -67,7 +64,6 @@ $input-border-color: #e7e7e7;
 $input-darker-bg-color: #e3e8f0;
 $input-darker-fg-color: #9fa9ba;
 $input-lighter-bg-color: #f2f5f8;
-$input-focused-border-color: #238cf5;
 
 $resend-button-divider-color: $input-darker-bg-color;
 
@@ -103,14 +99,13 @@ $imagebody-giflabel: rgba(0, 0, 0, 0.7);
 $imagebody-giflabel-border: rgba(0, 0, 0, 0.2);
 $imagebody-giflabel-color: rgba(255, 255, 255, 1);
 
-$greyed-fg-color: #888;
+$info-plinth-fg-color: #888;
 
 $neutral-badge-color: #dbdbdb;
 
 $preview-widget-bar-color: #ddd;
 
 $blockquote-bar-color: #ddd;
-$blockquote-fg-color: #777;
 
 $settings-grey-fg-color: #a2a2a2;
 $settings-profile-overlay-placeholder-fg-color: #2e2f32;
@@ -120,6 +115,8 @@ $settings-subsection-fg-color: #61708b;
 $rte-bg-color: #e9e9e9;
 $rte-code-bg-color: rgba(0, 0, 0, 0.04);
 
+$header-panel-text-primary-color: #91a1c0;
+
 $pill-bg-color: #aaa;
 $pill-hover-bg-color: #ccc;
 
@@ -127,24 +124,12 @@ $topleftmenu-color: #212121;
 $roomheader-bg-color: $primary-bg-color;
 $roomheader-addroom-bg-color: #91a1c0;
 $roomheader-addroom-fg-color: $accent-fg-color;
-$groupFilterPanel-button-color: #91a1c0;
-$groupheader-button-color: #91a1c0;
-$rightpanel-button-color: #91a1c0;
 $icon-button-color: #91a1c0;
 $roomtopic-color: #9e9e9e;
-
-$composer-e2e-icon-color: #91a1c0;
-$header-divider-color: #91a1c0;
 
 // ********************
 
 $theme-button-bg-color: #e3e8f0;
-
-$roomlist-button-bg-color: #fff; // Buttons include the filter box, explore button, and sublist buttons
-$roomlist-filter-active-bg-color: $roomlist-button-bg-color;
-$roomlist-bg-color: $header-panel-bg-color;
-$roomlist-header-color: $primary-fg-color;
-$roomsublist-skeleton-ui-bg: linear-gradient(180deg, #ffffff 0%, #ffffff00 100%);
 
 $roomtile-default-badge-bg-color: #61708b;
 $roomtile-selected-bg-color: #fff;
@@ -173,7 +158,19 @@ $space-nav: rgba($tertiary-content, 0.15);
 
 // ********************
 
+$roomlist-filter-active-bg-color: $panel-actions;
+$roomlist-bg-color: $header-panel-bg-color;
+$roomlist-header-color: $primary-fg-color;
+$roomsublist-skeleton-ui-bg: linear-gradient(180deg, #ffffff 0%, #ffffff00 100%);
+
 $voipcall-plinth-color: $system;
+
+$call-view-button-on-foreground: $secondary-content;
+$call-view-button-on-background: $background;
+$call-view-button-off-foreground: $background;
+$call-view-button-off-background: $secondary-content;
+
+$video-feed-secondary-background: #394049; // XXX: Color from dark theme
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
@@ -196,17 +193,12 @@ $widget-body-bg-color: #fff;
 // defined before both
 $yellow-background: #fff8e3;
 
-// event tile lifecycle
-$event-notsent-color: #f44;
-
 $event-highlight-bg-color: $yellow-background;
 
 // event timestamp
 $event-timestamp-color: #acacac;
 
 $copy-button-url: "$(res)/img/feather-customised/clipboard.svg";
-$collapse-button-url: "$(res)/img/feather-customised/minimise.svg";
-$expand-button-url: "$(res)/img/feather-customised/maximise.svg";
 
 // e2e
 $e2e-verified-color: #76cfa5; // N.B. *NOT* the same as $accent
@@ -222,7 +214,6 @@ $lightbox-border-color: #ffffff;
 // Tabbed views
 $tab-label-fg-color: #45474a;
 $tab-label-active-fg-color: #ffffff;
-$tab-label-active-icon-bg-color: $tab-label-active-fg-color;
 
 // Buttons
 $button-primary-fg-color: #ffffff;
@@ -242,8 +233,6 @@ $slider-background-color: #c1c9d6;
 
 $progressbar-bg-color: rgba(141, 151, 165, 0.2);
 
-$memberstatus-placeholder-color: $muted-fg-color;
-
 $authpage-bg-color: #2e3649;
 $authpage-modal-bg-color: rgba(255, 255, 255, 0.59);
 $authpage-focus-bg-color: #dddddd;
@@ -259,11 +248,10 @@ $message-action-bar-fg-color: $primary-fg-color;
 $message-action-bar-border-color: #e9edf1;
 $message-action-bar-hover-border-color: $focus-bg-color;
 
-$reaction-row-button-border-color: #e9edf1;
 $reaction-row-button-hover-border-color: $focus-bg-color;
 $reaction-row-button-selected-bg-color: #e9fff9;
 
-$kbd-border-color: $reaction-row-button-border-color;
+$kbd-border-color: $message-action-bar-border-color;
 
 $tooltip-timeline-bg-color: $groupFilterPanel-bg-color;
 $tooltip-timeline-fg-color: #ffffff;

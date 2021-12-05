@@ -56,7 +56,7 @@ limitations under the License.
         position: absolute;
         height: 20px;
         width: 20px;
-        background-color: $groupheader-button-color;
+        background-color: $header-panel-text-primary-color;
         mask-repeat: no-repeat;
         mask-size: contain;
     }
@@ -244,7 +244,7 @@ limitations under the License.
 }
 
 .mx_GroupView_membershipSection {
-    color: $greyed-fg-color;
+    color: $info-plinth-fg-color;
     margin-top: 10px;
 }
 

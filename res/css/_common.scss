@@ -30,6 +30,9 @@ $MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $selected-mess
 $slider-dot-size: 1em;
 $slider-selection-dot-size: 2.4em;
 
+$container-border-width: 8px;
+
+$timeline-image-border-radius: 8px;
 :root {
     font-size: 10px;
 
@@ -243,10 +246,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 
 #mx_theme_secondaryAccentColor {
     color: $secondary-accent-color;
-}
-
-#mx_theme_tertiaryAccentColor {
-    color: $tertiary-accent-color;
 }
 
 /* Expected z-indexes for dialogs:
@@ -481,6 +480,15 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     /* Don't show scroll-bars on spinner dialogs */
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.mx_DialogDesignChanges_wrapper .mx_Dialog_fixedWidth {
+    max-width: 636px; // match splash image width
+
+    .mx_AccessibleButton_kind_link {
+        font-size: inherit;
+        padding: 0;
+    }
 }
 
 // TODO: Review mx_GeneralButton usage to see if it can use a different class

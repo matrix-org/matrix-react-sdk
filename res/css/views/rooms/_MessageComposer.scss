@@ -20,7 +20,7 @@ limitations under the License.
     margin: auto;
     border-top: 1px solid $primary-hairline-color;
     position: relative;
-    padding-left: 82px;
+    padding-left: 42px;
     padding-right: 6px;
 }
 
@@ -74,7 +74,7 @@ limitations under the License.
 
 .mx_MessageComposer_e2eIcon.mx_E2EIcon {
     position: absolute;
-    left: 60px;
+    left: 20px;
     margin-right: 0; // Counteract the E2EIcon class
     margin-left: 3px; // Counteract the E2EIcon class
     width: 12px;
@@ -85,7 +85,7 @@ limitations under the License.
     width: 100%;
     height: 60px;
     font-style: italic;
-    color: $greyed-fg-color;
+    color: $info-plinth-fg-color;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,13 +135,6 @@ limitations under the License.
 
 .mx_MessageComposer_input_error {
     animation: 0.2s visualbell;
-}
-
-.mx_MessageComposer_input blockquote {
-    color: $blockquote-fg-color;
-    margin: 0 0 16px;
-    padding: 0 15px;
-    border-left: 4px solid $blockquote-bar-color;
 }
 
 .mx_MessageComposer_input pre {
@@ -326,7 +319,7 @@ limitations under the License.
     flex-direction: row;
     align-items: center;
     font-size: $font-10px;
-    color: $greyed-fg-color;
+    color: $info-plinth-fg-color;
 }
 
 .mx_MessageComposer_formatbar * {
