@@ -21,10 +21,11 @@ import SdkConfig from '../../../SdkConfig';
 import Field from "../elements/Field";
 import DialogButtons from "../elements/DialogButtons";
 import Dropdown from "../elements/Dropdown";
-import { LocationShareType } from "./LocationShareType";
+import LocationShareType from "./LocationShareType";
 
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IDropdownProps {
     value: LocationShareType;
@@ -74,6 +75,7 @@ interface IState {
     type: LocationShareType;
     position?: GeolocationPosition;
     manualPosition?: GeolocationPosition;
+    error: Error;
 }
 
 @replaceableComponent("views.location.LocationPicker")
@@ -90,6 +92,7 @@ class LocationPicker extends React.Component<IProps, IState> {
             type: LocationShareType.OnceOff,
             position: undefined,
             manualPosition: undefined,
+            error: undefined,
         };
     }
 
@@ -110,6 +113,11 @@ class LocationPicker extends React.Component<IProps, IState> {
             trackUserLocation: true,
         });
         this.map.addControl(this.geolocate);
+
+        this.map.on('error', (e)=>{
+            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
+            this.setState({ error: e.error });
+        });
 
         this.map.on('load', ()=>{
             this.geolocate.trigger();
@@ -208,9 +216,15 @@ class LocationPicker extends React.Component<IProps, IState> {
     };
 
     render() {
+        const error = this.state.error ?
+            <div className="mx_LocationPicker_error">
+                { _t("Failed to load map") }
+            </div> : null;
+
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
+                { error }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
                         <LocationShareTypeDropdown

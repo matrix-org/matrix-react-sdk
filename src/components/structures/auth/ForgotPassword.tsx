@@ -290,8 +290,8 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 <div className="mx_AuthBody_fieldRow">
                     <EmailField
                         name="reset_email" // define a name so browser's password autofill gets less confused
-                        labelRequired={_t('The email address linked to your account must be entered.')}
-                        labelInvalid={_t("The email address doesn't appear to be valid.")}
+                        labelRequired={_td('The email address linked to your account must be entered.')}
+                        labelInvalid={_td("The email address doesn't appear to be valid.")}
                         value={this.state.email}
                         fieldRef={field => this[ForgotPasswordField.Email] = field}
                         autoFocus={true}
@@ -315,9 +315,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     />
                     <PassphraseConfirmField
                         name="reset_password_confirm"
-                        label={_t('Confirm')}
-                        labelRequired={_t("A new password must be entered.")}
-                        labelInvalid={_t("New passwords must match each other.")}
+                        label={_td('Confirm')}
+                        labelRequired={_td("A new password must be entered.")}
+                        labelInvalid={_td("New passwords must match each other.")}
                         value={this.state.password2}
                         password={this.state.password}
                         fieldRef={field => this[ForgotPasswordField.PasswordConfirm] = field}

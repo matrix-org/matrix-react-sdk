@@ -38,6 +38,7 @@ import { MatrixCapabilities } from "matrix-widget-api";
 import RoomWidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import CallHandler from '../../../CallHandler';
 import { Room } from "matrix-js-sdk/src/models/room";
 import { IApp } from "../../../stores/WidgetStore";
 import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
@@ -46,6 +47,7 @@ interface IProps {
     // If room is not specified then it is an account level widget
     // which bypasses permission prompts as it was added explicitly by that user
     room: Room;
+    threadId?: string | null;
     // Specifying 'fullWidth' as true will render the app tile to fill the width of the app drawer continer.
     // This should be set to true when there is only one widget in the app drawer, otherwise it should be false.
     fullWidth?: boolean;
@@ -99,6 +101,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         handleMinimisePointerEvents: false,
         userWidget: false,
         miniMode: false,
+        threadId: null,
     };
 
     private contextMenuButton = createRef<any>();
@@ -290,7 +293,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         if (WidgetType.JITSI.matches(this.props.app.type)) {
-            dis.dispatch({ action: 'hangup_conference' });
+            CallHandler.instance.hangupCallApp(this.props.room.roomId);
         }
 
         // Delete the widget from the persisted store for good measure.
@@ -321,7 +324,13 @@ export default class AppTile extends React.Component<IProps, IState> {
             switch (payload.action) {
                 case 'm.sticker':
                     if (this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.StickerSending)) {
-                        dis.dispatch({ action: 'post_sticker_message', data: payload.data });
+                        dis.dispatch({
+                            action: 'post_sticker_message',
+                            data: {
+                                ...payload.data,
+                                threadId: this.props.threadId,
+                            },
+                        });
                         dis.dispatch({ action: 'stickerpicker_close' });
                     } else {
                         logger.warn('Ignoring sticker message. Invalid capability');
@@ -402,9 +411,9 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private onMaxMinWidgetClick = (): void => {
         const targetContainer =
-        WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
-            ? Container.Right
-            : Container.Center;
+            WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
+                ? Container.Right
+                : Container.Center;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 

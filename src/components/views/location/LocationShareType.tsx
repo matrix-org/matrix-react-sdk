@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export enum LocationShareType {
+enum LocationShareType {
     Custom = -1,
     OnceOff = 0,
     OneMine = 60,
@@ -26,3 +26,5 @@ export enum LocationShareType {
     OneDay = 24 * 60 * 60,
     Forever = Number.MAX_SAFE_INTEGER,
 }
+
+export default LocationShareType;

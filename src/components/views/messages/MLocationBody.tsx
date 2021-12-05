@@ -19,9 +19,15 @@ import maplibregl from 'maplibre-gl';
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
+import { logger } from "matrix-js-sdk/src/logger";
+import { _t } from '../../../languageHandler';
+
+interface IState {
+    error: Error;
+}
 
 @replaceableComponent("views.messages.MLocationBody")
-export default class MLocationBody extends React.Component<IBodyProps> {
+export default class MLocationBody extends React.Component<IBodyProps, IState> {
     private map: maplibregl.Map;
     private coords: GeolocationCoordinates;
     private description: string;
@@ -39,6 +45,9 @@ export default class MLocationBody extends React.Component<IBodyProps> {
             content['geo_uri'];
 
         this.coords = this.parseGeoUri(uri);
+        this.state = {
+            error: undefined,
+        };
 
         this.description =
             content['org.matrix.msc3488.location']?.description ?? content['body'];
@@ -88,6 +97,11 @@ export default class MLocationBody extends React.Component<IBodyProps> {
             .setLngLat(coordinates)
             .setHTML(this.description)
             .addTo(this.map);
+
+        this.map.on('error', (e)=>{
+            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
+            this.setState({ error: e.error });
+        });
     }
 
     private getBodyId = () => {
@@ -95,8 +109,14 @@ export default class MLocationBody extends React.Component<IBodyProps> {
     };
 
     render() {
+        const error = this.state.error ?
+            <div className="mx_EventTile_tileError mx_EventTile_body">
+                { _t("Failed to load map") }
+            </div> : null;
+
         return <div className="mx_MLocationBody">
             <div id={this.getBodyId()} className="mx_MLocationBody_map" />
+            { error }
         </div>;
     }
 }
