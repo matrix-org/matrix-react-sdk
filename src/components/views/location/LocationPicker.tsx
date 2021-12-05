@@ -132,7 +132,7 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.geolocate.on('geolocate', this.onGeolocate);
     }
 
-    private addMarker(lngLat) {
+    private addMarker(lngLat: LngLat): void {
         if (this.marker) return;
         this.marker = new maplibregl.Marker({
             draggable: true,
@@ -142,13 +142,13 @@ class LocationPicker extends React.Component<IProps, IState> {
             .on('dragend', ()=>{ this.storeManualPosition(this.marker.getLngLat()); });
     }
 
-    private removeMarker() {
+    private removeMarker(): void {
         if (!this.marker) return;
         this.marker.remove();
         this.marker = undefined;
     }
 
-    private storeManualPosition(lngLat) {
+    private storeManualPosition(lngLat: LngLat): void {
         const manualPosition: GeolocationPosition = {
             coords: {
                 longitude: lngLat.lng,
@@ -168,7 +168,7 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.geolocate.off('geolocate', this.onGeolocate);
     }
 
-    private onGeolocate = (position) => {
+    private onGeolocate = (position: GeolocationPosition) => {
         this.setState({ position });
     };
 

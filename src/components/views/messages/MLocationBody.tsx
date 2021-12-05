@@ -85,10 +85,6 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             zoom: 13,
         });
 
-        // const marker = new maplibregl.Marker()
-        //     .setLngLat(coordinates)
-        //     .addTo(this.map);
-
         new maplibregl.Popup({
             closeButton: false,
             closeOnClick: false,
