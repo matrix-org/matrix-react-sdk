@@ -19,6 +19,8 @@ import maplibregl from 'maplibre-gl';
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
+import { logger } from "matrix-js-sdk/src/logger";
+import { _t } from '../../../languageHandler';
 
 interface IState {
     fail: boolean;
@@ -81,15 +83,14 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             zoom: 13,
         });
 
-        try {
-            this.map.getStyle();
-        } catch (e) {
-            this.setState({ fail: true });
-        }
-
         new maplibregl.Marker()
             .setLngLat([this.coords.longitude, this.coords.latitude])
             .addTo(this.map);
+
+        this.map.on('error', (e)=>{
+            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
+            this.setState({ error: e });
+        });
     }
 
     private getBodyId = () => {
@@ -97,9 +98,9 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     render() {
-        const error = this.state.fail ?
+        const error = this.state.error ?
             <div className="mx_EventTile_tileError mx_EventTile_body">
-                Failed to load map - check config.json has a valid API key
+                { _t("Failed to load map") }
             </div> : null;
 
         return <div className="mx_MLocationBody">
