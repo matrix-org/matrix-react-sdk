@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638786000364,
+  "lastUpdate": 1638787834881,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45380,6 +45380,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4839.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jamess@element.io",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "43f264ccfcdb923338406a4452e9741bacfa7f6d",
+          "message": "Integrate analytics stubs (#7186)\n\n* Add matrix-analytics-events as a dependency\r\n* Make IEvent look like a stub definition\r\n* Update pageview tracking to track screens, using a hypothetical definition of a screen event\r\n* Remove distinction between pseudo and anon tracking, will need to rework it considering stubs",
+          "timestamp": "2021-12-06T21:43:42+11:00",
+          "tree_id": "ecc2913ae290b408d2bf8bff69812b3bf45889d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/43f264ccfcdb923338406a4452e9741bacfa7f6d"
+        },
+        "date": 1638787831610,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5177,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1195.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
