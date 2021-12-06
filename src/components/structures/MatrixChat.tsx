@@ -479,7 +479,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
     }
 
-    trackScreenChange(durationMs: number): void {
+    public trackScreenChange(durationMs: number): void {
         const notLoggedInMap = {};
         notLoggedInMap[Views.LOADING] = "WebLoading";
         notLoggedInMap[Views.WELCOME] = "WebWelcome";
