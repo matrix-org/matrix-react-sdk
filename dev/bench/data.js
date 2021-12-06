@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638783190864,
+  "lastUpdate": 1638783203679,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45212,6 +45212,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4713.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7dfdb06627f205ad55c704790e97512e05f5f2b1",
+          "message": "Dropdown follow wai-aria practices for expanding on arrow keys (#7277)",
+          "timestamp": "2021-12-06T09:25:44Z",
+          "tree_id": "45d58242c47b81d94e925637f22ece8e2a54f3c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7dfdb06627f205ad55c704790e97512e05f5f2b1"
+        },
+        "date": 1638783200165,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5503.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1442.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1752.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5240.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
