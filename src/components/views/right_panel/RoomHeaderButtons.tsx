@@ -36,6 +36,9 @@ import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
+import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
+import classNames from "classnames";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -48,13 +51,21 @@ const ROOM_INFO_PHASES = [
 ];
 
 interface IUnreadIndicatorProps {
-    className: string;
+    color?: NotificationColor;
 }
 
-const UnreadIndicator = ({ className }: IUnreadIndicatorProps) => {
+const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
+    if (color === NotificationColor.None) {
+        return null;
+    }
+
+    const classes = classNames({
+        "mx_RightPanel_headerButton_unreadIndicator": true,
+        "mx_Indicator_gray": color === NotificationColor.Grey,
+    });
     return <React.Fragment>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
-        <div className={className} />
+        <div className={classes} />
     </React.Fragment>;
 };
 
@@ -72,7 +83,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
 
     let unreadIndicator;
     if (pinnedEvents.some(id => !readPinnedEvents.has(id))) {
-        unreadIndicator = <UnreadIndicator className="mx_RightPanel_headerButton_unreadIndicator" />;
+        unreadIndicator = <UnreadIndicator />;
     }
 
     return <HeaderButton
@@ -89,17 +100,11 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
 const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButtonProps) => {
     if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
     let unreadIndicator;
-    switch (RoomNotificationStateStore.instance.getRoomState(room).color) {
+    const color = RoomNotificationStateStore.instance.getRoomState(room).color;
+    switch (color) {
         case NotificationColor.Grey:
-            unreadIndicator =
-                <UnreadIndicator className="mx_RightPanel_headerButton_unreadIndicator mx_Indicator_gray" />;
-            break;
         case NotificationColor.Red:
-            unreadIndicator =
-                <UnreadIndicator className="mx_RightPanel_headerButton_unreadIndicator" />;
-            break;
-        default:
-            break;
+            unreadIndicator = <UnreadIndicator color={color} />;
     }
     return <HeaderButton
         name="timelineCardButton"
@@ -123,9 +128,26 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         RightPanelPhases.ThreadPanel,
         RightPanelPhases.ThreadView,
     ];
+    private threadNotificationState: ThreadsRoomNotificationState;
 
     constructor(props: IProps) {
         super(props, HeaderKind.Room);
+
+        this.threadNotificationState = RoomNotificationStateStore.instance.getThreadsRoomState(this.props.room);
+    }
+
+    public componentDidMount(): void {
+        this.threadNotificationState.on(NotificationStateEvents.Update, this.onThreadNotification);
+    }
+
+    public componentWillUnmount(): void {
+        this.threadNotificationState.off(NotificationStateEvents.Update, this.onThreadNotification);
+    }
+
+    private onThreadNotification(): void {
+        this.setState({
+            threadNotificationColor: this.threadNotificationState.color,
+        });
     }
 
     protected onAction(payload: ActionPayload) {
@@ -205,7 +227,9 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                     title={_t("Threads")}
                     onClick={this.onThreadsPanelClicked}
                     isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
-                    analytics={['Right Panel', 'Threads List Button', 'click']} />
+                    analytics={['Right Panel', 'Threads List Button', 'click']}>
+                    <UnreadIndicator color={this.threadNotificationState.color} />
+                </HeaderButton>
                 : null,
         );
         rightPanelPhaseButtons.set(RightPanelPhases.NotificationPanel,

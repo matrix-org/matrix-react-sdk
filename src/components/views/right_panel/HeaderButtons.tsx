@@ -29,6 +29,7 @@ import {
 } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
 import type { EventSubscription } from "fbemitter";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 
 export enum HeaderKind {
   Room = "room",
@@ -38,6 +39,7 @@ export enum HeaderKind {
 interface IState {
     headerKind: HeaderKind;
     phase: RightPanelPhases;
+    threadNotificationColor: NotificationColor;
 }
 
 interface IProps {}
@@ -53,6 +55,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.getSharedInstance();
         this.state = {
             headerKind: kind,
+            threadNotificationColor: NotificationColor.None,
             phase: kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
         };
     }
