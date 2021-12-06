@@ -44,7 +44,7 @@ export const TooltipTarget: React.FC<IProps> = ({
     const hide = () => setIsVisible(false);
 
     return (
-        <span
+        <div
             tabIndex={0}
             aria-describedby={id}
             className={tooltipTargetClassName}
@@ -64,6 +64,6 @@ export const TooltipTarget: React.FC<IProps> = ({
                 alignment={alignment}
                 visible={isVisible}
             />
-        </span>
+        </div>
     );
 };
