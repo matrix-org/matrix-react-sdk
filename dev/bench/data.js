@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638783429747,
+  "lastUpdate": 1638784268538,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45296,6 +45296,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 781.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12620214174001390cb0c8b525badad9d8c5f58c",
+          "message": "Simple static location sharing (#7135)\n\nAdds maplibre as a dependency, and behind a labs flag, lets users send and receive [MSC3488](https://github.com/matrix-org/matrix-doc/blob/matthew/location/proposals/3488-location.md) style location shares - with backwards compatibility with old school `m.location` `msgtype` location shares too.\r\n\r\nFor this to work, you have to define a valid maptile server and API in your config.json's `map_style_url`.",
+          "timestamp": "2021-12-06T09:45:12Z",
+          "tree_id": "59a50c8018d310526cceb059a49d9b176747e285",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12620214174001390cb0c8b525badad9d8c5f58c"
+        },
+        "date": 1638784265680,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4640.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 668.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
