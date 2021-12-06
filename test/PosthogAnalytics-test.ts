@@ -40,7 +40,7 @@ class FakePosthog {
 }
 
 export interface ITestEvent extends IEvent {
-    eventName: "jest_test_event";
+    eventName: "JestTestEvents";
     foo: string;
 }
 
@@ -112,17 +112,17 @@ describe("PosthogAnalytics", () => {
         it("Should pass event to posthog", () => {
             analytics.setAnonymity(Anonymity.Pseudonymous);
             analytics.trackEvent<ITestEvent>({
-                eventName: "jest_test_event",
+                eventName: "JestTestEvents",
                 foo: "bar",
             });
-            expect(fakePosthog.capture.mock.calls[0][0]).toBe("jest_test_event");
+            expect(fakePosthog.capture.mock.calls[0][0]).toBe("JestTestEvents");
             expect(fakePosthog.capture.mock.calls[0][1]["foo"]).toEqual("bar");
         });
 
         it("Should not track events if anonymous", async () => {
             analytics.setAnonymity(Anonymity.Anonymous);
             await analytics.trackEvent<ITestEvent>({
-                eventName: "jest_test_event",
+                eventName: "JestTestEvents",
                 foo: "bar",
             });
             expect(fakePosthog.capture.mock.calls.length).toBe(0);
@@ -131,7 +131,7 @@ describe("PosthogAnalytics", () => {
         it("Should not track any events if disabled", async () => {
             analytics.setAnonymity(Anonymity.Disabled);
             analytics.trackEvent<ITestEvent>({
-                eventName: "jest_test_event",
+                eventName: "JestTestEvents",
                 foo: "bar",
             });
             expect(fakePosthog.capture.mock.calls.length).toBe(0);
