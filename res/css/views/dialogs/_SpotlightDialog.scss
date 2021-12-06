@@ -20,6 +20,7 @@ limitations under the License.
     position: relative;
     height: 60%;
     padding: 0;
+    contain: unset;
 
     .mx_SpotlightDialog_keyboardPrompt {
         position: absolute;

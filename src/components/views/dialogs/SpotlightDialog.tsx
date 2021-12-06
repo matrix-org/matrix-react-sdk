@@ -38,6 +38,7 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {
     findSiblingElement,
     RovingAccessibleButton,
+    RovingAccessibleTooltipButton,
     RovingTabIndexContext,
     RovingTabIndexProvider,
     Type,
@@ -57,6 +58,8 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../dispatcher/actions";
 import Modal from "../../../Modal";
 import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import RoomViewStore from "../../../stores/RoomViewStore";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50;
@@ -65,6 +68,18 @@ const RECENT_SEARCHES_LS_KEY = "mx_SpotlightDialog_recent_searches";
 const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ inputRef, ...props }) => {
     const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
     return <AccessibleButton
+        {...props}
+        onFocus={onFocus}
+        inputRef={ref}
+        tabIndex={-1}
+        aria-selected={isActive}
+        role="option"
+    />;
+};
+
+const TooltipOption: React.FC<ComponentProps<typeof RovingAccessibleTooltipButton>> = ({ inputRef, ...props }) => {
+    const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
+    return <AccessibleTooltipButton
         {...props}
         onFocus={onFocus}
         inputRef={ref}
@@ -335,26 +350,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             </div>
         </>;
     } else {
-        content = <>
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentlyViewed" role="group">
-                <h4>{ _t("Recently viewed") }</h4>
-                <div>
-                    { BreadcrumbsStore.instance.rooms.slice(0, 10).map(room => (
-                        <Option
-                            id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
-                            key={room.roomId}
-                            onClick={() => {
-                                viewRoom(room.roomId);
-                            }}
-                        >
-                            <DecoratedRoomAvatar room={room} avatarSize={32} />
-                            { room.name }
-                        </Option>
-                    )) }
-                </div>
-            </div>
-
-            { recentSearches.length ? (
+        let recentSearchesSection: JSX.Element;
+        if (recentSearches.length) {
+            recentSearchesSection = (
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentSearches" role="group">
                     <h4>
                         { _t("Recent searches") }
@@ -378,7 +376,34 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         )) }
                     </div>
                 </div>
-            ) : null }
+            );
+        }
+
+        content = <>
+            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentlyViewed" role="group">
+                <h4>{ _t("Recently viewed") }</h4>
+                <div>
+                    { BreadcrumbsStore.instance.rooms
+                        .filter(r => r.roomId !== RoomViewStore.getRoomId())
+                        .slice(0, 10)
+                        .map(room => (
+                            <TooltipOption
+                                id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
+                                title={room.name}
+                                key={room.roomId}
+                                onClick={() => {
+                                    viewRoom(room.roomId);
+                                }}
+                            >
+                                <DecoratedRoomAvatar room={room} avatarSize={32} />
+                                { room.name }
+                            </TooltipOption>
+                        ))
+                    }
+                </div>
+            </div>
+
+            { recentSearchesSection }
 
             <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
                 <h4>{ _t("Other searches") }</h4>
@@ -461,7 +486,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     autoFocus
                     type="text"
                     autoComplete="off"
-                    placeholder={_t("Search for anything")}
+                    placeholder={_t("Search")}
                     value={query}
                     onChange={setQuery}
                     onKeyDown={onKeyDown}
