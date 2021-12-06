@@ -72,18 +72,25 @@ const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ input
     />;
 };
 
-const useRecentSearches = (): Room[] => {
-    const cli = MatrixClientPeg.get();
+const useRecentSearches = (): [Room[], () => void] => {
+    const [rooms, setRooms] = useState(() => {
+        const cli = MatrixClientPeg.get();
 
-    try {
-        const recents = JSON.parse(localStorage.getItem(RECENT_SEARCHES_LS_KEY));
-        if (Array.isArray(recents)) {
-            return recents.map(r => cli.getRoom(r)).filter(Boolean).reverse();
+        try {
+            const recents = JSON.parse(localStorage.getItem(RECENT_SEARCHES_LS_KEY));
+            if (Array.isArray(recents)) {
+                return recents.map(r => cli.getRoom(r)).filter(Boolean).reverse();
+            }
+        } catch {
+            // do nothing
         }
-    } catch {
-        // do nothing
-    }
-    return [];
+        return [];
+    });
+
+    return [rooms, () => {
+        localStorage.removeItem(RECENT_SEARCHES_LS_KEY);
+        setRooms([]);
+    }];
 };
 
 const ResultDetails = ({ room }: { room: Room }) => {
@@ -150,7 +157,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
-    const recentSearches = useRecentSearches();
+    const [recentSearches, clearRecentSearches] = useRecentSearches();
 
     const results = useMemo<Room[] | null>(() => {
         if (!query) return null;
@@ -333,7 +340,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
             { recentSearches.length ? (
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentSearches" role="group">
-                    <h4>{ _t("Recent searches") }</h4>
+                    <h4>
+                        { _t("Recent searches") }
+                        <AccessibleButton kind="link" onClick={clearRecentSearches}>
+                            { _t("Clear") }
+                        </AccessibleButton>
+                    </h4>
                     <div>
                         { recentSearches.map(room => (
                             <Option

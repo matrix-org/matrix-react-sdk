@@ -179,6 +179,15 @@ limitations under the License.
         .mx_SpotlightDialog_recentSearches {
             overflow-y: hidden;
             height: calc(100% - 100px);
+
+            > h4 > .mx_AccessibleButton_kind_link {
+                padding: 0;
+                float: right;
+                font-weight: normal;
+                font-size: $font-12px;
+                line-height: $font-15px;
+                color: $secondary-content;
+            }
         }
 
         .mx_SpotlightDialog_enterPrompt {
