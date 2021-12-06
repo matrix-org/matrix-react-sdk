@@ -941,6 +941,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // If we are redirecting to a Room Alias and it is for the room we already showing then replace history item
         const replaceLast = presentedId[0] === "#" && roomInfo.room_id === this.state.currentRoomId;
 
+        if (roomInfo.room_id === this.state.currentRoomId) {
+            // if we are re-viewing the same room then copy any state we already know
+            roomInfo.threepid_invite = roomInfo.threepid_invite ?? this.state.threepidInvite;
+            roomInfo.oob_data = roomInfo.oob_data ?? this.state.roomOobData;
+            roomInfo.forceTimeline = roomInfo.forceTimeline ?? this.state.forceTimeline;
+            roomInfo.justCreatedOpts = roomInfo.justCreatedOpts ?? this.state.roomJustCreatedOpts;
+        }
+
         if (roomInfo.event_id && roomInfo.highlighted) {
             presentedId += "/" + roomInfo.event_id;
         }
