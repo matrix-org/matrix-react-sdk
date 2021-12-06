@@ -304,35 +304,36 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             { roomsSection }
             { spacesSection }
             { spaceRoomsSection }
-            { (results.length + spaceResults.length) === 0 ? _t("No results") : null }
+            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                <h4>{ _t('Use "%(query)s" to search', { query }) }</h4>
+                <div>
+                    <Option
+                        id="mx_SpotlightDialog_button_explorePublicRooms"
+                        className="mx_SpotlightDialog_explorePublicRooms"
+                        onClick={() => {
+                            defaultDispatcher.dispatch({
+                                action: Action.ViewRoomDirectory,
+                                initialText: query,
+                            });
+                            onFinished();
+                        }}
+                    >
+                        { _t("Public rooms") }
+                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
+                    </Option>
+                </div>
+            </div>
+            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                <h4>{ _t("Other searches") }</h4>
+                <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
+                    { _t("To search messages, look for this icon at the top of a room <icon/>", {}, {
+                        icon: () => <div className="mx_SpotlightDialog_otherSearches_messageSearchIcon" />,
+                    }) }
+                </div>
+            </div>
         </>;
     } else {
         content = <>
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                <h4>{ _t("Search for") }</h4>
-                <div>
-                    <AccessibleButton
-                        kind="primary_outline"
-                        onClick={() => {
-                            // TODO does not work when user is on Home, or a Space.
-                            defaultDispatcher.fire(Action.SearchRoomTimeline);
-                            onFinished();
-                        }}
-                    >
-                        { _t("Messages") }
-                    </AccessibleButton>
-                    <AccessibleButton
-                        kind="primary_outline"
-                        onClick={() => {
-                            defaultDispatcher.fire(Action.ViewRoomDirectory);
-                            onFinished();
-                        }}
-                    >
-                        { _t("Public Rooms") }
-                    </AccessibleButton>
-                </div>
-            </div>
-
             <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentlyViewed" role="group">
                 <h4>{ _t("Recently viewed") }</h4>
                 <div>

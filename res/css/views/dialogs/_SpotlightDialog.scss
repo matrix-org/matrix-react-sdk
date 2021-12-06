@@ -180,6 +180,24 @@ limitations under the License.
                     transform: translateY(-50%);
                 }
             }
+
+            .mx_SpotlightDialog_otherSearches_messageSearchText {
+                font-size: $font-15px;
+                line-height: $font-24px;
+            }
+
+            .mx_SpotlightDialog_otherSearches_messageSearchIcon {
+                display: inline-block;
+                margin-left: 8px;
+                width: 20px;
+                height: 20px;
+                background-color: $secondary-content;
+                vertical-align: text-bottom;
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-size: contain;
+                mask-image: url('$(res)/img/element-icons/room/search-inset.svg');
+            }
         }
 
         .mx_SpotlightDialog_result_details {
