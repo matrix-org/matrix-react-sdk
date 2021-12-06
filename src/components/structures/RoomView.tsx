@@ -933,12 +933,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     this.messagePanel?.jumpToLiveTimeline();
                 }
                 break;
-
-            case Action.SearchRoomTimeline:
-                this.setState({
-                    searching: true,
-                });
-                break;
         }
     };
 

@@ -228,9 +228,4 @@ export enum Action {
      * Payload: none
      */
     AnonymousAnalyticsReject = "anonymous_analytics_reject",
-
-    /**
-     * Searches the currently open room. No additional payload information required.
-     */
-    SearchRoomTimeline = "search_room_timeline",
 }
