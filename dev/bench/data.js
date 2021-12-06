@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638787834881,
+  "lastUpdate": 1638790530870,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45416,6 +45416,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1195.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2bfffab5663b382f64d5a2c6b7fb40b32ebd78c7",
+          "message": "Add edits and replies to the right panel timeline & prepare the timelineCard to share code with threads (#7262)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2021-12-06T12:29:37+01:00",
+          "tree_id": "9a029b607daa7c62e22b08eaaeec4ce9b93bd834",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2bfffab5663b382f64d5a2c6b7fb40b32ebd78c7"
+        },
+        "date": 1638790528155,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5081.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 908.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1599.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4236.5,
             "unit": "ms",
             "extra": "type: measure"
           }
