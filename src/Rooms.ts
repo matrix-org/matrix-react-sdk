@@ -165,10 +165,12 @@ export function roomContextDetailsText(room: Room): string {
         return room.getMember(dmPartner)?.rawDisplayName;
     }
 
-    const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(room.roomId);
+    const [parent, ...otherParents] = SpaceStore.instance.spacePanelSpaces.filter(s => {
+        return SpaceStore.instance.getSpaceFilteredRoomIds(s.roomId).has(room.roomId);
+    });
     if (parent) {
         return _t("%(spaceName)s and %(count)s others", {
-            spaceName: room.client.getRoom(parent).name,
+            spaceName: parent.name,
             count: otherParents.length,
         });
     }
