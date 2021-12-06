@@ -778,8 +778,8 @@ export default class CallHandler extends EventEmitter {
         // if the runtime env doesn't do VoIP, whine.
         if (!MatrixClientPeg.get().supportsVoip()) {
             Modal.createTrackedDialog('Call Handler', 'VoIP is unsupported', ErrorDialog, {
-                title: _t('VoIP is unsupported'),
-                description: _t('You cannot place VoIP calls in this browser.'),
+                title: _t('Voice/video are unsupported'),
+                description: _t('You cannot place voice/video calls in this browser.'),
             });
             return;
         }
@@ -787,7 +787,7 @@ export default class CallHandler extends EventEmitter {
         if (MatrixClientPeg.get().getSyncState() === SyncState.Error) {
             Modal.createTrackedDialog('Call Handler', 'Sync error', ErrorDialog, {
                 title: _t('Connectivity to the server has been lost'),
-                description: _t('You cannot place VoIP calls without a connection to the server.'),
+                description: _t('You cannot place voice/video calls without a connection to the server.'),
             });
             return;
         }
