@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638784268538,
+  "lastUpdate": 1638786000364,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45332,6 +45332,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 668.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "684b0617aecd5a88a9447a93f34bbed8753799e9",
+          "message": "Support sharing custom locations. (#7185)\n\nAdd the ability to click on the map to share a specific named location.",
+          "timestamp": "2021-12-06T10:13:06Z",
+          "tree_id": "bb3b7b23b7c32d4dae3576f7fabd7211d912e441",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/684b0617aecd5a88a9447a93f34bbed8753799e9"
+        },
+        "date": 1638785996443,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4673.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1089.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1683.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4839.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
