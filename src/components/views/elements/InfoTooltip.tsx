@@ -36,7 +36,7 @@ interface ITooltipProps {
 }
 
 @replaceableComponent("views.elements.InfoTooltip")
-export default class InfoTooltip extends React.PureComponent<ITooltipProps, IState> {
+export default class InfoTooltip extends React.PureComponent<ITooltipProps> {
     constructor(props: ITooltipProps) {
         super(props);
     }

@@ -58,15 +58,19 @@ export default class ActionButton extends React.Component<IProps, IState> {
     };
 
     private onMouseEnter = (): void => {
-        if (this.props.tooltip) this.setState({ showTooltip: true });
+        this.onShowTooltip();
         if (this.props.mouseOverAction) {
             dis.dispatch({ action: this.props.mouseOverAction });
         }
     };
 
-    private onMouseLeave = (): void => {
+    private onShowTooltip = (): void => {
+        if (this.props.tooltip) this.setState({ showTooltip: true });
+    }
+
+    private onHideTooltip = (): void => {
         this.setState({ showTooltip: false });
-    };
+    }
 
     render() {
         let tooltip;
@@ -88,7 +92,9 @@ export default class ActionButton extends React.Component<IProps, IState> {
                 className={classNames.join(" ")}
                 onClick={this.onClick}
                 onMouseEnter={this.onMouseEnter}
-                onMouseLeave={this.onMouseLeave}
+                onMouseLeave={this.onHideTooltip}
+                onFocus={this.onShowTooltip}
+                onBlur={this.onHideTooltip}
                 aria-label={this.props.label}
             >
                 { icon }
