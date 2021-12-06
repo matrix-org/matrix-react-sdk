@@ -210,12 +210,14 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
 
         rightPanelPhaseButtons.set(RightPanelPhases.PinnedMessages,
             <PinnedMessagesHeaderButton
+                key="pinnedMessagesButton"
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
                 onClick={this.onPinnedMessagesClicked} />,
         );
         rightPanelPhaseButtons.set(RightPanelPhases.Timeline,
             <TimelineCardHeaderButton
+                key="timelineButton"
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.Timeline)}
                 onClick={this.onTimelineCardClicked} />,
@@ -234,6 +236,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         );
         rightPanelPhaseButtons.set(RightPanelPhases.NotificationPanel,
             <HeaderButton
+                key="notifsButton"
                 name="notifsButton"
                 title={_t('Notifications')}
                 isHighlighted={this.isPhase(RightPanelPhases.NotificationPanel)}
@@ -242,6 +245,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         );
         rightPanelPhaseButtons.set(RightPanelPhases.RoomSummary,
             <HeaderButton
+                key="roomSummaryButton"
                 name="roomSummaryButton"
                 title={_t('Room Info')}
                 isHighlighted={this.isPhase(ROOM_INFO_PHASES)}
