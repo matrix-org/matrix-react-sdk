@@ -66,11 +66,11 @@ export default class ActionButton extends React.Component<IProps, IState> {
 
     private onShowTooltip = (): void => {
         if (this.props.tooltip) this.setState({ showTooltip: true });
-    }
+    };
 
     private onHideTooltip = (): void => {
         this.setState({ showTooltip: false });
-    }
+    };
 
     render() {
         let tooltip;
