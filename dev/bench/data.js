@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638783203679,
+  "lastUpdate": 1638783429747,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45260,6 +45260,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5240.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb05044bc4ce10da24669981de68f85d6d3c5cf2",
+          "message": "Fix labs exploding when lab group is empty (#7290)",
+          "timestamp": "2021-12-06T09:29:42Z",
+          "tree_id": "05bf1eb134ff9b67fb2758583710cc3abc5900d2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb05044bc4ce10da24669981de68f85d6d3c5cf2"
+        },
+        "date": 1638783425815,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5120.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 781.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
