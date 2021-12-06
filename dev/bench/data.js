@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638801490890,
+  "lastUpdate": 1638801967731,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45596,6 +45596,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4517.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerryannabell@gmail.com",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eab028f2f8075ce5ab4452543a3196cb1e7ae47d",
+          "message": "Make emoji picker search placeholder localizable (#7294)",
+          "timestamp": "2021-12-06T14:39:11Z",
+          "tree_id": "1d7bfcb2718f3c619a9afcca265f2279e8d26d3a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eab028f2f8075ce5ab4452543a3196cb1e7ae47d"
+        },
+        "date": 1638801964394,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5162.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1123.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1741.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5009.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
