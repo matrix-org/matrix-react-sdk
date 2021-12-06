@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638790530870,
+  "lastUpdate": 1638791627262,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45464,6 +45464,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4236.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12000060a5f800089da8cd21be6813eccc737a1c",
+          "message": "Fix: Warning: Unsupported style property pointer-events. Did you mean pointerEvents? (#7291)",
+          "timestamp": "2021-12-06T12:47:43+01:00",
+          "tree_id": "fffd3831caa6a78aef3e3fd050fc0705aa0775c9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12000060a5f800089da8cd21be6813eccc737a1c"
+        },
+        "date": 1638791623814,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4691.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1016,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1632,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4487.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
