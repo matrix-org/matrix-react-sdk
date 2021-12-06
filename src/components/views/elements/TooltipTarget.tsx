@@ -52,7 +52,7 @@ export const TooltipTarget: React.FC<IProps> = ({
             onMouseLeave={hide}
             onFocus={show}
             onBlur={hide}
-            { ...rest }
+            {...rest}
         >
             { children }
             <Tooltip

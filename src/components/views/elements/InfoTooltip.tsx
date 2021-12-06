@@ -39,7 +39,7 @@ interface ITooltipProps {
 export default class InfoTooltip extends React.PureComponent<ITooltipProps, IState> {
     constructor(props: ITooltipProps) {
         super(props);
-    };
+    }
 
     render() {
         const { tooltip, children, tooltipClassName, className, kind } = this.props;
@@ -58,7 +58,7 @@ export default class InfoTooltip extends React.PureComponent<ITooltipProps, ISta
                 alignment={Alignment.Right}
             >
                 <span className={classNames("mx_InfoTooltip_icon", iconClassName)} aria-label={title} />
-                {children}
+                { children }
             </TooltipTarget>
         );
     }

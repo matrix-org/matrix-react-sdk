@@ -80,6 +80,8 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
                 {...props}
                 onMouseOver={this.onMouseOver}
                 onMouseLeave={this.onMouseLeave}
+                onFocus={this.onMouseOver}
+                onBlur={this.onMouseLeave}
                 aria-label={title}
             >
                 { children }
