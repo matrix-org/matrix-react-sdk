@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638791627262,
+  "lastUpdate": 1638793075886,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45512,6 +45512,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4487.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9bcb82d6dcb995ee08449ac806c66ebbba224fb3",
+          "message": "Add CSS variable to make the UI gaps consistent and fix the resize handle position (#7234)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2021-12-06T13:10:52+01:00",
+          "tree_id": "41fd33cfcc2739951b09c757e471e6ad20dd8c8f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9bcb82d6dcb995ee08449ac806c66ebbba224fb3"
+        },
+        "date": 1638793072253,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4746.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 698.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
