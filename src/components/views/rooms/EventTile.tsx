@@ -493,6 +493,10 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.once(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
+
+            if (this.thread) {
+                this.setupNotificationListener(this.thread);
+            }
         }
 
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
@@ -506,6 +510,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.threadState = notifications.threadsState.get(thread);
 
         this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
+        this.onThreadStateUpdate();
     };
 
     private onThreadStateUpdate = (): void => {
@@ -574,6 +579,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         room?.off(ThreadEvent.New, this.onNewThread);
+        if (this.threadState) {
+            this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
