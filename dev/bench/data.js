@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638783065960,
+  "lastUpdate": 1638783079279,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45068,6 +45068,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4405.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ca6feaad8973214eef9a299e95e2e7379f833f6f",
+          "message": "Expose PL control for pinned events when lab enabled (#7278)",
+          "timestamp": "2021-12-06T09:25:37Z",
+          "tree_id": "0ee6bbc3dc1041e9978a1f232e2c82057b838720",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ca6feaad8973214eef9a299e95e2e7379f833f6f"
+        },
+        "date": 1638783076772,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4857.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 913.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1659.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4276.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
