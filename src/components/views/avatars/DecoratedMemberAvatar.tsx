@@ -18,12 +18,12 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 import { User } from "matrix-js-sdk/src/models/user";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MemberAvatar from "./MemberAvatar";
 import { isPresenceEnabled } from "../../../utils/presence";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps extends React.ComponentProps<typeof MemberAvatar> {}
 
@@ -53,12 +53,14 @@ function tooltipText(variant: Icon) {
 @replaceableComponent("views.avatars.DecoratedRoomAvatar")
 export default class DecoratedRoomAvatar extends React.PureComponent<IProps, IState> {
     private _dmUser: User;
+    static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
-    constructor(props: IProps) {
+    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
 
         if (isPresenceEnabled()) {
-            this.dmUser = MatrixClientPeg.get().getUser(this.props.member.userId);
+            this.dmUser = context.getUser(this.props.member.userId);
         }
 
         this.state = {
