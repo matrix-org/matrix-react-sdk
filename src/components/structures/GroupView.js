@@ -428,7 +428,7 @@ export default class GroupView extends React.Component {
         membershipBusy: false,
         publicityBusy: false,
         inviterProfile: null,
-        showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+        showRightPanel: RightPanelStore.instance.isOpenForGroup,
         showUpgradeNotice: !localStorage.getItem(UPGRADE_NOTICE_LS_KEY),
     };
 
@@ -440,7 +440,7 @@ export default class GroupView extends React.Component {
         this._initGroupStore(this.props.groupId, true);
 
         this._dispatcherRef = dis.register(this._onAction);
-        this._rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this._onRightPanelStoreUpdate);
+        this._rightPanelStoreToken = RightPanelStore.instance.addListener(this._onRightPanelStoreUpdate);
     }
 
     componentWillUnmount() {
@@ -469,7 +469,7 @@ export default class GroupView extends React.Component {
 
     _onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+            showRightPanel: RightPanelStore.instance.isOpenForGroup,
         });
     };
 

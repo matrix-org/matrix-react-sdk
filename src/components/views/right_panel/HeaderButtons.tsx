@@ -50,7 +50,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     constructor(props: IProps & P, kind: HeaderKind) {
         super(props);
 
-        const rps = RightPanelStore.getSharedInstance();
+        const rps = RightPanelStore.instance;
         this.state = {
             headerKind: kind,
             phase: kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
@@ -58,7 +58,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     public componentDidMount() {
-        this.storeToken = RightPanelStore.getSharedInstance().addListener(this.onRightPanelUpdate.bind(this));
+        this.storeToken = RightPanelStore.instance.addListener(this.onRightPanelUpdate.bind(this));
         this.dispatcherRef = dis.register(this.onAction.bind(this)); // used by subclasses
     }
 
@@ -86,7 +86,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     private onRightPanelUpdate() {
-        const rps = RightPanelStore.getSharedInstance();
+        const rps = RightPanelStore.instance;
         if (this.state.headerKind === HeaderKind.Room) {
             this.setState({ phase: rps.visibleRoomPanelPhase });
         } else if (this.state.headerKind === HeaderKind.Group) {

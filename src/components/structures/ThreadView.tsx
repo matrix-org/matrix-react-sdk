@@ -206,7 +206,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             event_id: this.state.thread?.id,
         };
 
-        let previousPhase = RightPanelStore.getSharedInstance().previousPhase;
+        let previousPhase = RightPanelStore.instance.previousPhase;
         if (!SettingsStore.getValue("feature_maximised_widgets")) {
             previousPhase = RightPanelPhases.ThreadPanel;
         }

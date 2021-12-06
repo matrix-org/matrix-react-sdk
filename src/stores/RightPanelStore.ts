@@ -67,7 +67,7 @@ const MEMBER_INFO_PHASES = [
  * sessions.
  */
 export default class RightPanelStore extends Store<ActionPayload> {
-    private static instance: RightPanelStore;
+    private static internalInstance: RightPanelStore;
     private state: RightPanelStoreState;
     private lastRoomId: string;
 
@@ -233,13 +233,12 @@ export default class RightPanelStore extends Store<ActionPayload> {
                 break;
         }
     }
-
-    static getSharedInstance(): RightPanelStore {
-        if (!RightPanelStore.instance) {
-            RightPanelStore.instance = new RightPanelStore();
+    public static get instance(): RightPanelStore {
+        if (!RightPanelStore.internalInstance) {
+            RightPanelStore.internalInstance = new RightPanelStore();
         }
-        return RightPanelStore.instance;
+        return RightPanelStore.internalInstance;
     }
 }
 
-window.mxRightPanelStore = RightPanelStore.getSharedInstance();
+window.mxRightPanelStore = RightPanelStore.instance;

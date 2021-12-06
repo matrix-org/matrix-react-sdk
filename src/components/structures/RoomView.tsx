@@ -245,7 +245,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             canPeek: false,
             showApps: false,
             isPeeking: false,
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom,
             joining: false,
             atEndOfLiveTimeline: true,
             atEndOfLiveTimelineInit: false,
@@ -288,7 +288,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.context.on("Event.decrypted", this.onEventDecrypted);
         // Start listening for RoomViewStore updates
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        this.rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this.onRightPanelStoreUpdate);
+        this.rightPanelStoreToken = RightPanelStore.instance.addListener(this.onRightPanelStoreUpdate);
 
         WidgetEchoStore.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
@@ -360,7 +360,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // This is a hack to hide the chat. This should not be necessary once the right panel
         // phase is stored per room. (need to be done after check widget so that mainSplitContentType is updated)
         if (
-            RightPanelStore.getSharedInstance().roomPanelPhase === RightPanelPhases.Timeline &&
+            RightPanelStore.instance.roomPanelPhase === RightPanelPhases.Timeline &&
             this.state.showRightPanel &&
             !WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)
         ) {
@@ -786,7 +786,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom,
         });
     };
 

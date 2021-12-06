@@ -146,12 +146,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
 
     private onRoomSummaryClicked = () => {
         // use roomPanelPhase rather than this.state.phase as it remembers the latest one if we close
-        const lastPhase = RightPanelStore.getSharedInstance().roomPanelPhase;
+        const lastPhase = RightPanelStore.instance.roomPanelPhase;
         if (ROOM_INFO_PHASES.includes(lastPhase)) {
             if (this.state.phase === lastPhase) {
                 this.setPhase(lastPhase);
             } else {
-                this.setPhase(lastPhase, RightPanelStore.getSharedInstance().roomPanelPhaseParams);
+                this.setPhase(lastPhase, RightPanelStore.instance.roomPanelPhaseParams);
             }
         } else {
             // This toggles for us, if needed

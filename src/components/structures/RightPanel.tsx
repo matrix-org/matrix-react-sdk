@@ -90,7 +90,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            ...RightPanelStore.getSharedInstance().roomPanelPhaseParams,
+            ...RightPanelStore.instance.roomPanelPhaseParams,
             phase: this.getPhaseFromProps(),
             isUserPrivilegedInGroup: null,
             member: this.getUserForPanel(),
@@ -106,13 +106,13 @@ export default class RightPanel extends React.Component<IProps, IState> {
     // as both are called at the same time in the constructor.
     private getUserForPanel(): RoomMember {
         if (this.state && this.state.member) return this.state.member;
-        const lastParams = RightPanelStore.getSharedInstance().roomPanelPhaseParams;
+        const lastParams = RightPanelStore.instance.roomPanelPhaseParams;
         return this.props.member || lastParams['member'];
     }
 
     // gets the current phase from the props and also maybe the store
     private getPhaseFromProps() {
-        const rps = RightPanelStore.getSharedInstance();
+        const rps = RightPanelStore.instance;
         const userForPanel = this.getUserForPanel();
         if (this.props.groupId) {
             if (!RIGHT_PANEL_PHASES_NO_ARGS.includes(rps.groupPanelPhase)) {
