@@ -55,6 +55,8 @@ import Spinner from "../elements/Spinner";
 import { roomContextDetailsText } from "../../../Rooms";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../dispatcher/actions";
+import Modal from "../../../Modal";
+import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50;
@@ -470,6 +472,27 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
             <div id="mx_SpotlightDialog_content" role="listbox" aria-activedescendant={activeDescendant}>
                 { content }
+            </div>
+
+            <div className="mx_SpotlightDialog_footer">
+                <span>
+                    { activeSpace
+                        ? _t("Searching rooms and chats you're in and %(spaceName)s", { spaceName: activeSpace.name })
+                        : _t("Searching rooms and chats you're in") }
+                </span>
+                <AccessibleButton
+                    kind="primary_outline"
+                    onClick={() => {
+                        Modal.createTrackedDialog("Spotlight Feedback", "", GenericFeatureFeedbackDialog, {
+                            title: _t("Spotlight search feedback"),
+                            subheading: _t("Thank you for trying Spotlight search. " +
+                                "Your feedback will help inform the next versions."),
+                            rageshakeLabel: "spotlight-feedback",
+                        });
+                    }}
+                >
+                    { _t("Feedback") }
+                </AccessibleButton>
             </div>
         </BaseDialog>
     </>;
