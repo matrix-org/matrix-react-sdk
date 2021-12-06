@@ -215,10 +215,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
     let content: JSX.Element;
     if (results) {
-        const [people, rooms] = results.reduce((result, room: Room) => {
-            result[DMRoomMap.shared().getUserIdForRoomId(room.roomId) ? 0 : 1].push(room);
+        const [people, rooms, spaces] = results.reduce((result, room: Room) => {
+            if (room.isSpaceRoom()) result[2].push(room);
+            else if (!DMRoomMap.shared().getUserIdForRoomId(room.roomId)) result[1].push(room);
+            else result[0].push(room);
             return result;
-        }, [[], []] as [Room[], Room[]]);
+        }, [[], [], []] as [Room[], Room[], Room[]]);
 
         const resultMapper = (room: Room): JSX.Element => (
             <Option
@@ -251,6 +253,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 <h4>{ _t("Rooms") }</h4>
                 <div>
                     { rooms.slice(0, SECTION_LIMIT).map(resultMapper) }
+                </div>
+            </div>;
+        }
+
+        let spacesSection: JSX.Element;
+        if (spaces.length) {
+            spacesSection = <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                <h4>{ _t("Spaces you're in") }</h4>
+                <div>
+                    { spaces.slice(0, SECTION_LIMIT).map(resultMapper) }
                 </div>
             </div>;
         }
@@ -290,6 +302,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         content = <>
             { peopleSection }
             { roomsSection }
+            { spacesSection }
             { spaceRoomsSection }
             { (results.length + spaceResults.length) === 0 ? _t("No results") : null }
         </>;
