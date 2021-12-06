@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638801967731,
+  "lastUpdate": 1638802830581,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45644,6 +45644,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5009.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "tulir@maunium.net",
+            "name": "Tulir Asokan",
+            "username": "tulir"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e5a6fc738c6c5dd14e943bf7d9e79f173163732",
+          "message": "Allow sharing manual location without giving location permission (#7295)",
+          "timestamp": "2021-12-06T14:53:39Z",
+          "tree_id": "96d8c49cfe56236d41919e99929ea0a23015d631",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e5a6fc738c6c5dd14e943bf7d9e79f173163732"
+        },
+        "date": 1638802826853,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5013.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1145.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1788.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4871,
             "unit": "ms",
             "extra": "type: measure"
           }
