@@ -114,6 +114,7 @@ import GenericToast from "../views/toasts/GenericToast";
 import InfoDialog from "../views/dialogs/InfoDialog";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import AccessibleButton from "../views/elements/AccessibleButton";
+import { ActionPayload } from "../../dispatcher/payloads";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -542,13 +543,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setState(newState);
     }
 
-    onAction = (payload) => {
+    private onAction = (payload: ActionPayload) => {
         // console.log(`MatrixClientPeg.onAction: ${payload.action}`);
 
         // Start the onboarding process for certain actions
-        if (MatrixClientPeg.get() && MatrixClientPeg.get().isGuest() &&
-            ONBOARDING_FLOW_STARTERS.includes(payload.action)
-        ) {
+        if (MatrixClientPeg.get()?.isGuest() && ONBOARDING_FLOW_STARTERS.includes(payload.action)) {
             // This will cause `payload` to be dispatched later, once a
             // sync has reached the "prepared" state. Setting a matrix ID
             // will cause a full login and sync and finally the deferred
@@ -590,7 +589,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 Lifecycle.logout();
                 break;
             case 'require_registration':
-                startAnyRegistrationFlow(payload);
+                startAnyRegistrationFlow(payload as any);
                 break;
             case 'start_registration':
                 if (Lifecycle.isSoftLogout()) {
@@ -666,7 +665,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // known to be in (eg. user clicks on a room in the recents panel), supply the ID
                 // If the user is clicking on a room in the context of the alias being presented
                 // to them, supply the room alias. If both are supplied, the room ID will be ignored.
-                const promise = this.viewRoom(payload);
+                const promise = this.viewRoom(payload as any);
                 if (payload.deferred_action) {
                     promise.then(() => {
                         dis.dispatch(payload.deferred_action);
