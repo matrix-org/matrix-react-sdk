@@ -15,15 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
-import Tooltip from './Tooltip';
+import React, { useState, HTMLAttributes } from 'react';
+import Tooltip, { ITooltipProps } from './Tooltip';
 
-interface IProps {
-    tooltip: React.ReactNode | string;
-    className?: string;
-    tooltipClassName?: string;
-    tooltipContainerClassName?: string;
-    id: string;
+interface IProps extends HTMLAttributes<HTMLSpanElement>, Omit<ITooltipProps, 'visible'> {
+    tooltipTargetClassName?: string;
 }
 
 /**
@@ -31,7 +27,16 @@ interface IProps {
  * and displays children
  */
 export const TooltipTarget: React.FC<IProps> = ({
-    className, id, children, tooltip, tooltipClassName, tooltipContainerClassName,
+    children,
+    tooltipTargetClassName,
+    // tooltip pass through props
+    className,
+    id,
+    label,
+    alignment,
+    yOffset,
+    tooltipClassName,
+    ...rest
 }) => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -39,23 +44,26 @@ export const TooltipTarget: React.FC<IProps> = ({
     const hide = () => setIsVisible(false);
 
     return (
-        <div
+        <span
             tabIndex={0}
-            aria-describedby={isVisible ? id : undefined}
-            className={className}
+            aria-describedby={id}
+            className={tooltipTargetClassName}
             onMouseOver={show}
             onMouseLeave={hide}
             onFocus={show}
             onBlur={hide}
+            { ...rest }
         >
             { children }
             <Tooltip
                 id={id}
-                className={tooltipContainerClassName}
+                className={className}
                 tooltipClassName={tooltipClassName}
-                label={tooltip}
+                label={label}
+                yOffset={yOffset}
+                alignment={alignment}
                 visible={isVisible}
             />
-        </div>
+        </span>
     );
 };

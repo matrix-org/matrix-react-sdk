@@ -39,11 +39,10 @@ export default class TooltipButton extends React.Component<IProps, IState> {
     render() {
         return (
             <TooltipTarget
-                id='todo'
-                className="mx_TooltipButton"
+                className="mx_TooltipButton_container"
                 tooltipClassName="mx_TooltipButton_helpText"
-                tooltipContainerClassName="mx_TooltipButton_container"
-                tooltip={this.props.helpText}
+                tooltipTargetClassName="mx_TooltipButton"
+                label={this.props.helpText}
             >
                 ?
             </TooltipTarget>

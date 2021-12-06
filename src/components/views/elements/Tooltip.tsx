@@ -33,7 +33,7 @@ export enum Alignment {
     Bottom, // Centered
 }
 
-interface IProps {
+export interface ITooltipProps {
         // Class applied to the element used to position the tooltip
         className?: string;
         // Class applied to the tooltip itself
@@ -52,7 +52,7 @@ interface IProps {
 }
 
 @replaceableComponent("views.elements.Tooltip")
-export default class Tooltip extends React.Component<IProps> {
+export default class Tooltip extends React.Component<ITooltipProps> {
     private tooltipContainer: HTMLElement;
     private tooltip: void | Element | Component<Element, any, any>;
     private parent: Element;
