@@ -52,7 +52,6 @@ $activeBorderColor: $primary-content;
             background-color: $secondary-content;
             mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
             transform: rotate(270deg);
-            transition: transform 200ms linear;
         }
 
         &:not(.expanded) {
@@ -85,10 +84,6 @@ $activeBorderColor: $primary-content;
 
     &:hover .mx_SpacePanel_toggleCollapse {
         opacity: 100%;
-
-        &:not(.expanded) {
-            transition: opacity 500ms linear;
-        }
     }
 
     ul {
