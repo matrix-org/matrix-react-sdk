@@ -69,13 +69,14 @@ import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
 import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 export interface IDevice {
     deviceId: string;
@@ -125,7 +126,7 @@ async function openDMForUser(matrixClient: MatrixClient, userId: string) {
 
     if (lastActiveRoom) {
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_id: lastActiveRoom.roomId,
         });
         return;
@@ -367,7 +368,7 @@ const UserOptionsSection: React.FC<{
             const onReadReceiptButton = function() {
                 const room = cli.getRoom(member.roomId);
                 dis.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     highlighted: true,
                     event_id: room.getEventReadUpTo(member.userId),
                     room_id: member.roomId,
@@ -378,6 +379,7 @@ const UserOptionsSection: React.FC<{
                 dis.dispatch<ComposerInsertPayload>({
                     action: Action.ComposerInsert,
                     userId: member.userId,
+                    timelineRenderingType: TimelineRenderingType.Room,
                 });
             };
 
@@ -582,7 +584,7 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
             // get out of sync if we force setState here!
             logger.log("Kick success");
         }, function(err) {
-            console.error("Kick error: " + err);
+            logger.error("Kick error: " + err);
             Modal.createTrackedDialog('Failed to kick', '', ErrorDialog, {
                 title: _t("Failed to kick"),
                 description: ((err && err.message) ? err.message : "Operation failed"),
@@ -658,17 +660,17 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
             // so first yield to allow to rerender after closing the dialog.
             await Promise.resolve();
 
-            console.info(`Started redacting recent ${count} messages for ${user} in ${roomId}`);
+            logger.info(`Started redacting recent ${count} messages for ${user} in ${roomId}`);
             await Promise.all(eventsToRedact.map(async event => {
                 try {
                     await cli.redactEvent(roomId, event.getId());
                 } catch (err) {
                     // log and swallow errors
-                    console.error("Could not redact", event.getId());
-                    console.error(err);
+                    logger.error("Could not redact", event.getId());
+                    logger.error(err);
                 }
             }));
-            console.info(`Finished redacting recent ${count} messages for ${user} in ${roomId}`);
+            logger.info(`Finished redacting recent ${count} messages for ${user} in ${roomId}`);
         }
     };
 
@@ -744,7 +746,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
             // get out of sync if we force setState here!
             logger.log("Ban success");
         }, function(err) {
-            console.error("Ban error: " + err);
+            logger.error("Ban error: " + err);
             Modal.createTrackedDialog('Failed to ban user', '', ErrorDialog, {
                 title: _t("Error"),
                 description: _t("Failed to ban user"),
@@ -789,7 +791,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
             try {
                 if (!(await warnSelfDemote(SpaceStore.spacesEnabled && room?.isSpaceRoom()))) return;
             } catch (e) {
-                console.error("Failed to warn about self demotion: ", e);
+                logger.error("Failed to warn about self demotion: ", e);
                 return;
             }
         }
@@ -817,7 +819,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
                 // get out of sync if we force setState here!
                 logger.log("Mute toggle success");
             }, function(err) {
-                console.error("Mute error: " + err);
+                logger.error("Mute error: " + err);
                 Modal.createTrackedDialog('Failed to mute user', '', ErrorDialog, {
                     title: _t("Error"),
                     description: _t("Failed to mute user"),
@@ -1120,6 +1122,10 @@ const PowerLevelEditor: React.FC<{
     const cli = useContext(MatrixClientContext);
 
     const [selectedPowerLevel, setSelectedPowerLevel] = useState(user.powerLevel);
+    useEffect(() => {
+        setSelectedPowerLevel(user.powerLevel);
+    }, [user]);
+
     const onPowerChange = useCallback(async (powerLevel: number) => {
         setSelectedPowerLevel(powerLevel);
 
@@ -1130,7 +1136,7 @@ const PowerLevelEditor: React.FC<{
                     // get out of sync if we force setState here!
                     logger.log("Power change success");
                 }, function(err) {
-                    console.error("Failed to change power level " + err);
+                    logger.error("Failed to change power level " + err);
                     Modal.createTrackedDialog('Failed to change power level', '', ErrorDialog, {
                         title: _t("Error"),
                         description: _t("Failed to change power level"),
@@ -1166,7 +1172,7 @@ const PowerLevelEditor: React.FC<{
             try {
                 if (!(await warnSelfDemote(SpaceStore.spacesEnabled && room?.isSpaceRoom()))) return;
             } catch (e) {
-                console.error("Failed to warn about self demotion: ", e);
+                logger.error("Failed to warn about self demotion: ", e);
             }
         }
 
@@ -1315,8 +1321,8 @@ const BasicUserInfo: React.FC<{
         try {
             await cli.deactivateSynapseUser(member.userId);
         } catch (err) {
-            console.error("Failed to deactivate user");
-            console.error(err);
+            logger.error("Failed to deactivate user");
+            logger.error(err);
 
             Modal.createTrackedDialog('Failed to deactivate Synapse user', '', ErrorDialog, {
                 title: _t('Failed to deactivate user'),

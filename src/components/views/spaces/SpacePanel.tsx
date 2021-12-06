@@ -34,16 +34,17 @@ import SpaceCreateMenu from "./SpaceCreateMenu";
 import { SpaceButton, SpaceItem } from "./SpaceTreeLevel";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import SpaceStore, {
-    HOME_SPACE,
+import SpaceStore from "../../../stores/spaces/SpaceStore";
+import {
+    getMetaSpaceName,
+    MetaSpace,
+    SpaceKey,
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_INVITED_SPACES,
     UPDATE_SELECTED_SPACE,
     UPDATE_TOP_LEVEL_SPACES,
-} from "../../../stores/SpaceStore";
-import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
+} from "../../../stores/spaces";
 import { RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
-import { Key } from "../../../Keyboard";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import IconizedContextMenu, {
@@ -53,18 +54,26 @@ import IconizedContextMenu, {
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import UIStore from "../../../stores/UIStore";
+import QuickSettingsButton from "./QuickSettingsButton";
+import { useSettingValue } from "../../../hooks/useSettings";
+import UserMenu from "../../structures/UserMenu";
+import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
 
-const useSpaces = (): [Room[], Room[], Room | null] => {
+const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
         return SpaceStore.instance.invitedSpaces;
     });
-    const spaces = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_TOP_LEVEL_SPACES, () => {
-        return SpaceStore.instance.spacePanelSpaces;
-    });
-    const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
+    const [metaSpaces, actualSpaces] = useEventEmitterState<[MetaSpace[], Room[]]>(
+        SpaceStore.instance, UPDATE_TOP_LEVEL_SPACES,
+        () => [
+            SpaceStore.instance.enabledMetaSpaces,
+            SpaceStore.instance.spacePanelSpaces,
+        ],
+    );
+    const activeSpace = useEventEmitterState<SpaceKey>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpace;
     });
-    return [invites, spaces, activeSpace];
+    return [invites, metaSpaces, actualSpaces, activeSpace];
 };
 
 interface IInnerSpacePanelProps {
@@ -73,7 +82,11 @@ interface IInnerSpacePanelProps {
     setPanelCollapsed: Dispatch<SetStateAction<boolean>>;
 }
 
-const HomeButtonContextMenu = ({ onFinished, ...props }: ComponentProps<typeof SpaceContextMenu>) => {
+export const HomeButtonContextMenu = ({
+    onFinished,
+    hideHeader,
+    ...props
+}: ComponentProps<typeof SpaceContextMenu>) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
@@ -84,9 +97,9 @@ const HomeButtonContextMenu = ({ onFinished, ...props }: ComponentProps<typeof S
         className="mx_SpacePanel_contextMenu"
         compact
     >
-        <div className="mx_SpacePanel_contextMenu_header">
+        { !hideHeader && <div className="mx_SpacePanel_contextMenu_header">
             { _t("Home") }
-        </div>
+        </div> }
         <IconizedContextMenuOptionList first>
             <IconizedContextMenuCheckbox
                 iconClassName="mx_SpacePanel_noIcon"
@@ -100,35 +113,74 @@ const HomeButtonContextMenu = ({ onFinished, ...props }: ComponentProps<typeof S
     </IconizedContextMenu>;
 };
 
-interface IHomeButtonProps {
+interface IMetaSpaceButtonProps extends ComponentProps<typeof SpaceButton> {
     selected: boolean;
     isPanelCollapsed: boolean;
 }
 
-const HomeButton = ({ selected, isPanelCollapsed }: IHomeButtonProps) => {
-    const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
-        return SpaceStore.instance.allRoomsInHome;
-    });
+type MetaSpaceButtonProps = Pick<IMetaSpaceButtonProps, "selected" | "isPanelCollapsed">;
 
+const MetaSpaceButton = ({ selected, isPanelCollapsed, ...props }: IMetaSpaceButtonProps) => {
     return <li
         className={classNames("mx_SpaceItem", {
             "collapsed": isPanelCollapsed,
         })}
         role="treeitem"
     >
-        <SpaceButton
-            className="mx_SpaceButton_home"
-            onClick={() => SpaceStore.instance.setActiveSpace(null)}
-            selected={selected}
-            label={allRoomsInHome ? _t("All rooms") : _t("Home")}
-            notificationState={allRoomsInHome
-                ? RoomNotificationStateStore.instance.globalState
-                : SpaceStore.instance.getNotificationState(HOME_SPACE)}
-            isNarrow={isPanelCollapsed}
-            ContextMenuComponent={HomeButtonContextMenu}
-            contextMenuTooltip={_t("Options")}
-        />
+        <SpaceButton {...props} selected={selected} isNarrow={isPanelCollapsed} />
     </li>;
+};
+
+const HomeButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+    const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
+        return SpaceStore.instance.allRoomsInHome;
+    });
+
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.Home}
+        className="mx_SpaceButton_home"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={getMetaSpaceName(MetaSpace.Home, allRoomsInHome)}
+        notificationState={allRoomsInHome
+            ? RoomNotificationStateStore.instance.globalState
+            : SpaceStore.instance.getNotificationState(MetaSpace.Home)}
+        ContextMenuComponent={HomeButtonContextMenu}
+        contextMenuTooltip={_t("Options")}
+    />;
+};
+
+const FavouritesButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.Favourites}
+        className="mx_SpaceButton_favourites"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={getMetaSpaceName(MetaSpace.Favourites)}
+        notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Favourites)}
+    />;
+};
+
+const PeopleButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.People}
+        className="mx_SpaceButton_people"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={getMetaSpaceName(MetaSpace.People)}
+        notificationState={SpaceStore.instance.getNotificationState(MetaSpace.People)}
+    />;
+};
+
+const OrphansButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+    return <MetaSpaceButton
+        spaceKey={MetaSpace.Orphans}
+        className="mx_SpaceButton_orphans"
+        selected={selected}
+        isPanelCollapsed={isPanelCollapsed}
+        label={getMetaSpaceName(MetaSpace.Orphans)}
+        notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Orphans)}
+    />;
 };
 
 const CreateSpaceButton = ({
@@ -182,13 +234,25 @@ const CreateSpaceButton = ({
     </li>;
 };
 
+const metaSpaceComponentMap: Record<MetaSpace, typeof HomeButton> = {
+    [MetaSpace.Home]: HomeButton,
+    [MetaSpace.Favourites]: FavouritesButton,
+    [MetaSpace.People]: PeopleButton,
+    [MetaSpace.Orphans]: OrphansButton,
+};
+
 // Optimisation based on https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#recommended-droppable--performance-optimisation
 const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCollapsed, setPanelCollapsed }) => {
-    const [invites, spaces, activeSpace] = useSpaces();
+    const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
     const activeSpaces = activeSpace ? [activeSpace] : [];
 
+    const metaSpacesSection = metaSpaces.map(key => {
+        const Component = metaSpaceComponentMap[key];
+        return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
+    });
+
     return <div className="mx_SpaceTreeLevel">
-        <HomeButton selected={!activeSpace} isPanelCollapsed={isPanelCollapsed} />
+        { metaSpacesSection }
         { invites.map(s => (
             <SpaceItem
                 key={s.roomId}
@@ -198,7 +262,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
                 onExpand={() => setPanelCollapsed(false)}
             />
         )) }
-        { spaces.map((s, i) => (
+        { actualSpaces.map((s, i) => (
             <Draggable key={s.roomId} draggableId={s.roomId} index={i}>
                 { (provided, snapshot) => (
                     <SpaceItem
@@ -221,6 +285,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
 });
 
 const SpacePanel = () => {
+    const metaSpacesEnabled = useSettingValue("feature_spaces_metaspaces");
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
     const ref = useRef<HTMLUListElement>();
     useLayoutEffect(() => {
@@ -228,75 +293,12 @@ const SpacePanel = () => {
         return () => UIStore.instance.stopTrackingElementDimensions("SpacePanel");
     }, []);
 
-    const onKeyDown = (ev: React.KeyboardEvent) => {
-        if (ev.defaultPrevented) return;
-
-        let handled = true;
-
-        switch (ev.key) {
-            case Key.ARROW_UP:
-                onMoveFocus(ev.target as Element, true);
-                break;
-            case Key.ARROW_DOWN:
-                onMoveFocus(ev.target as Element, false);
-                break;
-            default:
-                handled = false;
-        }
-
-        if (handled) {
-            // consume all other keys in context menu
-            ev.stopPropagation();
-            ev.preventDefault();
-        }
-    };
-
-    const onMoveFocus = (element: Element, up: boolean) => {
-        let descending = false; // are we currently descending or ascending through the DOM tree?
-        let classes: DOMTokenList;
-
-        do {
-            const child = up ? element.lastElementChild : element.firstElementChild;
-            const sibling = up ? element.previousElementSibling : element.nextElementSibling;
-
-            if (descending) {
-                if (child) {
-                    element = child;
-                } else if (sibling) {
-                    element = sibling;
-                } else {
-                    descending = false;
-                    element = element.parentElement;
-                }
-            } else {
-                if (sibling) {
-                    element = sibling;
-                    descending = true;
-                } else {
-                    element = element.parentElement;
-                }
-            }
-
-            if (element) {
-                if (element.classList.contains("mx_ContextualMenu")) { // we hit the top
-                    element = up ? element.lastElementChild : element.firstElementChild;
-                    descending = true;
-                }
-                classes = element.classList;
-            }
-        } while (element && !classes.contains("mx_SpaceButton"));
-
-        if (element) {
-            (element as HTMLElement).focus();
-        }
-    };
-
     return (
         <DragDropContext onDragEnd={result => {
             if (!result.destination) return; // dropped outside the list
             SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
         }}>
-            <RovingTabIndexProvider handleHomeEnd={true} onKeyDown={onKeyDown}>
+            <RovingTabIndexProvider handleHomeEnd handleUpDown>
                 { ({ onKeyDownHandler }) => (
                     <ul
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
@@ -305,9 +307,10 @@ const SpacePanel = () => {
                         aria-label={_t("Spaces")}
                         ref={ref}
                     >
+                        <UserMenu isPanelCollapsed={isPanelCollapsed} />
                         <Droppable droppableId="top-level-spaces">
                             { (provided, snapshot) => (
-                                <AutoHideScrollbar
+                                <IndicatorScrollbar
                                     {...provided.droppableProps}
                                     wrappedRef={provided.innerRef}
                                     className="mx_SpacePanel_spaceTreeWrapper"
@@ -321,14 +324,18 @@ const SpacePanel = () => {
                                     >
                                         { provided.placeholder }
                                     </InnerSpacePanel>
-                                </AutoHideScrollbar>
+                                </IndicatorScrollbar>
                             ) }
                         </Droppable>
                         <AccessibleTooltipButton
                             className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                             onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                             title={isPanelCollapsed ? _t("Expand space panel") : _t("Collapse space panel")}
-                        />
+                            forceHide={!isPanelCollapsed}
+                        >
+                            { !isPanelCollapsed ? _t("Collapse") : null }
+                        </AccessibleTooltipButton>
+                        { metaSpacesEnabled && <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> }
                     </ul>
                 ) }
             </RovingTabIndexProvider>

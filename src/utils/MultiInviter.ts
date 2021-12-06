@@ -188,7 +188,7 @@ export default class MultiInviter {
                     return;
                 }
 
-                console.error(err);
+                logger.error(err);
 
                 let errorText;
                 let fatal = false;
@@ -219,7 +219,7 @@ export default class MultiInviter {
                     case "M_PROFILE_NOT_FOUND":
                         if (!ignoreProfile) {
                             // Invite without the profile check
-                            console.warn(`User ${address} does not have a profile - inviting anyways automatically`);
+                            logger.warn(`User ${address} does not have a profile - inviting anyways automatically`);
                             this.doInvite(address, true).then(resolve, reject);
                             return;
                         }

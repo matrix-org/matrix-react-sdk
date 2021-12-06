@@ -32,7 +32,7 @@ import { calculateRoomVia, makeRoomPermalink } from "../../../utils/permalinks/P
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import Spinner from "../elements/Spinner";
 import { mediaFromMxc } from "../../../customisations/Media";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import Modal from "../../../Modal";
 import InfoDialog from "./InfoDialog";
 import dis from "../../../dispatcher/dispatcher";
@@ -41,6 +41,8 @@ import { UserTab } from "./UserSettingsDialog";
 import TagOrderActions from "../../../actions/TagOrderActions";
 import { inviteUsersToRoom } from "../../../RoomInvite";
 import ProgressBar from "../elements/ProgressBar";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     matrixClient: MatrixClient;
@@ -174,7 +176,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                         const { servers } = await cli.getRoomIdForAlias(canonicalAlias);
                         viaMap.set(roomId, servers);
                     } catch (e) {
-                        console.warn("Failed to resolve alias during community migration", e);
+                        logger.warn("Failed to resolve alias during community migration", e);
                     }
                 }
 
@@ -219,7 +221,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                     _t("This community has been upgraded into a Space") + `</h1></a><br />`
                     + groupSummary.profile.long_description,
             } as IGroupSummary["profile"]).catch(e => {
-                console.warn("Failed to update community profile during migration", e);
+                logger.warn("Failed to update community profile during migration", e);
             });
 
             onFinished(roomId);
@@ -271,7 +273,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                 },
             }, "mx_CreateSpaceFromCommunityDialog_SuccessInfoDialog");
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             setError(e);
         }
 

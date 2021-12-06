@@ -288,14 +288,10 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     private renderGroup(
         settingIds: string[],
         level = SettingLevel.ACCOUNT,
-        includeDisabled = false,
     ): React.ReactNodeArray {
-        if (!includeDisabled) {
-            settingIds = settingIds.filter(SettingsStore.isEnabled);
-        }
-
         return settingIds.map(i => {
-            return <SettingsFlag key={i} name={i} level={level} />;
+            const disabled = !SettingsStore.isEnabled(i);
+            return <SettingsFlag key={i} name={i} level={level} disabled={disabled} />;
         });
     }
 
@@ -329,21 +325,23 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTrayOption = <LabelledToggleSwitch
                 value={this.state.minimizeToTray}
                 onChange={this.onMinimizeToTrayChange}
-                label={_t('Show tray icon and minimize window to it on close')} />;
+                label={_t('Show tray icon and minimise window to it on close')} />;
         }
 
         return (
             <div className="mx_SettingsTab mx_PreferencesUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Preferences") }</div>
 
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
-                </div>
+                { !SettingsStore.getValue("feature_breadcrumbs_v2") &&
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
+                        { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
+                    </div>
+                }
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Spaces") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.SPACES_SETTINGS, SettingLevel.ACCOUNT, true) }
+                    { this.renderGroup(PreferencesUserSettingsTab.SPACES_SETTINGS, SettingLevel.ACCOUNT) }
                 </div>
 
                 <div className="mx_SettingsTab_section">
@@ -361,9 +359,13 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Keyboard shortcuts") }</span>
-                    <AccessibleButton className="mx_SettingsFlag" onClick={KeyboardShortcuts.toggleDialog}>
-                        { _t("To view all keyboard shortcuts, click here.") }
-                    </AccessibleButton>
+                    <div className="mx_SettingsFlag">
+                        { _t("To view all keyboard shortcuts, <a>click here</a>.", {}, {
+                            a: sub => <AccessibleButton kind="link" onClick={KeyboardShortcuts.toggleDialog}>
+                                { sub }
+                            </AccessibleButton>,
+                        }) }
+                    </div>
                     { this.renderGroup(PreferencesUserSettingsTab.KEYBINDINGS_SETTINGS) }
                 </div>
 

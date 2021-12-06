@@ -39,6 +39,7 @@ import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 /*
  * Dispatches:
@@ -55,8 +56,8 @@ Override both the content body and the TextForEvent handler for specific msgtype
 This is useful when the content body contains fallback text that would explain that the client can't handle a particular
 type of tile.
 */
-const typehandlers = {
-    "m.key.verification.request": (event) => {
+const msgTypeHandlers = {
+    [MsgType.KeyVerificationRequest]: (event) => {
         const name = (event.sender || {}).name;
         return _t("%(name)s is requesting verification", { name });
     },
@@ -71,8 +72,8 @@ export const Notifier = {
     pendingEncryptedEventIds: [],
 
     notificationMessageForEvent: function(ev: MatrixEvent): string {
-        if (typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
-            return typehandlers[ev.getContent().msgtype](ev);
+        if (msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
+            return msgTypeHandlers[ev.getContent().msgtype](ev);
         }
         return TextForEvent.textForEvent(ev);
     },
@@ -97,7 +98,7 @@ export const Notifier = {
             title = room.name;
             // notificationMessageForEvent includes sender,
             // but we already have the sender here
-            if (ev.getContent().body && !typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
+            if (ev.getContent().body && !msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
                 msg = ev.getContent().body;
             }
         } else if (ev.getType() === 'm.room.member') {
@@ -108,7 +109,7 @@ export const Notifier = {
             title = ev.sender.name + " (" + room.name + ")";
             // notificationMessageForEvent includes sender,
             // but we've just out sender in the title
-            if (ev.getContent().body && !typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
+            if (ev.getContent().body && !msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
                 msg = ev.getContent().body;
             }
         }
@@ -141,12 +142,12 @@ export const Notifier = {
         }
 
         if (!content.url) {
-            console.warn(`${roomId} has custom notification sound event, but no url key`);
+            logger.warn(`${roomId} has custom notification sound event, but no url key`);
             return null;
         }
 
         if (!content.url.startsWith("mxc://")) {
-            console.warn(`${roomId} has custom notification sound event, but url is not a mxc url`);
+            logger.warn(`${roomId} has custom notification sound event, but url is not a mxc url`);
             return null;
         }
 
@@ -170,7 +171,7 @@ export const Notifier = {
             let audioElement = selector;
             if (!selector) {
                 if (!sound) {
-                    console.error("No audio element or sound to play for notification");
+                    logger.error("No audio element or sound to play for notification");
                     return;
                 }
                 audioElement = new Audio(sound.url);
@@ -181,7 +182,7 @@ export const Notifier = {
             }
             await audioElement.play();
         } catch (ex) {
-            console.warn("Caught error when trying to fetch room notification sound:", ex);
+            logger.warn("Caught error when trying to fetch room notification sound:", ex);
         }
     },
 
@@ -378,11 +379,14 @@ export const Notifier = {
         }
     },
 
-    _evaluateEvent: function(ev) {
+    _evaluateEvent: function(ev: MatrixEvent) {
         const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions && actions.notify) {
-            if (RoomViewStore.getRoomId() === room.roomId && UserActivity.sharedInstance().userActiveRecently()) {
+            if (RoomViewStore.getRoomId() === room.roomId &&
+                UserActivity.sharedInstance().userActiveRecently() &&
+                !Modal.hasDialogs()
+            ) {
                 // don't bother notifying as user was recently active in this room
                 return;
             }

@@ -98,12 +98,12 @@ class FlairStore extends EventEmitter {
         }).catch((err) => {
             // Indicate whether the homeserver supports groups
             if (err.errcode === 'M_UNRECOGNIZED') {
-                console.warn('Cannot display flair, server does not support groups');
+                logger.warn('Cannot display flair, server does not support groups');
                 groupSupport = false;
                 // Return silently to avoid spamming for non-supporting servers
                 return;
             }
-            console.error('Could not get groups for user', userId, err);
+            logger.error('Could not get groups for user', userId, err);
             throw err;
         }).finally(() => {
             delete this._usersInFlight[userId];

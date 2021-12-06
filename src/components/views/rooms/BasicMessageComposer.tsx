@@ -28,6 +28,7 @@ import {
     formatRangeAsCode,
     toggleInlineFormat,
     replaceRangeAndMoveCaret,
+    formatRangeAsLink,
 } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
@@ -48,6 +49,8 @@ import DocumentPosition from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
@@ -92,6 +95,7 @@ function selectionEquals(a: Partial<Selection>, b: Selection): boolean {
 interface IProps {
     model: EditorModel;
     room: Room;
+    threadId: string;
     placeholder?: string;
     label?: string;
     initialCaret?: DocumentOffset;
@@ -207,7 +211,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             try {
                 setSelection(this.editorRef.current, this.props.model, selection);
             } catch (err) {
-                console.error(err);
+                logger.error(err);
             }
             // if caret selection is a range, take the end position
             const position = selection instanceof Range ? selection.end : selection;
@@ -240,7 +244,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 isTyping = false;
             }
         }
-        TypingStore.sharedInstance().setSelfTyping(this.props.room.roomId, isTyping);
+        TypingStore.sharedInstance().setSelfTyping(
+            this.props.room.roomId,
+            this.props.threadId,
+            isTyping,
+        );
 
         if (this.props.onChange) {
             this.props.onChange();
@@ -475,6 +483,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             switch (autocompleteAction) {
                 case AutocompleteAction.ForceComplete:
                 case AutocompleteAction.Complete:
+                    this.historyManager.ensureLastChangesPushed(this.props.model);
+                    this.modifiedFlag = true;
                     autoComplete.confirmCompletion();
                     handled = true;
                     break;
@@ -596,7 +606,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.setState({ showVisualBell: true });
             }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     }
 
@@ -703,6 +713,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 break;
             case Formatting.Quote:
                 formatRangeAsQuote(range);
+                break;
+            case Formatting.InsertLink:
+                formatRangeAsLink(range);
                 break;
         }
     };

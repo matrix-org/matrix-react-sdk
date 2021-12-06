@@ -22,7 +22,7 @@ import { HistoryVisibility, Preset } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { ChevronFace, ContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import createRoom, { IOpts as ICreateOpts } from "../../../createRoom";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SpaceBasicSettings, { SpaceAvatar } from "./SpaceBasicSettings";
@@ -38,6 +38,8 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserSettingsDialog";
 import { Key } from "../../../Keyboard";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 export const createSpace = async (
     name: string,
@@ -117,6 +119,7 @@ export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
                     rageshakeLabel: "spaces-feedback",
                     rageshakeData: Object.fromEntries([
                         "Spaces.allRoomsInHome",
+                        "Spaces.enabledMetaSpaces",
                     ].map(k => [k, SettingsStore.getValue(k)])),
                 });
             }}
@@ -255,7 +258,7 @@ const SpaceCreateMenu = ({ onFinished }) => {
 
             onFinished();
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
     };
 

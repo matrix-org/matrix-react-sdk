@@ -35,7 +35,7 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import SpecPermalinkConstructor from "../../../../src/utils/permalinks/SpecPermalinkConstructor";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import DocumentOffset from '../../../../src/editor/offset';
-import { Layout } from '../../../../src/settings/Layout';
+import { Layout } from '../../../../src/settings/enums/Layout';
 
 jest.mock("../../../../src/stores/RoomViewStore");
 
@@ -216,6 +216,7 @@ describe('<SendMessageComposer/>', () => {
             expect(spyDispatcher).toHaveBeenCalledWith({
                 action: "reply_to_event",
                 event: mockEvent,
+                context: TimelineRenderingType.Room,
             });
 
             // now try with localStorage wiped out
@@ -277,6 +278,7 @@ describe('<SendMessageComposer/>', () => {
             expect(spyDispatcher).toHaveBeenCalledWith({
                 action: "reply_to_event",
                 event: null,
+                context: TimelineRenderingType.Room,
             });
 
             expect(wrapper.text()).toBe("");

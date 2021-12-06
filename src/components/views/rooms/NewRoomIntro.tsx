@@ -31,7 +31,7 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import dis from "../../../dispatcher/dispatcher";
 import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../../dispatcher/actions";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { showSpaceInvite } from "../../../utils/space";
 import { privateShouldBeEncrypted } from "../../../createRoom";
 import EventTileBubble from "../messages/EventTileBubble";
@@ -106,7 +106,11 @@ const NewRoomIntro = () => {
             topicText = _t("Topic: %(topic)s ", { topic });
         } else if (canAddTopic) {
             topicText = _t("<a>Add a topic</a> to help people know what it is about.", {}, {
-                a: sub => <AccessibleButton kind="link" onClick={onTopicClick}>{ sub }</AccessibleButton>,
+                a: sub => <AccessibleButton
+                    kind="link"
+                    element="span"
+                    onClick={onTopicClick}
+                >{ sub }</AccessibleButton>,
             });
         }
 
@@ -122,12 +126,12 @@ const NewRoomIntro = () => {
             });
         }
 
-        let parentSpace;
+        let parentSpace: Room;
         if (
-            SpaceStore.instance.activeSpace?.canInvite(cli.getUserId()) &&
+            SpaceStore.instance.activeSpaceRoom?.canInvite(cli.getUserId()) &&
             SpaceStore.instance.getSpaceFilteredRoomIds(SpaceStore.instance.activeSpace).has(room.roomId)
         ) {
-            parentSpace = SpaceStore.instance.activeSpace;
+            parentSpace = SpaceStore.instance.activeSpaceRoom;
         }
 
         let buttons;

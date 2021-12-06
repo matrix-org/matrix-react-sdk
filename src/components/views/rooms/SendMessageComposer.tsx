@@ -34,7 +34,7 @@ import {
 } from '../../../editor/serialize';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from '../../../editor/parts';
-import ReplyThread from "../elements/ReplyThread";
+import ReplyChain from "../elements/ReplyChain";
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
@@ -56,27 +56,33 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import DocumentPosition from "../../../editor/position";
+import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
 function addReplyToMessageContent(
     content: IContent,
     replyToEvent: MatrixEvent,
     permalinkCreator: RoomPermalinkCreator,
-    relation?: IEventRelation,
 ): void {
-    const replyContent = ReplyThread.makeReplyMixIn(replyToEvent);
+    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
 
     // Part of Replies fallback support - prepend the text we're sending
     // with the text we're replying to
-    const nestedReply = ReplyThread.getNestedReplyText(replyToEvent, permalinkCreator);
+    const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, permalinkCreator);
     if (nestedReply) {
         if (content.formatted_body) {
             content.formatted_body = nestedReply.html + content.formatted_body;
         }
         content.body = nestedReply.body + content.body;
     }
+}
 
+export function attachRelation(
+    content: IContent,
+    relation?: IEventRelation,
+): void {
     if (relation) {
         content['m.relates_to'] = {
             ...relation, // the composer can have a default
@@ -237,6 +243,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
                 break;
             default:
@@ -268,6 +275,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         dis.dispatch({
             action: 'reply_to_event',
             event: replyEventId ? this.props.room.findEventById(replyEventId) : null,
+            context: this.context.timelineRenderingType,
         });
         if (parts) {
             this.model.reset(parts);
@@ -342,7 +350,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private async runSlashCommand(cmd: Command, args: string): Promise<void> {
-        const result = cmd.run(this.props.room.roomId, args);
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation?.event_id
+            : null;
+
+        const result = cmd.run(this.props.room.roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -358,7 +370,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             }
         }
         if (error) {
-            console.error("Command failure: %s", error);
+            logger.error("Command failure: %s", error);
             // assume the error is a server error when the command is async
             const isServerError = !!result.promise;
             const title = isServerError ? _td("Server error") : _td("Command error");
@@ -391,9 +403,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-            const caret = this.editorRef.current?.getCaret();
-            const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-            this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
+            const indexOfLastPart = model.parts.length - 1;
+            const positionInLastPart = model.parts[indexOfLastPart].text.length;
+            this.editorRef.current?.replaceEmoticon(
+                new DocumentPosition(indexOfLastPart, positionInLastPart),
+                REGEX_EMOTICON,
+            );
         }
 
         const replyToEvent = this.props.replyToEvent;
@@ -410,9 +425,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                             content,
                             replyToEvent,
                             this.props.permalinkCreator,
-                            this.props.relation,
                         );
                     }
+                    attachRelation(content, this.props.relation);
                 } else {
                     this.runSlashCommand(cmd, args);
                     shouldSend = false;
@@ -468,19 +483,29 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 decorateStartSendingTime(content);
             }
 
-            const prom = this.props.mxClient.sendMessage(roomId, content);
+            const threadId = this.props.relation?.rel_type === RelationType.Thread
+                ? this.props.relation.event_id
+                : null;
+
+            const prom = this.props.mxClient.sendMessage(roomId, threadId, content);
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
+                    context: this.context.timelineRenderingType,
                 });
             }
             dis.dispatch({ action: "message_sent" });
             CHAT_EFFECTS.forEach((effect) => {
                 if (containsEmoji(content, effect.emojis)) {
-                    dis.dispatch({ action: `effects.${effect.command}` });
+                    // For initial threads launch, chat effects are disabled
+                    // see #19731
+                    const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
+                    if (!SettingsStore.getValue("feature_thread") || isNotThread) {
+                        dis.dispatch({ action: `effects.${effect.command}` });
+                    }
                 }
             });
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
@@ -498,7 +523,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.editorRef.current?.focus();
         this.clearStoredEditorState();
         if (SettingsStore.getValue("scrollToBottomOnMessageSent")) {
-            dis.dispatch({ action: "scroll_to_bottom" });
+            dis.dispatch({
+                action: "scroll_to_bottom",
+                timelineRenderingType: this.context.timelineRenderingType,
+            });
         }
     }
 
@@ -545,11 +573,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     dis.dispatch({
                         action: 'reply_to_event',
                         event: this.props.room.findEventById(replyEventId),
+                        context: this.context.timelineRenderingType,
                     });
                 }
                 return parts;
             } catch (e) {
-                console.error(e);
+                logger.error(e);
             }
         }
     }
@@ -576,9 +605,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         switch (payload.action) {
             case 'reply_to_event':
             case Action.FocusSendMessageComposer:
-                this.editorRef.current?.focus();
+                if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
+                    this.editorRef.current?.focus();
+                }
                 break;
-            case "send_composer_insert":
+            case Action.ComposerInsert:
+                if (payload.timelineRenderingType !== this.context.timelineRenderingType) break;
+                if (payload.composerType !== ComposerType.Send) break;
+
                 if (payload.userId) {
                     this.editorRef.current?.insertMention(payload.userId);
                 } else if (payload.event) {
@@ -598,7 +632,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.props.mxClient,
+                Array.from(clipboardData.files), this.props.room.roomId, this.props.relation, this.props.mxClient,
             );
             return true; // to skip internal onPaste handler
         }
@@ -613,6 +647,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     };
 
     render() {
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation.event_id
+            : null;
         return (
             <div className="mx_SendMessageComposer" onClick={this.focusComposer} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
@@ -620,6 +657,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     ref={this.editorRef}
                     model={this.model}
                     room={this.props.room}
+                    threadId={threadId}
                     label={this.props.placeholder}
                     placeholder={this.props.placeholder}
                     onPaste={this.onPaste}

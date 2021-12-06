@@ -63,7 +63,6 @@ import { copyPlaintext, selectText } from "../../../utils/strings";
 import * as ContextMenu from "../../structures/ContextMenu";
 import { toRightOf } from "../../structures/ContextMenu";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
-import { TransferCallPayload } from '../../../dispatcher/payloads/TransferCallPayload';
 import Field from '../elements/Field';
 import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
 import Dialpad from '../voip/DialPad';
@@ -71,7 +70,8 @@ import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
+import CallHandler from "../../../CallHandler";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -470,7 +470,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             for (const member of otherMembers) {
                 if (rooms[member.userId]) continue; // already have a room
 
-                console.warn(`Adding DM room for ${member.userId} as ${dmRoom.roomId} from tag, not DM map`);
+                logger.warn(`Adding DM room for ${member.userId} as ${dmRoom.roomId} from tag, not DM map`);
                 rooms[member.userId] = dmRoom;
             }
         }
@@ -479,7 +479,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         for (const userId in rooms) {
             // Filter out user IDs that are already in the room / should be excluded
             if (excludedTargetIds.has(userId)) {
-                console.warn(`[Invite:Recents] Excluding ${userId} from recents`);
+                logger.warn(`[Invite:Recents] Excluding ${userId} from recents`);
                 continue;
             }
 
@@ -487,7 +487,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             const member = room.getMember(userId);
             if (!member) {
                 // just skip people who don't have memberships for some reason
-                console.warn(`[Invite:Recents] ${userId} is missing a member object in their own DM (${room.roomId})`);
+                logger.warn(`[Invite:Recents] ${userId} is missing a member object in their own DM (${room.roomId})`);
                 continue;
             }
 
@@ -507,13 +507,13 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             }
             if (!lastEventTs) {
                 // something weird is going on with this room
-                console.warn(`[Invite:Recents] ${userId} (${room.roomId}) has a weird last timestamp: ${lastEventTs}`);
+                logger.warn(`[Invite:Recents] ${userId} (${room.roomId}) has a weird last timestamp: ${lastEventTs}`);
                 continue;
             }
 
             recents.push({ userId, user: member, lastActive: lastEventTs });
         }
-        if (!recents) console.warn("[Invite:Recents] No recents to suggest!");
+        if (!recents) logger.warn("[Invite:Recents] No recents to suggest!");
 
         // Sort the recents by last active to save us time later
         recents.sort((a, b) => b.lastActive - a.lastActive);
@@ -677,7 +677,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
         if (existingRoom) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: existingRoom.roomId,
                 should_peek: false,
                 joining: false,
@@ -731,7 +731,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             await createRoom(createRoomOptions);
             this.props.onFinished();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             this.setState({
                 busy: false,
                 errorText: _t("We couldn't create your DM."),
@@ -749,7 +749,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
         if (!room) {
-            console.error("Failed to find the room to invite users to");
+            logger.error("Failed to find the room to invite users to");
             this.setState({
                 busy: false,
                 errorText: _t("Something went wrong trying to invite the users."),
@@ -784,7 +784,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 }
             }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             this.setState({
                 busy: false,
                 errorText: _t(
@@ -806,19 +806,17 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 return;
             }
 
-            dis.dispatch({
-                action: Action.TransferCallToMatrixID,
-                call: this.props.call,
-                destination: targetIds[0],
-                consultFirst: this.state.consultFirst,
-            } as TransferCallPayload);
+            CallHandler.instance.startTransferToMatrixID(
+                this.props.call,
+                targetIds[0],
+                this.state.consultFirst,
+            );
         } else {
-            dis.dispatch({
-                action: Action.TransferCallToPhoneNumber,
-                call: this.props.call,
-                destination: this.state.dialPadValue,
-                consultFirst: this.state.consultFirst,
-            } as TransferCallPayload);
+            CallHandler.instance.startTransferToPhoneNumber(
+                this.props.call,
+                this.state.dialPadValue,
+                this.state.consultFirst,
+            );
         }
         this.props.onFinished();
     };
@@ -873,8 +871,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         });
                     }
                 } catch (e) {
-                    console.warn("Non-fatal error trying to make an invite for a user ID");
-                    console.warn(e);
+                    logger.warn("Non-fatal error trying to make an invite for a user ID");
+                    logger.warn(e);
 
                     // Add a result anyways, just without a profile. We stick it at the
                     // top so it is most obviously presented to the user.
@@ -893,8 +891,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 })),
             });
         }).catch(e => {
-            console.error("Error searching user directory:");
-            console.error(e);
+            logger.error("Error searching user directory:");
+            logger.error(e);
             this.setState({ serverResultsMixin: [] }); // clear results because it's moderately fatal
         });
 
@@ -948,8 +946,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     }],
                 });
             } catch (e) {
-                console.error("Error searching identity server:");
-                console.error(e);
+                logger.error("Error searching identity server:");
+                logger.error(e);
                 this.setState({ threepidResultsMixin: [] }); // clear results because it's moderately fatal
             }
         }
@@ -1062,8 +1060,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     avatar_url: avatarUrl,
                 }));
             } catch (e) {
-                console.error("Error looking up profile for " + address);
-                console.error(e);
+                logger.error("Error looking up profile for " + address);
+                logger.error(e);
                 failed.push(address);
             }
         }
@@ -1412,7 +1410,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             goButtonFn = this.startDm;
             extraSection = <div className="mx_InviteDialog_section_hidden_suggestions_disclaimer">
                 <span>{ _t("Some suggestions may be hidden for privacy.") }</span>
-                <p>{ _t("If you can't see who you’re looking for, send them your invite link below.") }</p>
+                <p>{ _t("If you can't see who you're looking for, send them your invite link below.") }</p>
             </div>;
             const link = makeUserPermalink(MatrixClientPeg.get().getUserId());
             footer = <div className="mx_InviteDialog_footer">
@@ -1513,7 +1511,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 </AccessibleButton>
             </div>;
         } else {
-            console.error("Unknown kind of InviteDialog: " + this.props.kind);
+            logger.error("Unknown kind of InviteDialog: " + this.props.kind);
         }
 
         const goButton = this.props.kind == KIND_CALL_TRANSFER ? null : <AccessibleButton

@@ -183,7 +183,7 @@ Response:
             name: "dashboard",
             data: {key: "val"}
         }
-        room_id: “!foo:bar”,
+        room_id: "!foo:bar",
         sender: "@alice:localhost"
     }
 ]
@@ -202,7 +202,7 @@ Example:
                 name: "dashboard",
                 data: {key: "val"}
             }
-            room_id: “!foo:bar”,
+            room_id: "!foo:bar",
             sender: "@alice:localhost"
         }
     ]
@@ -272,7 +272,7 @@ function sendResponse(event: MessageEvent<any>, res: any): void {
 }
 
 function sendError(event: MessageEvent<any>, msg: string, nestedError?: Error): void {
-    console.error("Action:" + event.data.action + " failed with message: " + msg);
+    logger.error("Action:" + event.data.action + " failed with message: " + msg);
     const data = objectClone(event.data);
     data.response = {
         error: {
@@ -473,10 +473,7 @@ async function setBotPower(
         // If the PL is equal to or greater than the requested PL, ignore.
         if (ignoreIfGreater === true) {
             // As per https://matrix.org/docs/spec/client_server/r0.6.0#m-room-power-levels
-            const currentPl = (
-                powerLevels.content.users && powerLevels.content.users[userId]
-            ) || powerLevels.content.users_default || 0;
-
+            const currentPl = powerLevels.users?.[userId] ?? powerLevels.users_default ?? 0;
             if (currentPl >= level) {
                 return sendResponse(event, {
                     success: true,
@@ -695,7 +692,7 @@ const onMessage = function(event: MessageEvent<any>): void {
             setBotPower(event, roomId, userId, event.data.level, event.data.ignoreIfGreater);
             break;
         default:
-            console.warn("Unhandled postMessage event with action '" + event.data.action +"'");
+            logger.warn("Unhandled postMessage event with action '" + event.data.action +"'");
             break;
     }
 };
@@ -721,7 +718,7 @@ export function stopListening(): void {
             "ScalarMessaging: mismatched startListening / stopListening detected." +
             " Negative count",
         );
-        console.error(e);
+        logger.error(e);
     }
 }
 

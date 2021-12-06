@@ -45,6 +45,7 @@ import { WidgetType } from "../../widgets/WidgetType";
 import ActiveWidgetStore from "../ActiveWidgetStore";
 import { objectShallowClone } from "../../utils/objects";
 import defaultDispatcher from "../../dispatcher/dispatcher";
+import { Action } from "../../dispatcher/actions";
 import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
@@ -135,7 +136,7 @@ export class ElementWidget extends Widget {
         };
     }
 
-    public getCompleteUrl(params: ITemplateParams, asPopout=false): string {
+    public getCompleteUrl(params: ITemplateParams, asPopout = false): string {
         return runTemplate(asPopout ? this.popoutTemplateUrl : this.templateUrl, {
             ...this.rawDefinition,
             data: this.rawData,
@@ -149,7 +150,7 @@ export class StopGapWidget extends EventEmitter {
     private scalarToken: string;
     private roomId?: string;
     private kind: WidgetKind;
-    private readUpToMap: {[roomId: string]: string} = {}; // room ID to event ID
+    private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
 
     constructor(private appTileProps: IAppTileProps) {
         super();
@@ -262,6 +263,7 @@ export class StopGapWidget extends EventEmitter {
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
         this.messaging.on("ready", () => this.emit("ready"));
+        this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
         WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.messaging);
 
@@ -290,7 +292,7 @@ export class StopGapWidget extends EventEmitter {
 
             // at this point we can change rooms, so do that
             defaultDispatcher.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: targetRoomId,
             });
 
@@ -401,7 +403,7 @@ export class StopGapWidget extends EventEmitter {
             }
         } catch (e) {
             // All errors are non-fatal
-            console.error("Error preparing widget communications: ", e);
+            logger.error("Error preparing widget communications: ", e);
         }
     }
 
@@ -473,7 +475,7 @@ export class StopGapWidget extends EventEmitter {
 
         const raw = ev.getEffectiveEvent();
         this.messaging.feedEvent(raw, this.eventListenerRoomId).catch(e => {
-            console.error("Error sending event to widget: ", e);
+            logger.error("Error sending event to widget: ", e);
         });
     }
 }

@@ -24,7 +24,7 @@ import { _t } from '../../../languageHandler';
 import BaseDialog from "./BaseDialog";
 import Dropdown from "../elements/Dropdown";
 import SearchBox from "../../structures/SearchBox";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import RoomAvatar from "../avatars/RoomAvatar";
 import { getDisplayAliasForRoom } from "../../../Rooms";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -40,6 +40,8 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import TruncatedList from "../elements/TruncatedList";
 import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     space: Room;
@@ -160,7 +162,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
                 });
                 setProgress(i => i + 1);
             } catch (e) {
-                console.error("Failed to add rooms to space", e);
+                logger.error("Failed to add rooms to space", e);
                 setError(error = e);
                 break;
             }

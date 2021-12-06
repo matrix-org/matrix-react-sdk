@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, EventStatus } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
 import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { logger } from 'matrix-js-sdk/src/logger';
+import { POLL_START_EVENT_TYPE } from '../polls/consts';
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
@@ -51,14 +55,17 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED || mxEvent.getType() !== "m.room.message" || mxEvent.isRedacted()) {
+    if (mxEvent.status === EventStatus.CANCELLED ||
+        mxEvent.getType() !== EventType.RoomMessage ||
+        mxEvent.isRedacted() ||
+        mxEvent.isRelation(RelationType.Replace) ||
+        mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
+    ) {
         return false;
     }
-    const content = mxEvent.getOriginalContent();
-    const { msgtype } = content;
-    return (msgtype === "m.text" || msgtype === "m.emote") &&
-        content.body && typeof content.body === 'string' &&
-        mxEvent.getSender() === MatrixClientPeg.get().getUserId();
+
+    const { msgtype, body } = mxEvent.getOriginalContent();
+    return (msgtype === MsgType.Text || msgtype === MsgType.Emote) && body && typeof body === 'string';
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
@@ -133,7 +140,8 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
         !isLeftAlignedBubbleMessage &&
         eventType !== EventType.RoomMessage &&
         eventType !== EventType.Sticker &&
-        eventType !== EventType.RoomCreate
+        eventType !== EventType.RoomCreate &&
+        eventType !== POLL_START_EVENT_TYPE.name
     );
 
     // If we're showing hidden events in the timeline, we should use the
@@ -157,4 +165,38 @@ export function isVoiceMessage(mxEvent: MatrixEvent): boolean {
         !!content['org.matrix.msc2516.voice'] ||
         !!content['org.matrix.msc3245.voice']
     );
+}
+
+export async function fetchInitialEvent(
+    client: MatrixClient,
+    roomId: string,
+    eventId: string): Promise<MatrixEvent | null> {
+    let initialEvent: MatrixEvent;
+
+    try {
+        const eventData = await client.fetchRoomEvent(roomId, eventId);
+        initialEvent = new MatrixEvent(eventData);
+    } catch (e) {
+        logger.warn("Could not find initial event: " + initialEvent.threadRootId);
+        initialEvent = null;
+    }
+
+    if (initialEvent?.isThreadRelation) {
+        try {
+            const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
+            const rootEvent = new MatrixEvent(rootEventData);
+            const room = client.getRoom(roomId);
+            const thread = new Thread(
+                [rootEvent],
+                room,
+                client,
+            );
+            thread.addEvent(initialEvent);
+            room.threads.set(thread.id, thread);
+        } catch (e) {
+            logger.warn("Could not find root event: " + initialEvent.threadRootId);
+        }
+    }
+
+    return initialEvent;
 }

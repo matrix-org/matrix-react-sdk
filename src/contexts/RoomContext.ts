@@ -17,14 +17,14 @@ limitations under the License.
 import { createContext } from "react";
 
 import { IRoomState } from "../components/structures/RoomView";
-import { Layout } from "../settings/Layout";
+import { Layout } from "../settings/enums/Layout";
 
 export enum TimelineRenderingType {
-    Room,
-    Thread,
-    ThreadsList,
-    File,
-    Notification,
+    Room = "Room",
+    Thread = "Thread",
+    ThreadsList = "ThreadsList",
+    File = "File",
+    Notification = "Notification",
 }
 
 const RoomContext = createContext<IRoomState>({

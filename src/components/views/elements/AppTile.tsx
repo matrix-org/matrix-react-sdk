@@ -38,14 +38,16 @@ import { MatrixCapabilities } from "matrix-widget-api";
 import RoomWidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import CallHandler from '../../../CallHandler';
 import { Room } from "matrix-js-sdk/src/models/room";
 import { IApp } from "../../../stores/WidgetStore";
-
+import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
 interface IProps {
     app: IApp;
     // If room is not specified then it is an account level widget
     // which bypasses permission prompts as it was added explicitly by that user
     room: Room;
+    threadId?: string | null;
     // Specifying 'fullWidth' as true will render the app tile to fill the width of the app drawer continer.
     // This should be set to true when there is only one widget in the app drawer, otherwise it should be false.
     fullWidth?: boolean;
@@ -84,6 +86,7 @@ interface IState {
     error: Error;
     menuDisplayed: boolean;
     widgetPageTitle: string;
+    requiresClient: boolean;
 }
 
 import { logger } from "matrix-js-sdk/src/logger";
@@ -98,6 +101,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         handleMinimisePointerEvents: false,
         userWidget: false,
         miniMode: false,
+        threadId: null,
     };
 
     private contextMenuButton = createRef<any>();
@@ -114,8 +118,10 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.persistKey = getPersistKey(this.props.app.id);
         try {
             this.sgWidget = new StopGapWidget(this.props);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
+            // emits when the capabilites have been setup or changed
+            this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
         } catch (e) {
             logger.log("Failed to construct widget", e);
             this.sgWidget = null;
@@ -155,6 +161,10 @@ export default class AppTile extends React.Component<IProps, IState> {
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
+            // requiresClient is initially set to true. This avoids the broken state of the popout
+            // button being visible (for an instance) and then disappearing when the widget is loaded.
+            // requiresClient <-> hide the popout button
+            requiresClient: true,
         };
     }
 
@@ -176,7 +186,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         const u = url.parse(this.props.app.url);
         const childContentProtocol = u.protocol;
         if (parentContentProtocol === 'https:' && childContentProtocol !== 'https:') {
-            console.warn("Refusing to load mixed-content app:",
+            logger.warn("Refusing to load mixed-content app:",
                 parentContentProtocol, childContentProtocol, window.location, this.props.app.url);
             return true;
         }
@@ -216,11 +226,11 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
         try {
             this.sgWidget = new StopGapWidget(newProps);
-            this.sgWidget.on("preparing", this.onWidgetPrepared);
+            this.sgWidget.on("preparing", this.onWidgetPreparing);
             this.sgWidget.on("ready", this.onWidgetReady);
             this.startWidget();
         } catch (e) {
-            logger.log("Failed to construct widget", e);
+            logger.error("Failed to construct widget", e);
             this.sgWidget = null;
         }
     }
@@ -234,7 +244,13 @@ export default class AppTile extends React.Component<IProps, IState> {
     private iframeRefChange = (ref: HTMLIFrameElement): void => {
         this.iframe = ref;
         if (ref) {
-            if (this.sgWidget) this.sgWidget.start(ref);
+            try {
+                if (this.sgWidget) {
+                    this.sgWidget.start(ref);
+                }
+            } catch (e) {
+                logger.error("Failed to start widget", e);
+            }
         } else {
             this.resetWidget(this.props);
         }
@@ -277,7 +293,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         if (WidgetType.JITSI.matches(this.props.app.type)) {
-            dis.dispatch({ action: 'hangup_conference' });
+            CallHandler.instance.hangupCallApp(this.props.room.roomId);
         }
 
         // Delete the widget from the persisted store for good measure.
@@ -287,7 +303,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.sgWidget) this.sgWidget.stop({ forceDestroy: true });
     }
 
-    private onWidgetPrepared = (): void => {
+    private onWidgetPreparing = (): void => {
         this.setState({ loading: false });
     };
 
@@ -297,15 +313,27 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
     };
 
+    private onWidgetCapabilitiesNotified = (): void => {
+        this.setState({
+            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
+        });
+    };
+
     private onAction = (payload): void => {
         if (payload.widgetId === this.props.app.id) {
             switch (payload.action) {
                 case 'm.sticker':
                     if (this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.StickerSending)) {
-                        dis.dispatch({ action: 'post_sticker_message', data: payload.data });
+                        dis.dispatch({
+                            action: 'post_sticker_message',
+                            data: {
+                                ...payload.data,
+                                threadId: this.props.threadId,
+                            },
+                        });
                         dis.dispatch({ action: 'stickerpicker_close' });
                     } else {
-                        console.warn('Ignoring sticker message. Invalid capability');
+                        logger.warn('Ignoring sticker message. Invalid capability');
                     }
                     break;
             }
@@ -314,7 +342,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private grantWidgetPermission = (): void => {
         const roomId = this.props.room.roomId;
-        console.info("Granting permission for widget to load: " + this.props.app.eventId);
+        logger.info("Granting permission for widget to load: " + this.props.app.eventId);
         const current = SettingsStore.getValue("allowedWidgets", roomId);
         current[this.props.app.eventId] = true;
         const level = SettingsStore.firstSupportedLevel("allowedWidgets");
@@ -324,7 +352,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             // Fetch a token for the integration manager, now that we're allowed to
             this.startWidget();
         }).catch(err => {
-            console.error(err);
+            logger.error(err);
             // We don't really need to do anything about this - the user will just hit the button again.
         });
     };
@@ -379,6 +407,14 @@ export default class AppTile extends React.Component<IProps, IState> {
         // window.open(this._getPopoutUrl(), '_blank', 'noopener=yes');
         Object.assign(document.createElement('a'),
             { target: '_blank', href: this.sgWidget.popoutUrl, rel: 'noreferrer noopener' }).click();
+    };
+
+    private onMaxMinWidgetClick = (): void => {
+        const targetContainer =
+            WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
+                ? Container.Right
+                : Container.Center;
+        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 
     private onContextMenuClick = (): void => {
@@ -503,6 +539,23 @@ export default class AppTile extends React.Component<IProps, IState> {
                 />
             );
         }
+        let maxMinButton;
+        if (SettingsStore.getValue("feature_maximised_widgets")) {
+            const widgetIsMaximised = WidgetLayoutStore.instance.
+                isInContainer(this.props.room, this.props.app, Container.Center);
+            maxMinButton = <AccessibleButton
+                className={
+                    "mx_AppTileMenuBar_iconButton"
+                                    + (widgetIsMaximised
+                                        ? " mx_AppTileMenuBar_iconButton_minWidget"
+                                        : " mx_AppTileMenuBar_iconButton_maxWidget")
+                }
+                title={
+                    widgetIsMaximised ? _t('Close'): _t('Maximise widget')
+                }
+                onClick={this.onMaxMinWidgetClick}
+            />;
+        }
 
         return <React.Fragment>
             <div className={appTileClasses} id={this.props.app.id}>
@@ -512,7 +565,8 @@ export default class AppTile extends React.Component<IProps, IState> {
                             { this.props.showTitle && this.getTileTitle() }
                         </span>
                         <span className="mx_AppTileMenuBarWidgets">
-                            { this.props.showPopout && <AccessibleButton
+                            { maxMinButton }
+                            { (this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
                                 className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                                 title={_t('Popout widget')}
                                 onClick={this.onPopoutWidgetClick}

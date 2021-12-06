@@ -49,6 +49,8 @@ export interface IPosition {
     bottom?: number;
     left?: number;
     right?: number;
+    rightAligned?: boolean;
+    bottomAligned?: boolean;
 }
 
 export enum ChevronFace {
@@ -101,7 +103,7 @@ interface IState {
 // all options inside the menu should be of role=menuitem/menuitemcheckbox/menuitemradiobutton and have tabIndex={-1}
 // this will allow the ContextMenu to manage its own focus using arrow keys as per the ARIA guidelines.
 @replaceableComponent("structures.ContextMenu")
-export class ContextMenu extends React.PureComponent<IProps, IState> {
+export default class ContextMenu extends React.PureComponent<IProps, IState> {
     private readonly initialFocus: HTMLElement;
 
     static defaultProps = {
@@ -249,6 +251,8 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
         let handled = true;
 
         switch (ev.key) {
+            // XXX: this is imitating roving behaviour, it should really use the RovingTabIndex utils
+            // to inherit proper handling of unmount edge cases
             case Key.TAB:
             case Key.ESCAPE:
             case Key.ARROW_LEFT: // close on left and right arrows too for when it is a context menu on a <Toolbar />
@@ -344,6 +348,8 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
             'mx_ContextualMenu_withChevron_right': chevronFace === ChevronFace.Right,
             'mx_ContextualMenu_withChevron_top': chevronFace === ChevronFace.Top,
             'mx_ContextualMenu_withChevron_bottom': chevronFace === ChevronFace.Bottom,
+            'mx_ContextualMenu_rightAligned': this.props.rightAligned === true,
+            'mx_ContextualMenu_bottomAligned': this.props.bottomAligned === true,
         });
 
         const menuStyle: CSSProperties = {};
@@ -405,6 +411,7 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
                 onClick={this.onClick}
                 onContextMenu={this.onContextMenuPreventBubbling}
             >
+                { background }
                 <div
                     className={menuClasses}
                     style={menuStyle}
@@ -413,7 +420,6 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
                 >
                     { body }
                 </div>
-                { background }
             </div>
         );
     }
@@ -524,30 +530,22 @@ export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<
     return [isOpen, button, open, close, setIsOpen];
 };
 
-@replaceableComponent("structures.LegacyContextMenu")
-export default class LegacyContextMenu extends ContextMenu {
-    render() {
-        return this.renderMenu(false);
-    }
-}
-
 // XXX: Deprecated, used only for dynamic Tooltips. Avoid using at all costs.
 export function createMenu(ElementClass, props) {
     const onFinished = function(...args) {
         ReactDOM.unmountComponentAtNode(getOrCreateContainer());
-
-        if (props && props.onFinished) {
-            props.onFinished.apply(null, args);
-        }
+        props?.onFinished?.apply(null, args);
     };
 
-    const menu = <LegacyContextMenu
+    const menu = <ContextMenu
         {...props}
+        mountAsChild={true}
+        hasBackground={false}
         onFinished={onFinished} // eslint-disable-line react/jsx-no-bind
         windowResize={onFinished} // eslint-disable-line react/jsx-no-bind
     >
         <ElementClass {...props} onFinished={onFinished} />
-    </LegacyContextMenu>;
+    </ContextMenu>;
 
     ReactDOM.render(menu, getOrCreateContainer());
 

@@ -18,6 +18,7 @@ import React, { createRef } from 'react';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
+import { Action } from '../../../dispatcher/actions';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import SenderProfile from "../messages/SenderProfile";
@@ -28,6 +29,8 @@ import { replaceableComponent } from '../../../utils/replaceableComponent';
 import { getEventDisplayInfo, isVoiceMessage } from '../../../utils/EventUtils';
 import MFileBody from "../messages/MFileBody";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -88,7 +91,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
                 this.props.toggleExpandedQuote();
             } else {
                 dis.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     event_id: this.props.mxEvent.getId(),
                     highlighted: true,
                     room_id: this.props.mxEvent.getRoomId(),
@@ -107,7 +110,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         // before trying to instantiate us
         if (!tileHandler) {
             const { mxEvent } = this.props;
-            console.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
+            logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
             return <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
                 { _t('This event could not be displayed') }
             </div>;

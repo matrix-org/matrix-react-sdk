@@ -31,6 +31,8 @@ import { objectClone } from "./objects";
 import { _t } from "../languageHandler";
 import { IApp } from "../stores/WidgetStore";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
 const WIDGET_WAIT_TIME = 20000;
@@ -53,30 +55,30 @@ export default class WidgetUtils {
      */
     static canUserModifyWidgets(roomId: string): boolean {
         if (!roomId) {
-            console.warn('No room ID specified');
+            logger.warn('No room ID specified');
             return false;
         }
 
         const client = MatrixClientPeg.get();
         if (!client) {
-            console.warn('User must be be logged in');
+            logger.warn('User must be be logged in');
             return false;
         }
 
         const room = client.getRoom(roomId);
         if (!room) {
-            console.warn(`Room ID ${roomId} is not recognised`);
+            logger.warn(`Room ID ${roomId} is not recognised`);
             return false;
         }
 
         const me = client.credentials.userId;
         if (!me) {
-            console.warn('Failed to get user ID');
+            logger.warn('Failed to get user ID');
             return false;
         }
 
         if (room.getMyMembership() !== "join") {
-            console.warn(`User ${me} is not in room ${roomId}`);
+            logger.warn(`User ${me} is not in room ${roomId}`);
             return false;
         }
 
@@ -92,7 +94,7 @@ export default class WidgetUtils {
      */
     static isScalarUrl(testUrlString: string): boolean {
         if (!testUrlString) {
-            console.error('Scalar URL check failed. No URL specified');
+            logger.error('Scalar URL check failed. No URL specified');
             return false;
         }
 
@@ -246,7 +248,7 @@ export default class WidgetUtils {
         try {
             delete userWidgets[widgetId];
         } catch (e) {
-            console.error(`$widgetId is non-configurable`);
+            logger.error(`$widgetId is non-configurable`);
         }
 
         const addingWidget = Boolean(widgetUrl);

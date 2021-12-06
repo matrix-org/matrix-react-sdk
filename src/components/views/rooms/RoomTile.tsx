@@ -22,6 +22,7 @@ import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import dis from '../../../dispatcher/dispatcher';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
+import { Action } from "../../../dispatcher/actions";
 import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
@@ -50,6 +51,8 @@ import IconizedContextMenu, {
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 interface IProps {
     room: Room;
     showMessagePreview: boolean;
@@ -68,7 +71,7 @@ interface IState {
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
 
-const contextMenuBelow = (elementRect: PartialDOMRect) => {
+export const contextMenuBelow = (elementRect: PartialDOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
     const left = elementRect.left + window.pageXOffset - 9;
     const top = elementRect.bottom + window.pageYOffset + 17;
@@ -187,7 +190,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         defaultDispatcher.unregister(this.dispatcherRef);
         this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        this.roomProps.off("Room.name", this.onRoomNameUpdate);
         CommunityPrototypeStore.instance.off(
             CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
             this.onCommunityUpdate,
@@ -234,7 +236,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             show_room_tile: true, // make sure the room is visible in the list
             room_id: this.props.room.roomId,
             clear_search: (ev && (ev.key === Key.ENTER || ev.key === Key.SPACE)),
@@ -299,7 +301,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 0,
             ));
         } else {
-            console.warn(`Unexpected tag ${tagId} applied to ${this.props.room.roomId}`);
+            logger.warn(`Unexpected tag ${tagId} applied to ${this.props.room.roomId}`);
         }
 
         if ((ev as React.KeyboardEvent).key === Key.ENTER) {

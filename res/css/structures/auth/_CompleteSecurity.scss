@@ -51,7 +51,7 @@ limitations under the License.
 }
 
 .mx_CompleteSecurity_waiting {
-    color: $notice-secondary-color;
+    color: $tertiary-content;
 }
 
 .mx_CompleteSecurity_actionRow {
@@ -63,7 +63,7 @@ limitations under the License.
         margin-inline-start: 18px;
 
         &.warning {
-            color: $warning-color;
+            color: $alert;
         }
     }
 }

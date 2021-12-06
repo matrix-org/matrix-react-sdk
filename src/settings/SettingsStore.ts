@@ -24,7 +24,7 @@ import RoomSettingsHandler from "./handlers/RoomSettingsHandler";
 import ConfigSettingsHandler from "./handlers/ConfigSettingsHandler";
 import { _t } from '../languageHandler';
 import dis from '../dispatcher/dispatcher';
-import { ISetting, SETTINGS } from "./Settings";
+import { IFeature, ISetting, LabGroup, SETTINGS } from "./Settings";
 import LocalEchoWrapper from "./handlers/LocalEchoWrapper";
 import { WatchManager, CallbackFn as WatchCallbackFn } from "./WatchManager";
 import { SettingLevel } from "./SettingLevel";
@@ -182,7 +182,7 @@ export default class SettingsStore {
      */
     public static unwatchSetting(watcherReference: string) {
         if (!SettingsStore.watchers.has(watcherReference)) {
-            console.warn(`Ending non-existent watcher ID ${watcherReference}`);
+            logger.warn(`Ending non-existent watcher ID ${watcherReference}`);
             return;
         }
 
@@ -273,12 +273,18 @@ export default class SettingsStore {
         return SETTINGS[settingName].isFeature;
     }
 
-    public static getBetaInfo(settingName: string) {
+    public static getBetaInfo(settingName: string): ISetting["betaInfo"] {
         // consider a beta disabled if the config is explicitly set to false, in which case treat as normal Labs flag
         if (SettingsStore.isFeature(settingName)
             && SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, null, true, true) !== false
         ) {
             return SETTINGS[settingName]?.betaInfo;
+        }
+    }
+
+    public static getLabGroup(settingName: string): LabGroup {
+        if (SettingsStore.isFeature(settingName)) {
+            return (<IFeature>SETTINGS[settingName]).labsGroup;
         }
     }
 
@@ -550,7 +556,7 @@ export default class SettingsStore {
                     logger.log(`---     ${handlerName}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
                 } catch (e) {
                     logger.log(`---     ${handler}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.error(e);
                 }
 
                 if (roomId) {
@@ -559,7 +565,7 @@ export default class SettingsStore {
                         logger.log(`---     ${handlerName}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
                         logger.log(`---     ${handler}@<no_room> THREW ERROR: ${e.message}`);
-                        console.error(e);
+                        logger.error(e);
                     }
                 }
             }
@@ -572,7 +578,7 @@ export default class SettingsStore {
                 logger.log(`---     SettingsStore#generic@${roomId || '<no_room>'}  = ${JSON.stringify(value)}`);
             } catch (e) {
                 logger.log(`---     SettingsStore#generic@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                console.error(e);
+                logger.error(e);
             }
 
             if (roomId) {
@@ -581,7 +587,7 @@ export default class SettingsStore {
                     logger.log(`---     SettingsStore#generic@<no_room>  = ${JSON.stringify(value)}`);
                 } catch (e) {
                     logger.log(`---     SettingsStore#generic@$<no_room> THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.error(e);
                 }
             }
 
@@ -591,7 +597,7 @@ export default class SettingsStore {
                     logger.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
                 } catch (e) {
                     logger.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.error(e);
                 }
 
                 if (roomId) {
@@ -600,7 +606,7 @@ export default class SettingsStore {
                         logger.log(`---     SettingsStore#${level}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
                         logger.log(`---     SettingsStore#${level}@$<no_room> THREW ERROR: ${e.message}`);
-                        console.error(e);
+                        logger.error(e);
                     }
                 }
             }

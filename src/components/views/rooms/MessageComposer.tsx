@@ -27,16 +27,14 @@ import { makeRoomPermalink, RoomPermalinkCreator } from '../../../utils/permalin
 import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
 import SettingsStore from "../../../settings/SettingsStore";
-import {
+import ContextMenu, {
     aboveLeftOf,
-    ContextMenu,
     useContextMenu,
     MenuItem,
     AboveLeftOf,
 } from "../../structures/ContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
-import { UIFeature } from "../../../settings/UIFeature";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
@@ -50,24 +48,17 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
 import EmojiPicker from '../emojipicker/EmojiPicker';
-import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import Modal from "../../../Modal";
-import InfoDialog from "../dialogs/InfoDialog";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import RoomContext from '../../../contexts/RoomContext';
+import { POLL_START_EVENT_TYPE } from "../../../polls/consts";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import PollCreateDialog from "../elements/PollCreateDialog";
+import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
-
-interface IComposerAvatarProps {
-    me: RoomMember;
-}
-
-function ComposerAvatar(props: IComposerAvatarProps) {
-    return <div className="mx_MessageComposer_avatar">
-        <MemberStatusMessageAvatar member={props.me} width={24} height={24} />
-    </div>;
-}
 
 interface ISendButtonProps {
     onClick: () => void;
@@ -116,7 +107,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
             className={className}
             onClick={openMenu}
             title={!narrowMode && _t('Emoji picker')}
-            label={narrowMode && _t("Add emoji")}
+            label={narrowMode ? _t("Add emoji") : null}
         />
 
         { contextMenu }
@@ -125,6 +116,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
 
 interface IUploadButtonProps {
     roomId: string;
+    relation?: IEventRelation | null;
 }
 
 class UploadButton extends React.Component<IUploadButtonProps> {
@@ -166,7 +158,7 @@ class UploadButton extends React.Component<IUploadButtonProps> {
         }
 
         ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(),
+            tfiles, this.props.roomId, this.props.relation, MatrixClientPeg.get(),
         );
 
         // This is the onChange handler for a file form control, but we're
@@ -196,18 +188,34 @@ class UploadButton extends React.Component<IUploadButtonProps> {
     }
 }
 
-// TODO: [polls] Make this component actually do something
-class PollButton extends React.PureComponent {
+interface IPollButtonProps {
+    room: Room;
+}
+
+class PollButton extends React.PureComponent<IPollButtonProps> {
     private onCreateClick = () => {
-        Modal.createTrackedDialog('Polls', 'Not Yet Implemented', InfoDialog, {
-            // XXX: Deliberately not translated given this dialog is meant to be replaced and we don't
-            // want to clutter the language files with short-lived strings.
-            title: "Polls are currently in development",
-            description: "" +
-                "Thanks for testing polls! We haven't quite gotten a chance to write the feature yet " +
-                "though. Check back later for updates.",
-            hasCloseButton: true,
-        });
+        const canSend = this.props.room.currentState.maySendEvent(
+            POLL_START_EVENT_TYPE.name,
+            MatrixClientPeg.get().getUserId(),
+        );
+        if (!canSend) {
+            Modal.createTrackedDialog('Polls', 'permissions error: cannot start', ErrorDialog, {
+                title: _t("Permission Required"),
+                description: _t("You do not have permission to start polls in this room."),
+            });
+        } else {
+            Modal.createTrackedDialog(
+                'Polls',
+                'create',
+                PollCreateDialog,
+                {
+                    room: this.props.room,
+                },
+                'mx_CompoundDialog',
+                false, // isPriorityModal
+                true,  // isStaticModal
+            );
+        }
     };
 
     render() {
@@ -227,7 +235,6 @@ interface IProps {
     permalinkCreator: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
     relation?: IEventRelation;
-    showReplyPreview?: boolean;
     e2eStatus?: E2EStatus;
     compact?: boolean;
 }
@@ -242,6 +249,8 @@ interface IState {
     narrowMode?: boolean;
     isMenuOpen: boolean;
     showStickers: boolean;
+    showStickersButton: boolean;
+    showPollsButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -252,8 +261,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     static defaultProps = {
-        showReplyPreview: true,
         compact: false,
     };
 
@@ -269,9 +280,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             recordingTimeLeftSeconds: null, // when set to a number, shows a toast
             isMenuOpen: false,
             showStickers: false,
+            showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
+            showPollsButton: SettingsStore.getValue("feature_polls"),
         };
 
         this.instanceId = instanceCount++;
+
+        SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
+        SettingsStore.monitorSetting("feature_polls", null);
     }
 
     componentDidMount() {
@@ -294,14 +310,39 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === 'reply_to_event') {
-            // add a timeout for the reply preview to be rendered, so
-            // that the ScrollPanel listening to the resizeNotifier can
-            // correctly measure it's new height and scroll down to keep
-            // at the bottom if it already is
-            setTimeout(() => {
-                this.props.resizeNotifier.notifyTimelineHeightChanged();
-            }, 100);
+        switch (payload.action) {
+            case "reply_to_event":
+                if (payload.context === this.context.timelineRenderingType) {
+                    // add a timeout for the reply preview to be rendered, so
+                    // that the ScrollPanel listening to the resizeNotifier can
+                    // correctly measure it's new height and scroll down to keep
+                    // at the bottom if it already is
+                    setTimeout(() => {
+                        this.props.resizeNotifier.notifyTimelineHeightChanged();
+                    }, 100);
+                }
+                break;
+
+            case Action.SettingUpdated: {
+                const settingUpdatedPayload = payload as SettingUpdatedPayload;
+                switch (settingUpdatedPayload.settingName) {
+                    case "MessageComposerInput.showStickersButton": {
+                        const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
+                        if (this.state.showStickersButton !== showStickersButton) {
+                            this.setState({ showStickersButton });
+                        }
+                        break;
+                    }
+
+                    case "feature_polls": {
+                        const showPollsButton = SettingsStore.getValue("feature_polls");
+                        if (this.state.showPollsButton !== showPollsButton) {
+                            this.setState({ showPollsButton });
+                        }
+                        break;
+                    }
+                }
+            }
         }
     };
 
@@ -357,9 +398,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.state.tombstone.getSender().split(':').splice(1).join(':')];
+        const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             highlighted: true,
             event_id: createEventId,
             room_id: replacementRoomId,
@@ -397,13 +438,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
     };
 
-    private addEmoji(emoji: string): boolean {
+    private addEmoji = (emoji: string): boolean => {
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             text: emoji,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
         return true;
-    }
+    };
 
     private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
@@ -442,9 +484,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private shouldShowStickerPicker = (): boolean => {
-        return SettingsStore.getValue(UIFeature.Widgets)
-        && SettingsStore.getValue("MessageComposerInput.showStickersButton")
-        && !this.state.haveRecording;
+        return this.state.showStickersButton && !this.state.haveRecording;
     };
 
     private showStickers = (showStickers: boolean) => {
@@ -458,15 +498,21 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private renderButtons(menuPosition): JSX.Element | JSX.Element[] {
+        let uploadButtonIndex = 0;
         const buttons: JSX.Element[] = [];
         if (!this.state.haveRecording) {
-            if (SettingsStore.getValue("feature_polls")) {
+            if (this.state.showPollsButton) {
                 buttons.push(
-                    <PollButton key="polls" />,
+                    <PollButton key="polls" room={this.props.room} />,
                 );
             }
+            uploadButtonIndex = buttons.length;
             buttons.push(
-                <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
+                <UploadButton
+                    key="controls_upload"
+                    roomId={this.props.room.roomId}
+                    relation={this.props.relation}
+                />,
             );
             buttons.push(
                 <EmojiButton key="emoji_button" addEmoji={this.addEmoji} menuPosition={menuPosition} narrowMode={this.state.narrowMode} />,
@@ -485,13 +531,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     className="mx_MessageComposer_button mx_MessageComposer_stickers"
                     onClick={() => this.showStickers(!this.state.showStickers)}
                     title={title}
-                    label={this.state.narrowMode && _t("Send a sticker")}
+                    label={this.state.narrowMode ? _t("Send a sticker") : null}
                 />,
             );
         }
         if (!this.state.haveRecording && !this.state.narrowMode) {
             buttons.push(
                 <AccessibleTooltipButton
+                    key="voice_message_send"
                     className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
                     onClick={() => this.voiceRecordingButton.current?.onRecordStartEndClick()}
                     title={_t("Send voice message")}
@@ -509,7 +556,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             });
 
             return <>
-                { buttons[0] }
+                { buttons[uploadButtonIndex] }
                 <AccessibleTooltipButton
                     className={classnames}
                     onClick={this.toggleButtonMenu}
@@ -539,7 +586,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     render() {
         const controls = [
-            this.state.me && !this.props.compact ? <ComposerAvatar key="controls_avatar" me={this.state.me} /> : null,
             this.props.e2eStatus ?
                 <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
                 null,
@@ -610,12 +656,20 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 yOffset={-50}
             />;
         }
+
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation.event_id
+            : null;
+
         controls.push(
             <Stickerpicker
                 room={this.props.room}
+                threadId={threadId}
                 showStickers={this.state.showStickers}
                 setShowStickers={this.showStickers}
-                menuPosition={menuPosition} />,
+                menuPosition={menuPosition}
+                key="stickers"
+            />,
         );
 
         const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
@@ -624,15 +678,16 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             "mx_MessageComposer": true,
             "mx_GroupLayout": true,
             "mx_MessageComposer--compact": this.props.compact,
+            "mx_MessageComposer_e2eStatus": this.props.e2eStatus != undefined,
         });
 
         return (
             <div className={classes} ref={this.ref}>
                 { recordingTooltip }
                 <div className="mx_MessageComposer_wrapper">
-                    { this.props.showReplyPreview && (
-                        <ReplyPreview permalinkCreator={this.props.permalinkCreator} />
-                    ) }
+                    <ReplyPreview
+                        replyToEvent={this.props.replyToEvent}
+                        permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
                         { this.renderButtons(menuPosition) }

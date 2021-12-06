@@ -25,10 +25,12 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { createSpace, SpaceCreateForm } from "../spaces/SpaceCreateMenu";
 import { SubspaceSelector } from "./AddExistingToSpaceDialog";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
+
+import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     space: Room;
@@ -83,7 +85,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
             onFinished(true);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
     };
 

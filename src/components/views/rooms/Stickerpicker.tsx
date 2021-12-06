@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { _t, _td } from '../../../languageHandler';
@@ -24,7 +25,7 @@ import WidgetUtils, { IWidgetEvent } from '../../../utils/WidgetUtils';
 import PersistedElement from "../elements/PersistedElement";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
-import { ChevronFace, ContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { Action } from "../../../dispatcher/actions";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
@@ -45,6 +46,7 @@ const PERSISTED_ELEMENT_KEY = "stickerPicker";
 
 interface IProps {
     room: Room;
+    threadId?: string | null;
     showStickers: boolean;
     menuPosition?: any;
     setShowStickers: (showStickers: boolean) => void;
@@ -61,6 +63,10 @@ interface IState {
 
 @replaceableComponent("views.rooms.Stickerpicker")
 export default class Stickerpicker extends React.PureComponent<IProps, IState> {
+    static defaultProps = {
+        threadId: null,
+    };
+
     static currentWidget;
 
     private dispatcherRef: string;
@@ -107,20 +113,20 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                 scalarClient.disableWidgetAssets(WidgetType.STICKERPICKER, this.state.widgetId).then(() => {
                     logger.log('Assets disabled');
                 }).catch((err) => {
-                    console.error('Failed to disable assets');
+                    logger.error('Failed to disable assets');
                 });
             } else {
-                console.error("Cannot disable assets: no scalar client");
+                logger.error("Cannot disable assets: no scalar client");
             }
         } else {
-            console.warn('No widget ID specified, not disabling assets');
+            logger.warn('No widget ID specified, not disabling assets');
         }
 
         this.props.setShowStickers(false);
         WidgetUtils.removeStickerpickerWidgets().then(() => {
             this.forceUpdate();
         }).catch((e) => {
-            console.error('Failed to remove sticker picker widget', e);
+            logger.error('Failed to remove sticker picker widget', e);
         });
     };
 
@@ -152,7 +158,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     }
 
     private imError(errorMsg: string, e: Error): void {
-        console.error(errorMsg, e);
+        logger.error(errorMsg, e);
         this.setState({
             imError: _t(errorMsg),
         });
@@ -230,7 +236,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         const messaging = WidgetMessagingStore.instance.getMessagingForId(this.state.stickerpickerWidget.id);
         if (messaging && visible !== this.prevSentVisibility) {
             messaging.updateVisibility(visible).catch(err => {
-                console.error("Error updating widget visibility: ", err);
+                logger.error("Error updating widget visibility: ", err);
             });
             this.prevSentVisibility = visible;
         }
@@ -286,6 +292,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                             <AppTile
                                 app={stickerApp}
                                 room={this.props.room}
+                                threadId={this.props.threadId}
                                 fullWidth={true}
                                 userId={MatrixClientPeg.get().credentials.userId}
                                 creatorUserId={stickerpickerWidget.sender || MatrixClientPeg.get().credentials.userId}
