@@ -376,6 +376,23 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     </div>
                 </div>
             ) : null }
+
+            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                <h4>{ _t("Other searches") }</h4>
+                <div>
+                    <Option
+                        id="mx_SpotlightDialog_button_explorePublicRooms"
+                        className="mx_SpotlightDialog_explorePublicRooms"
+                        onClick={() => {
+                            defaultDispatcher.fire(Action.ViewRoomDirectory);
+                            onFinished();
+                        }}
+                    >
+                        { _t("Explore public rooms") }
+                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
+                    </Option>
+                </div>
+            </div>
         </>;
     }
 

@@ -93,12 +93,6 @@ limitations under the License.
             }
         }
 
-        .mx_SpotlightDialog_otherSearches {
-            .mx_AccessibleButton + .mx_AccessibleButton {
-                margin-left: 12px;
-            }
-        }
-
         .mx_SpotlightDialog_recentlyViewed {
             > div {
                 display: flex;
@@ -135,7 +129,8 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_results,
-        .mx_SpotlightDialog_recentSearches {
+        .mx_SpotlightDialog_recentSearches,
+        .mx_SpotlightDialog_otherSearches {
             .mx_AccessibleButton {
                 padding: 6px 4px;
                 border-radius: 8px;
@@ -161,6 +156,28 @@ limitations under the License.
                     .mx_SpotlightDialog_enterPrompt {
                         display: inline-block;
                     }
+                }
+            }
+        }
+
+        .mx_SpotlightDialog_otherSearches {
+            .mx_SpotlightDialog_explorePublicRooms {
+                padding-left: 32px;
+                position: relative;
+
+                &::before {
+                    background-color: $secondary-content;
+                    content: "";
+                    mask-repeat: no-repeat;
+                    mask-position: center;
+                    mask-size: contain;
+                    mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
+                    width: 20px;
+                    height: 20px;
+                    position: absolute;
+                    left: 4px;
+                    top: 50%;
+                    transform: translateY(-50%);
                 }
             }
         }
