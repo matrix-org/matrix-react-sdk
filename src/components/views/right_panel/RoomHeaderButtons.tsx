@@ -63,10 +63,10 @@ const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
         "mx_RightPanel_headerButton_unreadIndicator": true,
         "mx_Indicator_gray": color === NotificationColor.Grey,
     });
-    return <React.Fragment>
+    return <>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
         <div className={classes} />
-    </React.Fragment>;
+    </>;
 };
 
 interface IHeaderButtonProps {
@@ -144,11 +144,11 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         this.threadNotificationState.off(NotificationStateEvents.Update, this.onThreadNotification);
     }
 
-    private onThreadNotification(): void {
+    private onThreadNotification = (): void => {
         this.setState({
             threadNotificationColor: this.threadNotificationState.color,
         });
-    }
+    };
 
     protected onAction(payload: ActionPayload) {
         if (payload.action === Action.ViewUser) {
