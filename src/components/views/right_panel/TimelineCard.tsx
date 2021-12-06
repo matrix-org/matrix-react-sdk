@@ -74,7 +74,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            showReadReceipts: false,
+            showReadReceipts: SettingsStore.getValue("showReadReceipts", props.room.roomId),
         };
         this.settingWatchers = [];
     }
@@ -168,7 +168,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 >
                     <TimelinePanel
                         ref={this.timelinePanelRef}
-                        showReadReceipts={/*this.state.showReadReceipts*/ false} // TODO: RR's cause issues with limited horizontal space
+                        showReadReceipts={this.state.showReadReceipts}
                         manageReadReceipts={true}
                         manageReadMarkers={false} // No RM support in the TimelineCard
                         sendReadReceiptOnLoad={true}
