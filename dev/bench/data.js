@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638870142612,
+  "lastUpdate": 1638870729202,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45968,6 +45968,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4436.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "renancleyson.f@gmail.com",
+            "name": "Renan Cleyson",
+            "username": "renancleyson-dev"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b4b81a455e14d65e6d343d1a3e95c1ca5a845c61",
+          "message": "Fix wrong indentation with nested ordered list unnesting list on edit (#7300)",
+          "timestamp": "2021-12-07T09:46:04Z",
+          "tree_id": "702b079084380f0e94b96fa8c93af67d87c81789",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b4b81a455e14d65e6d343d1a3e95c1ca5a845c61"
+        },
+        "date": 1638870726487,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4637.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 686.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
