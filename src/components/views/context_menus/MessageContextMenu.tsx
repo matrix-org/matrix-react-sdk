@@ -43,7 +43,7 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import EndPollDialog from '../dialogs/EndPollDialog';
-import { Relations } from '../../../../../matrix-js-sdk/src/models/relations';
+import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { isPollEnded } from '../messages/MPollBody';
 
 export function canCancel(eventStatus: EventStatus): boolean {

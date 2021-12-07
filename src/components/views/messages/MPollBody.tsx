@@ -34,7 +34,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ErrorDialog from '../dialogs/ErrorDialog';
-import { MatrixClient } from '../../../../../matrix-js-sdk/src/matrix';
+import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 
 interface IState {
     selected?: string; // Which option was clicked by the local user

@@ -25,7 +25,7 @@ import { IPollEndContent, POLL_END_EVENT_TYPE, TEXT_NODE_TYPE } from "../../../p
 import { findTopAnswer } from "../messages/MPollBody";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
-import { Relations } from "../../../../../matrix-js-sdk/src/models/relations";
+import { Relations } from "matrix-js-sdk/src/models/relations";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
