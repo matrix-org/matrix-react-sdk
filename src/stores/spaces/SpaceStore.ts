@@ -356,6 +356,107 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return this.spaceFilteredRooms.get(space) || new Set();
     };
 
+    private markTreeChildren = (rootSpace: Room, unseen: Set<Room>): void => {
+        const stack = [rootSpace];
+        while (stack.length) {
+            const space = stack.pop();
+            unseen.delete(space);
+            this.getChildSpaces(space.roomId).forEach(space => {
+                if (unseen.has(space)) {
+                    stack.push(space);
+                }
+            });
+        }
+    };
+
+    private findRootSpaces = (joinedSpaces: Room[]): Room[] => {
+        // exclude invited spaces from unseenChildren as they will be forcibly shown at the top level of the treeview
+        const unseenSpaces = new Set(joinedSpaces);
+
+        joinedSpaces.forEach(space => {
+            this.getChildSpaces(space.roomId).forEach(subspace => {
+                unseenSpaces.delete(subspace);
+            });
+        });
+
+        // Consider any spaces remaining in unseenSpaces as root,
+        // given they are not children of any known spaces.
+        // The hierarchy from these roots may not yet be exhaustive due to the possibility of full-cycles.
+        const rootSpaces = Array.from(unseenSpaces);
+
+        // Next we need to determine the roots of any remaining full-cycles.
+        // We sort spaces by room ID to force the cycle breaking to be deterministic.
+        const detachedNodes = new Set<Room>(sortBy(joinedSpaces, space => space.roomId));
+
+        // Mark any nodes which are children of our existing root spaces as attached.
+        rootSpaces.forEach(rootSpace => {
+            this.markTreeChildren(rootSpace, detachedNodes);
+        });
+
+        // Handle spaces forming fully cyclical relationships.
+        // In order, assume each remaining detachedNode is a root unless it has already
+        // been claimed as the child of prior detached node.
+        // Work from a copy of the detachedNodes set as it will be mutated as part of this operation.
+        // TODO consider sorting by number of in-refs to favour nodes with fewer parents.
+        Array.from(detachedNodes).forEach(detachedNode => {
+            if (!detachedNodes.has(detachedNode)) return; // already claimed, skip
+            // declare this detached node a new root, find its children, without ever looping back to it
+            rootSpaces.push(detachedNode); // consider this node a new root space
+            this.markTreeChildren(detachedNode, detachedNodes); // declare this node and its children attached
+        });
+
+        return rootSpaces;
+    };
+
+    // TODO cull this before this PR can merge
+    private temporaryWorkaround = (joinedSpaces: Room[]) => {
+        // if the currently selected space no longer exists, remove its selection
+        // TODO this probably belongs elsewhere
+        if (!["join", "invite"].includes(this.activeSpaceRoom?.getMyMembership())) {
+            this.goToFirstSpace();
+        }
+
+        this.parentMap = new EnhancedMap<string, Set<string>>();
+        joinedSpaces.forEach(space => {
+            const children = this.getChildren(space.roomId);
+            children.forEach(child => {
+                this.parentMap.getOrCreate(child.roomId, new Set()).add(space.roomId);
+            });
+        });
+    };
+
+    private rebuildSpaceHierarchy = throttle(() => {
+        const visibleSpaces = this.matrixClient.getVisibleRooms().filter(r => r.isSpaceRoom());
+        const [joinedSpaces, invitedSpaces] = visibleSpaces.reduce((arr, s) => {
+            switch (s.getMyMembership()) {
+                case "join":
+                    arr[0].push(s);
+                    break;
+                case "invite":
+                    arr[1].push(s);
+                    break;
+            }
+            return arr;
+        }, [[], []] as [Room[], Room[]]);
+
+        const rootSpaces = this.findRootSpaces(joinedSpaces);
+        const oldRootSpaces = this.rootSpaces;
+        this.rootSpaces = this.sortRootSpaces(rootSpaces);
+
+        this.temporaryWorkaround(joinedSpaces);
+        this.onRoomsUpdate();
+
+        if (arrayHasOrderChange(oldRootSpaces, this.rootSpaces)) {
+            this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
+        }
+
+        const oldInvitedSpaces = this._invitedSpaces;
+        this._invitedSpaces = new Set(this.sortRootSpaces(invitedSpaces));
+        if (setHasDiff(oldInvitedSpaces, this._invitedSpaces)) {
+            this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
+        }
+    }, 100, { trailing: true, leading: true });
+
     private rebuild = throttle(() => {
         if (!this.matrixClient) return;
 
@@ -391,21 +492,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         // somewhat algorithm to handle full-cycles
         const detachedNodes = new Set<Room>(spaces);
 
-        const markTreeChildren = (rootSpace: Room, unseen: Set<Room>) => {
-            const stack = [rootSpace];
-            while (stack.length) {
-                const op = stack.pop();
-                unseen.delete(op);
-                this.getChildSpaces(op.roomId).forEach(space => {
-                    if (unseen.has(space)) {
-                        stack.push(space);
-                    }
-                });
-            }
-        };
-
         rootSpaces.forEach(rootSpace => {
-            markTreeChildren(rootSpace, detachedNodes);
+            this.markTreeChildren(rootSpace, detachedNodes);
         });
 
         // Handle spaces forming fully cyclical relationships.
@@ -417,7 +505,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             // declare this detached node a new root, find its children, without ever looping back to it
             detachedNodes.delete(detachedNode);
             rootSpaces.push(detachedNode);
-            markTreeChildren(detachedNode, detachedNodes);
+            this.markTreeChildren(detachedNode, detachedNodes);
 
             // TODO only consider a detached node a root space if it has no *parents other than the ones forming cycles
         });
@@ -811,13 +899,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
         this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]) as MetaSpace[];
 
-        await this.onSpaceUpdate(); // trigger an initial update
+        this.rebuildSpaceHierarchy(); // trigger an initial update
 
         // restore selected state from last session if any and still valid
         const lastSpaceId = window.localStorage.getItem(ACTIVE_SPACE_LS_KEY);
-        if (lastSpaceId && (
-            lastSpaceId[0] === "!" ? this.matrixClient.getRoom(lastSpaceId) : enabledMetaSpaces[lastSpaceId]
-        )) {
+        if (lastSpaceId?.[0] === "!" ? this.matrixClient.getRoom(lastSpaceId) : enabledMetaSpaces[lastSpaceId]) {
             // don't context switch here as it may break permalinks
             this.setActiveSpace(lastSpaceId, false);
         } else {
