@@ -93,8 +93,6 @@ const getRoomFn: FetchRoomFn = (room: Room) => {
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
     private rootSpaces: Room[] = [];
-    // The list of rooms not present in any currently joined spaces
-    private orphanedRooms = new Set<string>();
     // Map from room ID to set of spaces which list it as a child
     private parentMap = new EnhancedMap<string, Set<string>>();
     // Map from SpaceKey to SpaceNotificationState instance representing that space
@@ -451,26 +449,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return rootSpaces;
     };
 
-    // TODO cull this before this PR can merge
-    private temporaryWorkaround = (joinedSpaces: Room[]) => {
-        // if the currently selected space no longer exists, remove its selection
-        // TODO this probably belongs elsewhere
-        if (!["join", "invite"].includes(this.activeSpaceRoom?.getMyMembership())) {
-            this.goToFirstSpace();
-        }
-
-        this.parentMap = new EnhancedMap<string, Set<string>>();
-        joinedSpaces.forEach(space => {
-            const children = this.getChildren(space.roomId);
-            children.forEach(child => {
-                this.parentMap.getOrCreate(child.roomId, new Set()).add(space.roomId);
-            });
-        });
-
-        const joinedRooms = this.matrixClient.getVisibleRooms().filter(r => r.isSpaceRoom());
-        this.orphanedRooms = new Set(joinedRooms.filter(r => !this.parentMap.get(r.roomId)?.size).map(r => r.roomId));
-    };
-
     private rebuildSpaceHierarchy = () => {
         const visibleSpaces = this.matrixClient.getVisibleRooms().filter(r => r.isSpaceRoom());
         const [joinedSpaces, invitedSpaces] = visibleSpaces.reduce((arr, s) => {
@@ -489,7 +467,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const oldRootSpaces = this.rootSpaces;
         this.rootSpaces = this.sortRootSpaces(rootSpaces);
 
-        this.temporaryWorkaround(joinedSpaces);
         this.onRoomsUpdate();
 
         if (arrayHasOrderChange(oldRootSpaces, this.rootSpaces)) {
@@ -501,6 +478,20 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (setHasDiff(oldInvitedSpaces, this._invitedSpaces)) {
             this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
         }
+    };
+
+    private rebuildParentMap = () => {
+        const joinedSpaces = this.matrixClient.getVisibleRooms().filter(r => {
+            return r.isSpaceRoom() && r.getMyMembership() === "join";
+        });
+
+        this.parentMap = new EnhancedMap<string, Set<string>>();
+        joinedSpaces.forEach(space => {
+            const children = this.getChildren(space.roomId);
+            children.forEach(child => {
+                this.parentMap.getOrCreate(child.roomId, new Set()).add(space.roomId);
+            });
+        });
     };
 
     private rebuildHomeSpace = () => {
@@ -543,14 +534,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         // The People metaspace doesn't need maintaining
 
-        if (enabledMetaSpaces.has(MetaSpace.Orphans)) {
+        // Populate the orphans space if the Home space is enabled as it is a superset of it.
+        // Home is effectively a super set of People + Orphans with the addition of having all invites too.
+        if (enabledMetaSpaces.has(MetaSpace.Orphans) || enabledMetaSpaces.has(MetaSpace.Home)) {
             const orphans = visibleRooms.filter(r => {
                 // filter out DMs and rooms with >0 parents
                 return !this.parentMap.get(r.roomId)?.size && !DMRoomMap.shared().getUserIdForRoomId(r.roomId);
             });
             this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
-        } else {
-            this.spaceFilteredRooms.delete(MetaSpace.Orphans);
         }
     };
 
@@ -610,11 +601,16 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
         // TODO more metaspace stuffs
         if (enabledMetaSpaces.has(MetaSpace.Home)) {
+            const homeRooms = this.spaceFilteredRooms.get(MetaSpace.Home);
+            const len = homeRooms.size;
+
             if (this.showInHomeSpace(room)) {
-                this.spaceFilteredRooms.get(MetaSpace.Home)?.add(room.roomId);
-                this.emit(MetaSpace.Home);
-            } else if (!this.orphanedRooms.has(room.roomId)) {
+                homeRooms?.add(room.roomId);
+            } else if (!this.spaceFilteredRooms.get(MetaSpace.Orphans).has(room.roomId)) {
                 this.spaceFilteredRooms.get(MetaSpace.Home)?.delete(room.roomId);
+            }
+
+            if (len !== homeRooms.size) {
                 this.emit(MetaSpace.Home);
             }
         }
@@ -641,6 +637,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         //     this.spaceFilteredRooms.set(spaceKey, oldFilteredRooms.get(spaceKey));
         // });
 
+        this.rebuildParentMap();
         this.rebuildMetaSpaces();
 
         const hiddenChildren = new EnhancedMap<string, Set<string>>();
@@ -748,9 +745,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         if (!room.isSpaceRoom()) {
             // this.onRoomUpdate(room);
-            // this.onRoomsUpdate();
-            // ideally we only need onRoomsUpdate here but it doesn't rebuild parentMap so always adds new rooms to Home
-            this.rebuild();
+            this.onRoomsUpdate();
 
             if (membership === "join") {
                 // the user just joined a room, remove it from the suggested list if it was there
@@ -770,11 +765,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         // Space
         if (membership === "invite") {
+            const len = this._invitedSpaces.size;
             this._invitedSpaces.add(room);
-            this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
+            if (len !== this._invitedSpaces.size) {
+                this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
+            }
         } else if (oldMembership === "invite" && membership !== "join") {
-            this._invitedSpaces.delete(room);
-            this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
+            if (this._invitedSpaces.delete(room)) {
+                this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
+            }
         } else {
             this.rebuild();
             this.emit(room.roomId);
@@ -884,10 +883,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     protected async reset() {
         this.rootSpaces = [];
-        this.orphanedRooms = new Set();
         this.parentMap = new EnhancedMap();
         this.notificationStateMap = new Map();
         this.spaceFilteredRooms = new Map();
+        this.spaceFilteredUsers = new Map();
         this._activeSpace = MetaSpace.Home; // set properly by onReady
         this._suggestedRooms = [];
         this._invitedSpaces = new Set();
