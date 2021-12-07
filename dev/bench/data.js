@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638869834555,
+  "lastUpdate": 1638869878093,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45884,6 +45884,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4305.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "275e9c1d026fcd7e4144ec2e236bbb14bb64082f",
+          "message": "Update space panel expand mechanism (#7230)",
+          "timestamp": "2021-12-07T09:32:00Z",
+          "tree_id": "04854162163645cbf2e0c81f597eda78602de8ce",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/275e9c1d026fcd7e4144ec2e236bbb14bb64082f"
+        },
+        "date": 1638869875685,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4663.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 654.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
