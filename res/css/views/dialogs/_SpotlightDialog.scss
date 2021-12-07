@@ -163,6 +163,7 @@ limitations under the License.
         }
 
         .mx_SpotlightDialog_otherSearches {
+            .mx_SpotlightDialog_startChat,
             .mx_SpotlightDialog_explorePublicRooms {
                 padding-left: 32px;
                 position: relative;
@@ -173,7 +174,6 @@ limitations under the License.
                     mask-repeat: no-repeat;
                     mask-position: center;
                     mask-size: contain;
-                    mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
                     width: 20px;
                     height: 20px;
                     position: absolute;
@@ -181,6 +181,14 @@ limitations under the License.
                     top: 50%;
                     transform: translateY(-50%);
                 }
+            }
+
+            .mx_SpotlightDialog_startChat::before {
+                mask-image: url('$(res)/img/element-icons/room/members.svg');
+            }
+
+            .mx_SpotlightDialog_explorePublicRooms::before {
+                mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
             }
 
             .mx_SpotlightDialog_otherSearches_messageSearchText {

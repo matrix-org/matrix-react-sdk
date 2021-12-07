@@ -60,6 +60,7 @@ import Modal from "../../../Modal";
 import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomViewStore from "../../../stores/RoomViewStore";
+import { showStartChatInviteDialog } from "../../../RoomInvite";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50;
@@ -336,6 +337,17 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         }}
                     >
                         { _t("Public rooms") }
+                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
+                    </Option>
+                    <Option
+                        id="mx_SpotlightDialog_button_startChat"
+                        className="mx_SpotlightDialog_startChat"
+                        onClick={() => {
+                            showStartChatInviteDialog(query);
+                            onFinished();
+                        }}
+                    >
+                        { _t("People") }
                         <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                     </Option>
                 </div>
