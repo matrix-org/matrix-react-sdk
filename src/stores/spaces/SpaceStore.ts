@@ -101,6 +101,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
     // Map from space key to Set of room IDs that should be shown as part of that space's filter
     private spaceFilteredRooms = new Map<SpaceKey, Set<string>>();
+    // Map from space key to Set of user IDs that should be shown as part of that space's filter
+    private spaceFilteredUsers = new Map<SpaceKey, Set<string>>(); // TODO actually implement
     // The space currently selected in the Space Panel
     private _activeSpace?: SpaceKey = MetaSpace.Home; // set properly by onReady
     private _suggestedRooms: ISuggestedRoom[] = [];
@@ -215,7 +217,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             // else view space home or home depending on what is being clicked on
             if (cliSpace?.getMyMembership() !== "invite" &&
                 this.matrixClient.getRoom(roomId)?.getMyMembership() === "join" &&
-                this.getSpaceFilteredRoomIds(space).has(roomId)
+                this.isRoomInSpace(space, roomId)
             ) {
                 defaultDispatcher.dispatch({
                     action: "view_room",
@@ -349,11 +351,40 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return this.parentMap.get(roomId) || new Set();
     }
 
+    public isRoomInSpace(space: SpaceKey, roomId: string): boolean {
+        if (space === MetaSpace.Home && this.allRoomsInHome && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
+            return true;
+        }
+
+        if (this.spaceFilteredRooms.get(space)?.has(roomId)) {
+            return true;
+        }
+
+        const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
+        if (dmPartner && this.spaceFilteredUsers.get(space)?.has(dmPartner)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // TODO deprecate
     public getSpaceFilteredRoomIds = (space: SpaceKey): Set<string> => {
-        if (space === MetaSpace.Home && this.allRoomsInHome) {
+        if (space === MetaSpace.Home && this.allRoomsInHome && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
             return new Set(this.matrixClient.getVisibleRooms().map(r => r.roomId));
         }
         return this.spaceFilteredRooms.get(space) || new Set();
+    };
+
+    // TODO deprecate
+    public getSpaceFilteredUserIds = (space: SpaceKey): Set<string> => {
+        if (space === MetaSpace.Home && this.allRoomsInHome) {
+            return undefined;
+        }
+        if (space === MetaSpace.People || space === MetaSpace.Orphans) {
+            return undefined;
+        }
+        return this.spaceFilteredUsers.get(space) || new Set();
     };
 
     private markTreeChildren = (rootSpace: Room, unseen: Set<Room>): void => {
@@ -733,7 +764,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         // otherwise, try to find a metaspace which contains this room
         if (!parent) {
             // search meta spaces in reverse as Home is the first and least specific one
-            parent = [...this.enabledMetaSpaces].reverse().find(s => this.getSpaceFilteredRoomIds(s).has(roomId));
+            parent = [...this.enabledMetaSpaces].reverse().find(s => this.isRoomInSpace(s, roomId));
         }
 
         // don't trigger a context switch when we are switching a space to match the chosen room
@@ -962,7 +993,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     // Don't context switch when navigating to the space room
                     // as it will cause you to end up in the wrong room
                     this.setActiveSpace(room.roomId, false);
-                } else if (!this.getSpaceFilteredRoomIds(this.activeSpace).has(roomId)) {
+                } else if (!this.isRoomInSpace(this.activeSpace, roomId)) {
                     this.switchToRelatedSpace(roomId);
                 }
 
@@ -1031,7 +1062,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                     case "Spaces.showPeopleInSpace":
                         // TODO extract space DMs from space filtered rooms to simplify the data flow
-                        this.rebuild(); // rebuild everything
+                        // getSpaceFilteredUserIds will return the appropriate value
+                        this.emit(settingUpdatedPayload.roomId);
                         break;
                 }
             }

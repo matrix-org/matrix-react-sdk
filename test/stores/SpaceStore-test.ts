@@ -388,84 +388,84 @@ describe("SpaceStore", () => {
             });
 
             it("home space contains orphaned rooms", () => {
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(orphan1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(orphan2)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, orphan1)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, orphan2)).toBeTruthy();
             });
 
             it("home space does not contain all favourites", () => {
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(fav1)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(fav2)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(fav3)).toBeFalsy();
+                expect(store.isRoomInSpace(MetaSpace.Home, fav1)).toBeFalsy();
+                expect(store.isRoomInSpace(MetaSpace.Home, fav2)).toBeFalsy();
+                expect(store.isRoomInSpace(MetaSpace.Home, fav3)).toBeFalsy();
             });
 
             it("home space contains dm rooms", () => {
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(dm1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(dm2)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(dm3)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, dm1)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, dm2)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, dm3)).toBeTruthy();
             });
 
             it("home space contains invites", () => {
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(invite1)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, invite1)).toBeTruthy();
             });
 
             it("home space contains invites even if they are also shown in a space", () => {
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(invite2)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, invite2)).toBeTruthy();
             });
 
             it("all rooms space does contain rooms/low priority even if they are also shown in a space", async () => {
                 await setShowAllRooms(true);
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(room1)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Home, room1)).toBeTruthy();
             });
 
             it("favourites space does contain favourites even if they are also shown in a space", async () => {
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Favourites).has(fav1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Favourites).has(fav2)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Favourites).has(fav3)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Favourites, fav1)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Favourites, fav2)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Favourites, fav3)).toBeTruthy();
             });
 
             it("people space does contain people even if they are also shown in a space", async () => {
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.People).has(dm1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.People).has(dm2)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.People).has(dm3)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.People, dm1)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.People, dm2)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.People, dm3)).toBeTruthy();
             });
 
             it("orphans space does contain orphans even if they are also shown in all rooms", async () => {
                 await setShowAllRooms(true);
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Orphans).has(orphan1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Orphans).has(orphan2)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Orphans, orphan1)).toBeTruthy();
+                expect(store.isRoomInSpace(MetaSpace.Orphans, orphan2)).toBeTruthy();
             });
 
             it("home space doesn't contain rooms/low priority if they are also shown in a space", async () => {
                 await setShowAllRooms(false);
-                expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(room1)).toBeFalsy();
+                expect(store.isRoomInSpace(MetaSpace.Home, room1)).toBeFalsy();
             });
 
             it("space contains child rooms", () => {
-                expect(store.getSpaceFilteredRoomIds(space1).has(fav1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(space1).has(room1)).toBeTruthy();
+                expect(store.isRoomInSpace(space1, fav1)).toBeTruthy();
+                expect(store.isRoomInSpace(space1, room1)).toBeTruthy();
             });
 
             it("space contains child favourites", () => {
-                expect(store.getSpaceFilteredRoomIds(space2).has(fav1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(space2).has(fav2)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(space2).has(fav3)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(space2).has(room1)).toBeTruthy();
+                expect(store.isRoomInSpace(space2, fav1)).toBeTruthy();
+                expect(store.isRoomInSpace(space2, fav2)).toBeTruthy();
+                expect(store.isRoomInSpace(space2, fav3)).toBeTruthy();
+                expect(store.isRoomInSpace(space2, room1)).toBeTruthy();
             });
 
             it("space contains child invites", () => {
-                expect(store.getSpaceFilteredRoomIds(space3).has(invite2)).toBeTruthy();
+                expect(store.isRoomInSpace(space3, invite2)).toBeTruthy();
             });
 
             it("spaces contain dms which you have with members of that space", () => {
-                expect(store.getSpaceFilteredRoomIds(space1).has(dm1)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(space2).has(dm1)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(space3).has(dm1)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(space1).has(dm2)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(space2).has(dm2)).toBeTruthy();
-                expect(store.getSpaceFilteredRoomIds(space3).has(dm2)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(space1).has(dm3)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(space2).has(dm3)).toBeFalsy();
-                expect(store.getSpaceFilteredRoomIds(space3).has(dm3)).toBeFalsy();
+                expect(store.isRoomInSpace(space1, dm1)).toBeTruthy();
+                expect(store.isRoomInSpace(space2, dm1)).toBeFalsy();
+                expect(store.isRoomInSpace(space3, dm1)).toBeFalsy();
+                expect(store.isRoomInSpace(space1, dm2)).toBeFalsy();
+                expect(store.isRoomInSpace(space2, dm2)).toBeTruthy();
+                expect(store.isRoomInSpace(space3, dm2)).toBeFalsy();
+                expect(store.isRoomInSpace(space1, dm3)).toBeFalsy();
+                expect(store.isRoomInSpace(space2, dm3)).toBeFalsy();
+                expect(store.isRoomInSpace(space3, dm3)).toBeFalsy();
             });
 
             it("dms are only added to Notification States for only the Home Space", () => {
@@ -517,11 +517,11 @@ describe("SpaceStore", () => {
             });
 
             it("honours m.space.parent if sender has permission in parent space", () => {
-                expect(store.getSpaceFilteredRoomIds(space2).has(room2)).toBeTruthy();
+                expect(store.isRoomInSpace(space2, room2)).toBeTruthy();
             });
 
             it("does not honour m.space.parent if sender does not have permission in parent space", () => {
-                expect(store.getSpaceFilteredRoomIds(space3).has(room3)).toBeFalsy();
+                expect(store.isRoomInSpace(space3, room3)).toBeFalsy();
             });
         });
     });
@@ -612,8 +612,8 @@ describe("SpaceStore", () => {
             expect(store.invitedSpaces).toStrictEqual([]);
             expect(store.getChildSpaces(space1)).toStrictEqual([]);
             expect(store.getChildRooms(space1)).toStrictEqual([]);
-            expect(store.getSpaceFilteredRoomIds(space1).has(invite1)).toBeFalsy();
-            expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(invite1)).toBeFalsy();
+            expect(store.isRoomInSpace(space1, invite1)).toBeFalsy();
+            expect(store.isRoomInSpace(MetaSpace.Home, invite1)).toBeFalsy();
 
             const invite = mkRoom(invite1);
             invite.getMyMembership.mockReturnValue("invite");
@@ -625,8 +625,8 @@ describe("SpaceStore", () => {
             expect(store.invitedSpaces).toStrictEqual([]);
             expect(store.getChildSpaces(space1)).toStrictEqual([]);
             expect(store.getChildRooms(space1)).toStrictEqual([invite]);
-            expect(store.getSpaceFilteredRoomIds(space1).has(invite1)).toBeTruthy();
-            expect(store.getSpaceFilteredRoomIds(MetaSpace.Home).has(invite1)).toBeTruthy();
+            expect(store.isRoomInSpace(space1, invite1)).toBeTruthy();
+            expect(store.isRoomInSpace(MetaSpace.Home, invite1)).toBeTruthy();
         });
     });
 
