@@ -87,6 +87,7 @@ limitations under the License.
                 line-height: $font-15px;
                 color: $secondary-content;
                 margin-top: 0;
+                margin-bottom: 8px;
             }
 
             & + .mx_SpotlightDialog_section {
@@ -116,7 +117,7 @@ limitations under the License.
                 text-overflow: ellipsis;
 
                 .mx_DecoratedRoomAvatar {
-                    margin: 0 5px; // maintain centering
+                    margin: 0 5px 4px; // maintain centering
                 }
 
                 & + .mx_AccessibleButton {
