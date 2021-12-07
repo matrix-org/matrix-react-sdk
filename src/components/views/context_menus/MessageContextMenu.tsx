@@ -44,6 +44,7 @@ import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { Relations } from '../../../../../matrix-js-sdk/src/models/relations';
+import { isPollEnded } from '../messages/MPollBody';
 
 export function canCancel(eventStatus: EventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -134,7 +135,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     private canEndPoll(mxEvent: MatrixEvent) {
         return (
             mxEvent.getType() === POLL_START_EVENT_TYPE.name &&
-            this.state.canRedact
+            this.state.canRedact &&
+            !isPollEnded(mxEvent, MatrixClientPeg.get(), this.props.getRelationsForEvent)
         );
     }
 

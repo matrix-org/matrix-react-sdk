@@ -2065,6 +2065,8 @@
     "You sent a verification request": "You sent a verification request",
     "Vote not registered": "Vote not registered",
     "Sorry, your vote was not registered. Please try again.": "Sorry, your vote was not registered. Please try again.",
+    "Final result based on %(count)s votes|other": "Final result based on %(count)s votes",
+    "Final result based on %(count)s votes|one": "Final result based on %(count)s vote",
     "No votes cast": "No votes cast",
     "%(count)s votes cast. Vote to see the results|other": "%(count)s votes cast. Vote to see the results",
     "%(count)s votes cast. Vote to see the results|one": "%(count)s vote cast. Vote to see the results",
