@@ -425,7 +425,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         });
     };
 
-    private rebuildSpaceHierarchy = throttle(() => {
+    private rebuildSpaceHierarchy = () => {
         const visibleSpaces = this.matrixClient.getVisibleRooms().filter(r => r.isSpaceRoom());
         const [joinedSpaces, invitedSpaces] = visibleSpaces.reduce((arr, s) => {
             switch (s.getMyMembership()) {
@@ -455,7 +455,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (setHasDiff(oldInvitedSpaces, this._invitedSpaces)) {
             this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
         }
-    }, 100, { trailing: true, leading: true });
+    };
 
     private rebuild = throttle(() => {
         if (!this.matrixClient) return;
@@ -531,10 +531,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this._invitedSpaces = new Set(this.sortRootSpaces(invitedSpaces));
         this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
     }, 100, { trailing: true, leading: true });
-
-    private onSpaceUpdate = () => {
-        this.rebuild();
-    };
 
     private showInHomeSpace = (room: Room) => {
         if (this.allRoomsInHome) return true;
@@ -751,7 +747,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this._invitedSpaces.delete(room);
             this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
         } else {
-            this.onSpaceUpdate();
+            this.rebuild();
             this.emit(room.roomId);
         }
 
@@ -779,7 +775,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         switch (ev.getType()) {
             case EventType.SpaceChild:
                 if (room.isSpaceRoom()) {
-                    this.onSpaceUpdate();
+                    this.rebuild();
                     this.emit(room.roomId);
                 }
 
@@ -796,7 +792,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 // TODO rebuild the space parent and not the room - check permissions?
                 // TODO confirm this after implementing parenting behaviour
                 if (room.isSpaceRoom()) {
-                    this.onSpaceUpdate();
+                    this.rebuild();
                 } else if (!this.allRoomsInHome) {
                     this.onRoomUpdate(room);
                 }
