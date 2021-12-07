@@ -606,11 +606,11 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             { extraComponents }
             { primaryButton }
         </>
-        : <>
-            { primaryButton }
-            { extraComponents }
-            { secondaryButton }
-        </>;
+            : <>
+                { primaryButton }
+                { extraComponents }
+                { secondaryButton }
+            </>;
 
         return (
             <div className={classes}>
@@ -620,7 +620,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 </div>
                 { reasonElement }
                 <div className="mx_RoomPreviewBar_actions">
-                    {actions}
+                    { actions }
                 </div>
                 <div className="mx_RoomPreviewBar_footer">
                     { footer }
