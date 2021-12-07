@@ -776,6 +776,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             }
         } else {
             this.rebuild();
+            // fire off updates to all parent listeners
+            this.parentMap.get(room.roomId)?.forEach((parentId) => {
+                this.emit(parentId);
+            });
             this.emit(room.roomId);
         }
 
