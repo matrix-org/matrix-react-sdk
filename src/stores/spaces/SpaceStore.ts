@@ -582,12 +582,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
     };
 
-    // TODO cull
-    private rebuild = throttle(() => {
-        if (!this.matrixClient) return;
-        this.rebuildSpaceHierarchy();
-    }, 100, { trailing: true, leading: true });
-
     private showInHomeSpace = (room: Room): boolean => {
         if (this.allRoomsInHome) return true;
         if (room.isSpaceRoom()) return false;
@@ -775,7 +769,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
             }
         } else {
-            this.rebuild();
+            this.rebuildSpaceHierarchy();
             // fire off updates to all parent listeners
             this.parentMap.get(room.roomId)?.forEach((parentId) => {
                 this.emit(parentId);
@@ -805,26 +799,34 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!room) return;
 
         switch (ev.getType()) {
-            case EventType.SpaceChild:
+            case EventType.SpaceChild: {
+                const target = this.matrixClient.getRoom(ev.getStateKey());
+
                 if (room.isSpaceRoom()) {
-                    this.rebuild();
+                    if (target?.isSpaceRoom()) {
+                        this.rebuildSpaceHierarchy();
+                        this.emit(target.roomId);
+                    } else {
+                        this.onRoomsUpdate();
+                    }
                     this.emit(room.roomId);
                 }
 
                 if (room.roomId === this.activeSpace && // current space
-                    this.matrixClient.getRoom(ev.getStateKey())?.getMyMembership() !== "join" && // target not joined
+                    target?.getMyMembership() !== "join" && // target not joined
                     ev.getPrevContent().suggested !== ev.getContent().suggested // suggested flag changed
                 ) {
                     this.loadSuggestedRooms(room);
                 }
 
                 break;
+            }
 
             case EventType.SpaceParent:
                 // TODO rebuild the space parent and not the room - check permissions?
                 // TODO confirm this after implementing parenting behaviour
                 if (room.isSpaceRoom()) {
-                    this.rebuild();
+                    this.rebuildSpaceHierarchy();
                 } else if (!this.allRoomsInHome) {
                     this.onRoomUpdate(room);
                 }
