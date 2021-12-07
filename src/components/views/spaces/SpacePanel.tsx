@@ -44,7 +44,6 @@ import {
     UPDATE_SELECTED_SPACE,
     UPDATE_TOP_LEVEL_SPACES,
 } from "../../../stores/spaces";
-import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -58,6 +57,12 @@ import UIStore from "../../../stores/UIStore";
 import QuickSettingsButton from "./QuickSettingsButton";
 import { useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
+import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
+import { isMac } from "../../../Keyboard";
+import { useDispatcher } from "../../../hooks/useDispatcher";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { ActionPayload } from "../../../dispatcher/payloads";
+import { Action } from "../../../dispatcher/actions";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -252,7 +257,6 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({ children, isPanelCo
     });
 
     return <div className="mx_SpaceTreeLevel">
-        <UserMenu isPanelCollapsed={isPanelCollapsed} />
         { metaSpacesSection }
         { invites.map(s => (
             <SpaceItem
@@ -294,6 +298,12 @@ const SpacePanel = () => {
         return () => UIStore.instance.stopTrackingElementDimensions("SpacePanel");
     }, []);
 
+    useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
+        if (payload.action === Action.ToggleSpacePanel) {
+            setPanelCollapsed(!isPanelCollapsed);
+        }
+    });
+
     return (
         <DragDropContext onDragEnd={result => {
             if (!result.destination) return; // dropped outside the list
@@ -308,9 +318,24 @@ const SpacePanel = () => {
                         aria-label={_t("Spaces")}
                         ref={ref}
                     >
+                        <UserMenu isPanelCollapsed={isPanelCollapsed}>
+                            <AccessibleTooltipButton
+                                className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
+                                onClick={() => setPanelCollapsed(!isPanelCollapsed)}
+                                title={isPanelCollapsed ? _t("Expand") : _t("Collapse")}
+                                tooltip={<div>
+                                    <div className="mx_Tooltip_title">
+                                        { isPanelCollapsed ? _t("Expand") : _t("Collapse") }
+                                    </div>
+                                    <div className="mx_Tooltip_sub">
+                                        { isMac ? "⌘ + ⇧ + D" : "Ctrl + Shift + D" }
+                                    </div>
+                                </div>}
+                            />
+                        </UserMenu>
                         <Droppable droppableId="top-level-spaces">
                             { (provided, snapshot) => (
-                                <AutoHideScrollbar
+                                <IndicatorScrollbar
                                     {...provided.droppableProps}
                                     wrappedRef={provided.innerRef}
                                     className="mx_SpacePanel_spaceTreeWrapper"
@@ -324,17 +349,10 @@ const SpacePanel = () => {
                                     >
                                         { provided.placeholder }
                                     </InnerSpacePanel>
-                                </AutoHideScrollbar>
+                                </IndicatorScrollbar>
                             ) }
                         </Droppable>
-                        <AccessibleTooltipButton
-                            className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
-                            onClick={() => setPanelCollapsed(!isPanelCollapsed)}
-                            title={isPanelCollapsed ? _t("Expand space panel") : _t("Collapse space panel")}
-                            forceHide={!isPanelCollapsed}
-                        >
-                            { !isPanelCollapsed ? _t("Collapse") : null }
-                        </AccessibleTooltipButton>
+
                         { metaSpacesEnabled && <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> }
                     </ul>
                 ) }

@@ -27,17 +27,14 @@ import { IMatrixClientCreds } from '../../MatrixClientPeg';
 import SettingsStore from "../../settings/SettingsStore";
 
 import ResizeHandle from '../views/elements/ResizeHandle';
-import { Resizer, CollapseDistributor } from '../../resizer';
+import { CollapseDistributor, Resizer } from '../../resizer';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import * as KeyboardShortcuts from "../../accessibility/KeyboardShortcuts";
 import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import { DefaultTagID } from "../../stores/room-list/models";
-import {
-    showToast as showServerLimitToast,
-    hideToast as hideServerLimitToast,
-} from "../../toasts/ServerLimitToast";
+import { hideToast as hideServerLimitToast, showToast as showServerLimitToast } from "../../toasts/ServerLimitToast";
 import { Action } from "../../dispatcher/actions";
 import LeftPanel from "./LeftPanel";
 import CallContainer from '../views/voip/CallContainer';
@@ -76,7 +73,7 @@ import LegacyCommunityPreview from "./LegacyCommunityPreview";
 // NB. this is just for server notices rather than pinned messages in general.
 const MAX_PINNED_NOTICES_PER_ROOM = 2;
 
-function getInputableElement(el: HTMLElement): HTMLElement | null {
+export function getInputableElement(el: HTMLElement): HTMLElement | null {
     return el.closest("input, textarea, select, [contenteditable=true]");
 }
 
@@ -138,7 +135,7 @@ interface IState {
  * This is what our MatrixChat shows when we are logged in. The precise view is
  * determined by the page_type property.
  *
- * Currently it's very tightly coupled with MatrixChat. We should try to do
+ * Currently, it's very tightly coupled with MatrixChat. We should try to do
  * something about that.
  *
  * Components mounted below us can access the matrix client via the react context.
@@ -147,7 +144,6 @@ interface IState {
 class LoggedInView extends React.Component<IProps, IState> {
     static displayName = 'LoggedInView';
 
-    private dispatcherRef: string;
     protected readonly _matrixClient: MatrixClient;
     protected readonly _roomView: React.RefObject<any>;
     protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
@@ -213,7 +209,6 @@ class LoggedInView extends React.Component<IProps, IState> {
     componentWillUnmount() {
         document.removeEventListener('keydown', this.onNativeKeyDown, false);
         CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.onCallState);
-        dis.unregister(this.dispatcherRef);
         this._matrixClient.removeListener("accountData", this.onAccountData);
         this._matrixClient.removeListener("sync", this.onSync);
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
@@ -505,6 +500,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                     action: 'view_home_page',
                 });
                 Modal.closeCurrentModal("homeKeyboardShortcut");
+                handled = true;
+                break;
+            case NavigationAction.ToggleSpacePanel:
+                dis.fire(Action.ToggleSpacePanel);
                 handled = true;
                 break;
             case NavigationAction.ToggleRoomSidePanel:
