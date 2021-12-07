@@ -457,6 +457,62 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
     };
 
+    private rebuildHomeSpace = () => {
+        if (this.allRoomsInHome) {
+            // this is a special-case to not have to maintain a set of all rooms
+            this.spaceFilteredRooms.delete(MetaSpace.Home);
+        } else {
+            const visibleRooms = this.matrixClient.getVisibleRooms();
+
+            // include all room invites in the Home Space
+            const invites = visibleRooms.filter(r => !r.isSpaceRoom() && r.getMyMembership() === "invite");
+            const rooms = new Set(invites.map(r => r.roomId));
+
+            visibleRooms.forEach(room => {
+                if (this.showInHomeSpace(room)) {
+                    rooms.add(room.roomId);
+                }
+            });
+
+            this.spaceFilteredRooms.set(MetaSpace.Home, rooms);
+        }
+    };
+
+    private rebuildMetaSpaces = () => {
+        const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
+        const visibleRooms = this.matrixClient.getVisibleRooms();
+
+        if (enabledMetaSpaces.has(MetaSpace.Home)) {
+            this.rebuildHomeSpace();
+        } else {
+            this.spaceFilteredRooms.delete(MetaSpace.Home);
+        }
+
+        if (enabledMetaSpaces.has(MetaSpace.Favourites)) {
+            const favourites = visibleRooms.filter(r => r.tags[DefaultTagID.Favourite]);
+            this.spaceFilteredRooms.set(MetaSpace.Favourites, new Set(favourites.map(r => r.roomId)));
+        } else {
+            this.spaceFilteredRooms.delete(MetaSpace.Favourites);
+        }
+
+        if (enabledMetaSpaces.has(MetaSpace.People)) {
+            const people = visibleRooms.filter(r => DMRoomMap.shared().getUserIdForRoomId(r.roomId));
+            this.spaceFilteredRooms.set(MetaSpace.People, new Set(people.map(r => r.roomId)));
+        } else {
+            this.spaceFilteredRooms.delete(MetaSpace.People);
+        }
+
+        if (enabledMetaSpaces.has(MetaSpace.Orphans)) {
+            const orphans = visibleRooms.filter(r => {
+                // filter out DMs and rooms with >0 parents
+                return !this.parentMap.get(r.roomId)?.size && !DMRoomMap.shared().getUserIdForRoomId(r.roomId);
+            });
+            this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
+        } else {
+            this.spaceFilteredRooms.delete(MetaSpace.Orphans);
+        }
+    };
+
     private rebuild = throttle(() => {
         if (!this.matrixClient) return;
 
@@ -532,11 +588,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
     }, 100, { trailing: true, leading: true });
 
-    private showInHomeSpace = (room: Room) => {
+    private showInHomeSpace = (room: Room): boolean => {
         if (this.allRoomsInHome) return true;
         if (room.isSpaceRoom()) return false;
         return !this.parentMap.get(room.roomId)?.size // put all orphaned rooms in the Home Space
-            || DMRoomMap.shared().getUserIdForRoomId(room.roomId); // put all DMs in the Home Space
+            || !!DMRoomMap.shared().getUserIdForRoomId(room.roomId); // put all DMs in the Home Space
     };
 
     // Update a given room due to its tag changing (e.g DM-ness or Fav-ness)
@@ -568,40 +624,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const oldFilteredRooms = this.spaceFilteredRooms;
         this.spaceFilteredRooms = new Map();
 
+        // TODO do we need this here?
+        // copy metaspaces into new filter as they are not owned by this method
+        // metaSpaceOrder.forEach(spaceKey => {
+        //     this.spaceFilteredRooms.set(spaceKey, oldFilteredRooms.get(spaceKey));
+        // });
+
+        this.rebuildMetaSpaces();
+
         const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
-        // populate the Home metaspace if it is enabled and is not set to all rooms
-        if (enabledMetaSpaces.has(MetaSpace.Home) && !this.allRoomsInHome) {
-            // put all room invites in the Home Space
-            const invites = visibleRooms.filter(r => !r.isSpaceRoom() && r.getMyMembership() === "invite");
-            this.spaceFilteredRooms.set(MetaSpace.Home, new Set(invites.map(r => r.roomId)));
-
-            visibleRooms.forEach(room => {
-                if (this.showInHomeSpace(room)) {
-                    this.spaceFilteredRooms.get(MetaSpace.Home).add(room.roomId);
-                }
-            });
-        }
-
-        // populate the Favourites metaspace if it is enabled
-        if (enabledMetaSpaces.has(MetaSpace.Favourites)) {
-            const favourites = visibleRooms.filter(r => r.tags[DefaultTagID.Favourite]);
-            this.spaceFilteredRooms.set(MetaSpace.Favourites, new Set(favourites.map(r => r.roomId)));
-        }
-
-        // populate the People metaspace if it is enabled
-        if (enabledMetaSpaces.has(MetaSpace.People)) {
-            const people = visibleRooms.filter(r => DMRoomMap.shared().getUserIdForRoomId(r.roomId));
-            this.spaceFilteredRooms.set(MetaSpace.People, new Set(people.map(r => r.roomId)));
-        }
-
-        // populate the Orphans metaspace if it is enabled
-        if (enabledMetaSpaces.has(MetaSpace.Orphans)) {
-            const orphans = visibleRooms.filter(r => {
-                // filter out DMs and rooms with >0 parents
-                return !this.parentMap.get(r.roomId)?.size && !DMRoomMap.shared().getUserIdForRoomId(r.roomId);
-            });
-            this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
-        }
 
         const hiddenChildren = new EnhancedMap<string, Set<string>>();
         visibleRooms.forEach(room => {
@@ -976,7 +1007,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                         if (this.allRoomsInHome !== newValue) {
                             this._allRoomsInHome = newValue;
                             this.emit(UPDATE_HOME_BEHAVIOUR, this.allRoomsInHome);
-                            this.rebuild(); // rebuild everything
+                            if (this.enabledMetaSpaces.includes(MetaSpace.Home)) {
+                                this.rebuildHomeSpace();
+                            }
                         }
                         break;
                     }
@@ -986,14 +1019,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                         const enabledMetaSpaces = metaSpaceOrder.filter(k => newValue[k]) as MetaSpace[];
                         if (arrayHasDiff(this._enabledMetaSpaces, enabledMetaSpaces)) {
                             this._enabledMetaSpaces = enabledMetaSpaces;
-                            // if a metaspace currently being viewed was remove, go to another one
-                            if (this.activeSpace[0] !== "!" &&
-                                !enabledMetaSpaces.includes(this.activeSpace as MetaSpace)
-                            ) {
+                            // if a metaspace currently being viewed was removed, go to another one
+                            if (this.activeSpace[0] !== "!" && !newValue[this.activeSpace]) {
                                 this.goToFirstSpace();
                             }
+                            this.rebuildMetaSpaces();
                             this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
-                            this.rebuild(); // rebuild everything
                         }
                         break;
                     }
