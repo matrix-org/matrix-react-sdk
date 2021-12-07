@@ -40,7 +40,6 @@ import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
-import PseudonymousAnalyticsController from './controllers/PseudonymousAnalyticsController';
 import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
@@ -301,19 +300,18 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_pseudonymous_analytics_opt_in": {
-        isFeature: true,
-        labsGroup: LabGroup.Analytics,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td('Send pseudonymous analytics data'),
-        default: false,
-        controller: new PseudonymousAnalyticsController(),
-    },
     "feature_polls": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Polls (under active development)"),
+        default: false,
+    },
+    "feature_location_share": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing (under active development)"),
         default: false,
     },
     "doNotDisturb": {
@@ -355,6 +353,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             new ReloadOnChangeController(),
         ]),
     },
+    "feature_breadcrumbs_v2": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new room breadcrumbs"),
+        default: false,
+    },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
@@ -385,6 +390,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Show stickers button'),
         default: true,
+        controller: new UIFeatureController(UIFeature.Widgets, false),
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
@@ -613,6 +619,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: true,
     },
+    "pseudonymousAnalyticsOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td('Send analytics data'),
+        default: null,
+    },
     "autocompleteDelay": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: 200,
@@ -711,6 +722,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
+        controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),

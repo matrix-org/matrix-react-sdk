@@ -35,18 +35,10 @@ $activeBorderColor: $primary-content;
     display: flex;
     flex-direction: column;
 
-    .mx_SpacePanel_spaceTreeWrapper {
-        flex: 1;
-        padding: 12px 8px 16px 0;
-    }
-
     .mx_SpacePanel_toggleCollapse {
-        margin: 0 auto;
         position: relative;
-        min-width: 32px;
-        min-height: 32px;
-        line-height: 32px;
-        color: $secondary-content;
+        height: 32px;
+        width: 32px;
 
         &::before {
             content: "";
@@ -55,21 +47,43 @@ $activeBorderColor: $primary-content;
             height: 32px;
             left: 0;
             mask-position: center;
-            mask-size: contain;
+            mask-size: 24px;
             mask-repeat: no-repeat;
             background-color: $secondary-content;
-            mask-image: url('$(res)/img/element-icons/expand-space-panel.svg');
+            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+            transform: rotate(270deg);
+        }
+
+        &:not(.expanded) {
+            position: absolute;
+            left: 68px;
+            top: 12px;
+            border-radius: 0 8px 8px 0;
+            background-color: $primary-content;
+            opacity: 0;
+
+            &::before {
+                background-color: $background;
+            }
         }
 
         &.expanded {
-            padding-left: 48px;
-            padding-right: 8px;
-            margin-left: $gutterSize;
+            margin-left: auto;
+            margin-right: -8px; // overflow into .mx_UserMenu's margin without butchering its bottom stroke
+            border-radius: 8px;
 
             &::before {
-                transform: scaleX(-1);
+                transform: rotate(90deg);
+            }
+
+            &:hover {
+                background-color: $panel-actions;
             }
         }
+    }
+
+    &:hover .mx_SpacePanel_toggleCollapse {
+        opacity: 100%;
     }
 
     ul {
@@ -275,8 +289,6 @@ $activeBorderColor: $primary-content;
 
         .mx_BaseAvatar:not(.mx_UserMenu_userAvatar_BaseAvatar) .mx_BaseAvatar_initial {
             color: $secondary-content;
-            width: 32px;
-            height: 32px;
             border-radius: 8px;
             background-color: $panel-actions;
             font-size: $font-15px !important; // override inline style
@@ -285,13 +297,6 @@ $activeBorderColor: $primary-content;
 
             & + .mx_BaseAvatar_image {
                 visibility: hidden;
-            }
-        }
-
-        .mx_SpaceTreeLevel {
-            .mx_BaseAvatar_initial {
-                width: 24px;
-                height: 24px;
             }
         }
     }
@@ -336,6 +341,9 @@ $activeBorderColor: $primary-content;
 
     /* root space buttons are bigger and not indented */
     & > .mx_AutoHideScrollbar {
+        flex: 1;
+        padding: 0 8px 16px 0;
+
         & > .mx_SpaceButton {
             height: $topLevelHeight;
 
@@ -347,6 +355,24 @@ $activeBorderColor: $primary-content;
         & > ul {
             padding-left: 0;
         }
+
+        &.mx_IndicatorScrollbar_topOverflow {
+            mask-image: linear-gradient(180deg, transparent, black 5%);
+        }
+
+        &.mx_IndicatorScrollbar_bottomOverflow {
+            mask-image: linear-gradient(180deg, black, black 95%, transparent);
+        }
+
+        &.mx_IndicatorScrollbar_topOverflow.mx_IndicatorScrollbar_bottomOverflow {
+            mask-image: linear-gradient(180deg, transparent, black 5%, black 95%, transparent);
+        }
+    }
+
+    .mx_UserMenu {
+        padding: 0 2px 8px;
+        border-bottom: 1px solid $quinary-content;
+        margin: 12px 14px 4px 18px;
     }
 }
 

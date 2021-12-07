@@ -50,6 +50,7 @@ import {
     UPDATE_SUGGESTED_ROOMS,
     UPDATE_TOP_LEVEL_SPACES,
 } from ".";
+import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 
 interface IState {}
 
@@ -604,23 +605,22 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private switchToRelatedSpace = (roomId: string) => {
         if (this.suggestedRooms.find(r => r.room_id === roomId)) return;
 
-        let parent = this.getCanonicalParent(roomId);
+        // try to find the canonical parent first
+        let parent: SpaceKey = this.getCanonicalParent(roomId)?.roomId;
+
+        // otherwise, try to find a root space which contains this room
         if (!parent) {
-            parent = this.rootSpaces.find(s => this.spaceFilteredRooms.get(s.roomId)?.has(roomId));
+            parent = this.rootSpaces.find(s => this.spaceFilteredRooms.get(s.roomId)?.has(roomId))?.roomId;
         }
+
+        // otherwise, try to find a metaspace which contains this room
         if (!parent) {
-            const parentIds = Array.from(this.parentMap.get(roomId) || []);
-            for (const parentId of parentIds) {
-                const room = this.matrixClient.getRoom(parentId);
-                if (room) {
-                    parent = room;
-                    break;
-                }
-            }
+            // search meta spaces in reverse as Home is the first and least specific one
+            parent = [...this.enabledMetaSpaces].reverse().find(s => this.getSpaceFilteredRoomIds(s).has(roomId));
         }
 
         // don't trigger a context switch when we are switching a space to match the chosen room
-        this.setActiveSpace(parent?.roomId ?? MetaSpace.Home, false); // TODO
+        this.setActiveSpace(parent ?? MetaSpace.Home, false); // TODO
     };
 
     private onRoom = (room: Room, newMembership?: string, oldMembership?: string) => {
@@ -834,17 +834,20 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 // Don't auto-switch rooms when reacting to a context-switch
                 // as this is not helpful and can create loops of rooms/space switching
                 if (payload.context_switch) break;
+                let roomId = payload.room_id;
 
-                const roomId = payload.room_id;
+                if (payload.room_alias && !roomId) {
+                    roomId = getCachedRoomIDForAlias(payload.room_alias);
+                }
+
+                if (!roomId) return; // we'll get re-fired with the room ID shortly
+
                 const room = this.matrixClient?.getRoom(roomId);
                 if (room?.isSpaceRoom()) {
                     // Don't context switch when navigating to the space room
                     // as it will cause you to end up in the wrong room
                     this.setActiveSpace(room.roomId, false);
-                } else if (
-                    (!this.allRoomsInHome || this.activeSpace[0] === "!") &&
-                    !this.getSpaceFilteredRoomIds(this.activeSpace).has(roomId)
-                ) {
+                } else if (!this.getSpaceFilteredRoomIds(this.activeSpace).has(roomId)) {
                     this.switchToRelatedSpace(roomId);
                 }
 
