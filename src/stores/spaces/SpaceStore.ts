@@ -352,7 +352,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     public isRoomInSpace(space: SpaceKey, roomId: string): boolean {
-        if (space === MetaSpace.Home && this.allRoomsInHome && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
+        if (space === MetaSpace.Home && this.allRoomsInHome) {
             return true;
         }
 
@@ -361,6 +361,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
+        if (dmPartner && space === MetaSpace.People) {
+            return true;
+        }
         if (dmPartner && this.spaceFilteredUsers.get(space)?.has(dmPartner)) {
             return true;
         }
@@ -370,7 +373,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     // TODO deprecate
     public getSpaceFilteredRoomIds = (space: SpaceKey): Set<string> => {
-        if (space === MetaSpace.Home && this.allRoomsInHome && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
+        if (space === MetaSpace.Home && this.allRoomsInHome) {
             return new Set(this.matrixClient.getVisibleRooms().map(r => r.roomId));
         }
         return this.spaceFilteredRooms.get(space) || new Set();
@@ -526,12 +529,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.spaceFilteredRooms.delete(MetaSpace.Favourites);
         }
 
-        if (enabledMetaSpaces.has(MetaSpace.People)) {
-            const people = visibleRooms.filter(r => DMRoomMap.shared().getUserIdForRoomId(r.roomId));
-            this.spaceFilteredRooms.set(MetaSpace.People, new Set(people.map(r => r.roomId)));
-        } else {
-            this.spaceFilteredRooms.delete(MetaSpace.People);
-        }
+        // The People metaspace doesn't need maintaining
 
         if (enabledMetaSpaces.has(MetaSpace.Orphans)) {
             const orphans = visibleRooms.filter(r => {
@@ -541,6 +539,43 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
         } else {
             this.spaceFilteredRooms.delete(MetaSpace.Orphans);
+        }
+    };
+
+    // TODO consider when we need to update notificationStates, support rebuilding just the ones which changes
+    private updateNotificationStates = () => {
+        const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
+        const visibleRooms = this.matrixClient.getVisibleRooms();
+
+        let dmBadgeSpace: MetaSpace;
+        // only show badges on dms on the most relevant space if such exists
+        if (enabledMetaSpaces.has(MetaSpace.People)) {
+            dmBadgeSpace = MetaSpace.People;
+        } else if (enabledMetaSpaces.has(MetaSpace.Home)) {
+            dmBadgeSpace = MetaSpace.Home;
+        }
+
+        this.spaceFilteredRooms.forEach((roomIds, s) => {
+            if (this.allRoomsInHome && s === MetaSpace.Home) return; // we'll be using the global notification state, skip
+
+            // Update NotificationStates
+            this.getNotificationState(s).setRooms(visibleRooms.filter(room => {
+                if (!roomIds.has(room.roomId) || room.isSpaceRoom()) return false;
+
+                if (dmBadgeSpace && DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
+                    return s === dmBadgeSpace;
+                }
+
+                return true;
+            }));
+        });
+
+        if (dmBadgeSpace === MetaSpace.People) {
+            this.getNotificationState(MetaSpace.People).setRooms(visibleRooms.filter(room => {
+                return this.isRoomInSpace(MetaSpace.People, room.roomId);
+            }));
+        } else {
+            this.notificationStateMap.delete(MetaSpace.People);
         }
     };
 
@@ -663,8 +698,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         this.rebuildMetaSpaces();
 
-        const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
-
         const hiddenChildren = new EnhancedMap<string, Set<string>>();
         visibleRooms.forEach(room => {
             if (room.getMyMembership() !== "join") return;
@@ -689,6 +722,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 const space = this.matrixClient?.getRoom(spaceId);
 
                 // Add relevant DMs
+                // TODO
                 if (SettingsStore.getValue("Spaces.showPeopleInSpace", spaceId)) {
                     space?.getMembers().forEach(member => {
                         if (member.membership !== "join" && member.membership !== "invite") return;
@@ -719,6 +753,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             fn(s.roomId, new Set());
         });
 
+        // TODO diff members
         const diff = mapDiff(oldFilteredRooms, this.spaceFilteredRooms);
         // filter out keys which changed by reference only by checking whether the sets differ
         const changed = diff.changed.filter(k => setHasDiff(oldFilteredRooms.get(k), this.spaceFilteredRooms.get(k)));
@@ -726,28 +761,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.emit(k);
         });
 
-        let dmBadgeSpace: MetaSpace;
-        // only show badges on dms on the most relevant space if such exists
-        if (enabledMetaSpaces.has(MetaSpace.People)) {
-            dmBadgeSpace = MetaSpace.People;
-        } else if (enabledMetaSpaces.has(MetaSpace.Home)) {
-            dmBadgeSpace = MetaSpace.Home;
-        }
-
-        this.spaceFilteredRooms.forEach((roomIds, s) => {
-            if (this.allRoomsInHome && s === MetaSpace.Home) return; // we'll be using the global notification state, skip
-
-            // Update NotificationStates
-            this.getNotificationState(s).setRooms(visibleRooms.filter(room => {
-                if (!roomIds.has(room.roomId) || room.isSpaceRoom()) return false;
-
-                if (dmBadgeSpace && DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
-                    return s === dmBadgeSpace;
-                }
-
-                return true;
-            }));
-        });
+        this.updateNotificationStates();
     }, 100, { trailing: true, leading: true });
 
     private switchToRelatedSpace = (roomId: string) => {
@@ -1055,6 +1069,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                                 this.goToFirstSpace();
                             }
                             this.rebuildMetaSpaces();
+                            this.updateNotificationStates(); // TODO we could skip some work here
                             this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
                         }
                         break;
