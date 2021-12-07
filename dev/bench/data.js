@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638861967984,
+  "lastUpdate": 1638869834555,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45836,6 +45836,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4230.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e2ed00db85d19de2356ab6dc53c6b35f4992201b",
+          "message": "Location Picker catch instantiation errors e.g WebGL disabled (#7296)",
+          "timestamp": "2021-12-07T09:31:13Z",
+          "tree_id": "17a5c25c85e60a5f742d91a76175283108ee2a87",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e2ed00db85d19de2356ab6dc53c6b35f4992201b"
+        },
+        "date": 1638869831315,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5056.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 942.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1677.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4305.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
