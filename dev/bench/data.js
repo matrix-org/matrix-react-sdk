@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638809091590,
+  "lastUpdate": 1638861967984,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -45788,6 +45788,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4389.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "76884959+ankur12-1610@users.noreply.github.com",
+            "name": "Ankur",
+            "username": "ankur12-1610"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26297f5498270f2b188f032cf6ba4f8c5509c294",
+          "message": "Corrected the alignment of the Edit button on LoginPage. (#7292)",
+          "timestamp": "2021-12-07T07:20:09Z",
+          "tree_id": "2b7c31c7cb474c50e0e455c26116705ce6cd6938",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26297f5498270f2b188f032cf6ba4f8c5509c294"
+        },
+        "date": 1638861965108,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4648.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 962.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4230.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
