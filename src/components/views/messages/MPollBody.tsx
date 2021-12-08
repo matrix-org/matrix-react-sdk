@@ -508,7 +508,7 @@ export function allVotes(
 ): Array<UserVote> {
     const endTs = pollEndTs(pollEvent, matrixClient, endRelations);
 
-    function isOnOrBeforeEnd(responseEvent: MatrixEvent) {
+    function isOnOrBeforeEnd(responseEvent: MatrixEvent): boolean {
         // From MSC3381:
         // "Votes sent on or before the end event's timestamp are valid votes"
         return (
