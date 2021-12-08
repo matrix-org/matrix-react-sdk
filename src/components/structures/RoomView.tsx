@@ -337,7 +337,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }
         this.checkWidgets(this.state.room);
-        this.checkRightPanel(this.state.room);
+        // this.checkRightPanel(this.state.room);
     };
 
     private checkWidgets = (room) => {
@@ -355,22 +355,22 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             : MainSplitContentType.Timeline;
     };
 
-    private checkRightPanel = (room) => {
-        // TODO remove this!
-        // This is a hack to hide the chat. This should not be necessary once the right panel
-        // phase is stored per room. (need to be done after check widget so that mainSplitContentType is updated)
-        if (
-            RightPanelStore.instance.currentRoom?.phase === RightPanelPhases.Timeline &&
-            this.state.showRightPanel &&
-            !WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)
-        ) {
-            // Two timelines are shown prevent this by hiding the right panel
-            dis.dispatch({
-                action: Action.ToggleRightPanel,
-                type: "room",
-            });
-        }
-    };
+    // private checkRightPanel = (room) => {
+    //     // TODO remove this!
+    //     // This is a hack to hide the chat. This should not be necessary once the right panel
+    //     // phase is stored per room. (need to be done after check widget so that mainSplitContentType is updated)
+    //     if (
+    //         RightPanelStore.instance.currentRoom?.phase === RightPanelPhases.Timeline &&
+    //         this.state.showRightPanel &&
+    //         !WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)
+    //     ) {
+    //         // Two timelines are shown prevent this by hiding the right panel
+    //         dis.dispatch({
+    //             action: Action.ToggleRightPanel,
+    //             type: "room",
+    //         });
+    //     }
+    // };
 
     private onReadReceiptsChange = () => {
         this.setState({
@@ -1029,7 +1029,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
-        this.checkRightPanel(room);
+        // this.checkRightPanel(room);
 
         this.setState({
             liveTimeline: room.getLiveTimeline(),
