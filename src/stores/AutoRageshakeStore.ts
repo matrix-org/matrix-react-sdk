@@ -60,7 +60,7 @@ export default class AutoRageshakeStore extends EventEmitter {
     }
 
     private async onDecryptionAttempt(ev: MatrixEvent): Promise<void> {
-        if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) { return; }
+        if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
 
         const wireContent = ev.getWireContent();
         const sessionId = wireContent.session_id;
@@ -92,9 +92,9 @@ export default class AutoRageshakeStore extends EventEmitter {
     }
 
     private async onDeviceMessage(ev: MatrixEvent): Promise<void> {
-        if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) { return; }
+        if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
 
-        if (ev.getType() !== AUTO_RS_REQUEST) { return; }
+        if (ev.getType() !== AUTO_RS_REQUEST) return;
         const now = new Date().getTime();
         if (now - this.lastRageshakeTime > RAGESHAKE_INTERVAL) {
             this.lastRageshakeTime = now;
