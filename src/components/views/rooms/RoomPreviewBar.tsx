@@ -602,11 +602,11 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
 
         // ensure correct tab order for both views
         const actions = isPanel
-	        ? <>
-	            { secondaryButton }
-	            { extraComponents }
-	            { primaryButton }
-	        </>
+            ? <>
+                { secondaryButton }
+                { extraComponents }
+                { primaryButton }
+            </>
             : <>
                 { primaryButton }
                 { extraComponents }
