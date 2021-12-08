@@ -99,6 +99,11 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 phase: RightPanelPhases.RoomSummary,
             });
         }
+
+        const thread = this.props.room.threads.get(this.props.mxEvent.getId());
+        if (thread) {
+            thread.emit(ThreadEvent.ViewThread);
+        }
     }
 
     private onAction = (payload: ActionPayload): void => {
@@ -141,10 +146,11 @@ export default class ThreadView extends React.Component<IProps, IState> {
             // to add that back in, and the threads model should go through the
             // same reconciliation algorithm as events
             thread = new Thread(
-                [mxEv],
+                mxEv.getId(),
                 this.props.room,
                 client,
             );
+            mxEv.setThread(thread);
         }
         thread.on(ThreadEvent.Update, this.updateThread);
         thread.once(ThreadEvent.Ready, this.updateThread);
@@ -248,6 +254,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             manageReadMarkers={true}
                             sendReadReceiptOnLoad={true}
                             timelineSet={this.state?.thread?.timelineSet}
+                            onPaginationRequest={this.state?.thread?.onPaginationRequest}
                             showUrlPreview={true}
                             tileShape={TileShape.Thread}
                             layout={Layout.Group}

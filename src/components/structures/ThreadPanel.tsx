@@ -73,8 +73,8 @@ const useFilteredThreadsTimelinePanel = ({
         timelineSet.resetLiveTimeline("");
         Array.from(threads)
             .forEach(([, thread]) => {
-                if (filterOption !== ThreadFilterType.My || thread.hasCurrentUserParticipated) {
-                    timelineSet.addLiveEvent(thread.rootEvent);
+                if (filterOption !== ThreadFilterType.My) {
+                    timelineSet.addLiveEvent(thread.head);
                 }
             });
         updateTimeline();

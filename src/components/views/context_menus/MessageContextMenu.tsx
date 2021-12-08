@@ -403,7 +403,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             timelineRenderingType === TimelineRenderingType.Thread ||
             timelineRenderingType === TimelineRenderingType.ThreadsList
         );
-        const isThreadRootEvent = isThread && this.props.mxEvent?.getThread()?.rootEvent === this.props.mxEvent;
+        const isThreadRootEvent = isThread && this.props.mxEvent?.isThreadRoot;
 
         const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
             MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),

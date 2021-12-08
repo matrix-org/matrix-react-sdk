@@ -181,20 +181,14 @@ export async function fetchInitialEvent(
         initialEvent = null;
     }
 
-    if (initialEvent?.isThreadRelation) {
-        try {
-            const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
-            const rootEvent = new MatrixEvent(rootEventData);
-            const room = client.getRoom(roomId);
-            const thread = new Thread(
-                [rootEvent],
-                room,
-                client,
-            );
-            thread.addEvent(initialEvent);
-            room.threads.set(thread.id, thread);
-        } catch (e) {
-            logger.warn("Could not find root event: " + initialEvent.threadRootId);
+    const room = client.getRoom(roomId);
+
+    if (initialEvent.threadRootId) {
+        if (!room.threads.has(initialEvent.threadRootId)) {
+            const thread = new Thread(initialEvent.threadRootId, room, client);
+            thread.init();
+            initialEvent.setThread(thread);
+            room.threads.set(initialEvent.threadRootId, thread);
         }
     }
 
