@@ -28,9 +28,9 @@ import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAliasField from "../elements/RoomAliasField";
+import { SettingsFieldset } from "../settings/SettingsFieldset";
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { SettingsFieldset } from "../settings/SettingsFieldset";
 
 interface IEditableAliasesListProps {
     domain?: string;

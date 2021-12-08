@@ -27,10 +27,10 @@ import { RoomState } from "matrix-js-sdk/src/models/room-state";
 import { compare } from "../../../../../utils/strings";
 import ErrorDialog from '../../../dialogs/ErrorDialog';
 import PowerSelector from "../../../elements/PowerSelector";
+import { SettingsFieldset } from '../../SettingsFieldset';
 
 import { logger } from "matrix-js-sdk/src/logger";
 import SettingsStore from "../../../../../settings/SettingsStore";
-import { SettingsFieldset } from '../../SettingsFieldset';
 
 interface IEventShowOpts {
     isState?: boolean;
