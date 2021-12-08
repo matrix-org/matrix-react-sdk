@@ -132,7 +132,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
     }
 
-    private canEndPoll(mxEvent: MatrixEvent) {
+    private canEndPoll(mxEvent: MatrixEvent): boolean {
         return (
             mxEvent.getType() === POLL_START_EVENT_TYPE.name &&
             this.state.canRedact &&
