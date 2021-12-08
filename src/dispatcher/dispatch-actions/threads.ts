@@ -14,31 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import RightPanelStore from "../../stores/RightPanelStore";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-import { Action } from "../actions";
-import dis from '../dispatcher';
-import { SetRightPanelPhasePayload } from "../payloads/SetRightPanelPhasePayload";
 
 export const dispatchShowThreadEvent = (
     rootEvent: MatrixEvent,
     initialEvent?: MatrixEvent,
     highlighted?: boolean,
 ) => {
-    dis.dispatch({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.ThreadView,
-        refireParams: {
+    // TODO RightPanelStore: this should really be a push!
+    RightPanelStore.instance.setRightPanel(
+        RightPanelPhases.ThreadView,
+        {
             event: rootEvent,
             initialEvent,
             highlighted,
         },
-    });
+    );
+    // dis.dispatch({
+    //     action: Action.SetRightPanelPhase,
+    //     phase: RightPanelPhases.ThreadView,
+    //     refireParams: {
+    //         event: rootEvent,
+    //         initialEvent,
+    //         highlighted,
+    //     },
+    // });
 };
 
 export const dispatchShowThreadsPanelEvent = () => {
-    dis.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.ThreadPanel,
-    });
+    RightPanelStore.instance.setRightPanel(RightPanelPhases.ThreadPanel);
+    // dis.dispatch<SetRightPanelPhasePayload>({
+    //     action: Action.SetRightPanelPhase,
+    //     phase: RightPanelPhases.ThreadPanel,
+    // });
 };
 

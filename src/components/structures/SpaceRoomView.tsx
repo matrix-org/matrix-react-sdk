@@ -43,7 +43,6 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import RightPanel from "./RightPanel";
 import RightPanelStore from "../../stores/RightPanelStore";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
 import { useStateArray } from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import {
@@ -165,11 +164,13 @@ const SpaceInfo = ({ space }: { space: Room }) => {
                     kind="link"
                     className="mx_SpaceRoomView_info_memberCount"
                     onClick={() => {
-                        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                            action: Action.SetRightPanelPhase,
-                            phase: RightPanelPhases.RoomMemberList,
-                            refireParams: { space },
-                        });
+                        RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, { space } );
+
+                        // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+                        //     action: Action.SetRightPanelPhase,
+                        //     phase: RightPanelPhases.RoomMemberList,
+                        //     refireParams: { space },
+                        // });
                     }}
                 >
                     { _t("%(count)s members", { count }) }
@@ -474,11 +475,12 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     }
 
     const onMembersClick = () => {
-        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.RoomMemberList,
-            refireParams: { space },
-        });
+        RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, { space } );
+        // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+        //     action: Action.SetRightPanelPhase,
+        //     phase: RightPanelPhases.RoomMemberList,
+        //     refireParams: { space },
+        // });
     };
 
     return <div className="mx_SpaceRoomView_landing">
@@ -849,29 +851,41 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         if (payload.action !== Action.ViewUser && payload.action !== "view_3pid_invite") return;
 
         if (payload.action === Action.ViewUser && payload.member) {
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.SpaceMemberInfo,
-                refireParams: {
-                    space: this.props.space,
-                    member: payload.member,
-                },
-            });
+            RightPanelStore.instance.setRightPanel(
+                RightPanelPhases.SpaceMemberInfo,
+                { space: this.props.space, member: payload.member },
+            );
+            // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+            //     action: Action.SetRightPanelPhase,
+            //     phase: RightPanelPhases.SpaceMemberInfo,
+            //     refireParams: {
+            //         space: this.props.space,
+            //         member: payload.member,
+            //     },
+            // });
         } else if (payload.action === "view_3pid_invite" && payload.event) {
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.Space3pidMemberInfo,
-                refireParams: {
-                    space: this.props.space,
-                    event: payload.event,
-                },
-            });
+            RightPanelStore.instance.setRightPanel(
+                RightPanelPhases.Space3pidMemberInfo,
+                { space: this.props.space, member: payload.member },
+            );
+            // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+            //     action: Action.SetRightPanelPhase,
+            //     phase: RightPanelPhases.Space3pidMemberInfo,
+            //     refireParams: {
+            //         space: this.props.space,
+            //         event: payload.event,
+            //     },
+            // });
         } else {
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.SpaceMemberList,
-                refireParams: { space: this.props.space },
-            });
+            RightPanelStore.instance.setRightPanel(
+                RightPanelPhases.SpaceMemberList,
+                { space: this.props.space },
+            );
+            // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+            //     action: Action.SetRightPanelPhase,
+            //     phase: RightPanelPhases.SpaceMemberList,
+            //     refireParams: { space: this.props.space },
+            // });
         }
     };
 

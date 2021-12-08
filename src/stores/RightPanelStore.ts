@@ -357,7 +357,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
         const cacheGlobal = this.global;
         const cacheThisRoom = this.byRoom[this.viewedRoomId];
         SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, cacheGlobal);
-        SettingsStore.setValue("RightPanel.phases", this.viewedRoomId, SettingLevel.DEVICE, cacheThisRoom);
+        if (!!this.viewedRoomId) {
+            SettingsStore.setValue("RightPanel.phases", this.viewedRoomId, SettingLevel.ROOM_DEVICE, cacheThisRoom);
+        }
         this.emit(UPDATE_EVENT, null);
         // this.updateState({
         //     isOpen: roomCache?.isOpen ?? false,
@@ -425,32 +427,33 @@ export default class RightPanelStore extends ReadyWatchingStore {
         switch (payload.action) {
             case 'view_group':
             case Action.ViewRoom: {
+                const _this = RightPanelStore.instance;
                 console.log("ORDER_DEBUG: action:", payload.action);
-                if (payload.room_id === this.viewedRoomId) break; // skip this transition, probably a permalink
+                if (payload.room_id === _this.viewedRoomId) break; // skip this transition, probably a permalink
 
                 // Put group in the same/similar view to what was open from the previously viewed room
                 // Is contradictory to the new "per room" philosophy but it is the legacy behaviour for groups.
-                if ((this.isViewingRoom ? Action.ViewRoom : "view_group") != payload.action) {
-                    if (payload.action == Action.ViewRoom && MEMBER_INFO_PHASES.includes(this.currentRoom?.phase)) {
+                if ((_this.isViewingRoom ? Action.ViewRoom : "view_group") != payload.action) {
+                    if (payload.action == Action.ViewRoom && MEMBER_INFO_PHASES.includes(_this.currentRoom?.phase)) {
                         // switch from group to room
-                        this.setRightPanelCache(RightPanelPhases.RoomMemberList, {});
+                        _this.setRightPanelCache(RightPanelPhases.RoomMemberList, {});
                         // this.setState({ lastRoomPhase: RightPanelPhases.RoomMemberList, lastRoomPhaseParams: {} });
                     } else if (payload.action == "view_group"
-                        && this.currentRoom?.phase === RightPanelPhases.GroupMemberInfo) {
+                        && _this.currentRoom?.phase === RightPanelPhases.GroupMemberInfo) {
                         // switch from room to group
-                        this.setRightPanelCache(RightPanelPhases.GroupMemberList, {});
+                        _this.setRightPanelCache(RightPanelPhases.GroupMemberList, {});
                         // this.setState({ lastGroupPhase: RightPanelPhases.GroupMemberList });
                     }
                 }
 
                 // Update the current room here, so that all the other functions dont need to be room dependant.
                 // The right panel store always will return the state for the current room.
-                this.viewedRoomId = payload.room_id;
-                this.isViewingRoom = payload.action == Action.ViewRoom;
+                _this.viewedRoomId = payload.room_id;
+                _this.isViewingRoom = payload.action == Action.ViewRoom;
                 // load values from byRoomCache with the viewedRoomId.
-                this.loadCacheFromSettings();
-                this.emitAndUpdateSettings();
-                console.log("right panel store for current room: ", this.byRoom[this.viewedRoomId]);
+                _this.loadCacheFromSettings();
+                _this.emitAndUpdateSettings();
+                console.log("right panel store for current room: ", _this.byRoom[_this.viewedRoomId]);
                 break;
 
                 // Reset to the member list if we're viewing member info

@@ -19,7 +19,6 @@ import React from "react";
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
 import { userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";
@@ -32,6 +31,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
 
 import { logger } from "matrix-js-sdk/src/logger";
+import RightPanelStore from "../../../stores/RightPanelStore";
 
 interface IProps {
     toastKey: string;
@@ -116,14 +116,20 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                     room_id: request.channel.roomId,
                     should_peek: false,
                 });
-                dis.dispatch<SetRightPanelPhasePayload>({
-                    action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.EncryptionPanel,
-                    refireParams: {
+                RightPanelStore.instance.setRightPanel(RightPanelPhases.EncryptionPanel,
+                    {
                         verificationRequest: request,
                         member: cli.getUser(request.otherUserId),
-                    },
-                });
+                    }, undefined, request.channel.roomId,
+                );
+                // dis.dispatch<SetRightPanelPhasePayload>({
+                //     action: Action.SetRightPanelPhase,
+                //     phase: RightPanelPhases.EncryptionPanel,
+                //     refireParams: {
+                //         verificationRequest: request,
+                //         member: cli.getUser(request.otherUserId),
+                //     },
+                // });
             } else {
                 Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {
                     verificationRequest: request,

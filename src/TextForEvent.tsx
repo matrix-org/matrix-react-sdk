@@ -24,7 +24,6 @@ import { WIDGET_LAYOUT_EVENT_TYPE } from "./stores/widgets/WidgetLayoutStore";
 import { RightPanelPhases } from './stores/RightPanelStorePhases';
 import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
-import { SetRightPanelPhasePayload } from './dispatcher/payloads/SetRightPanelPhasePayload';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
@@ -33,6 +32,7 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
+import RightPanelStore from './stores/RightPanelStore';
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
@@ -503,11 +503,12 @@ const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void
 };
 
 const onPinnedMessagesClick = (): void => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.PinnedMessages,
-        allowClose: false,
-    });
+    RightPanelStore.instance.setRightPanel(RightPanelPhases.PinnedMessages, null, false);
+    // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+    //     action: Action.SetRightPanelPhase,
+    //     phase: RightPanelPhases.PinnedMessages,
+    //     allowClose: false,
+    // });
 };
 
 function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {

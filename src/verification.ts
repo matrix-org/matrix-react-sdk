@@ -23,10 +23,10 @@ import { RightPanelPhases } from "./stores/RightPanelStorePhases";
 import { findDMForUser } from './createRoom';
 import { accessSecretStorage } from './SecurityManager';
 import { verificationMethods as VerificationMethods } from 'matrix-js-sdk/src/crypto';
-import { Action } from './dispatcher/actions';
 import UntrustedDeviceDialog from "./components/views/dialogs/UntrustedDeviceDialog";
 import { IDevice } from "./components/views/right_panel/UserInfo";
 import ManualDeviceKeyVerificationDialog from "./components/views/dialogs/ManualDeviceKeyVerificationDialog";
+import RightPanelStore from "./stores/RightPanelStore";
 
 async function enable4SIfNeeded() {
     const cli = MatrixClientPeg.get();
@@ -65,11 +65,15 @@ export async function verifyDevice(user: User, device: IDevice) {
                     device.deviceId,
                     VerificationMethods.SAS,
                 );
-                dis.dispatch({
-                    action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.EncryptionPanel,
-                    refireParams: { member: user, verificationRequestPromise },
-                });
+                RightPanelStore.instance.setRightPanel(
+                    RightPanelPhases.EncryptionPanel,
+                    { member: user, verificationRequestPromise },
+                );
+                // dis.dispatch({
+                //     action: Action.SetRightPanelPhase,
+                //     phase: RightPanelPhases.EncryptionPanel,
+                //     refireParams: { member: user, verificationRequestPromise },
+                // });
             } else if (action === "legacy") {
                 Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
                     ManualDeviceKeyVerificationDialog,
@@ -96,11 +100,15 @@ export async function legacyVerifyUser(user: User) {
         }
     }
     const verificationRequestPromise = cli.requestVerification(user.userId);
-    dis.dispatch({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.EncryptionPanel,
-        refireParams: { member: user, verificationRequestPromise },
-    });
+    RightPanelStore.instance.setRightPanel(
+        RightPanelPhases.EncryptionPanel,
+        { member: user, verificationRequestPromise },
+    );
+    // dis.dispatch({
+    //     action: Action.SetRightPanelPhase,
+    //     phase: RightPanelPhases.EncryptionPanel,
+    //     refireParams: { member: user, verificationRequestPromise },
+    // });
 }
 
 export async function verifyUser(user: User) {
@@ -113,14 +121,18 @@ export async function verifyUser(user: User) {
         return;
     }
     const existingRequest = pendingVerificationRequestForUser(user);
-    dis.dispatch({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.EncryptionPanel,
-        refireParams: {
-            member: user,
-            verificationRequest: existingRequest,
-        },
-    });
+    RightPanelStore.instance.setRightPanel(
+        RightPanelPhases.EncryptionPanel,
+        { member: user, verificationRequest: existingRequest },
+    );
+    // dis.dispatch({
+    //     action: Action.SetRightPanelPhase,
+    //     phase: RightPanelPhases.EncryptionPanel,
+    //     refireParams: {
+    //         member: user,
+    //         verificationRequest: existingRequest,
+    //     },
+    // });
 }
 
 export function pendingVerificationRequestForUser(user: User) {

@@ -38,12 +38,10 @@ import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
 import { onRoomFilesClick, onRoomMembersClick } from "../right_panel/RoomSummaryCard";
 import RoomViewStore from "../../../stores/RoomViewStore";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
-import { Action } from "../../../dispatcher/actions";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import RightPanelStore from "../../../stores/RightPanelStore";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -249,11 +247,12 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     ev.stopPropagation();
 
                     ensureViewingRoom();
-                    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                        action: Action.SetRightPanelPhase,
-                        phase: RightPanelPhases.RoomSummary,
-                        allowClose: false,
-                    });
+                    RightPanelStore.instance.setRightPanel( RightPanelPhases.RoomSummary, null, false );
+                    // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+                    //     action: Action.SetRightPanelPhase,
+                    //     phase: RightPanelPhases.RoomSummary,
+                    //     allowClose: false,
+                    // });
                     onFinished();
                 }}
                 label={_t("Widgets")}

@@ -24,6 +24,8 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
 import { Action } from "../../../dispatcher/actions";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+// import RoomListStore from '../../../stores/room-list/RoomListStore';
+import RightPanelStore from '../../../stores/RightPanelStore';
 
 interface IProps {
     header?: ReactNode;
@@ -64,11 +66,16 @@ const BaseCard: React.FC<IProps> = ({
     let backButton;
     if (previousPhase) {
         const onBackClick = () => {
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: previousPhase,
-                refireParams: refireParams,
-            });
+            // console.log(RoomListStore.instance);
+            // TODO RightPanelStore: this should ideally be:
+            // RightPanelStore.instance.popRightPanel();
+
+            RightPanelStore.instance.setRightPanel(previousPhase, refireParams );
+            // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+            //     action: Action.SetRightPanelPhase,
+            //     phase: previousPhase,
+            //     refireParams: refireParams,
+            // });
         };
         const label = previousPhaseLabel ?? _t("Back");
         backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;

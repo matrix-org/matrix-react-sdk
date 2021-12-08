@@ -750,11 +750,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true,
     },
     "RightPanel.phasesGlobal": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        supportedLevels: [SettingLevel.DEVICE],
         default: null,
     },
     "RightPanel.phases": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        supportedLevels: [SettingLevel.ROOM_DEVICE],
         default: null,
     },
     // "showRightPanelInRoom": {

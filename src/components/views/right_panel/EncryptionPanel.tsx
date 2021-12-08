@@ -28,9 +28,8 @@ import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import * as sdk from "../../../index";
 import { _t } from "../../../languageHandler";
-import dis from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import RightPanelStore from "../../../stores/RightPanelStore";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
@@ -114,11 +113,15 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
         setRequest(verificationRequest_);
         setPhase(verificationRequest_.phase);
         // Notify the RightPanelStore about this
-        dis.dispatch({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.EncryptionPanel,
-            refireParams: { member, verificationRequest: verificationRequest_ },
-        });
+        RightPanelStore.instance.setRightPanel(
+            RightPanelPhases.EncryptionPanel,
+            { member, verificationRequest: verificationRequest_ },
+        );
+        // dis.dispatch({
+        //     action: Action.SetRightPanelPhase,
+        //     phase: RightPanelPhases.EncryptionPanel,
+        //     refireParams: { member, verificationRequest: verificationRequest_ },
+        // });
     }, [member]);
 
     const requested =

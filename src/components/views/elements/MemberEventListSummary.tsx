@@ -25,20 +25,19 @@ import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import EventListSummary from "./EventListSummary";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
-import { Action } from '../../../dispatcher/actions';
-import { SetRightPanelPhasePayload } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
 import { jsxJoin } from '../../../utils/ReactUtils';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Layout } from '../../../settings/enums/Layout';
+import RightPanelStore from '../../../stores/RightPanelStore';
 
 const onPinnedMessagesClick = (): void => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.PinnedMessages,
-        allowClose: false,
-    });
+    RightPanelStore.instance.setRightPanel( RightPanelPhases.PinnedMessages, null, false );
+    // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+    //     action: Action.SetRightPanelPhase,
+    //     phase: RightPanelPhases.PinnedMessages,
+    //     allowClose: false,
+    // });
 };
 
 const SENDER_AS_DISPLAY_NAME_EVENTS = [EventType.RoomServerAcl, EventType.RoomPinnedEvents];

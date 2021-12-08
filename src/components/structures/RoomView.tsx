@@ -97,7 +97,6 @@ import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threa
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
-import { SetRightPanelPhasePayload } from '../../dispatcher/payloads/SetRightPanelPhasePayload';
 import { RightPanelPhases } from '../../stores/RightPanelStorePhases';
 
 const DEBUG = false;
@@ -331,10 +330,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (!this.state.room) return;
         if (WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)) {
             // Show chat in right panel when a widget is maximised
-            dis.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.Timeline,
-            });
+            RightPanelStore.instance.setRightPanel(RightPanelPhases.Timeline);
+            // dis.dispatch<SetRightPanelPhasePayload>({
+            //     action: Action.SetRightPanelPhase,
+            //     phase: RightPanelPhases.Timeline,
+            // });
         }
         this.checkWidgets(this.state.room);
         // this.checkRightPanel(this.state.room);

@@ -51,6 +51,7 @@ import {
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_SELECTED_SPACE,
 } from "../../../stores/spaces";
+import RightPanelStore from "../../../stores/RightPanelStore";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -99,7 +100,8 @@ const PrototypeCommunityContextMenu = (props) => {
                 action: 'view_room',
                 room_id: chat.roomId,
             }, true);
-            dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });
+            RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, undefined, undefined, chat.roomId);
+            // dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });
         } else {
             // "This should never happen" clauses go here for the prototype.
             Modal.createTrackedDialog('Failed to find general chat', '', ErrorDialog, {

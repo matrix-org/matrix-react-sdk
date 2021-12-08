@@ -18,16 +18,14 @@ limitations under the License.
 import React from 'react';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
 import GroupStore from '../../../stores/GroupStore';
 import PropTypes from 'prop-types';
 import { showGroupInviteDialog } from '../../../GroupAddressPicker';
 import AccessibleButton from '../elements/AccessibleButton';
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
-import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
+import RightPanelStore from '../../../stores/RightPanelStore';
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 
 @replaceableComponent("views.groups.GroupMemberList")
@@ -169,11 +167,15 @@ export default class GroupMemberList extends React.Component {
 
     onInviteToGroupButtonClick = () => {
         showGroupInviteDialog(this.props.groupId).then(() => {
-            dis.dispatch({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.GroupMemberList,
-                refireParams: { groupId: this.props.groupId },
-            });
+            RightPanelStore.instance.setRightPanel(
+                RightPanelPhases.GroupMemberList,
+                { groupId: this.props.groupId },
+            );
+            // dis.dispatch({
+            //     action: Action.SetRightPanelPhase,
+            //     phase: RightPanelPhases.GroupMemberList,
+            //     refireParams: { groupId: this.props.groupId },
+            // });
         });
     };
 

@@ -63,8 +63,6 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import InfoDialog from "../dialogs/InfoDialog";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
-import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
 import UIStore from "../../../stores/UIStore";
@@ -77,6 +75,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
+import RightPanelStore from '../../../stores/RightPanelStore';
 
 export interface IDevice {
     deviceId: string;
@@ -1657,11 +1656,13 @@ const UserInfo: React.FC<IProps> = ({
     }
 
     const onEncryptionPanelClose = () => {
-        dis.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: previousPhase,
-            refireParams: refireParams,
-        });
+        // TODO RightPanelStore: here we want to pop the panel
+        RightPanelStore.instance.setRightPanel(previousPhase, refireParams);
+        // dis.dispatch<SetRightPanelPhasePayload>({
+        //     action: Action.SetRightPanelPhase,
+        //     phase: previousPhase,
+        //     refireParams: refireParams,
+        // });
     };
 
     let content;
