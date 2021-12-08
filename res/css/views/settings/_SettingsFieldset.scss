@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_SettingsFieldset {
-    margin: 10px 80px 10px 0;
+    margin: 10px 80px 30px 0;
     box-sizing: content-box;
 }
 
@@ -34,4 +34,13 @@ limitations under the License.
     display: block;
     margin-top: 0;
     margin-bottom: 10px;
+
+    p {
+        margin-top: 10px;
+        margin-bottom: 0;
+
+        &:first-child {
+            margin: 0
+        }
+    }
 }

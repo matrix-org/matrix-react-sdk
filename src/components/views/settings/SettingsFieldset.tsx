@@ -10,6 +10,6 @@ interface Props extends HTMLAttributes<HTMLFieldSetElement> {
 export const SettingsFieldset: React.FC<Props> = ({ legend, className, children, description, ...rest }) =>
     <fieldset {...rest} className={classNames('mx_SettingsFieldset', className)}>
         <legend className='mx_SettingsFieldset_legend'>{ legend }</legend>
-        { description && <p className='mx_SettingsFieldset_description'>{ description }</p> }
+        { description && <div className='mx_SettingsFieldset_description'>{ description }</div> }
         { children }
     </fieldset>;
