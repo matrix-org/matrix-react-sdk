@@ -1240,6 +1240,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             onFocusChange={this.onActionBarFocusChange}
             isQuoteExpanded={isQuoteExpanded}
             toggleThreadExpanded={() => this.setQuoteExpanded(!isQuoteExpanded)}
+            getRelationsForEvent={this.props.getRelationsForEvent}
         /> : undefined;
 
         const showTimestamp = (
@@ -1387,6 +1388,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             case TileShape.Thread: {
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
+                    "ref": this.ref,
                     "className": classes,
                     "aria-live": ariaLive,
                     "aria-atomic": true,

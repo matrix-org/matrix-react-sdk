@@ -130,7 +130,10 @@ export const reducer = (state: IState, action: IAction) => {
                     state.activeRef = findSiblingElement(state.refs, oldIndex)
                         || findSiblingElement(state.refs, oldIndex, true);
                 }
-                state.activeRef?.current?.focus();
+                if (document.activeElement === document.body) {
+                    // if the focus got reverted to the body then the user was likely focused on the unmounted element
+                    state.activeRef?.current?.focus();
+                }
             }
 
             // update the refs list
@@ -165,13 +168,13 @@ export const findSiblingElement = (
 ): RefObject<HTMLElement> => {
     if (backwards) {
         for (let i = startIndex; i < refs.length && i >= 0; i--) {
-            if (refs[i].current.offsetParent !== null) {
+            if (refs[i].current?.offsetParent !== null) {
                 return refs[i];
             }
         }
     } else {
         for (let i = startIndex; i < refs.length && i >= 0; i++) {
-            if (refs[i].current.offsetParent !== null) {
+            if (refs[i].current?.offsetParent !== null) {
                 return refs[i];
             }
         }

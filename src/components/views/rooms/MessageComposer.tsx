@@ -35,7 +35,6 @@ import ContextMenu, {
 } from "../../structures/ContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
-import { UIFeature } from "../../../settings/UIFeature";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
@@ -49,7 +48,7 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
 import EmojiPicker from '../emojipicker/EmojiPicker';
-import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
+import LocationPicker from '../location/LocationPicker';
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import Modal from "../../../Modal";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
@@ -57,19 +56,13 @@ import RoomContext from '../../../contexts/RoomContext';
 import { POLL_START_EVENT_TYPE } from "../../../polls/consts";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+import LocationShareType from "../location/LocationShareType";
+import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
-
-interface IComposerAvatarProps {
-    me: RoomMember;
-}
-
-function ComposerAvatar(props: IComposerAvatarProps) {
-    return <div className="mx_MessageComposer_avatar">
-        <MemberStatusMessageAvatar member={props.me} width={24} height={24} />
-    </div>;
-}
 
 interface ISendButtonProps {
     onClick: () => void;
@@ -88,7 +81,7 @@ function SendButton(props: ISendButtonProps) {
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
-    menuPosition: any; // TODO: Types
+    menuPosition: AboveLeftOf;
     narrowMode: boolean;
 }
 
@@ -119,6 +112,46 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
             onClick={openMenu}
             title={!narrowMode && _t('Emoji picker')}
             label={narrowMode ? _t("Add emoji") : null}
+        />
+
+        { contextMenu }
+    </React.Fragment>;
+};
+
+interface ILocationButtonProps {
+    room: Room;
+    shareLocation: (uri: string, ts: number, type: LocationShareType, description: string) => boolean;
+    menuPosition: AboveLeftOf;
+    narrowMode: boolean;
+}
+
+const LocationButton: React.FC<ILocationButtonProps> = ({ shareLocation, menuPosition, narrowMode }) => {
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+
+    let contextMenu;
+    if (menuDisplayed) {
+        const position = menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect());
+        contextMenu = <ContextMenu {...position} onFinished={closeMenu} managed={false}>
+            <LocationPicker onChoose={shareLocation} onFinished={closeMenu} />
+        </ContextMenu>;
+    }
+
+    const className = classNames(
+        "mx_MessageComposer_button",
+        "mx_MessageComposer_location",
+        {
+            "mx_MessageComposer_button_highlight": menuDisplayed,
+        },
+    );
+
+    // TODO: replace ContextMenuTooltipButton with a unified representation of
+    // the header buttons and the right panel buttons
+    return <React.Fragment>
+        <AccessibleTooltipButton
+            className={className}
+            onClick={openMenu}
+            title={!narrowMode && _t('Share location')}
+            label={narrowMode ? _t('Share location') : null}
         />
 
         { contextMenu }
@@ -260,6 +293,8 @@ interface IState {
     narrowMode?: boolean;
     isMenuOpen: boolean;
     showStickers: boolean;
+    showStickersButton: boolean;
+    showPollsButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -289,9 +324,14 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             recordingTimeLeftSeconds: null, // when set to a number, shows a toast
             isMenuOpen: false,
             showStickers: false,
+            showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
+            showPollsButton: SettingsStore.getValue("feature_polls"),
         };
 
         this.instanceId = instanceCount++;
+
+        SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
+        SettingsStore.monitorSetting("feature_polls", null);
     }
 
     componentDidMount() {
@@ -314,14 +354,39 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === 'reply_to_event' && payload.context === this.context.timelineRenderingType) {
-            // add a timeout for the reply preview to be rendered, so
-            // that the ScrollPanel listening to the resizeNotifier can
-            // correctly measure it's new height and scroll down to keep
-            // at the bottom if it already is
-            setTimeout(() => {
-                this.props.resizeNotifier.notifyTimelineHeightChanged();
-            }, 100);
+        switch (payload.action) {
+            case "reply_to_event":
+                if (payload.context === this.context.timelineRenderingType) {
+                    // add a timeout for the reply preview to be rendered, so
+                    // that the ScrollPanel listening to the resizeNotifier can
+                    // correctly measure it's new height and scroll down to keep
+                    // at the bottom if it already is
+                    setTimeout(() => {
+                        this.props.resizeNotifier.notifyTimelineHeightChanged();
+                    }, 100);
+                }
+                break;
+
+            case Action.SettingUpdated: {
+                const settingUpdatedPayload = payload as SettingUpdatedPayload;
+                switch (settingUpdatedPayload.settingName) {
+                    case "MessageComposerInput.showStickersButton": {
+                        const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
+                        if (this.state.showStickersButton !== showStickersButton) {
+                            this.setState({ showStickersButton });
+                        }
+                        break;
+                    }
+
+                    case "feature_polls": {
+                        const showPollsButton = SettingsStore.getValue("feature_polls");
+                        if (this.state.showPollsButton !== showPollsButton) {
+                            this.setState({ showPollsButton });
+                        }
+                        break;
+                    }
+                }
+            }
         }
     };
 
@@ -426,6 +491,25 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
+    private shareLocation = (uri: string, ts: number, type: LocationShareType, description: string): boolean => {
+        if (!uri) return false;
+        try {
+            const text = `${description ? description : 'Location'} at ${uri} as of ${new Date(ts).toISOString()}`;
+            // noinspection ES6MissingAwait - we don't care if it fails, it'll get queued.
+            MatrixClientPeg.get().sendMessage(this.props.room.roomId, {
+                "body": text,
+                "msgtype": MsgType.Location,
+                "geo_uri": uri,
+                "org.matrix.msc3488.location": { uri, description },
+                "org.matrix.msc3488.ts": ts,
+                // TODO: MSC1767 fallbacks for text & thumbnail
+            });
+        } catch (e) {
+            logger.error("Error sending location:", e);
+        }
+        return true;
+    };
+
     private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
@@ -463,9 +547,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     private shouldShowStickerPicker = (): boolean => {
-        return SettingsStore.getValue(UIFeature.Widgets)
-        && SettingsStore.getValue("MessageComposerInput.showStickersButton")
-        && !this.state.haveRecording;
+        return this.state.showStickersButton && !this.state.haveRecording;
     };
 
     private showStickers = (showStickers: boolean) => {
@@ -482,7 +564,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         let uploadButtonIndex = 0;
         const buttons: JSX.Element[] = [];
         if (!this.state.haveRecording) {
-            if (SettingsStore.getValue("feature_polls")) {
+            if (this.state.showPollsButton) {
                 buttons.push(
                     <PollButton key="polls" room={this.props.room} />,
                 );
@@ -495,6 +577,17 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     relation={this.props.relation}
                 />,
             );
+            if (SettingsStore.getValue("feature_location_share")) {
+                buttons.push(
+                    <LocationButton
+                        key="location"
+                        room={this.props.room}
+                        shareLocation={this.shareLocation}
+                        menuPosition={menuPosition}
+                        narrowMode={this.state.narrowMode}
+                    />,
+                );
+            }
             buttons.push(
                 <EmojiButton key="emoji_button" addEmoji={this.addEmoji} menuPosition={menuPosition} narrowMode={this.state.narrowMode} />,
             );
@@ -567,7 +660,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     render() {
         const controls = [
-            this.state.me && !this.props.compact ? <ComposerAvatar key="controls_avatar" me={this.state.me} /> : null,
             this.props.e2eStatus ?
                 <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
                 null,
@@ -638,9 +730,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 yOffset={-50}
             />;
         }
+
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation.event_id
+            : null;
+
         controls.push(
             <Stickerpicker
                 room={this.props.room}
+                threadId={threadId}
                 showStickers={this.state.showStickers}
                 setShowStickers={this.showStickers}
                 menuPosition={menuPosition}

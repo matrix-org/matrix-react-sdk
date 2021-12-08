@@ -45,6 +45,9 @@ import { IPosition, ChevronFace } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
+import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
+import EndPollDialog from '../dialogs/EndPollDialog';
+import { isPollEnded } from '../messages/MPollBody';
 
 export function canCancel(eventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -79,6 +82,12 @@ interface IProps extends IPosition {
     reactions?: Relations;
     // A permalink to the event
     showPermalink?: boolean;
+
+    getRelationsForEvent?: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 interface IState {
@@ -140,6 +149,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         if (!pinnedEvent) return false;
         const content = pinnedEvent.getContent();
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
+    }
+
+    private canEndPoll(mxEvent: MatrixEvent): boolean {
+        return (
+            mxEvent.getType() === POLL_START_EVENT_TYPE.name &&
+            this.state.canRedact &&
+            !isPollEnded(mxEvent, MatrixClientPeg.get(), this.props.getRelationsForEvent)
+        );
     }
 
     private onResendReactionsClick = (): void => {
@@ -272,7 +289,17 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private getReactions(filter: (event: MatrixEvent) => boolean): Array<MatrixEvent> {
+    private onEndPollClick = (): void => {
+        const matrixClient = MatrixClientPeg.get();
+        Modal.createTrackedDialog('End Poll', '', EndPollDialog, {
+            matrixClient,
+            event: this.props.mxEvent,
+            getRelationsForEvent: this.props.getRelationsForEvent,
+        }, 'mx_Dialog_endPoll');
+        this.closeMenu();
+    };
+
+    private getReactions(filter: (e: MatrixEvent) => boolean): MatrixEvent[] {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
         const eventId = this.props.mxEvent.getId();
@@ -316,24 +343,25 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const context = this.context;
         const permalink = this.getPermalink();
 
-        let resendReactionsButton;
-        let redactButton;
-        let forwardButton;
-        let pinButton;
-        let unhidePreviewButton;
-        let externalURLButton;
-        let quoteButton;
-        let redactItemList;
-        let reportEventButton;
-        let copyButton;
-        let editButton;
-        let replyButton;
-        let reactButton;
-        let reactionPicker;
-        let quickItemsList;
-        let nativeItemsList;
-        let permalinkButton;
-        let collapseReplyChain;
+        let resendReactionsButton: JSX.Element;
+        let redactButton: JSX.Element;
+        let forwardButton: JSX.Element;
+        let pinButton: JSX.Element;
+        let unhidePreviewButton: JSX.Element;
+        let externalURLButton: JSX.Element;
+        let quoteButton: JSX.Element;
+        let redactItemList: JSX.Element;
+        let reportEventButton: JSX.Element;
+        let copyButton: JSX.Element;
+        let editButton: JSX.Element;
+        let replyButton: JSX.Element;
+        let reactButton: JSX.Element;
+        let reactionPicker: JSX.Element;
+        let quickItemsList: JSX.Element;
+        let nativeItemsList: JSX.Element;
+        let permalinkButton: JSX.Element;
+        let collapseReplyChain: JSX.Element;
+        let endPollButton: JSX.Element;
 
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
@@ -425,6 +453,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     />
                 );
             }
+        }
+
+        if (this.canEndPoll(mxEvent)) {
+            endPollButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconEndPoll"
+                    label={_t("End Poll")}
+                    onClick={this.onEndPollClick}
+                />
+            );
         }
 
         if (this.props.eventTileOps) { // this event is rendered using TextualBody
@@ -556,6 +594,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     label={_t("View in room")}
                     onClick={this.viewInRoom}
                 /> }
+                { endPollButton }
                 { quoteButton }
                 { forwardButton }
                 { pinButton }
