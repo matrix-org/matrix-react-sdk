@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638881901114,
+  "lastUpdate": 1638955507162,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46052,6 +46052,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4990.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f9e3328fb36e3208c89ef90782db9f51a1c64243",
+          "message": "Fix issue with room list resizer getting clipped in firefox (#7303)",
+          "timestamp": "2021-12-08T09:19:12Z",
+          "tree_id": "85f6d43b145d6f8b2dc54fa435632b7a05839257",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f9e3328fb36e3208c89ef90782db9f51a1c64243"
+        },
+        "date": 1638955503703,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4868.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 683.5,
             "unit": "ms",
             "extra": "type: measure"
           }
