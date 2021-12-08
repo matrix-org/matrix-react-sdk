@@ -73,10 +73,10 @@ interface IProps extends IPosition {
     /* if the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding) */
     onCloseDialog?(): void;
     getRelationsForEvent?: (
-            eventId: string,
-            relationType: string,
-            eventType: string
-        ) => Relations;
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 interface IState {
