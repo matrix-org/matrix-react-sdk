@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Modal from '../../../Modal';
@@ -397,9 +398,10 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                             (!ended && myVote === answer.id) ||
                             (ended && answerVotes === winCount)
                         );
-                        const classNames = `mx_MPollBody_option${
-                            checked ? " mx_MPollBody_option_checked": ""
-                        }`;
+                        const cls = classNames({
+                            "mx_MPollBody_option": true,
+                            "mx_MPollBody_option_checked": checked,
+                        });
 
                         const answerPercent = (
                             totalVotes === 0
@@ -408,7 +410,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                         );
                         return <div
                             key={answer.id}
-                            className={classNames}
+                            className={cls}
                             onClick={() => this.selectOption(answer.id)}
                         >
                             { (
@@ -448,11 +450,11 @@ interface IEndedPollOptionProps {
 }
 
 function EndedPollOption(props: IEndedPollOptionProps) {
-    const classNames = `mx_MPollBody_endedOption${
-        props.checked ? " mx_MPollBody_endedOptionWinner": ""
-    }`;
-
-    return <div className={classNames} data-value={props.answer.id}>
+    const cls = classNames({
+        "mx_MPollBody_endedOption": true,
+        "mx_MPollBody_endedOptionWinner": props.checked,
+    });
+    return <div className={cls} data-value={props.answer.id}>
         <div className="mx_MPollBody_optionDescription">
             <div className="mx_MPollBody_optionText">
                 { props.answer[TEXT_NODE_TYPE.name] }
