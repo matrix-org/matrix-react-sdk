@@ -152,10 +152,10 @@ interface IMessageActionBarProps {
     toggleThreadExpanded: () => void;
     isQuoteExpanded?: boolean;
     getRelationsForEvent?: (
-            eventId: string,
-            relationType: string,
-            eventType: string
-        ) => Relations;
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 @replaceableComponent("views.messages.MessageActionBar")
