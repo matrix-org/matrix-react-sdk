@@ -25,7 +25,7 @@ interface Props extends DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement
 const ExternalLink: React.FC<Props> = ({ children, className, ...rest }) =>
     <a
         {...rest}
-        className={classNames(className)}
+        className={classNames('mx_ExternalLink', className)}
     >
         { children }
         <i className='mx_ExternalLink_icon' />
