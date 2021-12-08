@@ -91,11 +91,6 @@ const getRoomFn: FetchRoomFn = (room: Room) => {
     return RoomNotificationStateStore.instance.getRoomState(room);
 };
 
-enum RoomsUpdateCause {
-    SpaceHierarchy,
-    RoomMembership,
-}
-
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
     private rootSpaces: Room[] = [];
@@ -471,7 +466,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const oldRootSpaces = this.rootSpaces;
         this.rootSpaces = this.sortRootSpaces(rootSpaces);
 
-        this.onRoomsUpdate(RoomsUpdateCause.SpaceHierarchy);
+        this.onRoomsUpdate();
 
         if (arrayHasOrderChange(oldRootSpaces, this.rootSpaces)) {
             this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
@@ -664,20 +659,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         });
     };
 
-    // TODO use delta updates for some callers of RoomsUpdateCause.SpaceHierarchy
-    private onRoomsUpdate = (cause: RoomsUpdateCause) => {
+    private onRoomsUpdate = () => {
         const visibleRooms = this.matrixClient.getVisibleRooms();
 
         const oldFilteredRooms = this.spaceFilteredRooms;
         const oldFilteredUsers = this.spaceFilteredUsers;
         this.spaceFilteredRooms = new Map();
         this.spaceFilteredUsers = new Map();
-
-        // TODO do we need this here?
-        // copy metaspaces into new filter as they are not owned by this method
-        // metaSpaceOrder.forEach(spaceKey => {
-        //     this.spaceFilteredRooms.set(spaceKey, oldFilteredRooms.get(spaceKey));
-        // });
 
         this.rebuildParentMap();
         this.rebuildMetaSpaces();
@@ -786,7 +774,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const membership = newMembership || roomMembership;
 
         if (!room.isSpaceRoom()) {
-            this.onRoomsUpdate(RoomsUpdateCause.RoomMembership);
+            this.onRoomsUpdate();
 
             if (membership === "join") {
                 // the user just joined a room, remove it from the suggested list if it was there
@@ -854,7 +842,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                         this.rebuildSpaceHierarchy();
                         this.emit(target.roomId);
                     } else {
-                        this.onRoomsUpdate(RoomsUpdateCause.SpaceHierarchy);
+                        this.onRoomsUpdate();
                     }
                     this.emit(room.roomId);
                 }
@@ -875,14 +863,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 if (room.isSpaceRoom()) {
                     this.rebuildSpaceHierarchy();
                 } else {
-                    this.onRoomsUpdate(RoomsUpdateCause.SpaceHierarchy);
+                    this.onRoomsUpdate();
                 }
                 this.emit(room.roomId);
                 break;
 
             case EventType.RoomPowerLevels:
                 if (room.isSpaceRoom()) {
-                    this.onRoomsUpdate(RoomsUpdateCause.SpaceHierarchy);
+                    this.onRoomsUpdate();
                 }
                 break;
         }
