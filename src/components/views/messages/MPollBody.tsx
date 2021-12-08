@@ -528,13 +528,14 @@ export function allVotes(
 }
 
 /**
- * Returns the earliest timestamp from the supplied list of end_poll events.
+ * Returns the earliest timestamp from the supplied list of end_poll events
+ * or null if there are no authorised events.
  */
 export function pollEndTs(
     pollEvent: MatrixEvent,
     matrixClient: MatrixClient,
     endRelations: Relations,
-) {
+): number | null {
     if (!endRelations) {
         return null;
     }
