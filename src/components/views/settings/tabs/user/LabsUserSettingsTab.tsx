@@ -103,6 +103,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
 
             groups.getOrCreate(LabGroup.Analytics, []).push(
                 <SettingsFlag name="automaticErrorReporting" level={SettingLevel.DEVICE} />,
+                <SettingsFlag name="automaticDecryptionErrorReporting" level={SettingLevel.DEVICE} />,
             );
 
             if (this.state.showHiddenReadReceipts) {

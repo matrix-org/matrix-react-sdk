@@ -60,6 +60,7 @@ import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialo
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { setSentryUser } from "./sentry";
+import AutoRageshakeStore from './stores/AutoRageshakeStore';
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -824,6 +825,8 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     // Now that we have a MatrixClientPeg, update the Jitsi info
     await Jitsi.getInstance().start();
 
+    AutoRageshakeStore.instance.start();
+
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
     dis.dispatch({ action: 'client_started' });
@@ -908,6 +911,7 @@ export function stopMatrixClient(unsetClient = true): void {
     DeviceListener.sharedInstance().stop();
     if (DMRoomMap.shared()) DMRoomMap.shared().stop();
     EventIndexPeg.stop();
+    AutoRageshakeStore.instance.stop();
     const cli = MatrixClientPeg.get();
     if (cli) {
         cli.stopClient();

@@ -869,6 +869,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new ReloadOnChangeController(),
     },
+    "automaticDecryptionErrorReporting": {
+        displayName: _td("Automatically send debug logs on decryption errors"),
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: false,
+        controller: new ReloadOnChangeController(),
+    },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
