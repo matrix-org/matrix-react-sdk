@@ -25,8 +25,8 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 import dis from '../../dispatcher/dispatcher';
 import GroupStore from '../../stores/GroupStore';
 import {
-    RIGHT_PANEL_PHASES_NO_ARGS,
-    RIGHT_PANEL_SPACE_PHASES,
+    // RIGHT_PANEL_PHASES_NO_ARGS,
+    // RIGHT_PANEL_SPACE_PHASES,
     RightPanelPhases,
 } from "../../stores/RightPanelStorePhases";
 import RightPanelStore from "../../stores/RightPanelStore";
@@ -50,11 +50,12 @@ import NotificationPanel from "./NotificationPanel";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PinnedMessagesCard from "../views/right_panel/PinnedMessagesCard";
 import { throttle } from 'lodash';
-import SpaceStore from "../../stores/spaces/SpaceStore";
+// import SpaceStore from "../../stores/spaces/SpaceStore";
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
 import TimelineCard from '../views/right_panel/TimelineCard';
+import { UPDATE_EVENT } from '../../stores/AsyncStore';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
@@ -90,8 +91,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            ...RightPanelStore.instance.roomPanelPhaseParams,
-            phase: this.getPhaseFromProps(),
+            // get all the state from the room panel store on inti
+            ...RightPanelStore.instance.currentRoom?.state,
+            phase: RightPanelStore.instance.currentRoom?.phase,
             isUserPrivilegedInGroup: null,
             member: this.getUserForPanel(),
             searchQuery: "",
@@ -106,52 +108,54 @@ export default class RightPanel extends React.Component<IProps, IState> {
     // as both are called at the same time in the constructor.
     private getUserForPanel(): RoomMember {
         if (this.state && this.state.member) return this.state.member;
-        const lastParams = RightPanelStore.instance.roomPanelPhaseParams;
-        return this.props.member || lastParams['member'];
+        const lastState = RightPanelStore.instance.currentRoom?.state;
+        // Should just use the member from the RightPanelStore. Wherever the prop is passed should just update the store beforehand.
+        return this.props.member || lastState?.member;
     }
 
     // gets the current phase from the props and also maybe the store
-    private getPhaseFromProps() {
-        const rps = RightPanelStore.instance;
-        const userForPanel = this.getUserForPanel();
-        if (this.props.groupId) {
-            if (!RIGHT_PANEL_PHASES_NO_ARGS.includes(rps.groupPanelPhase)) {
-                dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.GroupMemberList });
-                return RightPanelPhases.GroupMemberList;
-            }
-            return rps.groupPanelPhase;
-        } else if (SpaceStore.spacesEnabled && this.props.room?.isSpaceRoom()
-            && !RIGHT_PANEL_SPACE_PHASES.includes(rps.roomPanelPhase)
-        ) {
-            return RightPanelPhases.SpaceMemberList;
-        } else if (userForPanel) {
-            // XXX FIXME AAAAAARGH: What is going on with this class!? It takes some of its state
-            // from its props and some from a store, except if the contents of the store changes
-            // while it's mounted in which case it replaces all of its state with that of the store,
-            // except it uses a dispatch instead of a normal store listener?
-            // Unfortunately rewriting this would almost certainly break showing the right panel
-            // in some of the many cases, and I don't have time to re-architect it and test all
-            // the flows now, so adding yet another special case so if the store thinks there is
-            // a verification going on for the member we're displaying, we show that, otherwise
-            // we race if a verification is started while the panel isn't displayed because we're
-            // not mounted in time to get the dispatch.
-            // Until then, let this code serve as a warning from history.
-            if (
-                rps.roomPanelPhaseParams.member &&
-                userForPanel.userId === rps.roomPanelPhaseParams.member.userId &&
-                rps.roomPanelPhaseParams.verificationRequest
-            ) {
-                return rps.roomPanelPhase;
-            }
-            return RightPanelPhases.RoomMemberInfo;
-        }
-        return rps.roomPanelPhase;
-    }
+    // private getPhaseFromProps() {
+    //     const rps = RightPanelStore.instance;
+    //     const userForPanel = this.getUserForPanel();
+    //     if (this.props.groupId) {
+    //         if (!RIGHT_PANEL_PHASES_NO_ARGS.includes(rps.groupPanelPhase)) {
+    //             dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.GroupMemberList });
+    //             return RightPanelPhases.GroupMemberList;
+    //         }
+    //         return rps.groupPanelPhase;
+    //     } else if (SpaceStore.spacesEnabled && this.props.room?.isSpaceRoom()
+    //         && !RIGHT_PANEL_SPACE_PHASES.includes(rps.roomPanelPhase)
+    //     ) {
+    //         return RightPanelPhases.SpaceMemberList;
+    //     } else if (userForPanel) {
+    //         // XXX FIXME AAAAAARGH: What is going on with this class!? It takes some of its state
+    //         // from its props and some from a store, except if the contents of the store changes
+    //         // while it's mounted in which case it replaces all of its state with that of the store,
+    //         // except it uses a dispatch instead of a normal store listener?
+    //         // Unfortunately rewriting this would almost certainly break showing the right panel
+    //         // in some of the many cases, and I don't have time to re-architect it and test all
+    //         // the flows now, so adding yet another special case so if the store thinks there is
+    //         // a verification going on for the member we're displaying, we show that, otherwise
+    //         // we race if a verification is started while the panel isn't displayed because we're
+    //         // not mounted in time to get the dispatch.
+    //         // Until then, let this code serve as a warning from history.
+    //         if (
+    //             rps.roomPanelPhaseParams.member &&
+    //             userForPanel.userId === rps.roomPanelPhaseParams.member.userId &&
+    //             rps.roomPanelPhaseParams.verificationRequest
+    //         ) {
+    //             return rps.roomPanelPhase;
+    //         }
+    //         return RightPanelPhases.RoomMemberInfo;
+    //     }
+    //     return rps.roomPanelPhase;
+    // }
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
         const cli = this.context;
         cli.on("RoomState.members", this.onRoomStateMember);
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.initGroupStore(this.props.groupId);
     }
 
@@ -160,6 +164,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
         if (this.context) {
             this.context.removeListener("RoomState.members", this.onRoomStateMember);
         }
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.unregisterGroupStore();
     }
 
@@ -199,7 +204,13 @@ export default class RightPanel extends React.Component<IProps, IState> {
             this.delayedUpdate();
         }
     };
-
+    private onRightPanelStoreUpdate = () => {
+        const currentRoom = RightPanelStore.instance.currentRoom;
+        this.setState({
+            ...currentRoom.state,
+            phase: currentRoom.phase,
+        });
+    };
     private onAction = (payload: ActionPayload) => {
         const isChangingRoom = payload.action === Action.ViewRoom && payload.room_id !== this.props.room.roomId;
         const isViewingThread = this.state.phase === RightPanelPhases.ThreadView;
@@ -207,21 +218,21 @@ export default class RightPanel extends React.Component<IProps, IState> {
             dispatchShowThreadsPanelEvent();
         }
 
-        if (payload.action === Action.AfterRightPanelPhaseChange) {
-            this.setState({
-                phase: payload.phase,
-                groupRoomId: payload.groupRoomId,
-                groupId: payload.groupId,
-                member: payload.member,
-                event: payload.event,
-                initialEvent: payload.initialEvent,
-                initialEventHighlighted: payload.highlighted,
-                verificationRequest: payload.verificationRequest,
-                verificationRequestPromise: payload.verificationRequestPromise,
-                widgetId: payload.widgetId,
-                space: payload.space,
-            });
-        }
+        // if (payload.action === Action.AfterRightPanelPhaseChange) {
+        //     this.setState({
+        //         phase: payload.phase,
+        //         groupRoomId: payload.groupRoomId,
+        //         groupId: payload.groupId,
+        //         member: payload.member,
+        //         event: payload.event,
+        //         initialEvent: payload.initialEvent,
+        //         initialEventHighlighted: payload.highlighted,
+        //         verificationRequest: payload.verificationRequest,
+        //         verificationRequestPromise: payload.verificationRequestPromise,
+        //         widgetId: payload.widgetId,
+        //         space: payload.space,
+        //     });
+        // }
     };
 
     private onClose = () => {
@@ -246,7 +257,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             // the RightPanelStore has no way of knowing which mode room/group it is in, so we handle closing here
             dis.dispatch({
                 action: Action.ToggleRightPanel,
-                type: this.props.groupId ? "group" : "room",
+                // type: this.props.groupId ? "group" : "room", // not needed anymore since group or room is already known by the state
             });
         }
     };

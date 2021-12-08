@@ -213,7 +213,6 @@ export interface IRoomState {
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private readonly dispatcherRef: string;
     private readonly roomStoreToken: EventSubscription;
-    private readonly rightPanelStoreToken: EventSubscription;
     private settingWatchers: string[];
 
     private unmounted = false;
@@ -288,9 +287,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.context.on("Event.decrypted", this.onEventDecrypted);
         // Start listening for RoomViewStore updates
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        this.rightPanelStoreToken = RightPanelStore.instance.addListener(this.onRightPanelStoreUpdate);
 
         WidgetEchoStore.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
 
         this.settingWatchers = [
@@ -357,10 +356,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private checkRightPanel = (room) => {
+        // TODO remove this!
         // This is a hack to hide the chat. This should not be necessary once the right panel
         // phase is stored per room. (need to be done after check widget so that mainSplitContentType is updated)
         if (
-            RightPanelStore.instance.roomPanelPhase === RightPanelPhases.Timeline &&
+            RightPanelStore.instance.currentRoom?.phase === RightPanelPhases.Timeline &&
             this.state.showRightPanel &&
             !WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)
         ) {
@@ -749,11 +749,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
         }
-        // Remove RightPanelStore listener
-        if (this.rightPanelStoreToken) {
-            this.rightPanelStoreToken.remove();
-        }
 
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         WidgetEchoStore.removeListener(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
         WidgetStore.instance.removeListener(UPDATE_EVENT, this.onWidgetStoreUpdate);
 

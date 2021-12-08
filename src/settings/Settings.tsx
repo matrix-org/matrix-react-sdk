@@ -749,22 +749,30 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show previews/thumbnails for images"),
         default: true,
     },
-    "showRightPanelInRoom": {
+    "RightPanel.phasesGlobal": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
+        default: null,
     },
-    "showRightPanelInGroup": {
+    "RightPanel.phases": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
+        default: null,
     },
-    "lastRightPanelPhaseForRoom": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: RightPanelPhases.RoomSummary,
-    },
-    "lastRightPanelPhaseForGroup": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: RightPanelPhases.GroupMemberList,
-    },
+    // "showRightPanelInRoom": {
+    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+    //     default: false,
+    // },
+    // "showRightPanelInGroup": {
+    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+    //     default: false,
+    // },
+    // "lastRightPanelPhaseForRoom": {
+    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+    //     default: RightPanelPhases.RoomSummary,
+    // },
+    // "lastRightPanelPhaseForGroup": {
+    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+    //     default: RightPanelPhases.GroupMemberList,
+    // },
     "enableEventIndexing": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Enable message search in encrypted rooms"),

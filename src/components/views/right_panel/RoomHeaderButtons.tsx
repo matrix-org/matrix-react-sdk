@@ -146,12 +146,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
 
     private onRoomSummaryClicked = () => {
         // use roomPanelPhase rather than this.state.phase as it remembers the latest one if we close
-        const lastPhase = RightPanelStore.instance.roomPanelPhase;
-        if (ROOM_INFO_PHASES.includes(lastPhase)) {
-            if (this.state.phase === lastPhase) {
-                this.setPhase(lastPhase);
+        const currentPhase = RightPanelStore.instance.currentRoom.phase;
+        if (ROOM_INFO_PHASES.includes(currentPhase)) {
+            if (this.state.phase === currentPhase) {
+                this.setPhase(currentPhase);
             } else {
-                this.setPhase(lastPhase, RightPanelStore.instance.roomPanelPhaseParams);
+                this.setPhase(currentPhase, RightPanelStore.instance.currentRoom.state);
             }
         } else {
             // This toggles for us, if needed
@@ -188,12 +188,14 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
 
         rightPanelPhaseButtons.set(RightPanelPhases.PinnedMessages,
             <PinnedMessagesHeaderButton
+                key={RightPanelPhases.PinnedMessages}
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
                 onClick={this.onPinnedMessagesClicked} />,
         );
         rightPanelPhaseButtons.set(RightPanelPhases.Timeline,
             <TimelineCardHeaderButton
+                key={RightPanelPhases.Timeline}
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.Timeline)}
                 onClick={this.onTimelineCardClicked} />,
@@ -201,6 +203,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         rightPanelPhaseButtons.set(RightPanelPhases.ThreadPanel,
             SettingsStore.getValue("feature_thread")
                 ? <HeaderButton
+                    key={RightPanelPhases.ThreadPanel}
                     name="threadsButton"
                     title={_t("Threads")}
                     onClick={this.onThreadsPanelClicked}
@@ -210,6 +213,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         );
         rightPanelPhaseButtons.set(RightPanelPhases.NotificationPanel,
             <HeaderButton
+                key={RightPanelPhases.NotificationPanel}
                 name="notifsButton"
                 title={_t('Notifications')}
                 isHighlighted={this.isPhase(RightPanelPhases.NotificationPanel)}
@@ -218,6 +222,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         );
         rightPanelPhaseButtons.set(RightPanelPhases.RoomSummary,
             <HeaderButton
+                key={RightPanelPhases.RoomSummary}
                 name="roomSummaryButton"
                 title={_t('Room Info')}
                 isHighlighted={this.isPhase(ROOM_INFO_PHASES)}

@@ -44,6 +44,7 @@ import { replaceableComponent } from "../../utils/replaceableComponent";
 import { createSpaceFromCommunity } from "../../utils/space";
 import { Action } from "../../dispatcher/actions";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -440,7 +441,7 @@ export default class GroupView extends React.Component {
         this._initGroupStore(this.props.groupId, true);
 
         this._dispatcherRef = dis.register(this._onAction);
-        this._rightPanelStoreToken = RightPanelStore.instance.addListener(this._onRightPanelStoreUpdate);
+        RightPanelStore.instance.on(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     componentWillUnmount() {
@@ -448,10 +449,7 @@ export default class GroupView extends React.Component {
         this._matrixClient.removeListener("Group.myMembership", this._onGroupMyMembership);
         dis.unregister(this._dispatcherRef);
 
-        // Remove RightPanelStore listener
-        if (this._rightPanelStoreToken) {
-            this._rightPanelStoreToken.remove();
-        }
+        RightPanelStore.instance.off(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event

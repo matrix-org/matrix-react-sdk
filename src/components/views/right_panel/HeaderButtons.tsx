@@ -27,8 +27,9 @@ import {
     SetRightPanelPhasePayload,
     SetRightPanelPhaseRefireParams,
 } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
-import type { EventSubscription } from "fbemitter";
+// import type { EventSubscription } from "fbemitter";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 
 export enum HeaderKind {
   Room = "room",
@@ -44,7 +45,6 @@ interface IProps {}
 
 @replaceableComponent("views.right_panel.HeaderButtons")
 export default abstract class HeaderButtons<P = {}> extends React.Component<IProps & P, IState> {
-    private storeToken: EventSubscription;
     private dispatcherRef: string;
 
     constructor(props: IProps & P, kind: HeaderKind) {
@@ -53,17 +53,17 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.instance;
         this.state = {
             headerKind: kind,
-            phase: kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
+            phase: rps.currentRoom.phase, //kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
         };
     }
 
     public componentDidMount() {
-        this.storeToken = RightPanelStore.instance.addListener(this.onRightPanelUpdate.bind(this));
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelUpdate.bind(this));
         this.dispatcherRef = dis.register(this.onAction.bind(this)); // used by subclasses
     }
 
     public componentWillUnmount() {
-        if (this.storeToken) this.storeToken.remove();
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelUpdate.bind(this));
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
@@ -86,12 +86,13 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     private onRightPanelUpdate() {
-        const rps = RightPanelStore.instance;
-        if (this.state.headerKind === HeaderKind.Room) {
-            this.setState({ phase: rps.visibleRoomPanelPhase });
-        } else if (this.state.headerKind === HeaderKind.Group) {
-            this.setState({ phase: rps.visibleGroupPanelPhase });
-        }
+        this.setState({ phase: RightPanelStore.instance.currentRoom.phase });
+        // const rps = RightPanelStore.instance;
+        // if (this.state.headerKind === HeaderKind.Room) {
+        //     this.setState({ phase: rps.visibleRoomPanelPhase });
+        // } else if (this.state.headerKind === HeaderKind.Group) {
+        //     this.setState({ phase: rps.visibleGroupPanelPhase });
+        // }
     }
 
     // XXX: Make renderButtons a prop
