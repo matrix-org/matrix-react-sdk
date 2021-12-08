@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-import { SetRightPanelPhaseRefireParams } from "./SetRightPanelPhasePayload";
+import { IPanelState } from "./SetRightPanelPhasePayload";
 import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
@@ -27,4 +27,4 @@ interface AfterRightPanelPhaseChangeAction extends ActionPayload {
 }
 
 export type AfterRightPanelPhaseChangePayload
-    = AfterRightPanelPhaseChangeAction & SetRightPanelPhaseRefireParams;
+    = AfterRightPanelPhaseChangeAction & IPanelState;

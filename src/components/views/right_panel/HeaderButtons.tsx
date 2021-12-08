@@ -22,9 +22,7 @@ import React from 'react';
 import dis from '../../../dispatcher/dispatcher';
 import RightPanelStore from "../../../stores/RightPanelStore";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import {
-    SetRightPanelPhaseRefireParams,
-} from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
+import { IPanelState } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
 // import type { EventSubscription } from "fbemitter";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
@@ -67,7 +65,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
 
     protected abstract onAction(payload);
 
-    public setPhase(phase: RightPanelPhases, extras?: Partial<SetRightPanelPhaseRefireParams>) {
+    public setPhase(phase: RightPanelPhases, extras?: Partial<IPanelState>) {
         RightPanelStore.instance.setRightPanel(phase, extras);
         // dis.dispatch<SetRightPanelPhasePayload>({
         //     action: Action.SetRightPanelPhase,

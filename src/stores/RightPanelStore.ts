@@ -28,34 +28,14 @@ import { UPDATE_EVENT } from './AsyncStore';
 import { ReadyWatchingStore } from './ReadyWatchingStore';
 import RoomViewStore from './RoomViewStore';
 import { EventSubscription } from 'fbemitter';
+import { IPanelState } from '../dispatcher/payloads/SetRightPanelPhasePayload';
 // import RightPanel from '../components/structures/RightPanel';
 // import { Playback } from '../audio/Playback';
 // import { RoomView } from '../components/structures/RoomView';
 
-interface IState {
-    // Whether or not to show the right panel at all. We split out rooms and groups
-    // because they're different flows for the user to follow.
-    // showRoomPanel: boolean;
-    // showGroupPanel: boolean;
-
-    // The last phase (screen) the right panel was showing
-    // lastRoomPhase: RightPanelPhases;
-    // lastGroupPhase: RightPanelPhases;
-
-    // previousPhase?: RightPanelPhases;
-
-    // Extra information about the last phase
-    // lastRoomPhaseParams: {[key: string]: any};
-
-    // Replicate everything for group
-    panelHistory: Array<IPhaseAndState>;
-    currentPanel?: IPhaseAndState;
-    previousPanel?: IPhaseAndState;
-    isOpen?: boolean;
-}
 interface IPhaseAndState {
     phase: RightPanelPhases;
-    state: any;
+    state: IPanelState;
 }
 
 // const INITIAL_STATE: IState = {
@@ -216,9 +196,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     // ALL SETTERS:
-    public setRightPanel(phase: RightPanelPhases, state: any, allowClose = true, roomId: string = null) {
+    public setRightPanel(phase: RightPanelPhases, state: IPanelState = null, allowClose = true, roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
-        console.log("ORDER_DEBUG: action:", Action.SetRightPanelPhase);
+        console.log("ORDER_DEBUG: setRightPanel ");
         // this was previously a very multifuncitonal command:
         // TogglePanel: if the same phase is send but without refireParams
         // UpdateState: if the same phase is send but with refireParams
@@ -249,7 +229,12 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
     // push right panel: appends to the history
-    public pushRightPanel(phase: RightPanelPhases, panelState: any, allowClose = true, roomId: string = null) {
+    public pushRightPanel(
+        phase: RightPanelPhases,
+        panelState: IPanelState = null,
+        allowClose = true,
+        roomId: string = null,
+    ) {
         const rId = roomId ?? this.viewedRoomId;
         console.log("ORDER_DEBUG: action: pushRightPanel");
         const redirect = this.getVerificationRedirect(phase, panelState);
@@ -373,7 +358,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
     // NEEDED:
     // set rigth panel: overrides the history
-    private setRightPanelCache(targetPhase: RightPanelPhases, panelState: any) {
+    private setRightPanelCache(targetPhase: RightPanelPhases, panelState: IPanelState = null) {
         this.byRoom[this.viewedRoomId] = {
             history: [{ phase: targetPhase, state: panelState }],
             isOpen: true,
