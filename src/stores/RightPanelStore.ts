@@ -116,10 +116,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     private constructor() {
         super(defaultDispatcher);
+        this.dispatcherRefRightPanelStore = this.dispatcher.register(this.onDispatch);
     }
 
     protected async onReady(): Promise<any> {
-        this.dispatcherRefRightPanelStore = this.dispatcher.register(this.onDispatch);
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
     }
 
