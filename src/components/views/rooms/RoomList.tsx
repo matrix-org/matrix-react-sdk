@@ -62,6 +62,7 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import SettingsStore from "../../../settings/SettingsStore";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -612,7 +613,11 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
                     (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM) ||
                     (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM) ||
-                    (this.props.activeSpace[0] === "!" && orderedTagId === DefaultTagID.DM) // TODO
+                    (
+                        this.props.activeSpace[0] === "!" &&
+                        orderedTagId === DefaultTagID.DM &&
+                        !SettingsStore.getValue("Spaces.showPeopleInSpace", this.props.activeSpace)
+                    )
                 ) {
                     alwaysVisible = false;
                 }
