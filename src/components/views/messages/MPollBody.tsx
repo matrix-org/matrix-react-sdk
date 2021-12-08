@@ -413,14 +413,16 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                         >
                             { (
                                 ended
-                                    ? renderEndedOption(answer, checked, votesText)
-                                    : renderOption(
-                                        pollId,
-                                        answer,
-                                        checked,
-                                        votesText,
-                                        this.onOptionSelected,
-                                    )
+                                    ? <EndedPollOption
+                                        answer={answer}
+                                        checked={checked}
+                                        votesText={votesText} />
+                                    : <LivePollOption
+                                        pollId={pollId}
+                                        answer={answer}
+                                        checked={checked}
+                                        votesText={votesText}
+                                        onOptionSelected={this.onOptionSelected} />
                             ) }
                             <div className="mx_MPollBody_popularityBackground">
                                 <div
@@ -439,46 +441,50 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 }
 
-function renderEndedOption(
-    answer: IPollAnswer,
-    checked: boolean,
-    votesText: string,
-) {
+interface IEndedPollOptionProps {
+    answer: IPollAnswer;
+    checked: boolean;
+    votesText: string;
+}
+
+function EndedPollOption(props: IEndedPollOptionProps) {
     const classNames = `mx_MPollBody_endedOption${
-        checked ? " mx_MPollBody_endedOptionWinner": ""
+        props.checked ? " mx_MPollBody_endedOptionWinner": ""
     }`;
 
-    return <div className={classNames} data-value={answer.id}>
+    return <div className={classNames} data-value={props.answer.id}>
         <div className="mx_MPollBody_optionDescription">
             <div className="mx_MPollBody_optionText">
-                { answer[TEXT_NODE_TYPE.name] }
+                { props.answer[TEXT_NODE_TYPE.name] }
             </div>
             <div className="mx_MPollBody_optionVoteCount">
-                { votesText }
+                { props.votesText }
             </div>
         </div>
     </div>;
 }
 
-function renderOption(
-    pollId: string,
-    answer: IPollAnswer,
-    checked: boolean,
-    votesText: string,
-    onOptionSelected: (e: React.FormEvent<HTMLInputElement>) => void,
-) {
+interface ILivePollOptionProps {
+    pollId: string;
+    answer: IPollAnswer;
+    checked: boolean;
+    votesText: string;
+    onOptionSelected: (e: React.FormEvent<HTMLInputElement>) => void;
+}
+
+function LivePollOption(props: ILivePollOptionProps) {
     return <StyledRadioButton
-        name={`poll_answer_select-${pollId}`}
-        value={answer.id}
-        checked={checked}
-        onChange={onOptionSelected}
+        name={`poll_answer_select-${props.pollId}`}
+        value={props.answer.id}
+        checked={props.checked}
+        onChange={props.onOptionSelected}
     >
         <div className="mx_MPollBody_optionDescription">
             <div className="mx_MPollBody_optionText">
-                { answer[TEXT_NODE_TYPE.name] }
+                { props.answer[TEXT_NODE_TYPE.name] }
             </div>
             <div className="mx_MPollBody_optionVoteCount">
-                { votesText }
+                { props.votesText }
             </div>
         </div>
     </StyledRadioButton>;

@@ -988,7 +988,7 @@ function votesCount(wrapper: ReactWrapper, value: string): string {
 
 function endedVoteChecked(wrapper: ReactWrapper, value: string): boolean {
     return endedVoteDiv(wrapper, value)
-        .parent()
+        .closest(".mx_MPollBody_option")
         .hasClass("mx_MPollBody_option_checked");
 }
 
