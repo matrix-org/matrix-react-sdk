@@ -104,14 +104,12 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                 </div>
 
                 <div className="mx_SettingsTab_heading">{ _t("Room Addresses") }</div>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <AliasSettings
-                        roomId={this.props.roomId}
-                        canSetCanonicalAlias={canSetCanonical}
-                        canSetAliases={canSetAliases}
-                        canonicalAliasEvent={canonicalAliasEv}
-                    />
-                </div>
+                <AliasSettings
+                    roomId={this.props.roomId}
+                    canSetCanonicalAlias={canSetCanonical}
+                    canSetAliases={canSetAliases}
+                    canonicalAliasEvent={canonicalAliasEv}
+                />
                 <div className="mx_SettingsTab_heading">{ _t("Other") }</div>
                 { flairSection }
                 { urlPreviewSettings }
