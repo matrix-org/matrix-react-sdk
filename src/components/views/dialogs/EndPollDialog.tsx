@@ -32,10 +32,10 @@ interface IProps extends IDialogProps {
     event: MatrixEvent;
     onFinished: (success: boolean) => void;
     getRelationsForEvent?: (
-            eventId: string,
-            relationType: string,
-            eventType: string
-        ) => Relations;
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 export default class EndPollDialog extends React.Component<IProps> {

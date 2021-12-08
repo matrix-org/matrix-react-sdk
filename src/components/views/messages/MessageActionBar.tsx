@@ -52,10 +52,10 @@ interface IOptionsButtonProps {
     permalinkCreator: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
     getRelationsForEvent?: (
-            eventId: string,
-            relationType: string,
-            eventType: string
-        ) => Relations;
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 const OptionsButton: React.FC<IOptionsButtonProps> = ({
