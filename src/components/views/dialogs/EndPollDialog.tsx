@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Relations } from "matrix-js-sdk/src/models/relations";
 
 import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
@@ -25,7 +26,6 @@ import { IPollEndContent, POLL_END_EVENT_TYPE, TEXT_NODE_TYPE } from "../../../p
 import { findTopAnswer } from "../messages/MPollBody";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
