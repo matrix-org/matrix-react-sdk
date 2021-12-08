@@ -14,24 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SettingsFieldset {
-    margin: 10px 80px 10px 0;
-    box-sizing: content-box;
+.mx_SettingsFlag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+
+    .mx_ToggleSwitch {
+        flex: 0 0 auto;
+    }
 }
 
-.mx_SettingsFieldset_legend {
-    font-size: $font-16px;
-    display: block;
-    font-weight: 600;
-    color: $primary-content;
-    margin-bottom: 10px;
-    margin-top: 12px;
-}
-
-.mx_SettingsFieldset_description {
-    color: $settings-subsection-fg-color;
+.mx_SettingsFlag_label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     font-size: $font-14px;
-    display: block;
-    margin-top: 0;
-    margin-bottom: 10px;
+    color: $primary-content;
+    padding-right: 10px;
+}
+
+.mx_SettingsFlag_microcopy {
+    margin-top: 4px;
+    font-size: $font-12px;
+    line-height: $font-15px;
+    color: $secondary-content;
 }

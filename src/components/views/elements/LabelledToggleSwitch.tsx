@@ -40,7 +40,7 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
     render() {
         // This is a minimal version of a SettingsFlag
 
-        let firstPart = <span className="mx_SettingsFlag_label">{ this.props.label }</span>;
+        let firstPart = <label className="mx_SettingsFlag_label">{ this.props.label }</label>;
         let secondPart = <ToggleSwitch
             checked={this.props.value}
             disabled={this.props.disabled}
