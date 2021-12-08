@@ -102,7 +102,7 @@ limitations under the License.
         }
     }
 
-    .mx_StyledRadioButton_checked,.mx_MPollBody_endedOptionWinner {
+    .mx_StyledRadioButton_checked, .mx_MPollBody_endedOptionWinner {
         input[type="radio"] + div {
             border-width: 2px;
             border-color: $accent;
