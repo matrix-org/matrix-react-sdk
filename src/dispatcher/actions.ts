@@ -97,25 +97,20 @@ export enum Action {
      */
     ViewRoomDelta = "view_room_delta",
 
-    /**
-     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
-     */
-    SetRightPanelPhase = "set_right_panel_phase",
+    // /**
+    //  * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
+    //  */
+    // SetRightPanelPhase = "set_right_panel_phase",
 
-    /**
-     * Pushes a new phase to the history array for the right panel. Should be used with SetRightPanelPhasePayload.
-     */
-    PushRightPanelPhase = "push_right_panel_phase",
+    // /**
+    //  * Pushes a new phase to the history array for the right panel. Should be used with SetRightPanelPhasePayload.
+    //  */
+    // PushRightPanelPhase = "push_right_panel_phase",
 
-    /**
-     * Pops the current phase for the right panel. So that the previous phase is show with its associated state (refireParams)
-     */
-     PopRightPanelPhase = "pop_right_panel_phase",
-
-    /**
-     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
-     */
-    ToggleRightPanel = "toggle_right_panel",
+    // /**
+    //  * Pops the current phase for the right panel. So that the previous phase is show with its associated state (refireParams)
+    //  */
+    //  PopRightPanelPhase = "pop_right_panel_phase",
 
     /**
      * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.

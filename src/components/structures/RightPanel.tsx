@@ -254,11 +254,12 @@ export default class RightPanel extends React.Component<IProps, IState> {
             // When the user clicks close on the encryption panel cancel the pending request first if any
             this.state.verificationRequest.cancel();
         } else {
-            // the RightPanelStore has no way of knowing which mode room/group it is in, so we handle closing here
-            dis.dispatch({
-                action: Action.ToggleRightPanel,
-                // type: this.props.groupId ? "group" : "room", // not needed anymore since group or room is already known by the state
-            });
+            // the RightPanelStore knows which mode room/group it is in, so we handle closing here
+            RightPanelStore.instance.togglePanel();
+            // dis.dispatch({
+            //     action: Action.ToggleRightPanel,
+            //     // type: this.props.groupId ? "group" : "room", // not needed anymore since group or room is already known by the state
+            // });
         }
     };
 

@@ -249,7 +249,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
     // push right panel: appends to the history
-    public pushRightPanel(roomId: string, phase: RightPanelPhases, panelState: any, allowClose = true) {
+    public pushRightPanel(phase: RightPanelPhases, panelState: any, allowClose = true, roomId: string = null) {
+        const rId = roomId ?? this.viewedRoomId;
         console.log("ORDER_DEBUG: action: pushRightPanel");
         const redirect = this.getVerificationRedirect(phase, panelState);
         const targetPhase = redirect?.targetPhase ?? phase;
@@ -258,7 +259,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // Checks for wrong SetRightPanelPhase requests
         if (!this.isPhaseActionIsValid(targetPhase)) return;
 
-        let roomCache = this.byRoom[roomId];
+        let roomCache = this.byRoom[rId];
         if (!!roomCache) {
             // append new phase
             roomCache.history.push({ state: refireParams, phase: targetPhase });
@@ -275,14 +276,16 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
     // pop right panel: removes last eelemnt from history
-    public popRightPanel(roomId: string) {
-        const roomCache = this.byRoom[roomId];
+    public popRightPanel(roomId: string = null) {
+        const rId = roomId ?? this.viewedRoomId;
+        const roomCache = this.byRoom[rId];
         roomCache.history.pop();
         this.emitAndUpdateSettings();
     }
 
-    public togglePanel(roomId: string) {
-        this.byRoom[roomId].isOpen = !this.byRoom[roomId].isOpen;
+    public togglePanel(roomId: string = null) {
+        const rId = roomId ?? this.viewedRoomId;
+        this.byRoom[rId].isOpen = !this.byRoom[rId].isOpen;
         this.emitAndUpdateSettings();
     }
     // get previousPhase(): RightPanelPhases | null {

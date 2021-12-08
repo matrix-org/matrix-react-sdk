@@ -174,10 +174,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
 
     private onThreadsPanelClicked = () => {
         if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
-            dis.dispatch({
-                action: Action.ToggleRightPanel,
-                type: "room",
-            });
+            RightPanelStore.instance.togglePanel();
         } else {
             dispatchShowThreadsPanelEvent();
         }
