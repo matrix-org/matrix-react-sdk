@@ -20,11 +20,7 @@ import classNames from 'classnames';
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
-import { Action } from "../../../dispatcher/actions";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-// import RoomListStore from '../../../stores/room-list/RoomListStore';
 import RightPanelStore from '../../../stores/RightPanelStore';
 
 interface IProps {
