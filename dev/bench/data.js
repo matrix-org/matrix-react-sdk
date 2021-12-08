@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638955507162,
+  "lastUpdate": 1638956502610,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46088,6 +46088,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 683.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "697b5d28b3bf11d68f959e8cd775bb23b06c2814",
+          "message": "fix leaking registration test (#7304)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-08T10:34:24+01:00",
+          "tree_id": "b15f40292ee7fca63981b20c035a5fd0b2e112e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/697b5d28b3bf11d68f959e8cd775bb23b06c2814"
+        },
+        "date": 1638956499132,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5240.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1267.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1738.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4855.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
