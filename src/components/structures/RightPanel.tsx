@@ -46,7 +46,6 @@ import NotificationPanel from "./NotificationPanel";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PinnedMessagesCard from "../views/right_panel/PinnedMessagesCard";
 import { throttle } from 'lodash';
-// import SpaceStore from "../../stores/spaces/SpaceStore";
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
@@ -88,7 +87,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            // get all the state from the room panel store on inti
+            // get all the state from the room panel store on init
             ...RightPanelStore.instance.currentPanel?.state,
             phase: RightPanelStore.instance.currentPanel?.phase,
             isUserPrivilegedInGroup: null,
