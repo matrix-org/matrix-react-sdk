@@ -759,7 +759,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     private switchSpaceIfNeeded = throttle(() => {
         const roomId = RoomViewStore.getRoomId();
-        if (!this.matrixClient.getRoom(roomId)?.isSpaceRoom() && !this.isRoomInSpace(this.activeSpace, roomId)) {
+        if (this.isRoomInSpace(this.activeSpace, roomId)) return;
+
+        if (this.matrixClient.getRoom(roomId)?.isSpaceRoom()) {
+            this.goToFirstSpace(true);
+        } else {
             this.switchToRelatedSpace(roomId);
         }
     }, 100, { leading: true, trailing: true });
@@ -782,7 +786,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         // don't trigger a context switch when we are switching a space to match the chosen room
-        this.setActiveSpace(parent ?? MetaSpace.Home, false); // TODO
+        if (parent) {
+            this.setActiveSpace(parent, false);
+        } else {
+            this.goToFirstSpace();
+        }
     };
 
     private onRoom = (room: Room, newMembership?: string, oldMembership?: string) => {
@@ -1034,7 +1042,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             // don't context switch here as it may break permalinks
             this.setActiveSpace(lastSpaceId, false);
         } else {
-            this.goToFirstSpace();
+            this.switchSpaceIfNeeded();
         }
     }
 
@@ -1084,7 +1092,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             case "after_leave_room":
                 if (this._activeSpace[0] === "!" && payload.room_id === this._activeSpace) {
                     // User has left the current space, go to first space
-                    this.goToFirstSpace();
+                    this.goToFirstSpace(true);
                 }
                 break;
 
@@ -1129,7 +1137,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                             // if a metaspace currently being viewed was removed, go to another one
                             if (this.activeSpace[0] !== "!" && !newValue[this.activeSpace]) {
-                                this.goToFirstSpace();
+                                this.switchSpaceIfNeeded();
                             }
                             this.rebuildMetaSpaces();
 

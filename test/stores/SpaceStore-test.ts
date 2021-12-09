@@ -817,7 +817,7 @@ describe("SpaceStore", () => {
             expect(store.activeSpace).toBe(MetaSpace.Orphans);
         });
 
-        it("switch to first space when selected metaspace is disabled", async () => {
+        it("switch to first valid space when selected metaspace is disabled", async () => {
             store.setActiveSpace(MetaSpace.People, false);
             expect(store.activeSpace).toBe(MetaSpace.People);
             await SettingsStore.setValue("Spaces.enabledMetaSpaces", null, SettingLevel.DEVICE, {
@@ -827,7 +827,7 @@ describe("SpaceStore", () => {
                 [MetaSpace.Orphans]: true,
             });
             jest.runAllTimers();
-            expect(store.activeSpace).toBe(MetaSpace.Favourites);
+            expect(store.activeSpace).toBe(MetaSpace.Orphans);
         });
 
         it("when switching rooms in the all rooms home space don't switch to related space", async () => {
