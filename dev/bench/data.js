@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639047368954,
+  "lastUpdate": 1639051856623,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46520,6 +46520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4799.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1216285ed2e82e62f8780b6702aa0f9abdda0b34",
+          "message": "Add descriptions to ambiguous links for screen readers (#7310)\n\n* add title to room share link\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add ExternalLink component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* unit test ExternalLink\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* default target and rel for external link\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use scss $font variables\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-09T13:04:06+01:00",
+          "tree_id": "f625c2e213260f4a1536f99bd4236938b2b0991d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1216285ed2e82e62f8780b6702aa0f9abdda0b34"
+        },
+        "date": 1639051852995,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5541.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1008.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1713.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4754.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
