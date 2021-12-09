@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639071645627,
+  "lastUpdate": 1639072304162,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46736,6 +46736,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 803.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e3f225520d2224212c596c44108824df5535361",
+          "message": "Put room settings form elements in fieldsets (#7311)\n\n* override default fieldset styles\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* SettingsFieldset component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test settings fieldset\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* refactor SettingsFlag styles\r\n\r\n* use SettingsFieldset in room > securit settings\r\n\r\n* use fieldset in urlpreviewsettings\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use SettingsFieldset in AliasSettings\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fieldset in room > roles settings\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* css lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* run i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fussy order\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* default export\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix copyright headers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-09T18:44:22+01:00",
+          "tree_id": "fc54d7da99dce02edb40378c52bc087f44f42445",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e3f225520d2224212c596c44108824df5535361"
+        },
+        "date": 1639072300076,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5075.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 753.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
