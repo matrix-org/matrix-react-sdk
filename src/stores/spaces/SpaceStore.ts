@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ListIteratee, Many, sortBy } from "lodash";
+import { ListIteratee, Many, sortBy, throttle } from "lodash";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -33,11 +33,10 @@ import { SpaceNotificationState } from "../notifications/SpaceNotificationState"
 import { RoomNotificationStateStore } from "../notifications/RoomNotificationStateStore";
 import { DefaultTagID } from "../room-list/models";
 import { EnhancedMap, mapDiff } from "../../utils/maps";
-import { setHasDiff } from "../../utils/sets";
+import { setDiff, setHasDiff } from "../../utils/sets";
 import RoomViewStore from "../RoomViewStore";
 import { Action } from "../../dispatcher/actions";
 import { arrayHasDiff, arrayHasOrderChange } from "../../utils/arrays";
-import { objectDiff } from "../../utils/objects";
 import { reorderLexicographically } from "../../utils/stringOrderField";
 import { TAG_ORDER } from "../../components/views/rooms/RoomList";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
@@ -501,6 +500,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             const rooms = new Set(this.matrixClient.getVisibleRooms().filter(this.showInHomeSpace).map(r => r.roomId));
             this.spaceFilteredRooms.set(MetaSpace.Home, rooms);
         }
+
+        if (this.activeSpace === MetaSpace.Home) {
+            this.switchSpaceIfNeeded();
+        }
     };
 
     private rebuildMetaSpaces = () => {
@@ -530,6 +533,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 return !this.parentMap.get(r.roomId)?.size && !DMRoomMap.shared().getUserIdForRoomId(r.roomId);
             });
             this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
+        }
+
+        if (this.activeSpace[0] !== "!") {
+            this.switchSpaceIfNeeded();
         }
     };
 
@@ -632,6 +639,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 }
             });
         }
+
+        this.switchSpaceIfNeeded();
     };
 
     private onMembersUpdate = (space: Room, seen = new Set<string>()) => {
@@ -741,8 +750,19 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.emit(k);
         });
 
+        if (changeSet.has(this.activeSpace)) {
+            this.switchSpaceIfNeeded();
+        }
+
         this.updateNotificationStates(Array.from(changeSet));
     };
+
+    private switchSpaceIfNeeded = throttle(() => {
+        const roomId = RoomViewStore.getRoomId();
+        if (!this.matrixClient.getRoom(roomId)?.isSpaceRoom() && !this.isRoomInSpace(this.activeSpace, roomId)) {
+            this.switchToRelatedSpace(roomId);
+        }
+    }, 100, { leading: true, trailing: true });
 
     private switchToRelatedSpace = (roomId: string) => {
         if (this.suggestedRooms.find(r => r.room_id === roomId)) return;
@@ -919,7 +939,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
     }
 
-    private onRoomDmChange(room: Room) {
+    private onRoomDmChange(room: Room, isDm: boolean): void {
         const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
 
         if (!this.allRoomsInHome && enabledMetaSpaces.has(MetaSpace.Home)) {
@@ -936,23 +956,31 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (enabledMetaSpaces.has(MetaSpace.People)) {
             this.emit(MetaSpace.People);
         }
+
+        if (enabledMetaSpaces.has(MetaSpace.Orphans) || enabledMetaSpaces.has(MetaSpace.Home)) {
+            if (isDm && this.spaceFilteredRooms.get(MetaSpace.Orphans).delete(room.roomId)) {
+                this.emit(MetaSpace.Orphans);
+                this.emit(MetaSpace.Home);
+            }
+        }
     }
 
-    private onAccountData = (ev: MatrixEvent, prevEvent?: MatrixEvent) => {
+    private onAccountData = (ev: MatrixEvent, prevEv?: MatrixEvent) => {
         if (ev.getType() === EventType.Direct) {
-            const lastContent = prevEvent?.getContent() ?? {};
-            const content = ev.getContent();
+            const previousRooms = new Set(Object.values(prevEv?.getContent<Record<string, string[]>>() ?? {}).flat());
+            const currentRooms = new Set(Object.values(ev.getContent<Record<string, string[]>>()).flat());
 
-            const diff = objectDiff<Record<string, string[]>>(lastContent, content);
-            // filter out keys which changed by reference only by checking whether the sets differ
-            const changed = diff.changed.filter(k => arrayHasDiff(lastContent[k], content[k]));
-            // DM tag changes, refresh relevant rooms
-            new Set([...diff.added, ...diff.removed, ...changed]).forEach(roomId => {
+            const diff = setDiff(previousRooms, currentRooms);
+            [...diff.added, ...diff.removed].forEach(roomId => {
                 const room = this.matrixClient?.getRoom(roomId);
                 if (room) {
-                    this.onRoomDmChange(room);
+                    this.onRoomDmChange(room, currentRooms.has(roomId));
                 }
             });
+
+            if (diff.removed.length > 0) {
+                this.switchSpaceIfNeeded();
+            }
         }
     };
 

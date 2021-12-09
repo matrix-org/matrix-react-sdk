@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { arrayDiff, arrayUnion } from "./arrays";
+
 /**
  * Determines if two sets are different through a shallow comparison.
  * @param a The first set. Must be defined.
@@ -31,4 +33,17 @@ export function setHasDiff<T>(a: Set<T>, b: Set<T>): boolean {
     } else {
         return true; // different lengths means they are naturally diverged
     }
+}
+
+type Diff<T> = { added: T[], removed: T[] };
+
+/**
+ * Determines the values added and removed between two sets.
+ * @param a The first set. Must be defined.
+ * @param b The second set. Must be defined.
+ * @returns The difference between the values in each set.
+ */
+export function setDiff<T>(a: Set<T>, b: Set<T>): Diff<T> {
+    const keyDiff = arrayDiff(Array.from(a), Array.from(b));
+    return { added: keyDiff.added, removed: keyDiff.removed };
 }
