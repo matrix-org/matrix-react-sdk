@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639047227122,
+  "lastUpdate": 1639047368954,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46472,6 +46472,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 653.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d7a6e3ec65cf28d2454ccb357874828bc8147eb0",
+          "message": "Correct tab order in room preview dialog (#7302)\n\n* tab order\r\n\r\n* lint fixes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test RoomPreviewBar\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add copyright header\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* Update src/components/views/rooms/RoomPreviewBar.tsx\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* fix tabs/spaces lint for reformatted actions\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2021-12-09T11:48:58+01:00",
+          "tree_id": "b9b1043e91d9b5841401b7ae267f71407916f30b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d7a6e3ec65cf28d2454ccb357874828bc8147eb0"
+        },
+        "date": 1639047365577,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4966.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1261.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1852,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4799.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
