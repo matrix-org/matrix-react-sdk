@@ -18,6 +18,7 @@ import React, { createRef } from 'react';
 import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 import { Mjolnir } from "../../../mjolnir/Mjolnir";
+import HiddenBody from "./HiddenBody";
 import RedactedBody from "./RedactedBody";
 import UnknownBody from "./UnknownBody";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -25,10 +26,11 @@ import { IMediaBody } from "./IMediaBody";
 import { IOperableEventTile } from "../context_menus/MessageContextMenu";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { ReactAnyComponent } from "../../../@types/common";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MSC3531_VISIBILITY_CHANGE_REL_TYPE, MsgType } from "matrix-js-sdk/src/@types/event";
 import { IBodyProps } from "./IBodyProps";
 import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { Relations } from 'matrix-js-sdk/src/models/relations';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed"> {
@@ -45,11 +47,18 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
     private body: React.RefObject<React.Component | IOperableEventTile> = createRef();
     private mediaHelper: MediaEventHelper;
 
+    static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     public constructor(props: IProps) {
         super(props);
 
         if (MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+        }
+        if (SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
+            this.props.mxEvent.on("Event.visibilityChange", this.onVisibilityChange);
+            this.props.mxEvent.sender.on("RoomMember.powerLevel", this.onVisibilityPowerLevelChange);
         }
     }
 
@@ -98,23 +107,73 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         this.forceUpdate();
     };
 
+    private onVisibilityChange = () => {
+        this.forceUpdate();
+    };
+
+    private onVisibilityPowerLevelChange = () => {
+        // This method is only called when `feature_msc3531_hide_messages_pending_moderation`
+        // is enabled.
+        if (this.props.mxEvent.messageVisibility().visible) {
+            // If the message is already visible to all, a powerLevel change won't affect
+            // its rendering.
+            return;
+        }
+        // The message is marked as hidden. However, if we have gained/lost powerLevel,
+        // we may have gained/lost the ability to see it.
+        this.forceUpdate();
+    };
+
     public render() {
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;
         let BodyType: ReactAnyComponent = RedactedBody;
+        let isShowingHiddenMessage = false;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted
-            if (type && this.evTypes[type]) {
-                BodyType = this.evTypes[type];
-            } else if (msgtype && this.bodyTypes[msgtype]) {
-                BodyType = this.bodyTypes[msgtype];
-            } else if (content.url) {
-                // Fallback to MFileBody if there's a content URL
-                BodyType = this.bodyTypes[MsgType.File];
-            } else {
-                // Fallback to UnknownBody otherwise if not redacted
-                BodyType = UnknownBody;
+
+            if (SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
+                // MSC3531 is enabled.
+                // We have two cases:
+                //
+                // 1. The message is set to be visible to all. Show it normally.
+                // 2. The message is set to be hidden but we're either the author or a moderator.
+                //    Show the message with a marker.
+                // 3. The message is set to be hidden and we're neither of the above. Show only a marker.
+                const visibility = this.props.mxEvent.messageVisibility();
+                if (!visibility.visible) {
+                    // This message should be hidden, unless we're the author
+                    // or a moderator.
+                    if (this.props.mxEvent.sender.userId === this.context.getUserId()) {
+                        // We're the author, show the message.
+                        isShowingHiddenMessage = true;
+                    } else {
+                        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+                        if (room.currentState.hasSufficientPowerLevelFor(
+                            MSC3531_VISIBILITY_CHANGE_REL_TYPE.unstable,
+                            this.props.mxEvent.sender.powerLevel)) {
+                            // We're a moderator, show the message.
+                            isShowingHiddenMessage = true;
+                        } else {
+                            // For everybody else, hide the message.
+                            BodyType = HiddenBody;
+                        }
+                    }
+                }
+            }
+            if (BodyType != HiddenBody) {
+                if (type && this.evTypes[type]) {
+                    BodyType = this.evTypes[type];
+                } else if (msgtype && this.bodyTypes[msgtype]) {
+                    BodyType = this.bodyTypes[msgtype];
+                } else if (content.url) {
+                    // Fallback to MFileBody if there's a content URL
+                    BodyType = this.bodyTypes[MsgType.File];
+                } else {
+                    // Fallback to UnknownBody otherwise if not redacted
+                    BodyType = UnknownBody;
+                }
             }
 
             if (type && type === POLL_START_EVENT_TYPE.name) {
@@ -159,6 +218,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             permalinkCreator={this.props.permalinkCreator}
             mediaEventHelper={this.mediaHelper}
             getRelationsForEvent={this.props.getRelationsForEvent}
+            isShowingHiddenMessage={isShowingHiddenMessage}
         /> : null;
     }
 }

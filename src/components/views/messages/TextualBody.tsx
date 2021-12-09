@@ -502,6 +502,29 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         );
     }
 
+    /**
+     * Render a marker informing the user that, while they can see the message,
+     * it is hidden for other users.
+     */
+    private renderHiddenMessageMarker() {
+        let text;
+        const visibility = this.props.mxEvent.messageVisibility();
+        switch (visibility.visible) {
+            case true:
+                throw new Error("HiddenBody should only be applied to hidden messages");
+            case false:
+                if (visibility.reason) {
+                    text = _t("Message pending moderation: %(reason)", { reason: visibility.reason });
+                } else {
+                    text = _t("Message pending moderation");
+                }
+                break;
+        }
+        return (
+            <span>{ `(${text})` }</span>
+        );
+    }
+
     render() {
         if (this.props.editState) {
             return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
@@ -523,6 +546,12 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             body = <>
                 { body }
                 { this.renderEditedMarker() }
+            </>;
+        }
+        if (this.props.isShowingHiddenMessage) {
+            body = <>
+                { body }
+                { this.renderHiddenMessageMarker() }
             </>;
         }
 

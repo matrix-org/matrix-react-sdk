@@ -43,6 +43,11 @@ export interface IBodyProps {
     permalinkCreator: RoomPermalinkCreator;
     mediaEventHelper: MediaEventHelper;
 
+    /* if present and `true`, the message has been marked as hidden (see MSC3531) but
+    should be displayed to the current user (with a marker) either because the user is
+    the author of the message or because the user is a moderator */
+    isShowingHiddenMessage?: boolean;
+
     // helper function to access relations for this event
     getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
 }

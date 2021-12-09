@@ -139,6 +139,12 @@ export interface ISetting {
 }
 
 export const SETTINGS: {[setting: string]: ISetting} = {
+    "feature_msc3531_hide_messages_pending_moderation": {
+        isFeature: true,
+        displayName: _td("Let moderators hide messages pending moderation."),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_report_to_moderators": {
         isFeature: true,
         displayName: _td("Report to moderators prototype. " +
