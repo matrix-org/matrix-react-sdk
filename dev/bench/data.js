@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639043443914,
+  "lastUpdate": 1639047227122,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46436,6 +46436,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4707.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0c850b2f1315d33c173fa276b8ea7aab26546939",
+          "message": "Make tooltips keyboard accessible (#7281)\n\n* show tooltips on hover in eventtile\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use tooltip props pass thru\r\n\r\n* use tooltiptarget in InfoTooltip\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use target in TestWithTooltip\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tsc fixes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test tooltip target\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint fix\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename tooltip handlers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update copyright to 2021\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-09T11:47:50+01:00",
+          "tree_id": "7b242c0d0e2b62fbca9293026a3295956faa983d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0c850b2f1315d33c173fa276b8ea7aab26546939"
+        },
+        "date": 1639047224883,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4953.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 653.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
