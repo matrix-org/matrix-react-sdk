@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638975896049,
+  "lastUpdate": 1639037942614,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46184,6 +46184,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5446,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "alexandre.franke@gmail.com",
+            "name": "Alexandre Franke",
+            "username": "afranke"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "40b2a90d08b7ca5b2ba1d15b2760ead172b3932c",
+          "message": "💚 Update PR description editing action (#7309)\n\nSwitch to upstream and use a more recent version.\r\nFixes failure to edit on empty descriptions.\r\n\r\nSigned-off-by: Alexandre Franke <alexandre.franke@gmail.com>",
+          "timestamp": "2021-12-09T09:12:59+01:00",
+          "tree_id": "da0b451e4b0d47750c0d68bb1411cb62960ea90f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/40b2a90d08b7ca5b2ba1d15b2760ead172b3932c"
+        },
+        "date": 1639037938854,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5058.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 945.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1655.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4585.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
