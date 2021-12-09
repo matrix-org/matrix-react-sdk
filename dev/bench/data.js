@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639091751065,
+  "lastUpdate": 1639092419640,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46808,6 +46808,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 679.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "69c847b94c7f0d5a92e0551e6c98b9aded36848b",
+          "message": "Don't show options button when the user can't modify widgets (#7324)\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2021-12-09T16:21:05-07:00",
+          "tree_id": "914f97aa6cbd7270dc5870c90223f8aaf84f4b2c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/69c847b94c7f0d5a92e0551e6c98b9aded36848b"
+        },
+        "date": 1639092416826,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4968.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 651.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
