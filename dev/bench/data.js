@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639053192876,
+  "lastUpdate": 1639053765397,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46604,6 +46604,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 621.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c1ee204a04006b4d16054f47ee4170567620c18",
+          "message": "default export for TooltipTarget (#7319)\n\n* default export for TooltipTarget\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* newline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-09T13:36:55+01:00",
+          "tree_id": "388cfdd70d13986945e4e8105c6c1ee47ff30686",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c1ee204a04006b4d16054f47ee4170567620c18"
+        },
+        "date": 1639053762607,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5031,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 930.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1679.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4491.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
