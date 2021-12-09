@@ -84,11 +84,11 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
  * */
 const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
     const translated = counterpart.translate(text, options);
-    if (!/^missing translation:/.test(translated)) {
-        return { translated };
+    if (/^missing translation:/.test(translated)) {
+        const fallbackTranslated = counterpart.translate(text, { ...options, fallbackLocale: FALLBACK_LOCALE });
+        return { translated: fallbackTranslated, isFallback: true };
     }
-    const fallbackTranslated = counterpart.translate(text, { ...options, fallbackLocale: FALLBACK_LOCALE });
-    return { translated: fallbackTranslated, isFallback: true };
+    return { translated };
 };
 
 // Wrapper for counterpart's translation function so that it handles nulls and undefineds properly
