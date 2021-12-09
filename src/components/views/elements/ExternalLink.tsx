@@ -24,6 +24,8 @@ interface Props extends DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement
  */
 const ExternalLink: React.FC<Props> = ({ children, className, ...rest }) =>
     <a
+        target="_blank"
+        rel="noreferrer noopener"
         {...rest}
         className={classNames('mx_ExternalLink', className)}
     >

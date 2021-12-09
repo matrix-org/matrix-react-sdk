@@ -5,7 +5,8 @@ exports[`<ExternalLink /> renders link correctly 1`] = `
   class="mx_ExternalLink myCustomClass"
   data-test-id="test"
   href="test.com"
-  target="_blank"
+  rel="noopener"
+  target="_self"
 >
   <span>
     react element 
@@ -24,6 +25,7 @@ exports[`<ExternalLink /> renders plain text link correctly 1`] = `
   class="mx_ExternalLink myCustomClass"
   data-test-id="test"
   href="test.com"
+  rel="noreferrer noopener"
   target="_blank"
 >
   test

@@ -23,7 +23,6 @@ describe('<ExternalLink />', () => {
         "onClick": jest.fn(),
         "className": 'myCustomClass',
         'data-test-id': 'test',
-        "target": '_blank',
     };
     const getComponent = (props = {}) => {
         const wrapper = renderIntoDocument<HTMLDivElement>(
@@ -34,7 +33,14 @@ describe('<ExternalLink />', () => {
 
     it('renders link correctly', () => {
         const children = <span>react element <b>children</b></span>;
-        expect(getComponent({ children })).toMatchSnapshot();
+        expect(getComponent({ children, target: '_self', rel: 'noopener' })).toMatchSnapshot();
+    });
+
+    it('defaults target and rel', () => {
+        const children = 'test';
+        const component = getComponent({ children });
+        expect(component.getAttribute('rel')).toEqual('noreferrer noopener');
+        expect(component.getAttribute('target')).toEqual('_blank');
     });
 
     it('renders plain text link correctly', () => {
