@@ -889,4 +889,24 @@ describe("SpaceStore", () => {
             expect(fn).toBeCalledWith("!c:server");
         });
     });
+
+    describe("dynamic text fixture", () => {
+        // receive invite to space
+        // expect it to appear in SpaceStore.instance.invitedSpaces
+
+        // accept invite to space
+        // expect it to disappear from SpaceStore.instance.invitedSpaces and move to SpaceStore.instance.spacePanelSpaces
+
+        // join room in space
+        // expect it to show up in the Room List only for that Space
+
+        // receive room invite
+        // expect it to show up in the Space and Home
+
+        // start DM in space
+        // expect it to show up in the Space and Home and People
+
+        // join subspace
+        // expect an emit on the parent space
+    });
 });
