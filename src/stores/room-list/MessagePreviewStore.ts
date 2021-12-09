@@ -19,6 +19,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { MessageEventPreview } from "./previews/MessageEventPreview";
+import { PollStartEventPreview } from "./previews/PollStartEventPreview";
 import { TagID } from "./models";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { CallInviteEventPreview } from "./previews/CallInviteEventPreview";
@@ -27,6 +28,7 @@ import { CallHangupEvent } from "./previews/CallHangupEvent";
 import { StickerEventPreview } from "./previews/StickerEventPreview";
 import { ReactionEventPreview } from "./previews/ReactionEventPreview";
 import { UPDATE_EVENT } from "../AsyncStore";
+import { POLL_START_EVENT_TYPE } from "../../polls/consts";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which
@@ -37,6 +39,10 @@ const PREVIEWS = {
     'm.room.message': {
         isState: false,
         previewer: new MessageEventPreview(),
+    },
+    [POLL_START_EVENT_TYPE.name]: {
+        isState: false,
+        previewer: new PollStartEventPreview(),
     },
     'm.call.invite': {
         isState: false,
