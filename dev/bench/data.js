@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639072304162,
+  "lastUpdate": 1639091751065,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46772,6 +46772,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 753.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "distinct": true,
+          "id": "8a0398b632dff1a5f6cfd4bf95d78854aeadc60e",
+          "message": "Fix remaining import ordering requirements",
+          "timestamp": "2021-12-09T16:09:20-07:00",
+          "tree_id": "3c51dd6e1a6be481bc0d021f8f5277f05f9703c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8a0398b632dff1a5f6cfd4bf95d78854aeadc60e"
+        },
+        "date": 1639091747856,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4865.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 679.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
