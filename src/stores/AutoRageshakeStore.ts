@@ -19,7 +19,6 @@ import { MatrixEvent } from "matrix-js-sdk/src";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import SdkConfig from '../SdkConfig';
-import SettingsStore from '../settings/SettingsStore';
 import sendBugReport from '../rageshake/submit-rageshake';
 
 // Minimum interval of 5 minutes between reports, especially important when we're doing an initial sync with a lot of decryption errors
@@ -60,8 +59,6 @@ export default class AutoRageshakeStore extends EventEmitter {
     }
 
     private async onDecryptionAttempt(ev: MatrixEvent): Promise<void> {
-        if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
-
         const wireContent = ev.getWireContent();
         const sessionId = wireContent.session_id;
         if (ev.isDecryptionFailure() && !this.reportedSessionIds.has(sessionId)) {
@@ -92,8 +89,6 @@ export default class AutoRageshakeStore extends EventEmitter {
     }
 
     private async onDeviceMessage(ev: MatrixEvent): Promise<void> {
-        if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
-
         if (ev.getType() !== AUTO_RS_REQUEST) return;
         const now = new Date().getTime();
         if (now - this.lastRageshakeTime > RAGESHAKE_INTERVAL) {
