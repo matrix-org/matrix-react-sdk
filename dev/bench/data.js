@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639040330633,
+  "lastUpdate": 1639041589038,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46280,6 +46280,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5119.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e0162d255e7d204645ad8afad6bfa8766b480968",
+          "message": "Make clear button images visible in high contrast theme (#7306)",
+          "timestamp": "2021-12-09T09:13:03Z",
+          "tree_id": "d9bb015293da9ffcd86be1aab87c54beeaa32713",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e0162d255e7d204645ad8afad6bfa8766b480968"
+        },
+        "date": 1639041585242,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5354.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1146.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
