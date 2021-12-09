@@ -228,7 +228,9 @@ export class PosthogAnalytics {
             // Check the user's account_data for an analytics ID to use. Storing the ID in account_data allows
             // different devices to send the same ID.
             try {
-                const accountData = await client.getAccountDataFromServer(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
+                const accountData = await client.getAccountDataFromServer<{
+                    id: string;
+                }>(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
                 let analyticsID = accountData?.id;
                 if (!analyticsID) {
                     // Couldn't retrieve an analytics ID from user settings, so create one and set it on the server.
