@@ -52,7 +52,7 @@ interface IProps {
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
-    initialEventHighlighted?: boolean;
+    isInitialEventHighlighted?: boolean;
 }
 interface IState {
     thread?: Thread;
@@ -174,7 +174,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private onScroll = (): void => {
-        if (this.props.initialEvent && this.props.initialEventHighlighted) {
+        if (this.props.initialEvent && this.props.isInitialEventHighlighted) {
             dis.dispatch({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
@@ -195,7 +195,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        const highlightedEventId = this.props.initialEventHighlighted
+        const highlightedEventId = this.props.isInitialEventHighlighted
             ? this.props.initialEvent?.getId()
             : null;
 

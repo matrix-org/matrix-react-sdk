@@ -26,9 +26,9 @@ export const dispatchShowThreadEvent = (
     RightPanelStore.instance.setRightPanel(
         RightPanelPhases.ThreadView,
         {
-            event: rootEvent,
+            threadHeadEvent: rootEvent,
             initialEvent,
-            highlighted,
+            isInitialEventHighlighted: highlighted,
         },
     );
 };

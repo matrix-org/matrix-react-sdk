@@ -73,9 +73,9 @@ interface IState {
     widgetId?: string;
     groupRoomId?: string;
     groupId?: string;
-    event?: MatrixEvent;
+    threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
-    initialEventHighlighted?: boolean;
+    isInitialEventHighlighted?: boolean;
     searchQuery: string;
 }
 
@@ -166,21 +166,22 @@ export default class RightPanel extends React.Component<IProps, IState> {
     private onRightPanelStoreUpdate = () => {
         const currentRoom = RightPanelStore.instance.currentPanel;
         this.setState({
+            ...currentRoom.state,
             phase: currentRoom.phase,
-            member: currentRoom.state?.member,
-            verificationRequest: currentRoom.state.verificationRequest,
-            verificationRequestPromise: currentRoom.state.verificationRequestPromise,
+            // member: currentRoom.state?.member,
+            // verificationRequest: currentRoom.state.verificationRequest,
+            // verificationRequestPromise: currentRoom.state.verificationRequestPromise,
 
-            groupId: currentRoom.state.groupId,
-            groupRoomId: currentRoom.state.groupRoomId,
-            event: currentRoom.state.event,
+            // groupId: currentRoom.state.groupId,
+            // groupRoomId: currentRoom.state.groupRoomId,
+            // threadHeadEvent: currentRoom.state.threadHeadEvent,
 
-            widgetId: currentRoom.state.widgetId,
+            // widgetId: currentRoom.state.widgetId,
 
-            space: currentRoom.state.space,
+            // space: currentRoom.state.space,
 
-            initialEvent: currentRoom.state.initialEvent,
-            initialEventHighlighted: currentRoom.state.highlighted,
+            // initialEvent: currentRoom.state.initialEvent,
+            // isInitialEventHighlighted: currentRoom.state.isInitialEventHighlighted,
         });
     };
     private onAction = (payload: ActionPayload) => {
@@ -272,7 +273,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             }
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
-                panel = <ThirdPartyMemberInfo event={this.state.event} key={roomId} />;
+                panel = <ThirdPartyMemberInfo event={this.state.threadHeadEvent} key={roomId} />;
                 break;
 
             case RightPanelPhases.GroupMemberInfo:
@@ -320,9 +321,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     room={this.props.room}
                     resizeNotifier={this.props.resizeNotifier}
                     onClose={this.onClose}
-                    mxEvent={this.state.event}
+                    mxEvent={this.state.threadHeadEvent}
                     initialEvent={this.state.initialEvent}
-                    initialEventHighlighted={this.state.initialEventHighlighted}
+                    isInitialEventHighlighted={this.state.isInitialEventHighlighted}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus} />;
                 break;

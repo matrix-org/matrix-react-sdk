@@ -33,11 +33,10 @@ export interface IPanelState {
     widgetId?: string;
     space?: Room;
     // treads
-    event?: MatrixEvent;
+    threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
-    highlighted?: boolean;
+    isInitialEventHighlighted?: boolean;
 }
-
 export interface IPanelStateStored {
     member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
@@ -46,12 +45,12 @@ export interface IPanelStateStored {
     groupId?: string;
     groupRoomId?: string;
     // XXX: The type for event should 'view_3pid_invite' action's payload
-    eventId?: string;
     widgetId?: string;
     space?: Room;
     // treads
+    threadHeadEventId?: string;
     initialEventId?: string;
-    highlighted?: boolean;
+    isInitialEventHighlighted?: boolean;
 }
 
 export interface IPhaseAndState {
@@ -80,8 +79,8 @@ export function convertToStateRoom(storeRoom: { history: Array<IPhaseAndStateSto
 
 function convertStateToStore(panelState: IPhaseAndState): IPhaseAndStateStored {
     const panelStateThisRoomStored = { ...panelState.state } as any;
-    if (!!panelState?.state?.event?.getId()) {
-        panelStateThisRoomStored.eventId = panelState.state.event.getId();
+    if (!!panelState?.state?.threadHeadEvent?.getId()) {
+        panelStateThisRoomStored.eventId = panelState.state.threadHeadEvent.getId();
     }
     if (!!panelState?.state?.initialEvent?.getId()) {
         panelStateThisRoomStored.initialEventId = panelState.state.initialEvent.getId();
