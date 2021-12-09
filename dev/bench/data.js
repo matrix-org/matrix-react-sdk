@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639043270590,
+  "lastUpdate": 1639043443914,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46388,6 +46388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 645.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4712ae49b2aec6220bf2df68b1c9f1356c7e9cf8",
+          "message": "Fix favourites and people metaspaces not rendering their content (#7315)",
+          "timestamp": "2021-12-09T09:43:45Z",
+          "tree_id": "4139e6b7c09d1ffcdacd99b5f471f173b48dcfd4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4712ae49b2aec6220bf2df68b1c9f1356c7e9cf8"
+        },
+        "date": 1639043439573,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5037.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1109.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1739.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4707.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
