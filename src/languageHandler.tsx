@@ -38,8 +38,9 @@ const ANNOTATE_STRINGS = false;
 
 // We use english strings as keys, some of which contain full stops
 counterpart.setSeparator('|');
-// Fall back to English
-counterpart.setFallbackLocale('en');
+
+// see `translateWithFallback` for an explanation of fallback handling
+const FALLBACK_LOCALE = 'en';
 
 interface ITranslatableError extends Error {
     translatedMessage: string;
@@ -53,7 +54,7 @@ interface ITranslatableError extends Error {
  */
 export function newTranslatableError(message: string) {
     const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _t(message);
+    error.translatedMessage = _tPlain(message);
     return error;
 }
 
@@ -72,6 +73,24 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
     return s;
 }
 
+/**
+ * to improve screen reader experience translations that are not in the main page language
+ * eg a translation that fell back to english from another language
+ * should be wrapped with an appropriate `lang='en'` attribute
+ * counterpart's `translate` doesn't expose a way to determine if the resulting translation
+ * is in the target locale or a fallback locale
+ * for this reason, we do not set a fallback via `counterpart.setFallbackLocale`
+ * and fallback 'manually' so we can mark fallback strings appropriately
+ * */
+const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
+    const translated = counterpart.translate(text, options);
+    if (!/^missing translation:/.test(translated)) {
+        return { translated };
+    }
+    const fallbackTranslated = counterpart.translate(text, { ...options, fallbackLocale: FALLBACK_LOCALE });
+    return { translated: fallbackTranslated, isFallback: true };
+};
+
 // Wrapper for counterpart's translation function so that it handles nulls and undefineds properly
 // Takes the same arguments as counterpart.translate()
 function safeCounterpartTranslate(text: string, options?: object) {
@@ -82,10 +101,8 @@ function safeCounterpartTranslate(text: string, options?: object) {
     // valid ES6 template strings to i18n strings it's extremely easy to pass undefined/null
     // if there are no existing null guards. To avoid this making the app completely inoperable,
     // we'll check all the values for undefined/null and stringify them here.
-    let count;
 
     if (options && typeof options === 'object') {
-        count = options['count'];
         Object.keys(options).forEach((k) => {
             if (options[k] === undefined) {
                 logger.warn("safeCounterpartTranslate called with undefined interpolation name: " + k);
@@ -97,13 +114,7 @@ function safeCounterpartTranslate(text: string, options?: object) {
             }
         });
     }
-    let translated = counterpart.translate(text, options);
-    if (translated === undefined && count !== undefined) {
-        // counterpart does not do fallback if no pluralisation exists
-        // in the preferred language, so do it here
-        translated = counterpart.translate(text, Object.assign({}, options, { locale: 'en' }));
-    }
-    return translated;
+    return translateWithFallback(text, options);
 }
 
 type SubstitutionValue = number | string | React.ReactNode | ((sub: string) => React.ReactNode);
@@ -116,6 +127,26 @@ export interface IVariables {
 export type Tags = Record<string, SubstitutionValue>;
 
 export type TranslatedString = string | React.ReactNode;
+
+/**
+ * Translate text without tag substitions or fallback span wrapper
+ * Useful for translations that will not be displayed in the DOM, eg: error messages
+ * @param {string} text The untranslated text, e.g "click here now to %(foo)s".
+ * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
+ */
+export const _tPlain = (text: string, variables?: IVariables): string => {
+    // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
+    // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
+    // It is enough to pass the count variable, but in the future counterpart might make use of other information too
+    const args = Object.assign({ interpolate: false }, variables);
+
+    // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
+    const { translated } = safeCounterpartTranslate(text, args);
+
+    // For development/testing purposes it is useful to also output the original string
+    // Don't do that for release versions
+    return ANNOTATE_STRINGS ? `@@${text}##${translated}@@` : translated;
+};
 
 /*
  * Translates text and optionally also replaces XML-ish elements in the text with e.g. React components
@@ -135,7 +166,7 @@ export type TranslatedString = string | React.ReactNode;
  */
 // eslint-next-line @typescript-eslint/naming-convention
 // eslint-nexline @typescript-eslint/naming-convention
-export function _t(text: string, variables?: IVariables): string;
+export function _t(text: string, variables?: IVariables): string | React.ReactNode;
 export function _t(text: string, variables: IVariables, tags: Tags): React.ReactNode;
 export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
     // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
@@ -144,21 +175,24 @@ export function _t(text: string, variables?: IVariables, tags?: Tags): Translate
     const args = Object.assign({ interpolate: false }, variables);
 
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
-    const translated = safeCounterpartTranslate(text, args);
+    const { translated, isFallback } = safeCounterpartTranslate(text, args);
 
     const substituted = substitute(translated, variables, tags);
+
+    // wrap en fallback translation with lang attribute for screen readers
+    const result = isFallback ? <span lang='en'>{ substituted }</span> : substituted;
 
     // For development/testing purposes it is useful to also output the original string
     // Don't do that for release versions
     if (ANNOTATE_STRINGS) {
-        if (typeof substituted === 'string') {
-            return `@@${text}##${substituted}@@`;
+        if (typeof result === 'string') {
+            return `@@${text}##${result}@@`;
         } else {
             return <span className='translated-string' data-orig-string={text}>{ substituted }</span>;
         }
-    } else {
-        return substituted;
     }
+
+    return result;
 }
 
 /**
