@@ -38,19 +38,6 @@ interface IPhaseAndState {
     state: IPanelState;
 }
 
-// const INITIAL_STATE: IState = {
-//     panelHistory: [],
-//     currentPanel: null,
-//     previousPanel: null,
-//     isOpen: null,
-//     // byRoom: {},
-//     // byGroup: {},
-//     // showGroupPanel: SettingsStore.getValue("showRightPanelInGroup"),
-//     // lastRoomPhase: SettingsStore.getValue("lastRightPanelPhaseForRoom"),
-//     // lastGroupPhase: SettingsStore.getValue("lastRightPanelPhaseForGroup"),
-//     // lastRoomPhaseParams: {},
-// };
-
 const GROUP_PHASES = [
     RightPanelPhases.GroupMemberList,
     RightPanelPhases.GroupRoomList,
@@ -66,7 +53,12 @@ const MEMBER_INFO_PHASES = [
 
 /**
  * A class for tracking the state of the right panel between layouts and
- * sessions.
+ * sessions. This state includes a history for each room. Each history element contains
+ * the phase (e.g. RoomMemberInfo) and the state (e.g. the member) associated with it.
+ *
+ * Groups are treated the same then rooms (They are also stored in the byRoom object).
+ * This is possible since the store keeps track of the opened room/group -> the store will
+ * provide the correct history for that group/room.
  */
 export default class RightPanelStore extends ReadyWatchingStore {
     private static internalInstance: RightPanelStore;
@@ -85,14 +77,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         isOpen: boolean;
         history: Array<IPhaseAndState>;
     } = null;
-    // private byGroup: {
-    //     [groupId: string]: {
-    //         isOpen: boolean;
-    //         history: Array<IPhaseAndState>;
-    //     };
-    // };
-    // private state: RightPanelStoreState;
-    // private lastRoomId: string;
 
     private constructor() {
         super(defaultDispatcher);
@@ -111,18 +95,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
 
-    // get isOpenForRoom(roomId:): boolean {
-    //     return this.state.showRoomPanel;
-    // }
     // ALL GETTERS:
     get isOpenForRoom(): boolean {
-        // return this.state.isOpen ?? false;
         return this.byRoom[this.viewedRoomId]?.isOpen ?? false;
     }
-
-    // get isOpenForGroup(): boolean {
-    //     return this.state.showGroupPanel;
-    // }
 
     get isOpenForGroup(): boolean {
         // return this.state.isOpen ?? false;
@@ -130,16 +106,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // return this.byRoom[this.viewedRoomId]?.isOpen;
     }
 
-    // get roomPanelPhase(): RightPanelPhases {
-    //     return this.state.lastRoomPhase;
-    // }
     get roomPhaseHistory(): Array<IPhaseAndState> {
-        // return this.state.panelHistory;
-        // if (!this.viewedRoomId) return null;
         return this.byRoom[this.viewedRoomId]?.history ?? [];
     }
     get currentPanel(): IPhaseAndState {
-        // return this.state.currentPanel ?? { state: {}, phase: null };
         const hist = this.roomPhaseHistory;
         if (hist.length >= 1) {
             return hist[hist.length - 1];
@@ -152,47 +122,24 @@ export default class RightPanelStore extends ReadyWatchingStore {
             return hist[hist.length - 1];
         }
         return this.currentPanel ?? { state: {}, phase: null };
-        // const hist = this.roomPhaseHistory;
-        // if (hist.length >= 1) {
-        //     return hist[hist.length - 1];
-        // }
-        // return null;
     }
-    get previousRoom(): IPhaseAndState {
-        // const roomCache = cacheGlobal ?? cacheThisRoom;
+    get previousPanel(): IPhaseAndState {
         const hist = this.roomPhaseHistory;
         if (hist?.length >= 2) {
             return hist[hist.length - 2];
         }
         return { state: {}, phase: null };
-        // const hist = this.roomPhaseHistory;
-        // if (hist.length >= 2) {
-        //     return hist[hist.length - 2];
-        // }
     }
-    // get groupPanelPhase(): RightPanelPhases {
-    //     return this.state.lastGroupPhase;
-    // }
+
+    // The Group stuff is just for backwards compatibility. Can be removed when depracating groups
     get groupPhaseHistory(): Array<IPhaseAndState> {
         return this.roomPhaseHistory;
-        // if (!this.viewedGroupId) return null;
-        // return this.state.byRoom[this.viewedGroupId]?.history ?? [];
     }
     get currentGroup(): IPhaseAndState {
         return this.currentPanel;
-        // const hist = this.groupPhaseHistory;
-        // if (hist.length >= 1) {
-        //     return hist[hist.length - 1];
-        // }
-        // return null;
     }
     get previousGroup(): IPhaseAndState {
-        return this.previousRoom;
-        // const hist = this.groupPhaseHistory;
-        // if (hist.length >= 2) {
-        //     return hist[hist.length - 2];
-        // }
-        // return null;
+        return this.previousPanel;
     }
 
     // ALL SETTERS:
@@ -228,6 +175,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             this.setRightPanelCache(targetPhase, panelState);
         }
     }
+
     // push right panel: appends to the history
     public pushRightPanel(
         phase: RightPanelPhases,
@@ -260,6 +208,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
         this.emitAndUpdateSettings();
     }
+
     // pop right panel: removes last eelemnt from history
     public popRightPanel(roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
@@ -273,69 +222,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.byRoom[rId].isOpen = !this.byRoom[rId].isOpen;
         this.emitAndUpdateSettings();
     }
-    // get previousPhase(): RightPanelPhases | null {
-    //     return RIGHT_PANEL_PHASES_NO_ARGS.includes(this.state.previousPhase) ? this.state.previousPhase : null;
-    // }
 
-    // get visibleRoomPanelPhase(): RightPanelPhases {
-    //     return this.isOpenForRoom ? this.roomPanelPhase : null;
-    // }
-
-    // get visibleGroupPanelPhase(): RightPanelPhases {
-    //     return this.isOpenForGroup ? this.groupPanelPhase : null;
-    // }
-
-    // get roomPanelPhaseParams(): any {
-    //     return this.state.lastRoomPhaseParams || {};
-    // }
-
-    // private setState(newState: Partial<IState>) {
-    //     this.updateState(newState);
-
-    //     SettingsStore.setValue(
-    //         "showRightPanelInRoom",
-    //         null,
-    //         SettingLevel.DEVICE,
-    //         this.state.showRoomPanel,
-    //     );
-    //     SettingsStore.setValue(
-    //         "showRightPanelInGroup",
-    //         null,
-    //         SettingLevel.DEVICE,
-    //         this.state.showGroupPanel,
-    //     );
-
-    //     if (RIGHT_PANEL_PHASES_NO_ARGS.includes(this.state.lastRoomPhase)) {
-    //         SettingsStore.setValue(
-    //             "lastRightPanelPhaseForRoom",
-    //             null,
-    //             SettingLevel.DEVICE,
-    //             this.state.lastRoomPhase,
-    //         );
-    //     }
-    //     if (RIGHT_PANEL_PHASES_NO_ARGS.includes(this.state.lastGroupPhase)) {
-    //         SettingsStore.setValue(
-    //             "lastRightPanelPhaseForGroup",
-    //             null,
-    //             SettingLevel.DEVICE,
-    //             this.state.lastGroupPhase,
-    //         );
-    //     }
-    // }
-    // getCurrentRoomCache() {
-    //     if (!!this.global) {
-    //         return this.global;
-    //     } else {
-    //         return this.byRoom[this.viewedRoomId];
-    //     }
-    // }
-    // setCurrentRoomCache(roomCache, global) {
-    //     if (!!global) {
-    //         this.global = roomCache;
-    //     } else {
-    //         this.byRoom[this.viewedRoomId] = roomCache;
-    //     }
-    // }
+    // Private
     private loadCacheFromSettings() {
         this.global = this.global ?? SettingsStore.getValue("RightPanel.phasesGlobal");
         this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId]
@@ -349,14 +237,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
             SettingsStore.setValue("RightPanel.phases", this.viewedRoomId, SettingLevel.ROOM_DEVICE, cacheThisRoom);
         }
         this.emit(UPDATE_EVENT, null);
-        // this.updateState({
-        //     isOpen: roomCache?.isOpen ?? false,
-        //     currentPanel: current,
-        //     previousPanel: previous,
-        //     panelHistory: hist,
-        // });
     }
-    // NEEDED:
+
     // set rigth panel: overrides the history
     private setRightPanelCache(targetPhase: RightPanelPhases, panelState: IPanelState = null) {
         this.byRoom[this.viewedRoomId] = {
@@ -365,9 +247,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
         };
         this.emitAndUpdateSettings();
     }
+
     // CHECKS:
     //  - RoomMemberInfo -> needs to be changed to EncryptionPanel if pendingVerificationRequestForUser
-    //  - hide/show when setting the same panel twice
     private getVerificationRedirect(targetPhase: RightPanelPhases, panelState):
         { targetPhase: RightPanelPhases, panelState } {
         if (targetPhase === RightPanelPhases.RoomMemberInfo && panelState) {
@@ -411,7 +293,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     onDispatch(payload: ActionPayload) {
-        // __onDispatch(payload: ActionPayload) { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             case 'view_group':
             case Action.ViewRoom: {
@@ -443,162 +324,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 _this.emitAndUpdateSettings();
                 console.log("right panel store for current room: ", _this.byRoom[_this.viewedRoomId]);
                 break;
-
-                // Reset to the member list if we're viewing member info
             }
-
-            // case 'view_group':
-            //     this.viewedGroupId = payload.room_id;
-            //     this.viewedRoomId = undefined;
-
-            //     Not necassary anymore since we store everything per room/ per group
-            //     this.lastRoomId = payload.room_id;
-
-            // // Reset to the member list if we're viewing member info
-            // if (MEMBER_INFO_PHASES.includes(this.currentRoomPhaseState.phase)) {
-            //     this.setState({ lastRoomPhase: RightPanelPhases.RoomMemberList, lastRoomPhaseParams: {} });
-            // }
-
-            // // Do the same for groups
-            // if (this.state.lastGroupPhase === RightPanelPhases.GroupMemberInfo) {
-            //     this.setState({ lastGroupPhase: RightPanelPhases.GroupMemberList });
-            // }
-            //     break;
-
-            // case Action.SetRightPanelPhase: {
-            //     console.log("ORDER_DEBUG: action:", Action.SetRightPanelPhase);
-            //     // this was previously a very multifuncitonal command:
-            //     // TogglePanel: if the same phase is send but without refireParams
-            //     // UpdateState: if the same phase is send but with refireParams
-            //     // SetRightPanel and erase history: if a "differnt to the current" phase is send (with or without refireParams)
-            //     const redirect = this.getVerificationRedirect(payload, payload.phase);
-            //     const targetPhase = redirect?.targetPhase ?? payload.phase;
-            //     const refireParams = redirect?.refireParams ?? payload.refireParams;
-
-            //     const allowClose = payload.allowClose ?? true;
-
-            //     // Checks for wrong SetRightPanelPhase requests
-            //     if (!this.isPhaseActionIsValid(targetPhase)) break;
-
-            //     if (targetPhase === this.currentRoom?.phase && allowClose && !refireParams) {
-            //         // Toggle command: a toggle command needs to fullfill the following:
-            //         // - the same phase
-            //         // - the panel can be closed
-            //         // - does not contain any state information (refireParams)
-            //         this.togglePanel();
-            //         break;
-            //     } else if ((targetPhase === this.currentRoom?.phase && !!refireParams)) {
-            //         // Update Command: set right panel phase with a new state but keep the phase (dont know it this is ever needed...)
-            //         const hist = this.byRoom[this.viewedRoomId].history;
-            //         hist[hist.length - 1].state = refireParams;
-            //         this.updateStateAndSettingsFromCache();
-            //         break;
-            //     } else if (targetPhase !== this.currentRoom?.phase) {
-            //         // SetRightPanel and erase history.
-            //         this.setRightPanel(targetPhase, refireParams);
-            //         // this.byRoom[this.viewedRoomId] = {
-            //         //     history: [{ phase: targetPhase, state: refireParams }],
-            //         //     isOpen: true,
-            //         // };
-            //         // this.updateStateFromCache();
-            //     }
-            //     // redirect to EncryptionPanel if there is an ongoing verification request
-            //     // if (targetPhase === RightPanelPhases.RoomMemberInfo && payload.refireParams) {
-            //     //     const { member } = payload.refireParams;
-            //     //     const pendingRequest = pendingVerificationRequestForUser(member);
-            //     //     if (pendingRequest) {
-            //     //         targetPhase = RightPanelPhases.EncryptionPanel;
-            //     //         refireParams = {
-            //     //             verificationRequest: pendingRequest,
-            //     //             member,
-            //     //         };
-            //     //     }
-            //     // }
-
-            //     // if (GROUP_PHASES.includes(targetPhase)) {
-            //     //     if (targetPhase === this.state.lastGroupPhase) {
-            //     //     // hide when already open
-            //     //         this.setState({
-            //     //             showGroupPanel: !this.state.showGroupPanel,
-            //     //             previousPhase: null,
-            //     //         });
-            //     //     } else {
-            //     //         this.setState({
-            //     //             lastGroupPhase: targetPhase,
-            //     //             showGroupPanel: true,
-            //     //             previousPhase: this.state.lastGroupPhase,
-            //     //         });
-            //     //     }
-            //     // } else {
-            //     //     if (targetPhase === this.state.lastRoomPhase && !refireParams && allowClose) {
-            //     //         this.setState({
-            //     //             showRoomPanel: !this.state.showRoomPanel,
-            //     //             previousPhase: null,
-            //     //         });
-            //     //     } else {
-            //     //         this.setState({
-            //     //             lastRoomPhase: targetPhase,
-            //     //             showRoomPanel: true,
-            //     //             lastRoomPhaseParams: refireParams || {},
-            //     //             previousPhase: this.state.lastRoomPhase,
-            //     //         });
-            //     //     }
-            //     // }
-
-            //     // Let things like the member info panel actually open to the right member.
-            //     // Dont do the dispatch anymore, instead use a listener
-            //     // defaultDispatcher.dispatch({
-            //     //     action: Action.AfterRightPanelPhaseChange,
-            //     //     phase: targetPhase,
-            //     //     ...(refireParams || {}),
-            //     // });
-            //     break;
-            // }
-            // case Action.PushRightPanelPhase: {
-            //     console.log("ORDER_DEBUG: action:", payload.action);
-            //     const redirect = this.getVerificationRedirect(payload, payload.phase);
-            //     const targetPhase = redirect?.targetPhase ?? payload.phase;
-            //     const refireParams = redirect?.refireParams ?? payload.refireParams;
-
-            //     const allowClose = payload.allowClose ?? true;
-
-            //     // Checks for wrong SetRightPanelPhase requests
-            //     if (!this.isPhaseActionIsValid(targetPhase)) break;
-
-            //     let roomCache = this.byRoom[this.viewedRoomId];
-            //     if (!!roomCache) {
-            //         // append new phase
-            //         roomCache.history.push({ state: refireParams, phase: targetPhase });
-            //         roomCache.isOpen = allowClose ? roomCache.isOpen : true;
-            //     } else {
-            //         // create new phase
-            //         roomCache = {
-            //             history: [{ phase: targetPhase, state: refireParams }],
-            //             // if there was no right panel store object the the panel was closed -> keep it closed, except if allowClose==false
-            //             isOpen: !allowClose,
-            //         };
-            //     }
-
-            //     this.updateStateAndSettingsFromCache();
-            //     break;
-            // }
-            // case Action.PopRightPanelPhase: {
-            //     const roomCache = this.byRoom[this.viewedRoomId];
-            //     roomCache.history.pop();
-            //     this.updateStateAndSettingsFromCache();
-            //     break;
-            // }
-
-            // case Action.ToggleRightPanel:
-            //     console.log("ORDER_DEBUG: action:", payload.action);
-            //     this.togglePanel();
-            //     break;
-            // if (payload.type === "room") {
-            //     this.setState({ showRoomPanel: !this.state.showRoomPanel });
-            // } else { // group
-            //     this.setState({ showGroupPanel: !this.state.showGroupPanel });
-            // }
-            // break;
         }
     }
     public static get instance(): RightPanelStore {

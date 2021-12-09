@@ -171,11 +171,6 @@ export default class GroupMemberList extends React.Component {
                 RightPanelPhases.GroupMemberList,
                 { groupId: this.props.groupId },
             );
-            // dis.dispatch({
-            //     action: Action.SetRightPanelPhase,
-            //     phase: RightPanelPhases.GroupMemberList,
-            //     refireParams: { groupId: this.props.groupId },
-            // });
         });
     };
 

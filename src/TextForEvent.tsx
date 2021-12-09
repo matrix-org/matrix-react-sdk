@@ -504,11 +504,6 @@ const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void
 
 const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setRightPanel(RightPanelPhases.PinnedMessages, null, false);
-    // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-    //     action: Action.SetRightPanelPhase,
-    //     phase: RightPanelPhases.PinnedMessages,
-    //     allowClose: false,
-    // });
 };
 
 function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {

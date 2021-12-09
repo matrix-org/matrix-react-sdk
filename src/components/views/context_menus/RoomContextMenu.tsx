@@ -248,11 +248,6 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
 
                     ensureViewingRoom();
                     RightPanelStore.instance.setRightPanel( RightPanelPhases.RoomSummary, null, false );
-                    // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                    //     action: Action.SetRightPanelPhase,
-                    //     phase: RightPanelPhases.RoomSummary,
-                    //     allowClose: false,
-                    // });
                     onFinished();
                 }}
                 label={_t("Widgets")}

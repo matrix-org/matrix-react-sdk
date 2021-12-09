@@ -101,7 +101,6 @@ const PrototypeCommunityContextMenu = (props) => {
                 room_id: chat.roomId,
             }, true);
             RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, undefined, undefined, chat.roomId);
-            // dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });
         } else {
             // "This should never happen" clauses go here for the prototype.
             Modal.createTrackedDialog('Failed to find general chat', '', ErrorDialog, {

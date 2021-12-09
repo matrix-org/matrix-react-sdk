@@ -67,11 +67,6 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
 
     public setPhase(phase: RightPanelPhases, extras?: Partial<IPanelState>) {
         RightPanelStore.instance.setRightPanel(phase, extras);
-        // dis.dispatch<SetRightPanelPhasePayload>({
-        //     action: Action.SetRightPanelPhase,
-        //     phase: phase,
-        //     refireParams: extras,
-        // });
     }
 
     public isPhase(phases: string | string[]) {

@@ -1660,11 +1660,6 @@ const UserInfo: React.FC<IProps> = ({
     const onEncryptionPanelClose = () => {
         // TODO RightPanelStore: here we want to pop the panel
         RightPanelStore.instance.setRightPanel(previousPhase, refireParams);
-        // dis.dispatch<SetRightPanelPhasePayload>({
-        //     action: Action.SetRightPanelPhase,
-        //     phase: previousPhase,
-        //     refireParams: refireParams,
-        // });
     };
 
     let content;

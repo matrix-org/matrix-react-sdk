@@ -33,11 +33,6 @@ import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setRightPanel( RightPanelPhases.PinnedMessages, null, false );
-    // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-    //     action: Action.SetRightPanelPhase,
-    //     phase: RightPanelPhases.PinnedMessages,
-    //     allowClose: false,
-    // });
 };
 
 const SENDER_AS_DISPLAY_NAME_EVENTS = [EventType.RoomServerAcl, EventType.RoomPinnedEvents];

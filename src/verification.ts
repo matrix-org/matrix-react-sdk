@@ -69,11 +69,6 @@ export async function verifyDevice(user: User, device: IDevice) {
                     RightPanelPhases.EncryptionPanel,
                     { member: user, verificationRequestPromise },
                 );
-                // dis.dispatch({
-                //     action: Action.SetRightPanelPhase,
-                //     phase: RightPanelPhases.EncryptionPanel,
-                //     refireParams: { member: user, verificationRequestPromise },
-                // });
             } else if (action === "legacy") {
                 Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
                     ManualDeviceKeyVerificationDialog,
@@ -104,11 +99,6 @@ export async function legacyVerifyUser(user: User) {
         RightPanelPhases.EncryptionPanel,
         { member: user, verificationRequestPromise },
     );
-    // dis.dispatch({
-    //     action: Action.SetRightPanelPhase,
-    //     phase: RightPanelPhases.EncryptionPanel,
-    //     refireParams: { member: user, verificationRequestPromise },
-    // });
 }
 
 export async function verifyUser(user: User) {
@@ -125,14 +115,6 @@ export async function verifyUser(user: User) {
         RightPanelPhases.EncryptionPanel,
         { member: user, verificationRequest: existingRequest },
     );
-    // dis.dispatch({
-    //     action: Action.SetRightPanelPhase,
-    //     phase: RightPanelPhases.EncryptionPanel,
-    //     refireParams: {
-    //         member: user,
-    //         verificationRequest: existingRequest,
-    //     },
-    // });
 }
 
 export function pendingVerificationRequestForUser(user: User) {

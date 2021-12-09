@@ -117,11 +117,6 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             RightPanelPhases.EncryptionPanel,
             { member, verificationRequest: verificationRequest_ },
         );
-        // dis.dispatch({
-        //     action: Action.SetRightPanelPhase,
-        //     phase: RightPanelPhases.EncryptionPanel,
-        //     refireParams: { member, verificationRequest: verificationRequest_ },
-        // });
     }, [member]);
 
     const requested =

@@ -67,11 +67,6 @@ const BaseCard: React.FC<IProps> = ({
             // RightPanelStore.instance.popRightPanel();
 
             RightPanelStore.instance.setRightPanel(previousPhase, refireParams );
-            // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            //     action: Action.SetRightPanelPhase,
-            //     phase: previousPhase,
-            //     refireParams: refireParams,
-            // });
         };
         const label = previousPhaseLabel ?? _t("Back");
         backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;

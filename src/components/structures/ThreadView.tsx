@@ -94,10 +94,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         if (prevProps.room !== this.props.room) {
             RightPanelStore.instance.setRightPanel( RightPanelPhases.RoomSummary );
-            // dis.dispatch<SetRightPanelPhasePayload>({
-            //     action: Action.SetRightPanelPhase,
-            //     phase: RightPanelPhases.RoomSummary,
-            // });
         }
     }
 
@@ -206,7 +202,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             event_id: this.state.thread?.id,
         };
 
-        let previousPhase = RightPanelStore.instance.previousRoom.phase;
+        let previousPhase = RightPanelStore.instance.previousPanel.phase;
         if (!SettingsStore.getValue("feature_maximised_widgets")) {
             previousPhase = RightPanelPhases.ThreadPanel;
         }

@@ -824,10 +824,6 @@ export default class GroupView extends React.Component {
 
     _onAdminsLinkClick = () => {
         RightPanelStore.instance.setRightPanel(RightPanelPhases.GroupMemberList);
-        // dis.dispatch({
-        //     action: Action.SetRightPanelPhase,
-        //     phase: RightPanelPhases.GroupMemberList,
-        // });
     };
 
     _getGroupSection() {

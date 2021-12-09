@@ -51,10 +51,6 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
 
             //TODO RightPanelStore: here we want to just pop the widget card.
             RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomSummary);
-            // defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            //     action: Action.SetRightPanelPhase,
-            //     phase: RightPanelPhases.RoomSummary,
-            // });
         }
     }, [app, isPinned]);
 
