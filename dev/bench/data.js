@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639042444449,
+  "lastUpdate": 1639043270590,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46352,6 +46352,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 630.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "36052282+twigleingrid@users.noreply.github.com",
+            "name": "Ingrid",
+            "username": "twigleingrid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6c04c19a7aefc388151e7f765858e91e3c43ef9f",
+          "message": "Add vertical spacing between buttons when they go over multiple lines (#7314)",
+          "timestamp": "2021-12-09T09:41:33Z",
+          "tree_id": "3ae3abee384773efd6634dd410776cc6d9e80f89",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6c04c19a7aefc388151e7f765858e91e3c43ef9f"
+        },
+        "date": 1639043267470,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5015.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 645.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
