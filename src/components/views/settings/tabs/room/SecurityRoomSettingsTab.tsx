@@ -35,7 +35,7 @@ import createRoom, { IOpts } from '../../../../../createRoom';
 import CreateRoomDialog from '../../../dialogs/CreateRoomDialog';
 import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
-import { SettingsFieldset } from '../../SettingsFieldset';
+import SettingsFieldset from '../../SettingsFieldset';
 
 import { logger } from "matrix-js-sdk/src/logger";
 

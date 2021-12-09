@@ -14,7 +14,7 @@ limitations under the License.
 import React from 'react';
 import { renderIntoDocument } from 'react-dom/test-utils';
 
-import { SettingsFieldset } from '../../../../src/components/views/settings/SettingsFieldset';
+import SettingsFieldset from '../../../../src/components/views/settings/SettingsFieldset';
 
 describe('<SettingsFieldset />', () => {
     const defaultProps = {

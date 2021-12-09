@@ -27,7 +27,7 @@ import { SettingLevel } from "../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Room } from "matrix-js-sdk/src/models/room";
 import SettingsFlag from "../elements/SettingsFlag";
-import { SettingsFieldset } from '../settings/SettingsFieldset';
+import SettingsFieldset from '../settings/SettingsFieldset';
 
 interface IProps {
     room: Room;
