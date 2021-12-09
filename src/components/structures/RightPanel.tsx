@@ -24,12 +24,8 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 
 import dis from '../../dispatcher/dispatcher';
 import GroupStore from '../../stores/GroupStore';
-import {
-    // RIGHT_PANEL_PHASES_NO_ARGS,
-    // RIGHT_PANEL_SPACE_PHASES,
-    RightPanelPhases,
-} from "../../stores/RightPanelStorePhases";
-import RightPanelStore from "../../stores/RightPanelStore";
+import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { Action } from "../../dispatcher/actions";
 import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
@@ -41,7 +37,7 @@ import MemberList from "../views/rooms/MemberList";
 import GroupMemberList from "../views/groups/GroupMemberList";
 import GroupRoomList from "../views/groups/GroupRoomList";
 import GroupRoomInfo from "../views/groups/GroupRoomInfo";
-import UserInfo from "../views/right_panel/UserInfo";
+import UserInfo, { GroupMember } from "../views/right_panel/UserInfo";
 import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 import FilePanel from "./FilePanel";
 import ThreadView from "./ThreadView";
@@ -56,6 +52,7 @@ import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
 import TimelineCard from '../views/right_panel/TimelineCard';
 import { UPDATE_EVENT } from '../../stores/AsyncStore';
+import { User } from 'matrix-js-sdk/src/models/user';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
@@ -69,14 +66,14 @@ interface IProps {
 interface IState {
     phase: RightPanelPhases;
     isUserPrivilegedInGroup?: boolean;
-    member?: RoomMember;
+    member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
     space?: Room;
     widgetId?: string;
     groupRoomId?: string;
     groupId?: string;
-    event: MatrixEvent;
+    event?: MatrixEvent;
     initialEvent?: MatrixEvent;
     initialEventHighlighted?: boolean;
     searchQuery: string;
@@ -92,8 +89,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
         super(props, context);
         this.state = {
             // get all the state from the room panel store on inti
-            ...RightPanelStore.instance.currentRoom?.state,
-            phase: RightPanelStore.instance.currentRoom?.phase,
+            ...RightPanelStore.instance.currentPanel?.state,
+            phase: RightPanelStore.instance.currentPanel?.phase,
             isUserPrivilegedInGroup: null,
             member: this.getUserForPanel(),
             searchQuery: "",
@@ -106,11 +103,12 @@ export default class RightPanel extends React.Component<IProps, IState> {
 
     // Helper function to split out the logic for getPhaseFromProps() and the constructor
     // as both are called at the same time in the constructor.
-    private getUserForPanel(): RoomMember {
+    private getUserForPanel(): RoomMember | User | GroupMember {
         if (this.state && this.state.member) return this.state.member;
-        const lastState = RightPanelStore.instance.currentRoom?.state;
+        const lastState = RightPanelStore.instance.currentPanel?.state;
         // Should just use the member from the RightPanelStore. Wherever the prop is passed should just update the store beforehand.
-        return this.props.member || lastState?.member;
+        return this.props.member ?? lastState?.member;
+        // (lastState?.member instanceof RoomMember ? lastState?.member as RoomMember : undefined);
     }
 
     // gets the current phase from the props and also maybe the store
@@ -199,16 +197,29 @@ export default class RightPanel extends React.Component<IProps, IState> {
         if (this.state.phase === RightPanelPhases.RoomMemberList && member.roomId === this.props.room.roomId) {
             this.delayedUpdate();
         } else if (this.state.phase === RightPanelPhases.RoomMemberInfo && member.roomId === this.props.room.roomId &&
-                member.userId === this.state.member.userId) {
+            member.userId === this.state.member.userId) {
             // refresh the member info (e.g. new power level)
             this.delayedUpdate();
         }
     };
     private onRightPanelStoreUpdate = () => {
-        const currentRoom = RightPanelStore.instance.currentRoom;
+        const currentRoom = RightPanelStore.instance.currentPanel;
         this.setState({
-            ...currentRoom.state,
             phase: currentRoom.phase,
+            member: currentRoom.state?.member,
+            verificationRequest: currentRoom.state.verificationRequest,
+            verificationRequestPromise: currentRoom.state.verificationRequestPromise,
+
+            groupId: currentRoom.state.groupId,
+            groupRoomId: currentRoom.state.groupRoomId,
+            event: currentRoom.state.event,
+
+            widgetId: currentRoom.state.widgetId,
+
+            space: currentRoom.state.space,
+
+            initialEvent: currentRoom.state.initialEvent,
+            initialEventHighlighted: currentRoom.state.highlighted,
         });
     };
     private onAction = (payload: ActionPayload) => {
@@ -305,10 +316,11 @@ export default class RightPanel extends React.Component<IProps, IState> {
 
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
-            case RightPanelPhases.EncryptionPanel:
+            case RightPanelPhases.EncryptionPanel: {
+                const roomMember = this.state.member instanceof RoomMember ? this.state.member: undefined;
                 panel = <UserInfo
                     user={this.state.member}
-                    room={this.context.getRoom(this.state.member.roomId) ?? this.props.room}
+                    room={this.context.getRoom(roomMember?.roomId) ?? this.props.room}
                     key={roomId || this.state.member.userId}
                     onClose={this.onClose}
                     phase={this.state.phase}
@@ -316,7 +328,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     verificationRequestPromise={this.state.verificationRequestPromise}
                 />;
                 break;
-
+            }
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
                 panel = <ThirdPartyMemberInfo event={this.state.event} key={roomId} />;

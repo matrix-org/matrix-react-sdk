@@ -50,7 +50,7 @@ import WidgetEchoStore from '../../stores/WidgetEchoStore';
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
 import AccessibleButton from "../views/elements/AccessibleButton";
-import RightPanelStore from "../../stores/RightPanelStore";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { haveTileForEvent } from "../views/rooms/EventTile";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import MatrixClientContext, { withMatrixClientHOC, MatrixClientProps } from "../../contexts/MatrixClientContext";
@@ -97,7 +97,7 @@ import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threa
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
-import { RightPanelPhases } from '../../stores/RightPanelStorePhases';
+import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};

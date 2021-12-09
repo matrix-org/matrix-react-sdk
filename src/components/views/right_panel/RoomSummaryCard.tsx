@@ -25,7 +25,7 @@ import { _t } from '../../../languageHandler';
 import RoomAvatar from "../avatars/RoomAvatar";
 import AccessibleButton from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import Modal from "../../../Modal";
 import ShareDialog from '../dialogs/ShareDialog';
 import { useEventEmitter } from "../../../hooks/useEventEmitter";
@@ -46,7 +46,7 @@ import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widget
 import RoomName from "../elements/RoomName";
 import UIStore from "../../../stores/UIStore";
 import ExportDialog from "../dialogs/ExportDialog";
-import RightPanelStore from "../../../stores/RightPanelStore";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 interface IProps {
     room: Room;

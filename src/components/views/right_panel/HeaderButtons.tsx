@@ -20,9 +20,9 @@ limitations under the License.
 
 import React from 'react';
 import dis from '../../../dispatcher/dispatcher';
-import RightPanelStore from "../../../stores/RightPanelStore";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import { IPanelState } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { IPanelState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 // import type { EventSubscription } from "fbemitter";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
@@ -49,7 +49,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.instance;
         this.state = {
             headerKind: kind,
-            phase: rps.currentRoom.phase, //kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
+            phase: rps.currentPanel.phase, //kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
         };
     }
 
@@ -83,7 +83,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     private onRightPanelUpdate() {
-        this.setState({ phase: RightPanelStore.instance.currentRoom.phase });
+        this.setState({ phase: RightPanelStore.instance.currentPanel.phase });
         // const rps = RightPanelStore.instance;
         // if (this.state.headerKind === HeaderKind.Room) {
         //     this.setState({ phase: rps.visibleRoomPanelPhase });

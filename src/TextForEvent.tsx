@@ -21,7 +21,7 @@ import { isValid3pidInvite } from "./RoomInvite";
 import SettingsStore from "./settings/SettingsStore";
 import { ALL_RULE_TYPES, ROOM_RULE_TYPES, SERVER_RULE_TYPES, USER_RULE_TYPES } from "./mjolnir/BanList";
 import { WIDGET_LAYOUT_EVENT_TYPE } from "./stores/widgets/WidgetLayoutStore";
-import { RightPanelPhases } from './stores/RightPanelStorePhases';
+import { RightPanelPhases } from './stores/right-panel/RightPanelStorePhases';
 import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -32,7 +32,7 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
-import RightPanelStore from './stores/RightPanelStore';
+import RightPanelStore from './stores/right-panel/RightPanelStore';
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values

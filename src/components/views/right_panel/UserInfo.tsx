@@ -43,7 +43,7 @@ import E2EIcon from "../rooms/E2EIcon";
 import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import { textualPowerLevel } from '../../../Roles';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import EncryptionPanel from "./EncryptionPanel";
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import { legacyVerifyUser, verifyDevice, verifyUser } from '../../../verification';
@@ -75,7 +75,9 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
-import RightPanelStore from '../../../stores/RightPanelStore';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
+import RoomAvatar from '../avatars/RoomAvatar';
+import { IPanelState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 
 export interface IDevice {
     deviceId: string;
@@ -1642,7 +1644,7 @@ const UserInfo: React.FC<IProps> = ({
 
     const classes = ["mx_UserInfo"];
 
-    let refireParams;
+    let refireParams: IPanelState;
     let previousPhase: RightPanelPhases;
     // We have no previousPhase for when viewing a UserInfo from a Group or without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {

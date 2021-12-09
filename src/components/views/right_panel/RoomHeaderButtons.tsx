@@ -24,16 +24,15 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { _t } from '../../../languageHandler';
 import HeaderButton from './HeaderButton';
 import HeaderButtons, { HeaderKind } from './HeaderButtons';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { Action } from "../../../dispatcher/actions";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import RightPanelStore from "../../../stores/RightPanelStore";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
 import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
-import dis from "../../../dispatcher/dispatcher";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 
@@ -146,12 +145,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
 
     private onRoomSummaryClicked = () => {
         // use roomPanelPhase rather than this.state.phase as it remembers the latest one if we close
-        const currentPhase = RightPanelStore.instance.currentRoom.phase;
+        const currentPhase = RightPanelStore.instance.currentPanel.phase;
         if (ROOM_INFO_PHASES.includes(currentPhase)) {
             if (this.state.phase === currentPhase) {
                 this.setPhase(currentPhase);
             } else {
-                this.setPhase(currentPhase, RightPanelStore.instance.currentRoom.state);
+                this.setPhase(currentPhase, RightPanelStore.instance.currentPanel.state);
             }
         } else {
             // This toggles for us, if needed

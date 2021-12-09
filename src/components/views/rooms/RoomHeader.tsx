@@ -39,7 +39,7 @@ import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NOTIFICATION_STATE_UPDATE } from '../../../stores/notifications/NotificationState';
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 
 export interface ISearchInfo {
     searchTerm: string;

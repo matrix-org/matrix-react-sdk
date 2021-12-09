@@ -20,8 +20,8 @@ import classNames from 'classnames';
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import RightPanelStore from '../../../stores/RightPanelStore';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 interface IProps {
     header?: ReactNode;

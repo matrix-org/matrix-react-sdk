@@ -20,7 +20,7 @@ import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import BaseCard from "../views/right_panel/BaseCard";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -40,7 +40,7 @@ import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
-import RightPanelStore from '../../stores/RightPanelStore';
+import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import SettingsStore from '../../settings/SettingsStore';
 import { WidgetLayoutStore } from '../../stores/widgets/WidgetLayoutStore';
 

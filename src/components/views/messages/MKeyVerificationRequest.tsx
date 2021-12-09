@@ -20,13 +20,13 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import { getNameForEventRoom, userLabelForEventRoom }
     from '../../../utils/KeyVerificationStateObserver';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import EventTileBubble from "./EventTileBubble";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from '../elements/AccessibleButton';
 
 import { logger } from "matrix-js-sdk/src/logger";
-import RightPanelStore from '../../../stores/RightPanelStore';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 interface IProps {
     mxEvent: MatrixEvent;

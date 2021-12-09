@@ -38,10 +38,10 @@ import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
 import { onRoomFilesClick, onRoomMembersClick } from "../right_panel/RoomSummaryCard";
 import RoomViewStore from "../../../stores/RoomViewStore";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import RightPanelStore from "../../../stores/RightPanelStore";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 interface IProps extends IContextMenuProps {
     room: Room;

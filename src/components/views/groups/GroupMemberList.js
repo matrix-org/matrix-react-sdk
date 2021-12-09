@@ -22,10 +22,10 @@ import GroupStore from '../../../stores/GroupStore';
 import PropTypes from 'prop-types';
 import { showGroupInviteDialog } from '../../../GroupAddressPicker';
 import AccessibleButton from '../elements/AccessibleButton';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import RightPanelStore from '../../../stores/RightPanelStore';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 
 @replaceableComponent("views.groups.GroupMemberList")

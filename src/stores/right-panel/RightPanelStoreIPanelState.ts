@@ -14,18 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixEvent } from "matrix-js-sdk";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
+import { GroupMember } from "../../components/views/right_panel/UserInfo";
 
 export interface IPanelState {
-    member?: RoomMember | User;
+    member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
+    verificationRequestPromise?: Promise<VerificationRequest>;
+    // group
     groupId?: string;
     groupRoomId?: string;
     // XXX: The type for event should 'view_3pid_invite' action's payload
     event?: any;
     widgetId?: string;
     space?: Room;
+    // treads
+    initialEvent?: MatrixEvent;
+    highlighted?: boolean;
 }

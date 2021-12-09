@@ -28,8 +28,8 @@ import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import * as sdk from "../../../index";
 import { _t } from "../../../languageHandler";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import RightPanelStore from "../../../stores/RightPanelStore";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];

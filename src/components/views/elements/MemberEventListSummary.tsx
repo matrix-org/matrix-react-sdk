@@ -25,11 +25,11 @@ import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import EventListSummary from "./EventListSummary";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { jsxJoin } from '../../../utils/ReactUtils';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Layout } from '../../../settings/enums/Layout';
-import RightPanelStore from '../../../stores/RightPanelStore';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setRightPanel( RightPanelPhases.PinnedMessages, null, false );
