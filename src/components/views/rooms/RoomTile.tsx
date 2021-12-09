@@ -37,7 +37,7 @@ import RoomListStore from "../../../stores/room-list/RoomListStore";
 import RoomListActions from "../../../actions/RoomListActions";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "../../../stores/notifications/NotificationState";
+import { NotificationState, NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { CachedRoomKey, RoomEchoChamber } from "../../../stores/local-echo/RoomEchoChamber";
@@ -164,7 +164,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
             this.onRoomPreviewChanged,
         );
-        this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         this.props.room?.on("Room.name", this.onRoomNameUpdate);
         CommunityPrototypeStore.instance.on(
@@ -188,7 +188,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
-        this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.notificationState.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         CommunityPrototypeStore.instance.off(
             CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
@@ -485,8 +485,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             const isLowPriority = roomTags.includes(DefaultTagID.LowPriority);
             const lowPriorityLabel = _t("Low Priority");
 
+            const isDm = roomTags.includes(DefaultTagID.DM);
+
             const userId = MatrixClientPeg.get().getUserId();
-            const canInvite = this.props.room.canInvite(userId);
+            const canInvite = this.props.room.canInvite(userId) && !isDm; // hide invite in DMs from this quick menu
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -513,11 +515,11 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             iconClassName="mx_RoomTile_iconInvite"
                         />
                     ) : null }
-                    <IconizedContextMenuOption
+                    { !isDm ? <IconizedContextMenuOption
                         onClick={this.onCopyRoomClick}
                         label={_t("Copy Room Link")}
                         iconClassName="mx_RoomTile_iconCopyLink"
-                    />
+                    /> : null }
                     <IconizedContextMenuOption
                         onClick={this.onOpenRoomSettings}
                         label={_t("Settings")}

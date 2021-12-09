@@ -27,17 +27,14 @@ import { IMatrixClientCreds } from '../../MatrixClientPeg';
 import SettingsStore from "../../settings/SettingsStore";
 
 import ResizeHandle from '../views/elements/ResizeHandle';
-import { Resizer, CollapseDistributor } from '../../resizer';
+import { CollapseDistributor, Resizer } from '../../resizer';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import * as KeyboardShortcuts from "../../accessibility/KeyboardShortcuts";
 import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import { DefaultTagID } from "../../stores/room-list/models";
-import {
-    showToast as showServerLimitToast,
-    hideToast as hideServerLimitToast,
-} from "../../toasts/ServerLimitToast";
+import { hideToast as hideServerLimitToast, showToast as showServerLimitToast } from "../../toasts/ServerLimitToast";
 import { Action } from "../../dispatcher/actions";
 import LeftPanel from "./LeftPanel";
 import CallContainer from '../views/voip/CallContainer';
@@ -76,7 +73,7 @@ import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 // NB. this is just for server notices rather than pinned messages in general.
 const MAX_PINNED_NOTICES_PER_ROOM = 2;
 
-function getInputableElement(el: HTMLElement): HTMLElement | null {
+export function getInputableElement(el: HTMLElement): HTMLElement | null {
     return el.closest("input, textarea, select, [contenteditable=true]");
 }
 
@@ -503,6 +500,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                     action: 'view_home_page',
                 });
                 Modal.closeCurrentModal("homeKeyboardShortcut");
+                handled = true;
+                break;
+            case NavigationAction.ToggleSpacePanel:
+                dis.fire(Action.ToggleSpacePanel);
                 handled = true;
                 break;
             case NavigationAction.ToggleRoomSidePanel:
