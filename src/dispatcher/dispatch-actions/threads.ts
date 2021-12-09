@@ -31,22 +31,9 @@ export const dispatchShowThreadEvent = (
             highlighted,
         },
     );
-    // dis.dispatch({
-    //     action: Action.SetRightPanelPhase,
-    //     phase: RightPanelPhases.ThreadView,
-    //     refireParams: {
-    //         event: rootEvent,
-    //         initialEvent,
-    //         highlighted,
-    //     },
-    // });
 };
 
 export const dispatchShowThreadsPanelEvent = () => {
     RightPanelStore.instance.setRightPanel(RightPanelPhases.ThreadPanel);
-    // dis.dispatch<SetRightPanelPhasePayload>({
-    //     action: Action.SetRightPanelPhase,
-    //     phase: RightPanelPhases.ThreadPanel,
-    // });
 };
 

@@ -122,14 +122,6 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                         member: cli.getUser(request.otherUserId),
                     }, undefined, request.channel.roomId,
                 );
-                // dis.dispatch<SetRightPanelPhasePayload>({
-                //     action: Action.SetRightPanelPhase,
-                //     phase: RightPanelPhases.EncryptionPanel,
-                //     refireParams: {
-                //         verificationRequest: request,
-                //         member: cli.getUser(request.otherUserId),
-                //     },
-                // });
             } else {
                 Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {
                     verificationRequest: request,
