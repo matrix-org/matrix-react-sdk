@@ -28,15 +28,10 @@ import { UPDATE_EVENT } from '../AsyncStore';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
 import RoomViewStore from '../RoomViewStore';
 import { EventSubscription } from 'fbemitter';
-import { IPanelState } from './RightPanelStoreIPanelState';
+import { IPhaseAndState, IPanelState, convertToStateRoom, convertToStoreRoom } from './RightPanelStoreIPanelState';
 // import RightPanel from '../components/structures/RightPanel';
 // import { Playback } from '../audio/Playback';
 // import { RoomView } from '../components/structures/RoomView';
-
-interface IPhaseAndState {
-    phase: RightPanelPhases;
-    state: IPanelState;
-}
 
 const GROUP_PHASES = [
     RightPanelPhases.GroupMemberList,
@@ -85,6 +80,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     protected async onReady(): Promise<any> {
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        this.loadCacheFromSettings();
+        this.emitAndUpdateSettings();
     }
 
     protected async onNotReady(): Promise<any> {
@@ -224,17 +221,25 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     // Private
+
     private loadCacheFromSettings() {
-        this.global = this.global ?? SettingsStore.getValue("RightPanel.phasesGlobal");
-        this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId]
-            ?? SettingsStore.getValue("RightPanel.phases", this.viewedRoomId);
+        const room = this.mxClient?.getRoom(this.viewedRoomId);
+        if (!!room) {
+            this.global = this.global ?? convertToStateRoom(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
+            this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId]
+            ?? convertToStateRoom(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
+        }
     }
     private emitAndUpdateSettings() {
-        const cacheGlobal = this.global;
-        const cacheThisRoom = this.byRoom[this.viewedRoomId];
-        SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, cacheGlobal);
+        const storePanelGlobal = convertToStoreRoom(this.global);
+        const storePanelThisRoom = convertToStoreRoom(this.byRoom[this.viewedRoomId]);
+        SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, storePanelGlobal);
         if (!!this.viewedRoomId) {
-            SettingsStore.setValue("RightPanel.phases", this.viewedRoomId, SettingLevel.ROOM_DEVICE, cacheThisRoom);
+            SettingsStore.setValue("RightPanel.phases",
+                this.viewedRoomId,
+                SettingLevel.ROOM_DEVICE,
+                storePanelThisRoom,
+            );
         }
         this.emit(UPDATE_EVENT, null);
     }
@@ -320,8 +325,13 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 _this.viewedRoomId = payload.room_id;
                 _this.isViewingRoom = payload.action == Action.ViewRoom;
                 // load values from byRoomCache with the viewedRoomId.
-                _this.loadCacheFromSettings();
-                _this.emitAndUpdateSettings();
+                if (!!this.roomStoreToken) {
+                    // skip loading here since we need the client to be ready to get the events form the ids of the settings
+                    // this loading will be done in the onready function
+                    // all this nonsense is not necassary anymore as soon as we use: onRoomViewStoreUpdate
+                    _this.loadCacheFromSettings();
+                    _this.emitAndUpdateSettings();
+                }
                 console.log("right panel store for current room: ", _this.byRoom[_this.viewedRoomId]);
                 break;
             }
