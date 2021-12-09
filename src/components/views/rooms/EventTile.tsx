@@ -1157,6 +1157,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             onFocusChange={this.onActionBarFocusChange}
             isQuoteExpanded={isQuoteExpanded}
             toggleThreadExpanded={() => this.setQuoteExpanded(!isQuoteExpanded)}
+            getRelationsForEvent={this.props.getRelationsForEvent}
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs()
@@ -1202,7 +1203,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             _t(
                 '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
                 {},
-                { 'requestLink': (sub) => <a onClick={this.onRequestKeysClick}>{ sub }</a> },
+                { 'requestLink': (sub) => <a tabIndex={0} onClick={this.onRequestKeysClick}>{ sub }</a> },
             );
 
         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
