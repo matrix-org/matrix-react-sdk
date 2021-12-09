@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639037942614,
+  "lastUpdate": 1639040330633,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46232,6 +46232,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4585.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3f4b5df5744569f9846b99312bafb658c15c6357",
+          "message": "Fix html exporting and improve output size (#7312)",
+          "timestamp": "2021-12-09T08:51:05Z",
+          "tree_id": "201dc4bc7eb37dc44e25e267bb32004d415bf3f2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3f4b5df5744569f9846b99312bafb658c15c6357"
+        },
+        "date": 1639040326773,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5387.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1208.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1835.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5119.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
