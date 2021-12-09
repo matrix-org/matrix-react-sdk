@@ -61,10 +61,11 @@ import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
+import SettingsStore from "../../../settings/SettingsStore";
+import { SettingLevel } from "../../../settings/SettingLevel";
 
 const MAX_RECENT_SEARCHES = 10;
-const SECTION_LIMIT = 50;
-const RECENT_SEARCHES_LS_KEY = "mx_SpotlightDialog_recent_searches";
+const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
 
 const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ inputRef, ...props }) => {
     const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
@@ -93,20 +94,12 @@ const TooltipOption: React.FC<ComponentProps<typeof RovingAccessibleTooltipButto
 const useRecentSearches = (): [Room[], () => void] => {
     const [rooms, setRooms] = useState(() => {
         const cli = MatrixClientPeg.get();
-
-        try {
-            const recents = JSON.parse(localStorage.getItem(RECENT_SEARCHES_LS_KEY));
-            if (Array.isArray(recents)) {
-                return recents.map(r => cli.getRoom(r)).filter(Boolean).reverse();
-            }
-        } catch {
-            // do nothing
-        }
-        return [];
+        const recents = SettingsStore.getValue("SpotlightSearch.recentSearches", null);
+        return recents.map(r => cli.getRoom(r)).filter(Boolean);
     });
 
     return [rooms, () => {
-        localStorage.removeItem(RECENT_SEARCHES_LS_KEY);
+        SettingsStore.setValue("SpotlightSearch.recentSearches", null, SettingLevel.ACCOUNT, []);
         setRooms([]);
     }];
 };
@@ -214,13 +207,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
     const viewRoom = (roomId: string, persist = false) => {
         if (persist) {
-            const recents = new Set(recentSearches.reverse().map(r => r.roomId));
+            const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
             // remove & add the room to put it at the end
             recents.delete(roomId);
             recents.add(roomId);
-            localStorage.setItem(
-                RECENT_SEARCHES_LS_KEY,
-                JSON.stringify(Array.from(recents).slice(0, MAX_RECENT_SEARCHES)),
+
+            SettingsStore.setValue(
+                "SpotlightSearch.recentSearches",
+                null,
+                SettingLevel.ACCOUNT,
+                Array.from(recents).reverse().slice(0, MAX_RECENT_SEARCHES),
             );
         }
 

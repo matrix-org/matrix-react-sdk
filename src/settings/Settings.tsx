@@ -604,6 +604,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
     },
+    "SpotlightSearch.recentSearches": {
+        // not really a setting
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: [], // list of room IDs, most recent first
+    },
     "room_directory_servers": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],

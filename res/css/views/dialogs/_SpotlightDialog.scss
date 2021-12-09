@@ -27,7 +27,7 @@ limitations under the License.
         padding: 8px;
         border-radius: 8px;
         background-color: $background;
-        top: -60px;
+        top: -60px; // relative to the top of the modal
         left: 50%;
         transform: translateX(-50%);
         font-size: $font-12px;
