@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639051856623,
+  "lastUpdate": 1639053192876,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46568,6 +46568,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4754.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "93a90280a9fe123e7048de9ce91dabc4678fa422",
+          "message": "Improve accessibility of opening space create menu (#7316)",
+          "timestamp": "2021-12-09T12:27:03Z",
+          "tree_id": "e22b16a41d891519e0e609601c56a9a6d87ad2df",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/93a90280a9fe123e7048de9ce91dabc4678fa422"
+        },
+        "date": 1639053189256,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4997.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 621.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
