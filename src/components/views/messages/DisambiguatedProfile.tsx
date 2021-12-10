@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import classNames from 'classnames';
+
+import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 
 interface IProps {
     member?: RoomMember;
