@@ -19,6 +19,7 @@ limitations under the License.
 import React, { ComponentProps } from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 
 import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
@@ -27,7 +28,6 @@ import EventListSummary from "./EventListSummary";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { jsxJoin } from '../../../utils/ReactUtils';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Layout } from '../../../settings/enums/Layout';
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 

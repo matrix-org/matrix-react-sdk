@@ -15,6 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
+import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
 import { isValid3pidInvite } from "./RoomInvite";
@@ -24,14 +30,8 @@ import { WIDGET_LAYOUT_EVENT_TYPE } from "./stores/widgets/WidgetLayoutStore";
 import { RightPanelPhases } from './stores/right-panel/RightPanelStorePhases';
 import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 
 // These functions are frequently used just to check whether an event has

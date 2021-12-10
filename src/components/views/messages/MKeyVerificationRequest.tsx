@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import { getNameForEventRoom, userLabelForEventRoom }
@@ -24,8 +26,6 @@ import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePha
 import EventTileBubble from "./EventTileBubble";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from '../elements/AccessibleButton';
-
-import { logger } from "matrix-js-sdk/src/logger";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 interface IProps {
