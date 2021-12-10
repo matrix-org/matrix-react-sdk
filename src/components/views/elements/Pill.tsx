@@ -33,6 +33,7 @@ import Tooltip, { Alignment } from './Tooltip';
 import RoomAvatar from '../avatars/RoomAvatar';
 import MemberAvatar from '../avatars/MemberAvatar';
 import BaseAvatar from '../avatars/BaseAvatar';
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 export enum PillType {
     UserMention = 'TYPE_USER_MENTION',
