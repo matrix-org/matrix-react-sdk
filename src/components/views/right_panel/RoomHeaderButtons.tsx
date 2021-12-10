@@ -19,6 +19,7 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from '../../../languageHandler';
@@ -38,7 +39,6 @@ import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNo
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
 import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
-import classNames from "classnames";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,

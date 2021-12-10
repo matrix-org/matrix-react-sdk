@@ -23,6 +23,7 @@ import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
+import { NotificationCountType } from 'matrix-js-sdk/src/models/room';
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -70,7 +71,6 @@ import ThreadListContextMenu from '../context_menus/ThreadListContextMenu';
 import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
-import { NotificationCountType } from 'matrix-js-sdk/src/models/room';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 
 const eventTileTypes = {
