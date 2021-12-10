@@ -93,12 +93,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return this.byRoom[this.viewedRoomId]?.isOpen ?? false;
     }
 
-    get isOpenForGroup(): boolean {
-        // return this.state.isOpen ?? false;
-        return this.isOpenForRoom;
-        // return this.byRoom[this.viewedRoomId]?.isOpen;
-    }
-
     get roomPhaseHistory(): Array<IPhaseAndState> {
         return this.byRoom[this.viewedRoomId]?.history ?? [];
     }
@@ -109,7 +103,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
         return { state: {}, phase: null };
     }
-    currentPanelById(roomId: string): IPhaseAndState {
+    currentPanelForRoom(roomId: string): IPhaseAndState {
         const hist = this.byRoom[roomId]?.history ?? [];
         if (hist.length > 0) {
             return hist[hist.length - 1];
@@ -125,15 +119,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     // The Group stuff is just for backwards compatibility. Can be removed when depracating groups
-    get groupPhaseHistory(): Array<IPhaseAndState> {
-        return this.roomPhaseHistory;
-    }
-    get currentGroup(): IPhaseAndState {
-        return this.currentPanel;
-    }
-    get previousGroup(): IPhaseAndState {
-        return this.previousPanel;
-    }
+    get isOpenForGroup(): boolean {return this.isOpenForRoom;}
+    get groupPhaseHistory(): Array<IPhaseAndState> {return this.roomPhaseHistory;}
+    get currentGroup(): IPhaseAndState {return this.currentPanel;}
+    get previousGroup(): IPhaseAndState {return this.previousPanel;}
 
     // ALL SETTERS:
     public setRightPanel(phase: RightPanelPhases, state: IPanelState = null, allowClose = true, roomId: string = null) {
@@ -157,7 +146,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             // - does not contain any state information (refireParams)
             this.togglePanel(rId);
             return;
-        } else if ((targetPhase === this.currentPanelById(rId)?.phase && !!panelState)) {
+        } else if ((targetPhase === this.currentPanelForRoom(rId)?.phase && !!panelState)) {
             // Update Command: set right panel phase with a new state but keep the phase (dont know it this is ever needed...)
             const hist = this.byRoom[rId].history;
             hist[hist.length - 1].state = panelState;
