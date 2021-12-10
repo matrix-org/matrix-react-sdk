@@ -15,10 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
-import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { logger } from "matrix-js-sdk/src/logger";
+import { Group } from "matrix-js-sdk/src/models/group";
+import { MatrixClient } from 'matrix-js-sdk/src';
+
+import dis from '../../../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import FlairStore from "../../../stores/FlairStore";
 import { getPrimaryPermalinkEntity, parseAppLocalLink } from "../../../utils/permalinks/Permalinks";
@@ -26,9 +30,6 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { mediaFromMxc } from "../../../customisations/Media";
 import Tooltip, { Alignment } from './Tooltip';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Group } from "matrix-js-sdk/src/models/group";
-import { MatrixClient } from 'matrix-js-sdk/src';
 import RoomAvatar from '../avatars/RoomAvatar';
 import MemberAvatar from '../avatars/MemberAvatar';
 import BaseAvatar from '../avatars/BaseAvatar';
@@ -67,8 +68,6 @@ interface IState {
     // Is the user hovering the pill
     hover: boolean;
 }
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 @replaceableComponent("views.elements.Pill")
 export default class Pill extends React.Component<IProps, IState> {

@@ -21,6 +21,7 @@ import { RoomState } from "matrix-js-sdk/src/models/room-state";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { throttle } from 'lodash';
 
 import dis from '../../dispatcher/dispatcher';
 import GroupStore from '../../stores/GroupStore';
@@ -49,7 +50,6 @@ import ThreadPanel from "./ThreadPanel";
 import NotificationPanel from "./NotificationPanel";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PinnedMessagesCard from "../views/right_panel/PinnedMessagesCard";
-import { throttle } from 'lodash';
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { E2EStatus } from '../../utils/ShieldUtils';
@@ -339,8 +339,12 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 if (!SettingsStore.getValue("feature_maximised_widgets")) break;
                 panel = <TimelineCard
                     room={this.props.room}
+                    timelineSet={this.props.room.getUnfilteredTimelineSet()}
                     resizeNotifier={this.props.resizeNotifier}
-                    onClose={this.onClose} />;
+                    onClose={this.onClose}
+                    permalinkCreator={this.props.permalinkCreator}
+                    e2eStatus={this.props.e2eStatus}
+                />;
                 break;
             case RightPanelPhases.FilePanel:
                 panel = <FilePanel roomId={roomId} resizeNotifier={this.props.resizeNotifier} onClose={this.onClose} />;

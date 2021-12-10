@@ -21,6 +21,10 @@ import { ComponentType, createRef, ReactComponentElement } from "react";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from 'classnames';
+import { Enable, Resizable } from "re-resizable";
+import { Direction } from "re-resizable/lib/resizer";
+import { Dispatcher } from "flux";
+
 import { RovingAccessibleButton, RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../../views/elements/AccessibleButton";
@@ -42,8 +46,6 @@ import NotificationBadge from "./NotificationBadge";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { Key } from "../../../Keyboard";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import { Enable, Resizable } from "re-resizable";
-import { Direction } from "re-resizable/lib/resizer";
 import { polyfillTouchEvent } from "../../../@types/polyfill";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
@@ -54,7 +56,6 @@ import ExtraTile from "./ExtraTile";
 import { ListNotificationState } from "../../../stores/notifications/ListNotificationState";
 import { getKeyBindingsManager, RoomListAction } from "../../../KeyBindingsManager";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Dispatcher } from "flux";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -79,6 +80,7 @@ interface IProps {
     tagId: TagID;
     showSkeleton?: boolean;
     alwaysVisible?: boolean;
+    forceExpanded?: boolean;
     resizeNotifier: ResizeNotifier;
     extraTiles?: ReactComponentElement<typeof ExtraTile>[];
     onListCollapse?: (isExpanded: boolean) => void;
@@ -460,6 +462,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private toggleCollapsed = () => {
+        if (this.props.forceExpanded) return;
         this.layout.isCollapsed = this.state.isExpanded;
         this.setState({ isExpanded: !this.layout.isCollapsed });
         if (this.props.onListCollapse) {
@@ -508,7 +511,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private renderVisibleTiles(): React.ReactElement[] {
-        if (!this.state.isExpanded) {
+        if (!this.state.isExpanded && !this.props.forceExpanded) {
             // don't waste time on rendering
             return [];
         }
@@ -516,7 +519,11 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         const tiles: React.ReactElement[] = [];
 
         if (this.state.rooms) {
-            const visibleRooms = this.state.rooms.slice(0, this.numVisibleTiles);
+            let visibleRooms = this.state.rooms;
+            if (!this.props.forceExpanded) {
+                visibleRooms = visibleRooms.slice(0, this.numVisibleTiles);
+            }
+
             for (const room of visibleRooms) {
                 tiles.push(<RoomTile
                     room={room}
@@ -537,7 +544,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         // to avoid spending cycles on slicing. It's generally fine to do this though
         // as users are unlikely to have more than a handful of tiles when the extra
         // tiles are used.
-        if (tiles.length > this.numVisibleTiles) {
+        if (tiles.length > this.numVisibleTiles && !this.props.forceExpanded) {
             return tiles.slice(0, this.numVisibleTiles);
         }
 
@@ -731,7 +738,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         });
 
         let content = null;
-        if (visibleTiles.length > 0) {
+        if (visibleTiles.length > 0 && this.props.forceExpanded) {
+            content = <div className="mx_RoomSublist_resizeBox mx_RoomSublist_resizeBox_forceExpanded">
+                <div className="mx_RoomSublist_tiles" ref={this.tilesRef}>
+                    { visibleTiles }
+                </div>
+            </div>;
+        } else if (visibleTiles.length > 0) {
             const layout = this.layout; // to shorten calls
 
             const minTiles = Math.min(layout.minVisibleTiles, this.numTiles);
