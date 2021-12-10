@@ -325,7 +325,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 _this.viewedRoomId = payload.room_id;
                 _this.isViewingRoom = payload.action == Action.ViewRoom;
                 // load values from byRoomCache with the viewedRoomId.
-                if (!!this.roomStoreToken) {
+                if (!!_this.roomStoreToken) {
                     // skip loading here since we need the client to be ready to get the events form the ids of the settings
                     // this loading will be done in the onready function
                     // all this nonsense is not necassary anymore as soon as we use: onRoomViewStoreUpdate
