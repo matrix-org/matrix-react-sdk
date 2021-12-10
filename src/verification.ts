@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { User } from "matrix-js-sdk/src/models/user";
+import { verificationMethods as VerificationMethods } from 'matrix-js-sdk/src/crypto';
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
@@ -22,7 +23,6 @@ import Modal from './Modal';
 import { RightPanelPhases } from "./stores/RightPanelStorePhases";
 import { findDMForUser } from './createRoom';
 import { accessSecretStorage } from './SecurityManager';
-import { verificationMethods as VerificationMethods } from 'matrix-js-sdk/src/crypto';
 import { Action } from './dispatcher/actions';
 import UntrustedDeviceDialog from "./components/views/dialogs/UntrustedDeviceDialog";
 import { IDevice } from "./components/views/right_panel/UserInfo";
@@ -50,7 +50,7 @@ export async function verifyDevice(user: User, device: IDevice) {
     }
     // if cross-signing is not explicitly disabled, check if it should be enabled first.
     if (cli.getCryptoTrustCrossSignedDevices()) {
-        if (!await enable4SIfNeeded()) {
+        if (!(await enable4SIfNeeded())) {
             return;
         }
     }
@@ -91,7 +91,7 @@ export async function legacyVerifyUser(user: User) {
     }
     // if cross-signing is not explicitly disabled, check if it should be enabled first.
     if (cli.getCryptoTrustCrossSignedDevices()) {
-        if (!await enable4SIfNeeded()) {
+        if (!(await enable4SIfNeeded())) {
             return;
         }
     }
@@ -109,7 +109,7 @@ export async function verifyUser(user: User) {
         dis.dispatch({ action: 'require_registration' });
         return;
     }
-    if (!await enable4SIfNeeded()) {
+    if (!(await enable4SIfNeeded())) {
         return;
     }
     const existingRequest = pendingVerificationRequestForUser(user);

@@ -18,23 +18,27 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Room } from 'matrix-js-sdk/src/models/room';
+
 import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
 import QueryMatcher from './QueryMatcher';
 import { TextualCompletion } from './Components';
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import { Command, Commands, CommandMap } from '../SlashCommands';
+import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const COMMAND_RE = /(^\/\w*)(?: .*)?/g;
 
 export default class CommandProvider extends AutocompleteProvider {
     matcher: QueryMatcher<Command>;
 
-    constructor() {
-        super(COMMAND_RE);
+    constructor(room: Room, renderingType?: TimelineRenderingType) {
+        super({ commandRegex: COMMAND_RE, renderingType });
         this.matcher = new QueryMatcher(Commands, {
             keys: ['command', 'args', 'description'],
             funcs: [({ aliases }) => aliases.join(" ")], // aliases
+            context: renderingType,
         });
     }
 
@@ -47,13 +51,13 @@ export default class CommandProvider extends AutocompleteProvider {
         const { command, range } = this.getCurrentCommand(query, selection);
         if (!command) return [];
 
-        let matches = [];
+        let matches: Command[] = [];
         // check if the full match differs from the first word (i.e. returns false if the command has args)
         if (command[0] !== command[1]) {
             // The input looks like a command with arguments, perform exact match
             const name = command[1].substr(1); // strip leading `/`
             if (CommandMap.has(name) && CommandMap.get(name).isEnabled()) {
-                // some commands, namely `me` and `ddg` don't suit having the usage shown whilst typing their arguments
+                // some commands, namely `me` don't suit having the usage shown whilst typing their arguments
                 if (CommandMap.get(name).hideCompletionAfterSpace) return [];
                 matches = [CommandMap.get(name)];
             }
@@ -68,7 +72,10 @@ export default class CommandProvider extends AutocompleteProvider {
             }
         }
 
-        return matches.filter(cmd => cmd.isEnabled()).map((result) => {
+        return matches.filter(cmd => {
+            const display = !cmd.renderingTypes || cmd.renderingTypes.includes(this.renderingType);
+            return cmd.isEnabled() && display;
+        }).map((result) => {
             let completion = result.getCommand() + ' ';
             const usedAlias = result.aliases.find(alias => `/${alias}` === command[1]);
             // If the command (or an alias) is the same as the one they entered, we don't want to discard their arguments
@@ -95,8 +102,8 @@ export default class CommandProvider extends AutocompleteProvider {
     renderCompletions(completions: React.ReactNode[]): React.ReactNode {
         return (
             <div
-                className="mx_Autocomplete_Completion_container_block"
-                role="listbox"
+                className="mx_Autocomplete_Completion_container_pill"
+                role="presentation"
                 aria-label={_t("Command Autocomplete")}
             >
                 { completions }

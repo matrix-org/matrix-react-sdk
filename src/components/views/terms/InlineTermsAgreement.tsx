@@ -15,17 +15,18 @@ limitations under the License.
 */
 
 import React from "react";
+
 import { _t, pickBestLanguage } from "../../../languageHandler";
-import * as sdk from "../../..";
 import { objectClone } from "../../../utils/objects";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     policiesAndServicePairs: any[];
     onFinished: (string) => void;
     agreedUrls: string[]; // array of URLs the user has accepted
-    introElement: Node;
+    introElement: React.ReactNode;
 }
 
 interface IState {
@@ -91,7 +92,7 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
                     policyLink: () => {
                         return (
                             <a href={policy.url} rel='noreferrer noopener' target='_blank'>
-                                {policy.name}
+                                { policy.name }
                                 <span className='mx_InlineTermsAgreement_link' />
                             </a>
                         );
@@ -100,10 +101,10 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
             );
             rendered.push(
                 <div key={i} className='mx_InlineTermsAgreement_cbContainer'>
-                    <div>{introText}</div>
+                    <div>{ introText }</div>
                     <div className='mx_InlineTermsAgreement_checkbox'>
                         <StyledCheckbox onChange={() => this.togglePolicy(i)} checked={policy.checked}>
-                            {_t("Accept")}
+                            { _t("Accept") }
                         </StyledCheckbox>
                     </div>
                 </div>,
@@ -113,19 +114,18 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
     }
 
     public render(): React.ReactNode {
-        const AccessibleButton = sdk.getComponent("views.elements.AccessibleButton");
         const hasUnchecked = !!this.state.policies.some(p => !p.checked);
 
         return (
             <div>
-                {this.props.introElement}
-                {this.renderCheckboxes()}
+                { this.props.introElement }
+                { this.renderCheckboxes() }
                 <AccessibleButton
                     onClick={this.onContinue}
                     disabled={hasUnchecked || this.state.busy}
                     kind="primary_sm"
                 >
-                    {_t("Continue")}
+                    { _t("Continue") }
                 </AccessibleButton>
             </div>
         );

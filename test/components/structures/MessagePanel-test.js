@@ -15,31 +15,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsStore from "../../../src/settings/SettingsStore";
-
 import React from 'react';
 import ReactDOM from "react-dom";
-const TestUtils = require('react-dom/test-utils');
-const expect = require('expect');
 import { EventEmitter } from "events";
-
-import sdk from '../../skinned-sdk';
-
-const MessagePanel = sdk.getComponent('structures.MessagePanel');
-import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import Matrix from 'matrix-js-sdk';
-
-const TestUtilsMatrix = require('../../test-utils');
 import FakeTimers from '@sinonjs/fake-timers';
+import { mount } from "enzyme";
 
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { configure, mount } from "enzyme";
-
+import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
+import sdk from '../../skinned-sdk';
+import SettingsStore from "../../../src/settings/SettingsStore";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 
-configure({ adapter: new Adapter() });
+const TestUtils = require('react-dom/test-utils');
+const expect = require('expect');
+
+const MessagePanel = sdk.getComponent('structures.MessagePanel');
+
+const TestUtilsMatrix = require('../../test-utils');
 
 let client;
 const room = new Matrix.Room("!roomId:server_name");
@@ -312,8 +307,12 @@ describe('MessagePanel', function() {
 
     it('should insert the read-marker in the right place', function() {
         const res = TestUtils.renderIntoDocument(
-            <WrappedMessagePanel className="cls" events={events} readMarkerEventId={events[4].getId()}
-                readMarkerVisible={true} />,
+            <WrappedMessagePanel
+                className="cls"
+                events={events}
+                readMarkerEventId={events[4].getId()}
+                readMarkerVisible={true}
+            />,
         );
 
         const tiles = TestUtils.scryRenderedComponentsWithType(
@@ -330,8 +329,12 @@ describe('MessagePanel', function() {
     it('should show the read-marker that fall in summarised events after the summary', function() {
         const melsEvents = mkMelsEvents();
         const res = TestUtils.renderIntoDocument(
-            <WrappedMessagePanel className="cls" events={melsEvents} readMarkerEventId={melsEvents[4].getId()}
-                readMarkerVisible={true} />,
+            <WrappedMessagePanel
+                className="cls"
+                events={melsEvents}
+                readMarkerEventId={melsEvents[4].getId()}
+                readMarkerVisible={true}
+            />,
         );
 
         const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_EventListSummary');
@@ -348,8 +351,12 @@ describe('MessagePanel', function() {
     it('should hide the read-marker at the end of summarised events', function() {
         const melsEvents = mkMelsEventsOnly();
         const res = TestUtils.renderIntoDocument(
-            <WrappedMessagePanel className="cls" events={melsEvents} readMarkerEventId={melsEvents[9].getId()}
-                readMarkerVisible={true} />,
+            <WrappedMessagePanel
+                className="cls"
+                events={melsEvents}
+                readMarkerEventId={melsEvents[9].getId()}
+                readMarkerVisible={true}
+            />,
         );
 
         const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_EventListSummary');
@@ -371,7 +378,10 @@ describe('MessagePanel', function() {
 
         // first render with the RM in one place
         let mp = ReactDOM.render(
-            <WrappedMessagePanel className="cls" events={events} readMarkerEventId={events[4].getId()}
+            <WrappedMessagePanel
+                className="cls"
+                events={events}
+                readMarkerEventId={events[4].getId()}
                 readMarkerVisible={true}
             />, parentDiv);
 
@@ -387,7 +397,10 @@ describe('MessagePanel', function() {
 
         // now move the RM
         mp = ReactDOM.render(
-            <WrappedMessagePanel className="cls" events={events} readMarkerEventId={events[6].getId()}
+            <WrappedMessagePanel
+                className="cls"
+                events={events}
+                readMarkerEventId={events[6].getId()}
                 readMarkerVisible={true}
             />, parentDiv);
 

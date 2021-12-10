@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+
 import { _t } from "../../../languageHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -39,7 +40,7 @@ export default class InlineSpinner extends React.PureComponent<IProps> {
                     style={{ width: this.props.w, height: this.props.h }}
                     aria-label={_t("Loading...")}
                 >
-                    {this.props.children}
+                    { this.props.children }
                 </div>
             </div>
         );

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React, { CSSProperties } from "react";
 import classNames from "classnames";
-import { CSSProperties } from "react";
+
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface WaveformCSSProperties extends CSSProperties {
     '--barHeight': number;
@@ -47,17 +47,21 @@ export default class Waveform extends React.PureComponent<IProps, IState> {
 
     public render() {
         return <div className='mx_Waveform'>
-            {this.props.relHeights.map((h, i) => {
+            { this.props.relHeights.map((h, i) => {
                 const progress = this.props.progress;
                 const isCompleteBar = (i / this.props.relHeights.length) <= progress && progress > 0;
                 const classes = classNames({
                     'mx_Waveform_bar': true,
                     'mx_Waveform_bar_100pct': isCompleteBar,
                 });
-                return <span key={i} style={{
-                    "--barHeight": h,
-                } as WaveformCSSProperties} className={classes} />;
-            })}
+                return <span
+                    key={i}
+                    style={{
+                        "--barHeight": h,
+                    } as WaveformCSSProperties}
+                    className={classes}
+                />;
+            }) }
         </div>;
     }
 }

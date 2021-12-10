@@ -31,6 +31,7 @@ interface IProps {
     className?: string;
     withoutScrollContainer?: boolean;
     previousPhase?: RightPanelPhases;
+    previousPhaseLabel?: string;
     closeLabel?: string;
     onClose?(): void;
     refireParams?;
@@ -43,8 +44,8 @@ interface IGroupProps {
 
 export const Group: React.FC<IGroupProps> = ({ className, title, children }) => {
     return <div className={classNames("mx_BaseCard_Group", className)}>
-        <h1>{title}</h1>
-        {children}
+        <h1>{ title }</h1>
+        { children }
     </div>;
 };
 
@@ -56,6 +57,7 @@ const BaseCard: React.FC<IProps> = ({
     footer,
     withoutScrollContainer,
     previousPhase,
+    previousPhaseLabel,
     children,
     refireParams,
 }) => {
@@ -68,7 +70,8 @@ const BaseCard: React.FC<IProps> = ({
                 refireParams: refireParams,
             });
         };
-        backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={_t("Back")} />;
+        const label = previousPhaseLabel ?? _t("Back");
+        backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;
     }
 
     let closeButton;

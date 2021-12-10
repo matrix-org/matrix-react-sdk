@@ -15,10 +15,13 @@ limitations under the License.
 */
 
 import React from "react";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import MImageBody from "./MImageBody";
-import { presentableTextForFile } from "./MFileBody";
+import { presentableTextForFile } from "../../../utils/FileUtils";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import SenderProfile from "./SenderProfile";
+import { _t } from "../../../languageHandler";
 
 const FORCED_IMAGE_HEIGHT = 44;
 
@@ -32,8 +35,9 @@ export default class MImageReplyBody extends MImageBody {
     }
 
     // Don't show "Download this_file.png ..."
-    public getFileBody(): JSX.Element {
-        return presentableTextForFile(this.props.mxEvent.getContent());
+    public getFileBody(): string {
+        const sticker = this.props.mxEvent.getType() === EventType.Sticker;
+        return presentableTextForFile(this.props.mxEvent.getContent(), sticker ? _t("Sticker") : _t("Image"), !sticker);
     }
 
     render() {

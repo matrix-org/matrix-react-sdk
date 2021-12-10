@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_UserNotifSettings {
-    color: $primary-fg-color; // override from default settings page styles
+    color: $primary-content; // override from default settings page styles
 
     .mx_UserNotifSettings_pushRulesTable {
         width: calc(100% + 12px); // +12px to line up center of 'Noisy' column with toggle switches
@@ -34,7 +34,7 @@ limitations under the License.
         }
 
         tr > th:nth-child(n + 2) {
-            color: $secondary-fg-color;
+            color: $secondary-content;
             font-size: $font-12px;
             vertical-align: middle;
             width: 66px;
@@ -49,14 +49,14 @@ limitations under the License.
         }
 
         // Override StyledRadioButton default styles
-        .mx_RadioButton {
+        .mx_StyledRadioButton {
             justify-content: center;
 
-            .mx_RadioButton_content {
+            .mx_StyledRadioButton_content {
                 display: none;
             }
 
-            .mx_RadioButton_spacer {
+            .mx_StyledRadioButton_spacer {
                 display: none;
             }
         }
@@ -89,4 +89,8 @@ limitations under the License.
     .mx_TagComposer {
         margin-top: 35px; // lots of distance from the last line of the table
     }
+}
+
+.mx_AccessibleButton.mx_NotificationSound_browse {
+    margin-right: 10px;
 }

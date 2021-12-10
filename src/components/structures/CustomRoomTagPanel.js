@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+
 import CustomRoomTagStore from '../../stores/CustomRoomTagStore';
 import AutoHideScrollbar from './AutoHideScrollbar';
 import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
-import classNames from 'classnames';
 import * as FormattingUtils from '../../utils/FormattingUtils';
 import { replaceableComponent } from "../../utils/replaceableComponent";
 
@@ -56,7 +57,7 @@ class CustomRoomTagPanel extends React.Component {
         return (<div className={classes}>
             <div className="mx_CustomRoomTagPanel_divider" />
             <AutoHideScrollbar className="mx_CustomRoomTagPanel_scroller">
-                {tags}
+                { tags }
             </AutoHideScrollbar>
         </div>);
     }
@@ -84,7 +85,7 @@ class CustomRoomTagTile extends React.Component {
                 "mx_TagTile_badge": true,
                 "mx_TagTile_badgeHighlight": badgeNotifState.hasMentions,
             });
-            badgeElement = (<div className={badgeClasses}>{FormattingUtils.formatCount(badgeNotifState.count)}</div>);
+            badgeElement = (<div className={badgeClasses}>{ FormattingUtils.formatCount(badgeNotifState.count) }</div>);
         }
 
         return (

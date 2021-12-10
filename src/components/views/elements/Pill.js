@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import PropTypes from 'prop-types';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import * as sdk from '../../../index';
+import dis from '../../../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import FlairStore from "../../../stores/FlairStore";
 import { getPrimaryPermalinkEntity, parseAppLocalLink } from "../../../utils/permalinks/Permalinks";
@@ -188,11 +190,12 @@ class Pill extends React.Component {
             };
             this.setState({ member });
         }).catch((err) => {
-            console.error('Could not retrieve profile data for ' + userId + ':', err);
+            logger.error('Could not retrieve profile data for ' + userId + ':', err);
         });
     }
 
-    onUserPillClicked = () => {
+    onUserPillClicked = (e) => {
+        e.preventDefault();
         dis.dispatch({
             action: Action.ViewUser,
             member: this.state.member,
@@ -258,7 +261,10 @@ class Pill extends React.Component {
                     linkText = groupId;
                     if (this.props.shouldShowPillAvatar) {
                         avatar = <BaseAvatar
-                            name={name || groupId} width={16} height={16} aria-hidden="true"
+                            name={name || groupId}
+                            width={16}
+                            height={16}
+                            aria-hidden="true"
                             url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(16) : null} />;
                     }
                     pillClass = 'mx_GroupPill';

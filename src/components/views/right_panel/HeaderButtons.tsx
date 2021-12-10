@@ -19,6 +19,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import dis from '../../../dispatcher/dispatcher';
 import RightPanelStore from "../../../stores/RightPanelStore";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
@@ -99,7 +100,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
 
     public render() {
         return <div className="mx_HeaderButtons">
-            {this.renderButtons()}
+            { this.renderButtons() }
         </div>;
     }
 }

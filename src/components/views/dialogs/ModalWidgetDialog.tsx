@@ -15,9 +15,6 @@ limitations under the License.
 */
 
 import * as React from 'react';
-import BaseDialog from './BaseDialog';
-import { _t, getUserLanguage } from '../../../languageHandler';
-import AccessibleButton from "../elements/AccessibleButton";
 import {
     ClientWidgetApi,
     IModalWidgetCloseRequest,
@@ -33,6 +30,10 @@ import {
     WidgetApiFromWidgetAction,
     WidgetKind,
 } from "matrix-widget-api";
+
+import BaseDialog from './BaseDialog';
+import { _t, getUserLanguage } from '../../../languageHandler';
+import AccessibleButton from "../elements/AccessibleButton";
 import { StopGapWidgetDriver } from "../../../stores/widgets/StopGapWidgetDriver";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
@@ -191,9 +192,9 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
                     width="16"
                     alt=""
                 />
-                {_t("Data on this screen is shared with %(widgetDomain)s", {
+                { _t("Data on this screen is shared with %(widgetDomain)s", {
                     widgetDomain: parsed.hostname,
-                })}
+                }) }
             </div>
             <div>
                 <iframe

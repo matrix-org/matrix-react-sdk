@@ -16,9 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { _t } from '../../../languageHandler';
-import { ContextMenu, IProps as IContextMenuProps, MenuItem } from '../../structures/ContextMenu';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+
+import { _t } from '../../../languageHandler';
+import ContextMenu, { IProps as IContextMenuProps, MenuItem } from '../../structures/ContextMenu';
 import CallHandler from '../../../CallHandler';
 import InviteDialog, { KIND_CALL_TRANSFER } from '../dialogs/InviteDialog';
 import Modal from '../../../Modal';
@@ -45,7 +46,7 @@ export default class CallContextMenu extends React.Component<IProps> {
     };
 
     onUnholdClick = () => {
-        CallHandler.sharedInstance().setActiveCallRoomId(this.props.call.roomId);
+        CallHandler.instance.setActiveCallRoomId(this.props.call.roomId);
 
         this.props.onFinished();
     };
@@ -65,15 +66,15 @@ export default class CallContextMenu extends React.Component<IProps> {
         let transferItem;
         if (this.props.call.opponentCanBeTransferred()) {
             transferItem = <MenuItem className="mx_CallContextMenu_item" onClick={this.onTransferClick}>
-                {_t("Transfer")}
+                { _t("Transfer") }
             </MenuItem>;
         }
 
         return <ContextMenu {...this.props}>
             <MenuItem className="mx_CallContextMenu_item" onClick={handler}>
-                {holdUnholdCaption}
+                { holdUnholdCaption }
             </MenuItem>
-            {transferItem}
+            { transferItem }
         </ContextMenu>;
     }
 }

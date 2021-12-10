@@ -18,6 +18,7 @@ limitations under the License.
 import React from 'react';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -33,9 +34,10 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     resizeMethod?: ResizeMethod;
     // The onClick to give the avatar
     onClick?: React.MouseEventHandler;
-    // Whether the onClick of the avatar should be overriden to dispatch `Action.ViewUser`
+    // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
     viewUserOnClick?: boolean;
     title?: string;
+    style?: any;
 }
 
 interface IState {
@@ -84,7 +86,7 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
                 title: props.fallbackUserId,
             };
         } else {
-            console.error("MemberAvatar called somehow with null member or fallbackUserId");
+            logger.error("MemberAvatar called somehow with null member or fallbackUserId");
         }
     }
 
@@ -102,8 +104,12 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
         }
 
         return (
-            <BaseAvatar {...otherProps} name={this.state.name} title={this.state.title}
-                idName={userId} url={this.state.imageUrl} onClick={onClick} />
+            <BaseAvatar {...otherProps}
+                name={this.state.name}
+                title={this.state.title}
+                idName={userId}
+                url={this.state.imageUrl}
+                onClick={onClick} />
         );
     }
 }

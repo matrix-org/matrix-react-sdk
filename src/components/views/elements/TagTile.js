@@ -19,11 +19,12 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { isOnlyCtrlOrCmdIgnoreShiftKeyEvent } from '../../../Keyboard';
 import * as FormattingUtils from '../../../utils/FormattingUtils';
-
 import FlairStore from '../../../stores/FlairStore';
 import GroupStore from '../../../stores/GroupStore';
 import GroupFilterOrderStore from '../../../stores/GroupFilterOrderStore';
@@ -85,7 +86,7 @@ export default class TagTile extends React.Component {
             if (this.unmounted) return;
             this.setState({ profile });
         }).catch((err) => {
-            console.warn('Could not fetch group profile for ' + this.props.tag, err);
+            logger.warn('Could not fetch group profile for ' + this.props.tag, err);
         });
     };
 
@@ -152,7 +153,7 @@ export default class TagTile extends React.Component {
                 "mx_TagTile_badge": true,
                 "mx_TagTile_badgeHighlight": badge.highlight,
             });
-            badgeElement = (<div className={badgeClasses}>{FormattingUtils.formatCount(badge.count)}</div>);
+            badgeElement = (<div className={badgeClasses}>{ FormattingUtils.formatCount(badge.count) }</div>);
         }
 
         const contextButton = this.state.hover || this.props.menuDisplayed ?
@@ -161,7 +162,7 @@ export default class TagTile extends React.Component {
                 onClick={this.openMenu}
                 inputRef={this.props.contextMenuButtonRef}
             >
-                {"\u00B7\u00B7\u00B7"}
+                { "\u00B7\u00B7\u00B7" }
             </AccessibleButton> : <div ref={this.props.contextMenuButtonRef} />;
 
         const AccessibleTooltipButton = sdk.getComponent("elements.AccessibleTooltipButton");
@@ -184,8 +185,8 @@ export default class TagTile extends React.Component {
                     width={avatarSize}
                     height={avatarSize}
                 />
-                {contextButton}
-                {badgeElement}
+                { contextButton }
+                { badgeElement }
             </div>
         </AccessibleTooltipButton>;
     }

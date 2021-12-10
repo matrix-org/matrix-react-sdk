@@ -19,6 +19,10 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
+import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import dis from './dispatcher/dispatcher';
 import BaseEventIndexManager from './indexing/BaseEventIndexManager';
 import { ActionPayload } from "./dispatcher/payloads";
@@ -166,9 +170,9 @@ export default abstract class BasePlatform {
      */
     abstract requestNotificationPermission(): Promise<string>;
 
-    abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Object);
+    abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Room);
 
-    loudNotification(ev: Event, room: Object) {
+    loudNotification(ev: MatrixEvent, room: Room) {
     }
 
     clearNotification(notif: Notification) {
@@ -315,12 +319,14 @@ export default abstract class BasePlatform {
         let data;
         try {
             data = await idbLoad("pickleKey", [userId, deviceId]);
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbLoad for pickleKey failed", e);
+        }
         if (!data) {
             return null;
         }
         if (!data.encrypted || !data.iv || !data.cryptoKey) {
-            console.error("Badly formatted pickle key");
+            logger.error("Badly formatted pickle key");
             return null;
         }
 
@@ -340,7 +346,7 @@ export default abstract class BasePlatform {
             );
             return encodeUnpaddedBase64(key);
         } catch (e) {
-            console.error("Error decrypting pickle key");
+            logger.error("Error decrypting pickle key");
             return null;
         }
     }
@@ -394,6 +400,8 @@ export default abstract class BasePlatform {
     async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
             await idbDelete("pickleKey", [userId, deviceId]);
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbDelete failed in destroyPickleKey", e);
+        }
     }
 }

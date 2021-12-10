@@ -47,6 +47,7 @@ import { useRoomMemberCount } from "../../../hooks/useRoomMembers";
 import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import RoomName from "../elements/RoomName";
 import UIStore from "../../../stores/UIStore";
+import ExportDialog from "../dialogs/ExportDialog";
 
 interface IProps {
     room: Room;
@@ -95,6 +96,11 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     const name = WidgetUtils.getWidgetName(app);
     const dataTitle = WidgetUtils.getWidgetDataTitle(app);
     const subtitle = dataTitle && " - " + dataTitle;
+    const [canModifyWidget, setCanModifyWidget] = useState<boolean>();
+
+    useEffect(() => {
+        setCanModifyWidget(WidgetUtils.canUserModifyWidgets(room.roomId));
+    }, [room.roomId]);
 
     const onOpenWidgetClick = () => {
         defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
@@ -137,28 +143,45 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
         mx_RoomSummaryCard_Button_pinned: isPinned,
     });
 
+    const isMaximised = WidgetLayoutStore.instance.isInContainer(room, app, Container.Center);
+    const toggleMaximised = isMaximised
+        ? () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right); }
+        : () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center); };
+
+    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise widget");
+
+    let openTitle = "";
+    if (isPinned) {
+        openTitle = _t("Unpin this widget to view it in this panel");
+    } else if (isMaximised) {
+        openTitle =_t("Close this widget to view it in this panel");
+    }
+
     return <div className={classes} ref={handle}>
         <AccessibleTooltipButton
             className="mx_RoomSummaryCard_icon_app"
             onClick={onOpenWidgetClick}
             // only show a tooltip if the widget is pinned
-            title={isPinned ? _t("Unpin a widget to view it in this panel") : ""}
-            forceHide={!isPinned}
-            disabled={isPinned}
+            title={openTitle}
+            forceHide={!(isPinned || isMaximised)}
+            disabled={isPinned || isMaximised}
             yOffset={-48}
         >
             <WidgetAvatar app={app} />
-            <span>{name}</span>
+            <span>{ name }</span>
             { subtitle }
         </AccessibleTooltipButton>
 
-        <ContextMenuTooltipButton
-            className="mx_RoomSummaryCard_app_options"
+        { canModifyWidget && <ContextMenuTooltipButton
+            className={classNames({
+                "mx_RoomSummaryCard_app_options": true,
+                "mx_RoomSummaryCard_maximised_widget": SettingsStore.getValue("feature_maximised_widgets"),
+            })}
             isExpanded={menuDisplayed}
             onClick={openMenu}
             title={_t("Options")}
             yOffset={-24}
-        />
+        /> }
 
         <AccessibleTooltipButton
             className="mx_RoomSummaryCard_app_pinToggle"
@@ -167,6 +190,13 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             disabled={cannotPin}
             yOffset={-24}
         />
+        { SettingsStore.getValue("feature_maximised_widgets") &&
+        <AccessibleTooltipButton
+            className={isMaximised ? "mx_RoomSummaryCard_app_minimise" : "mx_RoomSummaryCard_app_maximise"}
+            onClick={toggleMaximised}
+            title={maximiseTitle}
+            yOffset={-24}
+        /> }
 
         { contextMenu }
     </div>;
@@ -206,17 +236,19 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
     </Group>;
 };
 
-const onRoomMembersClick = () => {
+export const onRoomMembersClick = (allowClose = true) => {
     defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
         action: Action.SetRightPanelPhase,
         phase: RightPanelPhases.RoomMemberList,
+        allowClose,
     });
 };
 
-const onRoomFilesClick = () => {
+export const onRoomFilesClick = (allowClose = true) => {
     defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
         action: Action.SetRightPanelPhase,
         phase: RightPanelPhases.FilePanel,
+        allowClose,
     });
 };
 
@@ -230,6 +262,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     const onShareRoomClick = () => {
         Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
             target: room,
+        });
+    };
+
+    const onRoomExportClick = async () => {
+        Modal.createTrackedDialog('export room dialog', '', ExportDialog, {
+            room,
         });
     };
 
@@ -256,7 +294,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
                 <h2 title={name}>
                     { name }
                 </h2>
-            )}
+            ) }
         </RoomName>
         <div className="mx_RoomSummaryCard_alias" title={alias}>
             { alias }
@@ -268,16 +306,22 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
     return <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
         <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
             <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
-                {_t("%(count)s people", { count: memberCount })}
+                { _t("People") }
+                <span className="mx_BaseCard_Button_sublabel">
+                    { memberCount }
+                </span>
             </Button>
             <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
-                {_t("Show files")}
+                { _t("Files") }
+            </Button>
+            <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
+                { _t("Export chat") }
             </Button>
             <Button className="mx_RoomSummaryCard_icon_share" onClick={onShareRoomClick}>
-                {_t("Share room")}
+                { _t("Share room") }
             </Button>
             <Button className="mx_RoomSummaryCard_icon_settings" onClick={onRoomSettingsClick}>
-                {_t("Room settings")}
+                { _t("Room settings") }
             </Button>
         </Group>
 

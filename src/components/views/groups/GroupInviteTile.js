@@ -18,12 +18,13 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
-import classNames from 'classnames';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { ContextMenu, ContextMenuButton, toRightOf } from "../../structures/ContextMenu";
+import ContextMenu, { ContextMenuButton, toRightOf } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -165,7 +166,7 @@ export default class GroupInviteTile extends React.Component {
 
         return <React.Fragment>
             <RovingTabIndexWrapper>
-                {({ onFocus, isActive, ref }) =>
+                { ({ onFocus, isActive, ref }) =>
                     <AccessibleButton
                         onFocus={onFocus}
                         tabIndex={isActive ? 0 : -1}

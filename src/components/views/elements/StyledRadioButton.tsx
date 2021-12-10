@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import classnames from 'classnames';
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -39,34 +40,34 @@ export default class StyledRadioButton extends React.PureComponent<IProps, IStat
     public render() {
         const { children, className, disabled, outlined, childrenInLabel, ...otherProps } = this.props;
         const _className = classnames(
-            'mx_RadioButton',
+            'mx_StyledRadioButton',
             className,
             {
-                "mx_RadioButton_disabled": disabled,
-                "mx_RadioButton_enabled": !disabled,
-                "mx_RadioButton_checked": this.props.checked,
-                "mx_RadioButton_outlined": outlined,
+                "mx_StyledRadioButton_disabled": disabled,
+                "mx_StyledRadioButton_enabled": !disabled,
+                "mx_StyledRadioButton_checked": this.props.checked,
+                "mx_StyledRadioButton_outlined": outlined,
             });
 
         const radioButton = <React.Fragment>
             <input type='radio' disabled={disabled} {...otherProps} />
-            {/* Used to render the radio button circle */}
+            { /* Used to render the radio button circle */ }
             <div><div /></div>
         </React.Fragment>;
 
         if (childrenInLabel) {
             return <label className={_className}>
-                {radioButton}
-                <div className="mx_RadioButton_content">{children}</div>
-                <div className="mx_RadioButton_spacer" />
+                { radioButton }
+                <div className="mx_StyledRadioButton_content">{ children }</div>
+                <div className="mx_StyledRadioButton_spacer" />
             </label>;
         } else {
             return <div className={_className}>
-                <label className="mx_RadioButton_innerLabel">
-                    {radioButton}
+                <label className="mx_StyledRadioButton_innerLabel">
+                    { radioButton }
                 </label>
-                <div className="mx_RadioButton_content">{children}</div>
-                <div className="mx_RadioButton_spacer" />
+                <div className="mx_StyledRadioButton_content">{ children }</div>
+                <div className="mx_StyledRadioButton_spacer" />
             </div>;
         }
     }

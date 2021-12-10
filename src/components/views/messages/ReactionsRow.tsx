@@ -24,7 +24,7 @@ import { _t } from '../../../languageHandler';
 import { isContentActionable } from '../../../utils/EventUtils';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
-import { aboveLeftOf, ContextMenu, useContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { aboveLeftOf, useContextMenu } from "../../structures/ContextMenu";
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import ReactionsRowButton from "./ReactionsRowButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -199,7 +199,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
                 href="#"
                 onClick={this.onShowAllClick}
             >
-                {_t("Show all")}
+                { _t("Show all") }
             </a>;
         }
 
