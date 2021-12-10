@@ -754,7 +754,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.switchSpaceIfNeeded();
         }
 
-        this.updateNotificationStates(Array.from(changeSet));
+        const notificationStatesToUpdate = [...changeSet];
+        if (this.enabledMetaSpaces.includes(MetaSpace.People) &&
+            userDiff.added.length + userDiff.removed.length + usersChanged.length > 0
+        ) {
+            notificationStatesToUpdate.push(MetaSpace.People);
+        }
+        this.updateNotificationStates(notificationStatesToUpdate);
     };
 
     private switchSpaceIfNeeded = throttle(() => {

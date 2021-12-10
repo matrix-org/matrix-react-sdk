@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventEmitter } from "events";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
@@ -35,7 +34,6 @@ import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { SettingLevel } from "../../src/settings/SettingLevel";
-import { emitPromise } from "../utils/test-utils";
 
 jest.useFakeTimers();
 
@@ -466,23 +464,24 @@ describe("SpaceStore", () => {
                 expect(store.isRoomInSpace(space3, dm3)).toBeFalsy();
             });
 
-            it("dms are only added to Notification States for only the Home Space", () => {
-                // XXX: All rooms space is forcibly enabled, as part of a future PR test Home space better
-                // [dm1, dm2, dm3].forEach(d => {
-                //     expect(store.getNotificationState(HOME_SPACE).rooms.map(r => r.roomId).includes(d)).toBeTruthy();
-                // });
-                [space1, space2, space3].forEach(s => {
+            it("dms are only added to Notification States for only the People Space", async () => {
+                [dm1, dm2, dm3].forEach(d => {
+                    expect(store.getNotificationState(MetaSpace.People)
+                        .rooms.map(r => r.roomId).includes(d)).toBeTruthy();
+                });
+                [space1, space2, space3, MetaSpace.Home, MetaSpace.Orphans, MetaSpace.Favourites].forEach(s => {
                     [dm1, dm2, dm3].forEach(d => {
                         expect(store.getNotificationState(s).rooms.map(r => r.roomId).includes(d)).toBeFalsy();
                     });
                 });
             });
 
-            it("orphan rooms are added to Notification States for only the Home Space", () => {
-                // XXX: All rooms space is forcibly enabled, as part of a future PR test Home space better
-                // [orphan1, orphan2].forEach(d => {
-                //     expect(store.getNotificationState(HOME_SPACE).rooms.map(r => r.roomId).includes(d)).toBeTruthy();
-                // });
+            it("orphan rooms are added to Notification States for only the Home Space", async () => {
+                await setShowAllRooms(false);
+                [orphan1, orphan2].forEach(d => {
+                    expect(store.getNotificationState(MetaSpace.Home)
+                        .rooms.map(r => r.roomId).includes(d)).toBeTruthy();
+                });
                 [space1, space2, space3].forEach(s => {
                     [orphan1, orphan2].forEach(d => {
                         expect(store.getNotificationState(s).rooms.map(r => r.roomId).includes(d)).toBeFalsy();
@@ -525,23 +524,12 @@ describe("SpaceStore", () => {
     });
 
     describe("hierarchy resolution update tests", () => {
-        let emitter: EventEmitter;
-        beforeEach(async () => {
-            emitter = new EventEmitter();
-            client.on.mockImplementation(emitter.on.bind(emitter));
-            client.removeListener.mockImplementation(emitter.removeListener.bind(emitter));
-        });
-        afterEach(() => {
-            client.on.mockReset();
-            client.removeListener.mockReset();
-        });
-
         it("updates state when spaces are joined", async () => {
             await run();
             expect(store.spacePanelSpaces).toStrictEqual([]);
             const space = mkSpace(space1);
             const prom = testUtils.emitPromise(store, UPDATE_TOP_LEVEL_SPACES);
-            emitter.emit("Room", space);
+            client.emit("Room", space);
             await prom;
             expect(store.spacePanelSpaces).toStrictEqual([space]);
             expect(store.invitedSpaces).toStrictEqual([]);
@@ -554,7 +542,7 @@ describe("SpaceStore", () => {
             expect(store.spacePanelSpaces).toStrictEqual([space]);
             space.getMyMembership.mockReturnValue("leave");
             const prom = testUtils.emitPromise(store, UPDATE_TOP_LEVEL_SPACES);
-            emitter.emit("Room.myMembership", space, "leave", "join");
+            client.emit("Room.myMembership", space, "leave", "join");
             await prom;
             expect(store.spacePanelSpaces).toStrictEqual([]);
         });
@@ -566,7 +554,7 @@ describe("SpaceStore", () => {
             const space = mkSpace(space1);
             space.getMyMembership.mockReturnValue("invite");
             const prom = testUtils.emitPromise(store, UPDATE_INVITED_SPACES);
-            emitter.emit("Room", space);
+            client.emit("Room", space);
             await prom;
             expect(store.spacePanelSpaces).toStrictEqual([]);
             expect(store.invitedSpaces).toStrictEqual([space]);
@@ -581,7 +569,7 @@ describe("SpaceStore", () => {
             expect(store.invitedSpaces).toStrictEqual([space]);
             space.getMyMembership.mockReturnValue("join");
             const prom = testUtils.emitPromise(store, UPDATE_TOP_LEVEL_SPACES);
-            emitter.emit("Room.myMembership", space, "join", "invite");
+            client.emit("Room.myMembership", space, "join", "invite");
             await prom;
             expect(store.spacePanelSpaces).toStrictEqual([space]);
             expect(store.invitedSpaces).toStrictEqual([]);
@@ -596,7 +584,7 @@ describe("SpaceStore", () => {
             expect(store.invitedSpaces).toStrictEqual([space]);
             space.getMyMembership.mockReturnValue("leave");
             const prom = testUtils.emitPromise(store, UPDATE_INVITED_SPACES);
-            emitter.emit("Room.myMembership", space, "leave", "invite");
+            client.emit("Room.myMembership", space, "leave", "invite");
             await prom;
             expect(store.spacePanelSpaces).toStrictEqual([]);
             expect(store.invitedSpaces).toStrictEqual([]);
@@ -616,7 +604,7 @@ describe("SpaceStore", () => {
             const invite = mkRoom(invite1);
             invite.getMyMembership.mockReturnValue("invite");
             const prom = testUtils.emitPromise(store, space1);
-            emitter.emit("Room", space);
+            client.emit("Room", space);
             await prom;
 
             expect(store.spacePanelSpaces).toStrictEqual([space]);
@@ -888,9 +876,10 @@ describe("SpaceStore", () => {
         });
     });
 
-    it("integrated test", async () => {
+    it("test user flow", async () => {
         // init the store
         await run();
+        await setShowAllRooms(false);
 
         // receive invite to space
         const rootSpace = mkSpace(space1, [room1, room2, space2]);
@@ -939,6 +928,7 @@ describe("SpaceStore", () => {
         const myRootSpaceMember = new RoomMember(space1, testUserId);
         myRootSpaceMember.membership = "join";
         const rootSpaceFriend = new RoomMember(space1, dm1Partner.userId);
+        rootSpaceFriend.membership = "join";
         rootSpace.getMembers.mockReturnValue([
             myRootSpaceMember,
             rootSpaceFriend,
@@ -977,13 +967,13 @@ describe("SpaceStore", () => {
         expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Orphans, dm1)).toBeFalsy();
 
         // join subspace
-        const subspace = mkSpace(space1);
+        const subspace = mkSpace(space2);
         subspace.getMyMembership.mockReturnValue("join");
-        const prom = emitPromise(SpaceStore.instance, space1);
+        const prom = testUtils.emitPromise(SpaceStore.instance, space1);
         client.emit("Room", subspace);
         jest.runAllTimers();
         expect(SpaceStore.instance.invitedSpaces).toStrictEqual([]);
-        expect(SpaceStore.instance.spacePanelSpaces).toStrictEqual([rootSpace]);
+        expect(SpaceStore.instance.spacePanelSpaces.map(r => r.roomId)).toStrictEqual([rootSpace.roomId]);
         await prom;
     });
 });
