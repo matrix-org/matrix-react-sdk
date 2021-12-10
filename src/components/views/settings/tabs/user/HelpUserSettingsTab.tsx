@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import { _t, getCurrentLanguage } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -34,8 +36,6 @@ import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPa
 import { Action } from "../../../../../dispatcher/actions";
 import { UserTab } from "../../../dialogs/UserSettingsDialog";
 import dis from "../../../../../dispatcher/dispatcher";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     closeSettingsFn: () => void;

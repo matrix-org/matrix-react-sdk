@@ -236,6 +236,12 @@ export const shortcuts: Record<Categories, IShortcut[]> = {
             description: _td("Activate selected button"),
         }, {
             keybinds: [{
+                modifiers: [CMD_OR_CTRL, Modifiers.SHIFT],
+                key: Key.D,
+            }],
+            description: _td("Toggle space panel"),
+        }, {
+            keybinds: [{
                 modifiers: [CMD_OR_CTRL],
                 key: Key.PERIOD,
             }],
