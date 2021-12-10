@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639143267422,
+  "lastUpdate": 1639146803054,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47108,6 +47108,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 685.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "will@half-shot.uk",
+            "name": "Will Hunt",
+            "username": "Half-Shot"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "785eb5fa15535d594eef4a56b3aadd0fce753670",
+          "message": "No-op action:join if the user is already invited for scalar (#7334)\n\n* No-op action:join if the user is already invited for scalar\r\n\r\n* Improve words",
+          "timestamp": "2021-12-10T14:26:38Z",
+          "tree_id": "98c44ba04ecd75ffc58cd0b49fe6fc5399f7c04a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/785eb5fa15535d594eef4a56b3aadd0fce753670"
+        },
+        "date": 1639146800070,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5572.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1444,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1912.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4677.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
