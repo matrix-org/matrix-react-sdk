@@ -266,18 +266,24 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
                 this.props.onFinished();
                 break;
             case Key.ARROW_UP:
-                this.onMoveFocus(ev.target as Element, true, true);
+                this.onMoveFocus(ev.target as Element, true);
                 break;
             case Key.ARROW_DOWN:
-                this.onMoveFocus(ev.target as Element, false, true);
+                this.onMoveFocus(ev.target as Element, false);
                 break;
-            // case Key.TAB:
-            //     if(ev.shiftKey) {
-            //         this.onMoveFocus(ev.target as Element, true);
-            //     } else {
-            //         this.onMoveFocus(ev.target as Element, false);
-            //     }
-            //     break;
+            case Key.TAB:
+                // Pass through listener
+                handled = false;
+
+                // TODO: This is more on PoC level and not very clean.
+                setTimeout(() => {
+                    console.log('tab', this.state.contextMenuElem, document.activeElement)
+                    // If we've tabbed outside of the menu, then close the menu
+                    if(!this.state.contextMenuElem.contains(document.activeElement)) {
+                        this.props.onFinished();
+                    }
+                }, 0);
+                break;
             case Key.HOME:
                 this.onMoveFocusHomeEnd(this.state.contextMenuElem, true);
                 break;
