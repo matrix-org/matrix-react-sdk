@@ -53,7 +53,7 @@ All actions can return an error response instead of the response outlined below.
 
 invite
 ------
-Invites a user into a room. The request will no-op if the user is already in the room.
+Invites a user into a room. The request will no-op if the user is already joined OR invited to the room.
 
 Request:
  - room_id is the room to invite the user into.
