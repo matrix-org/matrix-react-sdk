@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639146803054,
+  "lastUpdate": 1639148221651,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47156,6 +47156,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4677.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kim.brose@rwth-aachen.de",
+            "name": "Kim Brose",
+            "username": "HarHarLinks"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "692679a5ea36bb5ae9a3b871aeac1e825073e628",
+          "message": "don't collapse spaces in inline code blocks (#7328)",
+          "timestamp": "2021-12-10T14:50:50Z",
+          "tree_id": "efd151a9bd86573085bbd1a2fe213a3d304568e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/692679a5ea36bb5ae9a3b871aeac1e825073e628"
+        },
+        "date": 1639148218689,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4984.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 684.5,
             "unit": "ms",
             "extra": "type: measure"
           }
