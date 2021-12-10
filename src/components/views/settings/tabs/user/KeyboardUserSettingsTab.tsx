@@ -17,6 +17,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import React from "react";
+
 import { Categories, DIGITS, IShortcut, Modifiers, shortcuts } from "../../../../../accessibility/KeyboardShortcuts";
 import { isMac, Key } from "../../../../../Keyboard";
 import { _t, _td } from "../../../../../languageHandler";
