@@ -18,6 +18,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import { _t, _td } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
@@ -25,8 +27,8 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Room } from "matrix-js-sdk/src/models/room";
 import SettingsFlag from "../elements/SettingsFlag";
+import SettingsFieldset from '../settings/SettingsFieldset';
 
 interface IProps {
     room: Room;
@@ -96,18 +98,19 @@ export default class UrlPreviewSettings extends React.Component<IProps> {
                 roomId={roomId} />
         );
 
-        return (
-            <div>
-                <div className='mx_SettingsTab_subsectionText'>
-                    { _t('When someone puts a URL in their message, a URL preview can be shown to give more ' +
+        const description = <>
+            <p>
+                { _t('When someone puts a URL in their message, a URL preview can be shown to give more ' +
                         'information about that link such as the title, description, and an image from the website.') }
-                </div>
-                <div className='mx_SettingsTab_subsectionText'>
-                    { previewsForAccount }
-                </div>
+            </p>
+            <p>{ previewsForAccount }</p>
+        </>;
+
+        return (
+            <SettingsFieldset legend={_t("URL Previews")} description={description}>
                 { previewsForRoom }
                 <label>{ previewsForRoomAccount }</label>
-            </div>
+            </SettingsFieldset>
         );
     }
 }

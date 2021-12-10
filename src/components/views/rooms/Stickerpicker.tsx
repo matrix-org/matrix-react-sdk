@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t, _td } from '../../../languageHandler';
 import AppTile from '../elements/AppTile';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -35,8 +37,6 @@ import ScalarAuthClient from '../../../ScalarAuthClient';
 import GenericElementContextMenu from "../context_menus/GenericElementContextMenu";
 import { IApp } from "../../../stores/WidgetStore";
 
-import { logger } from "matrix-js-sdk/src/logger";
-
 // This should be below the dialog level (4000), but above the rest of the UI (1000-2000).
 // We sit in a context menu, so this should be given to the context menu.
 const STICKERPICKER_Z_INDEX = 3500;
@@ -46,6 +46,7 @@ const PERSISTED_ELEMENT_KEY = "stickerPicker";
 
 interface IProps {
     room: Room;
+    threadId?: string | null;
     showStickers: boolean;
     menuPosition?: any;
     setShowStickers: (showStickers: boolean) => void;
@@ -62,6 +63,10 @@ interface IState {
 
 @replaceableComponent("views.rooms.Stickerpicker")
 export default class Stickerpicker extends React.PureComponent<IProps, IState> {
+    static defaultProps = {
+        threadId: null,
+    };
+
     static currentWidget;
 
     private dispatcherRef: string;
@@ -287,6 +292,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                             <AppTile
                                 app={stickerApp}
                                 room={this.props.room}
+                                threadId={this.props.threadId}
                                 fullWidth={true}
                                 userId={MatrixClientPeg.get().credentials.userId}
                                 creatorUserId={stickerpickerWidget.sender || MatrixClientPeg.get().credentials.userId}
