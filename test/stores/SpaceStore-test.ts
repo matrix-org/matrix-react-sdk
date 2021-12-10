@@ -35,15 +35,11 @@ import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { SettingLevel } from "../../src/settings/SettingLevel";
+import { emitPromise } from "../utils/test-utils";
 
 jest.useFakeTimers();
 
 const testUserId = "@test:user";
-
-const getUserIdForRoomId = jest.fn();
-const getDMRoomsForUserId = jest.fn();
-// @ts-ignore
-DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
 
 const fav1 = "!fav1:server";
 const fav2 = "!fav2:server";
@@ -67,6 +63,28 @@ const room3 = "!room3:server";
 const space1 = "!space1:server";
 const space2 = "!space2:server";
 const space3 = "!space3:server";
+
+const getUserIdForRoomId = jest.fn(roomId => {
+    return {
+        [dm1]: dm1Partner.userId,
+        [dm2]: dm2Partner.userId,
+        [dm3]: dm3Partner.userId,
+    }[roomId];
+});
+const getDMRoomsForUserId = jest.fn(userId => {
+    switch (userId) {
+        case dm1Partner.userId:
+            return [dm1];
+        case dm2Partner.userId:
+            return [dm2];
+        case dm3Partner.userId:
+            return [dm3];
+        default:
+            return [];
+    }
+});
+// @ts-ignore
+DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
 
 describe("SpaceStore", () => {
     stubClient();
@@ -304,26 +322,6 @@ describe("SpaceStore", () => {
 
                 [invite1, invite2].forEach(roomId => {
                     client.getRoom(roomId).getMyMembership.mockReturnValue("invite");
-                });
-
-                getUserIdForRoomId.mockImplementation(roomId => {
-                    return {
-                        [dm1]: dm1Partner.userId,
-                        [dm2]: dm2Partner.userId,
-                        [dm3]: dm3Partner.userId,
-                    }[roomId];
-                });
-                getDMRoomsForUserId.mockImplementation(userId => {
-                    switch (userId) {
-                        case dm1Partner.userId:
-                            return [dm1];
-                        case dm2Partner.userId:
-                            return [dm2];
-                        case dm3Partner.userId:
-                            return [dm3];
-                        default:
-                            return [];
-                    }
                 });
 
                 // have dmPartner1 be in space1 with you
@@ -890,23 +888,102 @@ describe("SpaceStore", () => {
         });
     });
 
-    describe("dynamic text fixture", () => {
+    it("integrated test", async () => {
+        // init the store
+        await run();
+
         // receive invite to space
-        // expect it to appear in SpaceStore.instance.invitedSpaces
+        const rootSpace = mkSpace(space1, [room1, room2, space2]);
+        rootSpace.getMyMembership.mockReturnValue("invite");
+        client.emit("Room", rootSpace);
+        jest.runAllTimers();
+        expect(SpaceStore.instance.invitedSpaces).toStrictEqual([rootSpace]);
+        expect(SpaceStore.instance.spacePanelSpaces).toStrictEqual([]);
 
         // accept invite to space
-        // expect it to disappear from SpaceStore.instance.invitedSpaces and move to SpaceStore.instance.spacePanelSpaces
+        rootSpace.getMyMembership.mockReturnValue("join");
+        client.emit("Room.myMembership", rootSpace, "join", "invite");
+        jest.runAllTimers();
+        expect(SpaceStore.instance.invitedSpaces).toStrictEqual([]);
+        expect(SpaceStore.instance.spacePanelSpaces).toStrictEqual([rootSpace]);
 
         // join room in space
-        // expect it to show up in the Room List only for that Space
+        expect(SpaceStore.instance.isRoomInSpace(space1, room1)).toBeFalsy();
+        const rootSpaceRoom1 = mkRoom(room1);
+        rootSpaceRoom1.getMyMembership.mockReturnValue("join");
+        client.emit("Room", rootSpaceRoom1);
+        jest.runAllTimers();
+        expect(SpaceStore.instance.invitedSpaces).toStrictEqual([]);
+        expect(SpaceStore.instance.spacePanelSpaces).toStrictEqual([rootSpace]);
+        expect(SpaceStore.instance.isRoomInSpace(space1, room1)).toBeTruthy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Home, room1)).toBeFalsy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Favourites, room1)).toBeFalsy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.People, room1)).toBeFalsy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Orphans, room1)).toBeFalsy();
 
         // receive room invite
-        // expect it to show up in the Space and Home
+        expect(SpaceStore.instance.isRoomInSpace(space1, room2)).toBeFalsy();
+        const rootSpaceRoom2 = mkRoom(room2);
+        rootSpaceRoom2.getMyMembership.mockReturnValue("invite");
+        client.emit("Room", rootSpaceRoom2);
+        jest.runAllTimers();
+        expect(SpaceStore.instance.invitedSpaces).toStrictEqual([]);
+        expect(SpaceStore.instance.spacePanelSpaces).toStrictEqual([rootSpace]);
+        expect(SpaceStore.instance.isRoomInSpace(space1, room2)).toBeTruthy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Home, room2)).toBeTruthy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Favourites, room2)).toBeFalsy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.People, room2)).toBeFalsy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Orphans, room2)).toBeFalsy();
 
         // start DM in space
-        // expect it to show up in the Space and Home and People
+        const myRootSpaceMember = new RoomMember(space1, testUserId);
+        myRootSpaceMember.membership = "join";
+        const rootSpaceFriend = new RoomMember(space1, dm1Partner.userId);
+        rootSpace.getMembers.mockReturnValue([
+            myRootSpaceMember,
+            rootSpaceFriend,
+        ]);
+        rootSpace.getMember.mockImplementation(userId => {
+            switch (userId) {
+                case testUserId:
+                    return myRootSpaceMember;
+                case dm1Partner.userId:
+                    return rootSpaceFriend;
+            }
+        });
+        expect(SpaceStore.instance.getSpaceFilteredUserIds(space1).has(dm1Partner.userId)).toBeFalsy();
+        client.emit("RoomState.members", mkEvent({
+            event: true,
+            type: EventType.RoomMember,
+            content: {
+                membership: "join",
+            },
+            skey: dm1Partner.userId,
+            user: dm1Partner.userId,
+            room: space1,
+        }));
+        jest.runAllTimers();
+        expect(SpaceStore.instance.getSpaceFilteredUserIds(space1).has(dm1Partner.userId)).toBeTruthy();
+        const dm1Room = mkRoom(dm1);
+        dm1Room.getMyMembership.mockReturnValue("join");
+        client.emit("Room", dm1Room);
+        jest.runAllTimers();
+        expect(SpaceStore.instance.invitedSpaces).toStrictEqual([]);
+        expect(SpaceStore.instance.spacePanelSpaces).toStrictEqual([rootSpace]);
+        expect(SpaceStore.instance.isRoomInSpace(space1, dm1)).toBeTruthy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Home, dm1)).toBeTruthy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Favourites, dm1)).toBeFalsy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.People, dm1)).toBeTruthy();
+        expect(SpaceStore.instance.isRoomInSpace(MetaSpace.Orphans, dm1)).toBeFalsy();
 
         // join subspace
-        // expect an emit on the parent space
+        const subspace = mkSpace(space1);
+        subspace.getMyMembership.mockReturnValue("join");
+        const prom = emitPromise(SpaceStore.instance, space1);
+        client.emit("Room", subspace);
+        jest.runAllTimers();
+        expect(SpaceStore.instance.invitedSpaces).toStrictEqual([]);
+        expect(SpaceStore.instance.spacePanelSpaces).toStrictEqual([rootSpace]);
+        await prom;
     });
 });
