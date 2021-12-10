@@ -80,24 +80,24 @@ export function convertToStateRoom(storeRoom: { history: Array<IPhaseAndStateSto
 function convertStateToStore(panelState: IPhaseAndState): IPhaseAndStateStored {
     const panelStateThisRoomStored = { ...panelState.state } as any;
     if (!!panelState?.state?.threadHeadEvent?.getId()) {
-        panelStateThisRoomStored.eventId = panelState.state.threadHeadEvent.getId();
+        panelStateThisRoomStored.threadHeadEventId = panelState.state.threadHeadEvent.getId();
     }
     if (!!panelState?.state?.initialEvent?.getId()) {
         panelStateThisRoomStored.initialEventId = panelState.state.initialEvent.getId();
     }
-    delete panelStateThisRoomStored.event;
+    delete panelStateThisRoomStored.threadHeadEvent;
     delete panelStateThisRoomStored.initialEvent;
     return { state: panelStateThisRoomStored as IPhaseAndStateStored, phase: panelState.phase } as IPhaseAndStateStored;
 }
 function convertStoreToState(panelStateStore: IPhaseAndStateStored, room: Room): IPhaseAndState {
     const panelStateThisRoom = { ...panelStateStore?.state } as any;
-    if (!!panelStateThisRoom.eventId) {
-        panelStateThisRoom.event = room.findEventById(panelStateThisRoom.eventId);
+    if (!!panelStateThisRoom.threadHeadEventId) {
+        panelStateThisRoom.threadHeadEvent = room.findEventById(panelStateThisRoom.threadHeadEventId);
     }
     if (!!panelStateThisRoom.initialEventId) {
         panelStateThisRoom.initialEvent = room.findEventById(panelStateThisRoom.initialEventId);
     }
-    delete panelStateThisRoom.eventId;
+    delete panelStateThisRoom.threadHeadEventId;
     delete panelStateThisRoom.initialEventId;
 
     return { state: panelStateThisRoom as IPanelState, phase: panelStateStore.phase } as IPhaseAndState;
