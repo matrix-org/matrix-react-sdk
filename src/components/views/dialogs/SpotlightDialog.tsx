@@ -28,6 +28,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
+import { RoomType } from "matrix-js-sdk/src/@types/event";
 
 import { IDialogProps } from "./IDialogProps";
 import { _t } from "../../../languageHandler";
@@ -49,7 +50,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from "../avatars/BaseAvatar";
 import Spinner from "../elements/Spinner";
