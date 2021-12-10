@@ -1639,19 +1639,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     // jump down to the bottom of this room, where new events are arriving
     private jumpToLiveTimeline = () => {
-        if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
-            // If we were viewing a highlighted event, firing view_room without
-            // an event will take care of both clearing the URL fragment and
-            // jumping to the bottom
-            dis.dispatch({
-                action: Action.ViewRoom,
-                room_id: this.state.room.roomId,
-            });
-        } else {
-            // Otherwise we have to jump manually
-            this.messagePanel.jumpToLiveTimeline();
-            dis.fire(Action.FocusSendMessageComposer);
-        }
+        this.messagePanel.jumpToLiveTimeline();
+        dis.fire(Action.FocusSendMessageComposer);
     };
 
     // jump up to wherever our read marker is
