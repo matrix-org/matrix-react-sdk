@@ -18,6 +18,7 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 import { User } from "matrix-js-sdk/src/models/user";
+
 import { _t } from "../../../languageHandler";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
