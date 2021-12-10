@@ -50,7 +50,6 @@ import TileErrorBoundary from '../views/messages/TileErrorBoundary';
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
-import { POLL_START_EVENT_TYPE } from '../../polls/consts';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -460,13 +459,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         if (!haveTileForEvent(mxEv, this.showHiddenEvents)) {
             return false; // no tile = no show
-        }
-
-        if (
-            POLL_START_EVENT_TYPE.matches(mxEv.getType()) &&
-            !SettingsStore.getValue("feature_polls")
-        ) {
-            return false;
         }
 
         // Always show highlighted event
