@@ -49,7 +49,7 @@ $activeBorderColor: $primary-content;
             position: absolute;
             width: inherit;
             height: inherit;
-            mask-position: center 1px; // center the chevron more visually
+            mask-position: center;
             mask-size: 20px;
             mask-repeat: no-repeat;
             background-color: $background;
@@ -58,7 +58,16 @@ $activeBorderColor: $primary-content;
         }
 
         &:not(.expanded) {
+            width: 24px;
+            height: 24px;
             opacity: 0;
+            top: 16px; // v-align with avatar
+            right: -14px;
+
+            &::before {
+                mask-size: 24px;
+                mask-position: center 1px;
+            }
         }
 
         &.expanded::before {
