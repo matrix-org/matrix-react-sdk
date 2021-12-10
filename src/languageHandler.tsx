@@ -54,7 +54,7 @@ interface ITranslatableError extends Error {
  */
 export function newTranslatableError(message: string) {
     const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _tPlain(message);
+    error.translatedMessage = _t(message);
     return error;
 }
 
@@ -93,7 +93,12 @@ const translateWithFallback = (text: string, options?: object): { translated?: s
 
 // Wrapper for counterpart's translation function so that it handles nulls and undefineds properly
 // Takes the same arguments as counterpart.translate()
-function safeCounterpartTranslate(text: string, options?: object) {
+function safeCounterpartTranslate(text: string, variables?: object) {
+    // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
+    // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
+    // It is enough to pass the count variable, but in the future counterpart might make use of other information too
+    const options = { ...variables, interpolate: false };
+
     // Horrible hack to avoid https://github.com/vector-im/element-web/issues/4191
     // The interpolation library that counterpart uses does not support undefined/null
     // values and instead will throw an error. This is a problem since everywhere else
@@ -101,7 +106,6 @@ function safeCounterpartTranslate(text: string, options?: object) {
     // valid ES6 template strings to i18n strings it's extremely easy to pass undefined/null
     // if there are no existing null guards. To avoid this making the app completely inoperable,
     // we'll check all the values for undefined/null and stringify them here.
-
     if (options && typeof options === 'object') {
         Object.keys(options).forEach((k) => {
             if (options[k] === undefined) {
@@ -128,25 +132,19 @@ export type Tags = Record<string, SubstitutionValue>;
 
 export type TranslatedString = string | React.ReactNode;
 
-/**
- * Translate text without tag substitions or fallback span wrapper
- * Useful for translations that will not be displayed in the DOM, eg: error messages
- * @param {string} text The untranslated text, e.g "click here now to %(foo)s".
- * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
- */
-export const _tPlain = (text: string, variables?: IVariables): string => {
-    // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
-    // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
-    // It is enough to pass the count variable, but in the future counterpart might make use of other information too
-    const args = Object.assign({ interpolate: false }, variables);
+// For development/testing purposes it is useful to also output the original string
+// Don't do that for release versions
+const annotateStrings = (result: TranslatedString, translationKey: string): TranslatedString => {
+    if (!ANNOTATE_STRINGS) {
+        return result;
+    }
 
-    // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
-    const { translated } = safeCounterpartTranslate(text, args);
-
-    // For development/testing purposes it is useful to also output the original string
-    // Don't do that for release versions
-    return ANNOTATE_STRINGS ? `@@${text}##${translated}@@` : translated;
-};
+    if (typeof result === 'string') {
+        return `@@${translationKey}##${result}@@`;
+    } else {
+        return <span className='translated-string' data-orig-string={translationKey}>{result}</span>;
+    }
+}
 
 /*
  * Translates text and optionally also replaces XML-ish elements in the text with e.g. React components
@@ -165,34 +163,39 @@ export const _tPlain = (text: string, variables?: IVariables): string => {
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 // eslint-next-line @typescript-eslint/naming-convention
-// eslint-nexline @typescript-eslint/naming-convention
-export function _t(text: string, variables?: IVariables): string | React.ReactNode;
+export function _t(text: string, variables?: IVariables): string;
 export function _t(text: string, variables: IVariables, tags: Tags): React.ReactNode;
 export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
-    // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
-    // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
-    // It is enough to pass the count variable, but in the future counterpart might make use of other information too
-    const args = Object.assign({ interpolate: false }, variables);
-
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
-    const { translated, isFallback } = safeCounterpartTranslate(text, args);
+    const { translated } = safeCounterpartTranslate(text, variables);
 
+    const substituted = substitute(translated, variables, tags);
+
+    return annotateStrings(substituted, text);
+}
+
+/*
+ * Wraps normal _t function and adds atttribution for translations that used a fallback locale
+ * Wraps translations that fell back from active locale to fallback locale with a `<span lang=<fallback locale>>`
+ * @param {string} text The untranslated text, e.g "click <a>here</a> now to %(foo)s".
+ * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
+ * @param {object} tags Tag substitutions e.g. { 'a': (sub) => <a>{sub}</a> }
+ *
+ * @return a React <span> component if any non-strings were used in substitutions
+ * or translation used a fallback locale, otherwise a string
+ */
+// eslint-next-line @typescript-eslint/naming-convention
+export function _tDom(text: string, variables?: IVariables): TranslatedString;
+export function _tDom(text: string, variables: IVariables, tags: Tags): React.ReactNode;
+export function _tDom(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
+    // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
+    const { translated, isFallback } = safeCounterpartTranslate(text, variables);
     const substituted = substitute(translated, variables, tags);
 
     // wrap en fallback translation with lang attribute for screen readers
     const result = isFallback ? <span lang='en'>{ substituted }</span> : substituted;
 
-    // For development/testing purposes it is useful to also output the original string
-    // Don't do that for release versions
-    if (ANNOTATE_STRINGS) {
-        if (typeof result === 'string') {
-            return `@@${text}##${result}@@`;
-        } else {
-            return <span className='translated-string' data-orig-string={text}>{ substituted }</span>;
-        }
-    }
-
-    return result;
+    return annotateStrings(result, text);
 }
 
 /**
