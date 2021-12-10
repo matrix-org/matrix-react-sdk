@@ -142,9 +142,9 @@ const annotateStrings = (result: TranslatedString, translationKey: string): Tran
     if (typeof result === 'string') {
         return `@@${translationKey}##${result}@@`;
     } else {
-        return <span className='translated-string' data-orig-string={translationKey}>{result}</span>;
+        return <span className='translated-string' data-orig-string={translationKey}>{ result }</span>;
     }
-}
+};
 
 /*
  * Translates text and optionally also replaces XML-ish elements in the text with e.g. React components
