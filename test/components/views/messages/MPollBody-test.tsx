@@ -16,13 +16,12 @@ limitations under the License.
 
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
-
-import sdk from "../../../skinned-sdk";
-import * as TestUtils from "../../../test-utils";
-
 import { Callback, IContent, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { Relations } from "matrix-js-sdk/src/models/relations";
+
+import * as TestUtils from "../../../test-utils";
+import sdk from "../../../skinned-sdk";
 import {
     IPollAnswer,
     IPollContent,
@@ -496,6 +495,28 @@ describe("MPollBody", () => {
         expect(receivedEvents).toEqual([
             expectedResponseEvent("wings"),
         ]);
+    });
+
+    it("sends no vote event when I click what I already chose", () => {
+        const receivedEvents = [];
+        MatrixClientPeg.matrixClient.sendEvent = (
+            roomId: string,
+            eventType: string,
+            content: IContent,
+            txnId?: string,
+            callback?: Callback,
+        ): Promise<ISendEventResponse> => {
+            receivedEvents.push( { roomId, eventType, content, txnId, callback } );
+            return Promise.resolve({ "event_id": "fake_tracked_send_id" });
+        };
+
+        const votes = [responseEvent("@me:example.com", "wings")];
+        const body = newMPollBody(votes);
+        clickRadio(body, "wings");
+        clickRadio(body, "wings");
+        clickRadio(body, "wings");
+        clickRadio(body, "wings");
+        expect(receivedEvents).toEqual([]);
     });
 
     it("sends several events when I click different options", () => {

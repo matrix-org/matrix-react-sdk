@@ -17,6 +17,9 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { Relations } from 'matrix-js-sdk/src/models/relations';
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
@@ -26,7 +29,6 @@ import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
 import { canEditContent, isContentActionable } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ReadPinsEventId } from "../right_panel/PinnedMessagesCard";
 import ForwardDialog from "../dialogs/ForwardDialog";
@@ -36,7 +38,6 @@ import { ButtonEvent } from '../elements/AccessibleButton';
 import { copyPlaintext } from '../../../utils/strings';
 import ContextMenu, { toRightOf } from '../../structures/ContextMenu';
 import ReactionPicker from '../emojipicker/ReactionPicker';
-import { Relations } from 'matrix-js-sdk/src/models/relations';
 import ReportEventDialog from '../dialogs/ReportEventDialog';
 import ViewSource from '../../structures/ViewSource';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
