@@ -86,8 +86,9 @@ export interface IProps extends IPosition {
     // it will be mounted to a container at the root of the DOM.
     mountAsChild?: boolean;
 
-    // If specified, contents will be wrapped in a FocusLock, this is only needed if the context menu is being rendered
-    // within an existing FocusLock e.g inside a modal.
+    // If specified, contents will be wrapped in a FocusLock, this is only
+    // needed if the context menu is being rendered within an existing FocusLock
+    // e.g inside a modal.
     focusLock?: boolean;
 
     // Function to be called on menu close
@@ -180,12 +181,14 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         if (this.props.onFinished) this.props.onFinished();
     };
 
-    private onMoveFocus = (element: Element, up: boolean) => {
+    private onMoveFocus = (element: Element, up: boolean, closeIfOutOfBounds: boolean = false) => {
+        console.log('onMoveFocus =================', element)
         let descending = false; // are we currently descending or ascending through the DOM tree?
 
         do {
             const child = up ? element.lastElementChild : element.firstElementChild;
             const sibling = up ? element.previousElementSibling : element.nextElementSibling;
+            console.log('onMoveFocus', child, sibling)
 
             if (descending) {
                 if (child) {
@@ -257,18 +260,24 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         switch (ev.key) {
             // XXX: this is imitating roving behaviour, it should really use the RovingTabIndex utils
             // to inherit proper handling of unmount edge cases
-            case Key.TAB:
             case Key.ESCAPE:
             case Key.ARROW_LEFT: // close on left and right arrows too for when it is a context menu on a <Toolbar />
             case Key.ARROW_RIGHT:
                 this.props.onFinished();
                 break;
             case Key.ARROW_UP:
-                this.onMoveFocus(ev.target as Element, true);
+                this.onMoveFocus(ev.target as Element, true, true);
                 break;
             case Key.ARROW_DOWN:
-                this.onMoveFocus(ev.target as Element, false);
+                this.onMoveFocus(ev.target as Element, false, true);
                 break;
+            // case Key.TAB:
+            //     if(ev.shiftKey) {
+            //         this.onMoveFocus(ev.target as Element, true);
+            //     } else {
+            //         this.onMoveFocus(ev.target as Element, false);
+            //     }
+            //     break;
             case Key.HOME:
                 this.onMoveFocusHomeEnd(this.state.contextMenuElem, true);
                 break;
