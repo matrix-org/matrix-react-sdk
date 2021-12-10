@@ -15,14 +15,15 @@ limitations under the License.
 */
 
 import React from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { CSSTransition } from "react-transition-group";
+
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { _t } from "../../../languageHandler";
-import { Room } from "matrix-js-sdk/src/models/room";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import Analytics from "../../../Analytics";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import { CSSTransition } from "react-transition-group";
 import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -105,7 +106,9 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
             // NOTE: The CSSTransition timeout MUST match the timeout in our CSS!
             return (
                 <CSSTransition
-                    appear={true} in={this.state.doAnimation} timeout={640}
+                    appear={true}
+                    in={this.state.doAnimation}
+                    timeout={640}
                     classNames='mx_RoomBreadcrumbs'
                 >
                     <Toolbar className='mx_RoomBreadcrumbs' aria-label={_t("Recently visited rooms")}>

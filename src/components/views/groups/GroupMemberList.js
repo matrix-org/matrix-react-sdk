@@ -16,11 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import GroupStore from '../../../stores/GroupStore';
-import PropTypes from 'prop-types';
 import { showGroupInviteDialog } from '../../../GroupAddressPicker';
 import AccessibleButton from '../elements/AccessibleButton';
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
@@ -86,10 +87,16 @@ export default class GroupMemberList extends React.Component {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (
-            <EntityTile className="mx_EntityTile_ellipsis" avatarJsx={
-                <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
-            } name={text} presenceState="online" suppressOnHover={true}
-            onClick={this._showFullMemberList} />
+            <EntityTile
+                className="mx_EntityTile_ellipsis"
+                avatarJsx={
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                }
+                name={text}
+                presenceState="online"
+                suppressOnHover={true}
+                onClick={this._showFullMemberList}
+            />
         );
     };
 
@@ -152,7 +159,9 @@ export default class GroupMemberList extends React.Component {
             );
         });
 
-        return <TruncatedList className="mx_MemberList_wrapper" truncateAt={this.state.truncateAt}
+        return <TruncatedList
+            className="mx_MemberList_wrapper"
+            truncateAt={this.state.truncateAt}
             createOverflowElement={this._createOverflowTile}
         >
             { memberTiles }

@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import { getNameForEventRoom, userLabelForEventRoom }
@@ -68,7 +70,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
                 this.openRequest();
                 await request.accept();
             } catch (err) {
-                console.error(err.message);
+                logger.error(err.message);
             }
         }
     };
@@ -79,7 +81,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             try {
                 await request.cancel();
             } catch (err) {
-                console.error(err.message);
+                logger.error(err.message);
             }
         }
     };

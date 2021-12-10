@@ -14,19 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/models/room";
+import * as utils from "matrix-js-sdk/src/utils";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Action } from "../dispatcher/actions";
 import { EffectiveMembership, getEffectiveMembership } from "../utils/membership";
 import SettingsStore from "../settings/SettingsStore";
-import * as utils from "matrix-js-sdk/src/utils";
 import { UPDATE_EVENT } from "./AsyncStore";
 import FlairStore from "./FlairStore";
 import GroupFilterOrderStore from "./GroupFilterOrderStore";
 import GroupStore from "./GroupStore";
 import dis from "../dispatcher/dispatcher";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 
 interface IState {
     // nothing of value - we use account data
@@ -134,7 +137,7 @@ export class CommunityPrototypeStore extends AsyncStoreWithClient<IState> {
                     // we use global account data because per-room account data on invites is unreliable
                     await this.matrixClient.setAccountData("im.vector.group_info." + room.roomId, profile);
                 } catch (e) {
-                    console.warn("Non-fatal error getting group information for invite:", e);
+                    logger.warn("Non-fatal error getting group information for invite:", e);
                 }
             }
         } else if (payload.action === "MatrixActions.accountData") {
@@ -147,7 +150,7 @@ export class CommunityPrototypeStore extends AsyncStoreWithClient<IState> {
             const chat = this.getGeneralChat(payload.tag);
             if (chat) {
                 dis.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     room_id: chat.roomId,
                 });
             }

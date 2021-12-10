@@ -18,14 +18,20 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
+import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import encrypt from "browser-encrypt-attachment";
+import extractPngChunks from "png-chunks-extract";
+import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
+import { logger } from "matrix-js-sdk/src/logger";
+import { IEventRelation } from "matrix-js-sdk/src";
 
+import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from './dispatcher/dispatcher';
 import * as sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
-import encrypt from "browser-encrypt-attachment";
-import extractPngChunks from "png-chunks-extract";
 import Spinner from "./components/views/elements/Spinner";
 import { Action } from "./dispatcher/actions";
 import CountlyAnalytics from "./CountlyAnalytics";
@@ -37,8 +43,9 @@ import {
     UploadStartedPayload,
 } from "./dispatcher/payloads/UploadPayload";
 import { IUpload } from "./models/IUpload";
-import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { BlurhashEncoder } from "./BlurhashEncoder";
+import SettingsStore from "./settings/SettingsStore";
+import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -209,6 +216,14 @@ async function loadImageElement(imageFile: File) {
     return { width, height, img };
 }
 
+// Minimum size for image files before we generate a thumbnail for them.
+const IMAGE_SIZE_THRESHOLD_THUMBNAIL = 1 << 15; // 32KB
+// Minimum size improvement for image thumbnails, if both are not met then don't bother uploading thumbnail.
+const IMAGE_THUMBNAIL_MIN_REDUCTION_SIZE = 1 << 16; // 1MB
+const IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT = 0.1; // 10%
+// We don't apply these thresholds to video thumbnails as a poster image is always useful
+// and videos tend to be much larger.
+
 /**
  * Read the metadata for an image file and create and upload a thumbnail of the image.
  *
@@ -217,23 +232,33 @@ async function loadImageElement(imageFile: File) {
  * @param {File} imageFile The image to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
-function infoForImageFile(matrixClient, roomId, imageFile) {
+async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imageFile: File) {
     let thumbnailType = "image/png";
     if (imageFile.type === "image/jpeg") {
         thumbnailType = "image/jpeg";
     }
 
-    let imageInfo;
-    return loadImageElement(imageFile).then((r) => {
-        return createThumbnail(r.img, r.width, r.height, thumbnailType);
-    }).then((result) => {
-        imageInfo = result.info;
-        return uploadFile(matrixClient, roomId, result.thumbnail);
-    }).then((result) => {
-        imageInfo.thumbnail_url = result.url;
-        imageInfo.thumbnail_file = result.file;
+    const imageElement = await loadImageElement(imageFile);
+
+    const result = await createThumbnail(imageElement.img, imageElement.width, imageElement.height, thumbnailType);
+    const imageInfo = result.info;
+
+    // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
+    const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
+    if (
+        imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL || // image is small enough already
+        (sizeDifference <= IMAGE_THUMBNAIL_MIN_REDUCTION_SIZE && // thumbnail is not sufficiently smaller than original
+            sizeDifference <= (imageFile.size * IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT))
+    ) {
+        delete imageInfo["thumbnail_info"];
         return imageInfo;
-    });
+    }
+
+    const uploadResult = await uploadFile(matrixClient, roomId, result.thumbnail);
+
+    imageInfo["thumbnail_url"] = uploadResult.url;
+    imageInfo["thumbnail_file"] = uploadResult.file;
+    return imageInfo;
 }
 
 /**
@@ -285,7 +310,7 @@ function loadVideoElement(videoFile): Promise<HTMLVideoElement> {
 function infoForVideoFile(matrixClient, roomId, videoFile) {
     const thumbnailType = "image/jpeg";
 
-    let videoInfo;
+    let videoInfo: Partial<IMediaEventInfo>;
     return loadVideoElement(videoFile).then((video) => {
         return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
     }).then((result) => {
@@ -334,49 +359,48 @@ export function uploadFile(
     matrixClient: MatrixClient,
     roomId: string,
     file: File | Blob,
-    progressHandler?: any, // TODO: Types
-): IAbortablePromise<{url?: string, file?: any}> { // TODO: Types
+    progressHandler?: IUploadOpts["progressHandler"],
+): IAbortablePromise<{ url?: string, file?: IEncryptedFile }> {
     let canceled = false;
     if (matrixClient.isRoomEncrypted(roomId)) {
         // If the room is encrypted then encrypt the file before uploading it.
         // First read the file into memory.
-        let uploadPromise;
-        let encryptInfo;
+        let uploadPromise: IAbortablePromise<string>;
         const prom = readFileAsArrayBuffer(file).then(function(data) {
             if (canceled) throw new UploadCanceledError();
             // Then encrypt the file.
             return encrypt.encryptAttachment(data);
         }).then(function(encryptResult) {
             if (canceled) throw new UploadCanceledError();
-            // Record the information needed to decrypt the attachment.
-            encryptInfo = encryptResult.info;
+
             // Pass the encrypted data as a Blob to the uploader.
             const blob = new Blob([encryptResult.data]);
             uploadPromise = matrixClient.uploadContent(blob, {
-                progressHandler: progressHandler,
+                progressHandler,
                 includeFilename: false,
             });
-            return uploadPromise;
-        }).then(function(url) {
-            if (canceled) throw new UploadCanceledError();
-            // If the attachment is encrypted then bundle the URL along
-            // with the information needed to decrypt the attachment and
-            // add it under a file key.
-            encryptInfo.url = url;
-            if (file.type) {
-                encryptInfo.mimetype = file.type;
-            }
-            return { "file": encryptInfo };
-        }) as IAbortablePromise<{ file: any }>;
+
+            return uploadPromise.then(url => {
+                if (canceled) throw new UploadCanceledError();
+
+                // If the attachment is encrypted then bundle the URL along
+                // with the information needed to decrypt the attachment and
+                // add it under a file key.
+                return {
+                    file: {
+                        ...encryptResult.info,
+                        url,
+                    },
+                };
+            });
+        }) as IAbortablePromise<{ file: IEncryptedFile }>;
         prom.abort = () => {
             canceled = true;
             if (uploadPromise) matrixClient.cancelUpload(uploadPromise);
         };
         return prom;
     } else {
-        const basePromise = matrixClient.uploadContent(file, {
-            progressHandler: progressHandler,
-        });
+        const basePromise = matrixClient.uploadContent(file, { progressHandler });
         const promise1 = basePromise.then(function(url) {
             if (canceled) throw new UploadCanceledError();
             // If the attachment isn't encrypted then include the URL directly.
@@ -394,10 +418,17 @@ export default class ContentMessages {
     private inprogress: IUpload[] = [];
     private mediaConfig: IMediaConfig = null;
 
-    sendStickerContentToRoom(url: string, roomId: string, info: IImageInfo, text: string, matrixClient: MatrixClient) {
+    sendStickerContentToRoom(
+        url: string,
+        roomId: string,
+        threadId: string | null,
+        info: IImageInfo,
+        text: string,
+        matrixClient: MatrixClient,
+    ) {
         const startTime = CountlyAnalytics.getTimestamp();
-        const prom = matrixClient.sendStickerMessage(roomId, url, info, text).catch((e) => {
-            console.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
+        const prom = matrixClient.sendStickerMessage(roomId, threadId, url, info, text).catch((e) => {
+            logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
         CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, false, { msgtype: "m.sticker" });
@@ -412,7 +443,12 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient) {
+    async sendContentListToRoom(
+        files: File[],
+        roomId: string,
+        relation: IEventRelation | null,
+        matrixClient: MatrixClient,
+    ) {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
@@ -488,12 +524,20 @@ export default class ContentMessages {
                     uploadAll = true;
                 }
             }
-            promBefore = this.sendContentToRoom(file, roomId, matrixClient, promBefore);
+
+            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, promBefore);
         }
     }
 
-    getCurrentUploads() {
-        return this.inprogress.filter(u => !u.canceled);
+    getCurrentUploads(relation?: IEventRelation) {
+        return this.inprogress.filter(upload => {
+            const noRelation = !relation && !upload.relation;
+            const matchingRelation = relation && upload.relation
+                && relation.rel_type === upload.relation.rel_type
+                && relation.event_id === upload.relation.event_id;
+
+            return (noRelation || matchingRelation) && !upload.canceled;
+        });
     }
 
     cancelUpload(promise: Promise<any>, matrixClient: MatrixClient) {
@@ -511,7 +555,13 @@ export default class ContentMessages {
         }
     }
 
-    private sendContentToRoom(file: File, roomId: string, matrixClient: MatrixClient, promBefore: Promise<any>) {
+    private sendContentToRoom(
+        file: File,
+        roomId: string,
+        relation: IEventRelation,
+        matrixClient: MatrixClient,
+        promBefore: Promise<any>,
+    ) {
         const startTime = CountlyAnalytics.getTimestamp();
         const content: IContent = {
             body: file.name || 'Attachment',
@@ -521,6 +571,14 @@ export default class ContentMessages {
             msgtype: "", // set later
         };
 
+        if (relation) {
+            content["m.relates_to"] = relation;
+        }
+
+        if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
+            decorateStartSendingTime(content);
+        }
+
         // if we have a mime type for the file, add it to the message metadata
         if (file.type) {
             content.info.mimetype = file.type;
@@ -528,29 +586,29 @@ export default class ContentMessages {
 
         const prom = new Promise<void>((resolve) => {
             if (file.type.indexOf('image/') === 0) {
-                content.msgtype = 'm.image';
+                content.msgtype = MsgType.Image;
                 infoForImageFile(matrixClient, roomId, file).then((imageInfo) => {
                     Object.assign(content.info, imageInfo);
                     resolve();
                 }, (e) => {
-                    console.error(e);
-                    content.msgtype = 'm.file';
+                    logger.error(e);
+                    content.msgtype = MsgType.File;
                     resolve();
                 });
             } else if (file.type.indexOf('audio/') === 0) {
-                content.msgtype = 'm.audio';
+                content.msgtype = MsgType.Audio;
                 resolve();
             } else if (file.type.indexOf('video/') === 0) {
-                content.msgtype = 'm.video';
+                content.msgtype = MsgType.Video;
                 infoForVideoFile(matrixClient, roomId, file).then((videoInfo) => {
                     Object.assign(content.info, videoInfo);
                     resolve();
                 }, (e) => {
-                    content.msgtype = 'm.file';
+                    content.msgtype = MsgType.File;
                     resolve();
                 });
             } else {
-                content.msgtype = 'm.file';
+                content.msgtype = MsgType.File;
                 resolve();
             }
         }) as IAbortablePromise<void>;
@@ -562,7 +620,8 @@ export default class ContentMessages {
 
         const upload: IUpload = {
             fileName: file.name || 'Attachment',
-            roomId: roomId,
+            roomId,
+            relation,
             total: file.size,
             loaded: 0,
             promise: prom,
@@ -595,7 +654,15 @@ export default class ContentMessages {
             return promBefore;
         }).then(function() {
             if (upload.canceled) throw new UploadCanceledError();
-            const prom = matrixClient.sendMessage(roomId, content);
+            const threadId = relation?.rel_type === RelationType.Thread
+                ? relation.event_id
+                : null;
+            const prom = matrixClient.sendMessage(roomId, threadId, content);
+            if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
+                prom.then(resp => {
+                    sendRoundTripMetric(matrixClient, roomId, resp.event_id);
+                });
+            }
             CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, false, content);
             return prom;
         }, function(err) {
@@ -649,13 +716,13 @@ export default class ContentMessages {
     private ensureMediaConfigFetched(matrixClient: MatrixClient) {
         if (this.mediaConfig !== null) return;
 
-        console.log("[Media Config] Fetching");
+        logger.log("[Media Config] Fetching");
         return matrixClient.getMediaConfig().then((config) => {
-            console.log("[Media Config] Fetched config:", config);
+            logger.log("[Media Config] Fetched config:", config);
             return config;
         }).catch(() => {
             // Media repo can't or won't report limits, so provide an empty object (no limits).
-            console.log("[Media Config] Could not fetch config, so not limiting uploads.");
+            logger.log("[Media Config] Could not fetch config, so not limiting uploads.");
             return {};
         }).then((config) => {
             this.mediaConfig = config;

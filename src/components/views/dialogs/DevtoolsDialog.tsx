@@ -16,12 +16,6 @@ limitations under the License.
 */
 
 import React, { useState, useEffect, ChangeEvent, MouseEvent } from 'react';
-import SyntaxHighlight from '../elements/SyntaxHighlight';
-import { _t } from '../../../languageHandler';
-import Field from "../elements/Field";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
-
 import {
     PHASE_UNSENT,
     PHASE_REQUESTED,
@@ -31,6 +25,15 @@ import {
     PHASE_CANCELLED,
     VerificationRequest,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import SyntaxHighlight from '../elements/SyntaxHighlight';
+import { _t } from '../../../languageHandler';
+import Field from "../elements/Field";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { SETTINGS } from "../../../settings/Settings";
@@ -38,8 +41,6 @@ import SettingsStore, { LEVEL_ORDER } from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SettingLevel } from '../../../settings/SettingLevel';
 import BaseDialog from "./BaseDialog";
 import TruncatedList from "../elements/TruncatedList";
@@ -182,14 +183,23 @@ export class SendCustomEvent extends GenericEditor<ISendCustomEventProps, ISendC
 
                 <br />
 
-                <Field id="evContent" label={_t("Event Content")} type="text" className="mx_DevTools_textarea"
-                    autoComplete="off" value={this.state.evContent} onChange={this.onChange} element="textarea" />
+                <Field
+                    id="evContent"
+                    label={_t("Event Content")}
+                    type="text"
+                    className="mx_DevTools_textarea"
+                    autoComplete="off"
+                    value={this.state.evContent}
+                    onChange={this.onChange}
+                    element="textarea" />
             </div>
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
                 { !this.state.message && <button onClick={this.send}>{ _t('Send') }</button> }
                 { showTglFlip && <div style={{ float: "right" }}>
-                    <input id="isStateEvent" className="mx_DevTools_tgl mx_DevTools_tgl-flip"
+                    <input
+                        id="isStateEvent"
+                        className="mx_DevTools_tgl mx_DevTools_tgl-flip"
                         type="checkbox"
                         checked={this.state.isStateEvent}
                         onChange={this.onChange}
@@ -282,14 +292,24 @@ class SendAccountData extends GenericEditor<ISendAccountDataProps, ISendAccountD
                 { this.textInput('eventType', _t('Event Type')) }
                 <br />
 
-                <Field id="evContent" label={_t("Event Content")} type="text" className="mx_DevTools_textarea"
-                    autoComplete="off" value={this.state.evContent} onChange={this.onChange} element="textarea" />
+                <Field
+                    id="evContent"
+                    label={_t("Event Content")}
+                    type="text"
+                    className="mx_DevTools_textarea"
+                    autoComplete="off"
+                    value={this.state.evContent}
+                    onChange={this.onChange}
+                    element="textarea"
+                />
             </div>
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
                 { !this.state.message && <button onClick={this.send}>{ _t('Send') }</button> }
                 { !this.state.message && <div style={{ float: "right" }}>
-                    <input id="isRoomAccountData" className="mx_DevTools_tgl mx_DevTools_tgl-flip"
+                    <input
+                        id="isRoomAccountData"
+                        className="mx_DevTools_tgl mx_DevTools_tgl-flip"
                         type="checkbox"
                         checked={this.state.isRoomAccountData}
                         disabled={this.props.forceMode}
@@ -371,11 +391,18 @@ class FilteredList extends React.PureComponent<IFilteredListProps, IFilteredList
 
     render() {
         return <div>
-            <Field label={_t('Filter results')} autoFocus={true} size={64}
-                type="text" autoComplete="off" value={this.props.query} onChange={this.onQuery}
+            <Field
+                label={_t('Filter results')}
+                autoFocus={true}
+                size={64}
+                type="text"
+                autoComplete="off"
+                value={this.props.query}
+                onChange={this.onQuery}
                 className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
                 // force re-render so that autoFocus is applied when this component is re-used
-                key={this.props.children[0] ? this.props.children[0].key : ''} />
+                key={this.props.children[0] ? this.props.children[0].key : ''}
+            />
 
             <TruncatedList getChildren={this.getChildren}
                 getChildCount={this.getChildCount}
@@ -459,11 +486,16 @@ class RoomStateExplorer extends React.PureComponent<IExplorerProps, IRoomStateEx
     render() {
         if (this.state.event) {
             if (this.state.editing) {
-                return <SendCustomEvent room={this.props.room} forceStateEvent={true} onBack={this.onBack} inputs={{
-                    eventType: this.state.event.getType(),
-                    evContent: JSON.stringify(this.state.event.getContent(), null, '\t'),
-                    stateKey: this.state.event.getStateKey(),
-                }} />;
+                return <SendCustomEvent
+                    room={this.props.room}
+                    forceStateEvent={true}
+                    onBack={this.onBack}
+                    inputs={{
+                        eventType: this.state.event.getType(),
+                        evContent: JSON.stringify(this.state.event.getContent(), null, '\t'),
+                        stateKey: this.state.event.getStateKey(),
+                    }}
+                />;
             }
 
             return <div className="mx_ViewSource">
@@ -594,7 +626,9 @@ class AccountDataExplorer extends React.PureComponent<IExplorerProps, IAccountDa
                     inputs={{
                         eventType: this.state.event.getType(),
                         evContent: JSON.stringify(this.state.event.getContent(), null, '\t'),
-                    }} forceMode={true} />;
+                    }}
+                    forceMode={true}
+                />;
             }
 
             return <div className="mx_ViewSource">
@@ -631,7 +665,9 @@ class AccountDataExplorer extends React.PureComponent<IExplorerProps, IAccountDa
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
                 <div style={{ float: "right" }}>
-                    <input id="isRoomAccountData" className="mx_DevTools_tgl mx_DevTools_tgl-flip"
+                    <input
+                        id="isRoomAccountData"
+                        className="mx_DevTools_tgl mx_DevTools_tgl-flip"
                         type="checkbox"
                         checked={this.state.isRoomAccountData}
                         onChange={this.onChange}
@@ -949,22 +985,22 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
             const parsedExplicit = JSON.parse(this.state.explicitValues);
             const parsedExplicitRoom = JSON.parse(this.state.explicitRoomValues);
             for (const level of Object.keys(parsedExplicit)) {
-                console.log(`[Devtools] Setting value of ${settingId} at ${level} from user input`);
+                logger.log(`[Devtools] Setting value of ${settingId} at ${level} from user input`);
                 try {
                     const val = parsedExplicit[level];
                     await SettingsStore.setValue(settingId, null, level as SettingLevel, val);
                 } catch (e) {
-                    console.warn(e);
+                    logger.warn(e);
                 }
             }
             const roomId = this.props.room.roomId;
             for (const level of Object.keys(parsedExplicit)) {
-                console.log(`[Devtools] Setting value of ${settingId} at ${level} in ${roomId} from user input`);
+                logger.log(`[Devtools] Setting value of ${settingId} at ${level} in ${roomId} from user input`);
                 try {
                     const val = parsedExplicitRoom[level];
                     await SettingsStore.setValue(settingId, roomId, level as SettingLevel, val);
                 } catch (e) {
-                    console.warn(e);
+                    logger.warn(e);
                 }
             }
             this.setState({
@@ -998,7 +1034,7 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                     vals[level] = null;
                 }
             } catch (e) {
-                console.warn(e);
+                logger.warn(e);
             }
         }
         return JSON.stringify(vals, null, 4);
@@ -1021,8 +1057,13 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                 <div>
                     <div className="mx_Dialog_content mx_DevTools_SettingsExplorer">
                         <Field
-                            label={_t('Filter results')} autoFocus={true} size={64}
-                            type="text" autoComplete="off" value={this.state.query} onChange={this.onQueryChange}
+                            label={_t('Filter results')}
+                            autoFocus={true}
+                            size={64}
+                            type="text"
+                            autoComplete="off"
+                            value={this.state.query}
+                            onChange={this.onQueryChange}
                             className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
                         />
                         <table>
@@ -1040,7 +1081,9 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                                             <a href="" onClick={(e) => this.onViewClick(e, i)}>
                                                 <code>{ i }</code>
                                             </a>
-                                            <a href="" onClick={(e) => this.onEditClick(e, i)}
+                                            <a
+                                                href=""
+                                                onClick={(e) => this.onEditClick(e, i)}
                                                 className='mx_DevTools_SettingsExplorer_edit'
                                             >
                                             ✏
@@ -1104,18 +1147,26 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
 
                         <div>
                             <Field
-                                id="valExpl" label={_t("Values at explicit levels")} type="text"
-                                className="mx_DevTools_textarea" element="textarea"
-                                autoComplete="off" value={this.state.explicitValues}
+                                id="valExpl"
+                                label={_t("Values at explicit levels")}
+                                type="text"
+                                className="mx_DevTools_textarea"
+                                element="textarea"
+                                autoComplete="off"
+                                value={this.state.explicitValues}
                                 onChange={this.onExplValuesEdit}
                             />
                         </div>
 
                         <div>
                             <Field
-                                id="valExpl" label={_t("Values at explicit levels in this room")} type="text"
-                                className="mx_DevTools_textarea" element="textarea"
-                                autoComplete="off" value={this.state.explicitRoomValues}
+                                id="valExpl"
+                                label={_t("Values at explicit levels in this room")}
+                                type="text"
+                                className="mx_DevTools_textarea"
+                                element="textarea"
+                                autoComplete="off"
+                                value={this.state.explicitRoomValues}
                                 onChange={this.onExplRoomValuesEdit}
                             />
                         </div>

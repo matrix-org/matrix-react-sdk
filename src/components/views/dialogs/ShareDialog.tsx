@@ -22,6 +22,7 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { Group } from "matrix-js-sdk/src/models/group";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { _t } from '../../../languageHandler';
 import QRCode from "../elements/QRCode";
 import { RoomPermalinkCreator, makeGroupPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
@@ -158,7 +159,7 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
             if (this.state.linkSpecificEvent) {
                 matrixToUrl = this.props.permalinkCreator.forEvent(this.props.target.getId());
             } else {
-                matrixToUrl = this.props.permalinkCreator.forRoom();
+                matrixToUrl = this.props.permalinkCreator.forShareableRoom();
             }
         }
         return matrixToUrl;
@@ -239,6 +240,7 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
             <div className="mx_ShareDialog_content">
                 <div className="mx_ShareDialog_matrixto">
                     <a
+                        title={_t('Link to room')}
                         href={matrixToUrl}
                         onClick={ShareDialog.onLinkClick}
                         className="mx_ShareDialog_matrixto_link"

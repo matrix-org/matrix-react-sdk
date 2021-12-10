@@ -15,35 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React from 'react';
+import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import { EventSubscription } from 'fbemitter';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import CallView from "./CallView";
 import RoomViewStore from '../../../stores/RoomViewStore';
 import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
-import dis from '../../../dispatcher/dispatcher';
-import { ActionPayload } from '../../../dispatcher/payloads';
 import PersistentApp from "../elements/PersistentApp";
 import SettingsStore from "../../../settings/SettingsStore";
-import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import UIStore from '../../../stores/UIStore';
-import { lerp } from '../../../utils/AnimationUtils';
-import { MarkedExecution } from '../../../utils/MarkedExecution';
-import { EventSubscription } from 'fbemitter';
-
-const PIP_VIEW_WIDTH = 336;
-const PIP_VIEW_HEIGHT = 232;
-
-const MOVING_AMT = 0.2;
-const SNAPPING_AMT = 0.05;
-
-const PADDING = {
-    top: 58,
-    bottom: 58,
-    left: 76,
-    right: 8,
-};
+import PictureInPictureDragger from './PictureInPictureDragger';
+import dis from '../../../dispatcher/dispatcher';
+import { Action } from "../../../dispatcher/actions";
+import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -66,17 +53,15 @@ interface IState {
     // Any other call we're displaying: only if the user is on two calls and not viewing either of the rooms
     // they belong to
     secondaryCall: MatrixCall;
-
-    // Position of the CallPreview
-    translationX: number;
-    translationY: number;
 }
 
 // Splits a list of calls into one 'primary' one and a list
 // (which should be a single element) of other calls.
 // The primary will be the one not on hold, or an arbitrary one
 // if they're all on hold)
-function getPrimarySecondaryCalls(calls: MatrixCall[]): [MatrixCall, MatrixCall[]] {
+function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall[]] {
+    const calls = CallHandler.instance.getAllActiveCallsForPip(roomId);
+
     let primary: MatrixCall = null;
     let secondaries: MatrixCall[] = [];
 
@@ -97,7 +82,7 @@ function getPrimarySecondaryCalls(calls: MatrixCall[]): [MatrixCall, MatrixCall[
 
     if (secondaries.length > 1) {
         // We should never be in more than two calls so this shouldn't happen
-        console.log("Found more than 1 secondary call! Other calls will not be shown.");
+        logger.log("Found more than 1 secondary call! Other calls will not be shown.");
     }
 
     return [primary, secondaries];
@@ -112,165 +97,73 @@ export default class CallPreview extends React.Component<IProps, IState> {
     private roomStoreToken: EventSubscription;
     private dispatcherRef: string;
     private settingsWatcherRef: string;
-    private callViewWrapper = createRef<HTMLDivElement>();
-    private initX = 0;
-    private initY = 0;
-    private desiredTranslationX = UIStore.instance.windowWidth - PADDING.right - PIP_VIEW_WIDTH;
-    private desiredTranslationY = UIStore.instance.windowHeight - PADDING.bottom - PIP_VIEW_WIDTH;
-    private moving = false;
-    private scheduledUpdate = new MarkedExecution(
-        () => this.animationCallback(),
-        () => requestAnimationFrame(() => this.scheduledUpdate.trigger()),
-    );
 
     constructor(props: IProps) {
         super(props);
 
         const roomId = RoomViewStore.getRoomId();
 
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(roomId),
-        );
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(roomId);
 
         this.state = {
             roomId,
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
-            translationX: UIStore.instance.windowWidth - PADDING.right - PIP_VIEW_WIDTH,
-            translationY: UIStore.instance.windowHeight - PADDING.bottom - PIP_VIEW_WIDTH,
         };
     }
 
     public componentDidMount() {
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
+        CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
+        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCalls);
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        document.addEventListener("mousemove", this.onMoving);
-        document.addEventListener("mouseup", this.onEndMoving);
-        window.addEventListener("resize", this.snap);
-        this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
+        const room = MatrixClientPeg.get()?.getRoom(this.state.roomId);
+        if (room) {
+            WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
+        }
     }
 
     public componentWillUnmount() {
-        CallHandler.sharedInstance().removeListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.updateCalls);
         MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
-        document.removeEventListener("mousemove", this.onMoving);
-        document.removeEventListener("mouseup", this.onEndMoving);
-        window.removeEventListener("resize", this.snap);
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
         }
-        dis.unregister(this.dispatcherRef);
         SettingsStore.unwatchSetting(this.settingsWatcherRef);
-    }
-
-    private animationCallback = () => {
-        // If the PiP isn't being dragged and there is only a tiny difference in
-        // the desiredTranslation and translation, quit the animationCallback
-        // loop. If that is the case, it means the PiP has snapped into its
-        // position and there is nothing to do. Not doing this would cause an
-        // infinite loop
-        if (
-            !this.moving &&
-            Math.abs(this.state.translationX - this.desiredTranslationX) <= 1 &&
-            Math.abs(this.state.translationY - this.desiredTranslationY) <= 1
-        ) return;
-
-        const amt = this.moving ? MOVING_AMT : SNAPPING_AMT;
-        this.setState({
-            translationX: lerp(this.state.translationX, this.desiredTranslationX, amt),
-            translationY: lerp(this.state.translationY, this.desiredTranslationY, amt),
-        });
-        this.scheduledUpdate.mark();
-    };
-
-    private setTranslation(inTranslationX: number, inTranslationY: number) {
-        const width = this.callViewWrapper.current?.clientWidth || PIP_VIEW_WIDTH;
-        const height = this.callViewWrapper.current?.clientHeight || PIP_VIEW_HEIGHT;
-
-        // Avoid overflow on the x axis
-        if (inTranslationX + width >= UIStore.instance.windowWidth) {
-            this.desiredTranslationX = UIStore.instance.windowWidth - width;
-        } else if (inTranslationX <= 0) {
-            this.desiredTranslationX = 0;
-        } else {
-            this.desiredTranslationX = inTranslationX;
-        }
-
-        // Avoid overflow on the y axis
-        if (inTranslationY + height >= UIStore.instance.windowHeight) {
-            this.desiredTranslationY = UIStore.instance.windowHeight - height;
-        } else if (inTranslationY <= 0) {
-            this.desiredTranslationY = 0;
-        } else {
-            this.desiredTranslationY = inTranslationY;
+        const room = MatrixClientPeg.get().getRoom(this.state.roomId);
+        if (room) {
+            WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
     }
-
-    private snap = () => {
-        const translationX = this.desiredTranslationX;
-        const translationY = this.desiredTranslationY;
-        // We subtract the PiP size from the window size in order to calculate
-        // the position to snap to from the PiP center and not its top-left
-        // corner
-        const windowWidth = (
-            UIStore.instance.windowWidth -
-            (this.callViewWrapper.current?.clientWidth || PIP_VIEW_WIDTH)
-        );
-        const windowHeight = (
-            UIStore.instance.windowHeight -
-            (this.callViewWrapper.current?.clientHeight || PIP_VIEW_HEIGHT)
-        );
-
-        if (translationX >= windowWidth / 2 && translationY >= windowHeight / 2) {
-            this.desiredTranslationX = windowWidth - PADDING.right;
-            this.desiredTranslationY = windowHeight - PADDING.bottom;
-        } else if (translationX >= windowWidth / 2 && translationY <= windowHeight / 2) {
-            this.desiredTranslationX = windowWidth - PADDING.right;
-            this.desiredTranslationY = PADDING.top;
-        } else if (translationX <= windowWidth / 2 && translationY >= windowHeight / 2) {
-            this.desiredTranslationX = PADDING.left;
-            this.desiredTranslationY = windowHeight - PADDING.bottom;
-        } else {
-            this.desiredTranslationX = PADDING.left;
-            this.desiredTranslationY = PADDING.top;
-        }
-
-        // We start animating here because we want the PiP to move when we're
-        // resizing the window
-        this.scheduledUpdate.mark();
-    };
 
     private onRoomViewStoreUpdate = () => {
-        if (RoomViewStore.getRoomId() === this.state.roomId) return;
+        const newRoomId = RoomViewStore.getRoomId();
+        const oldRoomId = this.state.roomId;
+        if (newRoomId === oldRoomId) return;
+        // The WidgetLayoutStore observer always tracks the currently viewed Room,
+        // so we don't end up with multiple observers and know what observer to remove on unmount
+        const oldRoom = MatrixClientPeg.get()?.getRoom(oldRoomId);
+        if (oldRoom) {
+            WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(oldRoom), this.updateCalls);
+        }
+        const newRoom = MatrixClientPeg.get()?.getRoom(newRoomId);
+        if (newRoom) {
+            WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(newRoom), this.updateCalls);
+        }
+        if (!newRoomId) return;
 
-        const roomId = RoomViewStore.getRoomId();
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(roomId),
-        );
-
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(newRoomId);
         this.setState({
-            roomId,
+            roomId: newRoomId,
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
         });
     };
 
-    private onAction = (payload: ActionPayload) => {
-        switch (payload.action) {
-            // listen for call state changes to prod the render method, which
-            // may hide the global CallView if the call it is tracking is dead
-            case 'call_state': {
-                this.updateCalls();
-                break;
-            }
-        }
-    };
-
-    private updateCalls = () => {
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(this.state.roomId),
-        );
+    private updateCalls = (): void => {
+        if (!this.state.roomId) return;
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
 
         this.setState({
             primaryCall: primaryCall,
@@ -279,9 +172,8 @@ export default class CallPreview extends React.Component<IProps, IState> {
     };
 
     private onCallRemoteHold = () => {
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCalls(
-            CallHandler.sharedInstance().getAllActiveCallsNotInRoom(this.state.roomId),
-        );
+        if (!this.state.roomId) return;
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
 
         this.setState({
             primaryCall: primaryCall,
@@ -289,56 +181,34 @@ export default class CallPreview extends React.Component<IProps, IState> {
         });
     };
 
-    private onStartMoving = (event: React.MouseEvent) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        this.moving = true;
-        this.initX = event.pageX - this.desiredTranslationX;
-        this.initY = event.pageY - this.desiredTranslationY;
-        this.scheduledUpdate.mark();
-    };
-
-    private onMoving = (event: React.MouseEvent | MouseEvent) => {
-        if (!this.moving) return;
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        this.setTranslation(event.pageX - this.initX, event.pageY - this.initY);
-    };
-
-    private onEndMoving = () => {
-        this.moving = false;
-        this.snap();
+    private onDoubleClick = (): void => {
+        dis.dispatch({
+            action: Action.ViewRoom,
+            room_id: this.state.primaryCall.roomId,
+        });
     };
 
     public render() {
+        const pipMode = true;
         if (this.state.primaryCall) {
-            const translatePixelsX = this.state.translationX + "px";
-            const translatePixelsY = this.state.translationY + "px";
-            const style = {
-                transform: `translateX(${translatePixelsX})
-                            translateY(${translatePixelsY})`,
-            };
-
             return (
-                <div
+                <PictureInPictureDragger
                     className="mx_CallPreview"
-                    style={style}
-                    ref={this.callViewWrapper}
+                    draggable={pipMode}
+                    onDoubleClick={this.onDoubleClick}
                 >
-                    <CallView
+                    { ({ onStartMoving, onResize }) => <CallView
+                        onMouseDownOnHeader={onStartMoving}
                         call={this.state.primaryCall}
                         secondaryCall={this.state.secondaryCall}
-                        pipMode={true}
-                        onMouseDownOnHeader={this.onStartMoving}
-                    />
-                </div>
+                        pipMode={pipMode}
+                        onResize={onResize}
+                    /> }
+                </PictureInPictureDragger>
+
             );
         }
 
         return <PersistentApp />;
     }
 }
-

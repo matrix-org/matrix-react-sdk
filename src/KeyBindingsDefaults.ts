@@ -14,8 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AutocompleteAction, IKeyBindingsProvider, KeyBinding, MessageComposerAction, NavigationAction, RoomAction,
-    RoomListAction } from "./KeyBindingsManager";
+import {
+    AutocompleteAction,
+    IKeyBindingsProvider,
+    KeyBinding,
+    MessageComposerAction,
+    NavigationAction,
+    RoomAction,
+    RoomListAction,
+} from "./KeyBindingsManager";
 import { isMac, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
 
@@ -161,31 +168,29 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
 const autocompleteBindings = (): KeyBinding<AutocompleteAction>[] => {
     return [
         {
-            action: AutocompleteAction.CompleteOrNextSelection,
+            action: AutocompleteAction.ForceComplete,
             keyCombo: {
                 key: Key.TAB,
             },
         },
         {
-            action: AutocompleteAction.CompleteOrNextSelection,
+            action: AutocompleteAction.ForceComplete,
             keyCombo: {
                 key: Key.TAB,
                 ctrlKey: true,
             },
         },
         {
-            action: AutocompleteAction.CompleteOrPrevSelection,
+            action: AutocompleteAction.Complete,
             keyCombo: {
-                key: Key.TAB,
-                shiftKey: true,
+                key: Key.ENTER,
             },
         },
         {
-            action: AutocompleteAction.CompleteOrPrevSelection,
+            action: AutocompleteAction.Complete,
             keyCombo: {
-                key: Key.TAB,
+                key: Key.ENTER,
                 ctrlKey: true,
-                shiftKey: true,
             },
         },
         {
@@ -321,6 +326,14 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             keyCombo: {
                 key: Key.K,
                 ctrlOrCmd: true,
+            },
+        },
+        {
+            action: NavigationAction.ToggleSpacePanel,
+            keyCombo: {
+                key: Key.D,
+                ctrlOrCmd: true,
+                shiftKey: true,
             },
         },
         {

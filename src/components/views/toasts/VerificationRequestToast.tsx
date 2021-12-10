@@ -15,6 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -25,8 +28,6 @@ import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";
 import Modal from "../../../Modal";
 import GenericToast from "./GenericToast";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
@@ -98,7 +99,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         try {
             this.props.request.cancel();
         } catch (err) {
-            console.error("Error while cancelling verification request", err);
+            logger.error("Error while cancelling verification request", err);
         }
     };
 
@@ -110,7 +111,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         try {
             if (request.channel.roomId) {
                 dis.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     room_id: request.channel.roomId,
                     should_peek: false,
                 });
@@ -132,7 +133,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             }
             await request.accept();
         } catch (err) {
-            console.error(err.message);
+            logger.error(err.message);
         }
     };
 

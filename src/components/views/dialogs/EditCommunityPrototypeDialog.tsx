@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import BaseDialog from "./BaseDialog";
 import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
@@ -89,7 +91,7 @@ export default class EditCommunityPrototypeDialog extends React.PureComponent<IP
             // we did it, so close the dialog
             this.props.onFinished(true);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             this.setState({
                 busy: false,
                 error: _t("There was an error updating your community. The server is unable to process your request."),
@@ -144,8 +146,10 @@ export default class EditCommunityPrototypeDialog extends React.PureComponent<IP
                         </div>
                         <div className="mx_EditCommunityPrototypeDialog_rowAvatar">
                             <input
-                                type="file" style={{ display: "none" }}
-                                ref={this.avatarUploadRef} accept="image/*"
+                                type="file"
+                                style={{ display: "none" }}
+                                ref={this.avatarUploadRef}
+                                accept="image/*"
                                 onChange={this.onAvatarChanged}
                             />
                             <AccessibleButton

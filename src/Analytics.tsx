@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { getCurrentLanguage, _t, _td, IVariables } from './languageHandler';
 import PlatformPeg from './PlatformPeg';
@@ -31,7 +32,7 @@ function getRedactedHash(hash: string): string {
     // Don't leak URLs we aren't expecting - they could contain tokens/PII
     const match = hashRegex.exec(hash);
     if (!match) {
-        console.warn(`Unexpected hash location "${hash}"`);
+        logger.warn(`Unexpected hash location "${hash}"`);
         return '#/<unexpected hash location>';
     }
 
@@ -156,7 +157,7 @@ function getUid(): string {
         }
         return data;
     } catch (e) {
-        console.error("Analytics error: ", e);
+        logger.error("Analytics error: ", e);
         return "";
     }
 }
@@ -299,7 +300,7 @@ export class Analytics {
                 redirect: "follow",
             });
         } catch (e) {
-            console.error("Analytics error: ", e);
+            logger.error("Analytics error: ", e);
         }
     }
 
@@ -320,7 +321,7 @@ export class Analytics {
         }
 
         if (typeof generationTimeMs !== 'number') {
-            console.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
+            logger.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
             // But continue anyway because we still want to track the change
         }
 
@@ -391,16 +392,26 @@ export class Analytics {
         ];
 
         // FIXME: Using an import will result in test failures
+        const cookiePolicyUrl = SdkConfig.get().piwik?.policyUrl;
         const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
+        const cookiePolicyLink = _t(
+            "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.",
+            {},
+            {
+                "CookiePolicyLink": (sub) => {
+                    return <a href={cookiePolicyUrl} target="_blank" rel="noreferrer noopener">{ sub }</a>;
+                },
+            });
         Modal.createTrackedDialog('Analytics Details', '', ErrorDialog, {
             title: _t('Analytics'),
             description: <div className="mx_AnalyticsModal">
-                <div>{ _t('The information being sent to us to help make %(brand)s better includes:', {
+                { cookiePolicyUrl && <p>{ cookiePolicyLink }</p> }
+                <div>{ _t('Some examples of the information being sent to us to help make %(brand)s better includes:', {
                     brand: SdkConfig.get().brand,
                 }) }</div>
                 <table>
                     { rows.map((row) => <tr key={row[0]}>
-                        <td>{ _t(
+                        <td className="mx_AnalyticsModal_label">{ _t(
                             customVariables[row[0]].expl,
                             customVariables[row[0]].getTextVariables ?
                                 customVariables[row[0]].getTextVariables() :

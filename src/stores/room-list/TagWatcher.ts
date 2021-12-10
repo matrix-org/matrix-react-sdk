@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { RoomListStoreClass } from "./RoomListStore";
 import GroupFilterOrderStore from "../GroupFilterOrderStore";
 import { CommunityFilterCondition } from "./filters/CommunityFilterCondition";
@@ -37,7 +39,7 @@ export class TagWatcher {
             // Selected tags changed, do some filtering
 
             if (!this.store.matrixClient) {
-                console.warn("Tag update without an associated matrix client - ignoring");
+                logger.warn("Tag update without an associated matrix client - ignoring");
                 return;
             }
 
@@ -47,7 +49,7 @@ export class TagWatcher {
             for (const tag of filterableTags) {
                 const group = this.store.matrixClient.getGroup(tag);
                 if (!group) {
-                    console.warn(`Group selected with no group object available: ${tag}`);
+                    logger.warn(`Group selected with no group object available: ${tag}`);
                     continue;
                 }
 

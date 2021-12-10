@@ -16,6 +16,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import FlairStore from '../../../stores/FlairStore';
 import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -92,7 +94,7 @@ export default class Flair extends React.Component {
             try {
                 groupProfile = await FlairStore.getGroupProfileCached(this.context, groupId);
             } catch (err) {
-                console.error('Could not get profile for group', groupId, err);
+                logger.error('Could not get profile for group', groupId, err);
             }
             profiles.push(groupProfile);
         }

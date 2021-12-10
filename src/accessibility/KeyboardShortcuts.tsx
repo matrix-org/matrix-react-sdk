@@ -163,7 +163,7 @@ const shortcuts: Record<Categories, IShortcut[]> = {
                 modifiers: [Modifiers.SHIFT],
                 key: Key.PAGE_UP,
             }],
-                description: _td("Jump to oldest unread message"),
+            description: _td("Jump to oldest unread message"),
         }, {
             keybinds: [{
                 modifiers: [CMD_OR_CTRL, Modifiers.SHIFT],
@@ -253,6 +253,12 @@ const shortcuts: Record<Categories, IShortcut[]> = {
                 key: Key.SPACE,
             }],
             description: _td("Activate selected button"),
+        }, {
+            keybinds: [{
+                modifiers: [CMD_OR_CTRL, Modifiers.SHIFT],
+                key: Key.D,
+            }],
+            description: _td("Toggle space panel"),
         }, {
             keybinds: [{
                 modifiers: [CMD_OR_CTRL],
@@ -348,7 +354,7 @@ const Shortcut: React.FC<{
             }
 
             return <div key={s.key}>
-                { s.modifiers && s.modifiers.map(m => {
+                { s.modifiers?.map(m => {
                     return <React.Fragment key={m}>
                         <kbd>{ modifierIcon[m] || _t(m) }</kbd>+
                     </React.Fragment>;

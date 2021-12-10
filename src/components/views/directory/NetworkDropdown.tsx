@@ -21,9 +21,8 @@ import { IProtocol } from "matrix-js-sdk/src/client";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { instanceForInstanceId } from '../../../utils/DirectoryUtils';
-import {
+import ContextMenu, {
     ChevronFace,
-    ContextMenu,
     ContextMenuButton,
     MenuGroup,
     MenuItem,
@@ -268,7 +267,7 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
         };
 
         const buttonRect = handle.current.getBoundingClientRect();
-        content = <ContextMenu {...inPlaceOf(buttonRect)} onFinished={closeMenu}>
+        content = <ContextMenu {...inPlaceOf(buttonRect)} onFinished={closeMenu} focusLock>
             <div className="mx_NetworkDropdown_menu">
                 { options }
                 <MenuItem className="mx_NetworkDropdown_server_add" label={undefined} onClick={onClick}>

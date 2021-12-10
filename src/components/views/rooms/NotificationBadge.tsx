@@ -14,14 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { MouseEvent } from "react";
 import classNames from "classnames";
+
 import { formatCount } from "../../../utils/FormattingUtils";
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import { XOR } from "../../../@types/common";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "../../../stores/notifications/NotificationState";
+import { NotificationState, NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Tooltip from "../elements/Tooltip";
+import { _t } from "../../../languageHandler";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 
 interface IProps {
     notification: NotificationState;
@@ -39,6 +43,7 @@ interface IProps {
 }
 
 interface IClickableProps extends IProps, React.InputHTMLAttributes<Element> {
+    showUnsentTooltip?: boolean;
     /**
      * If specified will return an AccessibleButton instead of a div.
      */
@@ -47,6 +52,7 @@ interface IClickableProps extends IProps, React.InputHTMLAttributes<Element> {
 
 interface IState {
     showCounts: boolean; // whether or not to show counts. Independent of props.forceCount
+    showTooltip: boolean;
 }
 
 @replaceableComponent("views.rooms.NotificationBadge")
@@ -55,10 +61,11 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
 
     constructor(props: IProps) {
         super(props);
-        this.props.notification.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.props.notification.on(NotificationStateEvents.Update, this.onNotificationUpdate);
 
         this.state = {
             showCounts: SettingsStore.getValue("Notifications.alwaysShowBadgeCounts", this.roomId),
+            showTooltip: false,
         };
 
         this.countWatcherRef = SettingsStore.watchSetting(
@@ -74,15 +81,15 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
 
     public componentWillUnmount() {
         SettingsStore.unwatchSetting(this.countWatcherRef);
-        this.props.notification.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.props.notification.off(NotificationStateEvents.Update, this.onNotificationUpdate);
     }
 
     public componentDidUpdate(prevProps: Readonly<IProps>) {
         if (prevProps.notification) {
-            prevProps.notification.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+            prevProps.notification.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         }
 
-        this.props.notification.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.props.notification.on(NotificationStateEvents.Update, this.onNotificationUpdate);
     }
 
     private countPreferenceChanged = () => {
@@ -93,9 +100,22 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
         this.forceUpdate(); // notification state changed - update
     };
 
+    private onMouseOver = (e: MouseEvent) => {
+        e.stopPropagation();
+        this.setState({
+            showTooltip: true,
+        });
+    };
+
+    private onMouseLeave = () => {
+        this.setState({
+            showTooltip: false,
+        });
+    };
+
     public render(): React.ReactElement {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { notification, forceCount, roomId, onClick, ...props } = this.props;
+        const { notification, showUnsentTooltip, forceCount, roomId, onClick, ...props } = this.props;
 
         // Don't show a badge if we don't need to
         if (notification.isIdle) return null;
@@ -124,9 +144,24 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
         });
 
         if (onClick) {
+            let label: string;
+            let tooltip: JSX.Element;
+            if (showUnsentTooltip && this.state.showTooltip && notification.color === NotificationColor.Unsent) {
+                label = _t("Message didn't send. Click for info.");
+                tooltip = <Tooltip className="mx_RoleButton_tooltip" label={label} />;
+            }
+
             return (
-                <AccessibleButton {...props} className={classes} onClick={onClick}>
+                <AccessibleButton
+                    aria-label={label}
+                    {...props}
+                    className={classes}
+                    onClick={onClick}
+                    onMouseOver={this.onMouseOver}
+                    onMouseLeave={this.onMouseLeave}
+                >
                     <span className="mx_NotificationBadge_count">{ symbol }</span>
+                    { tooltip }
                 </AccessibleButton>
             );
         }
