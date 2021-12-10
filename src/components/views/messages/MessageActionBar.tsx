@@ -67,8 +67,9 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
+        onFocus();
         onFocusChange(menuDisplayed);
-    }, [onFocusChange, menuDisplayed]);
+    }, [onFocus, onFocusChange, menuDisplayed]);
 
     let contextMenu: ReactElement | null;
     if (menuDisplayed) {
