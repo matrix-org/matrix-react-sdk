@@ -65,6 +65,10 @@ interface IProps {
 interface IState {
     phase: RightPanelPhases;
     isUserPrivilegedInGroup?: boolean;
+    searchQuery: string;
+
+    // Parameters for the states of the different right panels (handled by the RightPanelStore)
+    // see: IPanelState
     member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
@@ -75,7 +79,6 @@ interface IState {
     threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
-    searchQuery: string;
 }
 
 @replaceableComponent("structures.RightPanel")
@@ -167,20 +170,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
         this.setState({
             ...currentRoom.state,
             phase: currentRoom.phase,
-            // member: currentRoom.state?.member,
-            // verificationRequest: currentRoom.state.verificationRequest,
-            // verificationRequestPromise: currentRoom.state.verificationRequestPromise,
 
-            // groupId: currentRoom.state.groupId,
-            // groupRoomId: currentRoom.state.groupRoomId,
-            // threadHeadEvent: currentRoom.state.threadHeadEvent,
-
-            // widgetId: currentRoom.state.widgetId,
-
-            // space: currentRoom.state.space,
-
-            // initialEvent: currentRoom.state.initialEvent,
-            // isInitialEventHighlighted: currentRoom.state.isInitialEventHighlighted,
         });
     };
     private onAction = (payload: ActionPayload) => {

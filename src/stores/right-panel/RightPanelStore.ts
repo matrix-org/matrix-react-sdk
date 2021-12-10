@@ -24,14 +24,10 @@ import { SettingLevel } from "../../settings/SettingLevel";
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { UPDATE_EVENT } from '../AsyncStore';
-// import { AsyncStoreWithClient } from './AsyncStoreWithClient';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
 import RoomViewStore from '../RoomViewStore';
 import { EventSubscription } from 'fbemitter';
 import { IPhaseAndState, IPanelState, convertToStateRoom, convertToStoreRoom } from './RightPanelStoreIPanelState';
-// import RightPanel from '../components/structures/RightPanel';
-// import { Playback } from '../audio/Playback';
-// import { RoomView } from '../components/structures/RoomView';
 
 const GROUP_PHASES = [
     RightPanelPhases.GroupMemberList,
