@@ -72,7 +72,7 @@ function previews(): Object {
                 isState: false,
                 previewer: new PollStartEventPreview(),
             },
-            ...PREVIEWS
+            ...PREVIEWS,
         };
     } else {
         return PREVIEWS;
