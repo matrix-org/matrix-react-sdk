@@ -39,8 +39,8 @@ export class PollStartEventPreview implements IPreview {
             return null;
         }
 
-        let question = eventContent[POLL_START_EVENT_TYPE.name]
-            .question[TEXT_NODE_TYPE.name];
+        let question =
+            eventContent[POLL_START_EVENT_TYPE.name].question[TEXT_NODE_TYPE.name];
         question = (question || '').trim();
         question = sanitizeForTranslation(question);
 
