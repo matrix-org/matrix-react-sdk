@@ -137,10 +137,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     }
 
     public componentDidMount(): void {
+        super.componentDidMount();
         this.threadNotificationState.on(NotificationStateEvents.Update, this.onThreadNotification);
     }
 
     public componentWillUnmount(): void {
+        super.componentWillUnmount();
         this.threadNotificationState.off(NotificationStateEvents.Update, this.onThreadNotification);
     }
 
