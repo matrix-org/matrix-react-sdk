@@ -19,6 +19,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventSubscription } from "fbemitter";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomAvatar from "../views/avatars/RoomAvatar";
@@ -48,6 +49,7 @@ import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPan
 import { useStateArray } from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import {
+    shouldShowSpaceInvite,
     shouldShowSpaceSettings,
     showAddExistingRooms,
     showCreateNewRoom,
@@ -81,8 +83,6 @@ import Spinner from "../views/elements/Spinner";
 import GroupAvatar from "../views/avatars/GroupAvatar";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { useRoomState } from "../../hooks/useRoomState";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 
@@ -396,7 +396,7 @@ const SpaceLandingAddButton = ({ space }) => {
                 />
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
-                    iconClassName="mx_RoomList_iconHash"
+                    iconClassName="mx_RoomList_iconAddExistingRoom"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -440,9 +440,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     const userId = cli.getUserId();
 
     let inviteButton;
-    if (((myMembership === "join" && space.canInvite(userId)) || space.getJoinRule() === JoinRule.Public) &&
-        shouldShowComponent(UIComponent.InviteUsers)
-    ) {
+    if (shouldShowSpaceInvite(space) && shouldShowComponent(UIComponent.InviteUsers)) {
         inviteButton = (
             <AccessibleButton
                 kind="primary"

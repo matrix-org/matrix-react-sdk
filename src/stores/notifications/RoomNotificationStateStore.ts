@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { DefaultTagID, TagID } from "../room-list/models";
 import { FetchRoomFn, ListNotificationState } from "./ListNotificationState";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomNotificationState } from "./RoomNotificationState";
 import { SummarizedNotificationState } from "./SummarizedNotificationState";
 import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
+import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
 
 interface IState {}
 
@@ -30,6 +32,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private static internalInstance = new RoomNotificationStateStore();
 
     private roomMap = new Map<Room, RoomNotificationState>();
+    private roomThreadsMap = new Map<Room, ThreadsRoomNotificationState>();
     private listMap = new Map<TagID, ListNotificationState>();
 
     private constructor() {
@@ -85,8 +88,20 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     public getRoomState(room: Room): RoomNotificationState {
         if (!this.roomMap.has(room)) {
             this.roomMap.set(room, new RoomNotificationState(room));
+            // Not very elegant, but that way we ensure that we start tracking
+            // threads notification at the same time at rooms.
+            // There are multiple entry points, and it's unclear which one gets
+            // called first
+            this.roomThreadsMap.set(room, new ThreadsRoomNotificationState(room));
         }
         return this.roomMap.get(room);
+    }
+
+    public getThreadsRoomState(room: Room): ThreadsRoomNotificationState {
+        if (!this.roomThreadsMap.has(room)) {
+            this.roomThreadsMap.set(room, new ThreadsRoomNotificationState(room));
+        }
+        return this.roomThreadsMap.get(room);
     }
 
     public static get instance(): RoomNotificationStateStore {

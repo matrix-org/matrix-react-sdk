@@ -16,12 +16,16 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from 'classnames';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
 import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
@@ -49,21 +53,16 @@ import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import CountlyAnalytics from "../../../CountlyAnalytics";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { getAddressType } from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { compare } from '../../../utils/strings';
-import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
+import { compare, copyPlaintext, selectText } from '../../../utils/strings';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { copyPlaintext, selectText } from "../../../utils/strings";
 import * as ContextMenu from "../../structures/ContextMenu";
 import { toRightOf } from "../../structures/ContextMenu";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
-import { TransferCallPayload } from '../../../dispatcher/payloads/TransferCallPayload';
 import Field from '../elements/Field';
 import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
 import Dialpad from '../voip/DialPad';
@@ -72,8 +71,7 @@ import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import CallHandler from "../../../CallHandler";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -806,19 +804,17 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 return;
             }
 
-            dis.dispatch({
-                action: Action.TransferCallToMatrixID,
-                call: this.props.call,
-                destination: targetIds[0],
-                consultFirst: this.state.consultFirst,
-            } as TransferCallPayload);
+            CallHandler.instance.startTransferToMatrixID(
+                this.props.call,
+                targetIds[0],
+                this.state.consultFirst,
+            );
         } else {
-            dis.dispatch({
-                action: Action.TransferCallToPhoneNumber,
-                call: this.props.call,
-                destination: this.state.dialPadValue,
-                consultFirst: this.state.consultFirst,
-            } as TransferCallPayload);
+            CallHandler.instance.startTransferToPhoneNumber(
+                this.props.call,
+                this.state.dialPadValue,
+                this.state.consultFirst,
+            );
         }
         this.props.onFinished();
     };

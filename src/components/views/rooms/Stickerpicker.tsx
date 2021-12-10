@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t, _td } from '../../../languageHandler';
 import AppTile from '../elements/AppTile';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -24,7 +27,7 @@ import WidgetUtils, { IWidgetEvent } from '../../../utils/WidgetUtils';
 import PersistedElement from "../elements/PersistedElement";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
-import { ChevronFace, ContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { Action } from "../../../dispatcher/actions";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
@@ -33,8 +36,6 @@ import { ActionPayload } from '../../../dispatcher/payloads';
 import ScalarAuthClient from '../../../ScalarAuthClient';
 import GenericElementContextMenu from "../context_menus/GenericElementContextMenu";
 import { IApp } from "../../../stores/WidgetStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // This should be below the dialog level (4000), but above the rest of the UI (1000-2000).
 // We sit in a context menu, so this should be given to the context menu.
@@ -45,6 +46,7 @@ const PERSISTED_ELEMENT_KEY = "stickerPicker";
 
 interface IProps {
     room: Room;
+    threadId?: string | null;
     showStickers: boolean;
     menuPosition?: any;
     setShowStickers: (showStickers: boolean) => void;
@@ -61,6 +63,10 @@ interface IState {
 
 @replaceableComponent("views.rooms.Stickerpicker")
 export default class Stickerpicker extends React.PureComponent<IProps, IState> {
+    static defaultProps = {
+        threadId: null,
+    };
+
     static currentWidget;
 
     private dispatcherRef: string;
@@ -286,6 +292,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                             <AppTile
                                 app={stickerApp}
                                 room={this.props.room}
+                                threadId={this.props.threadId}
                                 fullWidth={true}
                                 userId={MatrixClientPeg.get().credentials.userId}
                                 creatorUserId={stickerpickerWidget.sender || MatrixClientPeg.get().credentials.userId}

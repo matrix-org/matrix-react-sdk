@@ -19,6 +19,8 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import SdkConfig from './SdkConfig';
@@ -37,9 +39,6 @@ import RoomViewStore from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 /*
  * Dispatches:
@@ -379,11 +378,14 @@ export const Notifier = {
         }
     },
 
-    _evaluateEvent: function(ev) {
+    _evaluateEvent: function(ev: MatrixEvent) {
         const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions && actions.notify) {
-            if (RoomViewStore.getRoomId() === room.roomId && UserActivity.sharedInstance().userActiveRecently()) {
+            if (RoomViewStore.getRoomId() === room.roomId &&
+                UserActivity.sharedInstance().userActiveRecently() &&
+                !Modal.hasDialogs()
+            ) {
                 // don't bother notifying as user was recently active in this room
                 return;
             }

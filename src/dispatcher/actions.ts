@@ -78,6 +78,11 @@ export enum Action {
     ToggleUserMenu = "toggle_user_menu",
 
     /**
+     * Toggles the Space panel. No additional payload information required.
+     */
+    ToggleSpacePanel = "toggle_space_panel",
+
+    /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
      */
     UpdateFontSize = "update_font_size",
@@ -122,18 +127,6 @@ export enum Action {
      * payload: DialNumberPayload
      */
     DialNumber = "dial_number",
-
-    /**
-     * Start a call transfer to a Matrix ID
-     * payload: TransferCallPayload
-     */
-    TransferCallToMatrixID = "transfer_call_to_matrix_id",
-
-    /**
-     * Start a call transfer to a phone number
-     * payload: TransferCallPayload
-     */
-    TransferCallToPhoneNumber = "transfer_call_to_phone_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support
@@ -200,7 +193,7 @@ export enum Action {
     SwitchSpace = "switch_space",
 
     /**
-     * Signals to the visible space hierarchy that a change has occurred an that it should refresh.
+     * Signals to the visible space hierarchy that a change has occurred and that it should refresh.
      */
     UpdateSpaceHierarchy = "update_space_hierarchy",
 
@@ -215,4 +208,29 @@ export enum Action {
      * Fires when a user starts to edit event (e.g. up arrow in compositor)
      */
     EditEvent = "edit_event",
+
+    /**
+     * The user accepted pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsAccept = "pseudonymous_analytics_accept",
+
+    /**
+     * The user rejected pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
+
+    /**
+     * The user accepted anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     * (this action and its handler can be removed once posthog is rolled out)
+     * Payload: none
+     */
+    AnonymousAnalyticsAccept = "anonymous_analytics_accept",
+
+    /**
+     * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     * Payload: none
+     */
+    AnonymousAnalyticsReject = "anonymous_analytics_reject",
 }
