@@ -22,6 +22,7 @@ import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -60,8 +61,6 @@ import SettingsStore from "../../../settings/SettingsStore";
 import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
 import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
@@ -171,6 +170,13 @@ export function getHandlerTile(ev) {
         if (WidgetType.JITSI.matches(type)) {
             return "messages.MJitsiWidgetEvent";
         }
+    }
+
+    if (
+        POLL_START_EVENT_TYPE.matches(type) &&
+        !SettingsStore.getValue("feature_polls")
+    ) {
+        return undefined;
     }
 
     if (ev.isState()) {
@@ -1157,6 +1163,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             onFocusChange={this.onActionBarFocusChange}
             isQuoteExpanded={isQuoteExpanded}
             toggleThreadExpanded={() => this.setQuoteExpanded(!isQuoteExpanded)}
+            getRelationsForEvent={this.props.getRelationsForEvent}
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs()
@@ -1202,7 +1209,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             _t(
                 '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
                 {},
-                { 'requestLink': (sub) => <a onClick={this.onRequestKeysClick}>{ sub }</a> },
+                { 'requestLink': (sub) => <a tabIndex={0} onClick={this.onRequestKeysClick}>{ sub }</a> },
             );
 
         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
@@ -1294,6 +1301,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             case TileShape.Thread: {
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return React.createElement(this.props.as || "li", {
+                    "ref": this.ref,
                     "className": classes,
                     "aria-live": ariaLive,
                     "aria-atomic": true,
@@ -1362,22 +1370,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                         >
                             { linkedTimestamp }
                             { this.renderE2EPadlock() }
-                            { replyChain }
-                            <EventTileType ref={this.tile}
-                                mxEvent={this.props.mxEvent}
-                                forExport={this.props.forExport}
-                                replacingEventId={this.props.replacingEventId}
-                                editState={this.props.editState}
-                                highlights={this.props.highlights}
-                                highlightLink={this.props.highlightLink}
-                                showUrlPreview={this.props.showUrlPreview}
-                                permalinkCreator={this.props.permalinkCreator}
-                                onHeightChanged={this.props.onHeightChanged}
-                                callEventGrouper={this.props.callEventGrouper}
-                                tileShape={this.props.tileShape}
-                                getRelationsForEvent={this.props.getRelationsForEvent}
-                            />
-                            { keyRequestInfo }
+                            <div className="mx_EventTile_body">
+                                { MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent) }
+                            </div>
                             { this.renderThreadPanelSummary() }
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">

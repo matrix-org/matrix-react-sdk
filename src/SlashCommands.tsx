@@ -20,8 +20,10 @@ limitations under the License.
 import * as React from 'react';
 import { User } from "matrix-js-sdk/src/models/user";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
+import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import { _t, _td } from './languageHandler';
@@ -37,7 +39,6 @@ import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/I
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import { WidgetType } from "./widgets/WidgetType";
 import { Jitsi } from "./widgets/Jitsi";
-import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
 import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
@@ -55,8 +56,6 @@ import DevtoolsDialog from './components/views/dialogs/DevtoolsDialog';
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from './contexts/RoomContext';
 import RoomViewStore from "./stores/RoomViewStore";
@@ -1037,7 +1036,7 @@ export const Commands = [
 
             return success((async () => {
                 if (isPhoneNumber) {
-                    const results = await CallHandler.sharedInstance().pstnLookup(this.state.value);
+                    const results = await CallHandler.instance.pstnLookup(this.state.value);
                     if (!results || results.length === 0 || !results[0].userid) {
                         throw new Error("Unable to find Matrix ID for phone number");
                     }
@@ -1089,7 +1088,7 @@ export const Commands = [
         description: _td("Places the call in the current room on hold"),
         category: CommandCategories.other,
         runFn: function(roomId, args) {
-            const call = CallHandler.sharedInstance().getCallForRoom(roomId);
+            const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject("No active call in this room");
             }
@@ -1103,7 +1102,7 @@ export const Commands = [
         description: _td("Takes the call in the current room off hold"),
         category: CommandCategories.other,
         runFn: function(roomId, args) {
-            const call = CallHandler.sharedInstance().getCallForRoom(roomId);
+            const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject("No active call in this room");
             }

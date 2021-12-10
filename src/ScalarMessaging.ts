@@ -235,8 +235,10 @@ Example:
 }
 */
 
-import { MatrixClientPeg } from './MatrixClientPeg';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
 import RoomViewStore from './stores/RoomViewStore';
@@ -244,8 +246,6 @@ import { _t } from './languageHandler';
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { WidgetType } from "./widgets/WidgetType";
 import { objectClone } from "./utils/objects";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 enum Action {
     CloseScalar = "close_scalar",
@@ -473,10 +473,7 @@ async function setBotPower(
         // If the PL is equal to or greater than the requested PL, ignore.
         if (ignoreIfGreater === true) {
             // As per https://matrix.org/docs/spec/client_server/r0.6.0#m-room-power-levels
-            const currentPl = (
-                powerLevels.content.users && powerLevels.content.users[userId]
-            ) || powerLevels.content.users_default || 0;
-
+            const currentPl = powerLevels.users?.[userId] ?? powerLevels.users_default ?? 0;
             if (currentPl >= level) {
                 return sendResponse(event, {
                     success: true,
