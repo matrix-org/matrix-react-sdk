@@ -247,7 +247,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
 
         if (focusRef) {
             focusRef.current?.focus();
-            // programmatic focus doesn't fire the onFocus handler so we must do the do ourselves
+            // programmatic focus doesn't fire the onFocus handler, so we must do the do ourselves
             dispatch({
                 type: Type.SetFocus,
                 payload: {
