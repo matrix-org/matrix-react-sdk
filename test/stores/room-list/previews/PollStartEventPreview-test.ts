@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk";
+
 import { IPollAnswer } from "../../../../src/polls/consts";
 import { PollStartEventPreview } from "../../../../src/stores/room-list/previews/PollStartEventPreview";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
