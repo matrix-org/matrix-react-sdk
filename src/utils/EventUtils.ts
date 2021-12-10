@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
 import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
-import { logger } from 'matrix-js-sdk/src/logger';
 import { POLL_START_EVENT_TYPE } from '../polls/consts';
 
 /**
@@ -46,7 +46,10 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
             if (content.msgtype && content.msgtype !== 'm.bad.encrypted' && content.hasOwnProperty('body')) {
                 return true;
             }
-        } else if (mxEvent.getType() === 'm.sticker') {
+        } else if (
+            mxEvent.getType() === 'm.sticker' ||
+            POLL_START_EVENT_TYPE.matches(mxEvent.getType())
+        ) {
             return true;
         }
     }
