@@ -131,6 +131,7 @@ export const reducer = (state: IState, action: IAction) => {
         }
 
         case Type.SetFocus: {
+            if (state.activeRef === action.payload.ref) return state;
             // update active ref
             state.activeRef = action.payload.ref;
             return { ...state };
@@ -194,6 +195,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
         }
 
         let handled = false;
+        let focusRef: RefObject<HTMLElement>;
         // Don't interfere with input default keydown behaviour
         if (ev.target.tagName !== "INPUT" && ev.target.tagName !== "TEXTAREA") {
             // check if we actually have any items
@@ -202,7 +204,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                     if (handleHomeEnd) {
                         handled = true;
                         // move focus to first (visible) item
-                        findSiblingElement(context.state.refs, 0)?.current?.focus();
+                        focusRef = findSiblingElement(context.state.refs, 0);
                     }
                     break;
 
@@ -210,7 +212,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                     if (handleHomeEnd) {
                         handled = true;
                         // move focus to last (visible) item
-                        findSiblingElement(context.state.refs, context.state.refs.length - 1, true)?.current?.focus();
+                        focusRef = findSiblingElement(context.state.refs, context.state.refs.length - 1, true);
                     }
                     break;
 
@@ -220,7 +222,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                         handled = true;
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
-                            findSiblingElement(context.state.refs, idx - 1)?.current?.focus();
+                            focusRef = findSiblingElement(context.state.refs, idx + 1);
                         }
                     }
                     break;
@@ -231,7 +233,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                         handled = true;
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
-                            findSiblingElement(context.state.refs, idx + 1, true)?.current?.focus();
+                            focusRef = findSiblingElement(context.state.refs, idx - 1, true);
                         }
                     }
                     break;
@@ -242,7 +244,17 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
             ev.preventDefault();
             ev.stopPropagation();
         }
-    }, [context.state, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight]);
+
+        if (focusRef) {
+            focusRef.current?.focus();
+            dispatch({
+                type: Type.SetFocus,
+                payload: {
+                    ref: focusRef,
+                },
+            });
+        }
+    }, [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight]);
 
     return <RovingTabIndexContext.Provider value={context}>
         { children({ onKeyDownHandler }) }
@@ -283,7 +295,7 @@ export const useRovingTabIndex = (inputRef?: Ref): [FocusHandler, boolean, Ref] 
             type: Type.SetFocus,
             payload: { ref },
         });
-    }, [ref, context]);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const isActive = context.state.activeRef === ref;
     return [onFocus, isActive, ref];
