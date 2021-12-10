@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639139061703,
+  "lastUpdate": 1639139695511,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46976,6 +46976,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 691.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a727961c43f85dd818672910bbad2d1ab7e1eb30",
+          "message": "Adding missing TypeScript dependency (#7330)",
+          "timestamp": "2021-12-10T12:28:44Z",
+          "tree_id": "44b330e483a7f5fa7d5c8bad12a504ca905176f1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a727961c43f85dd818672910bbad2d1ab7e1eb30"
+        },
+        "date": 1639139692914,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4900.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 973.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1548.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4271,
             "unit": "ms",
             "extra": "type: measure"
           }
