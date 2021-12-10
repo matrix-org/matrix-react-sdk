@@ -138,13 +138,19 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
         !isBubbleMessage &&
         eventType === EventType.CallInvite
     );
+
+    const isPollStart = (
+        POLL_START_EVENT_TYPE.matches(eventType) &&
+        SettingsStore.getValue("feature_polls")
+    );
+
     let isInfoMessage = (
         !isBubbleMessage &&
         !isLeftAlignedBubbleMessage &&
+        !isPollStart &&
         eventType !== EventType.RoomMessage &&
         eventType !== EventType.Sticker &&
-        eventType !== EventType.RoomCreate &&
-        eventType !== POLL_START_EVENT_TYPE.name
+        eventType !== EventType.RoomCreate
     );
 
     // If we're showing hidden events in the timeline, we should use the
