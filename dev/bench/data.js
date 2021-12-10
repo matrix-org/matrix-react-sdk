@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639092419640,
+  "lastUpdate": 1639136155649,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -46844,6 +46844,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 651.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c56833816a70ce9c18644bdb1cf54a976e3e04a1",
+          "message": "Update yarn.lock (#7327)",
+          "timestamp": "2021-12-10T11:29:27Z",
+          "tree_id": "b4a56a9d9de98d4425ac3f7cf7ba1f1e5c8a49f9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c56833816a70ce9c18644bdb1cf54a976e3e04a1"
+        },
+        "date": 1639136152433,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5078.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1122.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1713.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4618.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
