@@ -37,6 +37,38 @@ import IconizedContextMenu, {
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
 
+interface CustomInputProps {
+    onChange?: (event: Event) => void;
+    onInput?: (event: Event) => void;
+}
+/**
+ * This component restores the native 'onChange' and 'onInput' behavior of
+ * JavaScript. via https://stackoverflow.com/a/62383569/796832 and
+ * https://github.com/facebook/react/issues/9657#issuecomment-643970199
+ *
+ * See:
+ * - https://reactjs.org/docs/dom-elements.html#onchange
+ * - https://github.com/facebook/react/issues/3964
+ * - https://github.com/facebook/react/issues/9657
+ * - https://github.com/facebook/react/issues/14857
+ *
+ * We use this for the <input type="date"> date picker so we can distinguish
+ * from a final date picker selection vs navigating the months in the date
+ * picker which trigger an `input`(and `onChange` in React).
+ */
+class CustomInput extends React.Component<Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'onInput' | 'ref'> & CustomInputProps> {
+    private readonly registerCallbacks  = (element: HTMLInputElement | null) => {
+        if (element) {
+            element.onchange = this.props.onChange ? this.props.onChange : null;
+            element.oninput = this.props.onInput ? this.props.onInput : null;
+        }
+    };
+
+    public render() {
+        return <input ref={this.registerCallbacks} {...this.props} onChange={() => {}} onInput={() => {}} />;
+    }
+}
+
 function getDaysArray(): string[] {
     return [
         _t('Sunday'),
@@ -57,6 +89,10 @@ interface IProps {
 
 interface IState {
     dateValue: string,
+    // Whether or not to automatically navigate to the given date after someone
+    // selects a day in the date picker. We want to disable this after someone
+    // starts manually typing in the input instead of picking.
+    navigateOnDatePickerSelection: boolean,
     contextMenuPosition?: DOMRect
 }
 
@@ -65,9 +101,27 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            dateValue: this.getDefaultDateValue()
+            dateValue: this.getDefaultDateValue(),
+            navigateOnDatePickerSelection: true
         };
     }
+
+    private onContextMenuOpenClick = (e: React.MouseEvent): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = e.target as HTMLButtonElement;
+        this.setState({ contextMenuPosition: target.getBoundingClientRect() });
+    };
+
+    private onContextMenuCloseClick = (): void => {
+        this.closeMenu();
+    };
+
+    private closeMenu = (): void => {
+        this.setState({
+            contextMenuPosition: null,
+        });
+    };
 
     private getLabel(): string {
         const date = new Date(this.props.ts);
@@ -136,25 +190,45 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         }
     };
 
-    private onDateValueChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
+    // Since we're using CustomInput with native JavaScript behavior, this
+    // tracks the date value changes as they come in.
+    private onDateValueInput = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
+        console.log('onDateValueInput')
         this.setState({ dateValue: e.target.value });
     };
-    
-    private onContextMenuOpenClick = (ev: React.MouseEvent): void => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const target = ev.target as HTMLButtonElement;
-        this.setState({ contextMenuPosition: target.getBoundingClientRect() });
+
+    // Since we're using CustomInput with native JavaScript behavior, the change
+    // event listener will trigger when a date is picked from the date picker
+    // or when the text is fully filled out. In order to not trigger early
+    // as someone is typing out a date, we need to disable when we see keydowns.
+    private onDateValueChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
+        console.log('onDateValueChange')
+        this.setState({ dateValue: e.target.value });
+
+        // Don't auto navigate if they were manually typing out a date
+        if(this.state.navigateOnDatePickerSelection) {
+            this.pickDate(this.state.dateValue);
+            this.closeMenu();
+        }
     };
 
-    private closeMenu = (): void => {
-        this.setState({
-            contextMenuPosition: null,
-        });
-    };
+    private onDateInputKeyDown = (e: React.KeyboardEvent): void => {
+        // Ignore the tab key which is probably just navigating focus around
+        // with the keyboard
+        if(e.key === "Tab") {
+            return;
+        }
 
-    private onContextMenuCloseClick = (): void => {
-        this.closeMenu();
+        // Go and navigate if they submitted
+        if(e.key === "Enter") {
+            this.pickDate(this.state.dateValue);
+            this.closeMenu();
+            return;
+        }
+
+        // When we see someone manually typing out a date, disable the auto
+        // submit on change.
+        this.setState({ navigateOnDatePickerSelection: false });
     };
 
     private onLastWeekClicked = (): void => {
@@ -217,14 +291,21 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                     >
                         <form className="mx_DateSeparator_datePickerForm" onSubmit={this.onJumpToDateSubmit}>
                             <Field
+                                element={CustomInput}
                                 type="date"
                                 onChange={this.onDateValueChange}
+                                onInput={this.onDateValueInput}
+                                onKeyDown={this.onDateInputKeyDown}
                                 value={this.state.dateValue}
                                 className="mx_DateSeparator_datePicker"
                                 label={_t("Pick a date to jump to")}
                                 autoFocus={true}
                             />
-                            <AccessibleButton kind="primary" className="mx_DateSeparator_datePickerSubmitButton" onClick={this.onJumpToDateSubmit}>
+                            <AccessibleButton
+                                kind="primary"
+                                className="mx_DateSeparator_datePickerSubmitButton"
+                                onClick={this.onJumpToDateSubmit}
+                            >
                                 { _t("Go") }
                             </AccessibleButton>
                         </form>
