@@ -26,8 +26,7 @@ interface IProps extends React.ComponentProps<typeof AccessibleButton> {
     isExpanded: boolean;
 }
 
-// Semantic component for representing the AccessibleButton which
-// launches a <ContextMenu />
+// Semantic component for representing the AccessibleButton which launches a <ContextMenu />
 export const ContextMenuButton: React.FC<IProps> = ({
     label,
     isExpanded,

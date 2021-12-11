@@ -56,7 +56,6 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
             wrapperClassName="mx_QuickSettingsButton_ContextMenuWrapper"
             onFinished={closeMenu}
             managed={false}
-            focusLock={true}
         >
             <h2>{ _t("Quick settings") }</h2>
 

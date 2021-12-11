@@ -64,8 +64,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-
-        this.myRef = React.createRef();
     }
 
     private onContextMenuOpenClick = (e: React.MouseEvent): void => {

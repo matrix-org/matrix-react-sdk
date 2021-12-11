@@ -39,7 +39,7 @@ class CustomInput extends React.Component<Omit<React.InputHTMLAttributes<HTMLInp
       return <input
         ref={this.registerCallbacks}
         {...this.props}
-        // Add these just so we don't get a read-only input warning from React
+        // These are just here so we don't get a read-only input warning from React
         onChange={() => {}}
         onInput={() => {}}
       />;

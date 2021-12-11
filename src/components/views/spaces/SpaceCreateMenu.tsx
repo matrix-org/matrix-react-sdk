@@ -356,7 +356,6 @@ const SpaceCreateMenu = ({ onFinished }) => {
         onFinished={onFinished}
         wrapperClassName="mx_SpaceCreateMenu_wrapper"
         managed={false}
-        focusLock={true}
     >
         { body }
     </ContextMenu>;
