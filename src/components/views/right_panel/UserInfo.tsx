@@ -76,6 +76,7 @@ import { bulkSpaceBehaviour } from "../../../utils/space";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 
 export interface IDevice {
     deviceId: string;
@@ -1502,6 +1503,7 @@ const UserInfoHeader: React.FC<{
     e2eStatus: E2EStatus;
 }> = ({ member, e2eStatus }) => {
     const cli = useContext(MatrixClientContext);
+    const statusMessage = useUserStatusMessage(member);
 
     const onMemberAvatarClick = useCallback(() => {
         const avatarUrl = (member as RoomMember).getMxcAvatarUrl
@@ -1539,20 +1541,10 @@ const UserInfoHeader: React.FC<{
     let presenceState;
     let presenceLastActiveAgo;
     let presenceCurrentlyActive;
-    let statusMessage;
-
     if (member instanceof RoomMember && member.user) {
         presenceState = member.user.presence;
         presenceLastActiveAgo = member.user.lastActiveAgo;
         presenceCurrentlyActive = member.user.currentlyActive;
-
-        if (SettingsStore.getValue("feature_custom_status")) {
-            if ((member as RoomMember).user) {
-                statusMessage = member.user.unstable_statusMessage;
-            } else {
-                statusMessage = (member as unknown as User).unstable_statusMessage;
-            }
-        }
     }
 
     const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
@@ -1573,7 +1565,7 @@ const UserInfoHeader: React.FC<{
     }
 
     let statusLabel = null;
-    if (statusMessage) {
+    if (SettingsStore.getValue("feature_custom_status") && statusMessage) {
         statusLabel = <span className="mx_UserInfo_statusMessage">{ statusMessage }</span>;
     }
 
