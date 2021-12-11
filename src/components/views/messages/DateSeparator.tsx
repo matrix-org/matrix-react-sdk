@@ -288,7 +288,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                         className="mx_DateSeparator_jumpToDateMenuOption"
                         label={_t("Jump to date")}
                         onClick={() => {}}
-                        tabIndex={-1}
                     >
                         <form className="mx_DateSeparator_datePickerForm" onSubmit={this.onJumpToDateSubmit}>
                             <Field

@@ -18,15 +18,16 @@ limitations under the License.
 
 import React from "react";
 
-import AccessibleButton from "../../components/views/elements/AccessibleButton";
+import { RovingAccessibleButton } from "../RovingTabIndex";
 
-interface IProps extends React.ComponentProps<typeof AccessibleButton> {
+interface IProps extends React.ComponentProps<typeof RovingAccessibleButton> {
     label?: string;
     // whether or not the context menu is currently open
     isExpanded: boolean;
 }
 
-// Semantic component for representing the AccessibleButton which launches a <ContextMenu />
+// Semantic component for representing the RovingAccessibleButton which
+// launches a <ContextMenu />
 export const ContextMenuButton: React.FC<IProps> = ({
     label,
     isExpanded,
@@ -36,7 +37,7 @@ export const ContextMenuButton: React.FC<IProps> = ({
     ...props
 }) => {
     return (
-        <AccessibleButton
+        <RovingAccessibleButton
             {...props}
             onClick={onClick}
             onContextMenu={onContextMenu || onClick}
@@ -46,6 +47,6 @@ export const ContextMenuButton: React.FC<IProps> = ({
             aria-expanded={isExpanded}
         >
             { children }
-        </AccessibleButton>
+        </RovingAccessibleButton>
     );
 };

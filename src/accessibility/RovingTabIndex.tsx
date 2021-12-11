@@ -194,6 +194,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
             }
         }
 
+        console.log('onKeyDownHandler', context.state.refs.length)
         let handled = false;
         let focusRef: RefObject<HTMLElement>;
         // Don't interfere with input default keydown behaviour
@@ -223,6 +224,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
                             focusRef = findSiblingElement(context.state.refs, idx + 1);
+                            console.log('up', focusRef, idx + 1)
                         }
                     }
                     break;
@@ -234,6 +236,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
                             focusRef = findSiblingElement(context.state.refs, idx - 1, true);
+                            console.log('down', focusRef, idx - 1)
                         }
                     }
                     break;

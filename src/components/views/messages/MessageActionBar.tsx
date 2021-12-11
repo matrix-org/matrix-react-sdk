@@ -29,7 +29,7 @@ import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } fr
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
-import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
+import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MessageContextMenu, { canCancel } from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
@@ -65,11 +65,9 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     getRelationsForEvent,
 }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-    const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
-        onFocus();
         onFocusChange(menuDisplayed);
-    }, [onFocus, onFocusChange, menuDisplayed]);
+    }, [onFocusChange, menuDisplayed]);
 
     let contextMenu: ReactElement | null;
     if (menuDisplayed) {
@@ -94,9 +92,6 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             title={_t("Options")}
             onClick={openMenu}
             isExpanded={menuDisplayed}
-            inputRef={ref}
-            onFocus={onFocus}
-            tabIndex={isActive ? 0 : -1}
         />
 
         { contextMenu }
@@ -111,7 +106,6 @@ interface IReactButtonProps {
 
 const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusChange }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-    const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
@@ -130,9 +124,6 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
             title={_t("React")}
             onClick={openMenu}
             isExpanded={menuDisplayed}
-            inputRef={ref}
-            onFocus={onFocus}
-            tabIndex={isActive ? 0 : -1}
         />
 
         { contextMenu }

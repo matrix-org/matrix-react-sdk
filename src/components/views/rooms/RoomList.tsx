@@ -167,7 +167,6 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
 
         return <>
             <ContextMenuTooltipButton
-                tabIndex={tabIndex}
                 onClick={openMenu}
                 className="mx_RoomSublist_auxButton"
                 tooltipClassName="mx_RoomSublist_addRoomTooltip"
@@ -287,7 +286,6 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
 
     return <>
         <ContextMenuTooltipButton
-            tabIndex={tabIndex}
             onClick={openMenu}
             className="mx_RoomSublist_auxButton"
             tooltipClassName="mx_RoomSublist_addRoomTooltip"

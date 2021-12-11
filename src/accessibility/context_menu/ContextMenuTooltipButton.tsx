@@ -18,9 +18,9 @@ limitations under the License.
 
 import React from "react";
 
-import AccessibleTooltipButton from "../../components/views/elements/AccessibleTooltipButton";
+import { RovingAccessibleTooltipButton } from "../RovingTabIndex";
 
-interface IProps extends React.ComponentProps<typeof AccessibleTooltipButton> {
+interface IProps extends React.ComponentProps<typeof RovingAccessibleTooltipButton> {
     // whether or not the context menu is currently open
     isExpanded: boolean;
 }
@@ -34,7 +34,7 @@ export const ContextMenuTooltipButton: React.FC<IProps> = ({
     ...props
 }) => {
     return (
-        <AccessibleTooltipButton
+        <RovingAccessibleTooltipButton
             {...props}
             onClick={onClick}
             onContextMenu={onContextMenu || onClick}
@@ -43,6 +43,6 @@ export const ContextMenuTooltipButton: React.FC<IProps> = ({
             forceHide={isExpanded}
         >
             { children }
-        </AccessibleTooltipButton>
+        </RovingAccessibleTooltipButton>
     );
 };
