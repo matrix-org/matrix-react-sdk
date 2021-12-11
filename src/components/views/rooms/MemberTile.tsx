@@ -66,7 +66,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_custom_status")) {
             const { user } = this.props.member;
             if (user) {
-                user.on("User._unstable_statusMessage", this.onStatusMessageCommitted);
+                user.on("User.unstable_statusMessage", this.onStatusMessageCommitted);
             }
         }
 
