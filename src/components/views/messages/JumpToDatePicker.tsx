@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { _t } from '../../../languageHandler';
 
+import { Key } from "../../../Keyboard";
 import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
@@ -89,6 +90,11 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
     };
 
     const onDateInputKeyDown = (e: React.KeyboardEvent): void => {
+        // Don't interfere with input default keydown behaviour. For example,
+        // without this, when pressing "Space" while in the input, it would
+        // scroll down the timeline.
+        e.stopPropagation();
+
         // Ignore the tab key which is probably just navigating focus around
         // with the keyboard
         if(e.key === "Tab") {
@@ -106,19 +112,40 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
         setNavigateOnDatePickerSelection(false);
     };
 
+    const onFormKeyDown = (e: React.KeyboardEvent) => {
+        // Stop the ContextMenu from closing when we first tab from the form to
+        // the datePicker.
+        if(e.target === e.currentTarget && e.key === Key.TAB) {
+            e.stopPropagation();
+        }
+    }
+
+    const onGoKeyDown = (e: React.KeyboardEvent) => {
+        // Stop the ContextMenu from closing when we tab backwards to the
+        // datePicker from the "Go" button
+        //
+        // If they tab forwards off the end of the ContextMenu, we want to close
+        // the ContextMenu which will put the focus back where we were before
+        // opening the ContextMenu.
+        if (e.key === Key.TAB && e.shiftKey) {
+            e.stopPropagation();
+        }
+    }
+
     const onJumpToDateSubmit = (): void => {
-        console.log('onJumpToDateSubmit')
         onDatePicked(dateValue);
     }
 
     return (
         <form
-            className="mx_DateSeparator_datePickerForm"
+            className="mx_JumpToDatePicker_form"
             onSubmit={onJumpToDateSubmit}
+            onKeyDown={onFormKeyDown}
             onFocus={onFocus}
             ref={ref}
             tabIndex={isActive ? 0 : -1}
         >
+            <span className="mx_JumpToDatePicker_label">Jump to date</span>
             <Field
                 element={CustomInput}
                 type="date"
@@ -126,7 +153,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
                 onInput={onDateValueInput}
                 onKeyDown={onDateInputKeyDown}
                 value={dateValue}
-                className="mx_DateSeparator_datePicker"
+                className="mx_JumpToDatePicker_datePicker"
                 label={_t("Pick a date to jump to")}
                 // onFocus={onFocus}
                 // inputRef={ref}
@@ -134,8 +161,9 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
             />
             <AccessibleButton
                 kind="primary"
-                className="mx_DateSeparator_datePickerSubmitButton"
+                className="mx_JumpToDatePicker_submitButton"
                 onClick={onJumpToDateSubmit}
+                onKeyDown={onGoKeyDown}
                 tabIndex={isActive ? 0 : -1}
             >
                 { _t("Go") }

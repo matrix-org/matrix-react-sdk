@@ -238,6 +238,12 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         ev.stopPropagation();
     };
 
+    private onKeyDown = (ev: React.KeyboardEvent) => {
+        if (ev.key === Key.TAB || ev.key === Key.ESCAPE) {
+            this.props.onFinished();
+        }
+    }
+
     // private onKeyDown = (ev: React.KeyboardEvent) => {
     //     // don't let keyboard handling escape the context menu
     //     ev.stopPropagation();
@@ -409,7 +415,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         // }
 
         return (
-            <RovingTabIndexProvider handleHomeEnd handleUpDown>
+            <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.onKeyDown}>
                 { ({ onKeyDownHandler }) => (
                     <div
                         className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}

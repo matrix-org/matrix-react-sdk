@@ -64,6 +64,8 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         this.state = {};
+
+        this.myRef = React.createRef();
     }
 
     private onContextMenuOpenClick = (e: React.MouseEvent): void => {
@@ -195,13 +197,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 </IconizedContextMenuOptionList>
 
                 <IconizedContextMenuOptionList>
-                    {/* <IconizedContextMenuOption
-                        className="mx_DateSeparator_jumpToDateMenuOption"
-                        label={_t("Jump to date")}
-                        onClick={() => {}}
-                    > */}
-                        <JumpToDatePicker ts={this.props.ts} onDatePicked={this.onDatePicked} />
-                    {/* </IconizedContextMenuOption> */}
+                    <JumpToDatePicker ts={this.props.ts} onDatePicked={this.onDatePicked} />
                 </IconizedContextMenuOptionList>
             </IconizedContextMenu>;
         }
