@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { _t } from '../../../languageHandler';
 
 import Field from "../elements/Field";
@@ -27,15 +27,21 @@ interface CustomInputProps {
 * picker which trigger an `input`(and `onChange` in React).
 */
 class CustomInput extends React.Component<Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'onInput' | 'ref'> & CustomInputProps> {
-  private readonly registerCallbacks  = (element: HTMLInputElement | null) => {
-      if (element) {
-          element.onchange = this.props.onChange ? this.props.onChange : null;
-          element.oninput = this.props.onInput ? this.props.onInput : null;
+  private readonly registerCallbacks = (input: HTMLInputElement | null) => {
+      if (input) {
+          input.onchange = this.props.onChange ? this.props.onChange : null;
+          input.oninput = this.props.onInput ? this.props.onInput : null;
       }
   };
 
   public render() {
-      return <input ref={this.registerCallbacks} {...this.props} onChange={() => {}} onInput={() => {}} />;
+      return <input
+        ref={this.registerCallbacks}
+        {...this.props}
+        // Add these just so we don't get a read-only input warning from React
+        onChange={() => {}}
+        onInput={() => {}}
+      />;
   }
 }
 
@@ -46,88 +52,96 @@ interface IProps {
 }
 
 const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
-  const date = new Date(ts);
-  const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, "0")
-  const day = `${date.getDate()}`.padStart(2, "0")
-  const dateDefaultValue = `${year}-${month}-${day}`;
+    const date = new Date(ts);
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, "0")
+    const day = `${date.getDate()}`.padStart(2, "0")
+    const dateDefaultValue = `${year}-${month}-${day}`;
 
-  const [dateValue, setDateValue] = useState(dateDefaultValue);
-  // Whether or not to automatically navigate to the given date after someone
-  // selects a day in the date picker. We want to disable this after someone
-  // starts manually typing in the input instead of picking.
-  const [navigateOnDatePickerSelection, setNavigateOnDatePickerSelection] = useState(true);
+    const [dateValue, setDateValue] = useState(dateDefaultValue);
+    // Whether or not to automatically navigate to the given date after someone
+    // selects a day in the date picker. We want to disable this after someone
+    // starts manually typing in the input instead of picking.
+    const [navigateOnDatePickerSelection, setNavigateOnDatePickerSelection] = useState(true);
 
-  //const [onFocus, isActive, ref] = useRovingTabIndex();
+    const ref = useRef<HTMLFormElement>(null);
+    const [onFocus, isActive] = useRovingTabIndex(ref);
 
-  // Since we're using CustomInput with native JavaScript behavior, this
-  // tracks the date value changes as they come in.
-  const onDateValueInput = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
-      console.log('onDateValueInput')
-      setDateValue(e.target.value);
-  };
+    // Since we're using CustomInput with native JavaScript behavior, this
+    // tracks the date value changes as they come in.
+    const onDateValueInput = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
+        console.log('onDateValueInput')
+        setDateValue(e.target.value);
+    };
 
-  // Since we're using CustomInput with native JavaScript behavior, the change
-  // event listener will trigger when a date is picked from the date picker
-  // or when the text is fully filled out. In order to not trigger early
-  // as someone is typing out a date, we need to disable when we see keydowns.
-  const onDateValueChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
-      console.log('onDateValueChange')
-      setDateValue(e.target.value);
+    // Since we're using CustomInput with native JavaScript behavior, the change
+    // event listener will trigger when a date is picked from the date picker
+    // or when the text is fully filled out. In order to not trigger early
+    // as someone is typing out a date, we need to disable when we see keydowns.
+    const onDateValueChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
+        console.log('onDateValueChange')
+        setDateValue(e.target.value);
 
-      // Don't auto navigate if they were manually typing out a date
-      if(navigateOnDatePickerSelection) {
+        // Don't auto navigate if they were manually typing out a date
+        if(navigateOnDatePickerSelection) {
         onDatePicked(dateValue);
-      }
-  };
+        }
+    };
 
-  const onDateInputKeyDown = (e: React.KeyboardEvent): void => {
-      // Ignore the tab key which is probably just navigating focus around
-      // with the keyboard
-      if(e.key === "Tab") {
-          return;
-      }
+    const onDateInputKeyDown = (e: React.KeyboardEvent): void => {
+        // Ignore the tab key which is probably just navigating focus around
+        // with the keyboard
+        if(e.key === "Tab") {
+            return;
+        }
 
-      // Go and navigate if they submitted
-      if(e.key === "Enter") {
-          onDatePicked(dateValue);
-          return;
-      }
+        // Go and navigate if they submitted
+        if(e.key === "Enter") {
+            onDatePicked(dateValue);
+            return;
+        }
 
-      // When we see someone manually typing out a date, disable the auto
-      // submit on change.
-      setNavigateOnDatePickerSelection(false);
-  };
+        // When we see someone manually typing out a date, disable the auto
+        // submit on change.
+        setNavigateOnDatePickerSelection(false);
+    };
 
-  const onJumpToDateSubmit = (): void => {
-      console.log('onJumpToDateSubmit')
-      onDatePicked(dateValue);
-  }
+    const onJumpToDateSubmit = (): void => {
+        console.log('onJumpToDateSubmit')
+        onDatePicked(dateValue);
+    }
 
-  return (
-      <form className="mx_DateSeparator_datePickerForm" onSubmit={onJumpToDateSubmit}>
-          <Field
-              element={CustomInput}
-              type="date"
-              onChange={onDateValueChange}
-              onInput={onDateValueInput}
-              onKeyDown={onDateInputKeyDown}
-              value={dateValue}
-              className="mx_DateSeparator_datePicker"
-              label={_t("Pick a date to jump to")}
-              // onFocus={onFocus}
-              // inputRef={ref}
-              // tabIndex={isActive ? 0 : -1}
-          />
-          <AccessibleButton
-              kind="primary"
-              className="mx_DateSeparator_datePickerSubmitButton"
-              onClick={onJumpToDateSubmit}
-          >
-              { _t("Go") }
-          </AccessibleButton>
-      </form>
-  )
+    return (
+        <form
+            className="mx_DateSeparator_datePickerForm"
+            onSubmit={onJumpToDateSubmit}
+            onFocus={onFocus}
+            ref={ref}
+            tabIndex={isActive ? 0 : -1}
+        >
+            <Field
+                element={CustomInput}
+                type="date"
+                onChange={onDateValueChange}
+                onInput={onDateValueInput}
+                onKeyDown={onDateInputKeyDown}
+                value={dateValue}
+                className="mx_DateSeparator_datePicker"
+                label={_t("Pick a date to jump to")}
+                // onFocus={onFocus}
+                // inputRef={ref}
+                tabIndex={isActive ? 0 : -1}
+            />
+            <AccessibleButton
+                kind="primary"
+                className="mx_DateSeparator_datePickerSubmitButton"
+                onClick={onJumpToDateSubmit}
+                tabIndex={isActive ? 0 : -1}
+            >
+                { _t("Go") }
+            </AccessibleButton>
+        </form>
+    )
 };
 
 export default JumpToDatePicker;

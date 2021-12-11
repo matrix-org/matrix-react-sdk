@@ -195,13 +195,13 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 </IconizedContextMenuOptionList>
 
                 <IconizedContextMenuOptionList>
-                    <IconizedContextMenuOption
+                    {/* <IconizedContextMenuOption
                         className="mx_DateSeparator_jumpToDateMenuOption"
                         label={_t("Jump to date")}
                         onClick={() => {}}
-                    >
+                    > */}
                         <JumpToDatePicker ts={this.props.ts} onDatePicked={this.onDatePicked} />
-                    </IconizedContextMenuOption>
+                    {/* </IconizedContextMenuOption> */}
                 </IconizedContextMenuOptionList>
             </IconizedContextMenu>;
         }
