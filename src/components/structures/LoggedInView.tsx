@@ -17,6 +17,8 @@ limitations under the License.
 import React, { ClipboardEvent } from 'react';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import classNames from 'classnames';
 
 import { Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -25,19 +27,15 @@ import { fixupColorFonts } from '../../utils/FontManager';
 import dis from '../../dispatcher/dispatcher';
 import { IMatrixClientCreds } from '../../MatrixClientPeg';
 import SettingsStore from "../../settings/SettingsStore";
-
 import ResizeHandle from '../views/elements/ResizeHandle';
-import { Resizer, CollapseDistributor } from '../../resizer';
+import { CollapseDistributor, Resizer } from '../../resizer';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import * as KeyboardShortcuts from "../../accessibility/KeyboardShortcuts";
 import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import { DefaultTagID } from "../../stores/room-list/models";
-import {
-    showToast as showServerLimitToast,
-    hideToast as hideServerLimitToast,
-} from "../../toasts/ServerLimitToast";
+import { hideToast as hideServerLimitToast, showToast as showServerLimitToast } from "../../toasts/ServerLimitToast";
 import { Action } from "../../dispatcher/actions";
 import LeftPanel from "./LeftPanel";
 import CallContainer from '../views/voip/CallContainer';
@@ -54,7 +52,6 @@ import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import CallHandler, { CallHandlerEvent } from '../../CallHandler';
-import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
 import { OwnProfileStore } from '../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
@@ -65,7 +62,6 @@ import UserView from "./UserView";
 import GroupView from "./GroupView";
 import BackdropPanel from "./BackdropPanel";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import classNames from 'classnames';
 import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
@@ -76,7 +72,7 @@ import LegacyCommunityPreview from "./LegacyCommunityPreview";
 // NB. this is just for server notices rather than pinned messages in general.
 const MAX_PINNED_NOTICES_PER_ROOM = 2;
 
-function getInputableElement(el: HTMLElement): HTMLElement | null {
+export function getInputableElement(el: HTMLElement): HTMLElement | null {
     return el.closest("input, textarea, select, [contenteditable=true]");
 }
 
@@ -503,6 +499,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                     action: 'view_home_page',
                 });
                 Modal.closeCurrentModal("homeKeyboardShortcut");
+                handled = true;
+                break;
+            case NavigationAction.ToggleSpacePanel:
+                dis.fire(Action.ToggleSpacePanel);
                 handled = true;
                 break;
             case NavigationAction.ToggleRoomSidePanel:
