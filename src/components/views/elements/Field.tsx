@@ -20,6 +20,7 @@ import { debounce } from "lodash";
 
 import * as sdk from '../../../index';
 import { IFieldState, IValidationResult } from "./Validation";
+import { ComponentClass } from "../../../@types/common";
 
 // Invoke validation from user input (when typing, etc.) at most once every N ms.
 const VALIDATION_THROTTLE_MS = 200;
@@ -97,7 +98,16 @@ interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElem
     value: string;
 }
 
-type PropShapes = IInputProps | ISelectProps | ITextareaProps;
+export interface ICustomInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
+    // The element to create.
+    element: ComponentClass;
+    // The input's value. This is a controlled component, so the value is required.
+    value: string;
+    // Optionally can be used for the CustomInput
+    onInput?: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+type PropShapes = IInputProps | ISelectProps | ITextareaProps | ICustomInputProps;
 
 interface IState {
     valid: boolean;
@@ -257,7 +267,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         }
 
         const hasValidationFlag = forceValidity !== null && forceValidity !== undefined;
-        const fieldClasses = classNames("mx_Field", `mx_Field_${this.props.element}`, className, {
+        const fieldClasses = classNames("mx_Field", `mx_Field_${typeof this.props.element === "string" ? this.props.element : "input"}`, className, {
             // If we have a prefix element, leave the label always at the top left and
             // don't animate it, as it looks a bit clunky and would add complexity to do
             // properly.
