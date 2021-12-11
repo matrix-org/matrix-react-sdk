@@ -35,6 +35,7 @@ import IconizedContextMenu, {
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
 import JumpToDatePicker from './JumpToDatePicker';
+import { Alignment } from '../elements/Tooltip';
 
 
 function getDaysArray(): string[] {
@@ -107,7 +108,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
     private pickDate = async (inputTimestamp): Promise<void> => {
         console.log('pickDate', inputTimestamp)
-
         const unixTimestamp = new Date(inputTimestamp).getTime();
 
         const cli = MatrixClientPeg.get();
@@ -166,7 +166,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     }
 
     private onDatePicked = (dateString): void => {
-        console.log('onDatePicked', dateString)
         this.pickDate(dateString);
         this.closeMenu();
     }
