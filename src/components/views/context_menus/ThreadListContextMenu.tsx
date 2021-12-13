@@ -83,7 +83,7 @@ const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCreator, on
         }
     }, [optionsPosition, onMenuToggle]);
 
-    const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
+    const isMainSplitTimelineShown = mxEvent && !WidgetLayoutStore.instance.hasMaximisedWidget(
         MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
     );
     return <React.Fragment>

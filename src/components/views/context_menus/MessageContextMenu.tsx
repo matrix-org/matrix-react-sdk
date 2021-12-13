@@ -443,7 +443,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         );
         const isThreadRootEvent = isThread && this.props.mxEvent?.isThreadRoot;
 
-        const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
+        const isMainSplitTimelineShown = mxEvent && !WidgetLayoutStore.instance.hasMaximisedWidget(
             MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
         );
         const commonItemsList = (
