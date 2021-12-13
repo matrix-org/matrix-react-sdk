@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639414359238,
+  "lastUpdate": 1639414394937,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47732,6 +47732,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4176.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed895f5881606b11bf49189b9c0fce5c03ed8796",
+          "message": "Always unhide widgets on layout change (pinning a widget) (#7299)",
+          "timestamp": "2021-12-13T17:46:50+01:00",
+          "tree_id": "6f2f87f97666f131798646433596af5509998ab0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ed895f5881606b11bf49189b9c0fce5c03ed8796"
+        },
+        "date": 1639414392037,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5044.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1009.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1616.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4457.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
