@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639151173026,
+  "lastUpdate": 1639392040113,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47240,6 +47240,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3974.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dominik.henneke@nordeck.net",
+            "name": "Dominik Henneke",
+            "username": "dhenneke"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "908e9389961d8a7cc3220dd5440c2f5151c40d4e",
+          "message": "Keep all previously approved widget capabilities when requesting new capabilities (#7340)",
+          "timestamp": "2021-12-13T10:34:04Z",
+          "tree_id": "b95322d60a0e49b5efcd74d9e67b41591207c60d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/908e9389961d8a7cc3220dd5440c2f5151c40d4e"
+        },
+        "date": 1639392036769,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4966.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 637.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
