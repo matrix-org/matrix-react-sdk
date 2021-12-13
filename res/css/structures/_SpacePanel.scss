@@ -37,12 +37,12 @@ $activeBorderColor: $primary-content;
 
     .mx_SpacePanel_toggleCollapse {
         position: absolute;
-        height: 20px;
-        width: 20px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
         background-color: $tertiary-content;
-        top: 18px; // v-align with avatar
-        right: -10px;
+        top: 19px; // v-align with avatar
+        right: -8px;
 
         &::before {
             content: "";
@@ -58,14 +58,9 @@ $activeBorderColor: $primary-content;
         }
 
         &:not(.expanded) {
-            width: 18px;
-            height: 18px;
             opacity: 0;
-            top: 19px; // v-align with avatar
-            right: -8px;
 
             &::before {
-                mask-size: contain;
                 mask-position: center 1px;
             }
         }
