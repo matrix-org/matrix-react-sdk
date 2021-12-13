@@ -32,7 +32,6 @@ import Spinner from "../elements/Spinner";
 import EditHistoryMessage from "../messages/EditHistoryMessage";
 import DateSeparator from "../messages/DateSeparator";
 import { IDialogProps } from "./IDialogProps";
-import { Awaited } from "../../../@types/common";
 
 interface IProps extends IDialogProps {
     mxEvent: MatrixEvent;

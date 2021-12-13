@@ -23,5 +23,3 @@ export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
 export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 export type ReactAnyComponent = React.Component | React.ExoticComponent;
-
-export type Awaited<T> = T extends PromiseLike<infer U> ? U : T; // Natively added to Typescript 4.5
