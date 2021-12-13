@@ -50,7 +50,7 @@ $activeBorderColor: $primary-content;
             width: inherit;
             height: inherit;
             mask-position: center;
-            mask-size: 20px;
+            mask-size: contain;
             mask-repeat: no-repeat;
             background-color: $background;
             mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
@@ -58,14 +58,14 @@ $activeBorderColor: $primary-content;
         }
 
         &:not(.expanded) {
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
             opacity: 0;
-            top: 16px; // v-align with avatar
-            right: -14px;
+            top: 19px; // v-align with avatar
+            right: -8px;
 
             &::before {
-                mask-size: 24px;
+                mask-size: contain;
                 mask-position: center 1px;
             }
         }
