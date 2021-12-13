@@ -48,6 +48,7 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
     return (
         <Component
             className={classNames("mx_videoTile", className, {
+                "mx_isLocal": isLocal,
                 "mx_speaking": speaking && !disableSpeakingHighlight,
                 "mx_muted": audioMuted,
                 "mx_screenshare": purpose === SDPStreamMetadataPurpose.Screenshare,

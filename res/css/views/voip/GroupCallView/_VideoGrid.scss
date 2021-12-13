@@ -40,6 +40,10 @@ limitations under the License.
             background-color: #444;
         }
 
+        &.mx_isLocal video {
+            transform: scaleX(-1);
+        }
+
         .mx_memberName {
             position: absolute;
             bottom: 16px;
@@ -55,6 +59,8 @@ limitations under the License.
             user-select: none;
             max-width: calc(100% - 48px);
             overflow: hidden;
+            z-index: 1;
+
             & > * {
                 margin-right: 6px;
             }
