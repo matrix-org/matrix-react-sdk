@@ -58,8 +58,10 @@ const SpacePreferencesAppearanceTab = ({ space }: Pick<IProps, "space">) => {
                     { _t("People") }
                 </StyledCheckbox>
                 <p>
-                    { _t("This groups your ongoing conversations with members of this space. " +
-                        "Turning off will hide it from your view.") }
+                    { _t("This groups your chats with members of this space. " +
+                        "Turning this off will hide those chats from your view of %(spaceName)s.", {
+                        spaceName: space.name,
+                    }) }
                 </p>
             </div>
         </div>
