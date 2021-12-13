@@ -16,11 +16,10 @@ limitations under the License.
 
 import { RoomMember } from "matrix-js-sdk";
 import { User } from "matrix-js-sdk/src/models/user";
-import { useCallback, useEffect, useState } from "react";
 
 import { GroupMember } from "../components/views/right_panel/UserInfo";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import { useEventEmitter } from "./useEventEmitter";
+import { useEventEmitterState } from "./useEventEmitter";
 
 type StatusMessageUser = User | RoomMember | GroupMember;
 
@@ -29,7 +28,7 @@ const getStatusMessage = (user: StatusMessageUser): string => getUser(user).unst
 
 // Hook to simplify handling Matrix User status
 export const useUserStatusMessage = (user?: StatusMessageUser): string => {
-    return useEventEmitterState(getUser(User), "User.unstable_statusMessage", () => {
+    return useEventEmitterState(getUser(user), "User.unstable_statusMessage", () => {
         return getStatusMessage(user);
     });
 };
