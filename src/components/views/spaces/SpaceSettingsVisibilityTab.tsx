@@ -28,6 +28,7 @@ import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { useLocalEcho } from "../../../hooks/useLocalEcho";
 import JoinRuleSettings from "../settings/JoinRuleSettings";
 import { useRoomState } from "../../../hooks/useRoomState";
+import SettingsFieldset from "../settings/SettingsFieldset";
 
 interface IProps {
     matrixClient: MatrixClient;
@@ -113,21 +114,24 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
 
         { error && <div className="mx_SpaceRoomView_errorText">{ error }</div> }
 
-        <div className="mx_SettingsTab_section">
-            <div className="mx_SettingsTab_section_caption">
-                { _t("Decide who can view and join %(spaceName)s.", { spaceName: space.name }) }
-            </div>
-
-            <div>
-                <JoinRuleSettings
-                    room={space}
-                    onError={() => setError(_t("Failed to update the visibility of this space"))}
-                    closeSettingsFn={closeSettingsFn}
-                />
-            </div>
-
+        <SettingsFieldset
+            legend={_t("Access")}
+            description={_t("Decide who can view and join %(spaceName)s.", { spaceName: space.name })}
+        >
+            <JoinRuleSettings
+                room={space}
+                onError={() => setError(_t("Failed to update the visibility of this space"))}
+                closeSettingsFn={closeSettingsFn}
+            />
             { advancedSection }
-
+        </SettingsFieldset>
+        <SettingsFieldset
+            legend={_t("Preview Space")}
+            description={<>
+                <p>{ _t("Allow people to preview your space before they join.") }</p>
+                <p><b>{ _t("Recommended for public spaces.") }</b></p>
+            </>}
+        >
             <LabelledToggleSwitch
                 value={historyVisibility === HistoryVisibility.WorldReadable}
                 onChange={(checked: boolean) => {
@@ -136,9 +140,7 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
                 disabled={!canSetHistoryVisibility}
                 label={_t("Preview Space")}
             />
-            <div>{ _t("Allow people to preview your space before they join.") }</div>
-            <b>{ _t("Recommended for public spaces.") }</b>
-        </div>
+        </SettingsFieldset>
 
         { addressesSection }
     </div>;
