@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639414394937,
+  "lastUpdate": 1639424119797,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47780,6 +47780,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4457.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "distinct": true,
+          "id": "0bb7f3d3ee3d8dd8095c2ae5cc75753f2da82353",
+          "message": "Fix conflict chunk in lockfile",
+          "timestamp": "2021-12-13T12:29:09-07:00",
+          "tree_id": "69c452da79b78c04ae8ba164a97eaa2c93c7fb74",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0bb7f3d3ee3d8dd8095c2ae5cc75753f2da82353"
+        },
+        "date": 1639424116060,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4684.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 640.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
