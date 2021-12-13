@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SpaceSettingsVisibilityTab /> for a public space Access renders guest access section toggle 1`] = `
+<div
+  aria-checked="true"
+  aria-disabled="false"
+  aria-label="Enable guest access"
+  class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+  role="switch"
+  tabindex="0"
+>
+  <div
+    class="mx_ToggleSwitch_ball"
+  />
+</div>
+`;
+
+exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
+<div
+  class="mx_SettingsTab"
+>
+  <div
+    class="mx_SettingsTab_heading"
+  >
+    Visibility
+  </div>
+  
+  <fieldset
+    class="mx_SettingsFieldset"
+    data-test-id="access-fieldset"
+  >
+    <legend
+      class="mx_SettingsFieldset_legend"
+    >
+      Access
+    </legend>
+    <div
+      class="mx_SettingsFieldset_description"
+    >
+      Decide who can view and join mock-space.
+    </div>
+    <label
+      class="mx_StyledRadioButton mx_JoinRuleSettings_radioButton mx_StyledRadioButton_disabled mx_StyledRadioButton_checked"
+    >
+      <input
+        checked=""
+        disabled=""
+        name="joinRule"
+        type="radio"
+        value="invite"
+      />
+      <div>
+        <div />
+      </div>
+      <div
+        class="mx_StyledRadioButton_content"
+      >
+        Private (invite only)
+      </div>
+      <div
+        class="mx_StyledRadioButton_spacer"
+      />
+    </label>
+    <span>
+      Only invited people can join.
+    </span>
+    <label
+      class="mx_StyledRadioButton mx_JoinRuleSettings_radioButton mx_StyledRadioButton_disabled"
+    >
+      <input
+        disabled=""
+        name="joinRule"
+        type="radio"
+        value="public"
+      />
+      <div>
+        <div />
+      </div>
+      <div
+        class="mx_StyledRadioButton_content"
+      >
+        Public
+      </div>
+      <div
+        class="mx_StyledRadioButton_spacer"
+      />
+    </label>
+    <span>
+      Anyone can find and join.
+    </span>
+  </fieldset>
+  <fieldset
+    class="mx_SettingsFieldset"
+  >
+    <legend
+      class="mx_SettingsFieldset_legend"
+    >
+      Preview Space
+    </legend>
+    <div
+      class="mx_SettingsFieldset_description"
+    >
+      <p>
+        Allow people to preview your space before they join.
+      </p>
+      <p>
+        <b>
+          Recommended for public spaces.
+        </b>
+      </p>
+    </div>
+    <div
+      class="mx_SettingsFlag "
+    >
+      <span
+        class="mx_SettingsFlag_label"
+      >
+        Preview Space
+      </span>
+      <div
+        aria-checked="true"
+        aria-disabled="false"
+        aria-label="Preview Space"
+        class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+        role="switch"
+        tabindex="0"
+      >
+        <div
+          class="mx_ToggleSwitch_ball"
+        />
+      </div>
+    </div>
+  </fieldset>
+</div>
+`;
