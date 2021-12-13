@@ -29,19 +29,7 @@ const getStatusMessage = (user: StatusMessageUser): string => getUser(user).unst
 
 // Hook to simplify handling Matrix User status
 export const useUserStatusMessage = (user?: StatusMessageUser): string => {
-    const [value, setValue] = useState<string>(getStatusMessage(user));
-
-    const update = useCallback(() => {
-        if (!user) return;
-        setValue(getStatusMessage(user));
-    }, [user]);
-
-    useEventEmitter(getUser(user), "User.unstable_statusMessage", update);
-    useEffect(() => {
-        update();
-        return () => {
-            setValue(undefined);
-        };
-    }, [update]);
-    return value;
+    return useEventEmitterState(getUser(User), "User.unstable_statusMessage", () => {
+        return getStatusMessage(user);
+    });
 };
