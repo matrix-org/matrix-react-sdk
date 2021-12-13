@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639393518353,
+  "lastUpdate": 1639394935686,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47324,6 +47324,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4954.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c96b9413e7a1d50148ef4ce94851d0f0d9fb9970",
+          "message": "Update Typescript to 4.5 (#7344)",
+          "timestamp": "2021-12-13T11:22:53Z",
+          "tree_id": "4b9376754e949305741f64052c172d827663e230",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c96b9413e7a1d50148ef4ce94851d0f0d9fb9970"
+        },
+        "date": 1639394932753,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5118,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 959.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1607.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4237.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
