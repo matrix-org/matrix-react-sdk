@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639394935686,
+  "lastUpdate": 1639399792930,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47372,6 +47372,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4237.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a46de3b9b30256390f0a3baba76ee56eda928fc5",
+          "message": "Improving typing around Message Edit History Dialog (#7342)\n\n* Improving typing around Message Edit History Dialog\r\n\r\n* Update Typescript to 4.5\r\n\r\n* Depend on TS4.5\r\n\r\n* Update types for TS4.5",
+          "timestamp": "2021-12-13T12:42:36Z",
+          "tree_id": "94610fb8d03b6f4e7a8a627ba991242b2423ea5f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a46de3b9b30256390f0a3baba76ee56eda928fc5"
+        },
+        "date": 1639399789752,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5054.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1150.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1651.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4716.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
