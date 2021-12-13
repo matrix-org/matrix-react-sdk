@@ -20,6 +20,7 @@ import { IContent, MatrixEvent, IEventRelation } from 'matrix-js-sdk/src/models/
 import { DebouncedFunc, throttle } from 'lodash';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Room } from 'matrix-js-sdk/src/models/room';
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
@@ -51,12 +52,11 @@ import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindin
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { Room } from 'matrix-js-sdk/src/models/room';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 
@@ -350,7 +350,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private async runSlashCommand(cmd: Command, args: string): Promise<void> {
-        const result = cmd.run(this.props.room.roomId, args);
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation?.event_id
+            : null;
+
+        const result = cmd.run(this.props.room.roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -479,7 +483,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 decorateStartSendingTime(content);
             }
 
-            const prom = this.props.mxClient.sendMessage(roomId, content);
+            const threadId = this.props.relation?.rel_type === RelationType.Thread
+                ? this.props.relation.event_id
+                : null;
+
+            const prom = this.props.mxClient.sendMessage(roomId, threadId, content);
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
@@ -492,7 +500,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             dis.dispatch({ action: "message_sent" });
             CHAT_EFFECTS.forEach((effect) => {
                 if (containsEmoji(content, effect.emojis)) {
-                    dis.dispatch({ action: `effects.${effect.command}` });
+                    // For initial threads launch, chat effects are disabled
+                    // see #19731
+                    const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
+                    if (!SettingsStore.getValue("feature_thread") || isNotThread) {
+                        dis.dispatch({ action: `effects.${effect.command}` });
+                    }
                 }
             });
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
@@ -592,7 +605,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         switch (payload.action) {
             case 'reply_to_event':
             case Action.FocusSendMessageComposer:
-                if (payload.context === this.context.timelineRenderingType) {
+                if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
                     this.editorRef.current?.focus();
                 }
                 break;
@@ -634,6 +647,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     };
 
     render() {
+        const threadId = this.props.relation?.rel_type === RelationType.Thread
+            ? this.props.relation.event_id
+            : null;
         return (
             <div className="mx_SendMessageComposer" onClick={this.focusComposer} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
@@ -641,6 +657,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     ref={this.editorRef}
                     model={this.model}
                     room={this.props.room}
+                    threadId={threadId}
                     label={this.props.placeholder}
                     placeholder={this.props.placeholder}
                     onPaste={this.onPaste}

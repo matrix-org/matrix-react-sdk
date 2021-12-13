@@ -17,11 +17,12 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import * as Email from '../../../email';
 import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
 import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 import withValidation, { IValidationResult } from '../elements/Validation';
@@ -33,8 +34,6 @@ import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CountryDropdown from "./CountryDropdown";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import PassphraseConfirmField from "./PassphraseConfirmField";
 
 enum RegistrationField {
@@ -431,8 +430,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             return null;
         }
         const emailLabel = this.authStepIsRequired('m.login.email.identity') ?
-            _t("Email") :
-            _t("Email (optional)");
+            _td("Email") :
+            _td("Email (optional)");
         return <EmailField
             fieldRef={field => this[RegistrationField.Email] = field}
             label={emailLabel}

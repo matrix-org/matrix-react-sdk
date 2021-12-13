@@ -37,11 +37,11 @@ import { isMac } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
-import { Layout } from "./Layout";
+import { Layout } from "./enums/Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
-import PseudonymousAnalyticsController from './controllers/PseudonymousAnalyticsController';
 import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
+import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
@@ -85,9 +85,38 @@ const LEVELS_UI_FEATURE = [
     // in future we might have a .well-known level or something
 ];
 
-export interface ISetting {
-    // Must be set to true for features. Default is 'false'.
-    isFeature?: boolean;
+export enum LabGroup {
+    Messaging,
+    Profile,
+    Spaces,
+    Widgets,
+    Rooms,
+    Moderation,
+    Analytics,
+    MessagePreviews,
+    Themes,
+    Encryption,
+    Experimental,
+    Developer,
+}
+
+export const labGroupNames: Record<LabGroup, string> = {
+    [LabGroup.Messaging]: _td("Messaging"),
+    [LabGroup.Profile]: _td("Profile"),
+    [LabGroup.Spaces]: _td("Spaces"),
+    [LabGroup.Widgets]: _td("Widgets"),
+    [LabGroup.Rooms]: _td("Rooms"),
+    [LabGroup.Moderation]: _td("Moderation"),
+    [LabGroup.Analytics]: _td("Analytics"),
+    [LabGroup.MessagePreviews]: _td("Message Previews"),
+    [LabGroup.Themes]: _td("Themes"),
+    [LabGroup.Encryption]: _td("Encryption"),
+    [LabGroup.Experimental]: _td("Experimental"),
+    [LabGroup.Developer]: _td("Developer"),
+};
+
+interface IBaseSetting {
+    isFeature?: false | undefined;
 
     // Display names are strongly recommended for clarity.
     // Display name can also be an object for different levels.
@@ -137,9 +166,19 @@ export interface ISetting {
     };
 }
 
+export interface IFeature extends Omit<IBaseSetting, "isFeature"> {
+    // Must be set to true for features.
+    isFeature: true;
+    labsGroup: LabGroup;
+}
+
+// Type using I-identifier for backwards compatibility from before it became a discriminated union
+export type ISetting = IBaseSetting | IFeature;
+
 export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_report_to_moderators": {
         isFeature: true,
+        labsGroup: LabGroup.Moderation,
         displayName: _td("Report to moderators prototype. " +
             "In rooms that support moderation, the `report` button will let you report abuse to room moderators"),
         supportedLevels: LEVELS_FEATURE,
@@ -147,18 +186,21 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_dnd": {
         isFeature: true,
+        labsGroup: LabGroup.Profile,
         displayName: _td("Show options to enable 'Do not disturb' mode"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_latex_maths": {
         isFeature: true,
+        labsGroup: LabGroup.Messaging,
         displayName: _td("Render LaTeX maths in messages"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_communities_v2_prototypes": {
         isFeature: true,
+        labsGroup: LabGroup.Spaces,
         displayName: _td(
             "Communities v2 prototypes. Requires compatible homeserver. " +
             "Highly experimental - use with caution.",
@@ -169,18 +211,21 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_pinning": {
         isFeature: true,
+        labsGroup: LabGroup.Messaging,
         displayName: _td("Message Pinning"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_maximised_widgets": {
         isFeature: true,
+        labsGroup: LabGroup.Widgets,
         displayName: _td("Maximised widgets"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_thread": {
         isFeature: true,
+        labsGroup: LabGroup.Messaging,
         // Requires a reload as we change an option flag on the `js-sdk`
         // And the entire sync history needs to be parsed again
         controller: new ReloadOnChangeController(),
@@ -190,6 +235,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_custom_status": {
         isFeature: true,
+        labsGroup: LabGroup.Profile,
         displayName: _td("Custom user status messages"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -197,6 +243,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_custom_tags": {
         isFeature: true,
+        labsGroup: LabGroup.Experimental,
         displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -204,30 +251,35 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_state_counters": {
         isFeature: true,
+        labsGroup: LabGroup.Rooms,
         displayName: _td("Render simple counters in room header"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_many_integration_managers": {
         isFeature: true,
+        labsGroup: LabGroup.Experimental,
         displayName: _td("Multiple integration managers (requires manual setup)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_mjolnir": {
         isFeature: true,
+        labsGroup: LabGroup.Moderation,
         displayName: _td("Try out new ways to ignore people (experimental)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_custom_themes": {
         isFeature: true,
+        labsGroup: LabGroup.Themes,
         displayName: _td("Support adding custom themes"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_roomlist_preview_reactions_dms": {
         isFeature: true,
+        labsGroup: LabGroup.MessagePreviews,
         displayName: _td("Show message previews for reactions in DMs"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -236,32 +288,36 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_roomlist_preview_reactions_all": {
         isFeature: true,
+        labsGroup: LabGroup.MessagePreviews,
         displayName: _td("Show message previews for reactions in all rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
     "feature_dehydration": {
         isFeature: true,
+        labsGroup: LabGroup.Encryption,
         displayName: _td("Offline encrypted messaging using dehydrated devices"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_pseudonymous_analytics_opt_in": {
-        isFeature: true,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td('Send pseudonymous analytics data'),
-        default: false,
-        controller: new PseudonymousAnalyticsController(),
-    },
     "feature_polls": {
         isFeature: true,
+        labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Polls (under active development)"),
+        default: false,
+    },
+    "feature_location_share": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing (under active development)"),
         default: false,
     },
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,
+        controller: new IncompatibleController("feature_dnd", false, false),
     },
     "mjolnirRooms": {
         supportedLevels: [SettingLevel.ACCOUNT],
@@ -273,12 +329,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_bridge_state": {
         isFeature: true,
+        labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Show info about bridges in room settings"),
         default: false,
     },
     "feature_new_layout_switcher": {
         isFeature: true,
+        labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("New layout switcher (with message bubbles)"),
         default: false,
@@ -286,6 +344,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_spaces_metaspaces": {
         isFeature: true,
+        labsGroup: LabGroup.Spaces,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Meta Spaces"),
         default: false,
@@ -294,15 +353,27 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             new ReloadOnChangeController(),
         ]),
     },
+    "feature_breadcrumbs_v2": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new room breadcrumbs"),
+        default: false,
+    },
+    "feature_spotlight": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("New spotlight search experience"),
+        default: false,
+    },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
     },
     "feature_hidden_read_receipts": {
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td(
-            "Don't send read receipts",
-        ),
+        displayName: _td("Don't send read receipts"),
         default: false,
     },
     "baseFontSize": {
@@ -326,6 +397,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Show stickers button'),
         default: true,
+        controller: new UIFeatureController(UIFeature.Widgets, false),
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
@@ -532,6 +604,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
     },
+    "SpotlightSearch.recentSearches": {
+        // not really a setting
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: [], // list of room IDs, most recent first
+    },
     "room_directory_servers": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
@@ -553,6 +630,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "showCookieBar": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: true,
+    },
+    "pseudonymousAnalyticsOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td('Send analytics data'),
+        default: null,
     },
     "autocompleteDelay": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -652,6 +734,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
+        controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
@@ -736,6 +819,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "layout": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: Layout.Group,
+    },
+    "Images.size": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: ImageSize.Normal,
     },
     "showChatEffects": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,

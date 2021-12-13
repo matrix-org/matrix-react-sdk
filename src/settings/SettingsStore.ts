@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import DeviceSettingsHandler from "./handlers/DeviceSettingsHandler";
 import RoomDeviceSettingsHandler from "./handlers/RoomDeviceSettingsHandler";
 import DefaultSettingsHandler from "./handlers/DefaultSettingsHandler";
@@ -24,15 +26,13 @@ import RoomSettingsHandler from "./handlers/RoomSettingsHandler";
 import ConfigSettingsHandler from "./handlers/ConfigSettingsHandler";
 import { _t } from '../languageHandler';
 import dis from '../dispatcher/dispatcher';
-import { ISetting, SETTINGS } from "./Settings";
+import { IFeature, ISetting, LabGroup, SETTINGS } from "./Settings";
 import LocalEchoWrapper from "./handlers/LocalEchoWrapper";
 import { WatchManager, CallbackFn as WatchCallbackFn } from "./WatchManager";
 import { SettingLevel } from "./SettingLevel";
 import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 import { Action } from "../dispatcher/actions";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const defaultWatchManager = new WatchManager();
 
@@ -273,12 +273,18 @@ export default class SettingsStore {
         return SETTINGS[settingName].isFeature;
     }
 
-    public static getBetaInfo(settingName: string) {
+    public static getBetaInfo(settingName: string): ISetting["betaInfo"] {
         // consider a beta disabled if the config is explicitly set to false, in which case treat as normal Labs flag
         if (SettingsStore.isFeature(settingName)
             && SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, null, true, true) !== false
         ) {
             return SETTINGS[settingName]?.betaInfo;
+        }
+    }
+
+    public static getLabGroup(settingName: string): LabGroup {
+        if (SettingsStore.isFeature(settingName)) {
+            return (<IFeature>SETTINGS[settingName]).labsGroup;
         }
     }
 

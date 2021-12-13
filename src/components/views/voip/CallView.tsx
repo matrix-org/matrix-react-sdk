@@ -17,22 +17,23 @@ limitations under the License.
 */
 
 import React, { createRef, CSSProperties } from 'react';
+import { CallEvent, CallState, CallType, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import classNames from 'classnames';
+import { CallFeed } from 'matrix-js-sdk/src/webrtc/callFeed';
+import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+
 import dis from '../../../dispatcher/dispatcher';
 import CallHandler from '../../../CallHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t, _td } from '../../../languageHandler';
 import VideoFeed from './VideoFeed';
 import RoomAvatar from "../avatars/RoomAvatar";
-import { CallEvent, CallState, CallType, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import classNames from 'classnames';
 import AccessibleButton from '../elements/AccessibleButton';
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../../Keyboard';
 import { avatarUrlForMember } from '../../../Avatar';
-import { CallFeed } from 'matrix-js-sdk/src/webrtc/callFeed';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DesktopCapturerSourcePicker from "../elements/DesktopCapturerSourcePicker";
 import Modal from '../../../Modal';
-import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
 import CallViewSidebar from './CallViewSidebar';
 import CallViewHeader from './CallView/CallViewHeader';
 import CallViewButtons from "./CallView/CallViewButtons";
@@ -56,6 +57,8 @@ interface IProps {
 
     // Used for dragging the PiP CallView
     onMouseDownOnHeader?: (event: React.MouseEvent<Element, MouseEvent>) => void;
+
+    showApps?: boolean;
 }
 
 interface IState {
@@ -326,20 +329,17 @@ export default class CallView extends React.Component<IProps, IState> {
     };
 
     private onCallResumeClick = (): void => {
-        const userFacingRoomId = CallHandler.sharedInstance().roomIdForCall(this.props.call);
-        CallHandler.sharedInstance().setActiveCallRoomId(userFacingRoomId);
+        const userFacingRoomId = CallHandler.instance.roomIdForCall(this.props.call);
+        CallHandler.instance.setActiveCallRoomId(userFacingRoomId);
     };
 
     private onTransferClick = (): void => {
-        const transfereeCall = CallHandler.sharedInstance().getTransfereeForCallId(this.props.call.callId);
+        const transfereeCall = CallHandler.instance.getTransfereeForCallId(this.props.call.callId);
         this.props.call.transferToCall(transfereeCall);
     };
 
     private onHangupClick = (): void => {
-        dis.dispatch({
-            action: 'hangup',
-            room_id: CallHandler.sharedInstance().roomIdForCall(this.props.call),
-        });
+        CallHandler.instance.hangupOrReject(CallHandler.instance.roomIdForCall(this.props.call));
     };
 
     private onToggleSidebar = (): void => {
@@ -402,12 +402,12 @@ export default class CallView extends React.Component<IProps, IState> {
 
     public render() {
         const client = MatrixClientPeg.get();
-        const callRoomId = CallHandler.sharedInstance().roomIdForCall(this.props.call);
-        const secondaryCallRoomId = CallHandler.sharedInstance().roomIdForCall(this.props.secondaryCall);
+        const callRoomId = CallHandler.instance.roomIdForCall(this.props.call);
+        const secondaryCallRoomId = CallHandler.instance.roomIdForCall(this.props.secondaryCall);
         const callRoom = client.getRoom(callRoomId);
         const secCallRoom = this.props.secondaryCall ? client.getRoom(secondaryCallRoomId) : null;
         const avatarSize = this.props.pipMode ? 76 : 160;
-        const transfereeCall = CallHandler.sharedInstance().getTransfereeForCallId(this.props.call.callId);
+        const transfereeCall = CallHandler.instance.getTransfereeForCallId(this.props.call.callId);
         const isOnHold = this.state.isLocalOnHold || this.state.isRemoteOnHold;
         const isScreensharing = this.props.call.isScreensharing();
         const sidebarShown = this.state.sidebarShown;
@@ -421,12 +421,12 @@ export default class CallView extends React.Component<IProps, IState> {
 
         if (transfereeCall) {
             const transferTargetRoom = MatrixClientPeg.get().getRoom(
-                CallHandler.sharedInstance().roomIdForCall(this.props.call),
+                CallHandler.instance.roomIdForCall(this.props.call),
             );
             const transferTargetName = transferTargetRoom ? transferTargetRoom.name : _t("unknown person");
 
             const transfereeRoom = MatrixClientPeg.get().getRoom(
-                CallHandler.sharedInstance().roomIdForCall(transfereeCall),
+                CallHandler.instance.roomIdForCall(transfereeCall),
             );
             const transfereeName = transfereeRoom ? transfereeRoom.name : _t("unknown person");
 
@@ -447,7 +447,7 @@ export default class CallView extends React.Component<IProps, IState> {
         } else if (isOnHold) {
             let onHoldText = null;
             if (this.state.isRemoteOnHold) {
-                const holdString = CallHandler.sharedInstance().hasAnyUnheldCall() ?
+                const holdString = CallHandler.instance.hasAnyUnheldCall() ?
                     _td("You held the call <a>Switch</a>") : _td("You held the call <a>Resume</a>");
                 onHoldText = _t(holdString, {}, {
                     a: sub => <AccessibleButton kind="link" onClick={this.onCallResumeClick}>
@@ -614,9 +614,14 @@ export default class CallView extends React.Component<IProps, IState> {
             );
         }
 
-        const myClassName = this.props.pipMode ? 'mx_CallView_pip' : 'mx_CallView_large';
+        const callViewClasses = classNames({
+            mx_CallView: true,
+            mx_CallView_pip: this.props.pipMode,
+            mx_CallView_large: !this.props.pipMode,
+            mx_CallView_belowWidget: this.props.showApps, // css to correct the margins if the call is below the AppsDrawer.
+        });
 
-        return <div className={"mx_CallView " + myClassName}>
+        return <div className={callViewClasses}>
             <CallViewHeader
                 onPipMouseDown={this.props.onMouseDownOnHeader}
                 pipMode={this.props.pipMode}

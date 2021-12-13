@@ -17,6 +17,9 @@ limitations under the License.
 import React, { createRef, KeyboardEvent } from 'react';
 import classNames from 'classnames';
 import { EventStatus, IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { MsgType } from 'matrix-js-sdk/src/@types/event';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -35,16 +38,12 @@ import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindin
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SendHistoryManager from '../../../SendHistoryManager';
 import Modal from '../../../Modal';
-import { MsgType } from 'matrix-js-sdk/src/@types/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import AccessibleButton from '../elements/AccessibleButton';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import SettingsStore from "../../../settings/SettingsStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
 import RoomContext from '../../../contexts/RoomContext';
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
@@ -321,7 +320,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private async runSlashCommand(cmd: Command, args: string, roomId: string): Promise<void> {
-        const result = cmd.run(roomId, args);
+        const threadId = this.props.editState?.getEvent()?.getThread()?.id || null;
+
+        const result = cmd.run(roomId, threadId, args);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -424,7 +425,11 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             }
             if (shouldSend) {
                 this.cancelPreviousPendingEdit();
-                const prom = this.props.mxClient.sendMessage(roomId, editContent);
+
+                const event = this.props.editState.getEvent();
+                const threadId = event.threadRootId || null;
+
+                const prom = this.props.mxClient.sendMessage(roomId, threadId, editContent);
                 this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
                 CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, true, false, editContent);
@@ -533,6 +538,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 ref={this.editorRef}
                 model={this.model}
                 room={this.getRoom()}
+                threadId={this.props.editState?.getEvent()?.getThread()?.id}
                 initialCaret={this.props.editState.getCaret()}
                 label={_t("Edit message")}
                 onChange={this.onChange}

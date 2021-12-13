@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, EventStatus } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
 import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
-import { logger } from 'matrix-js-sdk/src/logger';
 import { POLL_START_EVENT_TYPE } from '../polls/consts';
 
 /**
@@ -46,7 +46,10 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
             if (content.msgtype && content.msgtype !== 'm.bad.encrypted' && content.hasOwnProperty('body')) {
                 return true;
             }
-        } else if (mxEvent.getType() === 'm.sticker') {
+        } else if (
+            mxEvent.getType() === 'm.sticker' ||
+            POLL_START_EVENT_TYPE.matches(mxEvent.getType())
+        ) {
             return true;
         }
     }
@@ -55,14 +58,17 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED || mxEvent.getType() !== "m.room.message" || mxEvent.isRedacted()) {
+    if (mxEvent.status === EventStatus.CANCELLED ||
+        mxEvent.getType() !== EventType.RoomMessage ||
+        mxEvent.isRedacted() ||
+        mxEvent.isRelation(RelationType.Replace) ||
+        mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
+    ) {
         return false;
     }
-    const content = mxEvent.getOriginalContent();
-    const { msgtype } = content;
-    return (msgtype === "m.text" || msgtype === "m.emote") &&
-        content.body && typeof content.body === 'string' &&
-        mxEvent.getSender() === MatrixClientPeg.get().getUserId();
+
+    const { msgtype, body } = mxEvent.getOriginalContent();
+    return (msgtype === MsgType.Text || msgtype === MsgType.Emote) && body && typeof body === 'string';
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {

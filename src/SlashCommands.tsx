@@ -19,8 +19,11 @@ limitations under the License.
 
 import * as React from 'react';
 import { User } from "matrix-js-sdk/src/models/user";
-
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
+import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import { _t, _td } from './languageHandler';
@@ -36,7 +39,6 @@ import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/I
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import { WidgetType } from "./widgets/WidgetType";
 import { Jitsi } from "./widgets/Jitsi";
-import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
 import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
@@ -54,9 +56,9 @@ import DevtoolsDialog from './components/views/dialogs/DevtoolsDialog';
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
+import { TimelineRenderingType } from './contexts/RoomContext';
+import RoomViewStore from "./stores/RoomViewStore";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -102,6 +104,7 @@ interface ICommandOpts {
     category: string;
     hideCompletionAfterSpace?: boolean;
     isEnabled?(): boolean;
+    renderingTypes?: TimelineRenderingType[];
 }
 
 export class Command {
@@ -112,7 +115,8 @@ export class Command {
     runFn: undefined | RunFn;
     category: string;
     hideCompletionAfterSpace: boolean;
-    _isEnabled?: () => boolean;
+    private _isEnabled?: () => boolean;
+    public renderingTypes?: TimelineRenderingType[];
 
     constructor(opts: ICommandOpts) {
         this.command = opts.command;
@@ -123,6 +127,7 @@ export class Command {
         this.category = opts.category || CommandCategories.other;
         this.hideCompletionAfterSpace = opts.hideCompletionAfterSpace || false;
         this._isEnabled = opts.isEnabled;
+        this.renderingTypes = opts.renderingTypes;
     }
 
     getCommand() {
@@ -133,9 +138,17 @@ export class Command {
         return this.getCommand() + " " + this.args;
     }
 
-    run(roomId: string, args: string) {
+    run(roomId: string, threadId: string, args: string) {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) return reject(_t("Command error"));
+
+        const renderingType = threadId
+            ? TimelineRenderingType.Thread
+            : TimelineRenderingType.Room;
+        if (this.renderingTypes && !this.renderingTypes?.includes(renderingType)) {
+            return reject(_t("Command error"));
+        }
+
         return this.runFn.bind(this)(roomId, args);
     }
 
@@ -143,7 +156,7 @@ export class Command {
         return _t('Usage') + ': ' + this.getCommandWithArgs();
     }
 
-    isEnabled() {
+    isEnabled(): boolean {
         return this._isEnabled ? this._isEnabled() : true;
     }
 }
@@ -271,6 +284,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'nick',
@@ -283,6 +297,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'myroomnick',
@@ -302,6 +317,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'roomavatar',
@@ -319,6 +335,7 @@ export const Commands = [
             }));
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'myroomavatar',
@@ -345,6 +362,7 @@ export const Commands = [
             }));
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'myavatar',
@@ -362,6 +380,7 @@ export const Commands = [
             }));
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'topic',
@@ -387,6 +406,7 @@ export const Commands = [
             return success();
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'roomname',
@@ -399,6 +419,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'invite',
@@ -462,6 +483,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'join',
@@ -505,7 +527,7 @@ export const Commands = [
                     }
 
                     dis.dispatch({
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         room_alias: roomAlias,
                         auto_join: true,
                         _type: "slash_command", // instrumentation
@@ -515,7 +537,7 @@ export const Commands = [
                     const [roomId, ...viaServers] = params;
 
                     dis.dispatch({
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         room_id: roomId,
                         opts: {
                             // These are passed down to the js-sdk's /join call
@@ -546,7 +568,7 @@ export const Commands = [
                     const eventId = permalinkParts.eventId;
 
                     const dispatch = {
-                        action: 'view_room',
+                        action: Action.ViewRoom,
                         auto_join: true,
                         _type: "slash_command", // instrumentation
                     };
@@ -577,6 +599,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'part',
@@ -620,6 +643,7 @@ export const Commands = [
             return success(leaveRoomBehaviour(targetRoomId));
         },
         category: CommandCategories.actions,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'kick',
@@ -635,6 +659,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'ban',
@@ -650,6 +675,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'unban',
@@ -666,6 +692,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'ignore',
@@ -730,6 +757,11 @@ export const Commands = [
         command: 'op',
         args: '<user-id> [<power-level>]',
         description: _td('Define the power level of a user'),
+        isEnabled(): boolean {
+            const cli = MatrixClientPeg.get();
+            const room = cli.getRoom(RoomViewStore.getRoomId());
+            return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
+        },
         runFn: function(roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(-?\d+))?$/);
@@ -755,11 +787,17 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'deop',
         args: '<user-id>',
         description: _td('Deops user with given id'),
+        isEnabled(): boolean {
+            const cli = MatrixClientPeg.get();
+            const room = cli.getRoom(RoomViewStore.getRoomId());
+            return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
+        },
         runFn: function(roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
@@ -776,6 +814,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'devtools',
@@ -838,6 +877,7 @@ export const Commands = [
             }
         },
         category: CommandCategories.admin,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'verify',
@@ -903,6 +943,7 @@ export const Commands = [
             return reject(this.getUsage());
         },
         category: CommandCategories.advanced,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: 'discardsession',
@@ -916,6 +957,7 @@ export const Commands = [
             return success();
         },
         category: CommandCategories.advanced,
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: "rainbow",
@@ -994,7 +1036,7 @@ export const Commands = [
 
             return success((async () => {
                 if (isPhoneNumber) {
-                    const results = await CallHandler.sharedInstance().pstnLookup(this.state.value);
+                    const results = await CallHandler.instance.pstnLookup(this.state.value);
                     if (!results || results.length === 0 || !results[0].userid) {
                         throw new Error("Unable to find Matrix ID for phone number");
                     }
@@ -1004,7 +1046,7 @@ export const Commands = [
                 const roomId = await ensureDMExists(MatrixClientPeg.get(), userId);
 
                 dis.dispatch({
-                    action: 'view_room',
+                    action: Action.ViewRoom,
                     room_id: roomId,
                 });
             })());
@@ -1026,7 +1068,7 @@ export const Commands = [
                             const cli = MatrixClientPeg.get();
                             const roomId = await ensureDMExists(cli, userId);
                             dis.dispatch({
-                                action: 'view_room',
+                                action: Action.ViewRoom,
                                 room_id: roomId,
                             });
                             if (msg) {
@@ -1046,26 +1088,28 @@ export const Commands = [
         description: _td("Places the call in the current room on hold"),
         category: CommandCategories.other,
         runFn: function(roomId, args) {
-            const call = CallHandler.sharedInstance().getCallForRoom(roomId);
+            const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject("No active call in this room");
             }
             call.setRemoteOnHold(true);
             return success();
         },
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: "unholdcall",
         description: _td("Takes the call in the current room off hold"),
         category: CommandCategories.other,
         runFn: function(roomId, args) {
-            const call = CallHandler.sharedInstance().getCallForRoom(roomId);
+            const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject("No active call in this room");
             }
             call.setRemoteOnHold(false);
             return success();
         },
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: "converttodm",
@@ -1075,6 +1119,7 @@ export const Commands = [
             const room = MatrixClientPeg.get().getRoom(roomId);
             return success(guessAndSetDMRoom(room, true));
         },
+        renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: "converttoroom",
@@ -1084,6 +1129,7 @@ export const Commands = [
             const room = MatrixClientPeg.get().getRoom(roomId);
             return success(guessAndSetDMRoom(room, false));
         },
+        renderingTypes: [TimelineRenderingType.Room],
     }),
 
     // Command definitions for autocompletion ONLY:
@@ -1117,6 +1163,7 @@ export const Commands = [
                 })());
             },
             category: CommandCategories.effects,
+            renderingTypes: [TimelineRenderingType.Room],
         });
     }),
 ];
