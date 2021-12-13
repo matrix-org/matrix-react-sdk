@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+import { EventSubscription } from 'fbemitter';
+
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
 import SettingsStore from "../../settings/SettingsStore";
@@ -21,12 +24,9 @@ import { RightPanelPhases/*, RIGHT_PANEL_PHASES_NO_ARGS */ } from "./RightPanelS
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from '../../dispatcher/actions';
 import { SettingLevel } from "../../settings/SettingLevel";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { UPDATE_EVENT } from '../AsyncStore';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
 import RoomViewStore from '../RoomViewStore';
-import { EventSubscription } from 'fbemitter';
 import { IPhaseAndState, IPanelState, convertToStateRoom, convertToStoreRoom } from './RightPanelStoreIPanelState';
 
 const GROUP_PHASES = [
