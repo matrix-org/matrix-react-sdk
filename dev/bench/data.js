@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639404720527,
+  "lastUpdate": 1639407968975,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47552,6 +47552,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4344.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "58e79d836da885c162ea8ca0a590553537f44dc7",
+          "message": "Iterate space panel toggle collapse interaction (#7335)",
+          "timestamp": "2021-12-13T14:59:50Z",
+          "tree_id": "f39e27baf47c22945d04ce7e48b45886a08f4b9b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/58e79d836da885c162ea8ca0a590553537f44dc7"
+        },
+        "date": 1639407965671,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4950.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 985.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1592.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4558.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
