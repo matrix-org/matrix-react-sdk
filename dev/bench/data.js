@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639399792930,
+  "lastUpdate": 1639399803823,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47420,6 +47420,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4716.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "43499b9244d785c969b937271e50d6e7fd3a4eb5",
+          "message": "Update status message in the member list and user info panel when it is changed (#7338)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2021-12-13T12:44:03Z",
+          "tree_id": "c63cbf12369e8e3ea17a114b78a729c14d325f0a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/43499b9244d785c969b937271e50d6e7fd3a4eb5"
+        },
+        "date": 1639399800671,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4985.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 652.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
