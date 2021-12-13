@@ -56,6 +56,7 @@ import { getUnsentMessages } from "../../structures/RoomStatusBar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import { isRoomMarkedAsUnread, setRoomMarkedAsUnread } from "../../../Rooms";
 import SettingsStore from "../../../settings/SettingsStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 
 interface IProps {
     room: Room;
@@ -299,8 +300,18 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.stopPropagation();
 
         // Show home if current room is marked unread
+        // ToDo: Do this also if marked as unread on other device
         if (this.state.selected) {
-            dis.dispatch({ action: 'view_home_page' });
+            if (SpaceStore.instance.activeSpace[0] === "!") {
+                dis.dispatch({
+                    action: "view_room",
+                    room_id: SpaceStore.instance.activeSpace,
+                });
+            } else {
+                dis.dispatch({
+                    action: "view_home_page",
+                });
+            }
         }
 
         setRoomMarkedAsUnread(this.props.room);
