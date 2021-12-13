@@ -166,10 +166,10 @@ export default class RightPanel extends React.Component<IProps, IState> {
         }
     };
     private onRightPanelStoreUpdate = () => {
-        const currentRoom = RightPanelStore.instance.currentPanel;
+        const currentPanel = RightPanelStore.instance.currentPanel;
         this.setState({
-            ...currentRoom.state,
-            phase: currentRoom.phase,
+            ...currentPanel.state,
+            phase: currentPanel.phase,
 
         });
     };
