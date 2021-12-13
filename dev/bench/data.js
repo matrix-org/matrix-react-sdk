@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639407968975,
+  "lastUpdate": 1639407987444,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47600,6 +47600,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4558.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9c0868ce4f6cc2486bd5318f86005dab80f0bafb",
+          "message": "Fix upgraded rooms wrongly showing up in spotlight (#7341)",
+          "timestamp": "2021-12-13T15:00:09Z",
+          "tree_id": "5ab4fbd7c4395391012f329ce5df9ca51efaeee2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9c0868ce4f6cc2486bd5318f86005dab80f0bafb"
+        },
+        "date": 1639407983832,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5271.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 962.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1589.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4466.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
