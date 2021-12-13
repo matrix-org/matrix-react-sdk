@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639424119797,
+  "lastUpdate": 1639439151468,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47816,6 +47816,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 640.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "132e19beb77d89d70c08c9d831f950bb0019d7d6",
+          "message": "Update typescript-eslint plugin & parser (#7351)",
+          "timestamp": "2021-12-13T23:39:45Z",
+          "tree_id": "d6e8a7bbbbcac05cd6fadc5318b644b580d5c593",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/132e19beb77d89d70c08c9d831f950bb0019d7d6"
+        },
+        "date": 1639439147870,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5023.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 913.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4383.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
