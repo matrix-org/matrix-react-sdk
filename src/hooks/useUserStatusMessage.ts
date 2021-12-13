@@ -15,23 +15,20 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 import { useContext } from "react";
 
-import { GroupMember } from "../components/views/right_panel/UserInfo";
 import MatrixClientContext from "../contexts/MatrixClientContext";
 import { useEventEmitterState } from "./useEventEmitter";
+import { Member } from "../components/views/right_panel/UserInfo";
 
-type StatusMessageUser = User | RoomMember | GroupMember;
-
-const getUser = (cli: MatrixClient, user: StatusMessageUser): User => cli.getUser(user?.userId);
-const getStatusMessage = (cli: MatrixClient, user: StatusMessageUser): string => {
+const getUser = (cli: MatrixClient, user: Member): User => cli.getUser(user?.userId);
+const getStatusMessage = (cli: MatrixClient, user: Member): string => {
     return getUser(cli, user).unstable_statusMessage;
 };
 
 // Hook to simplify handling Matrix User status
-export const useUserStatusMessage = (user?: StatusMessageUser): string => {
+export const useUserStatusMessage = (user?: Member): string => {
     const cli = useContext(MatrixClientContext);
     return useEventEmitterState(getUser(cli, user), "User.unstable_statusMessage", () => {
         return getStatusMessage(cli, user);
