@@ -131,6 +131,7 @@ export const reducer = (state: IState, action: IAction) => {
         }
 
         case Type.SetFocus: {
+            // if the ref doesn't change just return the same object reference to skip a re-render
             if (state.activeRef === action.payload.ref) return state;
             // update active ref
             state.activeRef = action.payload.ref;

@@ -67,6 +67,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
+        // when the context menu is opened directly, e.g via mouse click, the onFocus handle is skipped so call manually
         onFocus();
         onFocusChange(menuDisplayed);
     }, [onFocus, onFocusChange, menuDisplayed]);
@@ -113,8 +114,10 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
+        // when the context menu is opened directly, e.g via mouse click, the onFocus handle is skipped so call manually
+        onFocus();
         onFocusChange(menuDisplayed);
-    }, [onFocusChange, menuDisplayed]);
+    }, [onFocus, onFocusChange, menuDisplayed]);
 
     let contextMenu;
     if (menuDisplayed) {
