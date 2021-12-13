@@ -93,7 +93,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         const { user } = this.props.member;
         if (user) {
             user.removeListener(
-                "User._unstable_statusMessage",
+                "User.unstable_statusMessage",
                 this.onStatusMessageCommitted,
             );
         }
