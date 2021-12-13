@@ -36,7 +36,6 @@ import createRoom, { findDMForUser, privateShouldBeEncrypted } from '../../../cr
 import DMRoomMap from '../../../utils/DMRoomMap';
 import AccessibleButton from '../elements/AccessibleButton';
 import SdkConfig from '../../../SdkConfig';
-import SettingsStore from "../../../settings/SettingsStore";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
 import GroupStore from "../../../stores/GroupStore";
@@ -1565,7 +1564,7 @@ const UserInfoHeader: React.FC<{
     }
 
     let statusLabel = null;
-    if (SettingsStore.getValue("feature_custom_status") && statusMessage) {
+    if (statusMessage) {
         statusLabel = <span className="mx_UserInfo_statusMessage">{ statusMessage }</span>;
     }
 

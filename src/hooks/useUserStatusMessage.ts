@@ -21,6 +21,7 @@ import { useContext } from "react";
 import MatrixClientContext from "../contexts/MatrixClientContext";
 import { useEventEmitterState } from "./useEventEmitter";
 import { Member } from "../components/views/right_panel/UserInfo";
+import { useFeatureEnabled } from "./useSettings";
 
 const getUser = (cli: MatrixClient, user: Member): User => cli.getUser(user?.userId);
 const getStatusMessage = (cli: MatrixClient, user: Member): string => {
@@ -30,7 +31,8 @@ const getStatusMessage = (cli: MatrixClient, user: Member): string => {
 // Hook to simplify handling Matrix User status
 export const useUserStatusMessage = (user?: Member): string => {
     const cli = useContext(MatrixClientContext);
-    return useEventEmitterState(getUser(cli, user), "User.unstable_statusMessage", () => {
+    const enabled = useFeatureEnabled("feature_custom_status");
+    return useEventEmitterState(enabled && getUser(cli, user), "User.unstable_statusMessage", () => {
         return getStatusMessage(cli, user);
     });
 };
