@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639409830999,
+  "lastUpdate": 1639414359238,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47684,6 +47684,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 665.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f938bfaab947887e8bc49f619923a3bc9786220c",
+          "message": "Right panel chat style changes for read receipts and optimizations for smaller widths (#7297)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2021-12-13T17:46:32+01:00",
+          "tree_id": "c52b82197a4410189a39c4512cd4615dd8040be9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f938bfaab947887e8bc49f619923a3bc9786220c"
+        },
+        "date": 1639414356197,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4859.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1008.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1668.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4176.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
