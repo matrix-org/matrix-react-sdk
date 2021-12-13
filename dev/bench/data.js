@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639392040113,
+  "lastUpdate": 1639393518353,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47276,6 +47276,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 637.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fcc4939075c6f568c5d53819c0e0435bba325f49",
+          "message": "Fix naming of set-theory utils to match convention (#7343)",
+          "timestamp": "2021-12-13T10:57:51Z",
+          "tree_id": "e9467079e638a1092d677003c0d28014ffc596ff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fcc4939075c6f568c5d53819c0e0435bba325f49"
+        },
+        "date": 1639393514636,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5219.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1295,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1754.3999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4954.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
