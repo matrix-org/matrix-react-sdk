@@ -70,7 +70,11 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
     if (joinRule === JoinRule.Public) {
         if (showAdvancedSection) {
             advancedSection = <>
-                <AccessibleButton onClick={toggleAdvancedSection} kind="link" className="mx_SettingsTab_showAdvanced">
+                <AccessibleButton
+                    data-test-id='toggle-guest-access-btn'
+                    onClick={toggleAdvancedSection}
+                    kind="link"
+                    className="mx_SettingsTab_showAdvanced">
                     { _t("Hide advanced") }
                 </AccessibleButton>
 
@@ -88,7 +92,11 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
             </>;
         } else {
             advancedSection = <>
-                <AccessibleButton onClick={toggleAdvancedSection} kind="link" className="mx_SettingsTab_showAdvanced">
+                <AccessibleButton
+                    data-test-id='toggle-guest-access-btn'
+                    onClick={toggleAdvancedSection}
+                    kind="link"
+                    className="mx_SettingsTab_showAdvanced">
                     { _t("Show advanced") }
                 </AccessibleButton>
             </>;
@@ -112,9 +120,10 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
     return <div className="mx_SettingsTab">
         <div className="mx_SettingsTab_heading">{ _t("Visibility") }</div>
 
-        { error && <div className="mx_SpaceRoomView_errorText">{ error }</div> }
+        { error && <div data-test-id='space-settings-error' className="mx_SpaceRoomView_errorText">{ error }</div> }
 
         <SettingsFieldset
+            data-test-id='access-fieldset'
             legend={_t("Access")}
             description={_t("Decide who can view and join %(spaceName)s.", { spaceName: space.name })}
         >
