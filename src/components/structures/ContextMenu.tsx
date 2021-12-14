@@ -26,6 +26,7 @@ import { Writeable } from "../../@types/common";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import UIStore from "../../stores/UIStore";
 import { getInputableElement } from "./LoggedInView";
+import { RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -238,52 +239,10 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
     };
 
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        // don't let keyboard handling escape the context menu
-        ev.stopPropagation();
-
-        if (!this.props.managed) {
-            if (ev.key === Key.ESCAPE) {
-                this.props.onFinished();
-                ev.preventDefault();
-            }
-            return;
+        if ((ev.key === Key.TAB && !this.props.focusLock) || ev.key === Key.ESCAPE) {
+            this.props.onFinished();
         }
-
-        // only handle escape when in an input field
-        if (ev.key !== Key.ESCAPE && getInputableElement(ev.target as HTMLElement)) return;
-
-        let handled = true;
-
-        switch (ev.key) {
-            // XXX: this is imitating roving behaviour, it should really use the RovingTabIndex utils
-            // to inherit proper handling of unmount edge cases
-            case Key.TAB:
-            case Key.ESCAPE:
-            case Key.ARROW_LEFT: // close on left and right arrows too for when it is a context menu on a <Toolbar />
-            case Key.ARROW_RIGHT:
-                this.props.onFinished();
-                break;
-            case Key.ARROW_UP:
-                this.onMoveFocus(ev.target as Element, true);
-                break;
-            case Key.ARROW_DOWN:
-                this.onMoveFocus(ev.target as Element, false);
-                break;
-            case Key.HOME:
-                this.onMoveFocusHomeEnd(this.state.contextMenuElem, true);
-                break;
-            case Key.END:
-                this.onMoveFocusHomeEnd(this.state.contextMenuElem, false);
-                break;
-            default:
-                handled = false;
-        }
-
-        if (handled) {
-            // consume all other keys in context menu
-            ev.preventDefault();
-        }
-    };
+    }
 
     protected renderMenu(hasBackground = this.props.hasBackground) {
         const position: Partial<Writeable<DOMRect>> = {};
@@ -408,23 +367,27 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div
-                className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}
-                style={{ ...position, ...wrapperStyle }}
-                onKeyDown={this.onKeyDown}
-                onClick={this.onClick}
-                onContextMenu={this.onContextMenuPreventBubbling}
-            >
-                { background }
-                <div
-                    className={menuClasses}
-                    style={menuStyle}
-                    ref={this.collectContextMenuRect}
-                    role={this.props.managed ? "menu" : undefined}
-                >
-                    { body }
-                </div>
-            </div>
+            <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.onKeyDown}>
+                { ({ onKeyDownHandler }) => (
+                    <div
+                        className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}
+                        style={{ ...position, ...wrapperStyle }}
+                        onClick={this.onClick}
+                        onKeyDown={onKeyDownHandler}
+                        onContextMenu={this.onContextMenuPreventBubbling}
+                    >
+                        { background }
+                        <div
+                            className={menuClasses}
+                            style={menuStyle}
+                            ref={this.collectContextMenuRect}
+                            role={this.props.managed ? "menu" : undefined}
+                        >
+                            { body }
+                        </div>
+                    </div>
+                ) }
+            </RovingTabIndexProvider>
         );
     }
 
