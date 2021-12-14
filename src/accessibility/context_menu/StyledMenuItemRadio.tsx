@@ -55,7 +55,6 @@ export const StyledMenuItemRadio: React.FC<IProps> = ({ children, label, onChang
         <StyledRadioButton
             {...props}
             role="menuitemradio"
-            tabIndex={-1}
             aria-label={label}
             onChange={onChange}
             onKeyDown={onKeyDown}
