@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639498444987,
+  "lastUpdate": 1639498478667,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48260,6 +48260,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4456.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c1315bfa6cea395d7bd3f482ac605e1a6263e69a",
+          "message": "Fix useUserStatusMessage exploding on unknown user (#7365)",
+          "timestamp": "2021-12-14T16:07:34Z",
+          "tree_id": "51989bffe09dcc82445e2a5c0e173af822fbb73e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c1315bfa6cea395d7bd3f482ac605e1a6263e69a"
+        },
+        "date": 1639498475258,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5822.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1136.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1825.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4835.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
