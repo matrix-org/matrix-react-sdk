@@ -47,7 +47,7 @@ const MEMBER_INFO_PHASES = [
  * sessions. This state includes a history for each room. Each history element contains
  * the phase (e.g. RoomMemberInfo) and the state (e.g. the member) associated with it.
  *
- * Groups are treated the same then rooms (They are also stored in the byRoom object).
+ * Groups are treated the same as rooms (they are also stored in the byRoom object).
  * This is possible since the store keeps track of the opened room/group -> the store will
  * provide the correct history for that group/room.
  */
