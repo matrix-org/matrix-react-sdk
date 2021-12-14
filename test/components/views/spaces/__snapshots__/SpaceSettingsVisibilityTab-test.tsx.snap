@@ -88,47 +88,37 @@ exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
     <span>
       Anyone can find and join.
     </span>
-  </fieldset>
-  <fieldset
-    class="mx_SettingsFieldset"
-  >
-    <legend
-      class="mx_SettingsFieldset_legend"
-    >
-      Preview Space
-    </legend>
     <div
-      class="mx_SettingsFieldset_description"
+      class="mx_SettingsTab_toggleWithDescription"
     >
+      <div
+        class="mx_SettingsFlag "
+      >
+        <span
+          class="mx_SettingsFlag_label"
+        >
+          Preview Space
+        </span>
+        <div
+          aria-checked="true"
+          aria-disabled="false"
+          aria-label="Preview Space"
+          class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+          role="switch"
+          tabindex="0"
+        >
+          <div
+            class="mx_ToggleSwitch_ball"
+          />
+        </div>
+      </div>
       <p>
         Allow people to preview your space before they join.
-      </p>
-      <p>
+        <br />
         <b>
           Recommended for public spaces.
         </b>
       </p>
-    </div>
-    <div
-      class="mx_SettingsFlag "
-    >
-      <span
-        class="mx_SettingsFlag_label"
-      >
-        Preview Space
-      </span>
-      <div
-        aria-checked="true"
-        aria-disabled="false"
-        aria-label="Preview Space"
-        class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
-        role="switch"
-        tabindex="0"
-      >
-        <div
-          class="mx_ToggleSwitch_ball"
-        />
-      </div>
     </div>
   </fieldset>
 </div>
