@@ -281,12 +281,12 @@ limitations under the License.
     .mx_ContextualMenu {
         position: initial;
         span:first-of-type {
-            font-weight: 600;
-            font-size: 12px;
+            font-weight: $font-semi-bold;
+            font-size: inherit;
             color: $primary-content;
         }
 
-        font-size: 12px;
+        font-size: $font-12px;
         color: $secondary-content;
         padding-top: 10px;
         padding-bottom: 10px;
