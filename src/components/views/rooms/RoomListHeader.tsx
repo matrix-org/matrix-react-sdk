@@ -41,7 +41,6 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import { showCommunityInviteDialog } from "../../../RoomInvite";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import InlineSpinner from "../elements/InlineSpinner";
-import TooltipButton from "../elements/TooltipButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import {
