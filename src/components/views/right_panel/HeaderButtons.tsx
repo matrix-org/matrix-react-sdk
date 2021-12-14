@@ -24,7 +24,6 @@ import dis from '../../../dispatcher/dispatcher';
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { IPanelState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
-// import type { EventSubscription } from "fbemitter";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
