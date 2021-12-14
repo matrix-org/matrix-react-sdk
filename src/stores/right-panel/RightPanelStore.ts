@@ -72,7 +72,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     private constructor() {
         super(defaultDispatcher);
-        this.dispatcherRefRightPanelStore = this.dispatcher.register(this.onDispatch);
+        this.dispatcherRefRightPanelStore = defaultDispatcher.register(this.onDispatch);
     }
 
     protected async onReady(): Promise<any> {
@@ -83,7 +83,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onNotReady(): Promise<any> {
-        this.dispatcher.unregister(this.dispatcherRefRightPanelStore);
+        defaultDispatcher.unregister(this.dispatcherRefRightPanelStore);
         // Remove RoomStore listener
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
