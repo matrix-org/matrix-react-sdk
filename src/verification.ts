@@ -16,6 +16,7 @@ limitations under the License.
 
 import { User } from "matrix-js-sdk/src/models/user";
 import { verificationMethods as VerificationMethods } from 'matrix-js-sdk/src/crypto';
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
@@ -24,7 +25,7 @@ import { RightPanelPhases } from "./stores/right-panel/RightPanelStorePhases";
 import { findDMForUser } from './createRoom';
 import { accessSecretStorage } from './SecurityManager';
 import UntrustedDeviceDialog from "./components/views/dialogs/UntrustedDeviceDialog";
-import { IDevice } from "./components/views/right_panel/UserInfo";
+import { GroupMember, IDevice } from "./components/views/right_panel/UserInfo";
 import ManualDeviceKeyVerificationDialog from "./components/views/dialogs/ManualDeviceKeyVerificationDialog";
 import RightPanelStore from "./stores/right-panel/RightPanelStore";
 
@@ -117,7 +118,7 @@ export async function verifyUser(user: User) {
     );
 }
 
-export function pendingVerificationRequestForUser(user: User) {
+export function pendingVerificationRequestForUser(user: User | RoomMember | GroupMember ) {
     const cli = MatrixClientPeg.get();
     const dmRoom = findDMForUser(cli, user.userId);
     if (dmRoom) {

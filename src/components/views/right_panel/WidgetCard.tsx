@@ -49,7 +49,7 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
         if (!app || isPinned) {
             // stop showing this card
 
-            //TODO RightPanelStore: here we want to just pop the widget card.
+            //TODO RightPanelStore (will be addressed in a follow up PR): here we want to just pop the widget card.
             RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomSummary);
         }
     }, [app, isPinned]);

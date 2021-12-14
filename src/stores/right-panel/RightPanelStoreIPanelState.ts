@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -64,15 +64,23 @@ export interface IPhaseAndStateStored {
     state: IPanelStateStored;
 }
 
-export function convertToStoreRoom(cacheRoom: { isOpen: boolean, history: Array<IPhaseAndState> }):
-{ history: Array<IPhaseAndStateStored>, isOpen: boolean } {
+export interface IRightPanelForRoom {
+    isOpen: boolean;
+    history: Array<IPhaseAndState>;
+}
+
+interface IRightPanelForRoomStored {
+    isOpen: boolean;
+    history: Array<IPhaseAndStateStored>;
+}
+
+export function convertToStoreRoom(cacheRoom: IRightPanelForRoom): IRightPanelForRoomStored {
     if (!cacheRoom) return cacheRoom;
     const storeHistory = [...cacheRoom.history].map(panelState => convertStateToStore(panelState));
     return { isOpen: cacheRoom.isOpen, history: storeHistory };
 }
 
-export function convertToStateRoom(storeRoom: { history: Array<IPhaseAndStateStored>, isOpen: boolean }, room: Room):
-{ history: Array<IPhaseAndState>, isOpen: boolean } {
+export function convertToStateRoom(storeRoom: IRightPanelForRoomStored, room: Room): IRightPanelForRoom {
     if (!storeRoom) return storeRoom;
     const stateHistory = [...storeRoom.history].map(panelStateStore => convertStoreToState(panelStateStore, room));
     return { history: stateHistory, isOpen: storeRoom.isOpen };
@@ -90,6 +98,7 @@ function convertStateToStore(panelState: IPhaseAndState): IPhaseAndStateStored {
     delete panelStateThisRoomStored.initialEvent;
     return { state: panelStateThisRoomStored as IPhaseAndStateStored, phase: panelState.phase } as IPhaseAndStateStored;
 }
+
 function convertStoreToState(panelStateStore: IPhaseAndStateStored, room: Room): IPhaseAndState {
     const panelStateThisRoom = { ...panelStateStore?.state } as any;
     if (!!panelStateThisRoom.threadHeadEventId) {

@@ -62,8 +62,7 @@ const BaseCard: React.FC<IProps> = ({
     let backButton;
     if (previousPhase) {
         const onBackClick = () => {
-            // console.log(RoomListStore.instance);
-            // TODO RightPanelStore: this should ideally be:
+            // TODO RightPanelStore (will be addressed in a follow up PR): this should ideally be:
             // RightPanelStore.instance.popRightPanel();
 
             RightPanelStore.instance.setRightPanel(previousPhase, refireParams );

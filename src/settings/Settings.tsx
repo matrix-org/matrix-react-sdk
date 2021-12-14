@@ -768,22 +768,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ROOM_DEVICE],
         default: null,
     },
-    // "showRightPanelInRoom": {
-    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-    //     default: false,
-    // },
-    // "showRightPanelInGroup": {
-    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-    //     default: false,
-    // },
-    // "lastRightPanelPhaseForRoom": {
-    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-    //     default: RightPanelPhases.RoomSummary,
-    // },
-    // "lastRightPanelPhaseForGroup": {
-    //     supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-    //     default: RightPanelPhases.GroupMemberList,
-    // },
     "enableEventIndexing": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Enable message search in encrypted rooms"),

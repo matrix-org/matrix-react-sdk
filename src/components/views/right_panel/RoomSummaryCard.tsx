@@ -102,7 +102,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     }, [room.roomId]);
 
     const onOpenWidgetClick = () => {
-        // TODO RightPanelPhase: should push the widget
+        // TODO RightPanelStore (will be addressed in a follow up PR): should push the widget
         RightPanelStore.instance.setRightPanel(RightPanelPhases.Widget, { widgetId: app.id });
     };
 
@@ -231,12 +231,12 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
 };
 
 export const onRoomMembersClick = (allowClose = true) => {
-    // TODO RightPanelStore: should push the phase
+    // TODO RightPanelStore (will be addressed in a follow up PR): should push the phase
     RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, undefined, allowClose);
 };
 
 export const onRoomFilesClick = (allowClose = true) => {
-    // TODO RightPanelStore: should push the phase
+    // TODO RightPanelStore (will be addressed in a follow up PR): should push the phase
     RightPanelStore.instance.setRightPanel(RightPanelPhases.FilePanel, undefined, allowClose);
 };
 

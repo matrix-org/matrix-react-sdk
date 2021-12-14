@@ -159,8 +159,10 @@ export default class RightPanel extends React.Component<IProps, IState> {
         // redraw the badge on the membership list
         if (this.state.phase === RightPanelPhases.RoomMemberList && member.roomId === this.props.room.roomId) {
             this.delayedUpdate();
-        } else if (this.state.phase === RightPanelPhases.RoomMemberInfo && member.roomId === this.props.room.roomId &&
-            member.userId === this.state.member.userId) {
+        } else if (
+            this.state.phase === RightPanelPhases.RoomMemberInfo && member.roomId === this.props.room.roomId &&
+            member.userId === this.state.member.userId
+        ) {
             // refresh the member info (e.g. new power level)
             this.delayedUpdate();
         }

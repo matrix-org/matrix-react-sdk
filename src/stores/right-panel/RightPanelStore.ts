@@ -26,8 +26,14 @@ import { Action } from '../../dispatcher/actions';
 import { SettingLevel } from "../../settings/SettingLevel";
 import { UPDATE_EVENT } from '../AsyncStore';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
-import RoomViewStore from '../RoomViewStore';
-import { IPhaseAndState, IPanelState, convertToStateRoom, convertToStoreRoom } from './RightPanelStoreIPanelState';
+// import RoomViewStore from '../RoomViewStore';
+import {
+    IPhaseAndState,
+    IPanelState,
+    convertToStateRoom,
+    convertToStoreRoom,
+    IRightPanelForRoom,
+} from './RightPanelStoreIPanelState';
 
 const GROUP_PHASES = [
     RightPanelPhases.GroupMemberList,
@@ -44,13 +50,14 @@ const MEMBER_INFO_PHASES = [
 
 /**
  * A class for tracking the state of the right panel between layouts and
- * sessions. This state includes a history for each room. Each history element contains
- * the phase (e.g. RoomMemberInfo) and the state (e.g. the member) associated with it.
- *
- * Groups are treated the same as rooms (they are also stored in the byRoom object).
- * This is possible since the store keeps track of the opened room/group -> the store will
- * provide the correct history for that group/room.
- */
+ * sessions. This state includes a history for each room. Each history element
+ * contains the phase (e.g. RightPanelPhase.RoomMemberInfo) and the state (e.g. the
+ * member) associated with it.
+ * Groups are treated the same as rooms (they are also
+ * stored in the byRoom object).This is possible since the store keeps track of the
+ * opened room/group -> the store will provide the correct history for that
+ * group/room.
+*/
 export default class RightPanelStore extends ReadyWatchingStore {
     private static internalInstance: RightPanelStore;
     private viewedRoomId: string;
@@ -59,15 +66,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
     private roomStoreToken: EventSubscription;
 
     private byRoom: {
-        [roomId: string]: {
-            isOpen: boolean;
-            history: Array<IPhaseAndState>;
-        };
+        [roomId: string]: IRightPanelForRoom;
     } = {};
-    private global?: {
-        isOpen: boolean;
-        history: Array<IPhaseAndState>;
-    } = null;
+    private global?: IRightPanelForRoom = null;
 
     private constructor() {
         super(defaultDispatcher);
@@ -75,7 +76,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onReady(): Promise<any> {
-        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        // this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        // TODO RightPanelStore (will be addressed in a follow up PR): This should be used instead of the onDispatch callback when groups are removed.
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
@@ -89,15 +91,15 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     // Getters
-    get isOpenForRoom(): boolean {
+    public get isOpenForRoom(): boolean {
         return this.byRoom[this.viewedRoomId]?.isOpen ?? false;
     }
 
-    get roomPhaseHistory(): Array<IPhaseAndState> {
+    public get roomPhaseHistory(): Array<IPhaseAndState> {
         return this.byRoom[this.viewedRoomId]?.history ?? [];
     }
 
-    get currentPanel(): IPhaseAndState {
+    public get currentPanel(): IPhaseAndState {
         const hist = this.roomPhaseHistory;
         if (hist.length >= 1) {
             return hist[hist.length - 1];
@@ -105,14 +107,15 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return { state: {}, phase: null };
     }
 
-    currentPanelForRoom(roomId: string): IPhaseAndState {
+    public currentPanelForRoom(roomId: string): IPhaseAndState {
         const hist = this.byRoom[roomId]?.history ?? [];
         if (hist.length > 0) {
             return hist[hist.length - 1];
         }
         return this.currentPanel ?? { state: {}, phase: null };
     }
-    get previousPanel(): IPhaseAndState {
+
+    public get previousPanel(): IPhaseAndState {
         const hist = this.roomPhaseHistory;
         if (hist?.length >= 2) {
             return hist[hist.length - 2];
@@ -120,47 +123,45 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return { state: {}, phase: null };
     }
 
-    // The Group stuff is just for backwards compatibility. Can be removed when depracating groups
-    get isOpenForGroup(): boolean {return this.isOpenForRoom;}
-    get groupPhaseHistory(): Array<IPhaseAndState> {return this.roomPhaseHistory;}
-    get currentGroup(): IPhaseAndState {return this.currentPanel;}
-    get previousGroup(): IPhaseAndState {return this.previousPanel;}
+    // The Group associated getters are just for backwards compatibility. Can be removed when deprecating groups.
+    public get isOpenForGroup(): boolean { return this.isOpenForRoom; }
+    public get groupPhaseHistory(): Array<IPhaseAndState> { return this.roomPhaseHistory; }
+    public get currentGroup(): IPhaseAndState { return this.currentPanel; }
+    public get previousGroup(): IPhaseAndState { return this.previousPanel; }
 
     // Setters
     public setRightPanel(phase: RightPanelPhases, state: IPanelState = null, allowClose = true, roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
-        console.log("ORDER_DEBUG: setRightPanel ");
-        // this was previously a very multifuncitonal command:
-        // TogglePanel: if the same phase is send but without refireParams
-        // UpdateState: if the same phase is send but with refireParams
-        // SetRightPanel and erase history: if a "differnt to the current" phase is send (with or without refireParams)
-        const redirect = this.getVerificationRedirect(phase, state);
-        const targetPhase = redirect?.targetPhase ?? phase;
-        const panelState = redirect?.panelState ?? state;
+        // this was previously a very multifunctional command:
+        // Toggle panel: if the same phase is send but without a state
+        // Update state: if the same phase is send but with a state
+        // Set right panel and erase history: if a "different to the current" phase is send (with or without a state)
+        const redirect = this.getVerificationRedirect({ phase, state });
+        const targetPhase = redirect?.phase ?? phase;
+        const panelState = redirect?.state ?? state;
 
         // Checks for wrong SetRightPanelPhase requests
         if (!this.isPhaseActionIsValid(targetPhase)) return;
 
         if (targetPhase === this.currentPanel?.phase && allowClose && !panelState) {
-            // Toggle command: a toggle command needs to fullfill the following:
+            // Toggle panel: a toggle command needs to fullfil the following:
             // - the same phase
             // - the panel can be closed
             // - does not contain any state information (refireParams)
             this.togglePanel(rId);
             return;
         } else if ((targetPhase === this.currentPanelForRoom(rId)?.phase && !!panelState)) {
-            // Update Command: set right panel phase with a new state but keep the phase (dont know it this is ever needed...)
+            // Update state: set right panel with a new state but keep the phase (dont know it this is ever needed...)
             const hist = this.byRoom[rId].history;
             hist[hist.length - 1].state = panelState;
             this.emitAndUpdateSettings();
             return;
         } else if (targetPhase !== this.currentPanel?.phase) {
-            // SetRightPanel and erase history.
+            // Set right panel and erase history.
             this.setRightPanelCache(targetPhase, panelState);
         }
     }
 
-    // push right panel: appends to the history
     public pushRightPanel(
         phase: RightPanelPhases,
         panelState: IPanelState = null,
@@ -168,10 +169,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
         roomId: string = null,
     ) {
         const rId = roomId ?? this.viewedRoomId;
-        console.log("ORDER_DEBUG: action: pushRightPanel");
-        const redirect = this.getVerificationRedirect(phase, panelState);
-        const targetPhase = redirect?.targetPhase ?? phase;
-        const refireParams = redirect?.panelState ?? panelState;
+        const redirect = this.getVerificationRedirect({ phase, state: panelState });
+        const targetPhase = redirect?.phase ?? phase;
+        const pState = redirect?.state ?? panelState;
 
         // Checks for wrong SetRightPanelPhase requests
         if (!this.isPhaseActionIsValid(targetPhase)) return;
@@ -179,12 +179,12 @@ export default class RightPanelStore extends ReadyWatchingStore {
         let roomCache = this.byRoom[rId];
         if (!!roomCache) {
             // append new phase
-            roomCache.history.push({ state: refireParams, phase: targetPhase });
+            roomCache.history.push({ state: pState, phase: targetPhase });
             roomCache.isOpen = allowClose ? roomCache.isOpen : true;
         } else {
             // create new phase
             roomCache = {
-                history: [{ phase: targetPhase, state: refireParams }],
+                history: [{ phase: targetPhase, state: pState }],
                 // if there was no right panel store object the the panel was closed -> keep it closed, except if allowClose==false
                 isOpen: !allowClose,
             };
@@ -193,7 +193,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
 
-    // pop right panel: removes last eelemnt from history
     public popRightPanel(roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
         const roomCache = this.byRoom[rId];
@@ -213,10 +212,11 @@ export default class RightPanelStore extends ReadyWatchingStore {
         const room = this.mxClient?.getRoom(this.viewedRoomId);
         if (!!room) {
             this.global = this.global ?? convertToStateRoom(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
-            this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId]
-            ?? convertToStateRoom(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
+            this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
+                convertToStateRoom(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
         }
     }
+
     private emitAndUpdateSettings() {
         const storePanelGlobal = convertToStoreRoom(this.global);
         const storePanelThisRoom = convertToStoreRoom(this.byRoom[this.viewedRoomId]);
@@ -231,8 +231,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emit(UPDATE_EVENT, null);
     }
 
-    // set rigth panel: overrides the history
     private setRightPanelCache(targetPhase: RightPanelPhases, panelState: IPanelState = null) {
+        // this overrides the history for the right panel in the current room.
         this.byRoom[this.viewedRoomId] = {
             history: [{ phase: targetPhase, state: panelState ?? {} }],
             isOpen: true,
@@ -240,17 +240,15 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
 
-    // CHECKS:
-    //  - RoomMemberInfo -> needs to be changed to EncryptionPanel if pendingVerificationRequestForUser
-    private getVerificationRedirect(targetPhase: RightPanelPhases, panelState):
-        { targetPhase: RightPanelPhases, panelState } {
-        if (targetPhase === RightPanelPhases.RoomMemberInfo && panelState) {
-            const { member } = panelState;
+    private getVerificationRedirect(phaseAndState: IPhaseAndState): IPhaseAndState {
+        if (phaseAndState.phase === RightPanelPhases.RoomMemberInfo && phaseAndState.state) {
+            // RightPanelPhases.RoomMemberInfo -> needs to be changed to RightPanelPhases.EncryptionPanel if there is a pending verification request
+            const { member } = phaseAndState.state;
             const pendingRequest = pendingVerificationRequestForUser(member);
             if (pendingRequest) {
                 return {
-                    targetPhase: RightPanelPhases.EncryptionPanel,
-                    panelState: {
+                    phase: RightPanelPhases.EncryptionPanel,
+                    state: {
                         verificationRequest: pendingRequest,
                         member,
                     },
@@ -266,16 +264,21 @@ export default class RightPanelStore extends ReadyWatchingStore {
             return false;
         }
         if (GROUP_PHASES.includes(targetPhase) && this.isViewingRoom) {
-            logger.warn(`Tried to switch right panel to a group phase: ${targetPhase}, 
-            but we are currently not viewing a group`);
+            logger.warn(
+                `Tried to switch right panel to a group phase: ${targetPhase}, ` +
+                `but we are currently not viewing a group`,
+            );
             return false;
         } else if (!GROUP_PHASES.includes(targetPhase) && !this.isViewingRoom) {
-            logger.warn(`Tried to switch right panel to a room phase: ${targetPhase}, 
-            but we are currently not viewing a room`);
+            logger.warn(
+                `Tried to switch right panel to a room phase: ${targetPhase}, ` +
+                `but we are currently not viewing a room`,
+            );
             return false;
         }
         return true;
     }
+
     onRoomViewStoreUpdate() {
         // TODO: use this function instead of the onDispatch (the whole onDispatch can get removed!) as soon groups are removed
         // this.viewedRoomId = RoomViewStore.getRoomId();
@@ -289,21 +292,18 @@ export default class RightPanelStore extends ReadyWatchingStore {
             case 'view_group':
             case Action.ViewRoom: {
                 const _this = RightPanelStore.instance;
-                console.log("ORDER_DEBUG: action:", payload.action);
                 if (payload.room_id === _this.viewedRoomId) break; // skip this transition, probably a permalink
 
                 // Put group in the same/similar view to what was open from the previously viewed room
-                // Is contradictory to the new "per room" philosophy but it is the legacy behaviour for groups.
+                // Is contradictory to the new "per room" philosophy but it is the legacy behavior for groups.
                 if ((_this.isViewingRoom ? Action.ViewRoom : "view_group") != payload.action) {
                     if (payload.action == Action.ViewRoom && MEMBER_INFO_PHASES.includes(_this.currentPanel?.phase)) {
                         // switch from group to room
                         _this.setRightPanelCache(RightPanelPhases.RoomMemberList, {});
-                        // this.setState({ lastRoomPhase: RightPanelPhases.RoomMemberList, lastRoomPhaseParams: {} });
                     } else if (payload.action == "view_group"
                         && _this.currentPanel?.phase === RightPanelPhases.GroupMemberInfo) {
                         // switch from room to group
                         _this.setRightPanelCache(RightPanelPhases.GroupMemberList, {});
-                        // this.setState({ lastGroupPhase: RightPanelPhases.GroupMemberList });
                     }
                 }
 
@@ -314,16 +314,16 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 // load values from byRoomCache with the viewedRoomId.
                 if (!!_this.roomStoreToken) {
                     // skip loading here since we need the client to be ready to get the events form the ids of the settings
-                    // this loading will be done in the onready function
-                    // all this nonsense is not necassary anymore as soon as we use: onRoomViewStoreUpdate
+                    // this loading will be done in the onReady function
+                    // all the logic in this case is not necessary anymore as soon as groups are dropped and we use: onRoomViewStoreUpdate
                     _this.loadCacheFromSettings();
                     _this.emitAndUpdateSettings();
                 }
-                console.log("right panel store for current room: ", _this.byRoom[_this.viewedRoomId]);
                 break;
             }
         }
     }
+
     public static get instance(): RightPanelStore {
         if (!RightPanelStore.internalInstance) {
             RightPanelStore.internalInstance = new RightPanelStore();

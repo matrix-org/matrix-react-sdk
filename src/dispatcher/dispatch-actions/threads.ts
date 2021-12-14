@@ -23,7 +23,7 @@ export const dispatchShowThreadEvent = (
     initialEvent?: MatrixEvent,
     highlighted?: boolean,
 ) => {
-    // TODO RightPanelStore: this should really be a push!
+    // TODO RightPanelStore (will be addressed in a follow up PR): this should really be a push!
     RightPanelStore.instance.setRightPanel(
         RightPanelPhases.ThreadView,
         {
