@@ -2,19 +2,22 @@
     font-size: $font-32px;
     font-weight: $font-semi-bold;
     line-height: $font-39px;
-    margin: 0;
+    margin-inline: unset;
+    margin-block: unset;
 }
 
 .mx_Heading_h2 {
     font-size: $font-24px;
     font-weight: $font-semi-bold;
     line-height: $font-29px;
-    margin: 0;
+    margin-inline: unset;
+    margin-block: unset;
 }
 
 .mx_Heading_h3 {
     font-size: $font-18px;
     font-weight: $font-semi-bold;
     line-height: $font-22px;
-    margin: 0;
+    margin-inline: unset;
+    margin-block: unset;
 }
