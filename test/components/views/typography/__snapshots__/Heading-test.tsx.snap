@@ -4,7 +4,6 @@ exports[`<Heading /> renders h1 with correct attributes 1`] = `
 <h1
   class="mx_Heading_h1 test"
   data-test-id="test"
-  legend="Who can read history?"
 >
   <div>
     test
@@ -16,7 +15,6 @@ exports[`<Heading /> renders h2 with correct attributes 1`] = `
 <h2
   class="mx_Heading_h2 test"
   data-test-id="test"
-  legend="Who can read history?"
 >
   <div>
     test
@@ -28,7 +26,6 @@ exports[`<Heading /> renders h3 with correct attributes 1`] = `
 <h3
   class="mx_Heading_h3 test"
   data-test-id="test"
-  legend="Who can read history?"
 >
   <div>
     test
