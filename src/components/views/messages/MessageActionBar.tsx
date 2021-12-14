@@ -29,7 +29,7 @@ import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } fr
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
-import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
+import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MessageContextMenu, { canCancel } from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
@@ -64,17 +64,20 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     onFocusChange,
     getRelationsForEvent,
 }) => {
-    const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
+        // when the context menu is opened directly, e.g via mouse click, the onFocus handle is skipped so call manually
+        onFocus();
         onFocusChange(menuDisplayed);
-    }, [onFocusChange, menuDisplayed]);
+    }, [onFocus, onFocusChange, menuDisplayed]);
 
     let contextMenu: ReactElement | null;
     if (menuDisplayed) {
         const tile = getTile && getTile();
         const replyChain = getReplyChain && getReplyChain();
 
-        const buttonRect = buttonRef.current.getBoundingClientRect();
+        const buttonRect = button.current.getBoundingClientRect();
         contextMenu = <MessageContextMenu
             {...aboveLeftOf(buttonRect)}
             mxEvent={mxEvent}
@@ -92,7 +95,9 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             title={_t("Options")}
             onClick={openMenu}
             isExpanded={menuDisplayed}
-            inputRef={buttonRef}
+            inputRef={ref}
+            onFocus={onFocus}
+            tabIndex={isActive ? 0 : -1}
         />
 
         { contextMenu }
@@ -106,14 +111,17 @@ interface IReactButtonProps {
 }
 
 const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusChange }) => {
-    const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const [onFocus, isActive, ref] = useRovingTabIndex(button);
     useEffect(() => {
+        // when the context menu is opened directly, e.g via mouse click, the onFocus handle is skipped so call manually
+        onFocus();
         onFocusChange(menuDisplayed);
-    }, [onFocusChange, menuDisplayed]);
+    }, [onFocus, onFocusChange, menuDisplayed]);
 
     let contextMenu;
     if (menuDisplayed) {
-        const buttonRect = buttonRef.current.getBoundingClientRect();
+        const buttonRect = button.current.getBoundingClientRect();
         contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
             <ReactionPicker mxEvent={mxEvent} reactions={reactions} onFinished={closeMenu} />
         </ContextMenu>;
@@ -125,7 +133,9 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
             title={_t("React")}
             onClick={openMenu}
             isExpanded={menuDisplayed}
-            inputRef={buttonRef}
+            inputRef={ref}
+            onFocus={onFocus}
+            tabIndex={isActive ? 0 : -1}
         />
 
         { contextMenu }
