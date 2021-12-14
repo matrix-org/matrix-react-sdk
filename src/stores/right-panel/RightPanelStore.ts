@@ -104,6 +104,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
         return { state: {}, phase: null };
     }
+
     currentPanelForRoom(roomId: string): IPhaseAndState {
         const hist = this.byRoom[roomId]?.history ?? [];
         if (hist.length > 0) {
