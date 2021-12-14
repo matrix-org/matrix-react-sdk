@@ -82,6 +82,11 @@ const CustomStatusSection = () => {
     });
 
     const onFormKeyDown = (ev: React.KeyboardEvent) => {
+        // Allow the custom status form to be tabbed through to move from the
+        // <input> to the buttons and back to the normal options. Normally,
+        // RoamingTabIndex items can only be navigated by Arrow keys but we need
+        // to be able to jump the focus out of the <input> so we also allow Tab
+        // within the form.
         if (ev.key === Key.TAB && rovingContext.state.refs.length > 0) {
             ev.stopPropagation();
             ev.preventDefault();
