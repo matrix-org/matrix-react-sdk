@@ -141,7 +141,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
     const membership = useMyRoomMembership(space);
 
     let visibilitySection;
-    if (joinRule === "public") {
+    if (joinRule === JoinRule.Public) {
         visibilitySection = <span className="mx_SpaceRoomView_info_public">
             { _t("Public space") }
         </span>;
