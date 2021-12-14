@@ -246,6 +246,11 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             return;
         }
 
+        // When an <input> is focused, only handle the Escape key
+        if (getInputableElement(ev.target as HTMLElement) && ev.key !== Key.ESCAPE) {
+            return;
+        }
+
         if (
             ev.key === Key.ESCAPE ||
             // You can only navigate the ContextMenu by arrow keys and Home/End (see RovingTabIndex).

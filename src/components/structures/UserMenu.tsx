@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useContext, useState } from "react";
+import React, { createRef, useContext, useRef, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import * as fbEmitter from "fbemitter";
 import classNames from "classnames";
@@ -33,6 +33,15 @@ import Modal from "../../Modal";
 import LogoutDialog from "../views/dialogs/LogoutDialog";
 import SettingsStore from "../../settings/SettingsStore";
 import { findHighContrastTheme, getCustomTheme, isHighContrastTheme } from "../../theme";
+import {
+    RovingAccessibleButton,
+    RovingAccessibleTooltipButton,
+    RovingTabIndexContext,
+    findSiblingElement,
+    useRovingTabIndex,
+    Type
+} from "../../accessibility/RovingTabIndex";
+import { Key } from "../../Keyboard";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
@@ -60,31 +69,76 @@ const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
     const setStatus = cli.getUser(cli.getUserId()).unstable_statusMessage || "";
     const [value, setValue] = useState(setStatus);
+    const [isFocused, setFocus] = useState(false);
+
+    const ref = useRef<HTMLInputElement>(null);
+    const [rovingOnFocus, isActive] = useRovingTabIndex(ref);
+    const rovingContext = useContext(RovingTabIndexContext);
+
+    const classes = classNames({
+        'mx_UserMenu_CustomStatusSection_field': true,
+        'mx_UserMenu_CustomStatusSection_field_hasQuery': value,
+        'mx_UserMenu_CustomStatusSection_field_focused': isFocused,
+    });
+
+    const onFormKeyDown = (ev: React.KeyboardEvent) => {
+        if (ev.key === Key.TAB && rovingContext.state.refs.length > 0) {
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            const idx = rovingContext.state.refs.indexOf(rovingContext.state.activeRef);
+            const ref = findSiblingElement(rovingContext.state.refs, idx + (ev.shiftKey ? -1 : 1));
+
+            if (ref) {
+                ref.current?.focus();
+                rovingContext.dispatch({
+                    type: Type.SetFocus,
+                    payload: { ref },
+                });
+            }
+        }
+    };
+
+    const onFocus = () => {
+        setFocus(true);
+        rovingOnFocus();
+    };
+
+    const onBlur = () => {
+        setFocus(false);
+    };
+    
 
     let details: JSX.Element;
     if (value !== setStatus) {
         details = <>
             <p>{ _t("Your status will be shown to people you have a DM with.") }</p>
 
-            <AccessibleButton
+            <RovingAccessibleButton
                 onClick={() => cli._unstable_setStatusMessage(value)}
                 kind="primary_outline"
             >
                 { value ? _t("Set status") : _t("Clear status") }
-            </AccessibleButton>
+            </RovingAccessibleButton>
         </>;
     }
 
-    return <div className="mx_UserMenu_CustomStatusSection">
-        <div className="mx_UserMenu_CustomStatusSection_input">
+    return <form className="mx_UserMenu_CustomStatusSection" onKeyDown={onFormKeyDown}>
+        <div className={classes}>
             <input
                 type="text"
                 value={value}
+                className="mx_UserMenu_CustomStatusSection_input"
                 onChange={e => setValue(e.target.value)}
                 placeholder={_t("Set a new status")}
                 autoComplete="off"
+                onBlur={onBlur}
+                onFocus={onFocus}
+                ref={ref}
+                tabIndex={isActive ? 0 : -1}
             />
             <AccessibleButton
+                // The clear button is only for mouse users
                 tabIndex={-1}
                 title={_t("Clear")}
                 className="mx_UserMenu_CustomStatusSection_clear"
@@ -93,7 +147,7 @@ const CustomStatusSection = () => {
         </div>
 
         { details }
-    </div>;
+    </form>;
 };
 
 interface IProps {
@@ -486,7 +540,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     </span>
                 </div>
 
-                <AccessibleTooltipButton
+                <RovingAccessibleTooltipButton
                     className="mx_UserMenu_contextMenu_themeButton"
                     onClick={this.onSwitchThemeClick}
                     title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
@@ -496,7 +550,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         alt={_t("Switch theme")}
                         width={16}
                     />
-                </AccessibleTooltipButton>
+                </RovingAccessibleTooltipButton>
             </div>
             { customStatusSection }
             { topSection }
