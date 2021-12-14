@@ -52,6 +52,7 @@ import {
     UPDATE_TOP_LEVEL_SPACES,
 } from ".";
 import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
+import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 
 interface IState {}
 
@@ -450,16 +451,16 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     private rebuildSpaceHierarchy = () => {
         const visibleSpaces = this.matrixClient.getVisibleRooms().filter(r => r.isSpaceRoom());
-        const [joinedSpaces, invitedSpaces] = visibleSpaces.reduce((arr, s) => {
-            switch (s.getMyMembership()) {
-                case "join":
-                    arr[0].push(s);
+        const [joinedSpaces, invitedSpaces] = visibleSpaces.reduce(([joined, invited], s) => {
+            switch (getEffectiveMembership(s.getMyMembership())) {
+                case EffectiveMembership.Join:
+                    joined.push(s);
                     break;
-                case "invite":
-                    arr[1].push(s);
+                case EffectiveMembership.Invite:
+                    invited.push(s);
                     break;
             }
-            return arr;
+            return [joined, invited];
         }, [[], []] as [Room[], Room[]]);
 
         const rootSpaces = this.findRootSpaces(joinedSpaces);
