@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639498396277,
+  "lastUpdate": 1639498444987,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48212,6 +48212,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 648.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "42b14bfcd7a48614e85e45e383329f77799b7b94",
+          "message": "Tweak FacePile tooltip to include whether or not you are included (#7367)",
+          "timestamp": "2021-12-14T16:07:54Z",
+          "tree_id": "420ed852355f51020c61a4c7ac40829dcec4939d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/42b14bfcd7a48614e85e45e383329f77799b7b94"
+        },
+        "date": 1639498441064,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4707.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 982.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1661.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4456.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
