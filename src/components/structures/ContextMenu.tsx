@@ -19,6 +19,7 @@ limitations under the License.
 import React, { CSSProperties, RefObject, SyntheticEvent, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
+import FocusLock from "react-focus-lock";
 
 import { Key } from "../../Keyboard";
 import { Writeable } from "../../@types/common";
@@ -85,6 +86,10 @@ export interface IProps extends IPosition {
     // If true, this context menu will be mounted as a child to the parent container. Otherwise
     // it will be mounted to a container at the root of the DOM.
     mountAsChild?: boolean;
+
+    // If specified, contents will be wrapped in a FocusLock, this is only needed if the context menu is being rendered
+    // within an existing FocusLock e.g inside a modal.
+    focusLock?: boolean;
 
     // Function to be called on menu close
     onFinished();
@@ -234,7 +239,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
     };
 
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        if (ev.key === Key.TAB || ev.key === Key.ESCAPE) {
+        if ((ev.key === Key.TAB && !this.props.focusLock) || ev.key === Key.ESCAPE) {
             this.props.onFinished();
         }
     }
@@ -354,6 +359,12 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             { chevron }
             { props.children }
         </>;
+
+        if (props.focusLock) {
+            body = <FocusLock>
+                { body }
+            </FocusLock>;
+        }
 
         return (
             <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.onKeyDown}>
