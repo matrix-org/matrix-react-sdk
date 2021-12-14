@@ -51,7 +51,7 @@ export default class StyledRadioButton extends React.PureComponent<IProps, IStat
             });
 
         const radioButton = <React.Fragment>
-            <input 
+            <input
                 // Pass through the ref - used for keyboard shortcut access to some buttons
                 ref={inputRef}
                 type='radio'

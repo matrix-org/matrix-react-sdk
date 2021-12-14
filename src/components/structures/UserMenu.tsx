@@ -39,7 +39,7 @@ import {
     RovingTabIndexContext,
     findSiblingElement,
     useRovingTabIndex,
-    Type
+    Type,
 } from "../../accessibility/RovingTabIndex";
 import { Key } from "../../Keyboard";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
@@ -48,7 +48,6 @@ import { getHomePageUrl } from "../../utils/pages";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import BaseAvatar from '../views/avatars/BaseAvatar';
-import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { SettingLevel } from "../../settings/SettingLevel";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
@@ -112,7 +111,6 @@ const CustomStatusSection = () => {
     const onBlur = () => {
         setFocus(false);
     };
-    
 
     let details: JSX.Element;
     if (value !== setStatus) {

@@ -241,8 +241,8 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
     private onKeyDown = (ev: React.KeyboardEvent) => {
         // If someone is managing their own focus, we will only exit for them with Escape.
         // They are probably using props.focusLock along with this option as well.
-        if(!this.props.managed) {
-            if(ev.key === Key.ESCAPE) {
+        if (!this.props.managed) {
+            if (ev.key === Key.ESCAPE) {
                 this.props.onFinished();
             }
             return;
@@ -265,7 +265,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         ) {
             this.props.onFinished();
         }
-    }
+    };
 
     protected renderMenu(hasBackground = this.props.hasBackground) {
         const position: Partial<Writeable<DOMRect>> = {};
