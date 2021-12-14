@@ -4,11 +4,11 @@ import { renderIntoDocument } from 'react-dom/test-utils';
 import Heading from "../../../../src/components/views/typography/Heading";
 describe('<Heading />', () => {
     const defaultProps = {
-        "size": 'h1',
-        "children": <div>test</div>,
-        'data-test-id': 'test',
-        "className": 'test',
-    };
+        size: 'h1',
+        children: <div>test</div>,
+        ['data-test-id']: 'test',
+        className: 'test',
+    } as any;
     const getComponent = (props = {}) => {
         const wrapper = renderIntoDocument<HTMLDivElement>(
             <div><Heading {...defaultProps} {...props} /></div>,
