@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639439151468,
+  "lastUpdate": 1639475433465,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47864,6 +47864,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4383.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d00809b8b9023230c4c34b30f063288e1fe44608",
+          "message": "Fix thread filter being cut-off on narrow screens (#7354)",
+          "timestamp": "2021-12-14T09:43:51Z",
+          "tree_id": "004220b06f67d3a90ee714e64a329c5e104c0e87",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d00809b8b9023230c4c34b30f063288e1fe44608"
+        },
+        "date": 1639475429899,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5324.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 683.5,
             "unit": "ms",
             "extra": "type: measure"
           }
