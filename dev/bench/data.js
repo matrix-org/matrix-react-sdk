@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639487830742,
+  "lastUpdate": 1639492426818,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -47996,6 +47996,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4526.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a667677c57f75946d414d0df1221770e9d747fc5",
+          "message": "Fix accessibility regressions (#7336)\n\n* Fix room list roving treeview\r\n\r\nNew TooltipTarget & TextWithTooltip were not roving-accessible\r\n\r\n* Fix programmatic focus management in roving tab index not triggering onFocus handler\r\n\r\n* Fix toolbar no longer handling left & right arrows\r\n\r\n* Fix roving tab index focus tracking on interactive element like context menu trigger\r\n\r\n* Fix thread list context menu roving\r\n\r\n* add comment\r\n\r\n* fix comment\r\n\r\n* Fix handling vertical arrows in the wrong direction\r\n\r\n* iterate PR\r\n\r\n* delint\r\n\r\n* tidy up",
+          "timestamp": "2021-12-14T14:27:35Z",
+          "tree_id": "e2b2137dc659ef6ecf56ec138e18660d7729561e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a667677c57f75946d414d0df1221770e9d747fc5"
+        },
+        "date": 1639492423522,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4781.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1020.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4522.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
