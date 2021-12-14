@@ -88,7 +88,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
 
-    // ALL GETTERS:
+    // Getters
     get isOpenForRoom(): boolean {
         return this.byRoom[this.viewedRoomId]?.isOpen ?? false;
     }
