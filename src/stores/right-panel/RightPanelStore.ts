@@ -20,7 +20,7 @@ import { EventSubscription } from 'fbemitter';
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
 import SettingsStore from "../../settings/SettingsStore";
-import { RightPanelPhases/*, RIGHT_PANEL_PHASES_NO_ARGS */ } from "./RightPanelStorePhases";
+import { RightPanelPhases } from "./RightPanelStorePhases";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from '../../dispatcher/actions';
 import { SettingLevel } from "../../settings/SettingLevel";
