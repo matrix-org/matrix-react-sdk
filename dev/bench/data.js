@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639496463365,
+  "lastUpdate": 1639498389159,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48140,6 +48140,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4425.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cc689f95d8916f45bdfae7a30b5fc02994e8790f",
+          "message": "Fix room search sometimes not opening spotlight (#7363)",
+          "timestamp": "2021-12-14T16:06:45Z",
+          "tree_id": "c1a8e1ad45198f357f82c624ae199549037d7fae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cc689f95d8916f45bdfae7a30b5fc02994e8790f"
+        },
+        "date": 1639498385536,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4699.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 645.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
