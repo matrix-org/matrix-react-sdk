@@ -239,7 +239,23 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
     };
 
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        if ((ev.key === Key.TAB && !this.props.focusLock) || ev.key === Key.ESCAPE) {
+        // If someone is managing their own focus, we will only exit for them with Escape.
+        // They are probably using props.focusLock along with this option as well.
+        if(!this.props.managed && ev.key === Key.ESCAPE) {
+            this.props.onFinished();
+            return;
+        }
+
+        if (
+            ev.key === Key.ESCAPE ||
+            // You can only navigate the ContextMenu by arrow keys and Home/End (see RovingTabIndex).
+            // Tabbing to the next section of the page, will close the ContextMenu.
+            ev.key === Key.TAB ||
+            // When someone moves left or right along a <Toolbar /> (like the
+            // MessageActionBar), we should close any ContextMenu that is open.
+            ev.key === Key.ARROW_LEFT ||
+            ev.key === Key.ARROW_RIGHT
+        ) {
             this.props.onFinished();
         }
     }
