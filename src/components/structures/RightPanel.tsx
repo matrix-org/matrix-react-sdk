@@ -90,7 +90,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            // get all the state from the room panel store on init
+            // get all the state from the right panel store on init
             ...RightPanelStore.instance.currentPanel?.state,
             phase: RightPanelStore.instance.currentPanel?.phase,
             isUserPrivilegedInGroup: null,
