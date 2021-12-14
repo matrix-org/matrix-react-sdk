@@ -124,7 +124,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     get currentGroup(): IPhaseAndState {return this.currentPanel;}
     get previousGroup(): IPhaseAndState {return this.previousPanel;}
 
-    // ALL SETTERS:
+    // Setters
     public setRightPanel(phase: RightPanelPhases, state: IPanelState = null, allowClose = true, roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
         console.log("ORDER_DEBUG: setRightPanel ");
