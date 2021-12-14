@@ -64,7 +64,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     onFocusChange,
     getRelationsForEvent,
 }) => {
-    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
     useEffect(() => {
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
@@ -74,7 +74,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         const tile = getTile && getTile();
         const replyChain = getReplyChain && getReplyChain();
 
-        const buttonRect = button.current.getBoundingClientRect();
+        const buttonRect = buttonRef.current.getBoundingClientRect();
         contextMenu = <MessageContextMenu
             {...aboveLeftOf(buttonRect)}
             mxEvent={mxEvent}
@@ -92,6 +92,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             title={_t("Options")}
             onClick={openMenu}
             isExpanded={menuDisplayed}
+            inputRef={buttonRef}
         />
 
         { contextMenu }
@@ -105,14 +106,14 @@ interface IReactButtonProps {
 }
 
 const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusChange }) => {
-    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
     useEffect(() => {
         onFocusChange(menuDisplayed);
     }, [onFocusChange, menuDisplayed]);
 
     let contextMenu;
     if (menuDisplayed) {
-        const buttonRect = button.current.getBoundingClientRect();
+        const buttonRect = buttonRef.current.getBoundingClientRect();
         contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
             <ReactionPicker mxEvent={mxEvent} reactions={reactions} onFinished={closeMenu} />
         </ContextMenu>;
@@ -124,6 +125,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
             title={_t("React")}
             onClick={openMenu}
             isExpanded={menuDisplayed}
+            inputRef={buttonRef}
         />
 
         { contextMenu }
