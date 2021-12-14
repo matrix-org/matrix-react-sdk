@@ -96,6 +96,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     get roomPhaseHistory(): Array<IPhaseAndState> {
         return this.byRoom[this.viewedRoomId]?.history ?? [];
     }
+
     get currentPanel(): IPhaseAndState {
         const hist = this.roomPhaseHistory;
         if (hist.length >= 1) {
