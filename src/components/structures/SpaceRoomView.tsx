@@ -128,9 +128,9 @@ const useMyRoomMembership = (room: Room) => {
 };
 
 const SpaceInfo = ({ space }: { space: Room }) => {
-    // summary will begin as undefined whilst loading and go null if it fails to load.
+    // summary will begin as undefined whilst loading and go null if it fails to load or we are not invited.
     const summary = useAsyncMemo(async () => {
-        if (space.getMyMembership() !== "invite") return;
+        if (space.getMyMembership() !== "invite") return null;
         try {
             return space.client.getRoomSummary(space.roomId);
         } catch (e) {
