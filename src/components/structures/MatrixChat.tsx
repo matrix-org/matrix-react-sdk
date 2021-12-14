@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React, { ComponentType, createRef } from 'react';
-import { createClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { createClient } from 'matrix-js-sdk/src/matrix';
+import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Error as ErrorEvent } from "matrix-analytics-events/types/typescript/Error";
