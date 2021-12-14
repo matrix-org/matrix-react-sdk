@@ -163,6 +163,7 @@ declare global {
 
     interface HTMLAudioElement {
         type?: string;
+        setSinkId(outputId: string): void;
     }
 
     interface HTMLStyleElement {
