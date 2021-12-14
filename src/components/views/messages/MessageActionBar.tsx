@@ -107,8 +107,10 @@ interface IReactButtonProps {
 const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusChange }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     useEffect(() => {
+        // when the context menu is opened directly, e.g via mouse click, the onFocus handle is skipped so call manually
+        onFocus();
         onFocusChange(menuDisplayed);
-    }, [onFocusChange, menuDisplayed]);
+    }, [onFocus, onFocusChange, menuDisplayed]);
 
     let contextMenu;
     if (menuDisplayed) {

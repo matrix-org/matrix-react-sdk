@@ -131,6 +131,7 @@ export const reducer = (state: IState, action: IAction) => {
         }
 
         case Type.SetFocus: {
+            // if the ref doesn't change just return the same object reference to skip a re-render
             if (state.activeRef === action.payload.ref) return state;
             // update active ref
             state.activeRef = action.payload.ref;
@@ -216,9 +217,11 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                     }
                     break;
 
-                case Key.ARROW_UP:
+                case Key.ARROW_DOWN:
                 case Key.ARROW_RIGHT:
-                    if ((ev.key === Key.ARROW_UP && handleUpDown) || (ev.key === Key.ARROW_RIGHT && handleLeftRight)) {
+                    if ((ev.key === Key.ARROW_DOWN && handleUpDown) ||
+                        (ev.key === Key.ARROW_RIGHT && handleLeftRight)
+                    ) {
                         handled = true;
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
@@ -227,9 +230,9 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
                     }
                     break;
 
-                case Key.ARROW_DOWN:
+                case Key.ARROW_UP:
                 case Key.ARROW_LEFT:
-                    if ((ev.key === Key.ARROW_DOWN && handleUpDown) || (ev.key === Key.ARROW_LEFT && handleLeftRight)) {
+                    if ((ev.key === Key.ARROW_UP && handleUpDown) || (ev.key === Key.ARROW_LEFT && handleLeftRight)) {
                         handled = true;
                         if (context.state.refs.length > 0) {
                             const idx = context.state.refs.indexOf(context.state.activeRef);
