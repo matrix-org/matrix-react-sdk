@@ -51,7 +51,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.instance;
         this.state = {
             headerKind: kind,
-            phase: rps.currentPanel.phase, //kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
+            phase: rps.currentPanel.phase,
             threadNotificationColor: NotificationColor.None,
         };
     }
