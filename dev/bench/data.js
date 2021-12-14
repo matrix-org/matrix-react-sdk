@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639498389159,
+  "lastUpdate": 1639498396277,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48176,6 +48176,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 645.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1d9906c3fa4e6235d44468b147606a15a2615e7e",
+          "message": "Fix room join spinner in room list header (#7364)",
+          "timestamp": "2021-12-14T16:07:00Z",
+          "tree_id": "eeeafd9ae5dbf5a825f2638af0456b67e937644a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1d9906c3fa4e6235d44468b147606a15a2615e7e"
+        },
+        "date": 1639498392569,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5016.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 648.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
