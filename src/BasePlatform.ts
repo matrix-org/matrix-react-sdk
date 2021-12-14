@@ -170,7 +170,7 @@ export default abstract class BasePlatform {
      */
     abstract requestNotificationPermission(): Promise<string>;
 
-    abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Room);
+    abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Room, ev?: MatrixEvent);
 
     loudNotification(ev: MatrixEvent, room: Room) {
     }
