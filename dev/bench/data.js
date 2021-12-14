@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639492426818,
+  "lastUpdate": 1639495310445,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48044,6 +48044,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4522.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b2548f05a825e3f2e38cbc6c04bfbe130105f7d4",
+          "message": "Add missing react keys, fixing the warning (#7360)",
+          "timestamp": "2021-12-14T15:15:27Z",
+          "tree_id": "c50d285ebe22c8916f6468079463e0959bda4072",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b2548f05a825e3f2e38cbc6c04bfbe130105f7d4"
+        },
+        "date": 1639495307358,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5111.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1011.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1736.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4599.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
