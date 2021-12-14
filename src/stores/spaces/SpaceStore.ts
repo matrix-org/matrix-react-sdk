@@ -41,6 +41,7 @@ import { reorderLexicographically } from "../../utils/stringOrderField";
 import { TAG_ORDER } from "../../components/views/rooms/RoomList";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
 import {
+    isMetaSpace,
     ISuggestedRoom,
     MetaSpace,
     SpaceKey,
@@ -135,7 +136,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     public get activeSpaceRoom(): Room | null {
-        if (this._activeSpace[0] !== "!") return null;
+        if (isMetaSpace(this._activeSpace)) return null;
         return this.matrixClient?.getRoom(this._activeSpace);
     }
 
@@ -148,7 +149,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     public setActiveRoomInSpace(space: SpaceKey): void {
-        if (space[0] === "!" && !this.matrixClient?.getRoom(space)?.isSpaceRoom()) return;
+        if (!isMetaSpace(space) && !this.matrixClient?.getRoom(space)?.isSpaceRoom()) return;
         if (space !== this.activeSpace) this.setActiveSpace(space);
 
         if (space) {
@@ -196,7 +197,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!space || !this.matrixClient || space === this.activeSpace) return;
 
         let cliSpace: Room;
-        if (space[0] === "!") {
+        if (!isMetaSpace(space)) {
             cliSpace = this.matrixClient.getRoom(space);
             if (!cliSpace?.isSpaceRoom()) return;
         } else if (!this.enabledMetaSpaces.includes(space as MetaSpace)) {
@@ -370,7 +371,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return true;
         }
 
-        if (space[0] === "!" &&
+        if (!isMetaSpace(space) &&
             this.spaceFilteredUsers.get(space)?.has(dmPartner) &&
             SettingsStore.getValue("Spaces.showPeopleInSpace", space)
         ) {
@@ -391,7 +392,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (space === MetaSpace.Home && this.allRoomsInHome) {
             return undefined;
         }
-        if (space[0] !== "!") return undefined;
+        if (isMetaSpace(space)) return undefined;
         return this.spaceFilteredUsers.get(space) || new Set();
     };
 
@@ -535,7 +536,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
         }
 
-        if (this.activeSpace[0] !== "!") {
+        if (isMetaSpace(this.activeSpace)) {
             this.switchSpaceIfNeeded();
         }
     };
@@ -1044,7 +1045,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         // restore selected state from last session if any and still valid
         const lastSpaceId = window.localStorage.getItem(ACTIVE_SPACE_LS_KEY);
-        if (lastSpaceId?.[0] === "!" ? this.matrixClient.getRoom(lastSpaceId) : enabledMetaSpaces[lastSpaceId]) {
+        const valid = (lastSpaceId && !isMetaSpace(lastSpaceId))
+            ? this.matrixClient.getRoom(lastSpaceId)
+            : enabledMetaSpaces[lastSpaceId];
+        if (valid) {
             // don't context switch here as it may break permalinks
             this.setActiveSpace(lastSpaceId, false);
         } else {
@@ -1096,7 +1100,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 break;
 
             case "after_leave_room":
-                if (this._activeSpace[0] === "!" && payload.room_id === this._activeSpace) {
+                if (!isMetaSpace(this._activeSpace) && payload.room_id === this._activeSpace) {
                     // User has left the current space, go to first space
                     this.goToFirstSpace(true);
                 }
@@ -1142,7 +1146,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                             });
 
                             // if a metaspace currently being viewed was removed, go to another one
-                            if (this.activeSpace[0] !== "!" && !newValue[this.activeSpace]) {
+                            if (isMetaSpace(this.activeSpace) && !newValue[this.activeSpace]) {
                                 this.switchSpaceIfNeeded();
                             }
                             this.rebuildMetaSpaces();
