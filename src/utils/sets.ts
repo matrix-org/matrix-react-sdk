@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { arrayDiff } from "./arrays";
+import { arrayDiff, Diff } from "./arrays";
 
 /**
  * Determines if two sets are different through a shallow comparison.
@@ -34,8 +34,6 @@ export function setHasDiff<T>(a: Set<T>, b: Set<T>): boolean {
         return true; // different lengths means they are naturally diverged
     }
 }
-
-type Diff<T> = { added: T[], removed: T[] };
 
 /**
  * Determines the values added and removed between two sets.
