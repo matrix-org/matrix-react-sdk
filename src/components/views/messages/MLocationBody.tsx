@@ -17,12 +17,12 @@ limitations under the License.
 import React from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
-import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 interface IState {
     error: Error;
