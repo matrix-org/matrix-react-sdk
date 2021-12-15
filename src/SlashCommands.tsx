@@ -298,7 +298,10 @@ export const Commands = [
                     const unixTimestamp = Date.parse(args);
                     if (!unixTimestamp) {
                         throw new Error(
-                            `We were unable to understand the given date (${args}). Try using the format YYYY-MM-DD.`,
+                            _t(
+                                'We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.',
+                                { inputDate: args },
+                            ),
                         );
                     }
 
