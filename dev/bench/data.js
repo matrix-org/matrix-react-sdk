@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639557652970,
+  "lastUpdate": 1639562521685,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48356,6 +48356,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4277.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5163ad216f36d4210e94c91c671d8f8f1b576d0f",
+          "message": "Use lazy rendering in the AddExistingToSpaceDialog (#7369)",
+          "timestamp": "2021-12-15T09:55:53Z",
+          "tree_id": "cdeeb6369d7cb5eb570a5fd969dddaa81bbce515",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5163ad216f36d4210e94c91c671d8f8f1b576d0f"
+        },
+        "date": 1639562517650,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4574.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 666.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
