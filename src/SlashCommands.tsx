@@ -142,12 +142,13 @@ export class Command {
     run(roomId: string, threadId: string, args: string) {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
-            return reject(
+            reject(
                 newTranslatableError(
-                    "Command error: This command should have been handled by another handler and we" +
-                        "  can't try to run something without a command function.",
+                    "Command error: Unable to handle slash command.",
                 ),
             );
+
+            return;
         }
 
         const renderingType = threadId
