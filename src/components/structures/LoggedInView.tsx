@@ -319,7 +319,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     private calculateServerLimitToast(syncError: IState["syncErrorData"], usageLimitEventContent?: IUsageLimit) {
         const error = syncError && syncError.error && syncError.error.errcode === "M_RESOURCE_LIMIT_EXCEEDED";
         if (error) {
-            usageLimitEventContent = syncError.error.data;
+            usageLimitEventContent = syncError.error.data as IUsageLimit;
         }
 
         // usageLimitDismissed is true when the user has explicitly hidden the toast
