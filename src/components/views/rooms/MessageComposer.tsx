@@ -88,8 +88,8 @@ interface ICollapsibleButtonProps extends ComponentProps<typeof AccessibleToolti
 const CollapsibleButton = ({ narrowMode, title, ...props }: ICollapsibleButtonProps) => {
     return <AccessibleTooltipButton
         {...props}
-        title={!narrowMode && title}
-        label={narrowMode && title}
+        title={narrowMode ? undefined : title}
+        label={narrowMode ? title : undefined}
     />;
 };
 
