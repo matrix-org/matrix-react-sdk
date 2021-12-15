@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639585750674,
+  "lastUpdate": 1639586067995,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48896,6 +48896,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 694.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "71b561d471637d015690a1a710be3cf400aa400b",
+          "message": "Make compact layout only apply to Modern layout (#7382)",
+          "timestamp": "2021-12-15T16:27:02Z",
+          "tree_id": "d96edb7c982625fc8d1e3d94e88a638857d89327",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/71b561d471637d015690a1a710be3cf400aa400b"
+        },
+        "date": 1639586064076,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5171.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1227.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1709.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4822.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
