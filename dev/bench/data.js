@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639585713846,
+  "lastUpdate": 1639585750674,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48860,6 +48860,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 674,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d9da2581b474f0e9cf962e88e12f5a6dc839f24b",
+          "message": "Pin qrcode to fix e2e verification bug (#7378)",
+          "timestamp": "2021-12-15T16:22:17Z",
+          "tree_id": "d62d451f564bd6b72e92cb300be222c43d70dc3a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d9da2581b474f0e9cf962e88e12f5a6dc839f24b"
+        },
+        "date": 1639585746918,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5049.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 694.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
