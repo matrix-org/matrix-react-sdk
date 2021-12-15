@@ -36,12 +36,8 @@ import { findHighContrastTheme, getCustomTheme, isHighContrastTheme } from "../.
 import {
     RovingAccessibleButton,
     RovingAccessibleTooltipButton,
-    RovingTabIndexContext,
-    findSiblingElement,
     useRovingTabIndex,
-    Type,
 } from "../../accessibility/RovingTabIndex";
-import { Key } from "../../Keyboard";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
@@ -71,36 +67,11 @@ const CustomStatusSection = () => {
 
     const ref = useRef<HTMLInputElement>(null);
     const [onFocus, isActive] = useRovingTabIndex(ref);
-    const rovingContext = useContext(RovingTabIndexContext);
 
     const classes = classNames({
         'mx_UserMenu_CustomStatusSection_field': true,
         'mx_UserMenu_CustomStatusSection_field_hasQuery': value,
     });
-
-    const onFormKeyDown = (ev: React.KeyboardEvent) => {
-        // Allow the custom status form to be tabbed through to move from the
-        // <input> to the buttons and back to the normal options. Normally,
-        // RoamingTabIndex items can only be navigated by Arrow keys but we need
-        // to be able to jump the focus out of the <input> so we also allow Tab
-        // within the form.
-        if (ev.key === Key.TAB && rovingContext.state.refs.length > 0) {
-            ev.stopPropagation();
-            ev.preventDefault();
-
-            const idx = rovingContext.state.refs.indexOf(rovingContext.state.activeRef);
-            const ref = findSiblingElement(rovingContext.state.refs, idx + (ev.shiftKey ? -1 : 1));
-
-            if (ref) {
-                ref.current?.focus();
-                rovingContext.dispatch({
-                    type: Type.SetFocus,
-                    payload: { ref },
-                });
-            }
-        }
-    };
-
 
     let details: JSX.Element;
     if (value !== setStatus) {
@@ -116,7 +87,7 @@ const CustomStatusSection = () => {
         </>;
     }
 
-    return <form className="mx_UserMenu_CustomStatusSection" onKeyDown={onFormKeyDown}>
+    return <form className="mx_UserMenu_CustomStatusSection">
         <div className={classes}>
             <input
                 type="text"

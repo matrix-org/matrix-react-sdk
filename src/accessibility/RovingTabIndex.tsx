@@ -43,6 +43,22 @@ import { FocusHandler, Ref } from "./roving/types";
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets#Technique_1_Roving_tabindex
  */
 
+// <input> types where it's safe to use the arrow keys to navigate over to the next item.
+// i.e. it's ok to press the down arrow on a radio button to move to the next radio.
+// But it's not ok to press the down arrow on a <input type="text"> to move away because
+// the down arrow should move the cursor to the end of the input.
+const NAVIGABLE_INPUT_TYPES = [
+    'radio',
+    'checkbox',
+];
+
+// Check for form elements which utilize the arrow keys for native functions
+// like many of the text input varieties.
+export function checkInputtableElement(el: HTMLElement): boolean {
+    const inputUsesArrowkeys = (el.tagName === 'INPUT' && !NAVIGABLE_INPUT_TYPES.includes(el.getAttribute('type')));
+    return inputUsesArrowkeys || el.matches("textarea, select, [contenteditable=true]");
+}
+
 export interface IState {
     activeRef: Ref;
     refs: Ref[];
@@ -187,7 +203,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
 
     const context = useMemo<IContext>(() => ({ state, dispatch }), [state]);
 
-    const onKeyDownHandler = useCallback((ev) => {
+    const onKeyDownHandler = useCallback((ev: React.KeyboardEvent) => {
         if (onKeyDown) {
             onKeyDown(ev, context.state);
             if (ev.defaultPrevented) {
@@ -198,7 +214,18 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
         let handled = false;
         let focusRef: RefObject<HTMLElement>;
         // Don't interfere with input default keydown behaviour
-        if (ev.target.tagName !== "INPUT" && ev.target.tagName !== "TEXTAREA") {
+        if (checkInputtableElement(ev.target as HTMLElement)) {
+            console.log('input');
+            switch (ev.key) {
+                case Key.TAB:
+                    handled = true;
+                    if (context.state.refs.length > 0) {
+                        const idx = context.state.refs.indexOf(context.state.activeRef);
+                        focusRef = findSiblingElement(context.state.refs, idx + (ev.shiftKey ? -1 : 1), ev.shiftKey);
+                    }
+                    break;
+            }
+        } else {
             // check if we actually have any items
             switch (ev.key) {
                 case Key.HOME:
