@@ -22,6 +22,9 @@ import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { logger } from "matrix-js-sdk/src/logger";
+import { NotificationCountType } from 'matrix-js-sdk/src/models/room';
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -60,14 +63,15 @@ import SettingsStore from "../../../settings/SettingsStore";
 import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
 import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
-import ThreadListContextMenu from '../context_menus/ThreadListContextMenu';
+import { RovingThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
+import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';
+import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
+import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
+import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -171,6 +175,13 @@ export function getHandlerTile(ev) {
         if (WidgetType.JITSI.matches(type)) {
             return "messages.MJitsiWidgetEvent";
         }
+    }
+
+    if (
+        POLL_START_EVENT_TYPE.matches(type) &&
+        !SettingsStore.getValue("feature_polls")
+    ) {
+        return undefined;
     }
 
     if (ev.isState()) {
@@ -340,6 +351,7 @@ interface IState {
     hover: boolean;
     isQuoteExpanded?: boolean;
     thread?: Thread;
+    threadNotification?: NotificationCountType;
 }
 
 @replaceableComponent("views.rooms.EventTile")
@@ -349,6 +361,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     // TODO: Types
     private tile = React.createRef<unknown>();
     private replyChain = React.createRef<ReplyChain>();
+    private threadState: ThreadNotificationState;
 
     public readonly ref = createRef<HTMLElement>();
 
@@ -486,17 +499,55 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.once(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
+
+            if (this.thread) {
+                this.setupNotificationListener(this.thread);
+            }
         }
 
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         room?.on(ThreadEvent.New, this.onNewThread);
     }
 
-    private updateThread = (thread) => {
+    private setupNotificationListener = (thread): void => {
+        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(room);
+
+        this.threadState = notifications.getThreadRoomState(thread);
+
+        this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
+        this.onThreadStateUpdate();
+    };
+
+    private onThreadStateUpdate = (): void => {
+        let threadNotification = null;
+        switch (this.threadState?.color) {
+            case NotificationColor.Grey:
+                threadNotification = NotificationCountType.Total;
+                break;
+            case NotificationColor.Red:
+                threadNotification = NotificationCountType.Highlight;
+                break;
+        }
+
         this.setState({
-            thread,
+            threadNotification,
         });
-        this.forceUpdate();
+    };
+
+    private updateThread = (thread) => {
+        if (thread !== this.state.thread) {
+            if (this.threadState) {
+                this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
+            }
+
+            this.setupNotificationListener(thread);
+            this.setState({
+                thread,
+            });
+
+            this.forceUpdate();
+        }
     };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -534,6 +585,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         room?.off(ThreadEvent.New, this.onNewThread);
+        if (this.threadState) {
+            this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -1013,6 +1067,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             isBubbleMessage,
             isInfoMessage,
             isLeftAlignedBubbleMessage,
+            noBubbleEvent,
         } = getEventDisplayInfo(this.props.mxEvent);
         const { isQuoteExpanded } = this.state;
 
@@ -1067,6 +1122,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_emote: msgtype === 'm.emote',
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp: this.props.tileShape === TileShape.ThreadPanel,
+            mx_EventTile_noBubble: noBubbleEvent,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -1157,6 +1213,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             onFocusChange={this.onActionBarFocusChange}
             isQuoteExpanded={isQuoteExpanded}
             toggleThreadExpanded={() => this.setQuoteExpanded(!isQuoteExpanded)}
+            getRelationsForEvent={this.props.getRelationsForEvent}
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs()
@@ -1202,7 +1259,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             _t(
                 '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
                 {},
-                { 'requestLink': (sub) => <a onClick={this.onRequestKeysClick}>{ sub }</a> },
+                { 'requestLink': (sub) => <a tabIndex={0} onClick={this.onRequestKeysClick}>{ sub }</a> },
             );
 
         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
@@ -1253,6 +1310,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.hover}
                     isQuoteExpanded={isQuoteExpanded}
                     setQuoteExpanded={this.setQuoteExpanded}
+                    getRelationsForEvent={this.props.getRelationsForEvent}
                 />) : null;
 
         switch (this.props.tileShape) {
@@ -1350,6 +1408,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-shape": this.props.tileShape,
                         "data-self": isOwnEvent,
                         "data-has-reply": !!replyChain,
+                        "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
 
@@ -1375,7 +1434,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
                                 key="thread"
                             />
-                            <ThreadListContextMenu
+                            <RovingThreadListContextMenu
                                 mxEvent={this.props.mxEvent}
                                 permalinkCreator={this.props.permalinkCreator}
                                 onMenuToggle={this.onActionBarFocusChange}

@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IDestroyable } from "../../utils/IDestroyable";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { NotificationState, NotificationStateEvents } from "./NotificationState";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+
+import { IDestroyable } from "../../utils/IDestroyable";
+import { NotificationState, NotificationStateEvents } from "./NotificationState";
 import { ThreadNotificationState } from "./ThreadNotificationState";
 import { NotificationColor } from "./NotificationColor";
 
 export class ThreadsRoomNotificationState extends NotificationState implements IDestroyable {
-    private threadsState = new Map<Thread, ThreadNotificationState>();
+    public readonly threadsState = new Map<Thread, ThreadNotificationState>();
 
     protected _symbol = null;
     protected _count = 0;
@@ -30,6 +31,11 @@ export class ThreadsRoomNotificationState extends NotificationState implements I
 
     constructor(public readonly room: Room) {
         super();
+        if (this.room?.threads) {
+            for (const [, thread] of this.room.threads) {
+                this.onNewThread(thread);
+            }
+        }
         this.room.on(ThreadEvent.New, this.onNewThread);
     }
 
@@ -41,8 +47,15 @@ export class ThreadsRoomNotificationState extends NotificationState implements I
         }
     }
 
+    public getThreadRoomState(thread: Thread): ThreadNotificationState {
+        if (!this.threadsState.has(thread)) {
+            this.threadsState.set(thread, new ThreadNotificationState(thread));
+        }
+        return this.threadsState.get(thread);
+    }
+
     private onNewThread = (thread: Thread): void => {
-        const notificationState = new ThreadNotificationState(this.room, thread);
+        const notificationState = new ThreadNotificationState(thread);
         this.threadsState.set(
             thread,
             notificationState,

@@ -16,16 +16,15 @@ limitations under the License.
 
 import React from 'react';
 import maplibregl from 'maplibre-gl';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import SdkConfig from '../../../SdkConfig';
 import Field from "../elements/Field";
 import DialogButtons from "../elements/DialogButtons";
 import Dropdown from "../elements/Dropdown";
 import LocationShareType from "./LocationShareType";
-
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IDropdownProps {
     value: LocationShareType;
@@ -189,9 +188,10 @@ class LocationPicker extends React.Component<IProps, IState> {
     private getGeoUri = (position) => {
         return (`geo:${ position.coords.latitude },` +
                 position.coords.longitude +
-                ( position.coords.altitude != null ?
+                ( position.coords.altitude !== undefined ?
                     `,${ position.coords.altitude }` : '' ) +
-                `;u=${ position.coords.accuracy }`);
+                ( position.coords.accuracy !== undefined ?
+                    `;u=${ position.coords.accuracy }` : '' ));
     };
 
     private onOk = () => {

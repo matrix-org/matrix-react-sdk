@@ -360,6 +360,22 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Use new room breadcrumbs"),
         default: false,
     },
+    "feature_spotlight": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("New spotlight search experience"),
+        default: false,
+    },
+    "feature_jump_to_date": {
+        // We purposely leave out `isFeature: true` so it doesn't show in Labs
+        // by default. We will conditionally show it depending on whether we can
+        // detect MSC3030 support (see LabUserSettingsTab.tsx).
+        // labsGroup: LabGroup.Messaging,
+        displayName: _td("Jump to date (adds /jumptodate)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
@@ -401,6 +417,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Use a more compact 'Modern' layout"),
         default: false,
+        controller: new IncompatibleController("layout", false, v => v !== Layout.Group),
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
@@ -596,6 +613,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         // not really a setting
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
+    },
+    "SpotlightSearch.recentSearches": {
+        // not really a setting
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: [], // list of room IDs, most recent first
     },
     "room_directory_servers": {
         supportedLevels: [SettingLevel.ACCOUNT],

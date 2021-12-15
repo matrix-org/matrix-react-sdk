@@ -113,6 +113,7 @@
 @import "./views/dialogs/_ShareDialog.scss";
 @import "./views/dialogs/_SlashCommandHelpDialog.scss";
 @import "./views/dialogs/_SpaceSettingsDialog.scss";
+@import "./views/dialogs/_SpotlightDialog.scss";
 @import "./views/dialogs/_TabbedIntegrationManagerDialog.scss";
 @import "./views/dialogs/_TermsDialog.scss";
 @import "./views/dialogs/_UntrustedDeviceDialog.scss";
@@ -139,6 +140,7 @@
 @import "./views/elements/_ErrorBoundary.scss";
 @import "./views/elements/_EventListSummary.scss";
 @import "./views/elements/_EventTilePreview.scss";
+@import "./views/elements/_ExternalLink.scss";
 @import "./views/elements/_FacePile.scss";
 @import "./views/elements/_Field.scss";
 @import "./views/elements/_ImageView.scss";
@@ -158,6 +160,7 @@
 @import "./views/elements/_RoomAliasField.scss";
 @import "./views/elements/_SSOButtons.scss";
 @import "./views/elements/_ServerPicker.scss";
+@import "./views/elements/_SettingsFlag.scss";
 @import "./views/elements/_Slider.scss";
 @import "./views/elements/_Spinner.scss";
 @import "./views/elements/_StyledCheckbox.scss";
@@ -268,6 +271,7 @@
 @import "./views/settings/_SecureBackupPanel.scss";
 @import "./views/settings/_SetIdServer.scss";
 @import "./views/settings/_SetIntegrationManager.scss";
+@import "./views/settings/_SettingsFieldset.scss";
 @import "./views/settings/_SpellCheckLanguages.scss";
 @import "./views/settings/_ThemeChoicePanel.scss";
 @import "./views/settings/_UpdateCheckButton.scss";
@@ -294,6 +298,7 @@
 @import "./views/toasts/_AnalyticsToast.scss";
 @import "./views/toasts/_IncomingCallToast.scss";
 @import "./views/toasts/_NonUrgentEchoFailureToast.scss";
+@import "./views/typography/_Heading.scss";
 @import "./views/verification/_VerificationShowSas.scss";
 @import "./views/voip/CallView/_CallViewButtons.scss";
 @import "./views/voip/_CallContainer.scss";

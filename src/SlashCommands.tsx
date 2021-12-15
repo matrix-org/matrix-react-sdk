@@ -19,9 +19,12 @@ limitations under the License.
 
 import * as React from 'react';
 import { User } from "matrix-js-sdk/src/models/user";
+import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
-
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
+import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import { _t, _td } from './languageHandler';
@@ -37,7 +40,6 @@ import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/I
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import { WidgetType } from "./widgets/WidgetType";
 import { Jitsi } from "./widgets/Jitsi";
-import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
 import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
@@ -55,8 +57,6 @@ import DevtoolsDialog from './components/views/dialogs/DevtoolsDialog';
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from './contexts/RoomContext';
 import RoomViewStore from "./stores/RoomViewStore";
@@ -286,6 +286,50 @@ export const Commands = [
         },
         category: CommandCategories.admin,
         renderingTypes: [TimelineRenderingType.Room],
+    }),
+    new Command({
+        command: 'jumptodate',
+        args: '<date>',
+        description: _td('Jump to the given date in the timeline (YYYY-MM-DD)'),
+        isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
+        runFn: function(roomId, args) {
+            if (args) {
+                return success((async () => {
+                    const unixTimestamp = Date.parse(args);
+                    if (!unixTimestamp) {
+                        throw new Error(
+                            // FIXME: Use newTranslatableError here instead
+                            // otherwise the rageshake error messages will be
+                            // translated too
+                            _t(
+                                // eslint-disable-next-line max-len
+                                'We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.',
+                                { inputDate: args },
+                            ),
+                        );
+                    }
+
+                    const cli = MatrixClientPeg.get();
+                    const { event_id: eventId, origin_server_ts: originServerTs } = await cli.timestampToEvent(
+                        roomId,
+                        unixTimestamp,
+                        Direction.Forward,
+                    );
+                    logger.log(
+                        `/timestamp_to_event: found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp}`,
+                    );
+                    dis.dispatch({
+                        action: Action.ViewRoom,
+                        eventId,
+                        highlighted: true,
+                        room_id: roomId,
+                    });
+                })());
+            }
+
+            return reject(this.getUsage());
+        },
+        category: CommandCategories.actions,
     }),
     new Command({
         command: 'nick',
