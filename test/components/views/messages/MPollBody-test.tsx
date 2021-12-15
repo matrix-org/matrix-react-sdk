@@ -28,7 +28,7 @@ import {
     POLL_END_EVENT_TYPE,
     POLL_RESPONSE_EVENT_TYPE,
     TEXT_NODE_TYPE,
-} from "../../../../src/polls/consts";
+} from "../../../../src/consts/polls";
 import {
     UserVote,
     allVotes,

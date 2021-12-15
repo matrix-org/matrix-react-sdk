@@ -33,7 +33,7 @@ import {
     POLL_RESPONSE_EVENT_TYPE,
     POLL_START_EVENT_TYPE,
     TEXT_NODE_TYPE,
-} from '../../../polls/consts';
+} from '../../../consts/polls';
 import StyledRadioButton from '../elements/StyledRadioButton';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ErrorDialog from '../dialogs/ErrorDialog';

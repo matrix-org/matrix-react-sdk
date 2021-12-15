@@ -29,7 +29,7 @@ import { IOperableEventTile } from "../context_menus/MessageContextMenu";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { ReactAnyComponent } from "../../../@types/common";
 import { IBodyProps } from "./IBodyProps";
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
+import { POLL_START_EVENT_TYPE } from '../../../consts/polls';
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed"> {

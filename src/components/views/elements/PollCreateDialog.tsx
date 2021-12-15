@@ -25,7 +25,7 @@ import { _t } from "../../../languageHandler";
 import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
-import { makePollContent, POLL_KIND_DISCLOSED, POLL_START_EVENT_TYPE } from "../../../polls/consts";
+import { makePollContent, POLL_KIND_DISCLOSED, POLL_START_EVENT_TYPE } from "../../../consts/polls";
 import Spinner from "./Spinner";
 
 interface IProps extends IDialogProps {

@@ -30,7 +30,7 @@ import { CallHangupEvent } from "./previews/CallHangupEvent";
 import { StickerEventPreview } from "./previews/StickerEventPreview";
 import { ReactionEventPreview } from "./previews/ReactionEventPreview";
 import { UPDATE_EVENT } from "../AsyncStore";
-import { POLL_START_EVENT_TYPE } from "../../polls/consts";
+import { POLL_START_EVENT_TYPE } from "../../consts/polls";
 import SettingsStore from "../../settings/SettingsStore";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which

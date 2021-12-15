@@ -65,7 +65,7 @@ import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewSto
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
+import { POLL_START_EVENT_TYPE } from '../../../consts/polls';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
 import { RovingThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
 import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';

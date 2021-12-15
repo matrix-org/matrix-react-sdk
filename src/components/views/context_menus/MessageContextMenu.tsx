@@ -42,7 +42,7 @@ import { IPosition, ChevronFace } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
+import { POLL_START_EVENT_TYPE } from '../../../consts/polls';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 

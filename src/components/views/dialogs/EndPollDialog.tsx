@@ -22,7 +22,7 @@ import { Relations } from "matrix-js-sdk/src/models/relations";
 import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
 import QuestionDialog from "./QuestionDialog";
-import { IPollEndContent, POLL_END_EVENT_TYPE, TEXT_NODE_TYPE } from "../../../polls/consts";
+import { IPollEndContent, POLL_END_EVENT_TYPE, TEXT_NODE_TYPE } from "../../../consts/polls";
 import { findTopAnswer } from "../messages/MPollBody";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";

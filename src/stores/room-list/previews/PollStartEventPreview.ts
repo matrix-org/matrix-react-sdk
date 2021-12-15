@@ -20,7 +20,7 @@ import { IPreview } from "./IPreview";
 import { TagID } from "../models";
 import { _t, sanitizeForTranslation } from "../../../languageHandler";
 import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
-import { POLL_START_EVENT_TYPE, TEXT_NODE_TYPE } from "../../../polls/consts";
+import { POLL_START_EVENT_TYPE, TEXT_NODE_TYPE } from "../../../consts/polls";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 export class PollStartEventPreview implements IPreview {

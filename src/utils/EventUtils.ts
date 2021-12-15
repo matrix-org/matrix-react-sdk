@@ -24,7 +24,7 @@ import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
 import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
-import { POLL_START_EVENT_TYPE } from '../polls/consts';
+import { POLL_START_EVENT_TYPE } from '../consts/polls';
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.

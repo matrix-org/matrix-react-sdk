@@ -56,7 +56,7 @@ import LocationPicker from '../location/LocationPicker';
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import Modal from "../../../Modal";
 import RoomContext from '../../../contexts/RoomContext';
-import { POLL_START_EVENT_TYPE } from "../../../polls/consts";
+import { POLL_START_EVENT_TYPE } from "../../../consts/polls";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import LocationShareType from "../location/LocationShareType";
