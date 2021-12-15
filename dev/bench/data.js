@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639584719497,
+  "lastUpdate": 1639585280486,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48728,6 +48728,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4318,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c9c82ee0d6df9a0a780ddc78230cfcd46e21241",
+          "message": "Fix narrow mode composer buttons for polls labs (#7386)",
+          "timestamp": "2021-12-15T16:15:09Z",
+          "tree_id": "0c154e51a9dbc928ef7061e5ae7194f93d39afac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c9c82ee0d6df9a0a780ddc78230cfcd46e21241"
+        },
+        "date": 1639585276785,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5145.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 912,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1674,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4175.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
