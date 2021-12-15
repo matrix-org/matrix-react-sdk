@@ -68,7 +68,7 @@ interface IState {
     searchQuery: string;
 
     // Parameters for the states of the different right panels (handled by the RightPanelStore)
-    // see: IPanelState
+    // see: IRightPanelCardState
     member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
@@ -76,6 +76,7 @@ interface IState {
     widgetId?: string;
     groupRoomId?: string;
     groupId?: string;
+    memberInfoEvent?: MatrixEvent;
     threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
@@ -264,7 +265,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             }
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
-                panel = <ThirdPartyMemberInfo event={this.state.threadHeadEvent} key={roomId} />;
+                panel = <ThirdPartyMemberInfo event={this.state.memberInfoEvent} key={roomId} />;
                 break;
 
             case RightPanelPhases.GroupMemberInfo:

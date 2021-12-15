@@ -160,7 +160,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             }
         } else if (payload.action === "view_3pid_invite") {
             if (payload.event) {
-                this.setPhase(RightPanelPhases.Room3pidMemberInfo, { threadHeadEvent: payload.event });
+                this.setPhase(RightPanelPhases.Room3pidMemberInfo, { memberInfoEvent: payload.event });
             } else {
                 this.setPhase(RightPanelPhases.RoomMemberList);
             }

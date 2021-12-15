@@ -30,9 +30,10 @@ export interface IRightPanelCardState {
     // group
     groupId?: string;
     groupRoomId?: string;
-    // XXX: The type for event should 'view_3pid_invite' action's payload
     widgetId?: string;
     space?: Room;
+    // Room3pidMemberInfo, Space3pidMemberInfo,
+    memberInfoEvent?: MatrixEvent;
     // treads
     threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
@@ -45,9 +46,10 @@ export interface IRightPanelCardStateStored {
     // group
     groupId?: string;
     groupRoomId?: string;
-    // XXX: The type for event should 'view_3pid_invite' action's payload
     widgetId?: string;
     space?: Room;
+    // 3pidMemberInfo
+    memberInfoEventId?: string;
     // treads
     threadHeadEventId?: string;
     initialEventId?: string;
@@ -91,11 +93,16 @@ function convertCardToStore(panelState: IRightPanelCard): IRightPanelCardStored 
     if (!!panelState?.state?.threadHeadEvent?.getId()) {
         panelStateThisRoomStored.threadHeadEventId = panelState.state.threadHeadEvent.getId();
     }
+    if (!!panelState?.state?.memberInfoEvent?.getId()) {
+        panelStateThisRoomStored.memberInfoEventId = panelState.state.memberInfoEvent.getId();
+    }
     if (!!panelState?.state?.initialEvent?.getId()) {
         panelStateThisRoomStored.initialEventId = panelState.state.initialEvent.getId();
     }
     delete panelStateThisRoomStored.threadHeadEvent;
     delete panelStateThisRoomStored.initialEvent;
+    delete panelStateThisRoomStored.memberInfoEvent;
+
     const storedCard = { state: panelStateThisRoomStored as IRightPanelCardStored, phase: panelState.phase };
     return storedCard as IRightPanelCardStored;
 }
@@ -105,11 +112,15 @@ function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room):
     if (!!panelStateThisRoom.threadHeadEventId) {
         panelStateThisRoom.threadHeadEvent = room.findEventById(panelStateThisRoom.threadHeadEventId);
     }
+    if (!!panelStateThisRoom.memberInfoEventId) {
+        panelStateThisRoom.memberInfoEvent = room.findEventById(panelStateThisRoom.memberInfoEventId);
+    }
     if (!!panelStateThisRoom.initialEventId) {
         panelStateThisRoom.initialEvent = room.findEventById(panelStateThisRoom.initialEventId);
     }
     delete panelStateThisRoom.threadHeadEventId;
     delete panelStateThisRoom.initialEventId;
+    delete panelStateThisRoom.memberInfoEventId;
 
     return { state: panelStateThisRoom as IRightPanelCardState, phase: panelStateStore.phase } as IRightPanelCard;
 }
