@@ -291,6 +291,7 @@ export const Commands = [
         command: 'jumptodate',
         args: '<date>',
         description: _td('Jump to the given date in the timeline'),
+        isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
         runFn: function(roomId, args) {
             if (args) {
                 return success((async () => {
