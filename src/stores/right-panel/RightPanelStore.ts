@@ -76,8 +76,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onReady(): Promise<any> {
-        // this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         // TODO RightPanelStore (will be addressed in a follow up PR): This should be used instead of the onDispatch callback when groups are removed.
+        // RoomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
@@ -89,10 +89,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onNotReady(): Promise<any> {
-        // Remove RoomStore listener
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
         }
+        // RoomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
 
     // Getters
