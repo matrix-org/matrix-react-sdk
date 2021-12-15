@@ -190,7 +190,8 @@ class LocationPicker extends React.Component<IProps, IState> {
                 position.coords.longitude +
                 ( position.coords.altitude != null ?
                     `,${ position.coords.altitude }` : '' ) +
-                `;u=${ position.coords.accuracy }`);
+                ( position.coords.accuracy != null ?
+                    `;u=${ position.coords.accuracy }` : '' );
     };
 
     private onOk = () => {
