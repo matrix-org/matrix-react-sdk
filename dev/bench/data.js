@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639498478667,
+  "lastUpdate": 1639557652970,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48308,6 +48308,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4835.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "53081f52fb35c97944de91535409474ee536d76c",
+          "message": "Pass MatrixEvent to displayNotification method (#7355)",
+          "timestamp": "2021-12-15T08:34:52Z",
+          "tree_id": "f3a41dbac4223014f153e262fdf2837c60cdff7b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/53081f52fb35c97944de91535409474ee536d76c"
+        },
+        "date": 1639557649735,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5450.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 931.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1592.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4277.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
