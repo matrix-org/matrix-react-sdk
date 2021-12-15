@@ -21,7 +21,6 @@ import { RoomState } from "matrix-js-sdk/src/models/room-state";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { throttle } from 'lodash';
-import { User } from 'matrix-js-sdk/src/models/user';
 
 import dis from '../../dispatcher/dispatcher';
 import GroupStore from '../../stores/GroupStore';
@@ -38,7 +37,7 @@ import MemberList from "../views/rooms/MemberList";
 import GroupMemberList from "../views/groups/GroupMemberList";
 import GroupRoomList from "../views/groups/GroupRoomList";
 import GroupRoomInfo from "../views/groups/GroupRoomInfo";
-import UserInfo, { GroupMember } from "../views/right_panel/UserInfo";
+import UserInfo from "../views/right_panel/UserInfo";
 import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 import FilePanel from "./FilePanel";
 import ThreadView from "./ThreadView";
@@ -146,6 +145,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             this.delayedUpdate();
         }
     };
+
     private onRightPanelStoreUpdate = () => {
         const currentPanel = RightPanelStore.instance.currentCard;
         this.setState({
@@ -154,6 +154,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
 
         });
     };
+
     private onAction = (payload: ActionPayload) => {
         const isChangingRoom = payload.action === Action.ViewRoom && payload.room_id !== this.props.room.roomId;
         const isViewingThread = this.state.phase === RightPanelPhases.ThreadView;
@@ -166,7 +167,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
         // XXX: There are three different ways of 'closing' this panel depending on what state
         // things are in... this knows far more than it should do about the state of the rest
         // of the app and is generally a bit silly.
-        if (this.props.member) {
+        if (this.props.overwriteCard?.state?.member) {
             // If we have a user prop then we're displaying a user from the 'user' page type
             // in LoggedInView, so need to change the page type to close the panel (we switch
             // to the home page which is not obviously the correct thing to do, but I'm not sure

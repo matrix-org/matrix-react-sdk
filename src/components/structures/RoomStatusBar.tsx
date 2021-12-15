@@ -87,6 +87,7 @@ interface IState {
 export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     public static contextType = MatrixClientContext;
+
     constructor(props: IProps, context: typeof MatrixClientContext) {
         super(props, context);
 

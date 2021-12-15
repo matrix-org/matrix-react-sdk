@@ -27,6 +27,7 @@ import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePha
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
+
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 
 @replaceableComponent("views.groups.GroupMemberList")

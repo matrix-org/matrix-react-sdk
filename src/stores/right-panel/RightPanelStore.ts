@@ -53,7 +53,7 @@ const MEMBER_INFO_PHASES = [
  * contains the phase (e.g. RightPanelPhase.RoomMemberInfo) and the state (e.g. the
  * member) associated with it.
  * Groups are treated the same as rooms (they are also
- * stored in the byRoom object).This is possible since the store keeps track of the
+ * stored in the byRoom object). This is possible since the store keeps track of the
  * opened room/group -> the store will provide the correct history for that
  * group/room.
 */
@@ -187,7 +187,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             roomCache.history.push({ state: pState, phase: targetPhase });
             roomCache.isOpen = allowClose ? roomCache.isOpen : true;
         } else {
-            // create new phase
+            // setup room panel cache with the new card
             roomCache = {
                 history: [{ phase: targetPhase, state: pState ?? {} }],
                 // if there was no right panel store object the the panel was closed -> keep it closed, except if allowClose==false
@@ -215,7 +215,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     // Private
-
     private loadCacheFromSettings() {
         const room = this.mxClient?.getRoom(this.viewedRoomId);
         if (!!room) {
@@ -308,8 +307,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
                     if (payload.action == Action.ViewRoom && MEMBER_INFO_PHASES.includes(_this.currentCard?.phase)) {
                         // switch from group to room
                         _this.setRightPanelCache({ phase: RightPanelPhases.RoomMemberList, state: {} });
-                    } else if (payload.action == "view_group"
-                        && _this.currentCard?.phase === RightPanelPhases.GroupMemberInfo) {
+                    } else if (
+                        payload.action == "view_group" &&
+                        _this.currentCard?.phase === RightPanelPhases.GroupMemberInfo
+                    ) {
                         // switch from room to group
                         _this.setRightPanelCache({ phase: RightPanelPhases.GroupMemberList, state: {} });
                     }
