@@ -290,14 +290,14 @@ export const Commands = [
     new Command({
         command: 'jumptodate',
         args: '<date>',
-        description: _td('Jump to the given date in the timeline'),
+        description: _td('Jump to the given date in the timeline (YYYY-MM-DD)'),
         isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
         runFn: function(roomId, args) {
             if (args) {
                 return success((async () => {
                     const unixTimestamp = Date.parse(args);
                     if (!unixTimestamp) {
-                        throw new Error(`Unable to parse given date ${args}`);
+                        throw new Error(`We were unable to understand the given date (${args}). Try using the format YYYY-MM-DD.`);
                     }
 
                     const cli = MatrixClientPeg.get();
