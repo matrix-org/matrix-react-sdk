@@ -19,6 +19,7 @@ limitations under the License.
 
 import * as React from 'react';
 import { User } from "matrix-js-sdk/src/models/user";
+import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
 import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
@@ -285,6 +286,38 @@ export const Commands = [
         },
         category: CommandCategories.admin,
         renderingTypes: [TimelineRenderingType.Room],
+    }),
+    new Command({
+        command: 'jumptodate',
+        args: '<date>',
+        description: _td('Jump to the given date in the timeline'),
+        runFn: function(roomId, args) {
+            if (args) {
+                return success((async () => {
+                    const unixTimestamp = Date.parse(args);
+                    if (!unixTimestamp) {
+                        throw new Error(`Unable to parse given date ${args}`);
+                    }
+
+                    const cli = MatrixClientPeg.get();
+                    const { event_id, origin_server_ts } = await cli.timestampToEvent(
+                        roomId,
+                        unixTimestamp,
+                        Direction.Forward,
+                    )
+                    logger.log(`/timestamp_to_event: found ${event_id} (${origin_server_ts}) for timestamp=${unixTimestamp}`);
+                    dis.dispatch({
+                        action: Action.ViewRoom,
+                        event_id,
+                        highlighted: true,
+                        room_id: roomId,
+                    });
+                })());
+            }
+
+            return reject(this.getUsage());
+        },
+        category: CommandCategories.actions,
     }),
     new Command({
         command: 'nick',
