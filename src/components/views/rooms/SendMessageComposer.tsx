@@ -40,7 +40,7 @@ import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
 import Modal from '../../../Modal';
-import { _t, _td, newTranslatableError } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
 import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
@@ -378,10 +378,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             let errText;
             if (typeof error === 'string') {
                 errText = error;
-            }
-            // Check for translatable errors
-            else if(error.translatedMessage) {
-                errText = error.translatedMessage
             } else if (error.message) {
                 errText = error.message;
             } else {

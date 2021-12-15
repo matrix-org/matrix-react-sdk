@@ -51,9 +51,9 @@ interface ITranslatableError extends Error {
  * @param {string} message Message to translate.
  * @returns {Error} The constructed error.
  */
-export function newTranslatableError(message: string, variables?: IVariables): ITranslatableError {
+export function newTranslatableError(message: string) {
     const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _t(message, variables);
+    error.translatedMessage = _t(message);
     return error;
 }
 
