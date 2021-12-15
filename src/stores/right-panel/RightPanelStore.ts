@@ -136,6 +136,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     // Setters
     public setCard(card: IRightPanelCard, allowClose = true, roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
+        if (!this.byRoom[rId]) return;
         // this was previously a very multifunctional command:
         // Toggle panel: if the same phase is send but without a state
         // Update state: if the same phase is send but with a state
@@ -172,6 +173,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         roomId: string = null,
     ) {
         const rId = roomId ?? this.viewedRoomId;
+        if (!this.byRoom[rId]) return;
         const redirect = this.getVerificationRedirect(card);
         const targetPhase = redirect?.phase ?? card.phase;
         const pState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
@@ -198,6 +200,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     public popCard(roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
+        if (!this.byRoom[rId]) return;
         const roomCache = this.byRoom[rId];
         const removedCard = roomCache.history.pop();
         this.emitAndUpdateSettings();
@@ -206,6 +209,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     public togglePanel(roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
+        if (!this.byRoom[rId]) return;
         this.byRoom[rId].isOpen = !this.byRoom[rId].isOpen;
         this.emitAndUpdateSettings();
     }
