@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639572049501,
+  "lastUpdate": 1639572437565,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48584,6 +48584,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4401,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "69c4a0cebc6b31e94cf4826860001d3a0854e5fc",
+          "message": "Fix main timeline pending events bleeding in thread's timeline (#7373)",
+          "timestamp": "2021-12-15T12:40:56Z",
+          "tree_id": "c1722e91f4c68cc3dc84ac0a1248adbc9d698eb7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/69c4a0cebc6b31e94cf4826860001d3a0854e5fc"
+        },
+        "date": 1639572433693,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5295.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 982.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1765.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4578.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
