@@ -297,7 +297,9 @@ export const Commands = [
                 return success((async () => {
                     const unixTimestamp = Date.parse(args);
                     if (!unixTimestamp) {
-                        throw new Error(`We were unable to understand the given date (${args}). Try using the format YYYY-MM-DD.`);
+                        throw new Error(
+                            `We were unable to understand the given date (${args}). Try using the format YYYY-MM-DD.`,
+                        );
                     }
 
                     const cli = MatrixClientPeg.get();
