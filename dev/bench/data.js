@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639585656650,
+  "lastUpdate": 1639585713846,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48824,6 +48824,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4053.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3229b06b01f53059b341add127fd4718444edbfa",
+          "message": "Add internationalisation to progress strings in room export dialog (#7385)",
+          "timestamp": "2021-12-15T16:21:51Z",
+          "tree_id": "a68cdcd3564d584d500faa67f782a05c63aca2ed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3229b06b01f53059b341add127fd4718444edbfa"
+        },
+        "date": 1639585710184,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5313.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 674,
             "unit": "ms",
             "extra": "type: measure"
           }
