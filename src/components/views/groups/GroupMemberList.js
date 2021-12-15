@@ -168,10 +168,10 @@ export default class GroupMemberList extends React.Component {
 
     onInviteToGroupButtonClick = () => {
         showGroupInviteDialog(this.props.groupId).then(() => {
-            RightPanelStore.instance.setRightPanel(
-                RightPanelPhases.GroupMemberList,
-                { groupId: this.props.groupId },
-            );
+            RightPanelStore.instance.setCard({
+                phase: RightPanelPhases.GroupMemberList,
+                state: { groupId: this.props.groupId },
+            });
         });
     };
 
