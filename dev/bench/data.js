@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639588395175,
+  "lastUpdate": 1639598055373,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49064,6 +49064,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 710.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "11aa6c74357dadadc5a954223112374271b2a7e6",
+          "message": "Don't show a message bubble around polls (#7374)\n\n* Don't show a message bubble around polls\n\n* Update res/css/views/rooms/_EventBubbleTile.scss",
+          "timestamp": "2021-12-15T19:47:57Z",
+          "tree_id": "6408ab95b77955b024ea0ea3d871e00fdfb7177e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/11aa6c74357dadadc5a954223112374271b2a7e6"
+        },
+        "date": 1639598051702,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5114.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 997.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1631.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4659.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
