@@ -39,6 +39,7 @@ export interface IRightPanelCardState {
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
 }
+
 export interface IRightPanelCardStateStored {
     member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;

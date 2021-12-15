@@ -288,8 +288,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // Start listening for RoomViewStore updates
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
 
-        WidgetEchoStore.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
+
+        WidgetEchoStore.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
 
         this.settingWatchers = [

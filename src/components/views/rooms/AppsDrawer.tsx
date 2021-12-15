@@ -75,6 +75,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         };
 
         this.resizer = this.createResizer();
+
         this.props.resizeNotifier.on("isResizing", this.onIsResizing);
     }
 

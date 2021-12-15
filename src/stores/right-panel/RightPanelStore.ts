@@ -26,13 +26,13 @@ import { Action } from '../../dispatcher/actions';
 import { SettingLevel } from "../../settings/SettingLevel";
 import { UPDATE_EVENT } from '../AsyncStore';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
-// import RoomViewStore from '../RoomViewStore';
 import {
     IRightPanelCard,
     convertToStatePanel,
     convertToStorePanel,
     IRightPanelForRoom,
 } from './RightPanelStoreIPanelState';
+// import RoomViewStore from '../RoomViewStore';
 
 const GROUP_PHASES = [
     RightPanelPhases.GroupMemberList,
@@ -64,10 +64,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
     private dispatcherRefRightPanelStore: string;
     private roomStoreToken: EventSubscription;
 
+    private global?: IRightPanelForRoom = null;
     private byRoom: {
         [roomId: string]: IRightPanelForRoom;
     } = {};
-    private global?: IRightPanelForRoom = null;
 
     private constructor() {
         super(defaultDispatcher);
@@ -75,7 +75,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onReady(): Promise<any> {
-        // TODO RightPanelStore (will be addressed in a follow up PR): This should be used instead of the onDispatch callback when groups are removed.
+        // TODO RightPanelStore (will be addressed when dropping groups): This should be used instead of the onDispatch callback when groups are removed.
         // RoomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
@@ -91,6 +91,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
         }
+        // TODO RightPanelStore (will be addressed when dropping groups): User this instead of the dispatcher.
         // RoomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
 
@@ -199,8 +200,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
     public popCard(roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
         if (!this.byRoom[rId]) return;
-        const roomCache = this.byRoom[rId];
-        const removedCard = roomCache.history.pop();
+
+        const removedCard = this.byRoom[rId].history.pop();
         this.emitAndUpdateSettings();
         return removedCard;
     }
@@ -208,6 +209,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     public togglePanel(roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
         if (!this.byRoom[rId]) return;
+
         this.byRoom[rId].isOpen = !this.byRoom[rId].isOpen;
         this.emitAndUpdateSettings();
     }
@@ -216,7 +218,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
     private loadCacheFromSettings() {
         const room = this.mxClient?.getRoom(this.viewedRoomId);
         if (!!room) {
-            this.global = this.global ?? convertToStatePanel(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
+            this.global = this.global ??
+                convertToStatePanel(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
+
             this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
                 convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
         }
@@ -224,10 +228,12 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     private emitAndUpdateSettings() {
         const storePanelGlobal = convertToStorePanel(this.global);
-        const storePanelThisRoom = convertToStorePanel(this.byRoom[this.viewedRoomId]);
         SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, storePanelGlobal);
+
         if (!!this.viewedRoomId) {
-            SettingsStore.setValue("RightPanel.phases",
+            const storePanelThisRoom = convertToStorePanel(this.byRoom[this.viewedRoomId]);
+            SettingsStore.setValue(
+                "RightPanel.phases",
                 this.viewedRoomId,
                 SettingLevel.ROOM_DEVICE,
                 storePanelThisRoom,
@@ -237,7 +243,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     private setRightPanelCache(card: IRightPanelCard) {
-        // this overrides the history for the right panel in the current room.
         this.byRoom[this.viewedRoomId] = {
             history: [{ phase: card.phase, state: card.state ?? {} }],
             isOpen: true,
