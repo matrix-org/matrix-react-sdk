@@ -51,12 +51,12 @@ import { E2EStatus } from '../../utils/ShieldUtils';
 import { dispatchShowThreadsPanelEvent } from '../../dispatcher/dispatch-actions/threads';
 import TimelineCard from '../views/right_panel/TimelineCard';
 import { UPDATE_EVENT } from '../../stores/AsyncStore';
-import { IRightPanelCardState } from '../../stores/right-panel/RightPanelStoreIPanelState';
+import { IRightPanelCard, IRightPanelCardState } from '../../stores/right-panel/RightPanelStoreIPanelState';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
     groupId?: string; // if showing panels for a given group, this is set
-    member?: RoomMember; // used if we know the room member ahead of opening the panel
+    overwriteCard?: IRightPanelCard; // used to display a custom card ignoring the store (for UserView)
     resizeNotifier: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
@@ -77,11 +77,10 @@ export default class RightPanel extends React.Component<IProps, IState> {
 
     constructor(props, context) {
         super(props, context);
-        const cardState = RightPanelStore.instance.currentCard?.state;
-        cardState.member = this.getUserForPanel();
+
         this.state = {
             // get all the state from the right panel store on init
-            cardState,
+            cardState: RightPanelStore.instance.currentCard?.state,
             phase: RightPanelStore.instance.currentCard?.phase,
             isUserPrivilegedInGroup: null,
             searchQuery: "",
@@ -91,15 +90,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
     private readonly delayedUpdate = throttle((): void => {
         this.forceUpdate();
     }, 500, { leading: true, trailing: true });
-
-    // Helper function to split out the logic for getPhaseFromProps() and the constructor
-    // as both are called at the same time in the constructor.
-    private getUserForPanel(): RoomMember | User | GroupMember {
-        // TODO RightPanelStore (will be addressed in a follow up PR):  Should just use the member from the RightPanelStore. Wherever the prop is passed should just update the store beforehand.
-        return this.state?.cardState?.member ??
-            this.props.member ??
-            RightPanelStore.instance.currentCard?.state?.member;
-    }
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
@@ -203,8 +193,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
     public render(): JSX.Element {
         let panel = <div />;
         const roomId = this.props.room ? this.props.room.roomId : undefined;
-
-        switch (this.state.phase) {
+        const phase = this.props.overwriteCard?.phase ?? this.state.phase;
+        const cardState = this.props.overwriteCard?.state ?? this.state.cardState;
+        switch (phase) {
             case RightPanelPhases.RoomMemberList:
                 if (roomId) {
                     panel = <MemberList
@@ -218,8 +209,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
             case RightPanelPhases.SpaceMemberList:
                 panel = <MemberList
-                    roomId={this.state.cardState.space ? this.state.cardState.space.roomId : roomId}
-                    key={this.state.cardState.space ? this.state.cardState.space.roomId : roomId}
+                    roomId={cardState.space ? cardState.space.roomId : roomId}
+                    key={cardState.space ? cardState.space.roomId : roomId}
                     onClose={this.onClose}
                     searchQuery={this.state.searchQuery}
                     onSearchQueryChanged={this.onSearchQueryChanged}
@@ -239,39 +230,39 @@ export default class RightPanel extends React.Component<IProps, IState> {
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel: {
-                const roomMember = this.state.cardState.member instanceof RoomMember
-                    ? this.state.cardState.member
+                const roomMember = cardState.member instanceof RoomMember
+                    ? cardState.member
                     : undefined;
                 panel = <UserInfo
-                    user={this.state.cardState.member}
+                    user={cardState.member}
                     room={this.context.getRoom(roomMember?.roomId) ?? this.props.room}
-                    key={roomId || this.state.cardState.member.userId}
+                    key={roomId || cardState.member.userId}
                     onClose={this.onClose}
-                    phase={this.state.phase}
-                    verificationRequest={this.state.cardState.verificationRequest}
-                    verificationRequestPromise={this.state.cardState.verificationRequestPromise}
+                    phase={phase}
+                    verificationRequest={cardState.verificationRequest}
+                    verificationRequestPromise={cardState.verificationRequestPromise}
                 />;
                 break;
             }
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
-                panel = <ThirdPartyMemberInfo event={this.state.cardState.memberInfoEvent} key={roomId} />;
+                panel = <ThirdPartyMemberInfo event={cardState.memberInfoEvent} key={roomId} />;
                 break;
 
             case RightPanelPhases.GroupMemberInfo:
                 panel = <UserInfo
-                    user={this.state.cardState.member}
+                    user={cardState.member}
                     groupId={this.props.groupId}
-                    key={this.state.cardState.member.userId}
-                    phase={this.state.phase}
+                    key={cardState.member.userId}
+                    phase={phase}
                     onClose={this.onClose} />;
                 break;
 
             case RightPanelPhases.GroupRoomInfo:
                 panel = <GroupRoomInfo
-                    groupRoomId={this.state.cardState.groupRoomId}
+                    groupRoomId={cardState.groupRoomId}
                     groupId={this.props.groupId}
-                    key={this.state.cardState.groupRoomId} />;
+                    key={cardState.groupRoomId} />;
                 break;
 
             case RightPanelPhases.NotificationPanel:
@@ -304,9 +295,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     room={this.props.room}
                     resizeNotifier={this.props.resizeNotifier}
                     onClose={this.onClose}
-                    mxEvent={this.state.cardState.threadHeadEvent}
-                    initialEvent={this.state.cardState.initialEvent}
-                    isInitialEventHighlighted={this.state.cardState.isInitialEventHighlighted}
+                    mxEvent={cardState.threadHeadEvent}
+                    initialEvent={cardState.initialEvent}
+                    isInitialEventHighlighted={cardState.isInitialEventHighlighted}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus} />;
                 break;
@@ -327,7 +318,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             case RightPanelPhases.Widget:
                 panel = <WidgetCard
                     room={this.props.room}
-                    widgetId={this.state.cardState.widgetId}
+                    widgetId={cardState.widgetId}
                     onClose={this.onClose} />;
                 break;
         }
