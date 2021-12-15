@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639598055373,
+  "lastUpdate": 1639602780445,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49112,6 +49112,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4659.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "will@half-shot.uk",
+            "name": "Will Hunt",
+            "username": "Half-Shot"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b952fef1950b3f05895a723293d0c1700e7106d1",
+          "message": "Don't include the accuracy parameter in location events if accuracy could not be determined. (#7375)\n\n* Don't include accuracy on geouri if not defined\r\n\r\n* Use !== undefined\r\n\r\n* Add a )",
+          "timestamp": "2021-12-15T21:06:40Z",
+          "tree_id": "b5ae01984351c972316ce8b13d7a4e0c666b2cac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b952fef1950b3f05895a723293d0c1700e7106d1"
+        },
+        "date": 1639602776947,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5033.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 970.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1598.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4400.79999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
