@@ -301,15 +301,17 @@ export const Commands = [
                     }
 
                     const cli = MatrixClientPeg.get();
-                    const { event_id, origin_server_ts } = await cli.timestampToEvent(
+                    const { event_id: eventId, origin_server_ts: originServerTs } = await cli.timestampToEvent(
                         roomId,
                         unixTimestamp,
                         Direction.Forward,
-                    )
-                    logger.log(`/timestamp_to_event: found ${event_id} (${origin_server_ts}) for timestamp=${unixTimestamp}`);
+                    );
+                    logger.log(
+                        `/timestamp_to_event: found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp}`,
+                    );
                     dis.dispatch({
                         action: Action.ViewRoom,
-                        event_id,
+                        eventId,
                         highlighted: true,
                         room_id: roomId,
                     });
