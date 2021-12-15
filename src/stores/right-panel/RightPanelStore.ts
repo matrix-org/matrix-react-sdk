@@ -136,7 +136,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
     // Setters
     public setCard(card: IRightPanelCard, allowClose = true, roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
-        if (!this.byRoom[rId]) return;
         // this was previously a very multifunctional command:
         // Toggle panel: if the same phase is send but without a state
         // Update state: if the same phase is send but with a state
@@ -157,7 +156,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             return;
         } else if ((targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState)) {
             // Update state: set right panel with a new state but keep the phase (dont know it this is ever needed...)
-            const hist = this.byRoom[rId].history ?? [];
+            const hist = this.byRoom[rId]?.history ?? [];
             hist[hist.length - 1].state = cardState;
             this.emitAndUpdateSettings();
             return;
@@ -173,7 +172,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         roomId: string = null,
     ) {
         const rId = roomId ?? this.viewedRoomId;
-        if (!this.byRoom[rId]) return;
         const redirect = this.getVerificationRedirect(card);
         const targetPhase = redirect?.phase ?? card.phase;
         const pState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
