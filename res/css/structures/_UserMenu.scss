@@ -212,7 +212,6 @@ limitations under the License.
         position: relative;
         display: flex;
 
-        &.mx_UserMenu_CustomStatusSection_field_focused,
         &.mx_UserMenu_CustomStatusSection_field_hasQuery {
             .mx_UserMenu_CustomStatusSection_clear {
                 display: block;
@@ -223,6 +222,10 @@ limitations under the License.
             border: 1px solid $accent;
             border-radius: 8px;
             width: 100%;
+
+            &:focus + .mx_UserMenu_CustomStatusSection_clear {
+                display: block;
+            }
         }
 
         > .mx_UserMenu_CustomStatusSection_clear {

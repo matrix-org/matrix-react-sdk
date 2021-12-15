@@ -68,16 +68,14 @@ const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
     const setStatus = cli.getUser(cli.getUserId()).unstable_statusMessage || "";
     const [value, setValue] = useState(setStatus);
-    const [isFocused, setFocus] = useState(false);
 
     const ref = useRef<HTMLInputElement>(null);
-    const [rovingOnFocus, isActive] = useRovingTabIndex(ref);
+    const [onFocus, isActive] = useRovingTabIndex(ref);
     const rovingContext = useContext(RovingTabIndexContext);
 
     const classes = classNames({
         'mx_UserMenu_CustomStatusSection_field': true,
         'mx_UserMenu_CustomStatusSection_field_hasQuery': value,
-        'mx_UserMenu_CustomStatusSection_field_focused': isFocused,
     });
 
     const onFormKeyDown = (ev: React.KeyboardEvent) => {
@@ -103,14 +101,6 @@ const CustomStatusSection = () => {
         }
     };
 
-    const onFocus = () => {
-        setFocus(true);
-        rovingOnFocus();
-    };
-
-    const onBlur = () => {
-        setFocus(false);
-    };
 
     let details: JSX.Element;
     if (value !== setStatus) {
@@ -135,7 +125,6 @@ const CustomStatusSection = () => {
                 onChange={e => setValue(e.target.value)}
                 placeholder={_t("Set a new status")}
                 autoComplete="off"
-                onBlur={onBlur}
                 onFocus={onFocus}
                 ref={ref}
                 tabIndex={isActive ? 0 : -1}
