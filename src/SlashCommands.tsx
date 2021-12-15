@@ -141,13 +141,25 @@ export class Command {
 
     run(roomId: string, threadId: string, args: string) {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
-        if (!this.runFn) return reject(_t("Command error"));
+        if (!this.runFn) {
+            return reject(
+                newTranslatableError(
+                    "Command error: This command should have been handled by another handler and we" +
+                        "  can't try to run something without a command function.",
+                ),
+            );
+        }
 
         const renderingType = threadId
             ? TimelineRenderingType.Thread
             : TimelineRenderingType.Room;
         if (this.renderingTypes && !this.renderingTypes?.includes(renderingType)) {
-            return reject(_t("Command error"));
+            return reject(
+                newTranslatableError(
+                    "Command error: Unable to find rendering type (%(renderingType)s)",
+                    { renderingType },
+                ),
+            );
         }
 
         return this.runFn.bind(this)(roomId, args);
@@ -270,7 +282,9 @@ export const Commands = [
                 const cli = MatrixClientPeg.get();
                 const room = cli.getRoom(roomId);
                 if (!room.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
-                    return reject(_t("You do not have the required permissions to use this command."));
+                    return reject(
+                        newTranslatableError("You do not have the required permissions to use this command."),
+                    );
                 }
 
                 const { finished } = Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
@@ -432,7 +446,7 @@ export const Commands = [
                 return success(cli.setRoomTopic(roomId, args));
             }
             const room = cli.getRoom(roomId);
-            if (!room) return reject(_t("Failed to set topic"));
+            if (!room) return reject(newTranslatableError("Failed to set topic"));
 
             const topicEvents = room.currentState.getStateEvents('m.room.topic', '');
             const topic = topicEvents && topicEvents.getContent().topic;
@@ -681,7 +695,14 @@ export const Commands = [
                         }
                         if (targetRoomId) break;
                     }
-                    if (!targetRoomId) return reject(_t('Unrecognised room address:') + ' ' + roomAlias);
+                    if (!targetRoomId) {
+                        return reject(
+                            newTranslatableError(
+                                'Unrecognised room address: %(roomAlias)s',
+                                { roomAlias },
+                            ),
+                        );
+                    }
                 }
             }
 
@@ -820,10 +841,10 @@ export const Commands = [
                     if (!isNaN(powerLevel)) {
                         const cli = MatrixClientPeg.get();
                         const room = cli.getRoom(roomId);
-                        if (!room) return reject(_t("Command failed"));
+                        if (!room) return reject(newTranslatableError("Command failed"));
                         const member = room.getMember(userId);
                         if (!member || getEffectiveMembership(member.membership) === EffectiveMembership.Leave) {
-                            return reject(_t("Could not find user in room"));
+                            return reject(newTranslatableError("Could not find user in room"));
                         }
                         const powerLevelEvent = room.currentState.getStateEvents('m.room.power_levels', '');
                         return success(cli.setPowerLevel(roomId, userId, powerLevel, powerLevelEvent));
@@ -850,10 +871,16 @@ export const Commands = [
                 if (matches) {
                     const cli = MatrixClientPeg.get();
                     const room = cli.getRoom(roomId);
-                    if (!room) return reject(_t("Command failed"));
+                    if (!room) {
+                        return reject(
+                            newTranslatableError("Command failed: Unable to find room (%(roomId)s", { roomId }),
+                        );
+                    }
 
                     const powerLevelEvent = room.currentState.getStateEvents('m.room.power_levels', '');
-                    if (!powerLevelEvent.getContent().users[args]) return reject(_t("Could not find user in room"));
+                    if (!powerLevelEvent.getContent().users[args]) {
+                        return reject(newTranslatableError("Could not find user in room"));
+                    }
                     return success(cli.setPowerLevel(roomId, args, undefined, powerLevelEvent));
                 }
             }
@@ -878,7 +905,7 @@ export const Commands = [
         isEnabled: () => SettingsStore.getValue(UIFeature.Widgets),
         runFn: function(roomId, widgetUrl) {
             if (!widgetUrl) {
-                return reject(_t("Please supply a widget URL or embed code"));
+                return reject(newTranslatableError("Please supply a widget URL or embed code"));
             }
 
             // Try and parse out a widget URL from iframes
@@ -897,7 +924,7 @@ export const Commands = [
             }
 
             if (!widgetUrl.startsWith("https://") && !widgetUrl.startsWith("http://")) {
-                return reject(_t("Please supply a https:// or http:// widget URL"));
+                return reject(newTranslatableError("Please supply a https:// or http:// widget URL"));
             }
             if (WidgetUtils.canUserModifyWidgets(roomId)) {
                 const userId = MatrixClientPeg.get().getUserId();
@@ -919,7 +946,7 @@ export const Commands = [
 
                 return success(WidgetUtils.setRoomWidget(roomId, widgetId, type, widgetUrl, name, data));
             } else {
-                return reject(_t("You cannot modify widgets in this room."));
+                return reject(newTranslatableError("You cannot modify widgets in this room."));
             }
         },
         category: CommandCategories.admin,
@@ -1140,7 +1167,7 @@ export const Commands = [
         runFn: function(roomId, args) {
             const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
-                return reject("No active call in this room");
+                return reject(newTranslatableError("No active call in this room"));
             }
             call.setRemoteOnHold(true);
             return success();
@@ -1154,7 +1181,7 @@ export const Commands = [
         runFn: function(roomId, args) {
             const call = CallHandler.instance.getCallForRoom(roomId);
             if (!call) {
-                return reject("No active call in this room");
+                return reject(newTranslatableError("No active call in this room"));
             }
             call.setRemoteOnHold(false);
             return success();
