@@ -27,7 +27,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
-import { _t, _td } from './languageHandler';
+import { _t, _td, newTranslatableError } from './languageHandler';
 import Modal from './Modal';
 import MultiInviter from './utils/MultiInviter';
 import { linkifyAndSanitizeHtml } from './HtmlUtils';
@@ -297,15 +297,10 @@ export const Commands = [
                 return success((async () => {
                     const unixTimestamp = Date.parse(args);
                     if (!unixTimestamp) {
-                        throw new Error(
-                            // FIXME: Use newTranslatableError here instead
-                            // otherwise the rageshake error messages will be
-                            // translated too
-                            _t(
-                                // eslint-disable-next-line max-len
-                                'We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.',
-                                { inputDate: args },
-                            ),
+                        throw newTranslatableError(
+                            'We were unable to understand the given date (%(inputDate)s). ' +
+                                'Try using the format YYYY-MM-DD.',
+                            { inputDate: args },
                         );
                     }
 
@@ -509,10 +504,16 @@ export const Commands = [
                                     useDefaultIdentityServer();
                                     return;
                                 }
-                                throw new Error(_t("Use an identity server to invite by email. Manage in Settings."));
+                                throw newTranslatableError(
+                                    "Use an identity server to invite by email. Manage in Settings.",
+                                );
                             });
                         } else {
-                            return reject(_t("Use an identity server to invite by email. Manage in Settings."));
+                            return reject(
+                                newTranslatableError(
+                                    "Use an identity server to invite by email. Manage in Settings.",
+                                ),
+                            );
                         }
                     }
                     const inviter = new MultiInviter(roomId);
@@ -941,22 +942,25 @@ export const Commands = [
                     return success((async () => {
                         const device = cli.getStoredDevice(userId, deviceId);
                         if (!device) {
-                            throw new Error(_t('Unknown (user, session) pair:') + ` (${userId}, ${deviceId})`);
+                            throw newTranslatableError(
+                                'Unknown (user, session) pair: (%(userId)s, %(deviceId)s)',
+                                { userId, deviceId },
+                            );
                         }
                         const deviceTrust = await cli.checkDeviceTrust(userId, deviceId);
 
                         if (deviceTrust.isVerified()) {
                             if (device.getFingerprint() === fingerprint) {
-                                throw new Error(_t('Session already verified!'));
+                                throw newTranslatableError('Session already verified!');
                             } else {
-                                throw new Error(_t('WARNING: Session already verified, but keys do NOT MATCH!'));
+                                throw newTranslatableError('WARNING: Session already verified, but keys do NOT MATCH!');
                             }
                         }
 
                         if (device.getFingerprint() !== fingerprint) {
                             const fprint = device.getFingerprint();
-                            throw new Error(
-                                _t('WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session' +
+                            throw newTranslatableError(
+                                'WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session' +
                                     ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
                                     '"%(fingerprint)s". This could mean your communications are being intercepted!',
                                 {
@@ -964,7 +968,8 @@ export const Commands = [
                                     userId,
                                     deviceId,
                                     fingerprint,
-                                }));
+                                },
+                            );
                         }
 
                         await cli.setDeviceVerified(userId, deviceId, true);
@@ -1083,7 +1088,7 @@ export const Commands = [
                 if (isPhoneNumber) {
                     const results = await CallHandler.instance.pstnLookup(this.state.value);
                     if (!results || results.length === 0 || !results[0].userid) {
-                        throw new Error("Unable to find Matrix ID for phone number");
+                        throw newTranslatableError("Unable to find Matrix ID for phone number");
                     }
                     userId = results[0].userid;
                 }
