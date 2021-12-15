@@ -116,10 +116,10 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
         setRequest(verificationRequest_);
         setPhase(verificationRequest_.phase);
         // Notify the RightPanelStore about this
-        RightPanelStore.instance.setRightPanel(
-            RightPanelPhases.EncryptionPanel,
-            { member, verificationRequest: verificationRequest_ },
-        );
+        RightPanelStore.instance.setCard({
+            phase: RightPanelPhases.EncryptionPanel,
+            state: { member, verificationRequest: verificationRequest_ },
+        });
     }, [member]);
 
     const requested =

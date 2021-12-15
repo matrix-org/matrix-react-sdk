@@ -32,7 +32,7 @@ interface IProps {
     previousPhaseLabel?: string;
     closeLabel?: string;
     onClose?(): void;
-    refireParams?;
+    cardState?;
 }
 
 interface IGroupProps {
@@ -57,7 +57,7 @@ const BaseCard: React.FC<IProps> = ({
     previousPhase,
     previousPhaseLabel,
     children,
-    refireParams,
+    cardState,
 }) => {
     let backButton;
     if (previousPhase) {
@@ -65,7 +65,7 @@ const BaseCard: React.FC<IProps> = ({
             // TODO RightPanelStore (will be addressed in a follow up PR): this should ideally be:
             // RightPanelStore.instance.popRightPanel();
 
-            RightPanelStore.instance.setRightPanel(previousPhase, refireParams );
+            RightPanelStore.instance.setCard({ phase: previousPhase, state: cardState } );
         };
         const label = previousPhaseLabel ?? _t("Back");
         backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;

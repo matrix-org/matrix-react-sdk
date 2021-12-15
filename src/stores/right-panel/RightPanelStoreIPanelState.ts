@@ -23,7 +23,7 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 import { GroupMember } from "../../components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "./RightPanelStorePhases";
 
-export interface IPanelState {
+export interface IRightPanelCardState {
     member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
@@ -38,7 +38,7 @@ export interface IPanelState {
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
 }
-export interface IPanelStateStored {
+export interface IRightPanelCardStateStored {
     member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
@@ -54,39 +54,39 @@ export interface IPanelStateStored {
     isInitialEventHighlighted?: boolean;
 }
 
-export interface IPhaseAndState {
+export interface IRightPanelCard {
     phase: RightPanelPhases;
-    state: IPanelState;
+    state?: IRightPanelCardState;
 }
 
-export interface IPhaseAndStateStored {
+export interface IRightPanelCardStored {
     phase: RightPanelPhases;
-    state: IPanelStateStored;
+    state?: IRightPanelCardStateStored;
 }
 
 export interface IRightPanelForRoom {
     isOpen: boolean;
-    history: Array<IPhaseAndState>;
+    history: Array<IRightPanelCard>;
 }
 
 interface IRightPanelForRoomStored {
     isOpen: boolean;
-    history: Array<IPhaseAndStateStored>;
+    history: Array<IRightPanelCardStored>;
 }
 
-export function convertToStoreRoom(cacheRoom: IRightPanelForRoom): IRightPanelForRoomStored {
+export function convertToStorePanel(cacheRoom: IRightPanelForRoom): IRightPanelForRoomStored {
     if (!cacheRoom) return cacheRoom;
-    const storeHistory = [...cacheRoom.history].map(panelState => convertStateToStore(panelState));
+    const storeHistory = [...cacheRoom.history].map(panelState => convertCardToStore(panelState));
     return { isOpen: cacheRoom.isOpen, history: storeHistory };
 }
 
-export function convertToStateRoom(storeRoom: IRightPanelForRoomStored, room: Room): IRightPanelForRoom {
+export function convertToStatePanel(storeRoom: IRightPanelForRoomStored, room: Room): IRightPanelForRoom {
     if (!storeRoom) return storeRoom;
-    const stateHistory = [...storeRoom.history].map(panelStateStore => convertStoreToState(panelStateStore, room));
+    const stateHistory = [...storeRoom.history].map(panelStateStore => convertStoreToCard(panelStateStore, room));
     return { history: stateHistory, isOpen: storeRoom.isOpen };
 }
 
-function convertStateToStore(panelState: IPhaseAndState): IPhaseAndStateStored {
+function convertCardToStore(panelState: IRightPanelCard): IRightPanelCardStored {
     const panelStateThisRoomStored = { ...panelState.state } as any;
     if (!!panelState?.state?.threadHeadEvent?.getId()) {
         panelStateThisRoomStored.threadHeadEventId = panelState.state.threadHeadEvent.getId();
@@ -96,10 +96,11 @@ function convertStateToStore(panelState: IPhaseAndState): IPhaseAndStateStored {
     }
     delete panelStateThisRoomStored.threadHeadEvent;
     delete panelStateThisRoomStored.initialEvent;
-    return { state: panelStateThisRoomStored as IPhaseAndStateStored, phase: panelState.phase } as IPhaseAndStateStored;
+    const storedCard = { state: panelStateThisRoomStored as IRightPanelCardStored, phase: panelState.phase };
+    return storedCard as IRightPanelCardStored;
 }
 
-function convertStoreToState(panelStateStore: IPhaseAndStateStored, room: Room): IPhaseAndState {
+function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room): IRightPanelCard {
     const panelStateThisRoom = { ...panelStateStore?.state } as any;
     if (!!panelStateThisRoom.threadHeadEventId) {
         panelStateThisRoom.threadHeadEvent = room.findEventById(panelStateThisRoom.threadHeadEventId);
@@ -110,5 +111,5 @@ function convertStoreToState(panelStateStore: IPhaseAndStateStored, room: Room):
     delete panelStateThisRoom.threadHeadEventId;
     delete panelStateThisRoom.initialEventId;
 
-    return { state: panelStateThisRoom as IPanelState, phase: panelStateStore.phase } as IPhaseAndState;
+    return { state: panelStateThisRoom as IRightPanelCardState, phase: panelStateStore.phase } as IRightPanelCard;
 }

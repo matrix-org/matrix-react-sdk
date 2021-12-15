@@ -24,17 +24,17 @@ export const dispatchShowThreadEvent = (
     highlighted?: boolean,
 ) => {
     // TODO RightPanelStore (will be addressed in a follow up PR): this should really be a push!
-    RightPanelStore.instance.setRightPanel(
-        RightPanelPhases.ThreadView,
-        {
+    RightPanelStore.instance.setCard({
+        phase: RightPanelPhases.ThreadView,
+        state: {
             threadHeadEvent: rootEvent,
             initialEvent,
             isInitialEventHighlighted: highlighted,
         },
-    );
+    });
 };
 
 export const dispatchShowThreadsPanelEvent = () => {
-    RightPanelStore.instance.setRightPanel(RightPanelPhases.ThreadPanel);
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel });
 };
 

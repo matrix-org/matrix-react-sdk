@@ -163,7 +163,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
                     kind="link"
                     className="mx_SpaceRoomView_info_memberCount"
                     onClick={() => {
-                        RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, { space } );
+                        RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList, state: { space } });
                     }}
                 >
                     { _t("%(count)s members", { count }) }
@@ -468,7 +468,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     }
 
     const onMembersClick = () => {
-        RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, { space } );
+        RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList, state: { space } });
     };
 
     return <div className="mx_SpaceRoomView_landing">
@@ -839,20 +839,20 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         if (payload.action !== Action.ViewUser && payload.action !== "view_3pid_invite") return;
 
         if (payload.action === Action.ViewUser && payload.member) {
-            RightPanelStore.instance.setRightPanel(
-                RightPanelPhases.SpaceMemberInfo,
-                { space: this.props.space, member: payload.member },
-            );
+            RightPanelStore.instance.setCard({
+                phase: RightPanelPhases.SpaceMemberInfo,
+                state: { space: this.props.space, member: payload.member },
+            });
         } else if (payload.action === "view_3pid_invite" && payload.event) {
-            RightPanelStore.instance.setRightPanel(
-                RightPanelPhases.Space3pidMemberInfo,
-                { space: this.props.space, member: payload.member },
-            );
+            RightPanelStore.instance.setCard({
+                phase: RightPanelPhases.Space3pidMemberInfo,
+                state: { space: this.props.space, member: payload.member },
+            });
         } else {
-            RightPanelStore.instance.setRightPanel(
-                RightPanelPhases.SpaceMemberList,
-                { space: this.props.space },
-            );
+            RightPanelStore.instance.setCard({
+                phase: RightPanelPhases.SpaceMemberList,
+                state: { space: this.props.space },
+            });
         }
     };
 

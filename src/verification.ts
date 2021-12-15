@@ -66,10 +66,10 @@ export async function verifyDevice(user: User, device: IDevice) {
                     device.deviceId,
                     VerificationMethods.SAS,
                 );
-                RightPanelStore.instance.setRightPanel(
-                    RightPanelPhases.EncryptionPanel,
-                    { member: user, verificationRequestPromise },
-                );
+                RightPanelStore.instance.setCard({
+                    phase: RightPanelPhases.EncryptionPanel,
+                    state: { member: user, verificationRequestPromise },
+                });
             } else if (action === "legacy") {
                 Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
                     ManualDeviceKeyVerificationDialog,
@@ -96,10 +96,10 @@ export async function legacyVerifyUser(user: User) {
         }
     }
     const verificationRequestPromise = cli.requestVerification(user.userId);
-    RightPanelStore.instance.setRightPanel(
-        RightPanelPhases.EncryptionPanel,
-        { member: user, verificationRequestPromise },
-    );
+    RightPanelStore.instance.setCard({
+        phase: RightPanelPhases.EncryptionPanel,
+        state: { member: user, verificationRequestPromise },
+    });
 }
 
 export async function verifyUser(user: User) {
@@ -112,10 +112,10 @@ export async function verifyUser(user: User) {
         return;
     }
     const existingRequest = pendingVerificationRequestForUser(user);
-    RightPanelStore.instance.setRightPanel(
-        RightPanelPhases.EncryptionPanel,
-        { member: user, verificationRequest: existingRequest },
-    );
+    RightPanelStore.instance.setCard({
+        phase: RightPanelPhases.EncryptionPanel,
+        state: { member: user, verificationRequest: existingRequest },
+    });
 }
 
 export function pendingVerificationRequestForUser(user: User | RoomMember | GroupMember ) {

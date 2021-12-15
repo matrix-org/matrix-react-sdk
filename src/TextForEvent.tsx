@@ -503,7 +503,7 @@ const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void
 };
 
 const onPinnedMessagesClick = (): void => {
-    RightPanelStore.instance.setRightPanel(RightPanelPhases.PinnedMessages, null, false);
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
 function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {

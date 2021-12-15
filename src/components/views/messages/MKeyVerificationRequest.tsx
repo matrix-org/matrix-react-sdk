@@ -51,7 +51,10 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
     private openRequest = () => {
         const { verificationRequest } = this.props.mxEvent;
         const member = MatrixClientPeg.get().getUser(verificationRequest.otherUserId);
-        RightPanelStore.instance.setRightPanel(RightPanelPhases.EncryptionPanel, { verificationRequest, member } );
+        RightPanelStore.instance.setCard({
+            phase: RightPanelPhases.EncryptionPanel,
+            state: { verificationRequest, member },
+        });
     };
 
     private onRequestChanged = () => {

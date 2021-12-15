@@ -50,7 +50,7 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
             // stop showing this card
 
             //TODO RightPanelStore (will be addressed in a follow up PR): here we want to just pop the widget card.
-            RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomSummary);
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
         }
     }, [app, isPinned]);
 

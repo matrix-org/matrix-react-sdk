@@ -115,11 +115,13 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                     room_id: request.channel.roomId,
                     should_peek: false,
                 });
-                RightPanelStore.instance.setRightPanel(RightPanelPhases.EncryptionPanel,
+                RightPanelStore.instance.setCard(
                     {
-                        verificationRequest: request,
-                        member: cli.getUser(request.otherUserId),
-                    }, undefined, request.channel.roomId,
+                        phase: RightPanelPhases.EncryptionPanel,
+                        state: { verificationRequest: request, member: cli.getUser(request.otherUserId) },
+                    },
+                    undefined,
+                    request.channel.roomId,
                 );
             } else {
                 Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {

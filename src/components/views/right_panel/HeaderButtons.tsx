@@ -23,7 +23,7 @@ import React from 'react';
 import dis from '../../../dispatcher/dispatcher';
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import { IPanelState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
+import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
@@ -51,7 +51,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.instance;
         this.state = {
             headerKind: kind,
-            phase: rps.currentPanel.phase,
+            phase: rps.currentCard.phase,
             threadNotificationColor: NotificationColor.None,
         };
     }
@@ -68,8 +68,8 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
 
     protected abstract onAction(payload);
 
-    public setPhase(phase: RightPanelPhases, extras?: Partial<IPanelState>) {
-        RightPanelStore.instance.setRightPanel(phase, extras);
+    public setPhase(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>) {
+        RightPanelStore.instance.setCard({ phase, state: cardState });
     }
 
     public isPhase(phases: string | string[]) {
@@ -81,7 +81,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     private onRightPanelStoreUpdate() {
-        let phase = RightPanelStore.instance.currentPanel.phase;
+        let phase = RightPanelStore.instance.currentCard.phase;
         if (!RightPanelStore.instance.isOpenForGroup) {phase = null;}
         this.setState({ phase });
     }

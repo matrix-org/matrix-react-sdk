@@ -91,8 +91,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
         super(props, context);
         this.state = {
             // get all the state from the right panel store on init
-            ...RightPanelStore.instance.currentPanel?.state,
-            phase: RightPanelStore.instance.currentPanel?.phase,
+            ...RightPanelStore.instance.currentCard?.state,
+            phase: RightPanelStore.instance.currentCard?.phase,
             isUserPrivilegedInGroup: null,
             member: this.getUserForPanel(),
             searchQuery: "",
@@ -107,7 +107,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     // as both are called at the same time in the constructor.
     private getUserForPanel(): RoomMember | User | GroupMember {
         if (this.state && this.state.member) return this.state.member;
-        const lastState = RightPanelStore.instance.currentPanel?.state;
+        const lastState = RightPanelStore.instance.currentCard?.state;
         // Should just use the member from the RightPanelStore. Wherever the prop is passed should just update the store beforehand.
         return this.props.member ?? lastState?.member;
     }
@@ -168,7 +168,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
         }
     };
     private onRightPanelStoreUpdate = () => {
-        const currentPanel = RightPanelStore.instance.currentPanel;
+        const currentPanel = RightPanelStore.instance.currentCard;
         this.setState({
             ...currentPanel.state,
             phase: currentPanel.phase,

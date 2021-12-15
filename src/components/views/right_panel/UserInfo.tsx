@@ -75,7 +75,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
-import { IPanelState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
+import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 
 export interface IDevice {
@@ -1650,22 +1650,22 @@ const UserInfo: React.FC<IProps> = ({
 
     const classes = ["mx_UserInfo"];
 
-    let refireParams: IPanelState;
+    let cardState: IRightPanelCardState;
     let previousPhase: RightPanelPhases;
     // We have no previousPhase for when viewing a UserInfo from a Group or without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {
         previousPhase = RightPanelPhases.RoomMemberInfo;
-        refireParams = { member };
+        cardState = { member };
     } else if (room?.isSpaceRoom() && SpaceStore.spacesEnabled) {
         previousPhase = previousPhase = RightPanelPhases.SpaceMemberList;
-        refireParams = { space: room };
+        cardState = { space: room };
     } else if (room) {
         previousPhase = RightPanelPhases.RoomMemberList;
     }
 
     const onEncryptionPanelClose = () => {
         // TODO RightPanelStore (will be addressed in a follow up PR): here we want to pop the panel
-        RightPanelStore.instance.setRightPanel(previousPhase, refireParams);
+        RightPanelStore.instance.setCard({ phase: previousPhase, state: cardState });
     };
 
     let content;
@@ -1721,7 +1721,7 @@ const UserInfo: React.FC<IProps> = ({
         onClose={onClose}
         closeLabel={closeLabel}
         previousPhase={previousPhase}
-        refireParams={refireParams}
+        cardState={cardState}
     >
         { content }
     </BaseCard>;

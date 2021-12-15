@@ -270,7 +270,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     ev.stopPropagation();
 
                     ensureViewingRoom();
-                    RightPanelStore.instance.setRightPanel( RightPanelPhases.RoomSummary, null, false );
+                    RightPanelStore.instance.setCard( { phase: RightPanelPhases.RoomSummary }, false );
                     onFinished();
                 }}
                 label={_t("Widgets")}

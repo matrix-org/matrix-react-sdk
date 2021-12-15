@@ -103,7 +103,10 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
 
     const onOpenWidgetClick = () => {
         // TODO RightPanelStore (will be addressed in a follow up PR): should push the widget
-        RightPanelStore.instance.setRightPanel(RightPanelPhases.Widget, { widgetId: app.id });
+        RightPanelStore.instance.setCard({
+            phase: RightPanelPhases.Widget,
+            state: { widgetId: app.id },
+        });
     };
 
     const isPinned = WidgetLayoutStore.instance.isInContainer(room, app, Container.Top);
@@ -232,12 +235,12 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
 
 export const onRoomMembersClick = (allowClose = true) => {
     // TODO RightPanelStore (will be addressed in a follow up PR): should push the phase
-    RightPanelStore.instance.setRightPanel(RightPanelPhases.RoomMemberList, undefined, allowClose);
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList }, allowClose);
 };
 
 export const onRoomFilesClick = (allowClose = true) => {
     // TODO RightPanelStore (will be addressed in a follow up PR): should push the phase
-    RightPanelStore.instance.setRightPanel(RightPanelPhases.FilePanel, undefined, allowClose);
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.FilePanel }, allowClose);
 };
 
 const onRoomSettingsClick = () => {
