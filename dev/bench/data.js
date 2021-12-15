@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639586067995,
+  "lastUpdate": 1639587613339,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48944,6 +48944,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4822.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fc58ce7ed299a353dd885d8ca102af27b7297b48",
+          "message": "Use the moved makePollContent function from js-sdk (#7387)",
+          "timestamp": "2021-12-15T16:54:01Z",
+          "tree_id": "7b9fee0ab81b5b9b7944422e228bb8dca1cc3c9c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fc58ce7ed299a353dd885d8ca102af27b7297b48"
+        },
+        "date": 1639587609808,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5012.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 934.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1620.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4321.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
