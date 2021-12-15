@@ -302,6 +302,7 @@ export const Commands = [
                             // otherwise the rageshake error messages will be
                             // translated too
                             _t(
+                                // eslint-disable-next-line max-len
                                 'We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.',
                                 { inputDate: args },
                             ),
