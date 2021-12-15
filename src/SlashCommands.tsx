@@ -449,7 +449,7 @@ export const Commands = [
             const room = cli.getRoom(roomId);
             if (!room) {
                 return reject(
-                    newTranslatableError("Failed to set topic: Unable to find room (%(roomId)s", { roomId }),
+                    newTranslatableError("Failed to get room topic: Unable to find room (%(roomId)s", { roomId }),
                 );
             }
 
