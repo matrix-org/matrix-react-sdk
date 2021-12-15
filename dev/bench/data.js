@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639563774336,
+  "lastUpdate": 1639572049501,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48536,6 +48536,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4303.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1e095994473d3a3424696bb5e5f43cb3ac3ae072",
+          "message": "Add `/jumptodate` slash command (#7372)\n\nFix https://github.com/vector-im/element-web/issues/7677\r\n\r\nUtilizing MSC3030: https://github.com/matrix-org/matrix-doc/pull/3030\r\n\r\nExperimental Synapse implementation added in https://github.com/matrix-org/synapse/pull/9445\r\n\r\n---\r\n\r\nJump to date headers are being worked on in https://github.com/matrix-org/matrix-react-sdk/pull/7339",
+          "timestamp": "2021-12-15T06:34:47-06:00",
+          "tree_id": "9e8449fe2339c32022b871c09f70ae7b7f8a939a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1e095994473d3a3424696bb5e5f43cb3ac3ae072"
+        },
+        "date": 1639572046333,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4657.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 915.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1710.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4401,
             "unit": "ms",
             "extra": "type: measure"
           }
