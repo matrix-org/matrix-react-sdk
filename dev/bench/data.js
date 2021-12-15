@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639578764843,
+  "lastUpdate": 1639584719497,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48680,6 +48680,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4308.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b174cc8963d1544d64b64c3244db579d46fd2dcd",
+          "message": "Use semantic heading on dialog component (#7383)\n\n* use semantic heading on dialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy styles\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* un-flex text centering\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-15T17:05:58+01:00",
+          "tree_id": "892d8dfd6052eac50178eb9595d73e28c6d08e85",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b174cc8963d1544d64b64c3244db579d46fd2dcd"
+        },
+        "date": 1639584715763,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4924.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 934.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4318,
             "unit": "ms",
             "extra": "type: measure"
           }
