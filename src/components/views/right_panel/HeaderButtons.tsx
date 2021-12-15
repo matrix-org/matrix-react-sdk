@@ -43,6 +43,7 @@ interface IProps {}
 
 @replaceableComponent("views.right_panel.HeaderButtons")
 export default abstract class HeaderButtons<P = {}> extends React.Component<IProps & P, IState> {
+    private unmounted = false;
     private dispatcherRef: string;
 
     constructor(props: IProps & P, kind: HeaderKind) {
@@ -62,6 +63,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     public componentWillUnmount() {
+        this.unmounted = true;
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate.bind(this));
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
@@ -81,6 +83,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     private onRightPanelStoreUpdate() {
+        if (this.unmounted) return;
         let phase = RightPanelStore.instance.currentCard.phase;
         if (!RightPanelStore.instance.isOpenForGroup) {phase = null;}
         this.setState({ phase });
