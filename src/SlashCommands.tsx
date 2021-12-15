@@ -446,7 +446,11 @@ export const Commands = [
                 return success(cli.setRoomTopic(roomId, args));
             }
             const room = cli.getRoom(roomId);
-            if (!room) return reject(newTranslatableError("Failed to set topic"));
+            if (!room) {
+                return reject(
+                    newTranslatableError("Failed to set topic: Unable to find room (%(roomId)s", { roomId }),
+                );
+            }
 
             const topicEvents = room.currentState.getStateEvents('m.room.topic', '');
             const topic = topicEvents && topicEvents.getContent().topic;
@@ -841,7 +845,11 @@ export const Commands = [
                     if (!isNaN(powerLevel)) {
                         const cli = MatrixClientPeg.get();
                         const room = cli.getRoom(roomId);
-                        if (!room) return reject(newTranslatableError("Command failed"));
+                        if (!room) {
+                            return reject(
+                                newTranslatableError("Command failed: Unable to find room (%(roomId)s", { roomId }),
+                            );
+                        }
                         const member = room.getMember(userId);
                         if (!member || getEffectiveMembership(member.membership) === EffectiveMembership.Leave) {
                             return reject(newTranslatableError("Could not find user in room"));
