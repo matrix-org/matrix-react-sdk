@@ -365,13 +365,14 @@ legend {
     height: 25px;
     margin-left: -2px;
     margin-right: 4px;
+    margin-bottom: 2px;
 }
 
 .mx_Dialog_title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     color: $dialog-title-fg-color;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .mx_Dialog_header.mx_Dialog_headerWithButton > .mx_Dialog_title {
