@@ -298,6 +298,7 @@ export const Commands = [
                     const unixTimestamp = Date.parse(args);
                     if (!unixTimestamp) {
                         throw new Error(
+                            // FIXME: Use newTranslatableError here instead otherwise the rageshake error messages will be translated too
                             _t(
                                 'We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.',
                                 { inputDate: args },
