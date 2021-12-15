@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639587658569,
+  "lastUpdate": 1639588395175,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49028,6 +49028,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 674.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d31aa121567a377a3cca3028e2589342992b4d57",
+          "message": "Fix MaxListenersExceededWarning (#7389)",
+          "timestamp": "2021-12-15T18:06:37+01:00",
+          "tree_id": "e377d897d1910fccd0c2dce212350e68b09b3abd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d31aa121567a377a3cca3028e2589342992b4d57"
+        },
+        "date": 1639588391824,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5344.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 710.5,
             "unit": "ms",
             "extra": "type: measure"
           }
