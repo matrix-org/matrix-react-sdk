@@ -81,11 +81,14 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
+    public destroy() {
+        if (this.dispatcherRefRightPanelStore) {
+            defaultDispatcher.unregister(this.dispatcherRefRightPanelStore);
+        }
+        super.destroy();
+    }
 
     protected async onNotReady(): Promise<any> {
-        // if (this.dispatcherRefRightPanelStore) {
-        //     defaultDispatcher.unregister(this.dispatcherRefRightPanelStore);
-        // }
         // Remove RoomStore listener
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
