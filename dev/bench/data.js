@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639562540455,
+  "lastUpdate": 1639562775990,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -48440,6 +48440,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4301.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "46b0865e89d603abed0b36f955ecdbdd90a1227c",
+          "message": "Add Heading components (#7362)\n\n* add Heading components\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove margins\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* snapshots\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* unset block and inline margins\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix werid quoting on heading test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-15T11:00:10+01:00",
+          "tree_id": "fe98e7f16ce908298b4ab37b8d113851d34db8bf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/46b0865e89d603abed0b36f955ecdbdd90a1227c"
+        },
+        "date": 1639562772827,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5118.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 925.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1642.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4457.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
