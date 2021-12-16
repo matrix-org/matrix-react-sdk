@@ -207,8 +207,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
             case RightPanelPhases.SpaceMemberList:
                 card = <MemberList
-                    roomId={cardState.space ? cardState.space.roomId : roomId}
-                    key={cardState.space ? cardState.space.roomId : roomId}
+                    roomId={cardState.spaceId ? cardState.spaceId : roomId}
+                    key={cardState.spaceId ? cardState.spaceId : roomId}
                     onClose={this.onClose}
                     searchQuery={this.state.searchQuery}
                     onSearchQueryChanged={this.onSearchQueryChanged}

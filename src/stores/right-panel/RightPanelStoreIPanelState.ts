@@ -31,7 +31,7 @@ export interface IRightPanelCardState {
     groupId?: string;
     groupRoomId?: string;
     widgetId?: string;
-    space?: Room;
+    spaceId?: string;
     // Room3pidMemberInfo, Space3pidMemberInfo,
     memberInfoEvent?: MatrixEvent;
     // threads
@@ -48,7 +48,7 @@ export interface IRightPanelCardStateStored {
     groupId?: string;
     groupRoomId?: string;
     widgetId?: string;
-    space?: Room;
+    spaceId?: string;
     // 3pidMemberInfo
     memberInfoEventId?: string;
     // threads

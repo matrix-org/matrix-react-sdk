@@ -163,7 +163,10 @@ const SpaceInfo = ({ space }: { space: Room }) => {
                     kind="link"
                     className="mx_SpaceRoomView_info_memberCount"
                     onClick={() => {
-                        RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList, state: { space } });
+                        RightPanelStore.instance.setCard({
+                            phase: RightPanelPhases.RoomMemberList,
+                            state: { spaceId: space.roomId },
+                        });
                     }}
                 >
                     { _t("%(count)s members", { count }) }
@@ -468,7 +471,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     }
 
     const onMembersClick = () => {
-        RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList, state: { space } });
+        RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList, state: { spaceId: space.roomId } });
     };
 
     return <div className="mx_SpaceRoomView_landing">
@@ -841,17 +844,17 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         if (payload.action === Action.ViewUser && payload.member) {
             RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.SpaceMemberInfo,
-                state: { space: this.props.space, member: payload.member },
+                state: { spaceId: this.props.space.roomId, member: payload.member },
             });
         } else if (payload.action === "view_3pid_invite" && payload.event) {
             RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.Space3pidMemberInfo,
-                state: { space: this.props.space, member: payload.member },
+                state: { spaceId: this.props.space.roomId, member: payload.member },
             });
         } else {
             RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.SpaceMemberList,
-                state: { space: this.props.space },
+                state: { spaceId: this.props.space.roomId },
             });
         }
     };
