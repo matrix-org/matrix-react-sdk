@@ -25,6 +25,9 @@ import { Action } from "../../../dispatcher/actions";
 import BaseAvatar from "./BaseAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import { CardContext } from '../right_panel/BaseCard';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember;
@@ -36,6 +39,7 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     onClick?: React.MouseEventHandler;
     // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
     viewUserOnClick?: boolean;
+    pushUserOnClick?: boolean;
     title?: string;
     style?: any;
 }
@@ -95,12 +99,21 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
         const userId = member ? member.userId : fallbackUserId;
 
         if (viewUserOnClick) {
-            onClick = () => {
+            const onClickPush = () => {
+                RightPanelStore.instance.pushCard({
+                    phase: RightPanelPhases.RoomMemberInfo,
+                    state: { member: this.props.member },
+                });
+            };
+
+            const onClickSet = () => {
                 dis.dispatch({
                     action: Action.ViewUser,
                     member: this.props.member,
                 });
             };
+
+            onClick = (this.context == "Card") ? onClickPush : onClickSet;
         }
 
         return (
@@ -109,7 +122,10 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
                 title={this.state.title}
                 idName={userId}
                 url={this.state.imageUrl}
-                onClick={onClick} />
+                onClick={onClick}
+            />
         );
     }
 }
+
+MemberAvatar.contextType = CardContext;

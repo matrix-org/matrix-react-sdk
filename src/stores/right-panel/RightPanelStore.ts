@@ -170,6 +170,13 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
 
+    public setCards(cards: IRightPanelCard[], allowClose = true, roomId: string = null) {
+        const rId = roomId ?? this.viewedRoomId;
+        const history = cards.map(c => {return { phase: c.phase, state: c.state ?? {} };});
+        this.byRoom[rId] = { history, isOpen: true };
+        this.emitAndUpdateSettings();
+    }
+
     public pushCard(
         card: IRightPanelCard,
         allowClose = true,

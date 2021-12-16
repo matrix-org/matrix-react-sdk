@@ -23,8 +23,7 @@ export const dispatchShowThreadEvent = (
     initialEvent?: MatrixEvent,
     highlighted?: boolean,
 ) => {
-    // TODO RightPanelStore (will be addressed in a follow up PR): this should really be a push!
-    RightPanelStore.instance.setCard({
+    RightPanelStore.instance.pushCard({
         phase: RightPanelPhases.ThreadView,
         state: {
             threadHeadEvent: rootEvent,

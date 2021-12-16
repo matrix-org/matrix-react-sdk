@@ -154,7 +154,11 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     protected onAction(payload: ActionPayload) {
         if (payload.action === Action.ViewUser) {
             if (payload.member) {
-                this.setPhase(RightPanelPhases.RoomMemberInfo, { member: payload.member });
+                RightPanelStore.instance.setCards([
+                    { phase: RightPanelPhases.RoomMemberList },
+                    { phase: RightPanelPhases.RoomMemberInfo, state: { member: payload.member } },
+                ]);
+                // this.setPhase(RightPanelPhases.RoomMemberInfo, { member: payload.member });
             } else {
                 this.setPhase(RightPanelPhases.RoomMemberList);
             }
