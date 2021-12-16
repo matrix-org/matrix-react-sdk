@@ -34,7 +34,7 @@ export interface IRightPanelCardState {
     space?: Room;
     // Room3pidMemberInfo, Space3pidMemberInfo,
     memberInfoEvent?: MatrixEvent;
-    // treads
+    // threads
     threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
