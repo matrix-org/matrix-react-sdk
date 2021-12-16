@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639649000081,
+  "lastUpdate": 1639658073463,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49208,6 +49208,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4271.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "36052282+twigleingrid@users.noreply.github.com",
+            "name": "Ingrid",
+            "username": "twigleingrid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f3ea977293b4601dd36910d1ef0b220a2a79f4b",
+          "message": "Full page spinner has no padding (#7390)\n\nDescription:\r\nAdds padding to full page spinner (e.g. when creating a room),\r\nwhich otherwise looks awkward on the grey background.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/20001\r\n\r\nSigned-off-by: Ingrid Budau inigiri@posteo.jp",
+          "timestamp": "2021-12-16T12:28:21Z",
+          "tree_id": "23bf9c148545f523a43a98784c9469daa854a2ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f3ea977293b4601dd36910d1ef0b220a2a79f4b"
+        },
+        "date": 1639658070708,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5161.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1119.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4378.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
