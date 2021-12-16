@@ -91,7 +91,8 @@ export default class UserView extends React.Component<IProps, IState> {
         } else if (this.state.member) {
             const panel = <RightPanel
                 overwriteCard={{ phase: RightPanelPhases.RoomMemberInfo, state: { member: this.state.member } }}
-                resizeNotifier={this.props.resizeNotifier} />;
+                resizeNotifier={this.props.resizeNotifier}
+            />;
             return (<MainSplit panel={panel} resizeNotifier={this.props.resizeNotifier}>
                 <HomePage />
             </MainSplit>);
