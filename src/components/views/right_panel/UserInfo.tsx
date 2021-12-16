@@ -1658,7 +1658,7 @@ const UserInfo: React.FC<IProps> = ({
         cardState = { member };
     } else if (room?.isSpaceRoom() && SpaceStore.spacesEnabled) {
         previousPhase = previousPhase = RightPanelPhases.SpaceMemberList;
-        cardState = { space: room };
+        cardState = { spaceId: room.roomId };
     } else if (room) {
         previousPhase = RightPanelPhases.RoomMemberList;
     }
