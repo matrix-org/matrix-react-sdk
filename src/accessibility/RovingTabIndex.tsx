@@ -214,8 +214,8 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
         let handled = false;
         let focusRef: RefObject<HTMLElement>;
         // Don't interfere with input default keydown behaviour
+        // but allow people to move focus from it with Tab.
         if (checkInputtableElement(ev.target as HTMLElement)) {
-            console.log('input');
             switch (ev.key) {
                 case Key.TAB:
                     handled = true;
