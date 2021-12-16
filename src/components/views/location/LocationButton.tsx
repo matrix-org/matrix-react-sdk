@@ -83,11 +83,10 @@ export function textForLocation(
     description: string | null,
 ): string {
     const date = new Date(ts).toISOString();
-    // TODO: translation, as soon as we've re-worded this better
     if (description) {
-        return `${description} at ${uri} as of ${date}`;
+        return `Location "${description}" ${uri} at ${date}`;
     } else {
-        return `Location at ${uri} as of ${date}`;
+        return `Location ${uri} at ${date}`;
     }
 }
 
