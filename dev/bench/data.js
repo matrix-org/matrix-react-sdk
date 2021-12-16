@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639602780445,
+  "lastUpdate": 1639649000081,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49160,6 +49160,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4400.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a968b4ce537ba12c4ec9d8d9f4e89c4104abc9b3",
+          "message": "Improve typing around LoggedInView (#7384)\n\n* Update SyncState imports\r\n\r\n* Improve typing around LoggedInView\r\n\r\n* Fix typing",
+          "timestamp": "2021-12-16T09:57:10Z",
+          "tree_id": "30c66f3808fb44592d95afae9c51752909a46e3e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a968b4ce537ba12c4ec9d8d9f4e89c4104abc9b3"
+        },
+        "date": 1639648996976,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4807.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 977.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1578.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4271.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
