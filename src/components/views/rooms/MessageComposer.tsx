@@ -61,7 +61,7 @@ import PollCreateDialog from "../elements/PollCreateDialog";
 import LocationShareType from "../location/LocationShareType";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import { CollapsibleButton, ICollapsibleButtonProps } from './CollapsibleButton';
-import { LocationButton } from '../location/LocationButton';
+import { LocationButton, textForLocation } from '../location/LocationButton';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -453,20 +453,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private textForLocation = (
-        uri: string,
-        ts: number,
-        description: string | null,
-    ): string => {
-        const date = new Date(ts).toISOString();
-        // TODO: translation, as soon as we've re-worded this better
-        if (description) {
-            return `${description} at ${uri} as of ${date}`;
-        } else {
-            return `Location at ${uri} as of ${date}`;
-        }
-    };
-
     private shareLocation = (
         uri: string,
         ts: number,
@@ -475,7 +461,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     ): boolean => {
         if (!uri) return false;
         try {
-            const text = this.textForLocation(uri, ts, description);
+            const text = textForLocation(uri, ts, description);
             MatrixClientPeg.get().sendMessage(
                 this.props.room.roomId,
                 makeLocationContent(text, uri, ts, description),

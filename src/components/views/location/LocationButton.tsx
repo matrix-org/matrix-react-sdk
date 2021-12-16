@@ -26,7 +26,12 @@ import ContextMenu, { aboveLeftOf, useContextMenu, AboveLeftOf } from "../../str
 
 interface ILocationButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
     room: Room;
-    shareLocation: (uri: string, ts: number, type: LocationShareType, description: string) => boolean;
+    shareLocation: (
+        uri: string,
+        ts: number,
+        type: LocationShareType,
+        description: string,
+    ) => boolean;
     menuPosition: AboveLeftOf;
     narrowMode: boolean;
 }
@@ -71,4 +76,18 @@ export const LocationButton: React.FC<ILocationButtonProps> = (
         { contextMenu }
     </React.Fragment>;
 };
+
+export function textForLocation(
+    uri: string,
+    ts: number,
+    description: string | null,
+): string {
+    const date = new Date(ts).toISOString();
+    // TODO: translation, as soon as we've re-worded this better
+    if (description) {
+        return `${description} at ${uri} as of ${date}`;
+    } else {
+        return `Location at ${uri} as of ${date}`;
+    }
+}
 
