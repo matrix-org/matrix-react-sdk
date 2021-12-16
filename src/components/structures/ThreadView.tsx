@@ -93,7 +93,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
 
         if (prevProps.room !== this.props.room) {
-            RightPanelStore.instance.setCard( { phase: RightPanelPhases.RoomSummary });
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
         }
     }
 
