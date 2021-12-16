@@ -32,7 +32,7 @@ import { Layout } from '../../../settings/enums/Layout';
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 const onPinnedMessagesClick = (): void => {
-    RightPanelStore.instance.setCard( { phase: RightPanelPhases.PinnedMessages }, false );
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
 const SENDER_AS_DISPLAY_NAME_EVENTS = [EventType.RoomServerAcl, EventType.RoomPinnedEvents];
