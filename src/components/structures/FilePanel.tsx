@@ -221,7 +221,6 @@ class FilePanel extends React.Component<IProps, IState> {
             return <BaseCard
                 className="mx_FilePanel mx_RoomView_messageListWrapper"
                 onClose={this.props.onClose}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <div className="mx_RoomView_empty">
                     { _t("You must <a>register</a> to use this functionality",
@@ -234,7 +233,6 @@ class FilePanel extends React.Component<IProps, IState> {
             return <BaseCard
                 className="mx_FilePanel mx_RoomView_messageListWrapper"
                 onClose={this.props.onClose}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <div className="mx_RoomView_empty">{ _t("You must join the room to see its files") }</div>
             </BaseCard>;
@@ -258,7 +256,6 @@ class FilePanel extends React.Component<IProps, IState> {
                     <BaseCard
                         className="mx_FilePanel"
                         onClose={this.props.onClose}
-                        previousPhase={RightPanelPhases.RoomSummary}
                         withoutScrollContainer
                     >
                         <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
@@ -285,7 +282,6 @@ class FilePanel extends React.Component<IProps, IState> {
                     <BaseCard
                         className="mx_FilePanel"
                         onClose={this.props.onClose}
-                        previousPhase={RightPanelPhases.RoomSummary}
                     >
                         <Spinner />
                     </BaseCard>
