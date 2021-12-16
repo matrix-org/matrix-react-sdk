@@ -31,6 +31,7 @@ import {
     convertToStatePanel,
     convertToStorePanel,
     IRightPanelForRoom,
+    convertCardToStore,
 } from './RightPanelStoreIPanelState';
 // import RoomViewStore from '../RoomViewStore';
 
@@ -147,7 +148,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // Checks for wrong SetRightPanelPhase requests
         if (!this.isPhaseActionIsValid(targetPhase)) return;
 
-        if (targetPhase === this.currentCard?.phase && allowClose && !cardState) {
+        if (targetPhase === this.currentCard?.phase &&
+            allowClose &&
+            (this.compareCards({ phase: targetPhase, state: cardState }, this.currentCard) || !cardState)
+        ) {
             // Toggle panel: a toggle command needs to fullfil the following:
             // - the same phase
             // - the panel can be closed
@@ -223,6 +227,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
             this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
                 convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
         }
+    }
+
+    private compareCards(a: IRightPanelCard, b: IRightPanelCard): boolean {
+        return JSON.stringify(convertCardToStore(a)) == JSON.stringify(convertCardToStore(b));
     }
 
     private emitAndUpdateSettings() {

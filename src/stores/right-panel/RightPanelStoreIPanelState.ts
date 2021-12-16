@@ -89,7 +89,7 @@ export function convertToStatePanel(storeRoom: IRightPanelForRoomStored, room: R
     return { history: stateHistory, isOpen: storeRoom.isOpen };
 }
 
-function convertCardToStore(panelState: IRightPanelCard): IRightPanelCardStored {
+export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCardStored {
     const panelStateThisRoomStored = { ...panelState.state } as any;
     if (!!panelState?.state?.threadHeadEvent?.getId()) {
         panelStateThisRoomStored.threadHeadEventId = panelState.state.threadHeadEvent.getId();
