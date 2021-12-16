@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639680075926,
+  "lastUpdate": 1639680090329,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49304,6 +49304,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4331.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "314475985c2631d85d79a5597e0a5350cdeedfef",
+          "message": "Fix bubble radius wrong when followed by a state event from same user (#7393)",
+          "timestamp": "2021-12-16T18:35:28Z",
+          "tree_id": "e0558ccd3f287448658ed4cffe1e1f8b76d0fa08",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/314475985c2631d85d79a5597e0a5350cdeedfef"
+        },
+        "date": 1639680087139,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5221.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 912.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1562.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4139.5,
             "unit": "ms",
             "extra": "type: measure"
           }
