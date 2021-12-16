@@ -65,7 +65,7 @@ const BaseCard: React.FC<IProps> = ({
             // TODO RightPanelStore (will be addressed in a follow up PR): this should ideally be:
             // RightPanelStore.instance.popRightPanel();
 
-            RightPanelStore.instance.setCard({ phase: previousPhase, state: cardState } );
+            RightPanelStore.instance.setCard({ phase: previousPhase, state: cardState });
         };
         const label = previousPhaseLabel ?? _t("Back");
         backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;
