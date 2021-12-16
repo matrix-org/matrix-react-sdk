@@ -14,24 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-//import React from "react";
-//import { mount, ReactWrapper } from "enzyme";
-//import { Callback, IContent, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk";
-//import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-
-//import * as TestUtils from "../../../test-utils";
 import sdk from "../../../skinned-sdk";
 import { parseGeoUri } from "../../../../src/components/views/messages/MLocationBody";
-//import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 sdk.getComponent("views.messages.MLocationBody");
-//const _MLocationBody = sdk.getComponent("views.messages.MLocationBody");
-// const MLocationBody = TestUtils.wrapInMatrixClientContext(_MLocationBody);
-
-//MatrixClientPeg.matrixClient = {
-//    getUserId: () => "@me:example.com",
-//    sendEvent: () => Promise.resolve({ "event_id": "fake_send_id" }),
-//};
 
 describe("MLocationBody", () => {
     describe("parseGeoUri", () => {
