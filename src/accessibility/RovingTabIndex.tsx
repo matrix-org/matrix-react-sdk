@@ -46,10 +46,11 @@ import { FocusHandler, Ref } from "./roving/types";
 // Check for form elements which utilize the arrow keys for native functions
 // like many of the text input varieties.
 //
-// i.e. it's ok to press the down arrow on a radio button to move to the next radio.
-// But it's not ok to press the down arrow on a <input type="text"> to move away because
-// the down arrow should move the cursor to the end of the input.
-export function checkInputtableElement(el: HTMLElement): boolean {
+// i.e. it's ok to press the down arrow on a radio button to move to the next
+// radio. But it's not ok to press the down arrow on a <input type="text"> to
+// move away because the down arrow should move the cursor to the end of the
+// input.
+export function checkInputableElement(el: HTMLElement): boolean {
     return el.matches('input:not([type="radio"]):not([type="checkbox"]), textarea, select, [contenteditable=true]');
 }
 
@@ -209,7 +210,7 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
         let focusRef: RefObject<HTMLElement>;
         // Don't interfere with input default keydown behaviour
         // but allow people to move focus from it with Tab.
-        if (checkInputtableElement(ev.target as HTMLElement)) {
+        if (checkInputableElement(ev.target as HTMLElement)) {
             switch (ev.key) {
                 case Key.TAB:
                     handled = true;
