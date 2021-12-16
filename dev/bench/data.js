@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639680090329,
+  "lastUpdate": 1639680120339,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49352,6 +49352,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4139.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d009cebb0745f22350f98e7ea98e9e051c1a373d",
+          "message": "Fix sizing of e2e shield in bubble layout (#7394)",
+          "timestamp": "2021-12-16T18:35:51Z",
+          "tree_id": "d678714fdab1004693ee2905ea476a8f2cd794d7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d009cebb0745f22350f98e7ea98e9e051c1a373d"
+        },
+        "date": 1639680117279,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5016.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 758.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
