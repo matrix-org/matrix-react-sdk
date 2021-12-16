@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639658073463,
+  "lastUpdate": 1639680075926,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49256,6 +49256,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4378.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4a9173a7f1568ae55d26954a047d45c95840e8a6",
+          "message": "Fix alignment between ELS and Events in bubble layout (#7392)\n\n* Fix alignment between ELS and Events in bubble layout\n\n* Improve ELS behaviour in bubble layout",
+          "timestamp": "2021-12-16T18:34:59Z",
+          "tree_id": "bd0b5d956ce97c651504d3700edba3e91fc92eb9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4a9173a7f1568ae55d26954a047d45c95840e8a6"
+        },
+        "date": 1639680072293,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4701.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1065.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1649.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4331.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
