@@ -50,12 +50,11 @@ const MEMBER_INFO_PHASES = [
 /**
  * A class for tracking the state of the right panel between layouts and
  * sessions. This state includes a history for each room. Each history element
- * contains the phase (e.g. RightPanelPhase.RoomMemberInfo) and the state (e.g. the
- * member) associated with it.
- * Groups are treated the same as rooms (they are also
- * stored in the byRoom object). This is possible since the store keeps track of the
- * opened room/group -> the store will provide the correct history for that
- * group/room.
+ * contains the phase (e.g. RightPanelPhase.RoomMemberInfo) and the state (e.g.
+ * the member) associated with it.
+ * Groups are treated the same as rooms (they are also stored in the byRoom
+ * object). This is possible since the store keeps track of the opened
+ * room/group -> the store will provide the correct history for that group/room.
 */
 export default class RightPanelStore extends ReadyWatchingStore {
     private static internalInstance: RightPanelStore;
