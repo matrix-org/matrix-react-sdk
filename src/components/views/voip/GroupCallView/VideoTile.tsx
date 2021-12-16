@@ -12,7 +12,6 @@ const defaultColors = ['#0DBD8B', '#368bd6', '#ac3ba8'];
 interface IVideoContainerProps {
     as: React.ElementType<PropsWithChildren<any>>;
     className?: string;
-    disableSpeakingHighlight: boolean;
     callFeed: CallFeed;
     avatarBackgroundColor: string;
     children?: ReactNode;
@@ -23,7 +22,6 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
     {
         as: Component,
         className,
-        disableSpeakingHighlight,
         callFeed,
         avatarBackgroundColor,
         children,
@@ -49,7 +47,7 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
         <Component
             className={classNames("mx_videoTile", className, {
                 "mx_isLocal": isLocal,
-                "mx_speaking": speaking && !disableSpeakingHighlight,
+                "mx_speaking": speaking,
                 "mx_muted": audioMuted,
                 "mx_screenshare": purpose === SDPStreamMetadataPurpose.Screenshare,
             })}
@@ -82,14 +80,12 @@ interface IVideoTileProps {
     style?: any;
     usermediaCallFeed: CallFeed;
     screenshareCallFeed?: CallFeed;
-    disableSpeakingHighlight: boolean;
 }
 
 export default function VideoTile({
     style,
     usermediaCallFeed,
     screenshareCallFeed,
-    disableSpeakingHighlight,
     ...rest
 }: IVideoTileProps) {
     const [avatarBackgroundColor] = useState(() => {
@@ -101,7 +97,6 @@ export default function VideoTile({
         <VideoContainer
             as={animated.div}
             style={style}
-            disableSpeakingHighlight={disableSpeakingHighlight}
             avatarBackgroundColor={avatarBackgroundColor}
             callFeed={screenshareCallFeed || usermediaCallFeed}
             {...rest}
@@ -113,7 +108,6 @@ export default function VideoTile({
                         className="mx_screensharePIP"
                         avatarBackgroundColor={avatarBackgroundColor}
                         callFeed={usermediaCallFeed}
-                        disableSpeakingHighlight={disableSpeakingHighlight}
                     />
                 )
             }

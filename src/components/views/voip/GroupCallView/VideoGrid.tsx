@@ -803,7 +803,6 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
                             ),
                             ...style,
                         }}
-                        disableSpeakingHighlight={springs.length < 3}
                         usermediaCallFeed={tile.item.usermediaCallFeed}
                         screenshareCallFeed={tile.item.screenshareCallFeed}
                     />
