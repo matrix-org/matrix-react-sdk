@@ -51,7 +51,7 @@ export interface IRightPanelCardStateStored {
     space?: Room;
     // 3pidMemberInfo
     memberInfoEventId?: string;
-    // treads
+    // threads
     threadHeadEventId?: string;
     initialEventId?: string;
     isInitialEventHighlighted?: boolean;
