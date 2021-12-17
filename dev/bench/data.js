@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639733571078,
+  "lastUpdate": 1639733651787,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49556,6 +49556,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 779.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "818465a4d671522ba511c6ae346796b0b89cdee4",
+          "message": "Increase gap between ELS and the subsequent event to prevent overlap (#7391)",
+          "timestamp": "2021-12-17T09:28:10Z",
+          "tree_id": "ee07ac5342c064ba06789a0321e93bbc3827d88d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/818465a4d671522ba511c6ae346796b0b89cdee4"
+        },
+        "date": 1639733648059,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4688.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 674.5,
             "unit": "ms",
             "extra": "type: measure"
           }
