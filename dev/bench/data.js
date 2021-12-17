@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639739297177,
+  "lastUpdate": 1639744362114,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49700,6 +49700,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 697.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "670d7824ec433b4ec6702682af54804f0781e421",
+          "message": "Tidy location code (#7402)",
+          "timestamp": "2021-12-17T12:26:02Z",
+          "tree_id": "88e27bbd20ae375f4266818a0aed8ccf9701a595",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/670d7824ec433b4ec6702682af54804f0781e421"
+        },
+        "date": 1639744359447,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4512.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 720.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
