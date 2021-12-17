@@ -17,6 +17,8 @@ limitations under the License.
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -35,7 +37,6 @@ import {
     UNSTABLE_FILTER_RELATION_SENDERS,
     UNSTABLE_FILTER_RELATION_TYPES,
 } from 'matrix-js-sdk/src/filter';
-import { EventType, MatrixClient, RelationType } from 'matrix-js-sdk';
 
 async function getThreadTimelineSet(
     client: MatrixClient,
@@ -48,7 +49,6 @@ async function getThreadTimelineSet(
     const definition: IFilterDefinition = {
         "room": {
             "timeline": {
-                "types": [EventType.RoomMessage, EventType.RoomMessageEncrypted],
                 [UNSTABLE_FILTER_RELATION_TYPES.name]: [RelationType.Thread],
             },
         },
@@ -61,7 +61,7 @@ async function getThreadTimelineSet(
     filter.setDefinition(definition);
 
     const filterId = await client.getOrCreateFilter(
-        `THREAD_PANEL_${room.roomId}`,
+        `THREAD_PANEL_${room.roomId}_${filterType}`,
         filter,
     );
     filter.filterId = filterId;
@@ -70,6 +70,7 @@ async function getThreadTimelineSet(
         { prepopulateTimeline: false },
     );
 
+    timelineSet.resetLiveTimeline();
     await client.paginateEventTimeline(
         timelineSet.getLiveTimeline(),
         { backwards: true, limit: 20 },
