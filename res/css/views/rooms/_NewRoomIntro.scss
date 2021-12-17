@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_RoomIntro {
+.mx_NewRoomIntro {
     margin: 40px 0 48px 64px;
 
     .mx_MiniAvatarUploader_hasAvatar:not(.mx_MiniAvatarUploader_busy):not(:hover) {
@@ -28,7 +28,7 @@ limitations under the License.
         font-size: inherit;
     }
 
-    .mx_RoomIntro_buttons {
+    .mx_NewRoomIntro_buttons {
         margin-top: 28px;
 
         .mx_AccessibleButton {
@@ -53,7 +53,7 @@ limitations under the License.
             }
         }
 
-        .mx_RoomIntro_inviteButton::before {
+        .mx_NewRoomIntro_inviteButton::before {
             mask-image: url('$(res)/img/element-icons/room/invite.svg');
         }
     }

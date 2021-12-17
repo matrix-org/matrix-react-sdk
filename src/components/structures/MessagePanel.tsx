@@ -35,7 +35,7 @@ import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
 import NewRoomIntro from "../views/rooms/NewRoomIntro";
-import RoomHistoryIntro from "../views/rooms/RoomHistoryIntro";
+import HistoryTile from "../views/rooms/HistoryTile";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import CallEventGrouper from "./CallEventGrouper";
@@ -1353,9 +1353,10 @@ class MemberGrouper extends BaseGrouper {
             eventTiles = null;
         }
 
-        // If a membership event is the start of visible history, show a room intro
+        // If a membership event is the start of visible history, tell the user
+        // why they can't see earlier messages
         if (!this.panel.props.canBackPaginate && !this.prevEvent) {
-            ret.push(<RoomHistoryIntro key="roomhistoryintro" />);
+            ret.push(<HistoryTile key="historytile" />);
         }
 
         ret.push(
