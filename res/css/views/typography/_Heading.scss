@@ -14,23 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from "react";
+.mx_Heading_h1 {
+    font-size: $font-32px;
+    font-weight: $font-semi-bold;
+    line-height: $font-39px;
+    margin-inline: unset;
+    margin-block: unset;
+}
 
-export const useLocalEcho = <T>(
-    currentFactory: () => T,
-    setterFn: (value: T) => Promise<unknown>,
-    errorFn: (error: Error) => void,
-): [value: T, handler: (value: T) => void] => {
-    const [value, setValue] = useState(currentFactory);
-    const handler = async (value: T) => {
-        setValue(value);
-        try {
-            await setterFn(value);
-        } catch (e) {
-            setValue(currentFactory());
-            errorFn(e);
-        }
-    };
+.mx_Heading_h2 {
+    font-size: $font-24px;
+    font-weight: $font-semi-bold;
+    line-height: $font-29px;
+    margin-inline: unset;
+    margin-block: unset;
+}
 
-    return [value, handler];
-};
+.mx_Heading_h3 {
+    font-size: $font-18px;
+    font-weight: $font-semi-bold;
+    line-height: $font-22px;
+    margin-inline: unset;
+    margin-block: unset;
+}

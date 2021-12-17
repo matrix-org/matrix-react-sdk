@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -41,39 +42,16 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         // events - so folks can read their old chat history correctly.
         // https://github.com/matrix-org/matrix-doc/issues/3516
         const content = this.props.mxEvent.getContent();
-        const uri = content['org.matrix.msc3488.location'] ?
-            content['org.matrix.msc3488.location'].uri :
-            content['geo_uri'];
+        const loc = content[LOCATION_EVENT_TYPE.name];
+        const uri = loc ? loc.uri : content['geo_uri'];
 
-        this.coords = this.parseGeoUri(uri);
+        this.coords = parseGeoUri(uri);
         this.state = {
             error: undefined,
         };
 
-        this.description =
-            content['org.matrix.msc3488.location']?.description ?? content['body'];
+        this.description = loc?.description ?? content['body'];
     }
-
-    private parseGeoUri = (uri: string): GeolocationCoordinates => {
-        const m = uri.match(/^\s*geo:(.*?)\s*$/);
-        if (!m) return;
-        const parts = m[1].split(';');
-        const coords = parts[0].split(',');
-        let uncertainty: number;
-        for (const param of parts.slice(1)) {
-            const m = param.match(/u=(.*)/);
-            if (m) uncertainty = parseFloat(m[1]);
-        }
-        return {
-            latitude: parseFloat(coords[0]),
-            longitude: parseFloat(coords[1]),
-            altitude: parseFloat(coords[2]),
-            accuracy: uncertainty,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
-        };
-    };
 
     componentDidMount() {
         const config = SdkConfig.get();
@@ -116,4 +94,25 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             { error }
         </div>;
     }
+}
+
+export function parseGeoUri(uri: string): GeolocationCoordinates {
+    const m = uri.match(/^\s*geo:(.*?)\s*$/);
+    if (!m) return;
+    const parts = m[1].split(';');
+    const coords = parts[0].split(',');
+    let uncertainty: number;
+    for (const param of parts.slice(1)) {
+        const m = param.match(/u=(.*)/);
+        if (m) uncertainty = parseFloat(m[1]);
+    }
+    return {
+        latitude: parseFloat(coords[0]),
+        longitude: parseFloat(coords[1]),
+        altitude: parseFloat(coords[2]),
+        accuracy: uncertainty,
+        altitudeAccuracy: undefined,
+        heading: undefined,
+        speed: undefined,
+    };
 }
