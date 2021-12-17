@@ -491,7 +491,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 dis.fire(Action.ToggleUserMenu);
                 handled = true;
                 break;
-            case NavigationAction.ToggleShortCutDialog:
+            case NavigationAction.OpenShortCutDialog:
                 dis.dispatch<OpenToTabPayload>({
                     action: Action.ViewUserSettings,
                     initialTabId: UserTab.Keyboard,
