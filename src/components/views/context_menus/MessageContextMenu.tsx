@@ -83,6 +83,8 @@ interface IProps extends IPosition {
 interface IState {
     canRedact: boolean;
     canPin: boolean;
+    canForward: boolean;
+    canShare: boolean;
 }
 
 @replaceableComponent("views.context_menus.MessageContextMenu")
@@ -93,6 +95,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     state = {
         canRedact: false,
         canPin: false,
+        canForward: false,
+        canShare: false,
     };
 
     componentDidMount() {
@@ -122,7 +126,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         // HACK: Intentionally say we can't pin if the user doesn't want to use the functionality
         if (!SettingsStore.getValue("feature_pinning")) canPin = false;
 
-        this.setState({ canRedact, canPin });
+        const isLoc = isLocationEvent(this.props.mxEvent);
+        const canForward = !isLoc;
+        const canShare = !isLoc;
+
+        this.setState({ canRedact, canPin, canForward, canShare });
     };
 
     private isPinned(): boolean {
