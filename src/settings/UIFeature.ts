@@ -32,7 +32,7 @@ export enum UIFeature {
     Communities = "UIFeature.communities",
     AdvancedSettings = "UIFeature.advancedSettings",
     RoomHistorySettings = "UIFeature.roomHistorySettings",
-    TimelineDisableRelativeDates = "UIFeature.timelineDisableRelativeDates"
+    TimelineEnableRelativeDates = "UIFeature.timelineEnableRelativeDates"
 }
 
 export enum UIComponent {

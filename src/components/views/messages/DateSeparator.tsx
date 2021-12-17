@@ -50,7 +50,7 @@ export default class DateSeparator extends React.Component<IProps> {
 
     private getLabel() {
         const date = new Date(this.props.ts);
-        const disableRelativeTimestamps = SettingsStore.getValue(UIFeature.TimelineDisableRelativeDates);
+        const disableRelativeTimestamps = !SettingsStore.getValue(UIFeature.TimelineEnableRelativeDates);
 
         // During the time the archive is being viewed, a specific day might not make sense, so we return the full date
         if (this.props.forExport || disableRelativeTimestamps) return formatFullDateNoTime(date);

@@ -54,10 +54,14 @@ describe("DateSeparator", () => {
         ],
     ];
 
+    beforeEach(() => {
+        (SettingsStore.getValue as jest.Mock).mockReturnValue(true);
+    });
+
     it('renders the date separator correctly', () => {
         const component = getComponent();
         expect(component).toMatchSnapshot();
-        expect(SettingsStore.getValue).toHaveBeenCalledWith(UIFeature.TimelineDisableRelativeDates);
+        expect(SettingsStore.getValue).toHaveBeenCalledWith(UIFeature.TimelineEnableRelativeDates);
     });
 
     it.each(testCases)('formats date correctly when current time is %s', (_d, ts, result) => {
@@ -70,9 +74,9 @@ describe("DateSeparator", () => {
         });
     });
 
-    describe('when Settings.TimelineDisableRelativeDates is truthy', () => {
+    describe('when Settings.TimelineEnableRelativeDates is falsy', () => {
         beforeEach(() => {
-            (SettingsStore.getValue as jest.Mock).mockReturnValue(true);
+            (SettingsStore.getValue as jest.Mock).mockReturnValue(false);
         });
         it.each(testCases)('formats date in full when current time is %s', (_d, ts) => {
             expect(getComponent({ ts, forExport: false }).text()).toEqual(formatFullDateNoTime(new Date(ts)));
