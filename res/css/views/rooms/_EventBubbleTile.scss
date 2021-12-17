@@ -304,11 +304,17 @@ limitations under the License.
         }
     }
 
-    .mx_EventTile_readAvatars {
+    .mx_EventTile_msgOption {
         position: absolute;
-        right: -110px;
         bottom: 0;
-        top: auto;
+        right: 0;
+
+        .mx_EventTile_readAvatars {
+            position: absolute;
+            right: -80px;
+            bottom: 0;
+            top: auto;
+        }
     }
 
     .mx_MTextBody {
