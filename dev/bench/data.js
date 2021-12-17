@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639759620578,
+  "lastUpdate": 1639759666055,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49772,6 +49772,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 634.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6761ef954098de8afd68d648a7968f281054a69e",
+          "message": "Space Panel use SettingsStore instead of SpaceStore as source of truth (#7404)",
+          "timestamp": "2021-12-17T16:41:39Z",
+          "tree_id": "620b1fc5e4af863534b4882b64694132cfaa8d0c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6761ef954098de8afd68d648a7968f281054a69e"
+        },
+        "date": 1639759663274,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4722.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 690.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
