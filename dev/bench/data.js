@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639759666055,
+  "lastUpdate": 1639761303446,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49808,6 +49808,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 690.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9289c0c90fc6877aa6ea751a1ac3c92b16611ef9",
+          "message": "Refactor `ContextMenu` to use `RovingTabIndex` (more consistent keyboard navigation accessibility) (#7353)\n\nSplit off from https://github.com/matrix-org/matrix-react-sdk/pull/7339",
+          "timestamp": "2021-12-17T11:08:56-06:00",
+          "tree_id": "c0c51056e2cb6de25310b99f39414a54069b98da",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9289c0c90fc6877aa6ea751a1ac3c92b16611ef9"
+        },
+        "date": 1639761299983,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4737.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 658.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
