@@ -965,4 +965,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
+    [UIFeature.TimelineDisableRelativeDates]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: false,
+    },
 };
