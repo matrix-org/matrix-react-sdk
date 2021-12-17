@@ -36,18 +36,23 @@ function getDaysArray(): string[] {
 interface IProps {
     ts: number;
     forExport?: boolean;
+    now?: Date;
 }
 
 @replaceableComponent("views.messages.DateSeparator")
 export default class DateSeparator extends React.Component<IProps> {
+    public static defaultProps = {
+        now: new Date(),
+    };
+
     private getLabel() {
         const date = new Date(this.props.ts);
 
         // During the time the archive is being viewed, a specific day might not make sense, so we return the full date
         if (this.props.forExport) return formatFullDateNoTime(date);
 
-        const today = new Date();
-        const yesterday = new Date();
+        const today = this.props.now;
+        const yesterday = new Date(this.props.now);
         const days = getDaysArray();
         yesterday.setDate(today.getDate() - 1);
 
@@ -63,11 +68,12 @@ export default class DateSeparator extends React.Component<IProps> {
     }
 
     render() {
+        const label = this.getLabel();
         // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one
         // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
-        return <h2 className="mx_DateSeparator" role="separator" tabIndex={-1} aria-label={this.getLabel()}>
+        return <h2 className="mx_DateSeparator" role="separator" tabIndex={-1} aria-label={label}>
             <hr role="none" />
-            <div aria-hidden="true">{ this.getLabel() }</div>
+            <div aria-hidden="true">{ label }</div>
             <hr role="none" />
         </h2>;
     }
