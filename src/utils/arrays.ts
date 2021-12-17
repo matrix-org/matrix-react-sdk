@@ -194,7 +194,7 @@ export type Diff<T> = { added: T[], removed: T[] };
  * @param b The second array. Must be defined.
  * @returns The diff between the arrays.
  */
-export function arrayDiff<T>(a: T[], b: T[]): { added: T[], removed: T[] } {
+export function arrayDiff<T>(a: T[], b: T[]): Diff<T> {
     return {
         added: b.filter(i => !a.includes(i)),
         removed: a.filter(i => !b.includes(i)),

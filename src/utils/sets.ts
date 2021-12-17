@@ -42,6 +42,5 @@ export function setHasDiff<T>(a: Set<T>, b: Set<T>): boolean {
  * @returns The difference between the values in each set.
  */
 export function setDiff<T>(a: Set<T>, b: Set<T>): Diff<T> {
-    const keyDiff = arrayDiff(Array.from(a), Array.from(b));
-    return { added: keyDiff.added, removed: keyDiff.removed };
+    return arrayDiff(Array.from(a), Array.from(b));
 }
