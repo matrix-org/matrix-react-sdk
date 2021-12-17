@@ -70,7 +70,10 @@ import {
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
-import { RoomNotificationStateStore } from "../../stores/notifications/RoomNotificationStateStore";
+import {
+    RoomNotificationStateStore,
+    UPDATE_STATUS_INDICATOR,
+} from "../../stores/notifications/RoomNotificationStateStore";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { leaveRoomBehaviour } from "../../utils/membership";
 import CreateCommunityPrototypeDialog from "../views/dialogs/CreateCommunityPrototypeDialog";
@@ -115,6 +118,7 @@ import InfoDialog from "../views/dialogs/InfoDialog";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
+import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -321,6 +325,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // For PersistentElement
         this.state.resizeNotifier.on("middlePanelResized", this.dispatchTimelineResize);
+
+        RoomNotificationStateStore.instance.on(UPDATE_STATUS_INDICATOR, this.onUpdateStatusIndicator);
 
         // Force users to go through the soft logout page if they're soft logged out
         if (Lifecycle.isSoftLogout()) {
@@ -1504,7 +1510,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.setState({ syncError: null });
             }
 
-            this.updateStatusIndicator(state, prevState);
             if (state === SyncState.Syncing && prevState === SyncState.Syncing) {
                 return;
             }
@@ -2025,8 +2030,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private updateStatusIndicator(state: SyncState, prevState?: SyncState): void {
-        const notificationState = RoomNotificationStateStore.instance.globalState;
+    private onUpdateStatusIndicator = (notificationState: SummarizedNotificationState, state: SyncState): void => {
         const numUnreadRooms = notificationState.numUnreadStates; // we know that states === rooms here
 
         if (PlatformPeg.get()) {
@@ -2043,7 +2047,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         this.setPageSubtitle();
-    }
+    };
 
     private onServerConfigChange = (serverConfig: ValidatedServerConfig) => {
         this.setState({ serverConfig });
