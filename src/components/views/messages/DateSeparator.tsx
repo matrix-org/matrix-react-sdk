@@ -43,6 +43,7 @@ interface IProps {
 
 @replaceableComponent("views.messages.DateSeparator")
 export default class DateSeparator extends React.Component<IProps> {
+    // use defaultProp for now to make testing easier
     public static defaultProps = {
         now: new Date(),
     };
