@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639733651787,
+  "lastUpdate": 1639737784380,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49592,6 +49592,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 674.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f3893245716f360302aca80ae475411211a8438c",
+          "message": "Show error if could not load space hierarchy (#7399)",
+          "timestamp": "2021-12-17T10:36:52Z",
+          "tree_id": "0bcdc940eb21203303ecbb8b700f962dbf70d0de",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f3893245716f360302aca80ae475411211a8438c"
+        },
+        "date": 1639737781167,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4948.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 692.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
