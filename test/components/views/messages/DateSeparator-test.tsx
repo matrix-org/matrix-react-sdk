@@ -20,6 +20,10 @@ import { mount } from "enzyme";
 import sdk from "../../../skinned-sdk";
 import * as TestUtils from "../../../test-utils";
 import { formatFullDateNoTime } from "../../../../src/DateUtils";
+import SettingsStore from "../../../../src/settings/SettingsStore";
+import { UIFeature } from "../../../../src/settings/UIFeature";
+
+jest.mock("../../../../src/settings/SettingsStore");
 
 const _DateSeparator = sdk.getComponent("views.messages.DateSeparator");
 const DateSeparator = TestUtils.wrapInMatrixClientContext(_DateSeparator);
@@ -53,6 +57,7 @@ describe("DateSeparator", () => {
     it('renders the date separator correctly', () => {
         const component = getComponent();
         expect(component).toMatchSnapshot();
+        expect(SettingsStore.getValue).toHaveBeenCalledWith(UIFeature.TimelineDisableRelativeDates);
     });
 
     it.each(testCases)('formats date correctly when current time is %s', (_d, ts, result) => {
@@ -62,6 +67,15 @@ describe("DateSeparator", () => {
     describe('when forExport is true', () => {
         it.each(testCases)('formats date in full when current time is %s', (_d, ts) => {
             expect(getComponent({ ts, forExport: true }).text()).toEqual(formatFullDateNoTime(new Date(ts)));
+        });
+    });
+
+    describe('when Settings.TimelineDisableRelativeDates is truthy', () => {
+        beforeEach(() => {
+            (SettingsStore.getValue as jest.Mock).mockReturnValue(true);
+        });
+        it.each(testCases)('formats date in full when current time is %s', (_d, ts) => {
+            expect(getComponent({ ts, forExport: false }).text()).toEqual(formatFullDateNoTime(new Date(ts)));
         });
     });
 });
