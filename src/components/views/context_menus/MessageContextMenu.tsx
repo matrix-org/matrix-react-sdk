@@ -15,11 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -82,6 +83,8 @@ interface IProps extends IPosition {
 interface IState {
     canRedact: boolean;
     canPin: boolean;
+    canForward: boolean;
+    canShare: boolean;
 }
 
 @replaceableComponent("views.context_menus.MessageContextMenu")
@@ -92,6 +95,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     state = {
         canRedact: false,
         canPin: false,
+        canForward: false,
+        canShare: false,
     };
 
     componentDidMount() {
@@ -121,7 +126,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         // HACK: Intentionally say we can't pin if the user doesn't want to use the functionality
         if (!SettingsStore.getValue("feature_pinning")) canPin = false;
 
-        this.setState({ canRedact, canPin });
+        const isLoc = isLocationEvent(this.props.mxEvent);
+        const canForward = !isLoc;
+        const canShare = !isLoc;
+
+        this.setState({ canRedact, canPin, canForward, canShare });
     };
 
     private isPinned(): boolean {
@@ -313,13 +322,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         if (isContentActionable(mxEvent)) {
-            forwardButton = (
-                <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconForward"
-                    label={_t("Forward")}
-                    onClick={this.onForwardClick}
-                />
-            );
+            if (this.state.canForward) {
+                forwardButton = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconForward"
+                        label={_t("Forward")}
+                        onClick={this.onForwardClick}
+                    />
+                );
+            }
 
             if (this.state.canPin) {
                 pinButton = (
@@ -352,26 +363,29 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        let permalink;
-        if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
-        }
-        const permalinkButton = (
-            <IconizedContextMenuOption
-                iconClassName="mx_MessageContextMenu_iconPermalink"
-                onClick={this.onPermalinkClick}
-                label={_t('Share')}
-                element="a"
-                {
-                    // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
-                    ...{
-                        href: permalink,
-                        target: "_blank",
-                        rel: "noreferrer noopener",
+        let permalink: string | null = null;
+        let permalinkButton: ReactElement | null = null;
+        if (this.state.canShare) {
+            if (this.props.permalinkCreator) {
+                permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+            }
+            permalinkButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconPermalink"
+                    onClick={this.onPermalinkClick}
+                    label={_t('Share')}
+                    element="a"
+                    {
+                        // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
+                        ...{
+                            href: permalink,
+                            target: "_blank",
+                            rel: "noreferrer noopener",
+                        }
                     }
-                }
-            />
-        );
+                />
+            );
+        }
 
         if (this.canEndPoll(mxEvent)) {
             endPollButton = (
@@ -485,4 +499,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             </IconizedContextMenu>
         );
     }
+}
+
+function isLocationEvent(event: MatrixEvent): boolean {
+    const eventType = event.getType();
+    return (
+        LOCATION_EVENT_TYPE.matches(eventType) ||
+        (
+            eventType === "m.room.message" &&
+            LOCATION_EVENT_TYPE.matches(event.getContent().msgtype)
+        )
+    );
 }
