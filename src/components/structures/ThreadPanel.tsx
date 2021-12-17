@@ -60,21 +60,36 @@ async function getThreadTimelineSet(
 
     filter.setDefinition(definition);
 
-    const filterId = await client.getOrCreateFilter(
-        `THREAD_PANEL_${room.roomId}_${filterType}`,
-        filter,
-    );
-    filter.filterId = filterId;
-    const timelineSet = room.getOrCreateFilteredTimelineSet(
-        filter,
-        { prepopulateTimeline: false },
-    );
+    let timelineSet;
 
-    timelineSet.resetLiveTimeline();
-    await client.paginateEventTimeline(
-        timelineSet.getLiveTimeline(),
-        { backwards: true, limit: 20 },
-    );
+    try {
+        const filterId = await client.getOrCreateFilter(
+            `THREAD_PANEL_${room.roomId}_${filterType}`,
+            filter,
+        );
+        filter.filterId = filterId;
+        const timelineSet = room.getOrCreateFilteredTimelineSet(
+            filter,
+            { prepopulateTimeline: false },
+        );
+
+        timelineSet.resetLiveTimeline();
+        await client.paginateEventTimeline(
+            timelineSet.getLiveTimeline(),
+            { backwards: true, limit: 20 },
+        );
+    } catch (e) {
+        // Filter creation fails if HomeServer does not support the new relation
+        // filter fields. We fallback to the threads that have been discovered in
+        // the main timeline
+        timelineSet = new EventTimelineSet(room, {});
+        for (const [, thread] of room.threads) {
+            const isOwnEvent = thread.rootEvent.getSender() === client.getUserId();
+            if (filterType !== ThreadFilterType.My || isOwnEvent) {
+                timelineSet.getLiveTimeline().addEvent(thread.rootEvent);
+            }
+        }
+    }
 
     return timelineSet;
 }
