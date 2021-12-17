@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639744362114,
+  "lastUpdate": 1639759620578,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49736,6 +49736,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 720.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "63e69d9fa8f68ab1b8300646300c9756af0cc21e",
+          "message": "Fix inline code block nowrap issue (#7406)",
+          "timestamp": "2021-12-17T16:41:01Z",
+          "tree_id": "5dc261e34de43ca5de991eedde8046d0f5e1630a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/63e69d9fa8f68ab1b8300646300c9756af0cc21e"
+        },
+        "date": 1639759617298,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4743.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 634.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
