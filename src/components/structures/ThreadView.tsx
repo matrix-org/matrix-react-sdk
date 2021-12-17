@@ -22,7 +22,6 @@ import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import { TileShape } from '../views/rooms/EventTile';
 import MessageComposer from '../views/rooms/MessageComposer';
@@ -41,6 +40,9 @@ import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
+import RightPanelStore from '../../stores/RightPanelStore';
+import SettingsStore from '../../settings/SettingsStore';
+import { WidgetLayoutStore } from '../../stores/widgets/WidgetLayoutStore';
 
 interface IProps {
     room: Room;
@@ -69,6 +71,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         super(props);
         this.state = {};
     }
+
     public componentDidMount(): void {
         this.setupThread(this.props.mxEvent);
         this.dispatcherRef = dis.register(this.onAction);
@@ -163,10 +166,11 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private updateThread = (thread?: Thread) => {
-        if (thread) {
+        if (thread && this.state.thread !== thread) {
             this.setState({
                 thread,
             });
+            thread.emit(ThreadEvent.ViewThread);
         }
 
         this.timelinePanelRef.current?.refreshTimeline();
@@ -175,7 +179,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private onScroll = (): void => {
         if (this.props.initialEvent && this.props.initialEventHighlighted) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
                 event_id: this.props.initialEvent?.getId(),
                 highlighted: false,
@@ -203,6 +207,24 @@ export default class ThreadView extends React.Component<IProps, IState> {
             event_id: this.state.thread?.id,
         };
 
+        let previousPhase = RightPanelStore.getSharedInstance().previousPhase;
+        if (!SettingsStore.getValue("feature_maximised_widgets")) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+
+        // change the previous phase to the threadPanel in case there is no maximised widget anymore
+        if (!WidgetLayoutStore.instance.hasMaximisedWidget(this.props.room)) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+
+        // Make sure the previous Phase is always one of the two: Timeline or ThreadPanel
+        if (![RightPanelPhases.ThreadPanel, RightPanelPhases.Timeline].includes(previousPhase)) {
+            previousPhase = RightPanelPhases.ThreadPanel;
+        }
+        const previousPhaseLabels = {};
+        previousPhaseLabels[RightPanelPhases.ThreadPanel] = _t("All threads");
+        previousPhaseLabels[RightPanelPhases.Timeline] = _t("Chat");
+
         return (
             <RoomContext.Provider value={{
                 ...this.context,
@@ -213,18 +235,19 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 <BaseCard
                     className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
-                    previousPhase={RightPanelPhases.ThreadPanel}
-                    previousPhaseLabel={_t("All threads")}
+                    previousPhase={previousPhase}
+                    previousPhaseLabel={previousPhaseLabels[previousPhase]}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
                 >
                     { this.state.thread && (
                         <TimelinePanel
                             ref={this.timelinePanelRef}
-                            showReadReceipts={false} // No RR support in thread's MVP
-                            manageReadReceipts={false} // No RR support in thread's MVP
-                            manageReadMarkers={false} // No RM support in thread's MVP
-                            sendReadReceiptOnLoad={false} // No RR support in thread's MVP
+                            showReadReceipts={false} // Hide the read receipts
+                            // until homeservers speak threads language
+                            manageReadReceipts={true}
+                            manageReadMarkers={true}
+                            sendReadReceiptOnLoad={true}
                             timelineSet={this.state?.thread?.timelineSet}
                             showUrlPreview={true}
                             tileShape={TileShape.Thread}

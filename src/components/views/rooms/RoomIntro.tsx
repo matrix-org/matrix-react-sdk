@@ -106,7 +106,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
         let parentSpace: Room;
         if (
             SpaceStore.instance.activeSpaceRoom?.canInvite(cli.getUserId()) &&
-            SpaceStore.instance.getSpaceFilteredRoomIds(SpaceStore.instance.activeSpace).has(room.roomId)
+            SpaceStore.instance.isRoomInSpace(SpaceStore.instance.activeSpace, room.roomId)
         ) {
             parentSpace = SpaceStore.instance.activeSpaceRoom;
         }

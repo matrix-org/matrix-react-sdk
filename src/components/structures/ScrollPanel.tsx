@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import React, { createRef, CSSProperties, ReactNode, SyntheticEvent, KeyboardEvent } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Timer from '../../utils/Timer';
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { getKeyBindingsManager, RoomAction } from "../../KeyBindingsManager";
 import ResizeNotifier from "../../utils/ResizeNotifier";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const DEBUG_SCROLL = false;
 
@@ -750,6 +750,8 @@ export default class ScrollPanel extends React.Component<IProps> {
         const minHeight = sn.clientHeight;
         const height = Math.max(minHeight, contentHeight);
         this.pages = Math.ceil(height / PAGE_SIZE);
+        const displayScrollbar = contentHeight > minHeight;
+        sn.dataset.scrollbar = displayScrollbar.toString();
         this.bottomGrowth = 0;
         const newHeight = `${this.getListHeight()}px`;
 

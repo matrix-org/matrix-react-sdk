@@ -32,8 +32,11 @@ import {
     IWidgetApiErrorResponseData,
     WidgetKind,
 } from "matrix-widget-api";
-import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { EventEmitter } from "events";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
 import RoomViewStore from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -45,19 +48,17 @@ import { WidgetType } from "../../widgets/WidgetType";
 import ActiveWidgetStore from "../ActiveWidgetStore";
 import { objectShallowClone } from "../../utils/objects";
 import defaultDispatcher from "../../dispatcher/dispatcher";
+import { Action } from "../../dispatcher/actions";
 import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
 import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // TODO: Destroy all of this code
 
@@ -291,7 +292,7 @@ export class StopGapWidget extends EventEmitter {
 
             // at this point we can change rooms, so do that
             defaultDispatcher.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: targetRoomId,
             });
 

@@ -17,10 +17,12 @@ limitations under the License.
 import { CallType } from 'matrix-js-sdk/src/webrtc/call';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import React from 'react';
+import classNames from 'classnames';
+
 import { _t, _td } from '../../../../languageHandler';
 import RoomAvatar from '../../avatars/RoomAvatar';
 import dis from '../../../../dispatcher/dispatcher';
-import classNames from 'classnames';
+import { Action } from '../../../../dispatcher/actions';
 import AccessibleTooltipButton from '../../elements/AccessibleTooltipButton';
 
 const callTypeTranslationByType: Record<CallType, string> = {
@@ -44,7 +46,7 @@ const onFullscreenClick = () => {
 
 const onExpandClick = (roomId: string) => {
     dis.dispatch({
-        action: 'view_room',
+        action: Action.ViewRoom,
         room_id: roomId,
     });
 };

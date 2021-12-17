@@ -40,7 +40,6 @@ import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
-import PseudonymousAnalyticsController from './controllers/PseudonymousAnalyticsController';
 import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
@@ -301,14 +300,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_pseudonymous_analytics_opt_in": {
-        isFeature: true,
-        labsGroup: LabGroup.Analytics,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td('Send pseudonymous analytics data'),
-        default: false,
-        controller: new PseudonymousAnalyticsController(),
-    },
     "feature_polls": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -316,9 +307,17 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Polls (under active development)"),
         default: false,
     },
+    "feature_location_share": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing (under active development)"),
+        default: false,
+    },
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,
+        controller: new IncompatibleController("feature_dnd", false, false),
     },
     "mjolnirRooms": {
         supportedLevels: [SettingLevel.ACCOUNT],
@@ -354,6 +353,29 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             new ReloadOnChangeController(),
         ]),
     },
+    "feature_breadcrumbs_v2": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Use new room breadcrumbs"),
+        default: false,
+    },
+    "feature_spotlight": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("New spotlight search experience"),
+        default: false,
+    },
+    "feature_jump_to_date": {
+        // We purposely leave out `isFeature: true` so it doesn't show in Labs
+        // by default. We will conditionally show it depending on whether we can
+        // detect MSC3030 support (see LabUserSettingsTab.tsx).
+        // labsGroup: LabGroup.Messaging,
+        displayName: _td("Jump to date (adds /jumptodate)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "RoomList.backgroundImage": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: null,
@@ -384,6 +406,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Show stickers button'),
         default: true,
+        controller: new UIFeatureController(UIFeature.Widgets, false),
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
@@ -394,6 +417,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Use a more compact 'Modern' layout"),
         default: false,
+        controller: new IncompatibleController("layout", false, v => v !== Layout.Group),
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
@@ -590,6 +614,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
     },
+    "SpotlightSearch.recentSearches": {
+        // not really a setting
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: [], // list of room IDs, most recent first
+    },
     "room_directory_servers": {
         supportedLevels: [SettingLevel.ACCOUNT],
         default: [],
@@ -611,6 +640,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "showCookieBar": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: true,
+    },
+    "pseudonymousAnalyticsOptIn": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        displayName: _td('Send analytics data'),
+        default: null,
     },
     "autocompleteDelay": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -710,6 +744,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
+        controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
     "showHiddenEventsInTimeline": {
         displayName: _td("Show hidden events in timeline"),
@@ -836,6 +871,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         controller: new IncompatibleController("feature_spaces_metaspaces", {
             [MetaSpace.Home]: true,
         }, false),
+    },
+    "Spaces.showPeopleInSpace": {
+        supportedLevels: [SettingLevel.ROOM_ACCOUNT],
+        default: true,
+        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
     "showCommunitiesInsteadOfSpaces": {
         displayName: _td("Display Communities instead of Spaces"),

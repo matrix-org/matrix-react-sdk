@@ -18,10 +18,13 @@ limitations under the License.
 import React, { createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import dis from '../../../dispatcher/dispatcher';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
+import { Action } from "../../../dispatcher/actions";
 import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
@@ -36,7 +39,7 @@ import RoomListStore from "../../../stores/room-list/RoomListStore";
 import RoomListActions from "../../../actions/RoomListActions";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "../../../stores/notifications/NotificationState";
+import { NotificationState, NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { CachedRoomKey, RoomEchoChamber } from "../../../stores/local-echo/RoomEchoChamber";
@@ -49,8 +52,6 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     room: Room;
@@ -163,7 +164,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
             this.onRoomPreviewChanged,
         );
-        this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         this.props.room?.on("Room.name", this.onRoomNameUpdate);
         CommunityPrototypeStore.instance.on(
@@ -187,7 +188,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
-        this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.notificationState.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         CommunityPrototypeStore.instance.off(
             CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
@@ -235,7 +236,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             show_room_tile: true, // make sure the room is visible in the list
             room_id: this.props.room.roomId,
             clear_search: (ev && (ev.key === Key.ENTER || ev.key === Key.SPACE)),
@@ -484,8 +485,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             const isLowPriority = roomTags.includes(DefaultTagID.LowPriority);
             const lowPriorityLabel = _t("Low Priority");
 
+            const isDm = roomTags.includes(DefaultTagID.DM);
+
             const userId = MatrixClientPeg.get().getUserId();
-            const canInvite = this.props.room.canInvite(userId);
+            const canInvite = this.props.room.canInvite(userId) && !isDm; // hide invite in DMs from this quick menu
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -508,15 +511,15 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     { canInvite ? (
                         <IconizedContextMenuOption
                             onClick={this.onInviteClick}
-                            label={_t("Invite People")}
+                            label={_t("Invite")}
                             iconClassName="mx_RoomTile_iconInvite"
                         />
                     ) : null }
-                    <IconizedContextMenuOption
+                    { !isDm ? <IconizedContextMenuOption
                         onClick={this.onCopyRoomClick}
-                        label={_t("Copy Room Link")}
+                        label={_t("Copy room link")}
                         iconClassName="mx_RoomTile_iconCopyLink"
-                    />
+                    /> : null }
                     <IconizedContextMenuOption
                         onClick={this.onOpenRoomSettings}
                         label={_t("Settings")}
@@ -526,7 +529,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 <IconizedContextMenuOptionList red>
                     <IconizedContextMenuOption
                         onClick={this.onLeaveRoomClick}
-                        label={_t("Leave Room")}
+                        label={_t("Leave")}
                         iconClassName="mx_RoomTile_iconSignOut"
                     />
                 </IconizedContextMenuOptionList>
@@ -562,13 +565,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         let name = roomProfile.displayName || this.props.room.name;
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
-
-        const roomAvatar = <DecoratedRoomAvatar
-            room={this.props.room}
-            avatarSize={32}
-            displayBadge={this.props.isMinimized}
-            oobData={({ avatarUrl: roomProfile.avatarMxc })}
-        />;
 
         let badge: React.ReactNode;
         if (!this.props.isMinimized && this.notificationState) {
@@ -660,7 +656,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             aria-selected={this.state.selected}
                             aria-describedby={ariaDescribedBy}
                         >
-                            { roomAvatar }
+                            <DecoratedRoomAvatar
+                                room={this.props.room}
+                                avatarSize={32}
+                                displayBadge={this.props.isMinimized}
+                                oobData={({ avatarUrl: roomProfile.avatarMxc })}
+                                tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
+                            />
                             { nameContainer }
                             { badge }
                             { this.renderGeneralMenu() }

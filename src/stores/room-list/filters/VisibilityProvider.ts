@@ -15,6 +15,7 @@
  */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+
 import CallHandler from "../../../CallHandler";
 import { RoomListCustomisations } from "../../../customisations/RoomList";
 import VoipUserMapper from "../../../VoipUserMapper";
@@ -43,7 +44,7 @@ export class VisibilityProvider {
         }
 
         if (
-            CallHandler.sharedInstance().getSupportsVirtualRooms() &&
+            CallHandler.instance.getSupportsVirtualRooms() &&
             VoipUserMapper.sharedInstance().isVirtualRoom(room)
         ) {
             return false;

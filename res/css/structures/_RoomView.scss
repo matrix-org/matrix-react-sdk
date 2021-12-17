@@ -120,6 +120,10 @@ limitations under the License.
     overflow-y: auto;
     flex: 1 1 0;
     overflow-anchor: none;
+
+    &[data-scrollbar=false] {
+        overflow-y: hidden;
+    }
 }
 
 .mx_RoomView_messagePanelSearchSpinner {
@@ -132,7 +136,7 @@ limitations under the License.
 }
 
 .mx_RoomView_messagePanelSearchSpinner::before {
-    background-color: $greyed-fg-color;
+    background-color: $info-plinth-fg-color;
     mask: url('$(res)/img/feather-customised/search-input.svg');
     mask-repeat: no-repeat;
     mask-position: center;
@@ -162,6 +166,7 @@ limitations under the License.
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-right: calc($container-gap-width / 2);
 }
 
 .mx_RoomView_statusArea {

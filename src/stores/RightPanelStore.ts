@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Store } from 'flux/utils';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import dis from '../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../verification';
-import { Store } from 'flux/utils';
 import SettingsStore from "../settings/SettingsStore";
 import { RightPanelPhases, RIGHT_PANEL_PHASES_NO_ARGS } from "./RightPanelStorePhases";
 import { ActionPayload } from "../dispatcher/payloads";
 import { Action } from '../dispatcher/actions';
 import { SettingLevel } from "../settings/SettingLevel";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface RightPanelStoreState {
     // Whether or not to show the right panel at all. We split out rooms and groups
@@ -148,7 +148,7 @@ export default class RightPanelStore extends Store<ActionPayload> {
 
     __onDispatch(payload: ActionPayload) { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
-            case 'view_room':
+            case Action.ViewRoom:
                 if (payload.room_id === this.lastRoomId) break; // skip this transition, probably a permalink
                 // fallthrough
             case 'view_group':
