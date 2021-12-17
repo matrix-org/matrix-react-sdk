@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639680120339,
+  "lastUpdate": 1639731553187,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49388,6 +49388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 758.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9ed771ad7a28e0626a1a36794140e831c43857d5",
+          "message": "Have LocalEchoWrapper emit updates so the app can react faster (#7358)",
+          "timestamp": "2021-12-17T08:53:03Z",
+          "tree_id": "0b7ce023b727925816cb722c9ca22c8c2fbe212b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9ed771ad7a28e0626a1a36794140e831c43857d5"
+        },
+        "date": 1639731549657,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5060.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 911.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1592.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4153.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
