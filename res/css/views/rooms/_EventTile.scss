@@ -783,7 +783,8 @@ $left-gutter: 64px;
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: 999;
+        /* enough to cover all sibling elements */
+        z-index: 10;
     }
 
     &:last-child {
