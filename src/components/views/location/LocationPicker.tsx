@@ -254,7 +254,7 @@ class LocationPicker extends React.Component<IProps, IState> {
     }
 }
 
-export function getGeoUri(position: GeolocationPosition) {
+export function getGeoUri(position: GeolocationPosition): string {
     return (`geo:${ position.coords.latitude },` +
             position.coords.longitude +
             ( position.coords.altitude !== undefined ?
