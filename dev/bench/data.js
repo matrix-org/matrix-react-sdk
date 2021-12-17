@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639737784380,
+  "lastUpdate": 1639739066372,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49628,6 +49628,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 692.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bd226cd0621bb136fd01580f33d659d5ab24dec5",
+          "message": "Tests for getGeoUri (#7400)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2021-12-17T10:58:24Z",
+          "tree_id": "8298a0c2182019b7540091a927566e58005a10ff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bd226cd0621bb136fd01580f33d659d5ab24dec5"
+        },
+        "date": 1639739062608,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4971.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 687.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
