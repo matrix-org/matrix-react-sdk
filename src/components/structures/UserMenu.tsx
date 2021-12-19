@@ -399,7 +399,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             }
         }
 
-        let homeButton = (
+        const homeButton = (
             <IconizedContextMenuOption
                 iconClassName="mx_UserMenu_iconHome"
                 label={_t("Home")}
