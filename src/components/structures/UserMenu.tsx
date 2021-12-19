@@ -175,10 +175,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
         return SettingsStore.getValue("doNotDisturb");
     }
 
-    private get hasHomePage(): boolean {
-        return !!getHomePageUrl(SdkConfig.get());
-    }
-
     public componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         this.themeWatcherRef = SettingsStore.watchSetting("theme", null, this.onThemeChanged);
@@ -403,16 +399,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
             }
         }
 
-        let homeButton = null;
-        if (this.hasHomePage) {
-            homeButton = (
-                <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconHome"
-                    label={_t("Home")}
-                    onClick={this.onHomeClick}
-                />
-            );
-        }
+        let homeButton = (
+            <IconizedContextMenuOption
+                iconClassName="mx_UserMenu_iconHome"
+                label={_t("Home")}
+                onClick={this.onHomeClick}
+            />
+        );
 
         let customStatusSection: JSX.Element;
         if (SettingsStore.getValue("feature_custom_status")) {
