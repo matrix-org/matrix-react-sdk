@@ -24,7 +24,7 @@ import LocationPicker from './LocationPicker';
 import { CollapsibleButton, ICollapsibleButtonProps } from '../rooms/CollapsibleButton';
 import ContextMenu, { aboveLeftOf, useContextMenu, AboveLeftOf } from "../../structures/ContextMenu";
 
-interface ILocationButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
+interface IProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
     room: Room;
     shareLocation: (
         uri: string,
@@ -36,7 +36,7 @@ interface ILocationButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode
     narrowMode: boolean;
 }
 
-export const LocationButton: React.FC<ILocationButtonProps> = (
+export const LocationButton: React.FC<IProps> = (
     { shareLocation, menuPosition, narrowMode },
 ) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
