@@ -51,6 +51,7 @@ export default class GroupHeaderButtons extends HeaderButtons {
         if (payload.action === Action.ViewUser) {
             if ((payload as ViewUserPayload).member) {
                 RightPanelStore.instance.setCards([
+                    { phase: RightPanelPhases.GroupRoomInfo },
                     { phase: RightPanelPhases.GroupMemberList },
                     { phase: RightPanelPhases.RoomMemberInfo, state: { member: payload.member } },
                 ]);
