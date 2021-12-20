@@ -20,7 +20,7 @@ limitations under the License.
     --gutterSize: 11px;
     --cornerRadius: 12px;
     --maxWidth: 70%;
-    margin-right: 60px;
+    margin-right: 80px;
 }
 
 .mx_EventTile[data-layout=bubble] {
@@ -307,10 +307,11 @@ limitations under the License.
         position: absolute;
         bottom: 0;
         right: 0;
+        z-index: 10; // above avatar
 
         .mx_EventTile_readAvatars {
             position: absolute;
-            right: -80px;
+            right: -100px;
             bottom: 0;
             top: auto;
         }
