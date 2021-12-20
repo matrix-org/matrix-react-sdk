@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useDrag } from "react-use-gesture";
 import { useSprings } from "@react-spring/web";
 import useMeasure from "react-use-measure";
@@ -22,6 +22,7 @@ import { ResizeObserver } from "@juggle/resize-observer";
 import moveArrItem from "lodash-move";
 import VideoTile from "./VideoTile";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 export function useVideoGridLayout(): [string, (layout: string) => void] {
     return useState("freedom");
@@ -462,6 +463,7 @@ interface IVideoGridProps {
     items: IVideoGridItem[];
     layout: string;
     onFocusTile?: (tiles: IVideoGridTile[], item: IVideoGridTile) => IVideoGridTile[];
+    getAvatar?: (member: RoomMember, width: number, height: number) => ReactNode;
 }
 
 interface IDraggingTile {
@@ -472,7 +474,7 @@ interface IDraggingTile {
     y: number;
 }
 
-export default function VideoGrid({ items, layout, onFocusTile, disableAnimations }: IVideoGridProps) {
+export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disableAnimations }: IVideoGridProps) {
     const [{ tiles, tilePositions }, setTileState] = useState<IVideoGridState>({
         tiles: [],
         tilePositions: [],
@@ -792,6 +794,7 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
         <div className="mx_VideoGrid" ref={gridRef}>
             { springs.map(({ shadow, ...style }, i) => {
                 const tile = tiles[i];
+                const tilePosition = tilePositions[i];
 
                 return (
                     <VideoTile
@@ -803,6 +806,9 @@ export default function VideoGrid({ items, layout, onFocusTile, disableAnimation
                             ),
                             ...style,
                         }}
+                        width={tilePosition.width}
+                        height={tilePosition.height}
+                        getAvatar={getAvatar}
                         disableSpeakingHighlight={springs.length < 3}
                         usermediaCallFeed={tile.item.usermediaCallFeed}
                         screenshareCallFeed={tile.item.screenshareCallFeed}

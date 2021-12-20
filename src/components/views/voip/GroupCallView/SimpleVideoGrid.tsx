@@ -21,6 +21,8 @@ export default function SimpleVideoGrid({ items }: ISimpleVideoGridProps) {
                         key={id}
                         disableSpeakingHighlight={items.length < 3}
                         usermediaCallFeed={callFeed}
+                        width={426}
+                        height={240}
                     />
                 );
             }) }

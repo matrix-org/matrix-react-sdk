@@ -1,4 +1,4 @@
-import React, { forwardRef, PropsWithChildren, ReactNode, useState } from "react";
+import React, { forwardRef, PropsWithChildren, ReactNode } from "react";
 import { animated } from "@react-spring/web";
 import classNames from "classnames";
 import { useCallFeed } from "../../../../hooks/useCallFeed";
@@ -6,17 +6,18 @@ import { useMediaStream } from "../../../../hooks/useMediaStream";
 import { useRoomMemberName } from "../../../../hooks/useRoomMemberName";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
-
-const defaultColors = ['#0DBD8B', '#368bd6', '#ac3ba8'];
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 interface IVideoContainerProps {
     as: React.ElementType<PropsWithChildren<any>>;
     className?: string;
     disableSpeakingHighlight: boolean;
     callFeed: CallFeed;
-    avatarBackgroundColor: string;
+    getAvatar?: (member: RoomMember, width: number, height: number) => ReactNode;
     children?: ReactNode;
     style?: any;
+    width: number;
+    height: number;
 }
 
 const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
@@ -25,8 +26,10 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
         className,
         disableSpeakingHighlight,
         callFeed,
-        avatarBackgroundColor,
+        getAvatar,
         children,
+        width,
+        height,
         ...rest
     },
     ref) => {
@@ -58,12 +61,7 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
             { videoMuted && (
                 <>
                     <div className="mx_videoMutedOverlay" />
-                    <svg className="mx_videoMutedAvatar" height="50%" viewBox="0 0 50 50" preserveAspectRatio="xMinYmin">
-                        <circle r="25" cx="25" cy="25" fill={avatarBackgroundColor} />
-                        <text x="25" y="27" fontSize="20" textAnchor="middle" dominantBaseline="middle" fill="white">
-                            { name.slice(0, 1).toUpperCase() }
-                        </text>
-                    </svg>
+                    { getAvatar && getAvatar(member, width, height) }
                 </>
             ) }
             { purpose !== SDPStreamMetadataPurpose.Screenshare && (
@@ -80,9 +78,12 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
 
 interface IVideoTileProps {
     style?: any;
+    getAvatar?: (member: RoomMember, width: number, height: number) => ReactNode;
     usermediaCallFeed: CallFeed;
     screenshareCallFeed?: CallFeed;
     disableSpeakingHighlight: boolean;
+    width: number;
+    height: number;
 }
 
 export default function VideoTile({
@@ -90,20 +91,18 @@ export default function VideoTile({
     usermediaCallFeed,
     screenshareCallFeed,
     disableSpeakingHighlight,
+    width,
+    height,
     ...rest
 }: IVideoTileProps) {
-    const [avatarBackgroundColor] = useState(() => {
-        const avatarBackgroundColorIndex = Math.round(Math.random() * (defaultColors.length - 1));
-        return defaultColors[avatarBackgroundColorIndex];
-    });
-
     return (
         <VideoContainer
             as={animated.div}
             style={style}
             disableSpeakingHighlight={disableSpeakingHighlight}
-            avatarBackgroundColor={avatarBackgroundColor}
             callFeed={screenshareCallFeed || usermediaCallFeed}
+            width={width}
+            height={height}
             {...rest}
         >
             {
@@ -111,9 +110,10 @@ export default function VideoTile({
                     <VideoContainer
                         as="div"
                         className="mx_screensharePIP"
-                        avatarBackgroundColor={avatarBackgroundColor}
                         callFeed={usermediaCallFeed}
                         disableSpeakingHighlight={disableSpeakingHighlight}
+                        width={Math.round(width / 4)}
+                        height={Math.round(height / 4)}
                     />
                 )
             }
