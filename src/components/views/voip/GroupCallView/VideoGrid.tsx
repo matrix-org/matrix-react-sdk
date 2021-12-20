@@ -809,7 +809,6 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                         width={tilePosition.width}
                         height={tilePosition.height}
                         getAvatar={getAvatar}
-                        disableSpeakingHighlight={springs.length < 3}
                         usermediaCallFeed={tile.item.usermediaCallFeed}
                         screenshareCallFeed={tile.item.screenshareCallFeed}
                     />

@@ -11,7 +11,6 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 interface IVideoContainerProps {
     as: React.ElementType<PropsWithChildren<any>>;
     className?: string;
-    disableSpeakingHighlight: boolean;
     callFeed: CallFeed;
     getAvatar?: (member: RoomMember, width: number, height: number) => ReactNode;
     children?: ReactNode;
@@ -24,7 +23,6 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
     {
         as: Component,
         className,
-        disableSpeakingHighlight,
         callFeed,
         getAvatar,
         children,
@@ -52,7 +50,7 @@ const VideoContainer = forwardRef<HTMLVideoElement, IVideoContainerProps>((
         <Component
             className={classNames("mx_videoTile", className, {
                 "mx_isLocal": isLocal,
-                "mx_speaking": speaking && !disableSpeakingHighlight,
+                "mx_speaking": speaking,
                 "mx_muted": audioMuted,
                 "mx_screenshare": purpose === SDPStreamMetadataPurpose.Screenshare,
             })}
@@ -81,7 +79,6 @@ interface IVideoTileProps {
     getAvatar?: (member: RoomMember, width: number, height: number) => ReactNode;
     usermediaCallFeed: CallFeed;
     screenshareCallFeed?: CallFeed;
-    disableSpeakingHighlight: boolean;
     width: number;
     height: number;
 }
@@ -90,7 +87,6 @@ export default function VideoTile({
     style,
     usermediaCallFeed,
     screenshareCallFeed,
-    disableSpeakingHighlight,
     width,
     height,
     ...rest
@@ -99,7 +95,6 @@ export default function VideoTile({
         <VideoContainer
             as={animated.div}
             style={style}
-            disableSpeakingHighlight={disableSpeakingHighlight}
             callFeed={screenshareCallFeed || usermediaCallFeed}
             width={width}
             height={height}
@@ -111,7 +106,6 @@ export default function VideoTile({
                         as="div"
                         className="mx_screensharePIP"
                         callFeed={usermediaCallFeed}
-                        disableSpeakingHighlight={disableSpeakingHighlight}
                         width={Math.round(width / 4)}
                         height={Math.round(height / 4)}
                     />
