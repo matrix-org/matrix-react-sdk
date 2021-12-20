@@ -61,10 +61,11 @@ function StyledRadioGroup<T extends string>({
                 value={d.value}
                 disabled={d.disabled ?? disabled}
                 outlined={outlined}
+                aria-describedby={d.description ? `${name}-${d.value}` : undefined}
             >
                 { d.label }
             </StyledRadioButton>
-            { d.description ? <span>{ d.description }</span> : null }
+            { d.description ? <span id={`${name}-${d.value}`}>{ d.description }</span> : null }
         </React.Fragment>) }
     </React.Fragment>;
 }
