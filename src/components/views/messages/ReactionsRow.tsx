@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 
