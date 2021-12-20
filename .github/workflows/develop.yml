@@ -12,7 +12,6 @@ jobs:
         runs-on: ubuntu-latest
         env:
           PR_NUMBER: ${{github.event.number}}
-          #SETUPTOOLS_USE_DISTUTILS: stdlib
         container: vectorim/element-web-ci-e2etests-env:latest
         steps:
             - name: Checkout code
