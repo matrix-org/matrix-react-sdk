@@ -38,16 +38,10 @@ function getDaysArray(): string[] {
 interface IProps {
     ts: number;
     forExport?: boolean;
-    now?: Date;
 }
 
 @replaceableComponent("views.messages.DateSeparator")
 export default class DateSeparator extends React.Component<IProps> {
-    // use defaultProp for now to make testing easier
-    public static defaultProps = {
-        now: new Date(),
-    };
-
     private getLabel() {
         const date = new Date(this.props.ts);
         const disableRelativeTimestamps = !SettingsStore.getValue(UIFeature.TimelineEnableRelativeDates);
@@ -55,8 +49,8 @@ export default class DateSeparator extends React.Component<IProps> {
         // During the time the archive is being viewed, a specific day might not make sense, so we return the full date
         if (this.props.forExport || disableRelativeTimestamps) return formatFullDateNoTime(date);
 
-        const today = this.props.now;
-        const yesterday = new Date(this.props.now);
+        const today = new Date();
+        const yesterday = new Date();
         const days = getDaysArray();
         yesterday.setDate(today.getDate() - 1);
 

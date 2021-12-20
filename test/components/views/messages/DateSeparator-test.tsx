@@ -32,21 +32,29 @@ describe("DateSeparator", () => {
     const HOUR_MS = 3600000;
     const DAY_MS = HOUR_MS * 24;
     // Friday Dec 17 2021, 9:09am
-    const now = new Date('Fri Dec 17 2021 09:09:00 GMT+0100 (Central European Standard Time)');
+    const now = '2021-12-17T08:09:00.000Z';
+    const nowMs = 1639728540000;
     const defaultProps = {
-        ts: now.getTime(),
+        ts: nowMs,
         now,
     };
+    const RealDate = global.Date;
+    class MockDate extends Date {
+        constructor(date) {
+            super(date || now);
+        }
+    }
+
     const getComponent = (props = {}) =>
         mount(<DateSeparator {...defaultProps} {...props} />);
 
     type TestCase = [string, number, string];
     const testCases: TestCase[] = [
-        ['the exact same moment', now.getTime(), 'Today'],
-        ['same day as current day', now.getTime() - HOUR_MS, 'Today'],
-        ['day before the current day', now.getTime() - (HOUR_MS * 12), 'Yesterday'],
-        ['2 days ago', now.getTime() - DAY_MS * 2, 'Wednesday'],
-        ['144 hours ago', now.getTime() - HOUR_MS * 144, 'Sat, Dec 11 2021'],
+        ['the exact same moment', nowMs, 'Today'],
+        ['same day as current day', nowMs - HOUR_MS, 'Today'],
+        ['day before the current day', nowMs - (HOUR_MS * 12), 'Yesterday'],
+        ['2 days ago', nowMs - DAY_MS * 2, 'Wednesday'],
+        ['144 hours ago', nowMs - HOUR_MS * 144, 'Sat, Dec 11 2021'],
         [
             '6 days ago, but less than 144h',
             new Date('Saturday Dec 11 2021 23:59:00 GMT+0100 (Central European Standard Time)').getTime(),
@@ -55,7 +63,12 @@ describe("DateSeparator", () => {
     ];
 
     beforeEach(() => {
+        global.Date = MockDate as unknown as DateConstructor;
         (SettingsStore.getValue as jest.Mock).mockReturnValue(true);
+    });
+
+    afterAll(() => {
+        global.Date = RealDate;
     });
 
     it('renders the date separator correctly', () => {

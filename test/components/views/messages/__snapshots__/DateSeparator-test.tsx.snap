@@ -2,11 +2,11 @@
 
 exports[`DateSeparator renders the date separator correctly 1`] = `
 <Wrapper
-  now={2021-12-17T08:09:00.000Z}
+  now="2021-12-17T08:09:00.000Z"
   ts={1639728540000}
 >
   <DateSeparator
-    now={2021-12-17T08:09:00.000Z}
+    now="2021-12-17T08:09:00.000Z"
     ts={1639728540000}
   >
     <h2
