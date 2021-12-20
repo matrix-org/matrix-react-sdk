@@ -26,7 +26,7 @@ source env/bin/activate
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python get-pip.py
 
-#pip install --upgrade setuptools
+pip install --upgrade setuptools
 pip install https://codeload.github.com/matrix-org/synapse/zip/$SYNAPSE_BRANCH
 # apply configuration
 pushd env/bin/
