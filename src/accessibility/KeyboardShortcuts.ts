@@ -251,7 +251,7 @@ export const shortcuts: Record<Categories, IShortcut[]> = {
                 modifiers: [CMD_OR_CTRL],
                 key: Key.SLASH,
             }],
-            description: _td("Toggle this dialog"),
+            description: _td("Open this settings tab"),
         }, {
             keybinds: [{
                 modifiers: [Modifiers.CONTROL, isMac ? Modifiers.SHIFT : Modifiers.ALT],
