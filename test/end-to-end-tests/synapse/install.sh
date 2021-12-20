@@ -30,6 +30,10 @@ pip install --upgrade pip
 #python get-pip.py
 
 pip install https://codeload.github.com/matrix-org/synapse/zip/$SYNAPSE_BRANCH
+
+# reivilibre: Suspected bug in frozendict 2.1.2 leading to a core dump...
+pip install frozendict==2.0.2
+
 # apply configuration
 pushd env/bin/
 cp -r $BASE_DIR/config-templates/$CONFIG_TEMPLATE/. ./
