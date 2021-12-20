@@ -48,9 +48,11 @@ export enum RightPanelPhases {
 
 export function labelForPhase(phase: RightPanelPhases) {
     switch (phase) {
-        case RightPanelPhases.ThreadPanel: return _t("All threads");
-        case RightPanelPhases.Timeline: return _t("Chat");
-        case RightPanelPhases.RoomSummary: return _t("Info");
+        case RightPanelPhases.ThreadPanel: return _t("all threads");
+        case RightPanelPhases.Timeline: return _t("chat");
+        case RightPanelPhases.RoomSummary: return _t("info");
+        case RightPanelPhases.RoomMemberList: return _t("member list");
+        case RightPanelPhases.ThreadView: return _t("thread");
     }
     return null;
 }

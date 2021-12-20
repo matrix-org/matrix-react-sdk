@@ -54,7 +54,6 @@ export default class GroupHeaderButtons extends HeaderButtons {
                     { phase: RightPanelPhases.GroupMemberList },
                     { phase: RightPanelPhases.RoomMemberInfo, state: { member: payload.member } },
                 ]);
-                // this.setPhase(RightPanelPhases.RoomMemberInfo, { member: payload.member });
             } else {
                 this.setPhase(RightPanelPhases.GroupMemberList);
             }

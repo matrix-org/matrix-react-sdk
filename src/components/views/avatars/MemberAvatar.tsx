@@ -99,21 +99,14 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
         const userId = member ? member.userId : fallbackUserId;
 
         if (viewUserOnClick) {
-            const onClickPush = () => {
-                RightPanelStore.instance.pushCard({
-                    phase: RightPanelPhases.RoomMemberInfo,
-                    state: { member: this.props.member },
-                });
-            };
-
-            const onClickSet = () => {
+            const onClickFunc = () => {
                 dis.dispatch({
                     action: Action.ViewUser,
                     member: this.props.member,
+                    push: this.context.isCard,
                 });
             };
-
-            onClick = (this.context.isCard) ? onClickPush : onClickSet;
+            onClick = onClickFunc;
         }
 
         return (
