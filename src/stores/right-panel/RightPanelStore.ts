@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventSubscription } from 'fbemitter';
 
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
@@ -62,7 +61,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     private viewedRoomId: string;
     private isViewingRoom?: boolean;
     private dispatcherRefRightPanelStore: string;
-    private roomStoreToken: EventSubscription;
+    private isReady = false;
 
     private global?: IRightPanelForRoom = null;
     private byRoom: {
@@ -75,6 +74,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onReady(): Promise<any> {
+        this.isReady = true;
         // TODO RightPanelStore (will be addressed when dropping groups): This should be used instead of the onDispatch callback when groups are removed.
         // RoomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.loadCacheFromSettings();
@@ -88,9 +88,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onNotReady(): Promise<any> {
-        if (this.roomStoreToken) {
-            this.roomStoreToken.remove();
-        }
+        this.isReady = false;
         // TODO RightPanelStore (will be addressed when dropping groups): User this instead of the dispatcher.
         // RoomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
@@ -338,9 +336,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 _this.viewedRoomId = payload.room_id;
                 _this.isViewingRoom = payload.action == Action.ViewRoom;
                 // load values from byRoomCache with the viewedRoomId.
-                if (!!_this.roomStoreToken) {
-                    // skip loading here since we need the client to be ready to get the events form the ids of the settings
-                    // this loading will be done in the onReady function
+                if (_this.isReady) {
+                    // we need the client to be ready to get the events form the ids of the settings
+                    // the loading will be done in the onReady function (to catch up with the changes done here before it was ready)
                     // all the logic in this case is not necessary anymore as soon as groups are dropped and we use: onRoomViewStoreUpdate
                     _this.loadCacheFromSettings();
                     _this.emitAndUpdateSettings();
