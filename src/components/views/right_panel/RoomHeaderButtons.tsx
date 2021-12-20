@@ -32,7 +32,7 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
-import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-actions/threads";
+import { showThreadPanel } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
@@ -203,7 +203,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
             RightPanelStore.instance.togglePanel();
         } else {
-            dispatchShowThreadsPanelEvent();
+            showThreadPanel();
         }
     };
 

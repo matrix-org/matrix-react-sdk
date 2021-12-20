@@ -113,7 +113,7 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
                 });
             };
 
-            onClick = (this.context == "Card") ? onClickPush : onClickSet;
+            onClick = (this.context.isCard) ? onClickPush : onClickSet;
         }
 
         return (

@@ -23,7 +23,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { labelForPhase } from '../../../stores/right-panel/RightPanelStorePhases';
 
-export const CardContext = React.createContext("");
+export const CardContext = React.createContext({ isCard: false });
 interface IProps {
     header?: ReactNode;
     footer?: ReactNode;
@@ -82,7 +82,7 @@ const BaseCard: React.FC<IProps> = ({
     }
 
     return (
-        <CardContext.Provider value="Card">
+        <CardContext.Provider value={{ isCard: true }}>
             <div className={classNames("mx_BaseCard", className)}>
                 <div className="mx_BaseCard_header">
                     { backButton }

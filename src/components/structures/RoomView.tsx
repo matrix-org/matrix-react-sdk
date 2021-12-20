@@ -94,7 +94,7 @@ import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threads';
+import { showThread } from '../../dispatcher/dispatch-actions/threads';
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
@@ -423,21 +423,21 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
             const thread = initialEvent?.getThread();
             if (thread && !initialEvent?.isThreadRoot) {
-                // dispatchShowThreadEvent(
-                //     thread.rootEvent,
-                //     initialEvent,
-                //     RoomViewStore.isInitialEventHighlighted(),
-                // );
+                showThread(
+                    thread.rootEvent,
+                    initialEvent,
+                    RoomViewStore.isInitialEventHighlighted(),
+                );
             } else {
                 newState.initialEventId = initialEventId;
                 newState.isInitialEventHighlighted = RoomViewStore.isInitialEventHighlighted();
 
                 if (thread && initialEvent?.isThreadRoot) {
-                    // dispatchShowThreadEvent(
-                    //     thread.rootEvent,
-                    //     initialEvent,
-                    //     RoomViewStore.isInitialEventHighlighted(),
-                    // );
+                    showThread(
+                        thread.rootEvent,
+                        initialEvent,
+                        RoomViewStore.isInitialEventHighlighted(),
+                    );
                 }
             }
         }
