@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639761303446,
+  "lastUpdate": 1640053112171,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49844,6 +49844,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 658.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b90a0c443db141920c7f1af94e71ed0b1d78f74e",
+          "message": "Fix end-to-end tests (synapse setup) (#7420)\n\n* Update install.sh\r\n\r\n* Update install.sh\r\n\r\n* Update develop.yml\r\n\r\n* Update install.sh\r\n\r\n* Update develop.yml\r\n\r\n* Update install.sh\r\n\r\n* Update install.sh\r\n\r\n* Work around suspected frozendict bug\r\n\r\n* Faff around with install-webserver.sh\r\n\r\n* Actually I don't think these clash anyway\r\n\r\n* Minor cleanup\r\n\r\n* Add comments\r\n\r\nCo-authored-by: Olivier <olivier@librepush.net>",
+          "timestamp": "2021-12-21T02:12:07Z",
+          "tree_id": "7e7a9f6b330865ad963e46900ea81354b75ac280",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b90a0c443db141920c7f1af94e71ed0b1d78f74e"
+        },
+        "date": 1640053108740,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5068.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 748.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
