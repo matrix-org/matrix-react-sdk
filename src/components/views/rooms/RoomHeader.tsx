@@ -17,9 +17,12 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
+import { throttle } from 'lodash';
+import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
+
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
@@ -28,20 +31,15 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Modal from '../../../Modal';
-import InfoDialog from "../dialogs/InfoDialog";
-import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
-import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
-import { NOTIFICATION_STATE_UPDATE } from '../../../stores/notifications/NotificationState';
 import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
+import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -78,7 +76,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
-        notiStore.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.state = {};
     }
 
@@ -93,7 +91,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             cli.removeListener("RoomState.events", this.onRoomStateEvents);
         }
         const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
-        notiStore.removeListener(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
     }
 
     private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
@@ -112,14 +110,6 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     private rateLimitedUpdate = throttle(() => {
         this.forceUpdate();
     }, 500, { leading: true, trailing: true });
-
-    private displayInfoDialogAboutScreensharing() {
-        Modal.createDialog(InfoDialog, {
-            title: _t("Screen sharing is here!"),
-            description: _t("You can now share your screen by pressing the \"screen share\" " +
-            "button during a call. You can even do this in audio calls if both sides support it!"),
-        });
-    }
 
     private onContextMenuOpenClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
@@ -219,8 +209,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             />;
             const videoCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
-                onClick={(ev: React.MouseEvent<Element>) => ev.shiftKey ?
-                    this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(CallType.Voice)}
+                onClick={() => this.props.onCallPlaced(CallType.Video)}
                 title={_t("Video call")}
                 key="video"
             />;

@@ -36,35 +36,42 @@ $activeBorderColor: $primary-content;
     flex-direction: column;
 
     .mx_SpacePanel_toggleCollapse {
-        margin: 0 auto;
-        position: relative;
-        min-width: 32px;
-        min-height: 32px;
-        line-height: 32px;
-        color: $secondary-content;
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: $tertiary-content;
+        top: 19px; // v-align with avatar
+        right: -8px;
 
         &::before {
             content: "";
             position: absolute;
-            width: 32px;
-            height: 32px;
-            left: 0;
+            width: inherit;
+            height: inherit;
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
-            background-color: $secondary-content;
-            mask-image: url('$(res)/img/element-icons/expand-space-panel.svg');
+            background-color: $background;
+            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+            transform: rotate(270deg);
         }
 
-        &.expanded {
-            padding-left: 48px;
-            padding-right: 8px;
-            margin-left: $gutterSize;
+        &:not(.expanded) {
+            opacity: 0;
 
             &::before {
-                transform: scaleX(-1);
+                mask-position: center 1px;
             }
         }
+
+        &.expanded::before {
+            transform: rotate(90deg);
+        }
+    }
+
+    &:hover .mx_SpacePanel_toggleCollapse {
+        opacity: 1;
     }
 
     ul {
@@ -349,6 +356,12 @@ $activeBorderColor: $primary-content;
             mask-image: linear-gradient(180deg, transparent, black 5%, black 95%, transparent);
         }
     }
+
+    .mx_UserMenu {
+        padding: 0 2px 8px;
+        border-bottom: 1px solid $quinary-content;
+        margin: 12px 14px 4px 18px;
+    }
 }
 
 .mx_SpacePanel_contextMenu {
@@ -381,6 +394,10 @@ $activeBorderColor: $primary-content;
 
     .mx_SpacePanel_iconExplore::before {
         mask-image: url('$(res)/img/element-icons/roomlist/search.svg');
+    }
+
+    .mx_SpacePanel_iconPreferences::before {
+        mask-image: url('$(res)/img/element-icons/settings/preference.svg');
     }
 
     .mx_SpacePanel_noIcon {

@@ -15,16 +15,16 @@ limitations under the License.
 */
 
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { logger } from 'matrix-js-sdk/src/logger';
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
 import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
-import { logger } from 'matrix-js-sdk/src/logger';
-import { POLL_START_EVENT_TYPE } from '../polls/consts';
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
@@ -46,7 +46,10 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
             if (content.msgtype && content.msgtype !== 'm.bad.encrypted' && content.hasOwnProperty('body')) {
                 return true;
             }
-        } else if (mxEvent.getType() === 'm.sticker') {
+        } else if (
+            mxEvent.getType() === 'm.sticker' ||
+            POLL_START_EVENT_TYPE.matches(mxEvent.getType())
+        ) {
             return true;
         }
     }
@@ -116,6 +119,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
     tileHandler: string;
     isBubbleMessage: boolean;
     isLeftAlignedBubbleMessage: boolean;
+    noBubbleEvent: boolean;
 } {
     const content = mxEvent.getContent();
     const msgtype = content.msgtype;
@@ -141,7 +145,11 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
         eventType !== EventType.RoomMessage &&
         eventType !== EventType.Sticker &&
         eventType !== EventType.RoomCreate &&
-        eventType !== POLL_START_EVENT_TYPE.name
+        !POLL_START_EVENT_TYPE.matches(eventType)
+    );
+    // Some non-info messages want to be rendered in the appropriate bubble column but without the bubble background
+    const noBubbleEvent = (
+        POLL_START_EVENT_TYPE.matches(eventType)
     );
 
     // If we're showing hidden events in the timeline, we should use the
@@ -155,7 +163,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
         isInfoMessage = true;
     }
 
-    return { tileHandler, isInfoMessage, isBubbleMessage, isLeftAlignedBubbleMessage };
+    return { tileHandler, isInfoMessage, isBubbleMessage, isLeftAlignedBubbleMessage, noBubbleEvent };
 }
 
 export function isVoiceMessage(mxEvent: MatrixEvent): boolean {

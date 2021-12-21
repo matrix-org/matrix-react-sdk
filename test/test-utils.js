@@ -1,11 +1,13 @@
 import React from 'react';
+import EventEmitter from "events";
+import ShallowRenderer from 'react-test-renderer/shallow';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { MatrixClientPeg as peg } from '../src/MatrixClientPeg';
 import dis from '../src/dispatcher/dispatcher';
 import { makeType } from "../src/utils/TypeUtils";
 import { ValidatedServerConfig } from "../src/utils/AutoDiscoveryUtils";
-import ShallowRenderer from 'react-test-renderer/shallow';
 import MatrixClientContext from "../src/contexts/MatrixClientContext";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 export function getRenderer() {
     // Old: ReactTestUtils.createRenderer();
@@ -42,6 +44,8 @@ export function stubClient() {
  * @returns {object} MatrixClient stub
  */
 export function createTestClient() {
+    const eventEmitter = new EventEmitter();
+
     return {
         getHomeserverUrl: jest.fn(),
         getIdentityServerUrl: jest.fn(),
@@ -56,8 +60,9 @@ export function createTestClient() {
         getVisibleRooms: jest.fn().mockReturnValue([]),
         getGroups: jest.fn().mockReturnValue([]),
         loginFlows: jest.fn(),
-        on: jest.fn(),
-        removeListener: jest.fn(),
+        on: eventEmitter.on.bind(eventEmitter),
+        emit: eventEmitter.emit.bind(eventEmitter),
+        removeListener: eventEmitter.removeListener.bind(eventEmitter),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         peekInRoom: jest.fn().mockResolvedValue(mkStubRoom()),
 
@@ -104,6 +109,10 @@ export function createTestClient() {
         getCapabilities: jest.fn().mockResolvedValue({}),
         supportsExperimentalThreads: () => false,
         getRoomUpgradeHistory: jest.fn().mockReturnValue([]),
+        getOpenIdToken: jest.fn().mockResolvedValue(),
+        registerWithIdentityServer: jest.fn().mockResolvedValue({}),
+        getIdentityAccount: jest.fn().mockResolvedValue({}),
+        getTerms: jest.fn().mockResolvedValueOnce(),
     };
 }
 

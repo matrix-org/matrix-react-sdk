@@ -19,6 +19,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventSubscription } from "fbemitter";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomAvatar from "../views/avatars/RoomAvatar";
@@ -82,8 +83,6 @@ import Spinner from "../views/elements/Spinner";
 import GroupAvatar from "../views/avatars/GroupAvatar";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { useRoomState } from "../../hooks/useRoomState";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 
@@ -129,9 +128,9 @@ const useMyRoomMembership = (room: Room) => {
 };
 
 const SpaceInfo = ({ space }: { space: Room }) => {
-    // summary will begin as undefined whilst loading and go null if it fails to load.
+    // summary will begin as undefined whilst loading and go null if it fails to load or we are not invited.
     const summary = useAsyncMemo(async () => {
-        if (space.getMyMembership() !== "invite") return;
+        if (space.getMyMembership() !== "invite") return null;
         try {
             return space.client.getRoomSummary(space.roomId);
         } catch (e) {
@@ -142,7 +141,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
     const membership = useMyRoomMembership(space);
 
     let visibilitySection;
-    if (joinRule === "public") {
+    if (joinRule === JoinRule.Public) {
         visibilitySection = <span className="mx_SpaceRoomView_info_public">
             { _t("Public space") }
         </span>;

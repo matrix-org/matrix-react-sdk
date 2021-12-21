@@ -27,6 +27,13 @@ import { IRecommendedVersion, NotificationCountType, Room } from "matrix-js-sdk/
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventSubscription } from "fbemitter";
 import { ISearchResults } from 'matrix-js-sdk/src/@types/search';
+import { logger } from "matrix-js-sdk/src/logger";
+import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
+import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { RoomState } from 'matrix-js-sdk/src/models/room-state';
+import { CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import { throttle } from "lodash";
+import { MatrixError } from 'matrix-js-sdk/src/http-api';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { _t } from '../../languageHandler';
@@ -66,7 +73,6 @@ import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
-import { CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import WidgetStore from "../../stores/WidgetStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
@@ -79,7 +85,6 @@ import SpaceRoomView from "./SpaceRoomView";
 import { IOpts } from "../../createRoom";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
-import { throttle } from "lodash";
 import ErrorDialog from '../views/dialogs/ErrorDialog';
 import SearchResultTile from '../views/rooms/SearchResultTile';
 import Spinner from "../views/elements/Spinner";
@@ -89,9 +94,6 @@ import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threads';
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
@@ -163,7 +165,7 @@ export interface IRoomState {
     // error object, as from the matrix client/server API
     // If we failed to load information about the room,
     // store the error here.
-    roomLoadError?: Error;
+    roomLoadError?: MatrixError;
     // Have we sent a request to join the room that we're waiting to complete?
     joining: boolean;
     // this is true if we are fully scrolled-down, and are looking at
@@ -329,6 +331,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onWidgetLayoutChange = () => {
         if (!this.state.room) return;
+        dis.dispatch({
+            action: "appsDrawer",
+            show: true,
+        });
         if (WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)) {
             // Show chat in right panel when a widget is maximised
             dis.dispatch<SetRightPanelPhasePayload>({
@@ -652,6 +658,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             callState: callState,
         });
 
+        CallHandler.instance.on(CallHandlerEvent.CallState, this.onCallState);
         window.addEventListener('beforeunload', this.onPageUnload);
     }
 
@@ -669,7 +676,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     componentDidUpdate() {
-        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.onCallState);
         if (this.roomView.current) {
             const roomView = this.roomView.current;
             if (!roomView.ondrop) {
@@ -763,6 +769,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
+        CallHandler.instance.off(CallHandlerEvent.CallState, this.onCallState);
+
         // cancel any pending calls to the throttled updated
         this.updateRoomMembers.cancel();
 
@@ -843,7 +851,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 this.injectSticker(
                     payload.data.content.url,
                     payload.data.content.info,
-                    payload.data.description || payload.data.name);
+                    payload.data.description || payload.data.name,
+                    payload.data.threadId);
                 break;
             case 'picture_snapshot':
                 ContentMessages.sharedInstance().sendContentListToRoom(
@@ -927,7 +936,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             case "scroll_to_bottom":
-                if (payload.timelineRenderingType === this.context.timelineRenderingType) {
+                if (payload.timelineRenderingType === TimelineRenderingType.Room) {
                     this.messagePanel?.jumpToLiveTimeline();
                 }
                 break;
@@ -1163,10 +1172,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
-    private onRoomStateEvents = (ev: MatrixEvent, state) => {
+    private onRoomStateEvents = (ev: MatrixEvent, state: RoomState) => {
         // ignore if we don't have a room yet
         if (!this.state.room || this.state.room.roomId !== state.roomId) {
             return;
+        }
+
+        if (ev.getType() === EventType.RoomCanonicalAlias) {
+            // re-view the room so MatrixChat can manage the alias in the URL properly
+            dis.dispatch({
+                action: Action.ViewRoom,
+                room_id: this.state.room.roomId,
+            });
+            return; // this event cannot affect permissions so bail
         }
 
         this.updatePermissions(this.state.room);
@@ -1352,13 +1370,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private injectSticker(url: string, info: object, text: string) {
+    private injectSticker(url: string, info: object, text: string, threadId: string | null) {
         if (this.context.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
         }
 
-        ContentMessages.sharedInstance().sendStickerContentToRoom(url, this.state.room.roomId, info, text, this.context)
+        ContentMessages.sharedInstance()
+            .sendStickerContentToRoom(url, this.state.room.roomId, threadId, info, text, this.context)
             .then(undefined, (error) => {
                 if (error.name === "UnknownDeviceError") {
                     // Let the staus bar handle this

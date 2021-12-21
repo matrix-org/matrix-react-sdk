@@ -22,6 +22,7 @@ import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from 'matrix-js-sdk/src/utils';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
 import SecurityCustomisations from "./customisations/Security";
@@ -57,8 +58,6 @@ import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyn
 import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { setSentryUser } from "./sentry";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
@@ -538,8 +537,8 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
  * fires on_logging_in, optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
- * @param {MatrixClientCreds} credentials
- * @param {Boolean} clearStorage
+ * @param {IMatrixClientCreds} credentials
+ * @param {Boolean} clearStorageEnabled
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
@@ -585,12 +584,13 @@ async function doSetLoggedIn(
 
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
-
     setSentryUser(credentials.userId);
 
-    const client = MatrixClientPeg.get();
+    if (PosthogAnalytics.instance.isEnabled()) {
+        PosthogAnalytics.instance.startListeningToSettingsChanges();
+    }
 
+    const client = MatrixClientPeg.get();
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
@@ -918,3 +918,17 @@ export function stopMatrixClient(unsetClient = true): void {
         }
     }
 }
+
+// Utility method to perform a login with an existing access_token
+window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Promise<void> => {
+    const tempClient = createClient({
+        baseUrl: hsUrl,
+        accessToken,
+    });
+    const { user_id: userId } = await tempClient.whoami();
+    await doSetLoggedIn({
+        homeserverUrl: hsUrl,
+        accessToken,
+        userId,
+    }, true);
+};

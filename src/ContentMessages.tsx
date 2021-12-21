@@ -18,17 +18,20 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
 import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import encrypt from "browser-encrypt-attachment";
+import extractPngChunks from "png-chunks-extract";
+import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
+import { logger } from "matrix-js-sdk/src/logger";
+import { IEventRelation } from "matrix-js-sdk/src";
 
+import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from './dispatcher/dispatcher';
 import * as sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
-import encrypt from "browser-encrypt-attachment";
-import extractPngChunks from "png-chunks-extract";
 import Spinner from "./components/views/elements/Spinner";
 import { Action } from "./dispatcher/actions";
 import CountlyAnalytics from "./CountlyAnalytics";
@@ -40,13 +43,9 @@ import {
     UploadStartedPayload,
 } from "./dispatcher/payloads/UploadPayload";
 import { IUpload } from "./models/IUpload";
-import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { BlurhashEncoder } from "./BlurhashEncoder";
 import SettingsStore from "./settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation } from "matrix-js-sdk/src";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -132,8 +131,8 @@ async function createThumbnail(
         canvas = new window.OffscreenCanvas(targetWidth, targetHeight);
     } else {
         canvas = document.createElement("canvas");
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
+        (canvas as HTMLCanvasElement).width = targetWidth;
+        (canvas as HTMLCanvasElement).height = targetHeight;
     }
 
     const context = canvas.getContext("2d");
@@ -419,9 +418,16 @@ export default class ContentMessages {
     private inprogress: IUpload[] = [];
     private mediaConfig: IMediaConfig = null;
 
-    sendStickerContentToRoom(url: string, roomId: string, info: IImageInfo, text: string, matrixClient: MatrixClient) {
+    sendStickerContentToRoom(
+        url: string,
+        roomId: string,
+        threadId: string | null,
+        info: IImageInfo,
+        text: string,
+        matrixClient: MatrixClient,
+    ) {
         const startTime = CountlyAnalytics.getTimestamp();
-        const prom = matrixClient.sendStickerMessage(roomId, url, info, text).catch((e) => {
+        const prom = matrixClient.sendStickerMessage(roomId, threadId, url, info, text).catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
@@ -532,8 +538,6 @@ export default class ContentMessages {
 
             return (noRelation || matchingRelation) && !upload.canceled;
         });
-
-        return this.inprogress.filter(u => !u.canceled);
     }
 
     cancelUpload(promise: Promise<any>, matrixClient: MatrixClient) {
