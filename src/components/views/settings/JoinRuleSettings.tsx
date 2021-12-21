@@ -40,7 +40,7 @@ interface IProps {
     closeSettingsFn(): void;
     onError(error: Error): void;
     beforeChange?(joinRule: JoinRule): Promise<boolean>; // if returns false then aborts the change
-    aliasWarning?: ReactNode
+    aliasWarning?: ReactNode;
 }
 
 const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeChange, closeSettingsFn }: IProps) => {
@@ -92,8 +92,8 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         value: JoinRule.Public,
         label: _t("Public"),
         description: <>
-            {_t("Anyone can find and join.")}
-            {aliasWarning}
+            { _t("Anyone can find and join.") }
+            { aliasWarning }
         </>,
     }];
 
