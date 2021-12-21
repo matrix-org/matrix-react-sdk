@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640078068572,
+  "lastUpdate": 1640081670640,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49916,6 +49916,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 688.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "renancleyson.f@gmail.com",
+            "name": "Renan Cleyson",
+            "username": "renancleyson-dev"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9ac85bcaa3646c31a7492a4a569e19234c745384",
+          "message": "Fix list formatting alternating on edit (#7422)\n\nCo-authored-by: Andy Balaam <andyb@element.io>",
+          "timestamp": "2021-12-21T10:07:44Z",
+          "tree_id": "e2bf99436afb745d2114c2e911cc501d57a8a2ad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9ac85bcaa3646c31a7492a4a569e19234c745384"
+        },
+        "date": 1640081666824,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5446.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 677.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
