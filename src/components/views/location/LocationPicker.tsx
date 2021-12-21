@@ -289,25 +289,16 @@ export function getGeoUri(position: GeolocationPosition): string {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     const alt = (
-        isNumeric(position.coords.altitude)
+        Number.isFinite(position.coords.altitude)
             ? `,${position.coords.altitude}`
             : ""
     );
     const acc = (
-        isNumeric(position.coords.accuracy)
+        Number.isFinite(position.coords.accuracy)
             ? `;u=${ position.coords.accuracy }`
             : ""
     );
     return `geo:${lat},${lon}${alt}${acc}`;
-}
-
-function isNumeric(n: number | null | undefined) {
-    return (
-        n !== null &&
-        n !== undefined &&
-        !isNaN(n) &&
-        isFinite(n)
-    );
 }
 
 export default LocationPicker;
