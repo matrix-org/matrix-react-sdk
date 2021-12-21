@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640102071594,
+  "lastUpdate": 1640106158749,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50204,6 +50204,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 705.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b412067b244c0152951726e4ff8bda2848e76e82",
+          "message": "Fix nulls leaking into geo urls (#7433)",
+          "timestamp": "2021-12-21T16:56:28Z",
+          "tree_id": "a2e124ad0298080156c328276afedcd51b58db7d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b412067b244c0152951726e4ff8bda2848e76e82"
+        },
+        "date": 1640106155256,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5002.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 714.8999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
