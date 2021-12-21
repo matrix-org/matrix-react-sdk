@@ -34,10 +34,11 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
   onChange={[MockFunction]}
 >
   <StyledRadioButton
-    aria-describedby="test-Anteater"
+    aria-describedby="test-Anteater-description"
     checked={false}
     childrenInLabel={true}
     className="test-class a-class"
+    id="test-Anteater"
     name="test"
     onChange={[Function]}
     value="Anteater"
@@ -46,8 +47,9 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
       className="mx_StyledRadioButton test-class a-class mx_StyledRadioButton_enabled"
     >
       <input
-        aria-describedby="test-Anteater"
+        aria-describedby="test-Anteater-description"
         checked={false}
+        id="test-Anteater"
         name="test"
         onChange={[Function]}
         type="radio"
@@ -69,7 +71,7 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
     </label>
   </StyledRadioButton>
   <span
-    id="test-Anteater"
+    id="test-Anteater-description"
   >
     anteater description
   </span>
@@ -77,6 +79,7 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
     checked={false}
     childrenInLabel={true}
     className="test-class"
+    id="test-Badger"
     name="test"
     onChange={[Function]}
     value="Badger"
@@ -86,6 +89,7 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
     >
       <input
         checked={false}
+        id="test-Badger"
         name="test"
         onChange={[Function]}
         type="radio"
@@ -107,10 +111,11 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
     </label>
   </StyledRadioButton>
   <StyledRadioButton
-    aria-describedby="test-Canary"
+    aria-describedby="test-Canary-description"
     checked={false}
     childrenInLabel={true}
     className="test-class"
+    id="test-Canary"
     name="test"
     onChange={[Function]}
     value="Canary"
@@ -119,8 +124,9 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
       className="mx_StyledRadioButton test-class mx_StyledRadioButton_enabled"
     >
       <input
-        aria-describedby="test-Canary"
+        aria-describedby="test-Canary-description"
         checked={false}
+        id="test-Canary"
         name="test"
         onChange={[Function]}
         type="radio"
@@ -142,7 +148,7 @@ exports[`<StyledRadioGroup /> renders radios correctly when no value is provided
     </label>
   </StyledRadioButton>
   <span
-    id="test-Canary"
+    id="test-Canary-description"
   >
     <span>
       Canary description
