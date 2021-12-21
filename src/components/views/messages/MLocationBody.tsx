@@ -62,6 +62,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             style: config.map_style_url,
             center: coordinates,
             zoom: 13,
+            interactive: false,
         });
 
         new maplibregl.Marker({
