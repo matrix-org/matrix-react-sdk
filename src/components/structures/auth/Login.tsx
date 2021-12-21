@@ -16,13 +16,14 @@ limitations under the License.
 
 import React, { ReactNode } from 'react';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import Login, { ISSOFlow, LoginFlow } from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from "classnames";
 import AuthPage from "../../views/auth/AuthPage";
 import PlatformPeg from '../../../PlatformPeg';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -307,7 +308,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     busy: false,
                 });
             } catch (e) {
-                console.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
+                logger.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
 
                 let message = _t("Failed to perform homeserver discovery");
                 if (e.translatedMessage) {
@@ -438,7 +439,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // technically the flow can have multiple steps, but no one does this
         // for login and loginLogic doesn't support it so we can ignore it.
         if (!this.stepRendererMap[flow.type]) {
-            console.log("Skipping flow", flow, "due to unsupported login type", flow.type);
+            logger.log("Skipping flow", flow, "due to unsupported login type", flow.type);
             return false;
         }
         return true;
@@ -453,7 +454,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         let errorText: ReactNode = _t("There was a problem communicating with the homeserver, " +
             "please try again later.") + (errCode ? " (" + errCode + ")" : "");
 
-        if (err.cors === 'rejected') {
+        if (err["cors"] === 'rejected') { // browser-request specific error field
             if (window.location.protocol === 'https:' &&
                 (this.props.serverConfig.hsUrl.startsWith("http:") ||
                  !this.props.serverConfig.hsUrl.startsWith("http"))

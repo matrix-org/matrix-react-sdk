@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import { _t, getCurrentLanguage } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -56,10 +58,10 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
     componentDidMount(): void {
         PlatformPeg.get().getAppVersion().then((ver) => this.setState({ appVersion: ver })).catch((e) => {
-            console.error("Error getting vector version: ", e);
+            logger.error("Error getting vector version: ", e);
         });
         PlatformPeg.get().canSelfUpdate().then((v) => this.setState({ canUpdate: v })).catch((e) => {
-            console.error("Error getting self updatability: ", e);
+            logger.error("Error getting self updatability: ", e);
         });
     }
 
@@ -72,8 +74,10 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
     private getVersionInfo(): { appVersion: string, olmVersion: string } {
         const brand = SdkConfig.get().brand;
         const appVersion = this.state.appVersion || 'unknown';
-        let olmVersion = MatrixClientPeg.get().olmVersion;
-        olmVersion = olmVersion ? `${olmVersion[0]}.${olmVersion[1]}.${olmVersion[2]}` : '<not-enabled>';
+        const olmVersionTuple = MatrixClientPeg.get().olmVersion;
+        const olmVersion = olmVersionTuple
+            ? `${olmVersionTuple[0]}.${olmVersionTuple[1]}.${olmVersionTuple[2]}`
+            : '<not-enabled>';
 
         return {
             appVersion: `${_t("%(brand)s version:", { brand })} ${appVersion}`,
@@ -86,7 +90,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
         // Dev note: please keep this log line, it's useful when troubleshooting a MatrixClient suddenly
         // stopping in the middle of the logs.
-        console.log("Clear cache & reload clicked");
+        logger.log("Clear cache & reload clicked");
         MatrixClientPeg.get().stopClient();
         MatrixClientPeg.get().store.deleteAllData().then(() => {
             PlatformPeg.get().reload();
@@ -268,7 +272,8 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             "If you've submitted a bug via GitHub, debug logs can help " +
                             "us track down the problem. Debug logs contain application " +
                             "usage data including your username, the IDs or aliases of " +
-                            "the rooms or groups you have visited and the usernames of " +
+                            "the rooms or groups you have visited, which UI elements you " +
+                            "last interacted with, and the usernames of " +
                             "other users. They do not contain messages.",
                         ) }
                         <div className='mx_HelpUserSettingsTab_debugButton'>

@@ -15,9 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
+import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
+import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import {
     ContentRules,
     IContentRules,
@@ -26,7 +29,6 @@ import {
     VectorState,
 } from "../../../notifications";
 import { _t, TranslatedString } from "../../../languageHandler";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import SettingsStore from "../../../settings/SettingsStore";
 import StyledRadioButton from "../elements/StyledRadioButton";
@@ -139,7 +141,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 phase: Phase.Ready,
             });
         } catch (e) {
-            console.error("Error setting up notifications for settings: ", e);
+            logger.error("Error setting up notifications for settings: ", e);
             this.setState({ phase: Phase.Error });
         }
     }
@@ -264,7 +266,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             await this.refreshFromServer();
         } catch (e) {
             this.setState({ phase: Phase.Error });
-            console.error("Error updating master push rule:", e);
+            logger.error("Error updating master push rule:", e);
             this.showSaveError();
         }
     };
@@ -298,7 +300,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             await this.refreshFromServer();
         } catch (e) {
             this.setState({ phase: Phase.Error });
-            console.error("Error updating email pusher:", e);
+            logger.error("Error updating email pusher:", e);
             this.showSaveError();
         }
     };
@@ -367,7 +369,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             await this.refreshFromServer();
         } catch (e) {
             this.setState({ phase: Phase.Error });
-            console.error("Error updating push rule:", e);
+            logger.error("Error updating push rule:", e);
             this.showSaveError();
         }
     };
@@ -427,7 +429,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             await this.refreshFromServer();
         } catch (e) {
             this.setState({ phase: Phase.Error });
-            console.error("Error updating keyword push rules:", e);
+            logger.error("Error updating keyword push rules:", e);
             this.showSaveError();
         }
     }
@@ -480,7 +482,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             return masterSwitch;
         }
 
-        const emailSwitches = this.state.threepids.filter(t => t.medium === ThreepidMedium.Email)
+        const emailSwitches = (this.state.threepids || []).filter(t => t.medium === ThreepidMedium.Email)
             .map(e => <LabelledToggleSwitch
                 key={e.address}
                 value={this.state.pushers.some(p => p.kind === "email" && p.pushkey === e.address)}

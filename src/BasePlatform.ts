@@ -19,6 +19,10 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
+import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import dis from './dispatcher/dispatcher';
 import BaseEventIndexManager from './indexing/BaseEventIndexManager';
 import { ActionPayload } from "./dispatcher/payloads";
@@ -166,9 +170,38 @@ export default abstract class BasePlatform {
      */
     abstract requestNotificationPermission(): Promise<string>;
 
-    abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Object);
+    public displayNotification(
+        title: string,
+        msg: string,
+        avatarUrl: string,
+        room: Room,
+        ev?: MatrixEvent,
+    ): Notification {
+        const notifBody = {
+            body: msg,
+            silent: true, // we play our own sounds
+        };
+        if (avatarUrl) notifBody['icon'] = avatarUrl;
+        const notification = new window.Notification(title, notifBody);
 
-    loudNotification(ev: Event, room: Object) {
+        notification.onclick = () => {
+            const payload: ActionPayload = {
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+            };
+
+            if (ev.getThread()) {
+                payload.event_id = ev.getId();
+            }
+
+            dis.dispatch(payload);
+            window.focus();
+        };
+
+        return notification;
+    }
+
+    loudNotification(ev: MatrixEvent, room: Room) {
     }
 
     clearNotification(notif: Notification) {
@@ -315,12 +348,14 @@ export default abstract class BasePlatform {
         let data;
         try {
             data = await idbLoad("pickleKey", [userId, deviceId]);
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbLoad for pickleKey failed", e);
+        }
         if (!data) {
             return null;
         }
         if (!data.encrypted || !data.iv || !data.cryptoKey) {
-            console.error("Badly formatted pickle key");
+            logger.error("Badly formatted pickle key");
             return null;
         }
 
@@ -340,7 +375,7 @@ export default abstract class BasePlatform {
             );
             return encodeUnpaddedBase64(key);
         } catch (e) {
-            console.error("Error decrypting pickle key");
+            logger.error("Error decrypting pickle key");
             return null;
         }
     }
@@ -394,6 +429,8 @@ export default abstract class BasePlatform {
     async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
             await idbDelete("pickleKey", [userId, deviceId]);
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbDelete failed in destroyPickleKey", e);
+        }
     }
 }

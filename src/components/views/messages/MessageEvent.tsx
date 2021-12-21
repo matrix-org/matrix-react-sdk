@@ -15,6 +15,11 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
+
 import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 import { Mjolnir } from "../../../mjolnir/Mjolnir";
@@ -25,7 +30,6 @@ import { IMediaBody } from "./IMediaBody";
 import { IOperableEventTile } from "../context_menus/MessageContextMenu";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { ReactAnyComponent } from "../../../@types/common";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { IBodyProps } from "./IBodyProps";
 
 // onMessageAllowed is handled internally
@@ -33,6 +37,9 @@ interface IProps extends Omit<IBodyProps, "onMessageAllowed"> {
     /* overrides for the msgtype-specific components, used by ReplyTile to override file rendering */
     overrideBodyTypes?: Record<string, React.Component>;
     overrideEventTypes?: Record<string, React.Component>;
+
+    // helper function to access relations for this event
+    getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
 }
 
 @replaceableComponent("views.messages.MessageEvent")
@@ -111,6 +118,25 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 // Fallback to UnknownBody otherwise if not redacted
                 BodyType = UnknownBody;
             }
+
+            if (type && type === POLL_START_EVENT_TYPE.name) {
+                // TODO: this can all disappear when Polls comes out of labs -
+                // instead, add something like this into this.evTypes:
+                // [EventType.Poll]: "messages.MPollBody"
+                if (SettingsStore.getValue("feature_polls")) {
+                    BodyType = sdk.getComponent('messages.MPollBody');
+                }
+            }
+
+            if (
+                LOCATION_EVENT_TYPE.matches(type) ||
+                (type === EventType.RoomMessage && msgtype === MsgType.Location)
+            ) {
+                // TODO: tidy this up once location sharing is out of labs
+                if (SettingsStore.getValue("feature_location_share")) {
+                    BodyType = sdk.getComponent('messages.MLocationBody');
+                }
+            }
         }
 
         if (SettingsStore.getValue("feature_mjolnir")) {
@@ -136,6 +162,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             highlightLink={this.props.highlightLink}
             showUrlPreview={this.props.showUrlPreview}
             tileShape={this.props.tileShape}
+            forExport={this.props.forExport}
             maxImageHeight={this.props.maxImageHeight}
             replacingEventId={this.props.replacingEventId}
             editState={this.props.editState}
@@ -143,6 +170,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             onMessageAllowed={this.onTileUpdate}
             permalinkCreator={this.props.permalinkCreator}
             mediaEventHelper={this.mediaHelper}
+            getRelationsForEvent={this.props.getRelationsForEvent}
         /> : null;
     }
 }

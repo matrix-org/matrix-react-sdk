@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import SdkConfig from "../SdkConfig";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 
@@ -69,7 +71,7 @@ export class Jitsi {
         // Start with a default of the config's domain
         let domain = (SdkConfig.get()['jitsi'] || {})['preferredDomain'] || 'jitsi.riot.im';
 
-        console.log("Attempting to get Jitsi conference information from homeserver");
+        logger.log("Attempting to get Jitsi conference information from homeserver");
         if (discoveryResponse && discoveryResponse[JITSI_WK_PROPERTY]) {
             const wkPreferredDomain = discoveryResponse[JITSI_WK_PROPERTY]['preferredDomain'];
             if (wkPreferredDomain) domain = wkPreferredDomain;
@@ -77,7 +79,7 @@ export class Jitsi {
 
         // Put the result into memory for us to use later
         this.domain = domain;
-        console.log("Jitsi conference domain:", this.preferredDomain);
+        logger.log("Jitsi conference domain:", this.preferredDomain);
     };
 
     /**
@@ -90,7 +92,9 @@ export class Jitsi {
         const parsed = new URL(url);
         if (parsed.hostname !== this.preferredDomain) return null; // invalid
         return {
-            conferenceId: parsed.pathname,
+            // URL pathnames always contain a leading slash.
+            // Remove it to be left with just the conference name.
+            conferenceId: parsed.pathname.substring(1),
             domain: parsed.hostname,
             isAudioOnly: false,
         };

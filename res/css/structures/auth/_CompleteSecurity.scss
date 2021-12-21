@@ -33,12 +33,25 @@ limitations under the License.
     margin: 0 auto;
 }
 
+.mx_CompleteSecurity_skip {
+    mask: url('$(res)/img/feather-customised/cancel.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: cover;
+    width: 18px;
+    height: 18px;
+    background-color: $dialog-close-fg-color;
+    cursor: pointer;
+    position: absolute;
+    right: 24px;
+}
+
 .mx_CompleteSecurity_body {
     font-size: $font-15px;
 }
 
 .mx_CompleteSecurity_waiting {
-    color: $notice-secondary-color;
+    color: $tertiary-content;
 }
 
 .mx_CompleteSecurity_actionRow {
@@ -50,7 +63,7 @@ limitations under the License.
         margin-inline-start: 18px;
 
         &.warning {
-            color: $warning-color;
+            color: $alert;
         }
     }
 }

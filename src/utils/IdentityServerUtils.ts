@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { SERVICE_TYPES } from 'matrix-js-sdk/src/service-types';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import SdkConfig from '../SdkConfig';
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -36,7 +37,7 @@ export async function doesIdentityServerHaveTerms(fullUrl: string): Promise<bool
     try {
         terms = await MatrixClientPeg.get().getTerms(SERVICE_TYPES.IS, fullUrl);
     } catch (e) {
-        console.error(e);
+        logger.error(e);
         if (e.cors === "rejected" || e.httpStatus === 404) {
             terms = null;
         } else {

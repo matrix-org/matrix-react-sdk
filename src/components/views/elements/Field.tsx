@@ -16,8 +16,9 @@ limitations under the License.
 
 import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import classNames from 'classnames';
-import * as sdk from '../../../index';
 import { debounce } from "lodash";
+
+import * as sdk from '../../../index';
 import { IFieldState, IValidationResult } from "./Validation";
 
 // Invoke validation from user input (when typing, etc.) at most once every N ms.
@@ -45,6 +46,9 @@ interface IProps {
     label?: string;
     // The field's placeholder string. Defaults to the label.
     placeholder?: string;
+    // When true (default false), the placeholder will be shown instead of the label when
+    // the component is unfocused & empty.
+    usePlaceholderAsHint?: boolean;
     // Optional component to include inside the field before the input.
     prefixComponent?: React.ReactNode;
     // Optional component to include inside the field after the input.
@@ -143,6 +147,10 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
     public focus() {
         this.input.focus();
+        // programmatic does not fire onFocus handler
+        this.setState({
+            focused: true,
+        });
     }
 
     private onFocus = (ev) => {
@@ -222,6 +230,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const { element, prefixComponent, postfixComponent, className, onValidate, children,
             tooltipContent, forceValidity, tooltipClassName, list, validateOnBlur, validateOnChange, validateOnFocus,
+            usePlaceholderAsHint, forceTooltipVisible,
             ...inputProps } = this.props;
 
         // Set some defaults for the <input> element
@@ -252,7 +261,8 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             // If we have a prefix element, leave the label always at the top left and
             // don't animate it, as it looks a bit clunky and would add complexity to do
             // properly.
-            mx_Field_labelAlwaysTopLeft: prefixComponent,
+            mx_Field_labelAlwaysTopLeft: prefixComponent || usePlaceholderAsHint,
+            mx_Field_placeholderIsHint: usePlaceholderAsHint,
             mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
             mx_Field_invalid: hasValidationFlag
                 ? !forceValidity
@@ -266,7 +276,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         if (tooltipContent || this.state.feedback) {
             fieldTooltip = <Tooltip
                 tooltipClassName={classNames("mx_Field_tooltip", tooltipClassName)}
-                visible={(this.state.focused && this.props.forceTooltipVisible) || this.state.feedbackVisible}
+                visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
                 label={tooltipContent || this.state.feedback}
                 alignment={Tooltip.Alignment.Right}
             />;

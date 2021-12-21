@@ -22,7 +22,7 @@ limitations under the License.
         list-style: none;
         font-weight: 600;
         cursor: pointer;
-        color: $accent-color;
+        color: $accent;
 
         // list-style doesn't do it for webkit
         &::-webkit-details-marker {
@@ -55,8 +55,8 @@ limitations under the License.
     border-radius: 3px;
     border: 1px solid $input-border-color;
     padding: 9px;
-    color: $primary-fg-color;
-    background-color: $primary-bg-color;
+    color: $primary-content;
+    background-color: $background;
     width: 100%;
 }
 

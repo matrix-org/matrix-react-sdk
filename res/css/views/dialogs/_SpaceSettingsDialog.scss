@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 .mx_SpaceSettingsDialog {
-    color: $primary-fg-color;
+    color: $primary-content;
 
     .mx_SpaceSettings_errorText {
         font-weight: $font-semi-bold;
         font-size: $font-12px;
         line-height: $font-15px;
-        color: $notice-primary-color;
+        color: $alert;
         margin-bottom: 28px;
     }
 
@@ -38,25 +38,25 @@ limitations under the License.
         }
 
         & + .mx_SettingsTab_subheading {
-            border-top: 1px solid $message-body-panel-bg-color;
+            border-top: 1px solid $quinary-content;
             margin-top: 0;
             padding-top: 24px;
         }
 
-        .mx_RadioButton {
+        .mx_StyledRadioButton {
             margin-top: 8px;
             margin-bottom: 4px;
 
-            .mx_RadioButton_content {
+            .mx_StyledRadioButton_content {
                 font-weight: $font-semi-bold;
                 line-height: $font-18px;
-                color: $primary-fg-color;
+                color: $primary-content;
             }
 
             & + span {
                 font-size: $font-15px;
                 line-height: $font-18px;
-                color: $secondary-fg-color;
+                color: $secondary-content;
                 margin-left: 26px;
             }
         }

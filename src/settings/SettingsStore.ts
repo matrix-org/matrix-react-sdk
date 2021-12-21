@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import DeviceSettingsHandler from "./handlers/DeviceSettingsHandler";
 import RoomDeviceSettingsHandler from "./handlers/RoomDeviceSettingsHandler";
 import DefaultSettingsHandler from "./handlers/DefaultSettingsHandler";
@@ -24,9 +26,9 @@ import RoomSettingsHandler from "./handlers/RoomSettingsHandler";
 import ConfigSettingsHandler from "./handlers/ConfigSettingsHandler";
 import { _t } from '../languageHandler';
 import dis from '../dispatcher/dispatcher';
-import { ISetting, SETTINGS } from "./Settings";
+import { IFeature, ISetting, LabGroup, SETTINGS } from "./Settings";
 import LocalEchoWrapper from "./handlers/LocalEchoWrapper";
-import { WatchManager, CallbackFn as WatchCallbackFn } from "./WatchManager";
+import { CallbackFn as WatchCallbackFn, WatchManager } from "./WatchManager";
 import { SettingLevel } from "./SettingLevel";
 import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
@@ -48,20 +50,19 @@ for (const key of Object.keys(SETTINGS)) {
     }
 }
 
+// Only wrap the handlers with async setters in a local echo wrapper
 const LEVEL_HANDLERS = {
     [SettingLevel.DEVICE]: new DeviceSettingsHandler(featureNames, defaultWatchManager),
     [SettingLevel.ROOM_DEVICE]: new RoomDeviceSettingsHandler(defaultWatchManager),
-    [SettingLevel.ROOM_ACCOUNT]: new RoomAccountSettingsHandler(defaultWatchManager),
-    [SettingLevel.ACCOUNT]: new AccountSettingsHandler(defaultWatchManager),
-    [SettingLevel.ROOM]: new RoomSettingsHandler(defaultWatchManager),
+    [SettingLevel.ROOM_ACCOUNT]: new LocalEchoWrapper(
+        new RoomAccountSettingsHandler(defaultWatchManager),
+        SettingLevel.ROOM_ACCOUNT,
+    ),
+    [SettingLevel.ACCOUNT]: new LocalEchoWrapper(new AccountSettingsHandler(defaultWatchManager), SettingLevel.ACCOUNT),
+    [SettingLevel.ROOM]: new LocalEchoWrapper(new RoomSettingsHandler(defaultWatchManager), SettingLevel.ROOM),
     [SettingLevel.CONFIG]: new ConfigSettingsHandler(featureNames),
     [SettingLevel.DEFAULT]: new DefaultSettingsHandler(defaultSettings, invertedDefaultSettings),
 };
-
-// Wrap all the handlers with local echo
-for (const key of Object.keys(LEVEL_HANDLERS)) {
-    LEVEL_HANDLERS[key] = new LocalEchoWrapper(LEVEL_HANDLERS[key]);
-}
 
 export const LEVEL_ORDER = [
     SettingLevel.DEVICE,
@@ -160,9 +161,10 @@ export default class SettingsStore {
 
         const watcherId = `${new Date().getTime()}_${SettingsStore.watcherCount++}_${settingName}_${roomId}`;
 
-        const localizedCallback = (changedInRoomId, atLevel, newValAtLevel) => {
+        const localizedCallback = (changedInRoomId: string | null, atLevel: SettingLevel, newValAtLevel: any) => {
             const newValue = SettingsStore.getValue(originalSettingName);
-            callbackFn(originalSettingName, changedInRoomId, atLevel, newValAtLevel, newValue);
+            const newValueAtLevel = SettingsStore.getValueAt(atLevel, originalSettingName) ?? newValAtLevel;
+            callbackFn(originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue);
         };
 
         SettingsStore.watchers.set(watcherId, localizedCallback);
@@ -179,7 +181,7 @@ export default class SettingsStore {
      */
     public static unwatchSetting(watcherReference: string) {
         if (!SettingsStore.watchers.has(watcherReference)) {
-            console.warn(`Ending non-existent watcher ID ${watcherReference}`);
+            logger.warn(`Ending non-existent watcher ID ${watcherReference}`);
             return;
         }
 
@@ -270,12 +272,18 @@ export default class SettingsStore {
         return SETTINGS[settingName].isFeature;
     }
 
-    public static getBetaInfo(settingName: string) {
+    public static getBetaInfo(settingName: string): ISetting["betaInfo"] {
         // consider a beta disabled if the config is explicitly set to false, in which case treat as normal Labs flag
         if (SettingsStore.isFeature(settingName)
             && SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, null, true, true) !== false
         ) {
             return SETTINGS[settingName]?.betaInfo;
+        }
+    }
+
+    public static getLabGroup(settingName: string): LabGroup {
+        if (SettingsStore.isFeature(settingName)) {
+            return (<IFeature>SETTINGS[settingName]).labsGroup;
         }
     }
 
@@ -467,6 +475,10 @@ export default class SettingsStore {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
         }
 
+        if (!SettingsStore.isEnabled(settingName)) {
+            return false;
+        }
+
         // When non-beta features are specified in the config.json, we force them as enabled or disabled.
         if (SettingsStore.isFeature(settingName) && !SETTINGS[settingName]?.betaInfo) {
             const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
@@ -523,16 +535,16 @@ export default class SettingsStore {
      * @param {string} roomId Optional room ID to test the setting in.
      */
     public static debugSetting(realSettingName: string, roomId: string) {
-        console.log(`--- DEBUG ${realSettingName}`);
+        logger.log(`--- DEBUG ${realSettingName}`);
 
         // Note: we intentionally use JSON.stringify here to avoid the console masking the
         // problem if there's a type representation issue. Also, this way it is guaranteed
         // to show up in a rageshake if required.
 
         const def = SETTINGS[realSettingName];
-        console.log(`--- definition: ${def ? JSON.stringify(def) : '<NOT_FOUND>'}`);
-        console.log(`--- default level order: ${JSON.stringify(LEVEL_ORDER)}`);
-        console.log(`--- registered handlers: ${JSON.stringify(Object.keys(LEVEL_HANDLERS))}`);
+        logger.log(`--- definition: ${def ? JSON.stringify(def) : '<NOT_FOUND>'}`);
+        logger.log(`--- default level order: ${JSON.stringify(LEVEL_ORDER)}`);
+        logger.log(`--- registered handlers: ${JSON.stringify(Object.keys(LEVEL_HANDLERS))}`);
 
         const doChecks = (settingName) => {
             for (const handlerName of Object.keys(LEVEL_HANDLERS)) {
@@ -540,60 +552,60 @@ export default class SettingsStore {
 
                 try {
                     const value = handler.getValue(settingName, roomId);
-                    console.log(`---     ${handlerName}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
+                    logger.log(`---     ${handlerName}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
                 } catch (e) {
-                    console.log(`---     ${handler}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.log(`---     ${handler}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
+                    logger.error(e);
                 }
 
                 if (roomId) {
                     try {
                         const value = handler.getValue(settingName, null);
-                        console.log(`---     ${handlerName}@<no_room> = ${JSON.stringify(value)}`);
+                        logger.log(`---     ${handlerName}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
-                        console.log(`---     ${handler}@<no_room> THREW ERROR: ${e.message}`);
-                        console.error(e);
+                        logger.log(`---     ${handler}@<no_room> THREW ERROR: ${e.message}`);
+                        logger.error(e);
                     }
                 }
             }
 
-            console.log(`--- calculating as returned by SettingsStore`);
-            console.log(`--- these might not match if the setting uses a controller - be warned!`);
+            logger.log(`--- calculating as returned by SettingsStore`);
+            logger.log(`--- these might not match if the setting uses a controller - be warned!`);
 
             try {
                 const value = SettingsStore.getValue(settingName, roomId);
-                console.log(`---     SettingsStore#generic@${roomId || '<no_room>'}  = ${JSON.stringify(value)}`);
+                logger.log(`---     SettingsStore#generic@${roomId || '<no_room>'}  = ${JSON.stringify(value)}`);
             } catch (e) {
-                console.log(`---     SettingsStore#generic@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                console.error(e);
+                logger.log(`---     SettingsStore#generic@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
+                logger.error(e);
             }
 
             if (roomId) {
                 try {
                     const value = SettingsStore.getValue(settingName, null);
-                    console.log(`---     SettingsStore#generic@<no_room>  = ${JSON.stringify(value)}`);
+                    logger.log(`---     SettingsStore#generic@<no_room>  = ${JSON.stringify(value)}`);
                 } catch (e) {
-                    console.log(`---     SettingsStore#generic@$<no_room> THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.log(`---     SettingsStore#generic@$<no_room> THREW ERROR: ${e.message}`);
+                    logger.error(e);
                 }
             }
 
             for (const level of LEVEL_ORDER) {
                 try {
                     const value = SettingsStore.getValueAt(level, settingName, roomId);
-                    console.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
+                    logger.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} = ${JSON.stringify(value)}`);
                 } catch (e) {
-                    console.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
-                    console.error(e);
+                    logger.log(`---     SettingsStore#${level}@${roomId || '<no_room>'} THREW ERROR: ${e.message}`);
+                    logger.error(e);
                 }
 
                 if (roomId) {
                     try {
                         const value = SettingsStore.getValueAt(level, settingName, null);
-                        console.log(`---     SettingsStore#${level}@<no_room> = ${JSON.stringify(value)}`);
+                        logger.log(`---     SettingsStore#${level}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
-                        console.log(`---     SettingsStore#${level}@$<no_room> THREW ERROR: ${e.message}`);
-                        console.error(e);
+                        logger.log(`---     SettingsStore#${level}@$<no_room> THREW ERROR: ${e.message}`);
+                        logger.error(e);
                     }
                 }
             }
@@ -602,12 +614,12 @@ export default class SettingsStore {
         doChecks(realSettingName);
 
         if (def.invertedSettingName) {
-            console.log(`--- TESTING INVERTED SETTING NAME`);
-            console.log(`--- inverted: ${def.invertedSettingName}`);
+            logger.log(`--- TESTING INVERTED SETTING NAME`);
+            logger.log(`--- inverted: ${def.invertedSettingName}`);
             doChecks(def.invertedSettingName);
         }
 
-        console.log(`--- END DEBUG`);
+        logger.log(`--- END DEBUG`);
     }
 
     private static getHandler(settingName: string, level: SettingLevel): SettingsHandler {

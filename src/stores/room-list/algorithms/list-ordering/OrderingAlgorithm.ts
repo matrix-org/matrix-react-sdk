@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { RoomUpdateCause, TagID } from "../../models";
 import { SortAlgorithm } from "../models";
 
@@ -71,7 +73,7 @@ export abstract class OrderingAlgorithm {
     protected getRoomIndex(room: Room): number {
         let roomIdx = this.cachedOrderedRooms.indexOf(room);
         if (roomIdx === -1) { // can only happen if the js-sdk's store goes sideways.
-            console.warn(`Degrading performance to find missing room in "${this.tagId}": ${room.roomId}`);
+            logger.warn(`Degrading performance to find missing room in "${this.tagId}": ${room.roomId}`);
             roomIdx = this.cachedOrderedRooms.findIndex(r => r.roomId === room.roomId);
         }
         return roomIdx;

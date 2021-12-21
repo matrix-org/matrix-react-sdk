@@ -15,9 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -34,10 +37,15 @@ import ForwardDialog from "../dialogs/ForwardDialog";
 import { Action } from "../../../dispatcher/actions";
 import ReportEventDialog from '../dialogs/ReportEventDialog';
 import ViewSource from '../../structures/ViewSource';
-import ConfirmRedactDialog from '../dialogs/ConfirmRedactDialog';
-import ErrorDialog from '../dialogs/ErrorDialog';
+import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { IPosition, ChevronFace } from '../../structures/ContextMenu';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
+import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
+import EndPollDialog from '../dialogs/EndPollDialog';
+import { isPollEnded } from '../messages/MPollBody';
 
 export function canCancel(eventStatus: EventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -52,18 +60,24 @@ export interface IOperableEventTile {
     getEventTileOps(): IEventTileOps;
 }
 
-interface IProps {
+interface IProps extends IPosition {
+    chevronFace: ChevronFace;
     /* the MatrixEvent associated with the context menu */
     mxEvent: MatrixEvent;
     /* an optional EventTileOps implementation that can be used to unhide preview widgets */
     eventTileOps?: IEventTileOps;
     permalinkCreator?: RoomPermalinkCreator;
     /* an optional function to be called when the user clicks collapse thread, if not provided hide button */
-    collapseReplyThread?(): void;
+    collapseReplyChain?(): void;
     /* callback called when the menu is dismissed */
     onFinished(): void;
     /* if the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding) */
     onCloseDialog?(): void;
+    getRelationsForEvent?: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 interface IState {
@@ -73,6 +87,9 @@ interface IState {
 
 @replaceableComponent("views.context_menus.MessageContextMenu")
 export default class MessageContextMenu extends React.Component<IProps, IState> {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     state = {
         canRedact: false,
         canPin: false,
@@ -116,6 +133,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
     }
 
+    private canEndPoll(mxEvent: MatrixEvent): boolean {
+        return (
+            mxEvent.getType() === POLL_START_EVENT_TYPE.name &&
+            this.state.canRedact &&
+            !isPollEnded(mxEvent, MatrixClientPeg.get(), this.props.getRelationsForEvent)
+        );
+    }
+
     private onResendReactionsClick = (): void => {
         for (const reaction of this.getUnsentReactions()) {
             Resend.resend(reaction);
@@ -138,34 +163,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onRedactClick = (): void => {
-        Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
-            onFinished: async (proceed: boolean, reason?: string) => {
-                if (!proceed) return;
-
-                const cli = MatrixClientPeg.get();
-                try {
-                    this.props.onCloseDialog?.();
-                    await cli.redactEvent(
-                        this.props.mxEvent.getRoomId(),
-                        this.props.mxEvent.getId(),
-                        undefined,
-                        reason ? { reason } : {},
-                    );
-                } catch (e) {
-                    const code = e.errcode || e.statusCode;
-                    // only show the dialog if failing for something other than a network error
-                    // (e.g. no errcode or statusCode) as in that case the redactions end up in the
-                    // detached queue and we show the room status bar to allow retry
-                    if (typeof code !== "undefined") {
-                        // display error message stating you couldn't delete this.
-                        Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
-                            title: _t('Error'),
-                            description: _t('You cannot delete this message. (%(code)s)', { code }),
-                        });
-                    }
-                }
-            },
-        }, 'mx_Dialog_confirmredact');
+        const { mxEvent, onCloseDialog } = this.props;
+        createRedactEventDialog({
+            mxEvent,
+            onCloseDialog,
+        });
         this.closeMenu();
     };
 
@@ -209,9 +211,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onQuoteClick = (): void => {
-        dis.dispatch({
+        dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             event: this.props.mxEvent,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
         this.closeMenu();
     };
@@ -225,8 +228,18 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private onCollapseReplyThreadClick = (): void => {
-        this.props.collapseReplyThread();
+    private onCollapseReplyChainClick = (): void => {
+        this.props.collapseReplyChain();
+        this.closeMenu();
+    };
+
+    private onEndPollClick = (): void => {
+        const matrixClient = MatrixClientPeg.get();
+        Modal.createTrackedDialog('End Poll', '', EndPollDialog, {
+            matrixClient,
+            event: this.props.mxEvent,
+            getRelationsForEvent: this.props.getRelationsForEvent,
+        }, 'mx_Dialog_endPoll');
         this.closeMenu();
     };
 
@@ -248,6 +261,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return this.getReactions(e => e.status === EventStatus.NOT_SENT);
     }
 
+    private viewInRoom = () => {
+        dis.dispatch({
+            action: Action.ViewRoom,
+            event_id: this.props.mxEvent.getId(),
+            highlighted: true,
+            room_id: this.props.mxEvent.getRoomId(),
+        });
+        this.closeMenu();
+    };
+
     render() {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
@@ -255,6 +278,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
 
+        let endPollButton: JSX.Element;
         let resendReactionsButton: JSX.Element;
         let redactButton: JSX.Element;
         let forwardButton: JSX.Element;
@@ -262,7 +286,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         let unhidePreviewButton: JSX.Element;
         let externalURLButton: JSX.Element;
         let quoteButton: JSX.Element;
-        let collapseReplyThread: JSX.Element;
+        let collapseReplyChain: JSX.Element;
         let redactItemList: JSX.Element;
 
         // status is SENT before remote-echo, null after
@@ -290,13 +314,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         if (isContentActionable(mxEvent)) {
-            forwardButton = (
-                <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconForward"
-                    label={_t("Forward")}
-                    onClick={this.onForwardClick}
-                />
-            );
+            if (canForward(mxEvent)) {
+                forwardButton = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconForward"
+                        label={_t("Forward")}
+                        onClick={this.onForwardClick}
+                    />
+                );
+            }
 
             if (this.state.canPin) {
                 pinButton = (
@@ -329,26 +355,39 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        let permalink;
-        if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
-        }
-        const permalinkButton = (
-            <IconizedContextMenuOption
-                iconClassName="mx_MessageContextMenu_iconPermalink"
-                onClick={this.onPermalinkClick}
-                label={_t('Share')}
-                element="a"
-                {
-                    // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
-                    ...{
-                        href: permalink,
-                        target: "_blank",
-                        rel: "noreferrer noopener",
+        let permalink: string | null = null;
+        let permalinkButton: ReactElement | null = null;
+        if (canShare(mxEvent)) {
+            if (this.props.permalinkCreator) {
+                permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+            }
+            permalinkButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconPermalink"
+                    onClick={this.onPermalinkClick}
+                    label={_t('Share')}
+                    element="a"
+                    {
+                        // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
+                        ...{
+                            href: permalink,
+                            target: "_blank",
+                            rel: "noreferrer noopener",
+                        }
                     }
-                }
-            />
-        );
+                />
+            );
+        }
+
+        if (this.canEndPoll(mxEvent)) {
+            endPollButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconEndPoll"
+                    label={_t("End Poll")}
+                    onClick={this.onEndPollClick}
+                />
+            );
+        }
 
         if (this.props.eventTileOps) { // this event is rendered using TextualBody
             quoteButton = (
@@ -382,12 +421,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (this.props.collapseReplyThread) {
-            collapseReplyThread = (
+        if (this.props.collapseReplyChain) {
+            collapseReplyChain = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCollapse"
                     label={_t("Collapse reply thread")}
-                    onClick={this.onCollapseReplyThreadClick}
+                    onClick={this.onCollapseReplyChainClick}
                 />
             );
         }
@@ -403,8 +442,24 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        const { timelineRenderingType } = this.context;
+        const isThread = (
+            timelineRenderingType === TimelineRenderingType.Thread ||
+            timelineRenderingType === TimelineRenderingType.ThreadsList
+        );
+        const isThreadRootEvent = isThread && this.props.mxEvent?.getThread()?.rootEvent === this.props.mxEvent;
+
+        const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
+            MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
+        );
         const commonItemsList = (
             <IconizedContextMenuOptionList>
+                { (isThreadRootEvent && isMainSplitTimelineShown) && <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconViewInRoom"
+                    label={_t("View in room")}
+                    onClick={this.viewInRoom}
+                /> }
+                { endPollButton }
                 { quoteButton }
                 { forwardButton }
                 { pinButton }
@@ -414,7 +469,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { unhidePreviewButton }
                 { viewSourceButton }
                 { resendReactionsButton }
-                { collapseReplyThread }
+                { collapseReplyChain }
             </IconizedContextMenuOptionList>
         );
 
@@ -425,7 +480,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 </IconizedContextMenuOptionList>
             );
         }
-
         return (
             <IconizedContextMenu
                 {...this.props}
@@ -437,4 +491,23 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             </IconizedContextMenu>
         );
     }
+}
+
+function canForward(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
+}
+
+function canShare(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
+}
+
+function isLocationEvent(event: MatrixEvent): boolean {
+    const eventType = event.getType();
+    return (
+        LOCATION_EVENT_TYPE.matches(eventType) ||
+        (
+            eventType === EventType.RoomMessage &&
+            LOCATION_EVENT_TYPE.matches(event.getContent().msgtype)
+        )
+    );
 }

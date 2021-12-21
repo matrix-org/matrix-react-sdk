@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import BaseDialog from './BaseDialog';
@@ -93,7 +94,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     this.validatedConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(hsUrl, discoveryResult);
                     return {}; // we have a validated config, we don't need to try the other paths
                 } catch (e) {
-                    console.error(`Attempted ${hsUrl} as a server_name but it failed`, e);
+                    logger.error(`Attempted ${hsUrl} as a server_name but it failed`, e);
                 }
             }
 
@@ -107,7 +108,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                 this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl);
                 return {};
             } catch (e) {
-                console.error(e);
+                logger.error(e);
 
                 const stateForError = AutoDiscoveryUtils.authComponentStateForError(e);
                 if (stateForError.serverErrorIsFatal) {
@@ -123,7 +124,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, null, true);
                     return {};
                 } catch (e) {
-                    console.error(e);
+                    logger.error(e);
                     return { error: _t("Invalid URL") };
                 }
             }
@@ -165,7 +166,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     public render() {
         let text;
         if (this.defaultServer.hsName === "matrix.org") {
-            text = _t("Matrix.org is the biggest public homeserver in the world, so it’s a good place for many.");
+            text = _t("Matrix.org is the biggest public homeserver in the world, so it's a good place for many.");
         }
 
         let defaultServerName: React.ReactNode = this.defaultServer.hsName;
@@ -187,7 +188,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         >
             <form className="mx_Dialog_content" id="mx_ServerPickerDialog" onSubmit={this.onSubmit}>
                 <p>
-                    { _t("We call the places where you can host your account ‘homeservers’.") } { text }
+                    { _t("We call the places where you can host your account 'homeservers'.") } { text }
                 </p>
 
                 <StyledRadioButton

@@ -17,12 +17,14 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import dis from '../../../dispatcher/dispatcher';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
+import { Action } from "../../../dispatcher/actions";
 import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
@@ -30,15 +32,14 @@ import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextM
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import { ALL_MESSAGES, ALL_MESSAGES_LOUD, MENTIONS_ONLY, MUTE } from "../../../RoomNotifs";
+import { RoomNotifState } from "../../../RoomNotifs";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import NotificationBadge from "./NotificationBadge";
-import { Volume } from "../../../RoomNotifsTypes";
 import RoomListStore from "../../../stores/room-list/RoomListStore";
 import RoomListActions from "../../../actions/RoomListActions";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "../../../stores/notifications/NotificationState";
+import { NotificationState, NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { CachedRoomKey, RoomEchoChamber } from "../../../stores/local-echo/RoomEchoChamber";
@@ -51,8 +52,6 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { getUnsentMessages } from "../../structures/RoomStatusBar";
-import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 
 interface IProps {
     room: Room;
@@ -68,12 +67,11 @@ interface IState {
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
     messagePreview?: string;
-    hasUnsentEvents: boolean;
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
 
-const contextMenuBelow = (elementRect: PartialDOMRect) => {
+export const contextMenuBelow = (elementRect: PartialDOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
     const left = elementRect.left + window.pageXOffset - 9;
     const top = elementRect.bottom + window.pageYOffset + 17;
@@ -95,7 +93,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             selected: ActiveRoomObserver.activeRoomId === this.props.room.roomId,
             notificationsMenuPosition: null,
             generalMenuPosition: null,
-            hasUnsentEvents: this.countUnsentEvents() > 0,
 
             // generatePreview() will return nothing if the user has previews disabled
             messagePreview: "",
@@ -106,21 +103,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.roomProps = EchoChamber.forRoom(this.props.room);
     }
 
-    private countUnsentEvents(): number {
-        return getUnsentMessages(this.props.room).length;
-    }
-
-    private onRoomNameUpdate = (room) => {
+    private onRoomNameUpdate = (room: Room) => {
         this.forceUpdate();
     };
 
     private onNotificationUpdate = () => {
         this.forceUpdate(); // notification state changed - update
-    };
-
-    private onLocalEchoUpdated = (ev: MatrixEvent, room: Room) => {
-        if (room?.roomId !== this.props.room.roomId) return;
-        this.setState({ hasUnsentEvents: this.countUnsentEvents() > 0 });
     };
 
     private onRoomPropertyUpdate = (property: CachedRoomKey) => {
@@ -176,14 +164,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
             this.onRoomPreviewChanged,
         );
-        this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        this.roomProps.on("Room.name", this.onRoomNameUpdate);
+        this.props.room?.on("Room.name", this.onRoomNameUpdate);
         CommunityPrototypeStore.instance.on(
             CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
             this.onCommunityUpdate,
         );
-        MatrixClientPeg.get().on("Room.localEchoUpdated", this.onLocalEchoUpdated);
     }
 
     public componentWillUnmount() {
@@ -201,14 +188,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
-        this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
+        this.notificationState.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        this.roomProps.off("Room.name", this.onRoomNameUpdate);
         CommunityPrototypeStore.instance.off(
             CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
             this.onCommunityUpdate,
         );
-        MatrixClientPeg.get()?.removeListener("Room.localEchoUpdated", this.onLocalEchoUpdated);
     }
 
     private onAction = (payload: ActionPayload) => {
@@ -251,7 +236,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             show_room_tile: true, // make sure the room is visible in the list
             room_id: this.props.room.roomId,
             clear_search: (ev && (ev.key === Key.ENTER || ev.key === Key.SPACE)),
@@ -316,7 +301,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 0,
             ));
         } else {
-            console.warn(`Unexpected tag ${tagId} applied to ${this.props.room.roomId}`);
+            logger.warn(`Unexpected tag ${tagId} applied to ${this.props.room.roomId}`);
         }
 
         if ((ev as React.KeyboardEvent).key === Key.ENTER) {
@@ -380,7 +365,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.setState({ generalMenuPosition: null }); // hide the menu
     };
 
-    private async saveNotifState(ev: ButtonEvent, newState: Volume) {
+    private async saveNotifState(ev: ButtonEvent, newState: RoomNotifState) {
         ev.preventDefault();
         ev.stopPropagation();
         if (MatrixClientPeg.get().isGuest()) return;
@@ -394,10 +379,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private onClickAllNotifs = ev => this.saveNotifState(ev, ALL_MESSAGES);
-    private onClickAlertMe = ev => this.saveNotifState(ev, ALL_MESSAGES_LOUD);
-    private onClickMentions = ev => this.saveNotifState(ev, MENTIONS_ONLY);
-    private onClickMute = ev => this.saveNotifState(ev, MUTE);
+    private onClickAllNotifs = ev => this.saveNotifState(ev, RoomNotifState.AllMessages);
+    private onClickAlertMe = ev => this.saveNotifState(ev, RoomNotifState.AllMessagesLoud);
+    private onClickMentions = ev => this.saveNotifState(ev, RoomNotifState.MentionsOnly);
+    private onClickMute = ev => this.saveNotifState(ev, RoomNotifState.Mute);
 
     private renderNotificationsMenu(isActive: boolean): React.ReactElement {
         if (MatrixClientPeg.get().isGuest() || this.props.tag === DefaultTagID.Archived ||
@@ -420,25 +405,25 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 <IconizedContextMenuOptionList first>
                     <IconizedContextMenuRadio
                         label={_t("Use default")}
-                        active={state === ALL_MESSAGES}
+                        active={state === RoomNotifState.AllMessages}
                         iconClassName="mx_RoomTile_iconBell"
                         onClick={this.onClickAllNotifs}
                     />
                     <IconizedContextMenuRadio
                         label={_t("All messages")}
-                        active={state === ALL_MESSAGES_LOUD}
+                        active={state === RoomNotifState.AllMessagesLoud}
                         iconClassName="mx_RoomTile_iconBellDot"
                         onClick={this.onClickAlertMe}
                     />
                     <IconizedContextMenuRadio
                         label={_t("Mentions & Keywords")}
-                        active={state === MENTIONS_ONLY}
+                        active={state === RoomNotifState.MentionsOnly}
                         iconClassName="mx_RoomTile_iconBellMentions"
                         onClick={this.onClickMentions}
                     />
                     <IconizedContextMenuRadio
                         label={_t("None")}
-                        active={state === MUTE}
+                        active={state === RoomNotifState.Mute}
                         iconClassName="mx_RoomTile_iconBellCrossed"
                         onClick={this.onClickMute}
                     />
@@ -448,14 +433,14 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         const classes = classNames("mx_RoomTile_notificationsButton", {
             // Show bell icon for the default case too.
-            mx_RoomTile_iconBell: state === ALL_MESSAGES,
-            mx_RoomTile_iconBellDot: state === ALL_MESSAGES_LOUD,
-            mx_RoomTile_iconBellMentions: state === MENTIONS_ONLY,
-            mx_RoomTile_iconBellCrossed: state === MUTE,
+            mx_RoomTile_iconBell: state === RoomNotifState.AllMessages,
+            mx_RoomTile_iconBellDot: state === RoomNotifState.AllMessagesLoud,
+            mx_RoomTile_iconBellMentions: state === RoomNotifState.MentionsOnly,
+            mx_RoomTile_iconBellCrossed: state === RoomNotifState.Mute,
 
             // Only show the icon by default if the room is overridden to muted.
             // TODO: [FTUE Notifications] Probably need to detect global mute state
-            mx_RoomTile_notificationsButton_show: state === MUTE,
+            mx_RoomTile_notificationsButton_show: state === RoomNotifState.Mute,
         });
 
         return (
@@ -500,8 +485,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             const isLowPriority = roomTags.includes(DefaultTagID.LowPriority);
             const lowPriorityLabel = _t("Low Priority");
 
+            const isDm = roomTags.includes(DefaultTagID.DM);
+
             const userId = MatrixClientPeg.get().getUserId();
-            const canInvite = this.props.room.canInvite(userId);
+            const canInvite = this.props.room.canInvite(userId) && !isDm; // hide invite in DMs from this quick menu
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -524,15 +511,15 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     { canInvite ? (
                         <IconizedContextMenuOption
                             onClick={this.onInviteClick}
-                            label={_t("Invite People")}
+                            label={_t("Invite")}
                             iconClassName="mx_RoomTile_iconInvite"
                         />
                     ) : null }
-                    <IconizedContextMenuOption
+                    { !isDm ? <IconizedContextMenuOption
                         onClick={this.onCopyRoomClick}
-                        label={_t("Copy Room Link")}
+                        label={_t("Copy room link")}
                         iconClassName="mx_RoomTile_iconCopyLink"
-                    />
+                    /> : null }
                     <IconizedContextMenuOption
                         onClick={this.onOpenRoomSettings}
                         label={_t("Settings")}
@@ -542,7 +529,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 <IconizedContextMenuOptionList red>
                     <IconizedContextMenuOption
                         onClick={this.onLeaveRoomClick}
-                        label={_t("Leave Room")}
+                        label={_t("Leave")}
                         iconClassName="mx_RoomTile_iconSignOut"
                     />
                 </IconizedContextMenuOptionList>
@@ -579,38 +566,18 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
-        const roomAvatar = <DecoratedRoomAvatar
-            room={this.props.room}
-            avatarSize={32}
-            displayBadge={this.props.isMinimized}
-            oobData={({ avatarUrl: roomProfile.avatarMxc })}
-        />;
-
         let badge: React.ReactNode;
-        if (!this.props.isMinimized) {
+        if (!this.props.isMinimized && this.notificationState) {
             // aria-hidden because we summarise the unread count/highlight status in a manual aria-label below
-            if (this.state.hasUnsentEvents) {
-                // hardcode the badge to a danger state when there's unsent messages
-                badge = (
-                    <div className="mx_RoomTile_badgeContainer" aria-hidden="true">
-                        <NotificationBadge
-                            notification={StaticNotificationState.RED_EXCLAMATION}
-                            forceCount={false}
-                            roomId={this.props.room.roomId}
-                        />
-                    </div>
-                );
-            } else if (this.notificationState) {
-                badge = (
-                    <div className="mx_RoomTile_badgeContainer" aria-hidden="true">
-                        <NotificationBadge
-                            notification={this.notificationState}
-                            forceCount={false}
-                            roomId={this.props.room.roomId}
-                        />
-                    </div>
-                );
-            }
+            badge = (
+                <div className="mx_RoomTile_badgeContainer" aria-hidden="true">
+                    <NotificationBadge
+                        notification={this.notificationState}
+                        forceCount={false}
+                        roomId={this.props.room.roomId}
+                    />
+                </div>
+            );
         }
 
         let messagePreview = null;
@@ -689,7 +656,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             aria-selected={this.state.selected}
                             aria-describedby={ariaDescribedBy}
                         >
-                            { roomAvatar }
+                            <DecoratedRoomAvatar
+                                room={this.props.room}
+                                avatarSize={32}
+                                displayBadge={this.props.isMinimized}
+                                oobData={({ avatarUrl: roomProfile.avatarMxc })}
+                                tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
+                            />
                             { nameContainer }
                             { badge }
                             { this.renderGeneralMenu() }

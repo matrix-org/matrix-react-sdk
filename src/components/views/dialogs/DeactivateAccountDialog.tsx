@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import { AuthType, IAuthData } from 'matrix-js-sdk/src/interactive-auth';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import Analytics from '../../../Analytics';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -112,7 +113,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             return;
         }
 
-        console.error("Error during UI Auth:", { result });
+        logger.error("Error during UI Auth:", { result });
         this.setState({ errStr: _t("There was a problem communicating with the server. Please try again.") });
     };
 
@@ -126,7 +127,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             Lifecycle.onLoggedOut();
             this.props.onFinished(true);
         }).catch(e => {
-            console.error(e);
+            logger.error(e);
             this.setState({ errStr: _t("There was a problem communicating with the server. Please try again.") });
         });
     };
@@ -156,7 +157,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             // Our application lifecycle will catch the error and do the logout bits.
             // We'll try to log something in an vain attempt to record what happened (storage
             // is also obliterated on logout).
-            console.warn("User's account got deactivated without confirmation: Server had no auth");
+            logger.warn("User's account got deactivated without confirmation: Server had no auth");
             this.setState({ errStr: _t("Server did not require any authentication") });
         }).catch(e => {
             if (e && e.httpStatus === 401 && e.data) {

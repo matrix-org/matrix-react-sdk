@@ -19,6 +19,7 @@ limitations under the License.
 import React, { ComponentProps } from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 
 import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
@@ -30,8 +31,7 @@ import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 import { Action } from '../../../dispatcher/actions';
 import { SetRightPanelPhasePayload } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
 import { jsxJoin } from '../../../utils/ReactUtils';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
-import { Layout } from '../../../settings/Layout';
+import { Layout } from '../../../settings/enums/Layout';
 
 const onPinnedMessagesClick = (): void => {
     defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
@@ -90,14 +90,15 @@ export default class MemberEventListSummary extends React.Component<IProps> {
         layout: Layout.Group,
     };
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps: IProps): boolean {
         // Update if
         //  - The number of summarised events has changed
         //  - or if the summary is about to toggle to become collapsed
         //  - or if there are fewEvents, meaning the child eventTiles are shown as-is
         return (
             nextProps.events.length !== this.props.events.length ||
-            nextProps.events.length < this.props.threshold
+            nextProps.events.length < this.props.threshold ||
+            nextProps.layout !== this.props.layout
         );
     }
 
@@ -135,7 +136,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
 
             const desc = formatCommaSeparatedList(descs);
 
-            return _t('%(nameList)s %(transitionList)s', { nameList: nameList, transitionList: desc });
+            return _t('%(nameList)s %(transitionList)s', { nameList, transitionList: desc });
         });
 
         if (!summaries) {

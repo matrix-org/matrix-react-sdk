@@ -182,14 +182,16 @@ export default class Dropdown extends React.Component<IProps, IState> {
         if (this.props.disabled) return;
 
         if (!this.state.expanded) {
-            this.setState({
-                expanded: true,
-            });
+            this.setState({ expanded: true });
             ev.preventDefault();
         } else if ((ev as React.KeyboardEvent).key === Key.ENTER) {
             // the accessible button consumes enter onKeyDown for firing onClick, so handle it here
             this.props.onOptionChange(this.state.highlightedOption);
             this.close();
+        } else if (!(ev as React.KeyboardEvent).key) {
+            // collapse on other non-keyboard event activations
+            this.setState({ expanded: false });
+            ev.preventDefault();
         }
     };
 
@@ -220,14 +222,22 @@ export default class Dropdown extends React.Component<IProps, IState> {
                 this.close();
                 break;
             case Key.ARROW_DOWN:
-                this.setState({
-                    highlightedOption: this.nextOption(this.state.highlightedOption),
-                });
+                if (this.state.expanded) {
+                    this.setState({
+                        highlightedOption: this.nextOption(this.state.highlightedOption),
+                    });
+                } else {
+                    this.setState({ expanded: true });
+                }
                 break;
             case Key.ARROW_UP:
-                this.setState({
-                    highlightedOption: this.prevOption(this.state.highlightedOption),
-                });
+                if (this.state.expanded) {
+                    this.setState({
+                        highlightedOption: this.prevOption(this.state.highlightedOption),
+                    });
+                } else {
+                    this.setState({ expanded: true });
+                }
                 break;
             default:
                 handled = false;

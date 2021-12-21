@@ -17,10 +17,11 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from "classnames";
+
 import AccessibleButton from '../elements/AccessibleButton';
 import { _td } from '../../../languageHandler';
-import classNames from "classnames";
-import E2EIcon from './E2EIcon';
+import E2EIcon, { E2EState } from './E2EIcon';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseAvatar from '../avatars/BaseAvatar';
 import PresenceLabel from "./PresenceLabel";
@@ -75,7 +76,7 @@ interface IProps {
     suppressOnHover?: boolean;
     showPresence?: boolean;
     subtextLabel?: string;
-    e2eStatus?: string;
+    e2eStatus?: E2EState;
     powerStatus?: PowerStatus;
 }
 

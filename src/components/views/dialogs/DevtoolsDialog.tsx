@@ -16,12 +16,6 @@ limitations under the License.
 */
 
 import React, { useState, useEffect, ChangeEvent, MouseEvent } from 'react';
-import SyntaxHighlight from '../elements/SyntaxHighlight';
-import { _t } from '../../../languageHandler';
-import Field from "../elements/Field";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
-
 import {
     PHASE_UNSENT,
     PHASE_REQUESTED,
@@ -31,6 +25,15 @@ import {
     PHASE_CANCELLED,
     VerificationRequest,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import SyntaxHighlight from '../elements/SyntaxHighlight';
+import { _t } from '../../../languageHandler';
+import Field from "../elements/Field";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { SETTINGS } from "../../../settings/Settings";
@@ -38,8 +41,6 @@ import SettingsStore, { LEVEL_ORDER } from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SettingLevel } from '../../../settings/SettingLevel';
 import BaseDialog from "./BaseDialog";
 import TruncatedList from "../elements/TruncatedList";
@@ -984,22 +985,22 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
             const parsedExplicit = JSON.parse(this.state.explicitValues);
             const parsedExplicitRoom = JSON.parse(this.state.explicitRoomValues);
             for (const level of Object.keys(parsedExplicit)) {
-                console.log(`[Devtools] Setting value of ${settingId} at ${level} from user input`);
+                logger.log(`[Devtools] Setting value of ${settingId} at ${level} from user input`);
                 try {
                     const val = parsedExplicit[level];
                     await SettingsStore.setValue(settingId, null, level as SettingLevel, val);
                 } catch (e) {
-                    console.warn(e);
+                    logger.warn(e);
                 }
             }
             const roomId = this.props.room.roomId;
             for (const level of Object.keys(parsedExplicit)) {
-                console.log(`[Devtools] Setting value of ${settingId} at ${level} in ${roomId} from user input`);
+                logger.log(`[Devtools] Setting value of ${settingId} at ${level} in ${roomId} from user input`);
                 try {
                     const val = parsedExplicitRoom[level];
                     await SettingsStore.setValue(settingId, roomId, level as SettingLevel, val);
                 } catch (e) {
-                    console.warn(e);
+                    logger.warn(e);
                 }
             }
             this.setState({
@@ -1033,7 +1034,7 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                     vals[level] = null;
                 }
             } catch (e) {
-                console.warn(e);
+                logger.warn(e);
             }
         }
         return JSON.stringify(vals, null, 4);

@@ -17,6 +17,8 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
@@ -53,7 +55,7 @@ export default class RelatedGroupSettings extends React.Component {
         this.context.sendStateEvent(this.props.roomId, 'm.room.related_groups', {
             groups: newGroupsList,
         }, '').catch((err) => {
-            console.error(err);
+            logger.error(err);
             Modal.createTrackedDialog('Error updating flair', '', ErrorDialog, {
                 title: _t("Error updating flair"),
                 description: _t(

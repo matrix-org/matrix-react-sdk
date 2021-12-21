@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import EventEmitter from 'events';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { groupMemberFromApiObject, groupRoomFromApiObject } from '../groups';
 import FlairStore from './FlairStore';
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -144,7 +146,7 @@ class GroupStore extends EventEmitter {
                 return;
             }
 
-            console.error(`Failed to get resource ${stateKey} for ${groupId}`, err);
+            logger.error(`Failed to get resource ${stateKey} for ${groupId}`, err);
             this.emit('error', err, groupId, stateKey);
         }).finally(() => {
             // Indicate finished request, allow for future fetches

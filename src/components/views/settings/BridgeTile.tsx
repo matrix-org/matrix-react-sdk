@@ -16,13 +16,15 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import Pill from "../elements/Pill";
 import { makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import BaseAvatar from "../avatars/BaseAvatar";
 import SettingsStore from "../../../settings/SettingsStore";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { isUrlPermitted } from '../../../HtmlUtils';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
@@ -75,13 +77,13 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         const content: IBridgeStateEvent = this.props.ev.getContent();
         // Validate
         if (!content.channel?.id || !content.protocol?.id) {
-            console.warn(`Bridge info event ${this.props.ev.getId()} has missing content. Tile will not render`);
+            logger.warn(`Bridge info event ${this.props.ev.getId()} has missing content. Tile will not render`);
             return null;
         }
         if (!content.bridgebot) {
             // Bridgebot was not required previously, so in order to not break rooms we are allowing
             // the sender to be used in place. When the proposal is merged, this should be removed.
-            console.warn(`Bridge info event ${this.props.ev.getId()} does not provide a 'bridgebot' key which`
+            logger.warn(`Bridge info event ${this.props.ev.getId()} does not provide a 'bridgebot' key which`
              + "is deprecated behaviour. Using sender for now.");
             content.bridgebot = this.props.ev.getSender();
         }

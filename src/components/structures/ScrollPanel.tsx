@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React, { createRef, CSSProperties, ReactNode, SyntheticEvent, KeyboardEvent } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Timer from '../../utils/Timer';
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { replaceableComponent } from "../../utils/replaceableComponent";
@@ -38,7 +40,7 @@ const PAGE_SIZE = 400;
 let debuglog;
 if (DEBUG_SCROLL) {
     // using bind means that we get to keep useful line numbers in the console
-    debuglog = console.log.bind(console, "ScrollPanel debuglog:");
+    debuglog = logger.log.bind(console, "ScrollPanel debuglog:");
 } else {
     debuglog = function() {};
 }
@@ -275,8 +277,15 @@ export default class ScrollPanel extends React.Component<IProps> {
         // fractional values (both too big and too small)
         // for scrollTop happen on certain browsers/platforms
         // when scrolled all the way down. E.g. Chrome 72 on debian.
-        // so check difference <= 1;
-        return Math.abs(sn.scrollHeight - (sn.scrollTop + sn.clientHeight)) <= 1;
+        //
+        // We therefore leave a bit of wiggle-room and assume we're at the
+        // bottom if the unscrolled area is less than one pixel high.
+        //
+        // non-standard DPI settings also seem to have effect here and can
+        // actually lead to scrollTop+clientHeight being *larger* than
+        // scrollHeight. (observed in element-desktop on Ubuntu 20.04)
+        //
+        return sn.scrollHeight - (sn.scrollTop + sn.clientHeight) <= 1;
     };
 
     // returns the vertical height in the given direction that can be removed from
@@ -399,7 +408,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             try {
                 await Promise.all(fillPromises);
             } catch (err) {
-                console.error(err);
+                logger.error(err);
             }
         }
         if (isFirstCall) {
@@ -741,6 +750,8 @@ export default class ScrollPanel extends React.Component<IProps> {
         const minHeight = sn.clientHeight;
         const height = Math.max(minHeight, contentHeight);
         this.pages = Math.ceil(height / PAGE_SIZE);
+        const displayScrollbar = contentHeight > minHeight;
+        sn.dataset.scrollbar = displayScrollbar.toString();
         this.bottomGrowth = 0;
         const newHeight = `${this.getListHeight()}px`;
 

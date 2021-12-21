@@ -18,6 +18,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Group } from "matrix-js-sdk/src/models/group";
+import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
@@ -29,14 +34,10 @@ import GroupHeaderButtons from '../views/right_panel/GroupHeaderButtons';
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
 import Modal from '../../Modal';
-import classnames from 'classnames';
-
 import GroupStore from '../../stores/GroupStore';
 import FlairStore from '../../stores/FlairStore';
 import { showGroupAddRoomDialog } from '../../GroupAddressPicker';
 import { makeGroupPermalink, makeUserPermalink } from "../../utils/permalinks/Permalinks";
-import { Group } from "matrix-js-sdk/src/models/group";
-import { sleep } from "matrix-js-sdk/src/utils";
 import RightPanelStore from "../../stores/RightPanelStore";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { mediaFromMxc } from "../../customisations/Media";
@@ -173,7 +174,7 @@ class FeaturedRoom extends React.Component {
         e.stopPropagation();
 
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_alias: this.props.summaryInfo.profile.canonical_alias,
             room_id: this.props.summaryInfo.room_id,
         });
@@ -186,7 +187,7 @@ class FeaturedRoom extends React.Component {
             this.props.groupId,
             this.props.summaryInfo.room_id,
         ).catch((err) => {
-            console.error('Error whilst removing room from group summary', err);
+            logger.error('Error whilst removing room from group summary', err);
             const roomName = this.props.summaryInfo.name ||
                 this.props.summaryInfo.canonical_alias ||
                 this.props.summaryInfo.room_id;
@@ -352,7 +353,7 @@ class FeaturedUser extends React.Component {
             this.props.groupId,
             this.props.summaryInfo.user_id,
         ).catch((err) => {
-            console.error('Error whilst removing user from group summary', err);
+            logger.error('Error whilst removing user from group summary', err);
             const displayName = this.props.summaryInfo.displayname || this.props.summaryInfo.user_id;
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog(
@@ -551,7 +552,7 @@ export default class GroupView extends React.Component {
                 },
             });
         }).catch((e) => {
-            console.error('Error getting group inviter profile', e);
+            logger.error('Error getting group inviter profile', e);
         }).finally(() => {
             if (this._unmounted) return;
             this.setState({
@@ -641,7 +642,7 @@ export default class GroupView extends React.Component {
         }).catch((e) => {
             this.setState({ uploadingAvatar: false });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            console.error("Failed to upload avatar image", e);
+            logger.error("Failed to upload avatar image", e);
             Modal.createTrackedDialog('Failed to upload image', '', ErrorDialog, {
                 title: _t('Error'),
                 description: _t('Failed to upload image'),
@@ -675,7 +676,7 @@ export default class GroupView extends React.Component {
                 saving: false,
             });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            console.error("Failed to save community profile", e);
+            logger.error("Failed to save community profile", e);
             Modal.createTrackedDialog('Failed to update group', '', ErrorDialog, {
                 title: _t('Error'),
                 description: _t('Failed to update community'),
@@ -1421,7 +1422,7 @@ export default class GroupView extends React.Component {
                 );
             }
         } else {
-            console.error("Invalid state for GroupView");
+            logger.error("Invalid state for GroupView");
             return <div />;
         }
     }

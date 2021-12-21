@@ -28,7 +28,6 @@ import { replaceableComponent } from "../../../../../utils/replaceableComponent"
 import SettingsFlag from '../../../elements/SettingsFlag';
 import * as KeyboardShortcuts from "../../../../../accessibility/KeyboardShortcuts";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import SpaceStore from "../../../../../stores/SpaceStore";
 import GroupAvatar from "../../../avatars/GroupAvatar";
 import dis from "../../../../../dispatcher/dispatcher";
 import GroupActions from "../../../../../actions/GroupActions";
@@ -145,7 +144,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     ];
 
     static COMMUNITIES_SETTINGS = [
-        // TODO: part of delabsing move the toggle here - https://github.com/vector-im/element-web/issues/18088
+        "showCommunitiesInsteadOfSpaces",
     ];
 
     static KEYBINDINGS_SETTINGS = [
@@ -172,7 +171,8 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     ];
     static IMAGES_AND_VIDEOS_SETTINGS = [
         'urlPreviewsEnabled',
-        'autoplayGifsAndVideos',
+        'autoplayGifs',
+        'autoplayVideo',
         'showImages',
     ];
     static TIMELINE_SETTINGS = [
@@ -233,7 +233,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         const alwaysShowMenuBarSupported = await platform.supportsAutoHideMenuBar();
         let alwaysShowMenuBar = true;
         if (alwaysShowMenuBarSupported) {
-            alwaysShowMenuBar = !await platform.getAutoHideMenuBarEnabled();
+            alwaysShowMenuBar = !(await platform.getAutoHideMenuBarEnabled());
         }
 
         const minimizeToTraySupported = await platform.supportsMinimizeToTray();
@@ -285,9 +285,13 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         SettingsStore.setValue("readMarkerOutOfViewThresholdMs", null, SettingLevel.DEVICE, e.target.value);
     };
 
-    private renderGroup(settingIds: string[]): React.ReactNodeArray {
-        return settingIds.filter(SettingsStore.isEnabled).map(i => {
-            return <SettingsFlag key={i} name={i} level={SettingLevel.ACCOUNT} />;
+    private renderGroup(
+        settingIds: string[],
+        level = SettingLevel.ACCOUNT,
+    ): React.ReactNodeArray {
+        return settingIds.map(i => {
+            const disabled = !SettingsStore.isEnabled(i);
+            return <SettingsFlag key={i} name={i} level={level} disabled={disabled} />;
         });
     }
 
@@ -321,22 +325,24 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTrayOption = <LabelledToggleSwitch
                 value={this.state.minimizeToTray}
                 onChange={this.onMinimizeToTrayChange}
-                label={_t('Show tray icon and minimize window to it on close')} />;
+                label={_t('Show tray icon and minimise window to it on close')} />;
         }
 
         return (
             <div className="mx_SettingsTab mx_PreferencesUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Preferences") }</div>
 
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
-                </div>
+                { !SettingsStore.getValue("feature_breadcrumbs_v2") &&
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
+                        { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
+                    </div>
+                }
 
-                { SpaceStore.spacesEnabled && <div className="mx_SettingsTab_section">
+                <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Spaces") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.SPACES_SETTINGS) }
-                </div> }
+                    { this.renderGroup(PreferencesUserSettingsTab.SPACES_SETTINGS, SettingLevel.ACCOUNT) }
+                </div>
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Communities") }</span>
@@ -348,14 +354,18 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                         <p>{ _t("If a community isn't shown you may not have permission to convert it.") }</p>
                         <CommunityMigrator onFinished={this.props.closeSettingsFn} />
                     </details>
-                    { this.renderGroup(PreferencesUserSettingsTab.COMMUNITIES_SETTINGS) }
+                    { this.renderGroup(PreferencesUserSettingsTab.COMMUNITIES_SETTINGS, SettingLevel.DEVICE) }
                 </div>
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Keyboard shortcuts") }</span>
-                    <AccessibleButton className="mx_SettingsFlag" onClick={KeyboardShortcuts.toggleDialog}>
-                        { _t("To view all keyboard shortcuts, click here.") }
-                    </AccessibleButton>
+                    <div className="mx_SettingsFlag">
+                        { _t("To view all keyboard shortcuts, <a>click here</a>.", {}, {
+                            a: sub => <AccessibleButton kind="link" onClick={KeyboardShortcuts.toggleDialog}>
+                                { sub }
+                            </AccessibleButton>,
+                        }) }
+                    </div>
                     { this.renderGroup(PreferencesUserSettingsTab.KEYBINDINGS_SETTINGS) }
                 </div>
 

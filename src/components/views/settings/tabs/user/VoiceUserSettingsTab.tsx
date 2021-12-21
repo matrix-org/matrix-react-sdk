@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
 import MediaDeviceHandler, { IMediaDevices, MediaDeviceKindEnum } from "../../../../../MediaDeviceHandler";
@@ -101,7 +103,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
             }
         }
         if (error) {
-            console.log("Failed to list userMedia devices", error);
+            logger.log("Failed to list userMedia devices", error);
             const brand = SdkConfig.get().brand;
             Modal.createTrackedDialog('No media permissions', '', ErrorDialog, {
                 title: _t('No media permissions'),

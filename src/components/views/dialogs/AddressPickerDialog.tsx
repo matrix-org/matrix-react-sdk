@@ -19,6 +19,7 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -225,7 +226,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
                         this.doRoomSearch(query);
                     }
                 } else {
-                    console.error('Unknown pickerType', this.props.pickerType);
+                    logger.error('Unknown pickerType', this.props.pickerType);
                 }
             }, QUERY_USER_DIRECTORY_DEBOUNCE_MS);
         } else {
@@ -282,7 +283,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
             });
             this.processResults(results, query);
         }).catch((err) => {
-            console.error('Error whilst searching group rooms: ', err);
+            logger.error('Error whilst searching group rooms: ', err);
             this.setState({
                 searchError: err.errcode ? err.message : _t('Something went wrong!'),
             });
@@ -388,7 +389,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
             }
             this.processResults(resp.results, query);
         }).catch((err) => {
-            console.error('Error whilst searching user directory: ', err);
+            logger.error('Error whilst searching user directory: ', err);
             this.setState({
                 searchError: err.errcode ? err.message : _t('Something went wrong!'),
             });
@@ -582,7 +583,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
                 }],
             });
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             this.setState({
                 searchError: _t('Something went wrong!'),
             });

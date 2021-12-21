@@ -1,10 +1,11 @@
 name: Layered Preview Build
 on:
     pull_request:
-        branches: [develop]
 jobs:
     build:
         runs-on: ubuntu-latest
+        env:
+          PR_NUMBER: ${{github.event.number}}
         steps:
             - uses: actions/checkout@v2
             - name: Build

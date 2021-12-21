@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_Dropdown {
     position: relative;
-    color: $primary-fg-color;
+    color: $primary-content;
 }
 
 .mx_Dropdown_disabled {
@@ -38,7 +38,7 @@ limitations under the License.
 }
 
 .mx_Dropdown_input:focus {
-    border-color: $input-focused-border-color;
+    border-color: $accent-alt;
 }
 
 /* Disable dropdown highlight on focus */
@@ -52,7 +52,7 @@ limitations under the License.
     padding-right: 9px;
     mask: url('$(res)/img/feather-customised/dropdown-arrow.svg');
     mask-repeat: no-repeat;
-    background: $primary-fg-color;
+    background: $primary-content;
 }
 
 .mx_Dropdown_option {
@@ -110,8 +110,8 @@ input.mx_Dropdown_option:focus {
     margin: 0;
     padding: 0px;
     border-radius: 4px;
-    border: 1px solid $input-focused-border-color;
-    background-color: $primary-bg-color;
+    border: 1px solid $accent-alt;
+    background-color: $background;
     max-height: 200px;
     overflow-y: auto;
 }
@@ -130,4 +130,3 @@ input.mx_Dropdown_option:focus {
     margin-left: 5px;
     margin-bottom: 5px;
 }
-

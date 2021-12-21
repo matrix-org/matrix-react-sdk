@@ -76,7 +76,6 @@ const LeftPanelWidget: React.FC = () => {
             <AppTile
                 app={app}
                 fullWidth
-                show
                 showMenubar={false}
                 userWidget
                 userId={cli.getUserId()}
@@ -115,7 +114,7 @@ const LeftPanelWidget: React.FC = () => {
                     aria-expanded={expanded}
                     aria-level={1}
                     onClick={() => {
-                        setExpanded(e => !e);
+                        setExpanded(!expanded);
                     }}
                 >
                     <span className={classNames({
@@ -132,7 +131,7 @@ const LeftPanelWidget: React.FC = () => {
                     }}
                     className="mx_LeftPanelWidget_maximizeButton"
                     tooltipClassName="mx_LeftPanelWidget_maximizeButtonTooltip"
-                    title={_t("Maximize")}
+                    title={_t("Maximise")}
                 />*/ }
             </div>
         </div>

@@ -15,6 +15,9 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, FormEvent } from 'react';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import BaseDialog from "./BaseDialog";
 import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
@@ -23,7 +26,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { arrayFastClone } from "../../../utils/arrays";
 import SdkConfig from "../../../SdkConfig";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import InviteDialog from "./InviteDialog";
 import BaseAvatar from "../avatars/BaseAvatar";
 import { inviteMultipleToRoom, showAnyInviteErrors } from "../../../RoomInvite";
@@ -99,7 +101,7 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
             }
         } catch (e) {
             this.setState({ busy: false });
-            console.error(e);
+            logger.error(e);
             Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
                 title: _t("Failed to invite"),
                 description: ((e && e.message) ? e.message : _t("Operation failed")),

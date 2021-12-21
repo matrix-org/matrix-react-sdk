@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import EventIndexPeg from "../../../indexing/EventIndexPeg";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
@@ -83,7 +85,7 @@ export default function DesktopBuildsNotice({ isRoomEncrypted, kind }: IProps) {
 
     // for safety
     if (!text) {
-        console.warn("Unknown desktop builds warning kind: ", kind);
+        logger.warn("Unknown desktop builds warning kind: ", kind);
         return null;
     }
 

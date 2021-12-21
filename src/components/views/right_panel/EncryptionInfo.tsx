@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-
-import { _t } from "../../../languageHandler";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
+
+import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
 
@@ -49,23 +49,29 @@ const EncryptionInfo: React.FC<IProps> = ({
     isSelfVerification,
 }: IProps) => {
     let content: JSX.Element;
-    if (waitingForOtherParty || waitingForNetwork) {
+    if (waitingForOtherParty && isSelfVerification) {
+        content = (
+            <div>
+                { _t("To proceed, please accept the verification request on your other login.") }
+            </div>
+        );
+    } else if (waitingForOtherParty || waitingForNetwork) {
         let text: string;
         if (waitingForOtherParty) {
-            if (isSelfVerification) {
-                text = _t("Accept on your other login…");
-            } else {
-                text = _t("Waiting for %(displayName)s to accept…", {
-                    displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
-                });
-            }
+            text = _t("Waiting for %(displayName)s to accept…", {
+                displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
+            });
         } else {
             text = _t("Accepting…");
         }
         content = <PendingActionSpinner text={text} />;
     } else {
         content = (
-            <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={onStartVerification}>
+            <AccessibleButton
+                kind="primary"
+                className="mx_UserInfo_wideButton mx_UserInfo_startVerification"
+                onClick={onStartVerification}
+            >
                 { _t("Start Verification") }
             </AccessibleButton>
         );

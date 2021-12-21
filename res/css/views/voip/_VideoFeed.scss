@@ -17,6 +17,9 @@ limitations under the License.
 .mx_VideoFeed {
     overflow: hidden;
     position: relative;
+    box-sizing: border-box;
+    border: transparent 2px solid;
+    display: flex;
 
     &.mx_VideoFeed_voice {
         background-color: $inverted-bg-color;

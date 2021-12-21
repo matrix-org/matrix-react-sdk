@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { configure, mount } from "enzyme";
+import { mount } from "enzyme";
 
 import sdk from "../../../skinned-sdk";
 import { mkEvent, mkStubRoom } from "../../../test-utils";
@@ -27,8 +26,6 @@ import DMRoomMap from "../../../../src/utils/DMRoomMap";
 
 const _TextualBody = sdk.getComponent("views.messages.TextualBody");
 const TextualBody = TestUtils.wrapInMatrixClientContext(_TextualBody);
-
-configure({ adapter: new Adapter() });
 
 describe("<TextualBody />", () => {
     afterEach(() => {
@@ -283,6 +280,30 @@ describe("<TextualBody />", () => {
                 'src="mxc://avatar.url/room.png" ' +
                 'style="width: 16px; height: 16px;" alt="" aria-hidden="true">' +
                 '!ZxbRYPQXDXKGmDnJNg:example.com</a></span> with vias</span>',
+            );
+        });
+
+        it('renders formatted body without html corretly', () => {
+            const ev = mkEvent({
+                type: "m.room.message",
+                room: "room_id",
+                user: "sender",
+                content: {
+                    body: "escaped \\*markdown\\*",
+                    msgtype: "m.text",
+                    format: "org.matrix.custom.html",
+                    formatted_body: "escaped *markdown*",
+                },
+                event: true,
+            });
+
+            const wrapper = mount(<TextualBody mxEvent={ev} />);
+
+            const content = wrapper.find(".mx_EventTile_body");
+            expect(content.html()).toBe(
+                '<span class="mx_EventTile_body" dir="auto">' +
+                'escaped *markdown*' +
+                '</span>',
             );
         });
     });

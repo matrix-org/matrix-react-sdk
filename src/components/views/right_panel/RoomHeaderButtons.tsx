@@ -19,6 +19,7 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from '../../../languageHandler';
@@ -31,6 +32,13 @@ import RightPanelStore from "../../../stores/RightPanelStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
+import { dispatchShowThreadsPanelEvent } from "../../../dispatcher/dispatch-actions/threads";
+import SettingsStore from "../../../settings/SettingsStore";
+import dis from "../../../dispatcher/dispatcher";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
+import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -42,7 +50,32 @@ const ROOM_INFO_PHASES = [
     RightPanelPhases.Room3pidMemberInfo,
 ];
 
-const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
+interface IUnreadIndicatorProps {
+    color?: NotificationColor;
+}
+
+const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
+    if (color === NotificationColor.None) {
+        return null;
+    }
+
+    const classes = classNames({
+        "mx_RightPanel_headerButton_unreadIndicator": true,
+        "mx_Indicator_gray": color === NotificationColor.Grey,
+    });
+    return <>
+        <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
+        <div className={classes} />
+    </>;
+};
+
+interface IHeaderButtonProps {
+    room: Room;
+    isHighlighted: boolean;
+    onClick: () => void;
+}
+
+const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButtonProps) => {
     const pinningEnabled = useSettingValue("feature_pinning");
     const pinnedEvents = usePinnedEvents(pinningEnabled && room);
     const readPinnedEvents = useReadPinnedEvents(pinningEnabled && room);
@@ -50,7 +83,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
 
     let unreadIndicator;
     if (pinnedEvents.some(id => !readPinnedEvents.has(id))) {
-        unreadIndicator = <div className="mx_RightPanel_pinnedMessagesButton_unreadIndicator" />;
+        unreadIndicator = <UnreadIndicator />;
     }
 
     return <HeaderButton
@@ -64,15 +97,60 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }) => {
     </HeaderButton>;
 };
 
+const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButtonProps) => {
+    if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
+    let unreadIndicator;
+    const color = RoomNotificationStateStore.instance.getRoomState(room).color;
+    switch (color) {
+        case NotificationColor.Grey:
+        case NotificationColor.Red:
+            unreadIndicator = <UnreadIndicator color={color} />;
+    }
+    return <HeaderButton
+        name="timelineCardButton"
+        title={_t("Chat")}
+        isHighlighted={isHighlighted}
+        onClick={onClick}
+        analytics={["Right Panel", "Timeline Panel Button", "click"]}
+    >
+        { unreadIndicator }
+    </HeaderButton>;
+};
+
 interface IProps {
     room?: Room;
+    excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
 @replaceableComponent("views.right_panel.RoomHeaderButtons")
 export default class RoomHeaderButtons extends HeaderButtons<IProps> {
+    private static readonly THREAD_PHASES = [
+        RightPanelPhases.ThreadPanel,
+        RightPanelPhases.ThreadView,
+    ];
+    private threadNotificationState: ThreadsRoomNotificationState;
+
     constructor(props: IProps) {
         super(props, HeaderKind.Room);
+
+        this.threadNotificationState = RoomNotificationStateStore.instance.getThreadsRoomState(this.props.room);
     }
+
+    public componentDidMount(): void {
+        super.componentDidMount();
+        this.threadNotificationState.on(NotificationStateEvents.Update, this.onThreadNotification);
+    }
+
+    public componentWillUnmount(): void {
+        super.componentWillUnmount();
+        this.threadNotificationState.off(NotificationStateEvents.Update, this.onThreadNotification);
+    }
+
+    private onThreadNotification = (): void => {
+        this.setState({
+            threadNotificationColor: this.threadNotificationState.color,
+        });
+    };
 
     protected onAction(payload: ActionPayload) {
         if (payload.action === Action.ViewUser) {
@@ -114,28 +192,76 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         // This toggles for us, if needed
         this.setPhase(RightPanelPhases.PinnedMessages);
     };
+    private onTimelineCardClicked = () => {
+        this.setPhase(RightPanelPhases.Timeline);
+    };
+
+    private onThreadsPanelClicked = () => {
+        if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
+            dis.dispatch({
+                action: Action.ToggleRightPanel,
+                type: "room",
+            });
+        } else {
+            dispatchShowThreadsPanelEvent();
+        }
+    };
 
     public renderButtons() {
-        return <>
+        const rightPanelPhaseButtons: Map<RightPanelPhases, any> = new Map();
+
+        rightPanelPhaseButtons.set(RightPanelPhases.PinnedMessages,
             <PinnedMessagesHeaderButton
+                key="pinnedMessagesButton"
                 room={this.props.room}
                 isHighlighted={this.isPhase(RightPanelPhases.PinnedMessages)}
-                onClick={this.onPinnedMessagesClicked}
-            />
+                onClick={this.onPinnedMessagesClicked} />,
+        );
+        rightPanelPhaseButtons.set(RightPanelPhases.Timeline,
+            <TimelineCardHeaderButton
+                key="timelineButton"
+                room={this.props.room}
+                isHighlighted={this.isPhase(RightPanelPhases.Timeline)}
+                onClick={this.onTimelineCardClicked} />,
+        );
+        rightPanelPhaseButtons.set(RightPanelPhases.ThreadPanel,
+            SettingsStore.getValue("feature_thread")
+                ? <HeaderButton
+                    name="threadsButton"
+                    title={_t("Threads")}
+                    onClick={this.onThreadsPanelClicked}
+                    isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
+                    analytics={['Right Panel', 'Threads List Button', 'click']}>
+                    <UnreadIndicator color={this.threadNotificationState.color} />
+                </HeaderButton>
+                : null,
+        );
+        rightPanelPhaseButtons.set(RightPanelPhases.NotificationPanel,
             <HeaderButton
+                key="notifsButton"
                 name="notifsButton"
                 title={_t('Notifications')}
                 isHighlighted={this.isPhase(RightPanelPhases.NotificationPanel)}
                 onClick={this.onNotificationsClicked}
-                analytics={['Right Panel', 'Notification List Button', 'click']}
-            />
+                analytics={['Right Panel', 'Notification List Button', 'click']} />,
+        );
+        rightPanelPhaseButtons.set(RightPanelPhases.RoomSummary,
             <HeaderButton
+                key="roomSummaryButton"
                 name="roomSummaryButton"
                 title={_t('Room Info')}
                 isHighlighted={this.isPhase(ROOM_INFO_PHASES)}
                 onClick={this.onRoomSummaryClicked}
-                analytics={['Right Panel', 'Room Summary Button', 'click']}
-            />
+                analytics={['Right Panel', 'Room Summary Button', 'click']} />,
+        );
+
+        return <>
+            {
+                Array.from(rightPanelPhaseButtons.keys()).map((phase) =>
+                    ( this.props.excludedRightPanelPhaseButtons.includes(phase)
+                        ? null
+                        : rightPanelPhaseButtons.get(phase)))
+            }
         </>;
     }
 }
