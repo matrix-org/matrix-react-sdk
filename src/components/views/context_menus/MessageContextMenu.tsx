@@ -506,7 +506,7 @@ function isLocationEvent(event: MatrixEvent): boolean {
     return (
         LOCATION_EVENT_TYPE.matches(eventType) ||
         (
-            eventType === "m.room.message" &&
+            eventType === EventType.RoomMessage &&
             LOCATION_EVENT_TYPE.matches(event.getContent().msgtype)
         )
     );
