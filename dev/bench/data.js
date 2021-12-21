@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640101347459,
+  "lastUpdate": 1640102071594,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50168,6 +50168,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 687.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a239c456e37e4f24eb8a57955ac5221bb60ee1fd",
+          "message": "Allow opening a map view in OpenStreetMap (#7428)",
+          "timestamp": "2021-12-21T15:48:20Z",
+          "tree_id": "bf91774c5aa04d658d45ebcc0e6c771ca999e776",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a239c456e37e4f24eb8a57955ac5221bb60ee1fd"
+        },
+        "date": 1640102067477,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4729.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 705.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
