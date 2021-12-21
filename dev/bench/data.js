@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640081670640,
+  "lastUpdate": 1640082243197,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49952,6 +49952,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 677.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8b2a478a25352c0a63d1c9a85d4def9c2b6c5b7f",
+          "message": "Update location text fallback and test it (#7408)",
+          "timestamp": "2021-12-21T09:37:06Z",
+          "tree_id": "ad9495b8cd1ffd3cbd8f4c54d4abd9ba85a2e1ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8b2a478a25352c0a63d1c9a85d4def9c2b6c5b7f"
+        },
+        "date": 1640082239190,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5362.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 702,
             "unit": "ms",
             "extra": "type: measure"
           }
