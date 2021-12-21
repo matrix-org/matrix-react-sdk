@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640090653002,
+  "lastUpdate": 1640091907745,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50024,6 +50024,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 695,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "de881d2321f60c30f2024cc8c6672f470f701ab7",
+          "message": "Remove the Forward and Share buttons for location messages only (#7423)",
+          "timestamp": "2021-12-21T12:57:56Z",
+          "tree_id": "48184cac9bd86b714b2fa3713f2f4bfc919c0515",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/de881d2321f60c30f2024cc8c6672f470f701ab7"
+        },
+        "date": 1640091904050,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4852.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 724.5,
             "unit": "ms",
             "extra": "type: measure"
           }
