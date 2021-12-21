@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640091907745,
+  "lastUpdate": 1640099171879,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50060,6 +50060,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 724.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d25d325387ee9f2bee94ebfefaec268196fcbf02",
+          "message": "Don't show `Testing small changes` without UIFeature.Feedback (#7427)",
+          "timestamp": "2021-12-21T14:59:59Z",
+          "tree_id": "e71ed334b16608b23040b0848b7fdcf9a22d4ec6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d25d325387ee9f2bee94ebfefaec268196fcbf02"
+        },
+        "date": 1640099167870,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4962.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 685,
             "unit": "ms",
             "extra": "type: measure"
           }
