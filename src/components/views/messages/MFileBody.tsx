@@ -225,6 +225,8 @@ export default class MFileBody extends React.Component<IProps, IState> {
 
         const showDownloadLink = this.props.tileShape || !this.props.showGenericPlaceholder;
 
+        console.log({ showDownloadLink }, this.props);
+
         if (isEncrypted) {
             if (!this.state.decryptedBlob) {
                 // Need to decrypt the attachment
@@ -252,12 +254,13 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 <span className="mx_MFileBody">
                     { placeholder }
                     { showDownloadLink && <div className="mx_MFileBody_download">
-                        <div style={{ display: "none" }}>
+                        <div aria-hidden style={{ display: "none" }}>
                             { /*
                               * Add dummy copy of the "a" tag
                               * We'll use it to learn how the download link
                               * would have been styled if it was rendered inline.
                               */ }
+                            { /* eslint-disable-next-line jsx-a11y/anchor-has-content */ }
                             <a ref={this.dummyLink} />
                         </div>
                         { /*

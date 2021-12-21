@@ -1,5 +1,8 @@
 module.exports = {
-    plugins: ["matrix-org"],
+    plugins: [
+        "jsx-a11y",
+        "matrix-org",
+    ],
     extends: [
         "plugin:matrix-org/babel",
         "plugin:matrix-org/react",
@@ -41,7 +44,6 @@ module.exports = {
         // There are too many a11y violations to fix at once
         // Turn violated rules off until they are fixed
         "jsx-a11y/alt-text": "off",
-        "jsx-a11y/anchor-has-content": "off",
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/aria-activedescendant-has-tabindex": "off",
         "jsx-a11y/click-events-have-key-events": "off",
