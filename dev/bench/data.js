@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640053112171,
+  "lastUpdate": 1640078068572,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49880,6 +49880,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 748.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "61e3c38b19b37c187400527f9beffa91a9357edf",
+          "message": "Add configuration to disable relative date markers in timeline (#7405)\n\n* add disabler elative dates setting\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test existing DateSeparator\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use full date format when TimelineDisableRelativeDates is truthy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* flip timelineDisableRelativeDates -> timelineEnableRelativeDates to fit convention\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* mock date constructor in test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2021-12-21T10:08:22+01:00",
+          "tree_id": "acc37e55a73bdd17d8d997ac50129c7020c910e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/61e3c38b19b37c187400527f9beffa91a9357edf"
+        },
+        "date": 1640078064684,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4651.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 688.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
