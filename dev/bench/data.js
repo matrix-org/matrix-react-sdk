@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640100339086,
+  "lastUpdate": 1640101347459,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50132,6 +50132,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 659.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "38634f86d190550c0a6dd78d6542d625b1230333",
+          "message": "Space panel should watch spaces for space name changes (#7432)",
+          "timestamp": "2021-12-21T15:35:54Z",
+          "tree_id": "598388d1a77fefadc99a3213b09a9009af35bfe4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/38634f86d190550c0a6dd78d6542d625b1230333"
+        },
+        "date": 1640101343565,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4912.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 687.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
