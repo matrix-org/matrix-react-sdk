@@ -19,7 +19,7 @@ export default function SimpleVideoGrid({ items }: ISimpleVideoGridProps) {
                 return (
                     <VideoTile
                         key={id}
-                        usermediaCallFeed={callFeed}
+                        callFeed={callFeed}
                         width={426}
                         height={240}
                     />

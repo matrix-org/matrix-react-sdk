@@ -60,6 +60,7 @@ function getTilePositions(
     presenterTileCount: number,
     gridWidth: number,
     gridHeight: number,
+    layout: string,
 ): ITilePosition[] {
     if (tileCount === 0) {
         return [];
@@ -91,8 +92,21 @@ function getTilePositions(
 
     const itemTileCount = tileCount - presenterTileCount;
 
+    const {
+        columnCount: itemColumnCount,
+        rowCount: itemRowCount,
+        tileAspectRatio: itemTileAspectRatio,
+    } = getSubGridLayout(
+        itemTileCount,
+        itemGridWidth,
+        itemGridHeight,
+    );
+
     const itemGridPositions = getSubGridPositions(
         itemTileCount,
+        itemColumnCount,
+        itemRowCount,
+        itemTileAspectRatio,
         itemGridWidth,
         itemGridHeight,
         gap,
@@ -117,8 +131,21 @@ function getTilePositions(
         presenterGridHeight = gridHeight;
     }
 
+    const {
+        columnCount: presenterColumnCount,
+        rowCount: presenterRowCount,
+        tileAspectRatio: presenterTileAspectRatio,
+    } = getSubGridLayout(
+        presenterTileCount,
+        presenterGridWidth,
+        presenterGridHeight,
+    );
+
     const presenterGridPositions = getSubGridPositions(
         presenterTileCount,
+        presenterColumnCount,
+        presenterRowCount,
+        presenterTileAspectRatio,
         presenterGridWidth,
         presenterGridHeight,
         gap,
@@ -365,16 +392,18 @@ interface ITilePosition {
     y: number;
 }
 
-function getSubGridPositions(tileCount: number, gridWidth: number, gridHeight: number, gap: number): ITilePosition[] {
+function getSubGridPositions(
+    tileCount: number,
+    columnCount: number,
+    rowCount: number,
+    tileAspectRatio: number,
+    gridWidth: number,
+    gridHeight: number,
+    gap: number,
+): ITilePosition[] {
     if (tileCount === 0) {
         return [];
     }
-
-    const { columnCount, rowCount, tileAspectRatio } = getSubGridLayout(
-        tileCount,
-        gridWidth,
-        gridHeight,
-    );
 
     const newTilePositions = [];
 
@@ -441,8 +470,7 @@ function getSubGridPositions(tileCount: number, gridWidth: number, gridHeight: n
 
 interface IVideoGridItem {
     id: string;
-    usermediaCallFeed: CallFeed;
-    screenshareCallFeed?: CallFeed;
+    callFeed: CallFeed;
     isActiveSpeaker: boolean;
 }
 
@@ -570,6 +598,7 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                                 presenterTileCount,
                                 gridBounds.width,
                                 gridBounds.height,
+                                layout,
                             ),
                         };
                     });
@@ -590,6 +619,7 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                     presenterTileCount,
                     gridBounds.width,
                     gridBounds.height,
+                    layout,
                 ),
             };
         });
@@ -706,11 +736,12 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                         presenterTileCount,
                         gridBounds.width,
                         gridBounds.height,
+                        layout,
                     ),
                 };
             });
         },
-        [tiles, gridBounds, onFocusTile],
+        [tiles, gridBounds, onFocusTile, layout],
     );
 
     const bind = useDrag(
@@ -809,8 +840,7 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                         width={tilePosition.width}
                         height={tilePosition.height}
                         getAvatar={getAvatar}
-                        usermediaCallFeed={tile.item.usermediaCallFeed}
-                        screenshareCallFeed={tile.item.screenshareCallFeed}
+                        callFeed={tile.item.callFeed}
                     />
                 );
             }) }

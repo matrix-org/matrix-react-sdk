@@ -127,6 +127,22 @@ limitations under the License.
         &.mx_screenshare > video {
             object-fit: contain;
         }
+
+        .mx_presenterLabel {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #17191C;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px 8px;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 15px;
+        }
     }
 
     .mx_screensharePIP {
