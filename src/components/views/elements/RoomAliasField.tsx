@@ -109,15 +109,12 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         rules: [
             { key: "hasDomain",
                 test: async ({ value }) => {
-                    if (!value) {
-                        return true;
-                    }
                     // Ignore if we have passed domain
-                    if (this.props.domain) {
+                    if (!value || this.props.domain) {
                         return true;
                     }
-                    const split = value.split(':');
-                    if (split.length < 2) {
+
+                    if (value.split(':').length < 2) {
                         return false;
                     }
                     return true;
@@ -125,18 +122,19 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                 invalid: () => _t("Missing domain separator e.g. (:domain.org)"),
             },
             {
-                key: "hasRoomnameOrAtLeastASingleSeparator",
+                key: "hasLocalpart",
                 test: async ({ value }) => {
-                    if (!value) {
+                    if (!value || this.props.domain) {
                         return true;
                     }
-                    // Ignore if we have passed domain
-                    if (this.props.domain) {
-                        return true;
-                    }
+
                     const split = value.split(':');
-                    // Define the value invalid if there's no first part (roomname) or separator's missing
-                    if (split.length < 2 || split[0].length < 1) {
+                    if (split.length < 2) {
+                        return true; // hasDomain check will fail here instead
+                    }
+
+                    // Define the value invalid if there's no first part (roomname)
+                    if (split[0].length < 1) {
                         return false;
                     }
                     return true;
