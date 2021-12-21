@@ -12,6 +12,7 @@ cd $BASE_DIR
     pip install --upgrade pip
 
     # Pin setuptools to work around crash bug in v60
+    # See https://github.com/vector-im/element-web/issues/20287
     pip install setuptools==v59.8.0
 
     pip install ComplexHttpServer
