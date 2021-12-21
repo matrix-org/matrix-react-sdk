@@ -322,7 +322,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         if (isContentActionable(mxEvent)) {
-            if (this.state.canForward) {
+            if (canForward(mxEvent)) {
                 forwardButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconForward"
@@ -365,7 +365,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
         let permalink: string | null = null;
         let permalinkButton: ReactElement | null = null;
-        if (this.state.canShare) {
+        if (canShare(mxEvent)) {
             if (this.props.permalinkCreator) {
                 permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
             }
@@ -499,6 +499,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             </IconizedContextMenu>
         );
     }
+}
+
+function canForward(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
+}
+
+function canShare(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
 }
 
 function isLocationEvent(event: MatrixEvent): boolean {
