@@ -83,8 +83,6 @@ interface IProps extends IPosition {
 interface IState {
     canRedact: boolean;
     canPin: boolean;
-    canForward: boolean;
-    canShare: boolean;
 }
 
 @replaceableComponent("views.context_menus.MessageContextMenu")
@@ -95,8 +93,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     state = {
         canRedact: false,
         canPin: false,
-        canForward: false,
-        canShare: false,
     };
 
     componentDidMount() {
@@ -126,11 +122,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         // HACK: Intentionally say we can't pin if the user doesn't want to use the functionality
         if (!SettingsStore.getValue("feature_pinning")) canPin = false;
 
-        const isLoc = isLocationEvent(this.props.mxEvent);
-        const canForward = !isLoc;
-        const canShare = !isLoc;
-
-        this.setState({ canRedact, canPin, canForward, canShare });
+        this.setState({ canRedact, canPin });
     };
 
     private isPinned(): boolean {
@@ -322,7 +314,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         if (isContentActionable(mxEvent)) {
-            if (this.state.canForward) {
+            if (canForward(mxEvent)) {
                 forwardButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconForward"
@@ -365,7 +357,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
         let permalink: string | null = null;
         let permalinkButton: ReactElement | null = null;
-        if (this.state.canShare) {
+        if (canShare(mxEvent)) {
             if (this.props.permalinkCreator) {
                 permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
             }
@@ -499,6 +491,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             </IconizedContextMenu>
         );
     }
+}
+
+function canForward(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
+}
+
+function canShare(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
 }
 
 function isLocationEvent(event: MatrixEvent): boolean {
