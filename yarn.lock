@@ -6063,8 +6063,8 @@ mathml-tag-names@^2.1.3:
   resolved "https://github.com/matrix-org/matrix-analytics-events.git#1eab4356548c97722a183912fda1ceabbe8cc7c1"
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "15.2.1"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/169b6b55727d0eea181a31b3170439c9a355065b"
+  version "15.3.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/f780e1dbc3918d3665f3b7f1214562f598486670"
   dependencies:
     "@babel/runtime" "^7.12.5"
     another-json "^0.2.0"
