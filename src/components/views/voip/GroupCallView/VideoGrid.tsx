@@ -61,6 +61,30 @@ function getTilePositions(
     gridWidth: number,
     gridHeight: number,
     layout: string,
+) {
+    if (layout === "freedom") {
+        return getFreedomLayoutTilePositions(tileCount, presenterTileCount, gridWidth, gridHeight);
+    } else {
+        return getFreedomLayoutTilePositions(tileCount, presenterTileCount, gridWidth, gridHeight);
+        // return getSpotlightLayoutTilePositions(tileCount, gridWidth, gridHeight);
+    }
+}
+
+function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, gridHeight: number) {
+    const tilePositions = [];
+
+    for (let i = 0; i < tilePositions.length; i++) {
+
+    }
+
+    return tilePositions;
+}
+
+function getFreedomLayoutTilePositions(
+    tileCount: number,
+    presenterTileCount: number,
+    gridWidth: number,
+    gridHeight: number,
 ): ITilePosition[] {
     if (tileCount === 0) {
         return [];
@@ -471,13 +495,15 @@ function getSubGridPositions(
 interface IVideoGridItem {
     id: string;
     callFeed: CallFeed;
-    isActiveSpeaker: boolean;
+    focused: boolean;
+    presenter: boolean;
 }
 
 interface IVideoGridTile {
     key: string;
     item: IVideoGridItem;
     remove: boolean;
+    focused: boolean;
     presenter: boolean;
 }
 
@@ -532,18 +558,21 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                     removedTileKeys.push(tile.key);
                 }
 
-                let presenter;
+                let focused;
+                let presenter = false;
 
                 if (layout === "spotlight") {
-                    presenter = item.isActiveSpeaker;
+                    focused = item.focused;
+                    presenter = item.presenter;
                 } else {
-                    presenter = layout === lastLayoutRef.current ? tile.presenter : false;
+                    focused = layout === lastLayoutRef.current ? tile.focused : false;
                 }
 
                 newTiles.push({
                     key: item.id,
                     item,
                     remove,
+                    focused,
                     presenter,
                 });
             }
@@ -561,7 +590,8 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                     key: item.id,
                     item,
                     remove: false,
-                    presenter: layout === "spotlight" && item.isActiveSpeaker,
+                    focused: layout === "spotlight" && item.focused,
+                    presenter: layout === "spotlight" && item.presenter,
                 };
 
                 if (existingTile) {
@@ -573,7 +603,15 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                 }
             }
 
-            newTiles.sort((a, b) => (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0));
+            newTiles.sort((a, b) => {
+                if (a.focused !== b.focused) {
+                    return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
+                } else if (a.presenter !== b.presenter) {
+                    return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
+                }
+
+                return 0;
+            });
 
             if (removedTileKeys.length > 0) {
                 setTimeout(() => {
@@ -587,7 +625,7 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                         );
 
                         const presenterTileCount = newTiles.reduce(
-                            (count, tile) => count + (tile.presenter ? 1 : 0),
+                            (count, tile) => count + (tile.focused ? 1 : 0),
                             0,
                         );
 
@@ -606,7 +644,7 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
             }
 
             const presenterTileCount = newTiles.reduce(
-                (count, tile) => count + (tile.presenter ? 1 : 0),
+                (count, tile) => count + (tile.focused ? 1 : 0),
                 0,
             );
 
@@ -706,7 +744,7 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                     newTiles = onFocusTile(state.tiles, tile);
 
                     for (const tile of newTiles) {
-                        if (tile.presenter) {
+                        if (tile.focused) {
                             presenterTileCount++;
                         }
                     }
@@ -715,10 +753,10 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                         let newTile = tile;
 
                         if (tile.item === item) {
-                            newTile = { ...tile, presenter: !tile.presenter };
+                            newTile = { ...tile, focused: !tile.focused };
                         }
 
-                        if (newTile.presenter) {
+                        if (newTile.focused) {
                             presenterTileCount++;
                         }
 
@@ -726,7 +764,15 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                     });
                 }
 
-                newTiles.sort((a, b) => (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0));
+                newTiles.sort((a, b) => {
+                    if (a.focused !== b.focused) {
+                        return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
+                    } else if (a.presenter !== b.presenter) {
+                        return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
+                    }
+
+                    return 0;
+                });
 
                 return {
                     ...state,
@@ -782,17 +828,23 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
 
                     newTiles = newTiles.map((tile) => {
                         if (tile === hoverTile) {
-                            return { ...tile, presenter: dragTile.presenter };
+                            return { ...tile, focused: dragTile.focused };
                         } else if (tile === dragTile) {
-                            return { ...tile, presenter: hoverTile.presenter };
+                            return { ...tile, focused: hoverTile.focused };
                         } else {
                             return tile;
                         }
                     });
 
-                    newTiles.sort(
-                        (a, b) => (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0),
-                    );
+                    newTiles.sort((a, b) => {
+                        if (a.focused !== b.focused) {
+                            return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
+                        } else if (a.presenter !== b.presenter) {
+                            return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
+                        }
+
+                        return 0;
+                    });
 
                     setTileState((state) => ({ ...state, tiles: newTiles }));
                     break;
