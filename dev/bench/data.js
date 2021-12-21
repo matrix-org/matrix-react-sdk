@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640082243197,
+  "lastUpdate": 1640090653002,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -49988,6 +49988,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 702,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d6af7294e41f1a1cbf0dfdfa71334260a3b390aa",
+          "message": "Fix legacy breadcrumbs wrongly showing up (#7425)",
+          "timestamp": "2021-12-21T12:27:44Z",
+          "tree_id": "ff472b04e09f50c0a737aae1ed1c1705145c5555",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d6af7294e41f1a1cbf0dfdfa71334260a3b390aa"
+        },
+        "date": 1640090649222,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4828.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 695,
             "unit": "ms",
             "extra": "type: measure"
           }
