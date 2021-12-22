@@ -19,6 +19,12 @@ import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
+import {
+    Filter,
+    IFilterDefinition,
+    UNSTABLE_FILTER_RELATION_SENDERS,
+    UNSTABLE_FILTER_RELATION_TYPES,
+} from 'matrix-js-sdk/src/filter';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -31,12 +37,6 @@ import TimelinePanel from './TimelinePanel';
 import { Layout } from '../../settings/enums/Layout';
 import { TileShape } from '../views/rooms/EventTile';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import {
-    Filter,
-    IFilterDefinition,
-    UNSTABLE_FILTER_RELATION_SENDERS,
-    UNSTABLE_FILTER_RELATION_TYPES,
-} from 'matrix-js-sdk/src/filter';
 
 async function getThreadTimelineSet(
     client: MatrixClient,
