@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640182452739,
+  "lastUpdate": 1640190186620,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50384,6 +50384,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 663.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "36052282+twigleingrid@users.noreply.github.com",
+            "name": "Ingrid",
+            "username": "twigleingrid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "defbe16448481a44183aec225a50cf51e4b277bd",
+          "message": "Trim spurious whitespace of \"Explore rooms\" menu input (#7431)\n\n* Trim spurious whitespace of \"Explore rooms\" menu input\r\n\r\nTrims the whitespace around the input string in order to\r\nshow relevant room suggestions and the \"Join\" button.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/19728\r\n\r\nSigned-off by: Ingrid Budau inigiri@posteo.jp\r\n\r\n* Add safe navigation\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>",
+          "timestamp": "2021-12-22T09:16:51-07:00",
+          "tree_id": "1338a90f122fc9f0dfd6c5a21aa4e240962d6e3d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/defbe16448481a44183aec225a50cf51e4b277bd"
+        },
+        "date": 1640190182495,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5002.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 781.5,
             "unit": "ms",
             "extra": "type: measure"
           }
