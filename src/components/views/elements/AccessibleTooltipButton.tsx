@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import classNames from 'classnames';
 
 import AccessibleButton from "./AccessibleButton";
 import Tooltip, { Alignment } from './Tooltip';
@@ -53,14 +52,14 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
         }
     }
 
-    onMouseOver = () => {
+    showTooltip = () => {
         if (this.props.forceHide) return;
         this.setState({
             hover: true,
         });
     };
 
-    onMouseLeave = () => {
+    hideTooltip = () => {
         this.setState({
             hover: false,
         });
@@ -70,18 +69,19 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { title, tooltip, children, tooltipClassName, forceHide, yOffset, alignment, ...props } = this.props;
 
-        const tip = this.state.hover ? <Tooltip
-            className="mx_AccessibleTooltipButton_container"
-            tooltipClassName={classNames("mx_AccessibleTooltipButton_tooltip", tooltipClassName)}
+        const tip = this.state.hover && <Tooltip
+            tooltipClassName={tooltipClassName}
             label={tooltip || title}
             yOffset={yOffset}
             alignment={alignment}
-        /> : null;
+        />;
         return (
             <AccessibleButton
                 {...props}
-                onMouseOver={this.onMouseOver}
-                onMouseLeave={this.onMouseLeave}
+                onMouseOver={this.showTooltip}
+                onMouseLeave={this.hideTooltip}
+                onFocus={this.showTooltip}
+                onBlur={this.hideTooltip}
                 aria-label={title}
             >
                 { children }

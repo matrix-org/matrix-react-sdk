@@ -15,20 +15,20 @@ limitations under the License.
 */
 
 import React from 'react';
+import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
+import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
 import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
 import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import Spinner from '../../views/elements/Spinner';
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 function keyHasPassphrase(keyInfo: ISecretStorageKeyInfo): boolean {
     return Boolean(
@@ -39,7 +39,7 @@ function keyHasPassphrase(keyInfo: ISecretStorageKeyInfo): boolean {
 }
 
 interface IProps {
-    onFinished: (boolean) => void;
+    onFinished: () => void;
 }
 
 interface IState {
@@ -70,7 +70,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
     private onStoreUpdate = () => {
         const store = SetupEncryptionStore.sharedInstance();
         if (store.phase === Phase.Finished) {
-            this.props.onFinished(true);
+            this.props.onFinished();
             return;
         }
         this.setState({
@@ -97,13 +97,16 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         const userId = cli.getUserId();
         const requestPromise = cli.requestVerification(userId);
 
-        this.props.onFinished(true);
+        // We need to call onFinished now to close this dialog, and
+        // again later to signal that the verification is complete.
+        this.props.onFinished();
         Modal.createTrackedDialog('New Session Verification', 'Starting dialog', VerificationRequestDialog, {
             verificationRequestPromise: requestPromise,
             member: cli.getUser(userId),
             onFinished: async () => {
                 const request = await requestPromise;
                 request.cancel();
+                this.props.onFinished();
             },
         });
     };
@@ -125,6 +128,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
     };
 
     private onResetConfirmClick = () => {
+        this.props.onFinished();
         const store = SetupEncryptionStore.sharedInstance();
         store.resetConfirm();
     };
@@ -140,7 +144,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
     };
 
     private onEncryptionPanelClose = () => {
-        this.props.onFinished(false);
+        this.props.onFinished();
     };
 
     public render() {
@@ -249,7 +253,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             return (
                 <div>
                     <p>{ _t(
-                        "Without verifying, you won’t have access to all your messages " +
+                        "Without verifying, you won't have access to all your messages " +
                         "and may appear as untrusted to others.",
                     ) }</p>
                     <div className="mx_CompleteSecurity_actionRow">

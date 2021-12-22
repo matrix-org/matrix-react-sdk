@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import SdkConfig from "../SdkConfig";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const JITSI_WK_PROPERTY = "im.vector.riot.jitsi";
 
@@ -92,7 +92,9 @@ export class Jitsi {
         const parsed = new URL(url);
         if (parsed.hostname !== this.preferredDomain) return null; // invalid
         return {
-            conferenceId: parsed.pathname,
+            // URL pathnames always contain a leading slash.
+            // Remove it to be left with just the conference name.
+            conferenceId: parsed.pathname.substring(1),
             domain: parsed.hostname,
             isAudioOnly: false,
         };

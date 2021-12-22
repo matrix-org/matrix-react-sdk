@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import * as Lifecycle from '../../../Lifecycle';
@@ -31,8 +33,6 @@ import AccessibleButton from '../../views/elements/AccessibleButton';
 import Spinner from "../../views/elements/Spinner";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const LOGIN_VIEW = {
     LOADING: 1,
@@ -215,7 +215,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         if (this.state.keyBackupNeeded) {
             introText = _t(
                 "Regain access to your account and recover encryption keys stored in this session. " +
-                "Without them, you won’t be able to read all of your secure messages in any session.");
+                "Without them, you won't be able to read all of your secure messages in any session.");
         }
 
         if (this.state.loginView === LOGIN_VIEW.PASSWORD) {

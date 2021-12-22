@@ -16,20 +16,20 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Direction } from "matrix-js-sdk/src/models/event-timeline";
+import { saveAs } from "file-saver";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { IExportOptions, ExportType } from "./exportUtils";
+import { ExportType, IExportOptions } from "./exportUtils";
 import { decryptFile } from "../DecryptFile";
 import { mediaFromContent } from "../../customisations/Media";
 import { formatFullDateNoDay } from "../../DateUtils";
 import { isVoiceMessage } from "../EventUtils";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { IMediaEventContent } from "../../customisations/models/IMediaEventContent";
-import { saveAs } from "file-saver";
 import { _t } from "../../languageHandler";
 import SdkConfig from "../../SdkConfig";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 type BlobFile = {
     name: string;
@@ -77,15 +77,16 @@ export default abstract class Exporter {
 
     protected async downloadZIP(): Promise<string | void> {
         const brand = SdkConfig.get().brand;
-        const filename = `${brand} - Chat Export - ${formatFullDateNoDay(new Date())}.zip`;
+        const filenameWithoutExt = `${brand} - Chat Export - ${formatFullDateNoDay(new Date())}`;
+        const filename = `${filenameWithoutExt}.zip`;
         const { default: JSZip } = await import('jszip');
 
         const zip = new JSZip();
         // Create a writable stream to the directory
-        if (!this.cancelled) this.updateProgress("Generating a ZIP");
+        if (!this.cancelled) this.updateProgress(_t("Generating a ZIP"));
         else return this.cleanUp();
 
-        for (const file of this.files) zip.file(file.name, file.blob);
+        for (const file of this.files) zip.file(filenameWithoutExt + "/" + file.name, file.blob);
 
         const content = await zip.generateAsync({ type: "blob" });
 
@@ -171,11 +172,18 @@ export default abstract class Exporter {
                 // }
                 events.push(mxEv);
             }
-            this.updateProgress(
-                ("Fetched " + events.length + " events ") + (this.exportType === ExportType.LastNMessages
-                    ? `out of ${this.exportOptions.numberOfMessages}`
-                    : "so far"),
-            );
+
+            if (this.exportType === ExportType.LastNMessages) {
+                this.updateProgress(_t("Fetched %(count)s events out of %(total)s", {
+                    count: events.length,
+                    total: this.exportOptions.numberOfMessages,
+                }));
+            } else {
+                this.updateProgress(_t("Fetched %(count)s events so far", {
+                    count: events.length,
+                }));
+            }
+
             prevToken = res.end;
         }
         // Reverse the events so that we preserve the order

@@ -20,7 +20,7 @@ import SettingsHandler from "./SettingsHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { SettingLevel } from "../SettingLevel";
 import { CallbackFn, WatchManager } from "../WatchManager";
-import { Layout } from "../Layout";
+import { Layout } from "../enums/Layout";
 
 /**
  * Gets and sets settings at the "device" level for the current device.
@@ -33,7 +33,7 @@ export default class DeviceSettingsHandler extends SettingsHandler {
      * @param {string[]} featureNames The names of known features.
      * @param {WatchManager} watchers The watch manager to notify updates to
      */
-    constructor(private featureNames: string[], private watchers: WatchManager) {
+    constructor(private featureNames: string[], public readonly watchers: WatchManager) {
         super();
     }
 

@@ -15,20 +15,19 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixEvent } from 'matrix-js-sdk/src';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import Spinner from '../elements/Spinner';
 import InteractiveAuthDialog from '../dialogs/InteractiveAuthDialog';
 import ConfirmDestroyCrossSigningDialog from '../dialogs/security/ConfirmDestroyCrossSigningDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixEvent } from 'matrix-js-sdk/src';
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import { accessSecretStorage } from '../../../SecurityManager';
-
-import { logger } from "matrix-js-sdk/src/logger";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IState {
     error?: Error;
@@ -165,7 +164,6 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     };
 
     public render() {
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
         const {
             error,
             crossSigningPublicKeysOnDevice,

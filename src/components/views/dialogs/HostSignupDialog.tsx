@@ -15,12 +15,14 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import PersistedElement from "../elements/PersistedElement";
 import QuestionDialog from './QuestionDialog';
 import SdkConfig from "../../../SdkConfig";
-import classNames from "classnames";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { HostSignupStore } from "../../../stores/HostSignupStore";
@@ -32,8 +34,6 @@ import {
     PostmessageAction,
 } from "./HostSignupDialogTypes";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const HOST_SIGNUP_KEY = "host_signup";
 
@@ -253,8 +253,8 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                     <AccessibleButton
                                         className="mx_HostSignup_maximize_button"
                                         onClick={this.maximizeDialog}
-                                        aria-label={_t("Maximize dialog")}
-                                        title={_t("Maximize dialog")}
+                                        aria-label={_t("Maximise dialog")}
+                                        title={_t("Maximise dialog")}
                                     />
                                 </div>
                             }
@@ -263,8 +263,8 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                     <AccessibleButton
                                         onClick={this.minimizeDialog}
                                         className="mx_HostSignup_minimize_button"
-                                        aria-label={_t("Minimize dialog")}
-                                        title={_t("Minimize dialog")}
+                                        aria-label={_t("Minimise dialog")}
+                                        title={_t("Minimise dialog")}
                                     />
                                     <AccessibleButton
                                         onClick={this.onCloseClick}

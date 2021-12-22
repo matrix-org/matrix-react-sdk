@@ -16,12 +16,11 @@ limitations under the License.
 
 import classNames from 'classnames';
 import { SERVICE_TYPES } from 'matrix-js-sdk/src/service-types';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import * as sdk from '.';
 import Modal from './Modal';
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 export class TermsNotSignedError extends Error {}
 
@@ -181,7 +180,7 @@ export async function startTermsFlow(
     return Promise.all(agreePromises);
 }
 
-export function dialogTermsInteractionCallback(
+export async function dialogTermsInteractionCallback(
     policiesAndServicePairs: {
         service: Service;
         policies: { [policy: string]: Policy };
@@ -189,21 +188,18 @@ export function dialogTermsInteractionCallback(
     agreedUrls: string[],
     extraClassNames?: string,
 ): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-        logger.log("Terms that need agreement", policiesAndServicePairs);
-        // FIXME: Using an import will result in test failures
-        const TermsDialog = sdk.getComponent("views.dialogs.TermsDialog");
+    logger.log("Terms that need agreement", policiesAndServicePairs);
+    // FIXME: Using an import will result in test failures
+    const TermsDialog = sdk.getComponent("views.dialogs.TermsDialog");
 
-        Modal.createTrackedDialog('Terms of Service', '', TermsDialog, {
-            policiesAndServicePairs,
-            agreedUrls,
-            onFinished: (done, agreedUrls) => {
-                if (!done) {
-                    reject(new TermsNotSignedError());
-                    return;
-                }
-                resolve(agreedUrls);
-            },
-        }, classNames("mx_TermsDialog", extraClassNames));
-    });
+    const { finished } = Modal.createTrackedDialog<[boolean, string[]]>('Terms of Service', '', TermsDialog, {
+        policiesAndServicePairs,
+        agreedUrls,
+    }, classNames("mx_TermsDialog", extraClassNames));
+
+    const [done, _agreedUrls] = await finished;
+    if (!done) {
+        throw new TermsNotSignedError();
+    }
+    return _agreedUrls;
 }

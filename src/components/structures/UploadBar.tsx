@@ -16,9 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import { Room } from "matrix-js-sdk/src/models/room";
+import filesize from "filesize";
+import { IEventRelation } from 'matrix-js-sdk/src';
+
 import ContentMessages from '../../ContentMessages';
 import dis from "../../dispatcher/dispatcher";
-import filesize from "filesize";
 import { _t } from '../../languageHandler';
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
@@ -30,6 +32,7 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 
 interface IProps {
     room: Room;
+    relation?: IEventRelation;
 }
 
 interface IState {
@@ -64,7 +67,7 @@ export default class UploadBar extends React.Component<IProps, IState> {
     }
 
     private getUploadsInRoom(): IUpload[] {
-        const uploads = ContentMessages.sharedInstance().getCurrentUploads();
+        const uploads = ContentMessages.sharedInstance().getCurrentUploads(this.props.relation);
         return uploads.filter(u => u.roomId === this.props.room.roomId);
     }
 

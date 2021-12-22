@@ -18,6 +18,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import BaseDialog from "./BaseDialog";
@@ -32,7 +33,7 @@ import { calculateRoomVia, makeRoomPermalink } from "../../../utils/permalinks/P
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import Spinner from "../elements/Spinner";
 import { mediaFromMxc } from "../../../customisations/Media";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import Modal from "../../../Modal";
 import InfoDialog from "./InfoDialog";
 import dis from "../../../dispatcher/dispatcher";
@@ -41,8 +42,6 @@ import { UserTab } from "./UserSettingsDialog";
 import TagOrderActions from "../../../actions/TagOrderActions";
 import { inviteUsersToRoom } from "../../../RoomInvite";
 import ProgressBar from "../elements/ProgressBar";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     matrixClient: MatrixClient;

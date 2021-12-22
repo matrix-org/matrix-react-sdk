@@ -14,17 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import { Action } from "../actions";
 import dis from '../dispatcher';
 import { SetRightPanelPhasePayload } from "../payloads/SetRightPanelPhasePayload";
 
-export const dispatchShowThreadEvent = (event: MatrixEvent) => {
+export const dispatchShowThreadEvent = (
+    rootEvent: MatrixEvent,
+    initialEvent?: MatrixEvent,
+    highlighted?: boolean,
+) => {
     dis.dispatch({
         action: Action.SetRightPanelPhase,
         phase: RightPanelPhases.ThreadView,
         refireParams: {
-            event,
+            event: rootEvent,
+            initialEvent,
+            highlighted,
         },
     });
 };

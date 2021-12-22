@@ -15,7 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ComponentType } from 'react';
+import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
@@ -27,8 +30,6 @@ import QuestionDialog from '../dialogs/QuestionDialog';
 import RestoreKeyBackupDialog from '../dialogs/security/RestoreKeyBackupDialog';
 import { accessSecretStorage } from '../../../SecurityManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
 
 interface IState {
     loading: boolean;
@@ -42,8 +43,6 @@ interface IState {
     backupSigStatus: TrustInfo;
     sessionsRemaining: number;
 }
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 @replaceableComponent("views.settings.SecureBackupPanel")
 export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
@@ -170,7 +169,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
     private startNewBackup = (): void => {
         Modal.createTrackedDialogAsync('Key Backup', 'Key Backup',
-            import('../../../async-components/views/dialogs/security/CreateKeyBackupDialog'),
+            import(
+                '../../../async-components/views/dialogs/security/CreateKeyBackupDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             {
                 onFinished: () => {
                     this.loadBackupStatus();

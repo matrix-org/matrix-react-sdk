@@ -17,11 +17,12 @@ limitations under the License.
 import { CallType } from 'matrix-js-sdk/src/webrtc/call';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import React from 'react';
+import classNames from 'classnames';
+
 import { _t, _td } from '../../../../languageHandler';
 import RoomAvatar from '../../avatars/RoomAvatar';
-import AccessibleButton from '../../elements/AccessibleButton';
 import dis from '../../../../dispatcher/dispatcher';
-import classNames from 'classnames';
+import { Action } from '../../../../dispatcher/actions';
 import AccessibleTooltipButton from '../../elements/AccessibleTooltipButton';
 
 const callTypeTranslationByType: Record<CallType, string> = {
@@ -36,13 +37,6 @@ interface CallViewHeaderProps {
     onPipMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
-const onRoomAvatarClick = (roomId: string) => {
-    dis.dispatch({
-        action: 'view_room',
-        room_id: roomId,
-    });
-};
-
 const onFullscreenClick = () => {
     dis.dispatch({
         action: 'video_fullscreen',
@@ -52,7 +46,7 @@ const onFullscreenClick = () => {
 
 const onExpandClick = (roomId: string) => {
     dis.dispatch({
-        action: 'view_room',
+        action: Action.ViewRoom,
         room_id: roomId,
     });
 };
@@ -76,12 +70,10 @@ const CallViewHeaderControls: React.FC<CallControlsProps> = ({ pipMode = false, 
 };
 const SecondaryCallInfo: React.FC<{ callRoom: Room }> = ({ callRoom }) => {
     return <span className="mx_CallViewHeader_secondaryCallInfo">
-        <AccessibleButton element='span' onClick={() => onRoomAvatarClick(callRoom.roomId)}>
-            <RoomAvatar room={callRoom} height={16} width={16} />
-            <span className="mx_CallView_secondaryCall_roomName">
-                { _t("%(name)s on hold", { name: callRoom.name }) }
-            </span>
-        </AccessibleButton>
+        <RoomAvatar room={callRoom} height={16} width={16} />
+        <span className="mx_CallView_secondaryCall_roomName">
+            { _t("%(name)s on hold", { name: callRoom.name }) }
+        </span>
     </span>;
 };
 
@@ -117,9 +109,7 @@ const CallViewHeader: React.FC<CallViewHeaderProps> = ({
             className="mx_CallViewHeader"
             onMouseDown={onPipMouseDown}
         >
-            <AccessibleButton onClick={() => onRoomAvatarClick(roomId)}>
-                <RoomAvatar room={callRoom} height={32} width={32} />
-            </AccessibleButton>
+            <RoomAvatar room={callRoom} height={32} width={32} />
             <div className="mx_CallViewHeader_callInfo">
                 <div className="mx_CallViewHeader_roomName">{ callRoomName }</div>
                 <div className="mx_CallViewHeader_callTypeSmall">

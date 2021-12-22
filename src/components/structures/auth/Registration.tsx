@@ -17,11 +17,12 @@ limitations under the License.
 import { createClient } from 'matrix-js-sdk/src/matrix';
 import React, { ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from "classnames";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
@@ -36,8 +37,6 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -304,7 +303,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     errorText = _t('This server does not support authentication with a phone number.');
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
-                errorText = _t("That username already exists, please try another.");
+                errorText = _t("Someone already has that username, please try another.");
             } else if (response.errcode === "M_THREEPID_IN_USE") {
                 errorText = _t("That e-mail address is already in use.");
             }
@@ -510,6 +509,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     flows={this.state.flows}
                     serverConfig={this.props.serverConfig}
                     canSubmit={!this.state.serverErrorIsFatal}
+                    matrixClient={this.state.matrixClient}
                 />
             </React.Fragment>;
         }

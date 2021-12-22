@@ -19,6 +19,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventSubscription } from "fbemitter";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomAvatar from "../views/avatars/RoomAvatar";
@@ -48,6 +49,7 @@ import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPan
 import { useStateArray } from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import {
+    shouldShowSpaceInvite,
     shouldShowSpaceSettings,
     showAddExistingRooms,
     showCreateNewRoom,
@@ -57,7 +59,7 @@ import {
 } from "../../utils/space";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import MemberAvatar from "../views/avatars/MemberAvatar";
-import SpaceStore from "../../stores/SpaceStore";
+import SpaceStore from "../../stores/spaces/SpaceStore";
 import FacePile from "../views/elements/FacePile";
 import {
     AddExistingToSpace,
@@ -81,8 +83,6 @@ import Spinner from "../views/elements/Spinner";
 import GroupAvatar from "../views/avatars/GroupAvatar";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { useRoomState } from "../../hooks/useRoomState";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 
@@ -128,8 +128,9 @@ const useMyRoomMembership = (room: Room) => {
 };
 
 const SpaceInfo = ({ space }: { space: Room }) => {
+    // summary will begin as undefined whilst loading and go null if it fails to load or we are not invited.
     const summary = useAsyncMemo(async () => {
-        if (space.getMyMembership() !== "invite") return;
+        if (space.getMyMembership() !== "invite") return null;
         try {
             return space.client.getRoomSummary(space.roomId);
         } catch (e) {
@@ -140,7 +141,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
     const membership = useMyRoomMembership(space);
 
     let visibilitySection;
-    if (joinRule === "public") {
+    if (joinRule === JoinRule.Public) {
         visibilitySection = <span className="mx_SpaceRoomView_info_public">
             { _t("Public space") }
         </span>;
@@ -156,7 +157,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
         memberSection = <span className="mx_SpaceRoomView_info_memberCount">
             { _t("%(count)s members", { count: summary.num_joined_members }) }
         </span>;
-    } else if (summary === null) {
+    } else if (summary !== undefined) { // summary is not still loading
         memberSection = <RoomMemberCount room={space}>
             { (count) => count > 0 ? (
                 <AccessibleButton
@@ -395,7 +396,7 @@ const SpaceLandingAddButton = ({ space }) => {
                 />
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
-                    iconClassName="mx_RoomList_iconHash"
+                    iconClassName="mx_RoomList_iconAddExistingRoom"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -439,9 +440,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     const userId = cli.getUserId();
 
     let inviteButton;
-    if (((myMembership === "join" && space.canInvite(userId)) || space.getJoinRule() === JoinRule.Public) &&
-        shouldShowComponent(UIComponent.InviteUsers)
-    ) {
+    if (shouldShowSpaceInvite(space) && shouldShowComponent(UIComponent.InviteUsers)) {
         inviteButton = (
             <AccessibleButton
                 kind="primary"
@@ -668,10 +667,6 @@ const SpaceSetupPrivateScope = ({ space, justCreatedOpts, onFinished }) => {
             <h3>{ _t("Me and my teammates") }</h3>
             <div>{ _t("A private space for you and your teammates") }</div>
         </AccessibleButton>
-        <div className="mx_SpaceRoomView_betaWarning">
-            <h3>{ _t("Teammates might not be able to view or join any private rooms you make.") }</h3>
-            <p>{ _t("We're working on this, but just want to let you know.") }</p>
-        </div>
     </div>;
 };
 
