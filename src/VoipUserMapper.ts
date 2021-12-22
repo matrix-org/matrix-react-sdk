@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { ensureVirtualRoomExists, findDMForUser } from './createRoom';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import DMRoomMap from "./utils/DMRoomMap";
 import CallHandler, { VIRTUAL_ROOM_EVENT_TYPE } from './CallHandler';
-import { Room } from 'matrix-js-sdk/src/models/room';
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // Functions for mapping virtual users & rooms. Currently the only lookup
 // is sip virtual: there could be others in the future.
@@ -36,7 +36,7 @@ export default class VoipUserMapper {
     }
 
     private async userToVirtualUser(userId: string): Promise<string> {
-        const results = await CallHandler.sharedInstance().sipVirtualLookup(userId);
+        const results = await CallHandler.instance.sipVirtualLookup(userId);
         if (results.length === 0 || !results[0].fields.lookup_success) return null;
         return results[0].userid;
     }
@@ -97,11 +97,11 @@ export default class VoipUserMapper {
     }
 
     public async onNewInvitedRoom(invitedRoom: Room): Promise<void> {
-        if (!CallHandler.sharedInstance().getSupportsVirtualRooms()) return;
+        if (!CallHandler.instance.getSupportsVirtualRooms()) return;
 
         const inviterId = invitedRoom.getDMInviter();
         logger.log(`Checking virtual-ness of room ID ${invitedRoom.roomId}, invited by ${inviterId}`);
-        const result = await CallHandler.sharedInstance().sipNativeLookup(inviterId);
+        const result = await CallHandler.instance.sipNativeLookup(inviterId);
         if (result.length === 0) {
             return;
         }

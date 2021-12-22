@@ -19,6 +19,7 @@ import React from "react";
 import { IFieldType, IInstance, IProtocol, IPublicRoomsChunkRoom } from "matrix-js-sdk/src/client";
 import { Visibility } from "matrix-js-sdk/src/@types/partials";
 import { IRoomDirectoryOptions } from "matrix-js-sdk/src/@types/requests";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import dis from "../../dispatcher/dispatcher";
@@ -47,8 +48,6 @@ import ScrollPanel from "./ScrollPanel";
 import Spinner from "../views/elements/Spinner";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { getDisplayAliasForAliasSet } from "../../Rooms";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { Action } from "../../dispatcher/actions";
 
 const MAX_NAME_LENGTH = 80;
@@ -394,7 +393,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
     private onFilterChange = (alias: string) => {
         this.setState({
-            filterString: alias || "",
+            filterString: alias?.trim() || "",
         });
 
         // don't send the request for a little bit,

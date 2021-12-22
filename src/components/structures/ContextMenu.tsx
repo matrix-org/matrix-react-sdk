@@ -25,6 +25,7 @@ import { Key } from "../../Keyboard";
 import { Writeable } from "../../@types/common";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import UIStore from "../../stores/UIStore";
+import { checkInputableElement, RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -103,7 +104,7 @@ interface IState {
 // all options inside the menu should be of role=menuitem/menuitemcheckbox/menuitemradiobutton and have tabIndex={-1}
 // this will allow the ContextMenu to manage its own focus using arrow keys as per the ARIA guidelines.
 @replaceableComponent("structures.ContextMenu")
-export class ContextMenu extends React.PureComponent<IProps, IState> {
+export default class ContextMenu extends React.PureComponent<IProps, IState> {
     private readonly initialFocus: HTMLElement;
 
     static defaultProps = {
@@ -179,105 +180,41 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
         if (this.props.onFinished) this.props.onFinished();
     };
 
-    private onMoveFocus = (element: Element, up: boolean) => {
-        let descending = false; // are we currently descending or ascending through the DOM tree?
-
-        do {
-            const child = up ? element.lastElementChild : element.firstElementChild;
-            const sibling = up ? element.previousElementSibling : element.nextElementSibling;
-
-            if (descending) {
-                if (child) {
-                    element = child;
-                } else if (sibling) {
-                    element = sibling;
-                } else {
-                    descending = false;
-                    element = element.parentElement;
-                }
-            } else {
-                if (sibling) {
-                    element = sibling;
-                    descending = true;
-                } else {
-                    element = element.parentElement;
-                }
-            }
-
-            if (element) {
-                if (element.classList.contains("mx_ContextualMenu")) { // we hit the top
-                    element = up ? element.lastElementChild : element.firstElementChild;
-                    descending = true;
-                }
-            }
-        } while (element && !element.getAttribute("role")?.startsWith("menuitem"));
-
-        if (element) {
-            (element as HTMLElement).focus();
-        }
-    };
-
-    private onMoveFocusHomeEnd = (element: Element, up: boolean) => {
-        let results = element.querySelectorAll('[role^="menuitem"]');
-        if (!results) {
-            results = element.querySelectorAll('[tab-index]');
-        }
-        if (results && results.length) {
-            if (up) {
-                (results[0] as HTMLElement).focus();
-            } else {
-                (results[results.length - 1] as HTMLElement).focus();
-            }
-        }
-    };
-
     private onClick = (ev: React.MouseEvent) => {
         // Don't allow clicks to escape the context menu wrapper
         ev.stopPropagation();
     };
 
+    // We now only handle closing the ContextMenu in this keyDown handler.
+    // All of the item/option navigation is delegated to RovingTabIndex.
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        // don't let keyboard handling escape the context menu
-        ev.stopPropagation();
+        ev.stopPropagation(); // prevent keyboard propagating out of the context menu, we're focus-locked
 
+        // If someone is managing their own focus, we will only exit for them with Escape.
+        // They are probably using props.focusLock along with this option as well.
         if (!this.props.managed) {
             if (ev.key === Key.ESCAPE) {
                 this.props.onFinished();
-                ev.preventDefault();
             }
             return;
         }
 
-        let handled = true;
-
-        switch (ev.key) {
-            // XXX: this is imitating roving behaviour, it should really use the RovingTabIndex utils
-            // to inherit proper handling of unmount edge cases
-            case Key.TAB:
-            case Key.ESCAPE:
-            case Key.ARROW_LEFT: // close on left and right arrows too for when it is a context menu on a <Toolbar />
-            case Key.ARROW_RIGHT:
-                this.props.onFinished();
-                break;
-            case Key.ARROW_UP:
-                this.onMoveFocus(ev.target as Element, true);
-                break;
-            case Key.ARROW_DOWN:
-                this.onMoveFocus(ev.target as Element, false);
-                break;
-            case Key.HOME:
-                this.onMoveFocusHomeEnd(this.state.contextMenuElem, true);
-                break;
-            case Key.END:
-                this.onMoveFocusHomeEnd(this.state.contextMenuElem, false);
-                break;
-            default:
-                handled = false;
+        // When an <input> is focused, only handle the Escape key
+        if (checkInputableElement(ev.target as HTMLElement) && ev.key !== Key.ESCAPE) {
+            return;
         }
 
-        if (handled) {
-            // consume all other keys in context menu
-            ev.preventDefault();
+        if (
+            ev.key === Key.ESCAPE ||
+            // You can only navigate the ContextMenu by arrow keys and Home/End (see RovingTabIndex).
+            // Tabbing to the next section of the page, will close the ContextMenu.
+            ev.key === Key.TAB ||
+            // When someone moves left or right along a <Toolbar /> (like the
+            // MessageActionBar), we should close any ContextMenu that is open.
+            ev.key === Key.ARROW_LEFT ||
+            ev.key === Key.ARROW_RIGHT
+        ) {
+            this.props.onFinished();
         }
     };
 
@@ -404,23 +341,27 @@ export class ContextMenu extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div
-                className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}
-                style={{ ...position, ...wrapperStyle }}
-                onKeyDown={this.onKeyDown}
-                onClick={this.onClick}
-                onContextMenu={this.onContextMenuPreventBubbling}
-            >
-                <div
-                    className={menuClasses}
-                    style={menuStyle}
-                    ref={this.collectContextMenuRect}
-                    role={this.props.managed ? "menu" : undefined}
-                >
-                    { body }
-                </div>
-                { background }
-            </div>
+            <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.onKeyDown}>
+                { ({ onKeyDownHandler }) => (
+                    <div
+                        className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}
+                        style={{ ...position, ...wrapperStyle }}
+                        onClick={this.onClick}
+                        onKeyDown={onKeyDownHandler}
+                        onContextMenu={this.onContextMenuPreventBubbling}
+                    >
+                        { background }
+                        <div
+                            className={menuClasses}
+                            style={menuStyle}
+                            ref={this.collectContextMenuRect}
+                            role={this.props.managed ? "menu" : undefined}
+                        >
+                            { body }
+                        </div>
+                    </div>
+                ) }
+            </RovingTabIndexProvider>
         );
     }
 
@@ -513,6 +454,7 @@ export const alwaysAboveRightOf = (elementRect: DOMRect, chevronFace = ChevronFa
 };
 
 type ContextMenuTuple<T> = [boolean, RefObject<T>, () => void, () => void, (val: boolean) => void];
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
 export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<T> => {
     const button = useRef<T>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -530,30 +472,22 @@ export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<
     return [isOpen, button, open, close, setIsOpen];
 };
 
-@replaceableComponent("structures.LegacyContextMenu")
-export default class LegacyContextMenu extends ContextMenu {
-    render() {
-        return this.renderMenu(false);
-    }
-}
-
 // XXX: Deprecated, used only for dynamic Tooltips. Avoid using at all costs.
 export function createMenu(ElementClass, props) {
     const onFinished = function(...args) {
         ReactDOM.unmountComponentAtNode(getOrCreateContainer());
-
-        if (props && props.onFinished) {
-            props.onFinished.apply(null, args);
-        }
+        props?.onFinished?.apply(null, args);
     };
 
-    const menu = <LegacyContextMenu
+    const menu = <ContextMenu
         {...props}
+        mountAsChild={true}
+        hasBackground={false}
         onFinished={onFinished} // eslint-disable-line react/jsx-no-bind
         windowResize={onFinished} // eslint-disable-line react/jsx-no-bind
     >
         <ElementClass {...props} onFinished={onFinished} />
-    </LegacyContextMenu>;
+    </ContextMenu>;
 
     ReactDOM.render(menu, getOrCreateContainer());
 
