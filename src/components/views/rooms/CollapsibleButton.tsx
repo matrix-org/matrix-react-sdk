@@ -14,30 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_MLocationBody {
-    .mx_MLocationBody_map {
-        width: 450px;
-        height: 300px;
+import React, { ComponentProps } from 'react';
 
-        border-radius: $timeline-image-border-radius;
-    }
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 
-    .mx_MLocationBody_markerBorder {
-        width: 31px;
-        height: 31px;
-        border-radius: 50%;
-        background-color: $accent;
-        filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2));
-
-        .mx_BaseAvatar {
-            margin-top: 2px;
-            margin-left: 2px;
-        }
-    }
-
-    .mx_MLocationBody_pointer {
-        position: absolute;
-        bottom: -3px;
-        left: 12px;
-    }
+export interface ICollapsibleButtonProps
+    extends ComponentProps<typeof AccessibleTooltipButton>
+{
+    narrowMode: boolean;
+    title: string;
 }
+
+export const CollapsibleButton = ({ narrowMode, title, ...props }: ICollapsibleButtonProps) => {
+    return <AccessibleTooltipButton
+        {...props}
+        title={narrowMode ? undefined : title}
+        label={narrowMode ? title : undefined}
+    />;
+};
+
+export default CollapsibleButton;
