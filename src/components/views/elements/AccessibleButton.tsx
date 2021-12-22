@@ -132,8 +132,6 @@ export default function AccessibleButton({
         },
     );
 
-    console.log('element', element, children);
-
     // React.createElement expects InputHTMLAttributes
     return React.createElement(element, newProps, children);
 }

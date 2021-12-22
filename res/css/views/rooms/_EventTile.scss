@@ -607,7 +607,14 @@ $left-gutter: 64px;
     opacity: 0.5;
 }
 
-.mx_EventTile_keyRequestInfo_text a {
+.mx_EventTile_keyRequestInfo_text button {
+    background: unset;
+    appearance: unset;
+    border: unset;
+    padding: unset;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 0;
     color: $primary-content;
     text-decoration: underline;
     cursor: pointer;

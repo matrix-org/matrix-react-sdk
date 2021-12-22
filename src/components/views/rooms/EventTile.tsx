@@ -1259,7 +1259,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             _t(
                 '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
                 {},
-                { 'requestLink': (sub) => <a tabIndex={0} onClick={this.onRequestKeysClick}>{ sub }</a> },
+                { 'requestLink': (sub) => <button tabIndex={0} onClick={this.onRequestKeysClick}>{ sub }</button> },
             );
 
         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
