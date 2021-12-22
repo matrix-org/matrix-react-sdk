@@ -68,7 +68,7 @@ async function getThreadTimelineSet(
             filter,
         );
         filter.filterId = filterId;
-        const timelineSet = room.getOrCreateFilteredTimelineSet(
+        timelineSet = room.getOrCreateFilteredTimelineSet(
             filter,
             { prepopulateTimeline: false },
         );
@@ -211,7 +211,10 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
 
     const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
     const timelineSetPromise = useMemo(
-        async () => getThreadTimelineSet(mxClient, room, filterOption),
+        async () => {
+            const timelineSet = getThreadTimelineSet(mxClient, room, filterOption);
+            return timelineSet;
+        },
         [mxClient, room, filterOption],
     );
     useEffect(() => {
