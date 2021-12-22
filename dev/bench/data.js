@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640170939523,
+  "lastUpdate": 1640182452739,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50348,6 +50348,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 616.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cd04799cb49689fd6c94f6775e4f399c95579961",
+          "message": "Hook thread panel to homeserver API (#7352)",
+          "timestamp": "2021-12-22T14:08:05Z",
+          "tree_id": "e97b00a448ba0da9f0fde46512993512ea4b2c5f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cd04799cb49689fd6c94f6775e4f399c95579961"
+        },
+        "date": 1640182448584,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4964.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 663.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
