@@ -263,7 +263,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // display 'ghost' read markers that are animating away
             ghostReadMarkers: [],
             showTypingNotifications: SettingsStore.getValue("showTypingNotifications"),
-            hideSender: this.hideSender,
+            hideSender: this.shouldHideSender(),
         };
 
         // Cache hidden events setting on mount since Settings is expensive to
@@ -306,13 +306,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
     }
 
-    private get hideSender(): boolean {
+    private shouldHideSender(): boolean {
         return this.props.room?.getInvitedAndJoinedMemberCount() <= 2 && this.props.layout === Layout.Bubble;
     }
 
     private calculateRoomMembersCount = (): void => {
         this.setState({
-            hideSender: this.hideSender,
+            hideSender: this.shouldHideSender(),
         });
     };
 
