@@ -75,9 +75,8 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
 
         return <span className={classes}>
             { content }
-            <a
+            <button
                 className="mx_ViewSourceEvent_toggle"
-                href="#"
                 onClick={this.onToggle}
             />
         </span>;

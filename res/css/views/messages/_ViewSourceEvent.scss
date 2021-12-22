@@ -29,6 +29,7 @@ limitations under the License.
     }
 
     .mx_ViewSourceEvent_toggle {
+        @mixin ButtonResetDefault;
         mask-repeat: no-repeat;
         mask-position: 0 center;
         mask-size: auto 12px;
