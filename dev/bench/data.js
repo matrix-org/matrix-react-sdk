@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640106158749,
+  "lastUpdate": 1640168429884,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50240,6 +50240,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 714.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7dacaf7d061bd91b473be65f03536bb7c74a15b2",
+          "message": "Fix spotlight search bad padding (#7436)",
+          "timestamp": "2021-12-22T10:05:14Z",
+          "tree_id": "5da30b9e376243197377f6bfc48be7c9c6232e23",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7dacaf7d061bd91b473be65f03536bb7c74a15b2"
+        },
+        "date": 1640168426344,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4964.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 695.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
