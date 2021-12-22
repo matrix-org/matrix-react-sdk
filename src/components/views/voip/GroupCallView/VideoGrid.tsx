@@ -65,16 +65,63 @@ function getTilePositions(
     if (layout === "freedom") {
         return getFreedomLayoutTilePositions(tileCount, presenterTileCount, gridWidth, gridHeight);
     } else {
-        return getFreedomLayoutTilePositions(tileCount, presenterTileCount, gridWidth, gridHeight);
-        // return getSpotlightLayoutTilePositions(tileCount, gridWidth, gridHeight);
+        return getSpotlightLayoutTilePositions(tileCount, gridWidth, gridHeight);
     }
 }
 
 function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, gridHeight: number) {
+    const gap = 8;
     const tilePositions = [];
 
-    for (let i = 0; i < tilePositions.length; i++) {
+    const gridAspectRatio = gridWidth / gridHeight;
 
+    if (gridAspectRatio < 1) {
+        // Vertical layout (mobile)
+        const spotlightTileHeight = tileCount > 1 ? (gridHeight - (gap * 3)) * (4 / 5) : gridHeight - (gap * 2);
+        const spectatorTileSize = tileCount > 1 ? (gridHeight - (gap * 3)) - spotlightTileHeight : 0;
+
+        for (let i = 0; i < tileCount; i++) {
+            if (i === 0) {
+                // Spotlight tile
+                tilePositions.push({
+                    x: gap,
+                    y: gap,
+                    width: gridWidth - gap * 2,
+                    height: spotlightTileHeight,
+                });
+            } else {
+                // Spectator tile
+                tilePositions.push({
+                    x: ((gap + spectatorTileSize) * (i - 1)) + gap,
+                    y: spotlightTileHeight + (gap * 2),
+                    width: spectatorTileSize,
+                    height: spectatorTileSize,
+                });
+            }
+        }
+    } else {
+        // Horizontal layout (desktop)
+        const spotlightTileWidth = tileCount > 1 ? (gridWidth - (gap * 3)) * 4 / 5 : gridWidth - (gap * 2);
+        const spectatorTileWidth = tileCount > 1 ? (gridWidth - (gap * 3)) - spotlightTileWidth : 0;
+        const spectatorTileHeight = spectatorTileWidth * (9 / 16);
+
+        for (let i = 0; i < tileCount; i++) {
+            if (i === 0) {
+                tilePositions.push({
+                    x: gap,
+                    y: gap,
+                    width: spotlightTileWidth,
+                    height: gridHeight - (gap * 2),
+                });
+            } else {
+                tilePositions.push({
+                    x: ((gap * 2) + spotlightTileWidth),
+                    y: ((gap + spectatorTileHeight) * (i - 1)) + gap,
+                    width: spectatorTileWidth,
+                    height: spectatorTileHeight,
+                });
+            }
+        }
     }
 
     return tilePositions;
