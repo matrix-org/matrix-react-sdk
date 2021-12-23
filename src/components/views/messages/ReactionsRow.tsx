@@ -194,13 +194,12 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         let showAllButton;
         if ((items.length > MAX_ITEMS_WHEN_LIMITED + 1) && !showAll) {
             items = items.slice(0, MAX_ITEMS_WHEN_LIMITED);
-            showAllButton = <a
+            showAllButton = <button
                 className="mx_ReactionsRow_showAll"
-                href="#"
                 onClick={this.onShowAllClick}
             >
                 { _t("Show all") }
-            </a>;
+            </button>;
         }
 
         const cli = this.context;
