@@ -71,7 +71,6 @@ export default class EventIndex extends EventEmitter {
         client.on('sync', this.onSync);
         client.on('Room.timeline', this.onRoomTimeline);
         client.on('Room.timelineReset', this.onTimelineReset);
-        client.on('Room.redaction', this.onRedaction);
         client.on('RoomState.events', this.onRoomStateEvent);
     }
 
@@ -85,7 +84,6 @@ export default class EventIndex extends EventEmitter {
         client.removeListener('sync', this.onSync);
         client.removeListener('Room.timeline', this.onRoomTimeline);
         client.removeListener('Room.timelineReset', this.onTimelineReset);
-        client.removeListener('Room.redaction', this.onRedaction);
         client.removeListener('RoomState.events', this.onRoomStateEvent);
     }
 
@@ -201,10 +199,12 @@ export default class EventIndex extends EventEmitter {
         // We only index encrypted rooms locally.
         if (!client.isRoomEncrypted(room.roomId)) return;
 
-        // If it isn't a live event or if it's redacted there's nothing to
-        // do.
-        if (toStartOfTimeline || !data || !data.liveEvent
-            || ev.isRedacted()) {
+        if (ev.isRedaction()) {
+            return this.redactEvent(ev);
+        }
+
+        // If it isn't a live event or if it's redacted there's nothing to do.
+        if (toStartOfTimeline || !data || !data.liveEvent || ev.isRedacted()) {
             return;
         }
 
@@ -223,13 +223,10 @@ export default class EventIndex extends EventEmitter {
     };
 
     /*
-     * The Room.redaction listener.
-     *
      * Removes a redacted event from our event index.
+     * We cannot rely on Room.redaction as this only fires if the redaction applied to an event the js-sdk has loaded.
      */
-    private onRedaction = async (ev: MatrixEvent, room: Room) => {
-        // We only index encrypted rooms locally.
-        if (!MatrixClientPeg.get().isRoomEncrypted(room.roomId)) return;
+    private redactEvent = async (ev: MatrixEvent) => {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
 
         try {
