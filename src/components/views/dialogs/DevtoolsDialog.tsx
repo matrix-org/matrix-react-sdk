@@ -44,7 +44,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { SettingLevel } from '../../../settings/SettingLevel';
 import BaseDialog from "./BaseDialog";
 import TruncatedList from "../elements/TruncatedList";
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 
 interface IGenericEditorProps {
     onBack: () => void;
@@ -966,12 +966,12 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
         }
     };
 
-    private onViewClick = (ev: MouseEvent, settingId: string) => {
+    private onViewClick = (ev: ButtonEvent, settingId: string) => {
         ev.preventDefault();
         this.setState({ viewSetting: settingId });
     };
 
-    private onEditClick = (ev: MouseEvent, settingId: string) => {
+    private onEditClick = (ev: ButtonEvent, settingId: string) => {
         ev.preventDefault();
         this.setState({
             editSetting: settingId,
@@ -1082,13 +1082,13 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                                             <AccessibleButton kind='link_inline' className='mx_DevTools_SettingsExplorer_setting' onClick={(e) => this.onViewClick(e, i)}>
                                                 <code>{ i }</code>
                                             </AccessibleButton>
-                                            <a
-                                                href=""
+                                            <AccessibleButton
+                                                alt='edit setting'
                                                 onClick={(e) => this.onEditClick(e, i)}
                                                 className='mx_DevTools_SettingsExplorer_edit'
                                             >
                                             ✏
-                                            </a>
+                                            </AccessibleButton>
                                         </td>
                                         <td>
                                             <code>{ this.renderSettingValue(SettingsStore.getValue(i)) }</code>

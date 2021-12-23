@@ -121,7 +121,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         store.returnAfterSkip();
     };
 
-    private onResetClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    private onResetClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
         ev.preventDefault();
         const store = SetupEncryptionStore.sharedInstance();
         store.reset();
