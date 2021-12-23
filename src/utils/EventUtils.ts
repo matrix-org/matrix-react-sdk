@@ -17,7 +17,6 @@ limitations under the License.
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
 
