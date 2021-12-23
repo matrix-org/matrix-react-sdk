@@ -258,7 +258,6 @@ export default class MFileBody extends React.Component<IProps, IState> {
                               * We'll use it to learn how the download link
                               * would have been styled if it was rendered inline.
                               */ }
-                            { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                             <a ref={this.dummyLink} />
                         </div>
                         { /*
