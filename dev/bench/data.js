@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640261239638,
+  "lastUpdate": 1640261242773,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50540,6 +50540,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4420,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a9d1f6e6164745ce01a63cd4531a2af2551e6832",
+          "message": "Fix width overflow in mini composer overflow menu (#7411)",
+          "timestamp": "2021-12-23T12:01:21Z",
+          "tree_id": "39329aa8630b8f1ed4cc31664a1b15bc87b62d61",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a9d1f6e6164745ce01a63cd4531a2af2551e6832"
+        },
+        "date": 1640261238894,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4707.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 683.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
