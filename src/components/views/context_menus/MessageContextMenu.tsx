@@ -15,10 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -42,9 +44,9 @@ import { IPosition, ChevronFace } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
+import { createMapSiteLink } from "../messages/MLocationBody";
 
 export function canCancel(eventStatus: EventStatus): boolean {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -132,9 +134,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
     }
 
+    private canOpenInMapSite(mxEvent: MatrixEvent): boolean {
+        return isLocationEvent(mxEvent);
+    }
+
     private canEndPoll(mxEvent: MatrixEvent): boolean {
         return (
-            mxEvent.getType() === POLL_START_EVENT_TYPE.name &&
+            POLL_START_EVENT_TYPE.matches(mxEvent.getType()) &&
             this.state.canRedact &&
             !isPollEnded(mxEvent, MatrixClientPeg.get(), this.props.getRelationsForEvent)
         );
@@ -277,6 +283,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
 
+        let openInMapSiteButton: JSX.Element;
         let endPollButton: JSX.Element;
         let resendReactionsButton: JSX.Element;
         let redactButton: JSX.Element;
@@ -312,14 +319,35 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (isContentActionable(mxEvent)) {
-            forwardButton = (
+        if (this.canOpenInMapSite(mxEvent)) {
+            const mapSiteLink = createMapSiteLink(mxEvent);
+            openInMapSiteButton = (
                 <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconForward"
-                    label={_t("Forward")}
-                    onClick={this.onForwardClick}
+                    iconClassName="mx_MessageContextMenu_iconOpenInMapSite"
+                    onClick={null}
+                    label={_t('Open in OpenStreetMap')}
+                    element="a"
+                    {
+                        ...{
+                            href: mapSiteLink,
+                            target: "_blank",
+                            rel: "noreferrer noopener",
+                        }
+                    }
                 />
             );
+        }
+
+        if (isContentActionable(mxEvent)) {
+            if (canForward(mxEvent)) {
+                forwardButton = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconForward"
+                        label={_t("Forward")}
+                        onClick={this.onForwardClick}
+                    />
+                );
+            }
 
             if (this.state.canPin) {
                 pinButton = (
@@ -352,26 +380,29 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        let permalink;
-        if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
-        }
-        const permalinkButton = (
-            <IconizedContextMenuOption
-                iconClassName="mx_MessageContextMenu_iconPermalink"
-                onClick={this.onPermalinkClick}
-                label={_t('Share')}
-                element="a"
-                {
-                    // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
-                    ...{
-                        href: permalink,
-                        target: "_blank",
-                        rel: "noreferrer noopener",
+        let permalink: string | null = null;
+        let permalinkButton: ReactElement | null = null;
+        if (canShare(mxEvent)) {
+            if (this.props.permalinkCreator) {
+                permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+            }
+            permalinkButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconPermalink"
+                    onClick={this.onPermalinkClick}
+                    label={_t('Share')}
+                    element="a"
+                    {
+                        // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
+                        ...{
+                            href: permalink,
+                            target: "_blank",
+                            rel: "noreferrer noopener",
+                        }
                     }
-                }
-            />
-        );
+                />
+            );
+        }
 
         if (this.canEndPoll(mxEvent)) {
             endPollButton = (
@@ -453,6 +484,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     label={_t("View in room")}
                     onClick={this.viewInRoom}
                 /> }
+                { openInMapSiteButton }
                 { endPollButton }
                 { quoteButton }
                 { forwardButton }
@@ -485,4 +517,23 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             </IconizedContextMenu>
         );
     }
+}
+
+function canForward(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
+}
+
+function canShare(event: MatrixEvent): boolean {
+    return !isLocationEvent(event);
+}
+
+function isLocationEvent(event: MatrixEvent): boolean {
+    const eventType = event.getType();
+    return (
+        LOCATION_EVENT_TYPE.matches(eventType) ||
+        (
+            eventType === EventType.RoomMessage &&
+            LOCATION_EVENT_TYPE.matches(event.getContent().msgtype)
+        )
+    );
 }

@@ -24,6 +24,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType } from 'matrix-js-sdk/src/models/room';
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -65,7 +66,6 @@ import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewSto
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
 import { RovingThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
 import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';
@@ -1066,6 +1066,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             isBubbleMessage,
             isInfoMessage,
             isLeftAlignedBubbleMessage,
+            noBubbleEvent,
         } = getEventDisplayInfo(this.props.mxEvent);
         const { isQuoteExpanded } = this.state;
 
@@ -1120,6 +1121,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_emote: msgtype === 'm.emote',
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp: this.props.tileShape === TileShape.ThreadPanel,
+            mx_EventTile_noBubble: noBubbleEvent,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -1408,13 +1410,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-
+                        "onClick": () => dispatchShowThreadEvent(this.props.mxEvent),
                     }, <>
                         { sender }
                         { avatar }
                         <div
                             className={lineClasses}
-                            onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
                             key="mx_EventTile_line"
                         >
                             { linkedTimestamp }
