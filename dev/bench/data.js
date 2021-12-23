@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640272154569,
+  "lastUpdate": 1640274860067,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50696,6 +50696,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 686.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2430bd7eb4736422f84fe8b79a16af51fff59862",
+          "message": "Fix MessageActionBar alignment in Bubble layout (#7414)",
+          "timestamp": "2021-12-23T15:48:00Z",
+          "tree_id": "99a48d09ce6811c0708e5fa9dea1d2864580da27",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2430bd7eb4736422f84fe8b79a16af51fff59862"
+        },
+        "date": 1640274856397,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5065.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 659.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
