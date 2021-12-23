@@ -44,6 +44,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { SettingLevel } from '../../../settings/SettingLevel';
 import BaseDialog from "./BaseDialog";
 import TruncatedList from "../elements/TruncatedList";
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface IGenericEditorProps {
     onBack: () => void;
@@ -1078,9 +1079,9 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                                 { allSettings.map(i => (
                                     <tr key={i}>
                                         <td>
-                                            <a href="" onClick={(e) => this.onViewClick(e, i)}>
+                                            <AccessibleButton kind='link_inline' className='mx_DevTools_SettingsExplorer_setting' onClick={(e) => this.onViewClick(e, i)}>
                                                 <code>{ i }</code>
-                                            </a>
+                                            </AccessibleButton>
                                             <a
                                                 href=""
                                                 onClick={(e) => this.onEditClick(e, i)}
