@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640261242773,
+  "lastUpdate": 1640261269200,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50576,6 +50576,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 683.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "097c40b577cdc71f6921b6c4160ccaf0f9204c25",
+          "message": "Disable quick reactions button when no permissions (#7412)",
+          "timestamp": "2021-12-23T12:01:40Z",
+          "tree_id": "133ee7ec1aa332f806bd9fe198dbfd889ab5d22e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/097c40b577cdc71f6921b6c4160ccaf0f9204c25"
+        },
+        "date": 1640261266149,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4626.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 941.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1740.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4403,
             "unit": "ms",
             "extra": "type: measure"
           }
