@@ -32,6 +32,7 @@ import { Action } from '../../../dispatcher/actions';
 import { SetRightPanelPhasePayload } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
 import { jsxJoin } from '../../../utils/ReactUtils';
 import { Layout } from '../../../settings/enums/Layout';
+import AccessibleButton from './AccessibleButton';
 
 const onPinnedMessagesClick = (): void => {
     defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
@@ -328,10 +329,18 @@ export default class MemberEventListSummary extends React.Component<IProps> {
                 res = (userCount > 1)
                     ? _t("%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.",
                         { severalUsers: "", count: repeats },
-                        { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> })
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
+                                { sub }
+                            </AccessibleButton>,
+                        })
                     : _t("%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.",
                         { oneUser: "", count: repeats },
-                        { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> });
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
+                                { sub }
+                            </AccessibleButton>,
+                        });
                 break;
         }
 
