@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640274925073,
+  "lastUpdate": 1640275825337,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50780,6 +50780,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4418.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "13028d33c26226bddb17de142a32b85fd3a2be1a",
+          "message": "Move hideSender logic into state so it causes re-render (#7413)\n\n* Move hideSender logic into state so it causes re-render\n\n* change method signature",
+          "timestamp": "2021-12-23T16:03:25Z",
+          "tree_id": "5302ee7ec3f79188768f818bf77f8134dc92b382",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/13028d33c26226bddb17de142a32b85fd3a2be1a"
+        },
+        "date": 1640275821380,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5140.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1135,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1841.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4468.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
