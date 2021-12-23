@@ -214,10 +214,9 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
                             { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
-                                a: (sub) => <a
-                                    href=""
+                                a: (sub) => <button
                                     onClick={this.onResetClick}
-                                    className="mx_SetupEncryptionBody_reset_link">{ sub }</a>,
+                                    className="mx_SetupEncryptionBody_reset_link">{ sub }</button>,
                             }) }
                         </div>
                     </div>
