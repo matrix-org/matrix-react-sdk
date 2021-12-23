@@ -106,6 +106,10 @@ limitations under the License.
             transform: translate3d(90%, 50%, 0);
         }
 
+        .mx_CallEvent {
+            background-color: $eventbubble-others-bg;
+        }
+
         --backgroundColor: $eventbubble-others-bg;
     }
     &[data-self=true] {
@@ -148,6 +152,10 @@ limitations under the License.
         .mx_EventTile_avatar {
             top: -19px; // height of the sender block
             right: -35px;
+        }
+
+        .mx_CallEvent {
+            background-color: $eventbubble-self-bg;
         }
 
         --backgroundColor: $eventbubble-self-bg;
