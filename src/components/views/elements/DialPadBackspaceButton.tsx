@@ -17,7 +17,6 @@ limitations under the License.
 import * as React from "react";
 
 import { _t } from "../../../languageHandler";
-
 import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
 interface IProps {
