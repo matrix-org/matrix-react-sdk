@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640261229099,
+  "lastUpdate": 1640261239638,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50492,6 +50492,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 651.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f94bad7f0ae044f300bcf384a1a2f98515eb4fff",
+          "message": "Fix being wrongly sent to Home space when creating/joining/leaving rooms (#7418)",
+          "timestamp": "2021-12-23T12:01:14Z",
+          "tree_id": "695298a0c659cfbea84e5741309c1c9032b1db9c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f94bad7f0ae044f300bcf384a1a2f98515eb4fff"
+        },
+        "date": 1640261235431,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5189.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 877.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1684.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4420,
             "unit": "ms",
             "extra": "type: measure"
           }
