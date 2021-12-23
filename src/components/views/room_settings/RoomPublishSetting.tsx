@@ -31,7 +31,6 @@ interface IProps {
 
 interface IState {
     isRoomPublished: boolean;
-    isRoomPublishable: boolean;
 }
 
 @replaceableComponent("views.room_settings.RoomPublishSetting")
@@ -41,7 +40,6 @@ export default class RoomPublishSetting extends React.PureComponent<IProps, ISta
 
         this.state = {
             isRoomPublished: false,
-            isRoomPublishable: true,
         };
     }
 
@@ -65,19 +63,17 @@ export default class RoomPublishSetting extends React.PureComponent<IProps, ISta
         client.getRoomDirectoryVisibility(this.props.roomId).then((result => {
             this.setState({ isRoomPublished: result.visibility === 'public' });
         }));
-
-        const room = client.getRoom(this.props.roomId);
-        if (room.getJoinRule() === "invite") {
-            this.setState({ isRoomPublishable: false });
-        }
     }
 
     render() {
         const client = MatrixClientPeg.get();
 
+        const room = client.getRoom(this.props.roomId);
+        const isRoomPublishable = room.getJoinRule() !== "invite";
+
         const enabled = (
             (DirectoryCustomisations.requireCanonicalAliasAccessToPublish?.() === false ||
-            this.props.canSetCanonicalAlias) && (this.state.isRoomPublishable || this.state.isRoomPublished)
+            this.props.canSetCanonicalAlias) && (isRoomPublishable || this.state.isRoomPublished)
         );
 
         return (
