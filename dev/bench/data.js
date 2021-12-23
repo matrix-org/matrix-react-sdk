@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640261284856,
+  "lastUpdate": 1640272154569,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50660,6 +50660,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 685.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "38ba198fea2ae783a0d38ece44aa1fb7dedb93a7",
+          "message": "Fix dialpad positioning (#7446)",
+          "timestamp": "2021-12-23T15:02:59Z",
+          "tree_id": "95d5cac4914a225c71a207236c789315c20afeef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/38ba198fea2ae783a0d38ece44aa1fb7dedb93a7"
+        },
+        "date": 1640272150445,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5061.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 686.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
