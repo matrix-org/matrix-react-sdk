@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640254784391,
+  "lastUpdate": 1640261229099,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50456,6 +50456,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 697.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a20f3560da63f7fe5204097a97c9b7928242b416",
+          "message": "Fix HTML Export where the data-mx-theme is `Light` not `light` (#7415)",
+          "timestamp": "2021-12-23T12:01:03Z",
+          "tree_id": "83011766005d409d039b2e1faffe124588e4d17c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a20f3560da63f7fe5204097a97c9b7928242b416"
+        },
+        "date": 1640261224901,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4664.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 651.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
