@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.36.0",
+  "version": "3.37.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -25,7 +25,7 @@
   "bin": {
     "reskindex": "scripts/reskindex.js"
   },
-  "main": "./src/index.ts",
+  "main": "./src/index.js",
   "matrix_src_main": "./src/index.ts",
   "matrix_lib_main": "./lib/index.ts",
   "matrix_lib_typings": "./lib/index.d.ts",
@@ -97,7 +97,7 @@
     "png-chunks-extract": "^1.0.0",
     "posthog-js": "1.12.2",
     "prop-types": "^15.7.2",
-    "qrcode": "^1.4.4",
+    "qrcode": "1.4.4",
     "re-resizable": "^6.9.0",
     "react": "17.0.2",
     "react-beautiful-dnd": "^13.1.0",
@@ -130,7 +130,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.12.10",
     "@babel/traverse": "^7.12.12",
-    "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.7.tgz",
+    "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz",
     "@peculiar/webcrypto": "^1.1.4",
     "@sentry/types": "^6.10.0",
     "@sinonjs/fake-timers": "^7.0.2",
@@ -156,8 +156,8 @@
     "@types/react-transition-group": "^4.4.0",
     "@types/sanitize-html": "^2.3.1",
     "@types/zxcvbn": "^4.4.0",
-    "@typescript-eslint/eslint-plugin": "^4.17.0",
-    "@typescript-eslint/parser": "^4.17.0",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "allchange": "^1.0.6",
     "babel-jest": "^26.6.3",
@@ -186,7 +186,7 @@
     "stylelint": "^13.9.0",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.18.0",
-    "typescript": "4.3.5",
+    "typescript": "4.5.3",
     "walk": "^2.3.14"
   },
   "resolutions": {

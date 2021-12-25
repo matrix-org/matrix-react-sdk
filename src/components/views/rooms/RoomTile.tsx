@@ -511,13 +511,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     { canInvite ? (
                         <IconizedContextMenuOption
                             onClick={this.onInviteClick}
-                            label={_t("Invite People")}
+                            label={_t("Invite")}
                             iconClassName="mx_RoomTile_iconInvite"
                         />
                     ) : null }
                     { !isDm ? <IconizedContextMenuOption
                         onClick={this.onCopyRoomClick}
-                        label={_t("Copy Room Link")}
+                        label={_t("Copy room link")}
                         iconClassName="mx_RoomTile_iconCopyLink"
                     /> : null }
                     <IconizedContextMenuOption
@@ -529,7 +529,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 <IconizedContextMenuOptionList red>
                     <IconizedContextMenuOption
                         onClick={this.onLeaveRoomClick}
-                        label={_t("Leave Room")}
+                        label={_t("Leave")}
                         iconClassName="mx_RoomTile_iconSignOut"
                     />
                 </IconizedContextMenuOptionList>
@@ -565,13 +565,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         let name = roomProfile.displayName || this.props.room.name;
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
-
-        const roomAvatar = <DecoratedRoomAvatar
-            room={this.props.room}
-            avatarSize={32}
-            displayBadge={this.props.isMinimized}
-            oobData={({ avatarUrl: roomProfile.avatarMxc })}
-        />;
 
         let badge: React.ReactNode;
         if (!this.props.isMinimized && this.notificationState) {
@@ -663,7 +656,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             aria-selected={this.state.selected}
                             aria-describedby={ariaDescribedBy}
                         >
-                            { roomAvatar }
+                            <DecoratedRoomAvatar
+                                room={this.props.room}
+                                avatarSize={32}
+                                displayBadge={this.props.isMinimized}
+                                oobData={({ avatarUrl: roomProfile.avatarMxc })}
+                                tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
+                            />
                             { nameContainer }
                             { badge }
                             { this.renderGeneralMenu() }
