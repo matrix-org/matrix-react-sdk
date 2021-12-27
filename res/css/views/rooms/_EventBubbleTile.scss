@@ -20,7 +20,7 @@ limitations under the License.
     --gutterSize: 11px;
     --cornerRadius: 12px;
     --maxWidth: 70%;
-    margin-right: 100px;
+    margin-right: 60px;
 }
 
 .mx_EventTile[data-layout=bubble] {
@@ -89,6 +89,12 @@ limitations under the License.
         font-size: $font-15px;
     }
 
+    .mx_MessageActionBar {
+        top: -28px;
+        right: 0;
+        z-index: 9; // above the avatar
+    }
+
     &[data-self=false] {
         .mx_EventTile_line {
             border-bottom-right-radius: var(--cornerRadius);
@@ -101,21 +107,12 @@ limitations under the License.
             left: -34px;
         }
 
-        .mx_MessageActionBar {
-            right: 0;
-            transform: translate3d(90%, 50%, 0);
-        }
-
         --backgroundColor: $eventbubble-others-bg;
     }
     &[data-self=true] {
         .mx_EventTile_line {
             float: right;
             border-bottom-left-radius: var(--cornerRadius);
-            > a {
-                left: auto;
-                right: -68px;
-            }
 
             .mx_MImageBody .mx_MImageBody_thumbnail {
                 border-bottom-left-radius: var(--cornerRadius);
@@ -160,11 +157,13 @@ limitations under the License.
         margin: 0 -12px 0 -9px;
         border-top-left-radius: var(--cornerRadius);
         border-top-right-radius: var(--cornerRadius);
+
         > a {
             position: absolute;
-            padding: 10px 20px;
-            top: 0;
-            left: -68px;
+            padding: 4px 8px;
+            bottom: 0;
+            right: 0;
+            z-index: 1; // above media
         }
 
         //noinspection CssReplaceWithShorthandSafely
@@ -184,6 +183,7 @@ limitations under the License.
 
     .mx_EventTile_line:not(.mx_EventTile_mediaLine) {
         padding: var(--gutterSize);
+        padding-right: 60px; // space for the timestamp
         background: var(--backgroundColor);
     }
 
