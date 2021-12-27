@@ -21,7 +21,7 @@ import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
-import { labelForPhase } from '../../../stores/right-panel/RightPanelStorePhases';
+import { backLabelForPhase } from '../../../stores/right-panel/RightPanelStorePhases';
 
 export const CardContext = React.createContext({ isCard: false });
 interface IProps {
@@ -62,7 +62,7 @@ const BaseCard: React.FC<IProps> = ({
         const onBackClick = () => {
             RightPanelStore.instance.popCard();
         };
-        const label = labelForPhase(prevCard.phase) ? (_t("Back to ") + labelForPhase(prevCard.phase)) : _t("Back");
+        const label = backLabelForPhase(prevCard.phase) ?? _t("Back");
         backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;
     }
 
