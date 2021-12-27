@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from 'react';
 
-import PiPViewer from './CallPreview';
+import PiPViewer from './PiPView';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {

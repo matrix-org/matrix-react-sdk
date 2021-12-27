@@ -105,7 +105,7 @@ function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall
  */
 
 @replaceableComponent("views.voip.CallPreview")
-export default class PiPViewer extends React.Component<IProps, IState> {
+export default class PiPView extends React.Component<IProps, IState> {
     private roomStoreToken: EventSubscription;
     private dispatcherRef: string;
     private settingsWatcherRef: string;
@@ -178,6 +178,7 @@ export default class PiPViewer extends React.Component<IProps, IState> {
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
         });
+        this.updateShowWidgetInPip();
     };
 
     private onWidgetAction = (payload: ActionPayload): void => {
