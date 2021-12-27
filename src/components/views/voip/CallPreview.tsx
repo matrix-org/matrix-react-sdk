@@ -19,6 +19,7 @@ import React from 'react';
 import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import { EventSubscription } from 'fbemitter';
 import { logger } from "matrix-js-sdk/src/logger";
+import classNames from 'classnames';
 
 import CallView from "./CallView";
 import RoomViewStore from '../../../stores/RoomViewStore';
@@ -30,7 +31,12 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import PictureInPictureDragger from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
-import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
+import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
+import CallViewHeader from './CallView/CallViewHeader';
+import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/ActiveWidgetStore';
+import RightPanelStore from '../../../stores/RightPanelStore';
+import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
+import { ActionPayload } from '../../../dispatcher/payloads';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -53,6 +59,11 @@ interface IState {
     // Any other call we're displaying: only if the user is on two calls and not viewing either of the rooms
     // they belong to
     secondaryCall: MatrixCall;
+
+    // widget candidate to be displayed in the pip view.
+    persistentWidgetId: string;
+    showWidgetInPip: boolean;
+    rightPanelPhase: RightPanelPhases;
 }
 
 // Splits a list of calls into one 'primary' one and a list
@@ -92,8 +103,9 @@ function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall
  * CallPreview shows a small version of CallView hovering over the UI in 'picture-in-picture'
  * (PiP mode). It displays the call(s) which is *not* in the room the user is currently viewing.
  */
+
 @replaceableComponent("views.voip.CallPreview")
-export default class CallPreview extends React.Component<IProps, IState> {
+export default class PiPViewer extends React.Component<IProps, IState> {
     private roomStoreToken: EventSubscription;
     private dispatcherRef: string;
     private settingsWatcherRef: string;
@@ -109,6 +121,9 @@ export default class CallPreview extends React.Component<IProps, IState> {
             roomId,
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
+            persistentWidgetId: ActiveWidgetStore.instance.getPersistentWidgetId(),
+            rightPanelPhase: RightPanelStore.getSharedInstance().roomPanelPhase,
+            showWidgetInPip: false,
         };
     }
 
@@ -121,20 +136,24 @@ export default class CallPreview extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
+        this.dispatcherRef = dis.register(this.onWidgetAction);
+        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
     }
 
     public componentWillUnmount() {
         CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCalls);
         CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.updateCalls);
         MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
-        if (this.roomStoreToken) {
-            this.roomStoreToken.remove();
-        }
+        this.roomStoreToken?.remove();
         SettingsStore.unwatchSetting(this.settingsWatcherRef);
         const room = MatrixClientPeg.get().getRoom(this.state.roomId);
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
+        if (this.dispatcherRef) {
+            dis.unregister(this.dispatcherRef);
+        }
+        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
     }
 
     private onRoomViewStoreUpdate = () => {
@@ -161,6 +180,25 @@ export default class CallPreview extends React.Component<IProps, IState> {
         });
     };
 
+    private onWidgetAction = (payload: ActionPayload): void => {
+        switch (payload.action) {
+            case Action.AfterRightPanelPhaseChange:
+                this.setState({
+                    rightPanelPhase: RightPanelStore.getSharedInstance().roomPanelPhase,
+                });
+                this.updateShowWidgetInPip();
+                break;
+            default: break;
+        }
+    };
+
+    private onActiveWidgetStoreUpdate = (): void => {
+        this.setState({
+            persistentWidgetId: ActiveWidgetStore.instance.getPersistentWidgetId(),
+        });
+        this.updateShowWidgetInPip();
+    };
+
     private updateCalls = (): void => {
         if (!this.state.roomId) return;
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
@@ -169,6 +207,7 @@ export default class CallPreview extends React.Component<IProps, IState> {
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
         });
+        this.updateShowWidgetInPip();
     };
 
     private onCallRemoteHold = () => {
@@ -188,28 +227,90 @@ export default class CallPreview extends React.Component<IProps, IState> {
         });
     };
 
+    public updateShowWidgetInPip() {
+        const wId = this.state.persistentWidgetId;
+
+        let userIsPartOfTheRoom = false;
+        let fromAnotherRoom = false;
+        let notInRightPanel = false;
+        let notInCenterContainer = false;
+        let notInTopContainer = false;
+        if (wId) {
+            const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(wId);
+
+            const persistentWidgetInRoom = MatrixClientPeg.get().getRoom(persistentWidgetInRoomId);
+
+            // Sanity check the room - the widget may have been destroyed between render cycles, and
+            // thus no room is associated anymore.
+            if (!persistentWidgetInRoom) return null;
+
+            const wls = WidgetLayoutStore.instance;
+
+            userIsPartOfTheRoom = persistentWidgetInRoom.getMyMembership() == "join";
+            fromAnotherRoom = this.state.roomId !== persistentWidgetInRoomId;
+
+            notInRightPanel =
+                !(this.state.rightPanelPhase == RightPanelPhases.Widget &&
+                wId == RightPanelStore.getSharedInstance().roomPanelPhaseParams?.widgetId);
+            notInCenterContainer =
+                    !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center)
+                        .find((app)=>app.id == wId);
+            notInTopContainer =
+                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).find(app=>app.id == wId);
+            // Show the persistent widget in two cases. The booleans have to be read like this: the widget is-`fromAnotherRoom`:
+        }
+        this.setState({
+            showWidgetInPip: (fromAnotherRoom && userIsPartOfTheRoom) ||
+                    (notInRightPanel && notInCenterContainer && notInTopContainer && userIsPartOfTheRoom),
+        });
+    }
+
     public render() {
         const pipMode = true;
+        let pipContent;
+        let pipViewClasses;
         if (this.state.primaryCall) {
-            return (
-                <PictureInPictureDragger
-                    className="mx_CallPreview"
-                    draggable={pipMode}
-                    onDoubleClick={this.onDoubleClick}
-                >
-                    { ({ onStartMoving, onResize }) =>
-                        <CallView
-                            onMouseDownOnHeader={onStartMoving}
-                            call={this.state.primaryCall}
-                            secondaryCall={this.state.secondaryCall}
-                            pipMode={pipMode}
-                            onResize={onResize}
-                        /> }
-                </PictureInPictureDragger>
-
-            );
+            pipContent = ({ onStartMoving, onResize }) =>
+                <CallView
+                    onMouseDownOnHeader={onStartMoving}
+                    call={this.state.primaryCall}
+                    secondaryCall={this.state.secondaryCall}
+                    pipMode={pipMode}
+                    onResize={onResize}
+                />;
         }
 
-        return <PersistentApp />;
+        if (this.state.showWidgetInPip) {
+            pipViewClasses = classNames({
+                mx_CallView: true,
+                mx_CallView_pip: pipMode,
+                mx_CallView_large: !pipMode,
+            });
+            const roomId = ActiveWidgetStore.instance.getRoomId(this.state.persistentWidgetId);
+            const roomForWidget = MatrixClientPeg.get().getRoom(roomId);
+
+            pipContent = ({ onStartMoving, _onResize }) =>
+                <div className={pipViewClasses}>
+                    <CallViewHeader
+                        type={undefined}
+                        onPipMouseDown={onStartMoving}
+                        pipMode={pipMode}
+                        callRooms={[roomForWidget]}
+                    />
+                    <PersistentApp
+                        persistentWidgetId={this.state.persistentWidgetId}
+                    />
+                </div>;
+        }
+        if (!!pipContent) {
+            return <PictureInPictureDragger
+                className="mx_CallPreview"
+                draggable={pipMode}
+                onDoubleClick={this.onDoubleClick}
+            >
+                { pipContent }
+            </PictureInPictureDragger>;
+        }
+        return null;
     }
 }

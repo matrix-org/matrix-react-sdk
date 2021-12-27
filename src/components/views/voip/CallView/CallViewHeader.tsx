@@ -87,15 +87,15 @@ const CallTypeIcon: React.FC<{ type: CallType }> = ({ type }) => {
 };
 
 const CallViewHeader: React.FC<CallViewHeaderProps> = ({
-    type,
+    type = undefined,
     pipMode = false,
     callRooms = [],
     onPipMouseDown,
 }) => {
     const [callRoom, onHoldCallRoom] = callRooms;
-    const callTypeText = _t(callTypeTranslationByType[type]);
-    const callRoomName = callRoom.name;
-    const { roomId } = callRoom;
+    const callTypeText = type ? _t(callTypeTranslationByType[type]) : _t("widget");
+    const callRoomName = callRoom?.name;
+    const roomId = callRoom?.roomId;
 
     if (!pipMode) {
         return <div className="mx_CallViewHeader">
