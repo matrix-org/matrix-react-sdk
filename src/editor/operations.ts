@@ -92,8 +92,8 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset 
  * @param {Range} range the previous value
  * @param {Part[]} newParts the new value
  * @param {boolean} rangeHasFormatting the new value
- * @param {number} prefixLength length of the formatting prefix
- * @param {number} suffixLength length of the formatting suffix
+ * @param {number} prefixLength the length of the formatting prefix
+ * @param {number} suffixLength the length of the formatting suffix, defaults to prefix length
  */
 export function replaceRangeAndAutoAdjustCaret(
     range: Range,
