@@ -92,20 +92,21 @@ export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset 
  * @param {Range} range the previous value
  * @param {Part[]} newParts the new value
  * @param {boolean} rangeHasFormatting the new value
- * @param {number} formatStringLength the length of the format string, assumed to be 0 when not formatted
+ * @param {number} prefixLength length of the formatting prefix
+ * @param {number} suffixLength length of the formatting suffix
  */
 export function replaceRangeAndAutoAdjustCaret(
     range: Range,
     newParts: Part[],
     rangeHasFormatting = false,
-    prefixLength = 0,
+    prefixLength: number,
     suffixLength = prefixLength,
 ): void {
     const { model } = range;
     const lastStartingPosition = range.getLastStartingPosition();
     const relativeOffset = lastStartingPosition.offset - range.start.offset;
     const distanceFromEnd = range.length - relativeOffset;
-    // Handle edge case were the caret is located within the suffix or prefix
+    // Handle edge case where the caret is located within the suffix or prefix
     if (rangeHasFormatting) {
         if (relativeOffset < prefixLength) { // Was the caret at the left format string?
             replaceRangeAndMoveCaret(range, newParts, -(range.length - 2 * suffixLength));
@@ -124,15 +125,15 @@ export function replaceRangeAndAutoAdjustCaret(
     });
 }
 
-const isSameWord = (_index: number, offset: number, part: Part) => {
-    return part.text[offset] !== " " && part.text[offset] !== "+" && part.type === Type.Plain;
+const isFormattable = (_index: number, offset: number, part: Part) => {
+    return part.text[offset] !== " " && part.type === Type.Plain;
 };
 
 export function selectRangeOfWordAtCaret(range: Range): void {
     // Select right side of word
-    range.expandForwardsWhile(isSameWord);
+    range.expandForwardsWhile(isFormattable);
     // Select left side of word
-    range.expandBackwardsWhile(isSameWord);
+    range.expandBackwardsWhile(isFormattable);
     // Trim possibly selected new lines
     range.trim();
 }
@@ -171,12 +172,7 @@ export function formatRangeAsQuote(range: Range): void {
         parts.push(partCreator.newline());
     }
     parts.push(partCreator.newline());
-
-    if (range.wasInitializedEmpty()) {
-        replaceRangeAndAutoAdjustCaret(range, parts, false);
-    } else {
-        replaceRangeAndExpandSelection(range, parts);
-    }
+    replaceRangeAndExpandSelection(range, parts);
 }
 
 export function formatRangeAsCode(range: Range): void {
