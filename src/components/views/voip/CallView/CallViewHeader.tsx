@@ -28,6 +28,7 @@ import AccessibleTooltipButton from '../../elements/AccessibleTooltipButton';
 const callTypeTranslationByType: Record<CallType, string> = {
     [CallType.Video]: _td("Video Call"),
     [CallType.Voice]: _td("Voice Call"),
+    [CallType.Widget]: _td("Widget"),
 };
 
 interface CallViewHeaderProps {
@@ -87,13 +88,13 @@ const CallTypeIcon: React.FC<{ type: CallType }> = ({ type }) => {
 };
 
 const CallViewHeader: React.FC<CallViewHeaderProps> = ({
-    type = undefined,
+    type,
     pipMode = false,
     callRooms = [],
     onPipMouseDown,
 }) => {
     const [callRoom, onHoldCallRoom] = callRooms;
-    const callTypeText = type ? _t(callTypeTranslationByType[type]) : _t("widget");
+    const callTypeText = _t(callTypeTranslationByType[type]);
     const callRoomName = callRoom?.name;
     const roomId = callRoom?.roomId;
 
