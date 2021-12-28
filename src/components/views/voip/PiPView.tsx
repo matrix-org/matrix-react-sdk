@@ -136,7 +136,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
-        this.dispatcherRef = dis.register(this.onWidgetAction);
+        this.dispatcherRef = dis.register(this.onAction);
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
     }
 
@@ -181,7 +181,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         this.updateShowWidgetInPip();
     };
 
-    private onWidgetAction = (payload: ActionPayload): void => {
+    private onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
             case Action.AfterRightPanelPhaseChange:
                 this.setState({
