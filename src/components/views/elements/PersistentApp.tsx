@@ -27,6 +27,7 @@ import AppTile from "./AppTile";
 
 interface IProps {
     persistentWidgetId: string;
+    pointerEvents?: string;
 }
 
 interface IState {
@@ -88,6 +89,7 @@ export default class PersistentApp extends React.Component<IProps, IState> {
                 waitForIframeLoad={app.waitForIframeLoad}
                 miniMode={true}
                 showMenubar={false}
+                pointerEvents={this.props.pointerEvents}
             />;
         }
         return null;

@@ -64,6 +64,8 @@ interface IState {
     persistentWidgetId: string;
     showWidgetInPip: boolean;
     rightPanelPhase: RightPanelPhases;
+
+    moving: boolean;
 }
 
 // Splits a list of calls into one 'primary' one and a list
@@ -118,6 +120,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(roomId);
 
         this.state = {
+            moving: false,
             roomId,
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
@@ -138,6 +141,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         }
         this.dispatcherRef = dis.register(this.onAction);
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
+        document.addEventListener("mouseup", this.onEndMoving.bind(this));
     }
 
     public componentWillUnmount() {
@@ -154,6 +158,15 @@ export default class PiPView extends React.Component<IProps, IState> {
             dis.unregister(this.dispatcherRef);
         }
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
+        document.removeEventListener("mouseup", this.onEndMoving.bind(this));
+    }
+
+    private onStartMoving() {
+        this.setState({ moving: true });
+    }
+
+    private onEndMoving() {
+        this.setState({ moving: false });
     }
 
     private onRoomViewStoreUpdate = () => {
@@ -291,12 +304,13 @@ export default class PiPView extends React.Component<IProps, IState> {
                 <div className={pipViewClasses}>
                     <CallViewHeader
                         type={undefined}
-                        onPipMouseDown={onStartMoving}
+                        onPipMouseDown={(event)=>{onStartMoving(event); this.onStartMoving.bind(this)();}}
                         pipMode={pipMode}
                         callRooms={[roomForWidget]}
                     />
                     <PersistentApp
                         persistentWidgetId={this.state.persistentWidgetId}
+                        pointerEvents={this.state.moving ? 'none' : undefined}
                     />
                 </div>;
         }
