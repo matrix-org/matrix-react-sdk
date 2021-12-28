@@ -302,7 +302,6 @@
 @import "./views/typography/_Heading.scss";
 @import "./views/verification/_VerificationShowSas.scss";
 @import "./views/voip/CallView/_CallViewButtons.scss";
-@import "./views/voip/_CallContainer.scss";
 @import "./views/voip/_CallPreview.scss";
 @import "./views/voip/_CallView.scss";
 @import "./views/voip/_CallViewForRoom.scss";
@@ -311,4 +310,5 @@
 @import "./views/voip/_DialPad.scss";
 @import "./views/voip/_DialPadContextMenu.scss";
 @import "./views/voip/_DialPadModal.scss";
+@import "./views/voip/_PiPContainer.scss";
 @import "./views/voip/_VideoFeed.scss";
