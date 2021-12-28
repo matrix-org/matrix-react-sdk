@@ -28,10 +28,10 @@ interface IState {
 
 }
 
-@replaceableComponent("views.voip.CallContainer")
+@replaceableComponent("views.voip.PiPContainer")
 export default class PiPContainer extends React.PureComponent<IProps, IState> {
     public render() {
-        return <div className="mx_CallContainer">
+        return <div className="mx_PipContainer">
             <PiPViewer />
         </div>;
     }
