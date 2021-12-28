@@ -182,14 +182,11 @@ export default class PiPView extends React.Component<IProps, IState> {
     };
 
     private onAction = (payload: ActionPayload): void => {
-        switch (payload.action) {
-            case Action.AfterRightPanelPhaseChange:
-                this.setState({
-                    rightPanelPhase: RightPanelStore.getSharedInstance().roomPanelPhase,
-                });
-                this.updateShowWidgetInPip();
-                break;
-            default: break;
+        if (payload.action ==Action.AfterRightPanelPhaseChange ) {
+            this.setState({
+                rightPanelPhase: RightPanelStore.getSharedInstance().roomPanelPhase,
+            });
+            this.updateShowWidgetInPip();
         }
     };
 
