@@ -51,7 +51,7 @@ interface IProps {
 }
 
 interface IState {
-    roomId: string;
+    viewedRoomId: string;
 
     // The main call that we are displaying (ie. not including the call in the room being viewed, if any)
     primaryCall: MatrixCall;
@@ -121,7 +121,7 @@ export default class PiPView extends React.Component<IProps, IState> {
 
         this.state = {
             moving: false,
-            roomId,
+            viewedRoomId: roomId,
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
             persistentWidgetId: ActiveWidgetStore.instance.getPersistentWidgetId(),
@@ -135,7 +135,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCalls);
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         MatrixClientPeg.get().on(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
-        const room = MatrixClientPeg.get()?.getRoom(this.state.roomId);
+        const room = MatrixClientPeg.get()?.getRoom(this.state.viewedRoomId);
         if (room) {
             WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
@@ -150,7 +150,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         MatrixClientPeg.get().removeListener(CallEvent.RemoteHoldUnhold, this.onCallRemoteHold);
         this.roomStoreToken?.remove();
         SettingsStore.unwatchSetting(this.settingsWatcherRef);
-        const room = MatrixClientPeg.get().getRoom(this.state.roomId);
+        const room = MatrixClientPeg.get().getRoom(this.state.viewedRoomId);
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
@@ -171,7 +171,7 @@ export default class PiPView extends React.Component<IProps, IState> {
 
     private onRoomViewStoreUpdate = () => {
         const newRoomId = RoomViewStore.getRoomId();
-        const oldRoomId = this.state.roomId;
+        const oldRoomId = this.state.viewedRoomId;
         if (newRoomId === oldRoomId) return;
         // The WidgetLayoutStore observer always tracks the currently viewed Room,
         // so we don't end up with multiple observers and know what observer to remove on unmount
@@ -187,7 +187,7 @@ export default class PiPView extends React.Component<IProps, IState> {
 
         const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(newRoomId);
         this.setState({
-            roomId: newRoomId,
+            viewedRoomId: newRoomId,
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
         });
@@ -211,8 +211,8 @@ export default class PiPView extends React.Component<IProps, IState> {
     };
 
     private updateCalls = (): void => {
-        if (!this.state.roomId) return;
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
+        if (!this.state.viewedRoomId) return;
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.viewedRoomId);
 
         this.setState({
             primaryCall: primaryCall,
@@ -222,8 +222,8 @@ export default class PiPView extends React.Component<IProps, IState> {
     };
 
     private onCallRemoteHold = () => {
-        if (!this.state.roomId) return;
-        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.roomId);
+        if (!this.state.viewedRoomId) return;
+        const [primaryCall, secondaryCalls] = getPrimarySecondaryCallsForPip(this.state.viewedRoomId);
 
         this.setState({
             primaryCall: primaryCall,
@@ -232,10 +232,14 @@ export default class PiPView extends React.Component<IProps, IState> {
     };
 
     private onDoubleClick = (): void => {
-        dis.dispatch({
-            action: Action.ViewRoom,
-            room_id: this.state.primaryCall.roomId,
-        });
+        const callRoomId = this.state.primaryCall?.roomId;
+        const widgetRoomId = ActiveWidgetStore.instance.getRoomId(this.state.persistentWidgetId);
+        if (!!(callRoomId ?? widgetRoomId)) {
+            dis.dispatch({
+                action: Action.ViewRoom,
+                room_id: callRoomId ?? widgetRoomId,
+            });
+        }
     };
 
     public updateShowWidgetInPip() {
@@ -248,7 +252,6 @@ export default class PiPView extends React.Component<IProps, IState> {
         let notInTopContainer = false;
         if (wId) {
             const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(wId);
-
             const persistentWidgetInRoom = MatrixClientPeg.get().getRoom(persistentWidgetInRoomId);
 
             // Sanity check the room - the widget may have been destroyed between render cycles, and
@@ -258,7 +261,7 @@ export default class PiPView extends React.Component<IProps, IState> {
             const wls = WidgetLayoutStore.instance;
 
             userIsPartOfTheRoom = persistentWidgetInRoom.getMyMembership() == "join";
-            fromAnotherRoom = this.state.roomId !== persistentWidgetInRoomId;
+            fromAnotherRoom = this.state.viewedRoomId !== persistentWidgetInRoomId;
 
             notInRightPanel =
                 !(this.state.rightPanelPhase == RightPanelPhases.Widget &&
@@ -269,13 +272,13 @@ export default class PiPView extends React.Component<IProps, IState> {
                 !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).some(app=>app.id == wId);
         }
 
-        this.setState({
-            // The widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
-            // either, because we are viewing a different room OR because it is in none of the possible containers of the room view.
-            showWidgetInPip:
-                (fromAnotherRoom && userIsPartOfTheRoom) ||
-                (notInRightPanel && notInCenterContainer && notInTopContainer && userIsPartOfTheRoom),
-        });
+        // The widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
+        // either, because we are viewing a different room OR because it is in none of the possible containers of the room view.
+        const showWidgetInPip =
+            (fromAnotherRoom && userIsPartOfTheRoom) ||
+            (notInRightPanel && notInCenterContainer && notInTopContainer && userIsPartOfTheRoom);
+
+        this.setState({ showWidgetInPip });
     }
 
     public render() {
