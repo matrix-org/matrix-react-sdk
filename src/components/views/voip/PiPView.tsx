@@ -264,22 +264,24 @@ export default class PiPView extends React.Component<IProps, IState> {
                 !(this.state.rightPanelPhase == RightPanelPhases.Widget &&
                 wId == RightPanelStore.getSharedInstance().roomPanelPhaseParams?.widgetId);
             notInCenterContainer =
-                    !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center)
-                        .find((app)=>app.id == wId);
+                    !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center).some((app)=>app.id == wId);
             notInTopContainer =
-                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).find(app=>app.id == wId);
-            // Show the persistent widget in two cases. The booleans have to be read like this: the widget is-`fromAnotherRoom`:
+                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).some(app=>app.id == wId);
         }
+
         this.setState({
-            showWidgetInPip: (fromAnotherRoom && userIsPartOfTheRoom) ||
-                    (notInRightPanel && notInCenterContainer && notInTopContainer && userIsPartOfTheRoom),
+            // The widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
+            // either, because we are viewing a different room OR because it is in none of the possible containers of the room view.
+            showWidgetInPip:
+                (fromAnotherRoom && userIsPartOfTheRoom) ||
+                (notInRightPanel && notInCenterContainer && notInTopContainer && userIsPartOfTheRoom),
         });
     }
 
     public render() {
         const pipMode = true;
         let pipContent;
-        let pipViewClasses;
+
         if (this.state.primaryCall) {
             pipContent = ({ onStartMoving, onResize }) =>
                 <CallView
@@ -292,7 +294,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         }
 
         if (this.state.showWidgetInPip) {
-            pipViewClasses = classNames({
+            const pipViewClasses = classNames({
                 mx_CallView: true,
                 mx_CallView_pip: pipMode,
                 mx_CallView_large: !pipMode,
@@ -314,6 +316,7 @@ export default class PiPView extends React.Component<IProps, IState> {
                     />
                 </div>;
         }
+
         if (!!pipContent) {
             return <PictureInPictureDragger
                 className="mx_CallPreview"
@@ -323,6 +326,7 @@ export default class PiPView extends React.Component<IProps, IState> {
                 { pipContent }
             </PictureInPictureDragger>;
         }
+
         return null;
     }
 }

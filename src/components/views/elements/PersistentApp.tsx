@@ -49,9 +49,7 @@ export default class PersistentApp extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("Room.myMembership", this.onMyMembership);
-        }
+        MatrixClientPeg.get().off("Room.myMembership", this.onMyMembership);
     }
 
     private onMyMembership = async (room: Room, membership: string): Promise<void> => {
