@@ -46,6 +46,7 @@ interface IState {
 export default class PersistentApp extends React.Component<IProps, IState> {
     private roomStoreToken: EventSubscription;
     private dispatcherRef: string;
+
     constructor(props: IProps) {
         super(props);
 
@@ -130,12 +131,12 @@ export default class PersistentApp extends React.Component<IProps, IState> {
                 !(this.state.rightPanelPhase == RightPanelPhases.Widget &&
                 wId == RightPanelStore.getSharedInstance().roomPanelPhaseParams?.widgetId);
             const notInCenterContainer =
-                    !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center)
-                        .find((app)=>app.id == wId);
+                    !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center).some((app) => app.id == wId);
             const notInTopContainer =
-                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).find(app=>app.id == wId);
+                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).some(app => app.id == wId);
             if (
-                //Show the persistent widget in two cases. The booleans have to be read like this: the widget is-`fromAnotherRoom`:
+                // the widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
+                // either, because we are viewing a different room OR because it is in none of the possible containers of the room view.
                 (fromAnotherRoom && userIsPartOfTheRoom) ||
                 (notInRightPanel && notInCenterContainer && notInTopContainer && userIsPartOfTheRoom)
             ) {
