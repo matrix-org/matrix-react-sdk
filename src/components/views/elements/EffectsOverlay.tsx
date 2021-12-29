@@ -15,9 +15,11 @@
  limitations under the License.
  */
 import React, { FunctionComponent, useEffect, useRef } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import dis from '../../../dispatcher/dispatcher';
 import ICanvasEffect from '../../../effects/ICanvasEffect';
-import { CHAT_EFFECTS } from '../../../effects'
+import { CHAT_EFFECTS } from '../../../effects';
 import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
 
 interface IProps {
@@ -32,13 +34,13 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
         if (!name) return null;
         let effect: ICanvasEffect | null = effectsRef.current[name] || null;
         if (effect === null) {
-            const options = CHAT_EFFECTS.find((e) => e.command === name)?.options
+            const options = CHAT_EFFECTS.find((e) => e.command === name)?.options;
             try {
                 const { default: Effect } = await import(`../../../effects/${name}`);
                 effect = new Effect(options);
                 effectsRef.current[name] = effect;
             } catch (err) {
-                console.warn(`Unable to load effect module at '../../../effects/${name}.`, err);
+                logger.warn(`Unable to load effect module at '../../../effects/${name}.`, err);
             }
         }
         return effect;
@@ -56,7 +58,7 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
                 const effect = payload.action.substr(actionPrefix.length);
                 lazyLoadEffectModule(effect).then((module) => module?.start(canvasRef.current));
             }
-        }
+        };
         const dispatcherRef = dis.register(onAction);
         const canvas = canvasRef.current;
         canvas.height = UIStore.instance.windowHeight;
@@ -89,7 +91,7 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
                 right: 0,
             }}
         />
-    )
-}
+    );
+};
 
 export default EffectsOverlay;

@@ -16,25 +16,24 @@ limitations under the License.
 
 import { CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React from 'react';
+import { Resizable } from "re-resizable";
+
 import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
 import CallView from './CallView';
-import dis from '../../../dispatcher/dispatcher';
-import {Resizable} from "re-resizable";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // What room we should display the call for
-    roomId: string,
+    roomId: string;
 
-    // maxHeight style attribute for the video panel
-    maxVideoHeight?: number;
+    resizeNotifier: ResizeNotifier;
 
-    resizeNotifier: ResizeNotifier,
+    showApps?: boolean;
 }
 
 interface IState {
-    call: MatrixCall,
+    call: MatrixCall;
 }
 
 /*
@@ -53,33 +52,24 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        this.dispatcherRef = dis.register(this.onAction);
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCall);
+        CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
 
     public componentWillUnmount() {
-        dis.unregister(this.dispatcherRef);
-        CallHandler.sharedInstance().removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.updateCall);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
-
-    private onAction = (payload) => {
-        switch (payload.action) {
-            case 'call_state': {
-                this.updateCall();
-                break;
-            }
-        }
-    };
 
     private updateCall = () => {
         const newCall = this.getCall();
         if (newCall !== this.state.call) {
-            this.setState({call: newCall});
+            this.setState({ call: newCall });
         }
     };
 
     private getCall(): MatrixCall {
-        const call = CallHandler.sharedInstance().getCallForRoom(this.props.roomId);
+        const call = CallHandler.instance.getCallForRoom(this.props.roomId);
 
         if (call && [CallState.Ended, CallState.Ringing].includes(call.state)) return null;
         return call;
@@ -99,14 +89,12 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
 
     public render() {
         if (!this.state.call) return null;
-        // We subtract 8 as it the margin-bottom of the mx_CallViewForRoom_ResizeWrapper
-        const maxHeight = this.props.maxVideoHeight - 8;
 
         return (
             <div className="mx_CallViewForRoom">
                 <Resizable
                     minHeight={380}
-                    maxHeight={maxHeight}
+                    maxHeight="80vh"
                     enable={{
                         top: false,
                         right: false,
@@ -121,11 +109,12 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
                     onResize={this.onResize}
                     onResizeStop={this.onResizeStop}
                     className="mx_CallViewForRoom_ResizeWrapper"
-                    handleClasses={{bottom: "mx_CallViewForRoom_ResizeHandle"}}
+                    handleClasses={{ bottom: "mx_CallViewForRoom_ResizeHandle" }}
                 >
                     <CallView
                         call={this.state.call}
                         pipMode={false}
+                        showApps={this.props.showApps}
                     />
                 </Resizable>
             </div>

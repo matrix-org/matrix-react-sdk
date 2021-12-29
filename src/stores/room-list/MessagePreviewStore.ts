@@ -15,18 +15,23 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { MessageEventPreview } from "./previews/MessageEventPreview";
+import { PollStartEventPreview } from "./previews/PollStartEventPreview";
 import { TagID } from "./models";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { CallInviteEventPreview } from "./previews/CallInviteEventPreview";
 import { CallAnswerEventPreview } from "./previews/CallAnswerEventPreview";
 import { CallHangupEvent } from "./previews/CallHangupEvent";
 import { StickerEventPreview } from "./previews/StickerEventPreview";
 import { ReactionEventPreview } from "./previews/ReactionEventPreview";
 import { UPDATE_EVENT } from "../AsyncStore";
+import SettingsStore from "../../settings/SettingsStore";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which
 // the change happened.
@@ -59,11 +64,26 @@ const PREVIEWS = {
     },
 };
 
+function previews(): Object {
+    // TODO: when polls comes out of labs, add this to PREVIEWS
+    if (SettingsStore.getValue("feature_polls")) {
+        return {
+            [POLL_START_EVENT_TYPE.name]: {
+                isState: false,
+                previewer: new PollStartEventPreview(),
+            },
+            ...PREVIEWS,
+        };
+    } else {
+        return PREVIEWS;
+    }
+}
+
 // The maximum number of events we're willing to look back on to get a preview.
 const MAX_EVENTS_BACKWARDS = 50;
 
 // type merging ftw
-type TAG_ANY = "im.vector.any";
+type TAG_ANY = "im.vector.any"; // eslint-disable-line @typescript-eslint/naming-convention
 const TAG_ANY: TAG_ANY = "im.vector.any";
 
 interface IState {
@@ -108,6 +128,14 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
         return previews.get(inTagId);
     }
 
+    public generatePreviewForEvent(event: MatrixEvent): string {
+        const previewDef = previews()[event.getType()];
+        // TODO: Handle case where we don't have
+        if (!previewDef) return '';
+        const previewText = previewDef.previewer.getTextFor(event, null, true);
+        return previewText ?? '';
+    }
+
     private async generatePreview(room: Room, tagId?: TagID) {
         const events = room.timeline;
         if (!events) return; // should only happen in tests
@@ -133,7 +161,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
             await this.matrixClient.decryptEventIfNeeded(event);
 
-            const previewDef = PREVIEWS[event.getType()];
+            const previewDef = previews()[event.getType()];
             if (!previewDef) continue;
             if (previewDef.isState && isNullOrUndefined(event.getStateKey())) continue;
 
@@ -176,7 +204,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
         if (payload.action === 'MatrixActions.Room.timeline' || payload.action === 'MatrixActions.Event.decrypted') {
             const event = payload.event; // TODO: Type out the dispatcher
-            const isHistoricalEvent = payload.hasOwnProperty("isLiveEvent") && !payload.isLiveEvent
+            const isHistoricalEvent = payload.hasOwnProperty("isLiveEvent") && !payload.isLiveEvent;
             if (!this.previews.has(event.getRoomId()) || isHistoricalEvent) return; // not important
             await this.generatePreview(this.matrixClient.getRoom(event.getRoomId()), TAG_ANY);
         }

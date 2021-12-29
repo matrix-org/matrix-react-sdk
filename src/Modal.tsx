@@ -15,14 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
+import { defer, sleep } from "matrix-js-sdk/src/utils";
 
 import Analytics from './Analytics';
 import dis from './dispatcher/dispatcher';
-import {defer} from './utils/promise';
 import AsyncWrapper from './AsyncWrapper';
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
@@ -193,7 +192,7 @@ export class ModalManager {
         modal.elem = <AsyncWrapper key={modalCount} prom={prom} {...props} onFinished={closeDialog} />;
         modal.close = closeDialog;
 
-        return {modal, closeDialog, onFinishedProm};
+        return { modal, closeDialog, onFinishedProm };
     }
 
     private getCloseFn<T extends any[]>(
@@ -282,7 +281,7 @@ export class ModalManager {
         isStaticModal = false,
         options: IOptions<T> = {},
     ): IHandle<T> {
-        const {modal, closeDialog, onFinishedProm} = this.buildModal<T>(prom, props, className, options);
+        const { modal, closeDialog, onFinishedProm } = this.buildModal<T>(prom, props, className, options);
         if (isPriorityModal) {
             // XXX: This is destructive
             this.priorityModal = modal;
@@ -305,7 +304,7 @@ export class ModalManager {
         props?: IProps<T>,
         className?: string,
     ): IHandle<T> {
-        const {modal, closeDialog, onFinishedProm} = this.buildModal<T>(prom, props, className, {});
+        const { modal, closeDialog, onFinishedProm } = this.buildModal<T>(prom, props, className, {});
 
         this.modals.push(modal);
         this.reRender();
@@ -333,7 +332,10 @@ export class ModalManager {
         return this.priorityModal ? this.priorityModal : (this.modals[0] || this.staticModal);
     }
 
-    private reRender() {
+    private async reRender() {
+        // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
+        await sleep(0);
+
         if (this.modals.length === 0 && !this.priorityModal && !this.staticModal) {
             // If there is no modal to render, make all of Element available
             // to screen reader users again
@@ -379,7 +381,7 @@ export class ModalManager {
             const dialog = (
                 <div className={classes}>
                     <div className="mx_Dialog">
-                        {modal.elem}
+                        { modal.elem }
                     </div>
                     <div className="mx_Dialog_background" onClick={this.onBackgroundClick} />
                 </div>

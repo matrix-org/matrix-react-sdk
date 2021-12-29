@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.groups.GroupUserSettings")
 export default class GroupUserSettings extends React.Component {
@@ -31,10 +33,10 @@ export default class GroupUserSettings extends React.Component {
 
     componentDidMount() {
         this.context.getJoinedGroups().then((result) => {
-            this.setState({groups: result.groups || [], error: null});
+            this.setState({ groups: result.groups || [], error: null });
         }, (err) => {
-            console.error(err);
-            this.setState({groups: null, error: err});
+            logger.error(err);
+            this.setState({ groups: null, error: err });
         });
     }
 

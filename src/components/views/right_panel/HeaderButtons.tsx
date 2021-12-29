@@ -19,6 +19,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import dis from '../../../dispatcher/dispatcher';
 import RightPanelStore from "../../../stores/RightPanelStore";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
@@ -29,6 +30,7 @@ import {
 } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
 import type { EventSubscription } from "fbemitter";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 
 export enum HeaderKind {
   Room = "room",
@@ -38,6 +40,7 @@ export enum HeaderKind {
 interface IState {
     headerKind: HeaderKind;
     phase: RightPanelPhases;
+    threadNotificationColor: NotificationColor;
 }
 
 interface IProps {}
@@ -53,6 +56,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         const rps = RightPanelStore.getSharedInstance();
         this.state = {
             headerKind: kind,
+            threadNotificationColor: NotificationColor.None,
             phase: kind === HeaderKind.Room ? rps.visibleRoomPanelPhase : rps.visibleGroupPanelPhase,
         };
     }
@@ -88,9 +92,9 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     private onRightPanelUpdate() {
         const rps = RightPanelStore.getSharedInstance();
         if (this.state.headerKind === HeaderKind.Room) {
-            this.setState({phase: rps.visibleRoomPanelPhase});
+            this.setState({ phase: rps.visibleRoomPanelPhase });
         } else if (this.state.headerKind === HeaderKind.Group) {
-            this.setState({phase: rps.visibleGroupPanelPhase});
+            this.setState({ phase: rps.visibleGroupPanelPhase });
         }
     }
 
@@ -99,7 +103,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
 
     public render() {
         return <div className="mx_HeaderButtons">
-            {this.renderButtons()}
+            { this.renderButtons() }
         </div>;
     }
 }

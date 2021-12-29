@@ -16,12 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { GroupRoomType } from '../../../groups';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
-import {mediaFromMxc} from "../../../customisations/Media";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { mediaFromMxc } from "../../../customisations/Media";
 
 @replaceableComponent("views.groups.GroupRoomTile")
 class GroupRoomTile extends React.Component {
@@ -48,8 +49,10 @@ class GroupRoomTile extends React.Component {
             : null;
 
         const av = (
-            <BaseAvatar name={this.props.groupRoom.displayname}
-                width={36} height={36}
+            <BaseAvatar
+                name={this.props.groupRoom.displayname}
+                width={36}
+                height={36}
                 url={avatarUrl}
             />
         );

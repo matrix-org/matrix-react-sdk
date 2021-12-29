@@ -18,11 +18,18 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { RoomState } from 'matrix-js-sdk/src/models/room-state';
+import { User } from "matrix-js-sdk/src/models/user";
+import { throttle } from 'lodash';
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher/dispatcher';
 import { isValid3pidInvite } from "../../../RoomInvite";
-import rateLimitedFunction from "../../../ratelimitedfunc";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import BaseCard from "../right_panel/BaseCard";
@@ -31,11 +38,6 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from "../../../settings/SettingsStore";
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { RoomState } from 'matrix-js-sdk/src/models/room-state';
-import { User } from "matrix-js-sdk/src/models/user";
 import TruncatedList from '../elements/TruncatedList';
 import Spinner from "../elements/Spinner";
 import SearchBox from "../../structures/SearchBox";
@@ -43,6 +45,9 @@ import AccessibleButton from '../elements/AccessibleButton';
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
+import SpaceStore from "../../../stores/spaces/SpaceStore";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -54,7 +59,9 @@ const SORT_REGEX = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]+/g;
 
 interface IProps {
     roomId: string;
+    searchQuery: string;
     onClose(): void;
+    onSearchQueryChanged: (query: string) => void;
 }
 
 interface IState {
@@ -65,7 +72,6 @@ interface IState {
     canInvite: boolean;
     truncateAtJoined: number;
     truncateAtInvited: number;
-    searchQuery: string;
 }
 
 @replaceableComponent("views.rooms.MemberList")
@@ -92,7 +98,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.showPresence = enablePresenceByHsUrl?.[hsUrl] ?? true;
     }
 
-    // eslint-disable-next-line camelcase
+    // eslint-disable-next-line
     UNSAFE_componentWillMount() {
         const cli = MatrixClientPeg.get();
         this.mounted = true;
@@ -133,7 +139,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
 
         // cancel any pending calls to the rate_limited_funcs
-        this.updateList.cancelPendingCall();
+        this.updateList.cancel();
     }
 
     /**
@@ -148,7 +154,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             const room = cli.getRoom(this.props.roomId);
             const membership = room && room.getMyMembership();
             if (membership === "join") {
-                this.setState({loading: true});
+                this.setState({ loading: true });
                 try {
                     await room.loadMembersIfNeeded();
                 } catch (ex) {/* already logged in RoomView */}
@@ -166,7 +172,11 @@ export default class MemberList extends React.Component<IProps, IState> {
     private get canInvite(): boolean {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
-        return room && room.canInvite(cli.getUserId());
+
+        return (
+            room?.canInvite(cli.getUserId()) ||
+            (room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public)
+        );
     }
 
     private getMembersState(members: Array<RoomMember>): IState {
@@ -175,15 +185,14 @@ export default class MemberList extends React.Component<IProps, IState> {
         return {
             loading: false,
             members: members,
-            filteredJoinedMembers: this.filterMembers(members, 'join'),
-            filteredInvitedMembers: this.filterMembers(members, 'invite'),
+            filteredJoinedMembers: this.filterMembers(members, 'join', this.props.searchQuery),
+            filteredInvitedMembers: this.filterMembers(members, 'invite', this.props.searchQuery),
             canInvite: this.canInvite,
 
             // ideally we'd size this to the page height, but
             // in practice I find that a little constraining
             truncateAtJoined: INITIAL_LOAD_NUM_MEMBERS,
             truncateAtInvited: INITIAL_LOAD_NUM_INVITED,
-            searchQuery: "",
         };
     }
 
@@ -237,18 +246,18 @@ export default class MemberList extends React.Component<IProps, IState> {
         if (this.canInvite !== this.state.canInvite) this.setState({ canInvite: this.canInvite });
     };
 
-    private updateList = rateLimitedFunction(() => {
+    private updateList = throttle(() => {
         this.updateListNow();
-    }, 500);
+    }, 500, { leading: true, trailing: true });
 
     private updateListNow(): void {
-        const members = this.roomMembers()
+        const members = this.roomMembers();
 
         this.setState({
             loading: false,
             members: members,
-            filteredJoinedMembers: this.filterMembers(members, 'join', this.state.searchQuery),
-            filteredInvitedMembers: this.filterMembers(members, 'invite', this.state.searchQuery),
+            filteredJoinedMembers: this.filterMembers(members, 'join', this.props.searchQuery),
+            filteredInvitedMembers: this.filterMembers(members, 'invite', this.props.searchQuery),
         });
     }
 
@@ -305,10 +314,16 @@ export default class MemberList extends React.Component<IProps, IState> {
         // For now we'll pretend this is any entity. It should probably be a separate tile.
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (
-            <EntityTile className="mx_EntityTile_ellipsis" avatarJsx={
-                <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
-            } name={text} presenceState="online" suppressOnHover={true}
-            onClick={onClick} />
+            <EntityTile
+                className="mx_EntityTile_ellipsis"
+                avatarJsx={
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                }
+                name={text}
+                presenceState="online"
+                suppressOnHover={true}
+                onClick={onClick}
+            />
         );
     };
 
@@ -407,8 +422,8 @@ export default class MemberList extends React.Component<IProps, IState> {
     };
 
     private onSearchQueryChanged = (searchQuery: string): void => {
+        this.props.onSearchQueryChanged(searchQuery);
         this.setState({
-            searchQuery,
             filteredJoinedMembers: this.filterMembers(this.state.members, 'join', searchQuery),
             filteredInvitedMembers: this.filterMembers(this.state.members, 'invite', searchQuery),
         });
@@ -464,14 +479,18 @@ export default class MemberList extends React.Component<IProps, IState> {
                 return <MemberTile key={m.userId} member={m} ref={m.userId} showPresence={this.showPresence} />;
             } else {
                 // Is a 3pid invite
-                return <EntityTile key={m.getStateKey()} name={m.getContent().display_name} suppressOnHover={true}
-                    onClick={() => this.onPending3pidInviteClick(m)} />;
+                return <EntityTile
+                    key={m.getStateKey()}
+                    name={m.getContent().display_name}
+                    suppressOnHover={true}
+                    onClick={() => this.onPending3pidInviteClick(m)}
+                />;
             }
         });
     }
 
     private getChildrenJoined = (start: number, end: number): Array<JSX.Element> => {
-        return this.makeMemberTiles(this.state.filteredJoinedMembers.slice(start, end))
+        return this.makeMemberTiles(this.state.filteredJoinedMembers.slice(start, end));
     };
 
     private getChildCountJoined = (): number => this.state.filteredJoinedMembers.length;
@@ -487,7 +506,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
     private getChildCountInvited = (): number => {
         return this.state.filteredInvitedMembers.length + (this.getPending3PidInvites() || []).length;
-    }
+    };
 
     render() {
         if (this.state.loading) {
@@ -504,12 +523,12 @@ export default class MemberList extends React.Component<IProps, IState> {
         const room = cli.getRoom(this.props.roomId);
         let inviteButton;
 
-        if (room && room.getMyMembership() === 'join') {
+        if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
             const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
             if (chat && chat.roomId === this.props.roomId) {
                 inviteButtonText = _t("Invite to this community");
-            } else if (SettingsStore.getValue("feature_spaces") && room.isSpaceRoom()) {
+            } else if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
                 inviteButtonText = _t("Invite to this space");
             }
 
@@ -542,14 +561,16 @@ export default class MemberList extends React.Component<IProps, IState> {
         const footer = (
             <SearchBox
                 className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
-                placeholder={ _t('Filter room members') }
-                onSearch={ this.onSearchQueryChanged } />
+                placeholder={_t('Filter room members')}
+                onSearch={this.onSearchQueryChanged}
+                initialValue={this.props.searchQuery}
+            />
         );
 
         let previousPhase = RightPanelPhases.RoomSummary;
         // We have no previousPhase for when viewing a MemberList from a Space
         let scopeHeader;
-        if (SettingsStore.getValue("feature_spaces") && room?.isSpaceRoom()) {
+        if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
             previousPhase = undefined;
             scopeHeader = <div className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={room} height={32} width={32} />
@@ -582,7 +603,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
     onInviteButtonClick = (): void => {
         if (MatrixClientPeg.get().isGuest()) {
-            dis.dispatch({action: 'require_registration'});
+            dis.dispatch({ action: 'require_registration' });
             return;
         }
 

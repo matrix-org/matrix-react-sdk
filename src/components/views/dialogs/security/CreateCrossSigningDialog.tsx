@@ -16,6 +16,9 @@ limitations under the License.
 */
 
 import React from 'react';
+import { CrossSigningKeys } from 'matrix-js-sdk/src/client';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { _t } from '../../../../languageHandler';
 import Modal from '../../../../Modal';
@@ -71,14 +74,14 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private async queryKeyUploadAuth(): Promise<void> {
         try {
-            await MatrixClientPeg.get().uploadDeviceSigningKeys(null, {});
+            await MatrixClientPeg.get().uploadDeviceSigningKeys(null, {} as CrossSigningKeys);
             // We should never get here: the server should always require
             // UI auth to upload device signing keys. If we do, we upload
             // no keys which would be a no-op.
-            console.log("uploadDeviceSigningKeys unexpectedly succeeded without UI auth!");
+            logger.log("uploadDeviceSigningKeys unexpectedly succeeded without UI auth!");
         } catch (error) {
             if (!error.data || !error.data.flows) {
-                console.log("uploadDeviceSigningKeys advertised no flows!");
+                logger.log("uploadDeviceSigningKeys advertised no flows!");
                 return;
             }
             const canUploadKeysWithPasswordOnly = error.data.flows.some(f => {
@@ -139,7 +142,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 throw new Error("Cross-signing key upload auth canceled");
             }
         }
-    }
+    };
 
     private bootstrapCrossSigning = async (): Promise<void> => {
         this.setState({
@@ -161,19 +164,19 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             }
 
             this.setState({ error: e });
-            console.error("Error bootstrapping cross-signing", e);
+            logger.error("Error bootstrapping cross-signing", e);
         }
-    }
+    };
 
     private onCancel = (): void => {
         this.props.onFinished(false);
-    }
+    };
 
     render() {
         let content;
         if (this.state.error) {
             content = <div>
-                <p>{_t("Unable to set up keys")}</p>
+                <p>{ _t("Unable to set up keys") }</p>
                 <div className="mx_Dialog_buttons">
                     <DialogButtons primaryButton={_t('Retry')}
                         onPrimaryButtonClick={this.bootstrapCrossSigning}
@@ -195,7 +198,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 fixedWidth={false}
             >
                 <div>
-                    {content}
+                    { content }
                 </div>
             </BaseDialog>
         );

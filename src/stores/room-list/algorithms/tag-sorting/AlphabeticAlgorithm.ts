@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+
 import { TagID } from "../../models";
 import { IAlgorithm } from "./IAlgorithm";
 import { compare } from "../../../../utils/strings";
@@ -23,7 +24,7 @@ import { compare } from "../../../../utils/strings";
  * Sorts rooms according to the browser's determination of alphabetic.
  */
 export class AlphabeticAlgorithm implements IAlgorithm {
-    public async sortRooms(rooms: Room[], tagId: TagID): Promise<Room[]> {
+    public sortRooms(rooms: Room[], tagId: TagID): Room[] {
         return rooms.sort((a, b) => {
             return compare(a.name, b.name);
         });

@@ -17,15 +17,17 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 
-import {_t} from "../../../languageHandler";
+import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SettingsStore from "../../../settings/SettingsStore";
-import {SettingLevel} from "../../../settings/SettingLevel";
+import { SettingLevel } from "../../../settings/SettingLevel";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import Modal from "../../../Modal";
 import BetaFeedbackDialog from "../dialogs/BetaFeedbackDialog";
 import SdkConfig from "../../../SdkConfig";
 import SettingsFlag from "../elements/SettingsFlag";
+
+// XXX: Keep this around for re-use in future Betas
 
 interface IProps {
     title?: string;
@@ -105,7 +107,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
             </div>
             <img src={image} alt="" />
         </div>
-        { extraSettings && <div className="mx_BetaCard_relatedSettings">
+        { extraSettings && value && <div className="mx_BetaCard_relatedSettings">
             { extraSettings.map(key => (
                 <SettingsFlag key={key} name={key} level={SettingLevel.DEVICE} />
             )) }

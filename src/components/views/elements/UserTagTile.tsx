@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import React from "react";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
 import * as fbEmitter from "fbemitter";
+import classNames from "classnames";
+
+import defaultDispatcher from "../../../dispatcher/dispatcher";
 import GroupFilterOrderStore from "../../../stores/GroupFilterOrderStore";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
-import classNames from "classnames";
 import { _t } from "../../../languageHandler";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
 }
@@ -52,7 +53,7 @@ export default class UserTagTile extends React.PureComponent<IProps, IState> {
 
     private onTagStoreUpdate = () => {
         const selected = GroupFilterOrderStore.getSelectedTags().length === 0;
-        this.setState({selected});
+        this.setState({ selected });
     };
 
     private onTileClick = (ev) => {
@@ -60,7 +61,7 @@ export default class UserTagTile extends React.PureComponent<IProps, IState> {
         ev.stopPropagation();
 
         // Deselect all tags
-        defaultDispatcher.dispatch({action: "deselect_tags"});
+        defaultDispatcher.dispatch({ action: "deselect_tags" });
     };
 
     public render() {

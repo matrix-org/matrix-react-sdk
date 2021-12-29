@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { getNameForEventRoom, userLabelForEventRoom }
     from '../../../utils/KeyVerificationStateObserver';
@@ -26,9 +27,10 @@ import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import { Action } from "../../../dispatcher/actions";
 import EventTileBubble from "./EventTileBubble";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface IProps {
-    mxEvent: MatrixEvent
+    mxEvent: MatrixEvent;
 }
 
 @replaceableComponent("views.messages.MKeyVerificationRequest")
@@ -53,7 +55,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
         dis.dispatch({
             action: Action.SetRightPanelPhase,
             phase: RightPanelPhases.EncryptionPanel,
-            refireParams: {verificationRequest, member},
+            refireParams: { verificationRequest, member },
         });
     };
 
@@ -68,7 +70,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
                 this.openRequest();
                 await request.accept();
             } catch (err) {
-                console.error(err.message);
+                logger.error(err.message);
             }
         }
     };
@@ -79,7 +81,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             try {
                 await request.cancel();
             } catch (err) {
-                console.error(err.message);
+                logger.error(err.message);
             }
         }
     };
@@ -90,14 +92,14 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
         if (userId === myUserId) {
             return _t("You accepted");
         } else {
-            return _t("%(name)s accepted", {name: getNameForEventRoom(userId, this.props.mxEvent.getRoomId())});
+            return _t("%(name)s accepted", { name: getNameForEventRoom(userId, this.props.mxEvent.getRoomId()) });
         }
     }
 
     private cancelledLabel(userId: string) {
         const client = MatrixClientPeg.get();
         const myUserId = client.getUserId();
-        const {cancellationCode} = this.props.mxEvent.verificationRequest;
+        const { cancellationCode } = this.props.mxEvent.verificationRequest;
         const declined = cancellationCode === "m.user";
         if (userId === myUserId) {
             if (declined) {
@@ -107,17 +109,15 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             }
         } else {
             if (declined) {
-                return _t("%(name)s declined", {name: getNameForEventRoom(userId, this.props.mxEvent.getRoomId())});
+                return _t("%(name)s declined", { name: getNameForEventRoom(userId, this.props.mxEvent.getRoomId()) });
             } else {
-                return _t("%(name)s cancelled", {name: getNameForEventRoom(userId, this.props.mxEvent.getRoomId())});
+                return _t("%(name)s cancelled", { name: getNameForEventRoom(userId, this.props.mxEvent.getRoomId()) });
             }
         }
     }
 
     public render() {
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
-
-        const {mxEvent} = this.props;
+        const { mxEvent } = this.props;
         const request = mxEvent.verificationRequest;
 
         if (!request || request.invalid) {
@@ -133,7 +133,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             const accepted = request.ready || request.started || request.done;
             if (accepted) {
                 stateLabel = (<AccessibleButton onClick={this.openRequest}>
-                    {this.acceptedLabel(request.receivingUserId)}
+                    { this.acceptedLabel(request.receivingUserId) }
                 </AccessibleButton>);
             } else if (request.cancelled) {
                 stateLabel = this.cancelledLabel(request.cancellingUserId);
@@ -142,20 +142,20 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             } else if (request.declining) {
                 stateLabel = _t("Declining …");
             }
-            stateNode = (<div className="mx_cryptoEvent_state">{stateLabel}</div>);
+            stateNode = (<div className="mx_cryptoEvent_state">{ stateLabel }</div>);
         }
 
         if (!request.initiatedByMe) {
             const name = getNameForEventRoom(request.requestingUserId, mxEvent.getRoomId());
-            title = _t("%(name)s wants to verify", {name});
+            title = _t("%(name)s wants to verify", { name });
             subtitle = userLabelForEventRoom(request.requestingUserId, mxEvent.getRoomId());
             if (request.canAccept) {
                 stateNode = (<div className="mx_cryptoEvent_buttons">
                     <AccessibleButton kind="danger" onClick={this.onRejectClicked}>
-                        {_t("Decline")}
+                        { _t("Decline") }
                     </AccessibleButton>
-                    <AccessibleButton onClick={this.onAcceptClicked}>
-                        {_t("Accept")}
+                    <AccessibleButton kind="primary" onClick={this.onAcceptClicked}>
+                        { _t("Accept") }
                     </AccessibleButton>
                 </div>);
             }

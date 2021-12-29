@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import classNames from 'classnames';
+import { SERVICE_TYPES } from 'matrix-js-sdk/src/service-types';
+import { logger } from "matrix-js-sdk/src/logger";
 
-import {MatrixClientPeg} from './MatrixClientPeg';
+import { MatrixClientPeg } from './MatrixClientPeg';
 import * as sdk from '.';
 import Modal from './Modal';
 
@@ -32,7 +34,7 @@ export class Service {
      * @param {string} baseUrl The Base URL of the service (ie. before '/_matrix')
      * @param {string} accessToken The user's access token for the service
      */
-    constructor(public serviceType: string, public baseUrl: string, public accessToken: string) {
+    constructor(public serviceType: SERVICE_TYPES, public baseUrl: string, public accessToken: string) {
     }
 }
 
@@ -48,13 +50,13 @@ export interface Policy {
 }
 
 export type Policies = {
-    [policy: string]: Policy,
+    [policy: string]: Policy;
 };
 
 export type TermsInteractionCallback = (
     policiesAndServicePairs: {
-        service: Service,
-        policies: Policies,
+        service: Service;
+        policies: Policies;
     }[],
     agreedUrls: string[],
     extraClassNames?: string,
@@ -117,7 +119,7 @@ export async function startTermsFlow(
     // but that is not a thing the API supports, so probably best to just show
     // things they've not agreed to yet.
     const unagreedPoliciesAndServicePairs = [];
-    for (const {service, policies} of policiesAndServicePairs) {
+    for (const { service, policies } of policiesAndServicePairs) {
         const unagreedPolicies = {};
         for (const [policyName, policy] of Object.entries(policies)) {
             let policyAgreed = false;
@@ -131,7 +133,7 @@ export async function startTermsFlow(
             if (!policyAgreed) unagreedPolicies[policyName] = policy;
         }
         if (Object.keys(unagreedPolicies).length > 0) {
-            unagreedPoliciesAndServicePairs.push({service, policies: unagreedPolicies});
+            unagreedPoliciesAndServicePairs.push({ service, policies: unagreedPolicies });
         }
     }
 
@@ -139,16 +141,16 @@ export async function startTermsFlow(
     const numAcceptedBeforeAgreement = agreedUrlSet.size;
     if (unagreedPoliciesAndServicePairs.length > 0) {
         const newlyAgreedUrls = await interactionCallback(unagreedPoliciesAndServicePairs, [...agreedUrlSet]);
-        console.log("User has agreed to URLs", newlyAgreedUrls);
+        logger.log("User has agreed to URLs", newlyAgreedUrls);
         // Merge with previously agreed URLs
         newlyAgreedUrls.forEach(url => agreedUrlSet.add(url));
     } else {
-        console.log("User has already agreed to all required policies");
+        logger.log("User has already agreed to all required policies");
     }
 
     // We only ever add to the set of URLs, so if anything has changed then we'd see a different length
     if (agreedUrlSet.size !== numAcceptedBeforeAgreement) {
-        const newAcceptedTerms = {accepted: Array.from(agreedUrlSet)};
+        const newAcceptedTerms = { accepted: Array.from(agreedUrlSet) };
         await MatrixClientPeg.get().setAccountData('m.accepted_terms', newAcceptedTerms);
     }
 
@@ -178,28 +180,26 @@ export async function startTermsFlow(
     return Promise.all(agreePromises);
 }
 
-export function dialogTermsInteractionCallback(
+export async function dialogTermsInteractionCallback(
     policiesAndServicePairs: {
-        service: Service,
-        policies: { [policy: string]: Policy },
+        service: Service;
+        policies: { [policy: string]: Policy };
     }[],
     agreedUrls: string[],
     extraClassNames?: string,
 ): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-        console.log("Terms that need agreement", policiesAndServicePairs);
-        const TermsDialog = sdk.getComponent("views.dialogs.TermsDialog");
+    logger.log("Terms that need agreement", policiesAndServicePairs);
+    // FIXME: Using an import will result in test failures
+    const TermsDialog = sdk.getComponent("views.dialogs.TermsDialog");
 
-        Modal.createTrackedDialog('Terms of Service', '', TermsDialog, {
-            policiesAndServicePairs,
-            agreedUrls,
-            onFinished: (done, agreedUrls) => {
-                if (!done) {
-                    reject(new TermsNotSignedError());
-                    return;
-                }
-                resolve(agreedUrls);
-            },
-        }, classNames("mx_TermsDialog", extraClassNames));
-    });
+    const { finished } = Modal.createTrackedDialog<[boolean, string[]]>('Terms of Service', '', TermsDialog, {
+        policiesAndServicePairs,
+        agreedUrls,
+    }, classNames("mx_TermsDialog", extraClassNames));
+
+    const [done, _agreedUrls] = await finished;
+    if (!done) {
+        throw new TermsNotSignedError();
+    }
+    return _agreedUrls;
 }

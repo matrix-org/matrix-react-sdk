@@ -18,7 +18,8 @@ limitations under the License.
 
 import React from "react";
 
-import {Key} from "../../Keyboard";
+import { Key } from "../../Keyboard";
+import { useRovingTabIndex } from "../RovingTabIndex";
 import StyledCheckbox from "../../components/views/elements/StyledCheckbox";
 
 interface IProps extends React.ComponentProps<typeof StyledCheckbox> {
@@ -28,7 +29,9 @@ interface IProps extends React.ComponentProps<typeof StyledCheckbox> {
 }
 
 // Semantic component for representing a styled role=menuitemcheckbox
-export const StyledMenuItemCheckbox: React.FC<IProps> = ({children, label, onChange, onClose, ...props}) => {
+export const StyledMenuItemCheckbox: React.FC<IProps> = ({ children, label, onChange, onClose, ...props }) => {
+    const [onFocus, isActive, ref] = useRovingTabIndex<HTMLInputElement>();
+
     const onKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === Key.ENTER || e.key === Key.SPACE) {
             e.stopPropagation();
@@ -52,11 +55,13 @@ export const StyledMenuItemCheckbox: React.FC<IProps> = ({children, label, onCha
         <StyledCheckbox
             {...props}
             role="menuitemcheckbox"
-            tabIndex={-1}
             aria-label={label}
             onChange={onChange}
             onKeyDown={onKeyDown}
             onKeyUp={onKeyUp}
+            onFocus={onFocus}
+            inputRef={ref}
+            tabIndex={isActive ? 0 : -1}
         >
             { children }
         </StyledCheckbox>

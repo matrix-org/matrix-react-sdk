@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {Store} from 'flux/utils';
+import { Store } from 'flux/utils';
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import dis from '../dispatcher/dispatcher';
+import { Action } from '../dispatcher/actions';
 import GroupStore from './GroupStore';
 import Analytics from '../Analytics';
 import * as RoomNotifs from "../RoomNotifs";
-import {MatrixClientPeg} from '../MatrixClientPeg';
+import { MatrixClientPeg } from '../MatrixClientPeg';
 import SettingsStore from "../settings/SettingsStore";
+import { CreateEventField } from "../components/views/dialogs/CreateSpaceFromCommunityDialog";
 
 const INITIAL_STATE = {
     orderedTags: null,
@@ -49,10 +53,10 @@ class GroupFilterOrderStore extends Store {
         this.__emitChange();
     }
 
-    __onDispatch(payload) {
+    __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // Initialise state after initial sync
-            case 'view_room': {
+            case Action.ViewRoom: {
                 const relatedGroupIds = GroupStore.getGroupIdsForRoomId(payload.room_id);
                 this._updateBadges(relatedGroupIds);
                 break;
@@ -213,7 +217,7 @@ class GroupFilterOrderStore extends Store {
                 changedBadges[groupId] = (badge && badge.count !== 0) ? badge : undefined;
             });
             const newBadges = Object.assign({}, this._state.badges, changedBadges);
-            this._setState({badges: newBadges});
+            this._setState({ badges: newBadges });
         }
     }
 
@@ -231,13 +235,16 @@ class GroupFilterOrderStore extends Store {
         const tags = this._state.orderedTagsAccountData || [];
         const removedTags = new Set(this._state.removedTagsAccountData || []);
 
-
         const tagsToKeep = tags.filter(
             (t) => (t[0] !== '+' || groupIds.includes(t)) && !removedTags.has(t),
         );
 
+        const cli = MatrixClientPeg.get();
+        const migratedCommunities = new Set(cli.getRooms().map(r => {
+            return r.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent()[CreateEventField];
+        }).filter(Boolean));
         const groupIdsToAdd = groupIds.filter(
-            (groupId) => !tags.includes(groupId) && !removedTags.has(groupId),
+            (groupId) => !tags.includes(groupId) && !removedTags.has(groupId) && !migratedCommunities.has(groupId),
         );
 
         return tagsToKeep.concat(groupIdsToAdd);

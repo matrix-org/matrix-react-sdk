@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type {Room} from "matrix-js-sdk/src/models/room";
-
-import ScalarAuthClient from "../ScalarAuthClient";
-import {dialogTermsInteractionCallback, TermsNotSignedError} from "../Terms";
-import Modal from '../Modal';
 import url from 'url';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import type { Room } from "matrix-js-sdk/src/models/room";
+import ScalarAuthClient from "../ScalarAuthClient";
+import { dialogTermsInteractionCallback, TermsNotSignedError } from "../Terms";
+import Modal from '../Modal';
 import SettingsStore from "../settings/SettingsStore";
 import IntegrationManager from "../components/views/settings/IntegrationManager";
-import {IntegrationManagers} from "./IntegrationManagers";
+import { IntegrationManagers } from "./IntegrationManagers";
 
 export enum Kind {
     Account = "account",
@@ -67,7 +68,7 @@ export class IntegrationManagerInstance {
 
         const dialog = Modal.createTrackedDialog(
             'Integration Manager', '', IntegrationManager,
-            {loading: true}, 'mx_IntegrationManager',
+            { loading: true }, 'mx_IntegrationManager',
         );
 
         const client = this.getScalarClient();
@@ -94,7 +95,7 @@ export class IntegrationManagerInstance {
                 return;
             }
 
-            console.error(e);
+            logger.error(e);
             newProps["connected"] = false;
         }
 

@@ -20,25 +20,20 @@ limitations under the License.
 import React, { ReactNode } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import cheerio from 'cheerio';
-import * as linkify from 'linkifyjs';
-import _linkifyElement from 'linkifyjs/element';
-import _linkifyString from 'linkifyjs/string';
 import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
-import url from 'url';
 import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
 
+import { _linkifyElement, _linkifyString } from './linkify-matrix';
 import { IExtendedSanitizeOptions } from './@types/sanitize-html';
-import linkifyMatrix from './linkify-matrix';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
-import { SHORTCODE_TO_EMOJI, getEmojiFromUnicode } from "./emoji";
-import ReplyThread from "./components/views/elements/ReplyThread";
+import { getEmojiFromUnicode } from "./emoji";
+import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
-
-linkifyMatrix(linkify);
+import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
@@ -58,7 +53,35 @@ const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
-export const PERMITTED_URL_SCHEMES = ['http', 'https', 'ftp', 'mailto', 'magnet'];
+export const PERMITTED_URL_SCHEMES = [
+    "bitcoin",
+    "ftp",
+    "geo",
+    "http",
+    "https",
+    "im",
+    "irc",
+    "ircs",
+    "magnet",
+    "mailto",
+    "matrix",
+    "mms",
+    "news",
+    "nntp",
+    "openpgp4fpr",
+    "sip",
+    "sftp",
+    "sms",
+    "smsto",
+    "ssh",
+    "tel",
+    "urn",
+    "webcal",
+    "wtai",
+    "xmpp",
+];
+
+const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)\/(.+?)(?:[?/]|$)/;
 
 /*
  * Return true if the given string contains emoji
@@ -78,20 +101,8 @@ function mightContainEmoji(str: string): boolean {
  * @return {String} The shortcode (such as :thumbup:)
  */
 export function unicodeToShortcode(char: string): string {
-    const data = getEmojiFromUnicode(char);
-    return (data && data.shortcodes ? `:${data.shortcodes[0]}:` : '');
-}
-
-/**
- * Returns the unicode character for an emoji shortcode
- *
- * @param {String} shortcode The shortcode (such as :thumbup:)
- * @return {String} The emoji character; null if none exists
- */
-export function shortcodeToUnicode(shortcode: string): string {
-    shortcode = shortcode.slice(1, shortcode.length - 1);
-    const data = SHORTCODE_TO_EMOJI.get(shortcode);
-    return data ? data.unicode : null;
+    const shortcodes = getEmojiFromUnicode(char)?.shortcodes;
+    return shortcodes?.length ? `:${shortcodes[0]}:` : '';
 }
 
 export function processHtmlForSending(html: string): string {
@@ -138,7 +149,7 @@ export function getHtmlText(insaneHtml: string): string {
         selfClosing: [],
         allowedSchemes: [],
         disallowedTagsMode: 'discard',
-    })
+    });
 }
 
 /**
@@ -151,10 +162,8 @@ export function getHtmlText(insaneHtml: string): string {
  */
 export function isUrlPermitted(inputUrl: string): boolean {
     try {
-        const parsed = url.parse(inputUrl);
-        if (!parsed.protocol) return false;
         // URL parser protocol includes the trailing colon
-        return PERMITTED_URL_SCHEMES.includes(parsed.protocol.slice(0, -1));
+        return PERMITTED_URL_SCHEMES.includes(new URL(inputUrl).protocol.slice(0, -1));
     } catch (e) {
         return false;
     }
@@ -167,7 +176,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             attribs.target = '_blank'; // by default
 
             const transformed = tryTransformPermalinkToLocalHref(attribs.href);
-            if (transformed !== attribs.href || attribs.href.match(linkifyMatrix.ELEMENT_URL_PATTERN)) {
+            if (transformed !== attribs.href || attribs.href.match(ELEMENT_URL_PATTERN)) {
                 attribs.href = transformed;
                 delete attribs.target;
             }
@@ -176,18 +185,31 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         return { tagName, attribs };
     },
     'img': function(tagName: string, attribs: sanitizeHtml.Attributes) {
+        let src = attribs.src;
         // Strip out imgs that aren't `mxc` here instead of using allowedSchemesByTag
         // because transformTags is used _before_ we filter by allowedSchemesByTag and
         // we don't want to allow images with `https?` `src`s.
         // We also drop inline images (as if they were not present at all) when the "show
         // images" preference is disabled. Future work might expose some UI to reveal them
         // like standalone image events have.
-        if (!attribs.src || !attribs.src.startsWith('mxc://') || !SettingsStore.getValue("showImages")) {
-            return { tagName, attribs: {}};
+        if (!src || !SettingsStore.getValue("showImages")) {
+            return { tagName, attribs: {} };
         }
+
+        if (!src.startsWith("mxc://")) {
+            const match = MEDIA_API_MXC_REGEX.exec(src);
+            if (match) {
+                src = `mxc://${match[1]}/${match[2]}`;
+            }
+        }
+
+        if (!src.startsWith("mxc://")) {
+            return { tagName, attribs: {} };
+        }
+
         const width = Number(attribs.width) || 800;
         const height = Number(attribs.height) || 600;
-        attribs.src = mediaFromMxc(attribs.src).getThumbnailOfSourceHttp(width, height);
+        attribs.src = mediaFromMxc(src).getThumbnailOfSourceHttp(width, height);
         return { tagName, attribs };
     },
     'code': function(tagName: string, attribs: sanitizeHtml.Attributes) {
@@ -358,11 +380,11 @@ interface IOpts {
     stripReplyFallback?: boolean;
     returnString?: boolean;
     forComposerQuote?: boolean;
-    ref?: React.Ref<any>;
+    ref?: React.Ref<HTMLSpanElement>;
 }
 
 export interface IOptsReturnNode extends IOpts {
-    returnString: false;
+    returnString: false | undefined;
 }
 
 export interface IOptsReturnString extends IOpts {
@@ -385,8 +407,9 @@ export interface IOptsReturnString extends IOpts {
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnString): string;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnNode): ReactNode;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts = {}) {
-    const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
+    const isFormattedBody = content.format === "org.matrix.custom.html" && content.formatted_body;
     let bodyHasEmoji = false;
+    let isHtmlMessage = false;
 
     let sanitizeParams = sanitizeHtmlParams;
     if (opts.forComposerQuote) {
@@ -403,9 +426,14 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
     try {
         if (highlights && highlights.length > 0) {
             const highlighter = new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink);
-            const safeHighlights = highlights.map(function(highlight) {
-                return sanitizeHtml(highlight, sanitizeParams);
-            });
+            const safeHighlights = highlights
+                // sanitizeHtml can hang if an unclosed HTML tag is thrown at it
+                // A search for `<foo` will make the browser crash
+                // an alternative would be to escape HTML special characters
+                // but that would bring no additional benefit as the highlighter
+                // does not work with those special chars
+                .filter((highlight: string): boolean => !highlight.includes("<"))
+                .map((highlight: string): string => sanitizeHtml(highlight, sanitizeParams));
             // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
             sanitizeParams.textFilter = function(safeText) {
                 return highlighter.applyHighlights(safeText, safeHighlights).join('');
@@ -415,23 +443,26 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
 
-        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
-        strippedBody = opts.stripReplyFallback ? ReplyThread.stripPlainReply(plainBody) : plainBody;
+        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyChain.stripHTMLReply(formattedBody);
+        strippedBody = opts.stripReplyFallback ? ReplyChain.stripPlainReply(plainBody) : plainBody;
 
-        bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : plainBody);
+        bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
 
         // Only generate safeBody if the message was sent as org.matrix.custom.html
-        if (isHtmlMessage) {
+        if (isFormattedBody) {
             isDisplayedWithHtml = true;
-            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
 
-            if (SettingsStore.getValue("feature_latex_maths")) {
-                const phtml = cheerio.load(safeBody, {
-                    // @ts-ignore: The `_useHtmlParser2` internal option is the
-                    // simplest way to both parse and render using `htmlparser2`.
-                    _useHtmlParser2: true,
-                    decodeEntities: false,
-                });
+            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
+            const phtml = cheerio.load(safeBody, {
+                // @ts-ignore: The `_useHtmlParser2` internal option is the
+                // simplest way to both parse and render using `htmlparser2`.
+                _useHtmlParser2: true,
+                decodeEntities: false,
+            });
+            const isPlainText = phtml.html() === phtml.root().text();
+            isHtmlMessage = isFormattedBody && !isPlainText;
+
+            if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
                 // @ts-ignore - The types for `replaceWith` wrongly expect
                 // Cheerio instance to be returned.
                 phtml('div, span[data-mx-maths!=""]').replaceWith(function(i, e) {
@@ -502,10 +533,10 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
  * Linkifies the given string. This is a wrapper around 'linkifyjs/string'.
  *
  * @param {string} str string to linkify
- * @param {object} [options] Options for linkifyString. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyString. Default: linkifyMatrixOptions
  * @returns {string} Linkified string
  */
-export function linkifyString(str: string, options = linkifyMatrix.options): string {
+export function linkifyString(str: string, options = linkifyMatrixOptions): string {
     return _linkifyString(str, options);
 }
 
@@ -513,10 +544,10 @@ export function linkifyString(str: string, options = linkifyMatrix.options): str
  * Linkifies the given DOM element. This is a wrapper around 'linkifyjs/element'.
  *
  * @param {object} element DOM element to linkify
- * @param {object} [options] Options for linkifyElement. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyElement. Default: linkifyMatrixOptions
  * @returns {object}
  */
-export function linkifyElement(element: HTMLElement, options = linkifyMatrix.options): HTMLElement {
+export function linkifyElement(element: HTMLElement, options = linkifyMatrixOptions): HTMLElement {
     return _linkifyElement(element, options);
 }
 
@@ -524,10 +555,10 @@ export function linkifyElement(element: HTMLElement, options = linkifyMatrix.opt
  * Linkify the given string and sanitize the HTML afterwards.
  *
  * @param {string} dirtyHtml The HTML string to sanitize and linkify
- * @param {object} [options] Options for linkifyString. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyString. Default: linkifyMatrixOptions
  * @returns {string}
  */
-export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatrix.options): string {
+export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatrixOptions): string {
     return sanitizeHtml(linkifyString(dirtyHtml, options), sanitizeHtmlParams);
 }
 

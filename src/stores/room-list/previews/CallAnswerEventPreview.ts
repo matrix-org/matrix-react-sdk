@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { IPreview } from "./IPreview";
 import { TagID } from "../models";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
 import { _t } from "../../../languageHandler";
 
@@ -26,7 +27,7 @@ export class CallAnswerEventPreview implements IPreview {
             if (isSelf(event)) {
                 return _t("You joined the call");
             } else {
-                return _t("%(senderName)s joined the call", {senderName: getSenderName(event)});
+                return _t("%(senderName)s joined the call", { senderName: getSenderName(event) });
             }
         } else {
             return _t("Call in progress");

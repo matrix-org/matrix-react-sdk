@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ActionPayload } from "../dispatcher/payloads";
-import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
-import defaultDispatcher from "../dispatcher/dispatcher";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { User } from "matrix-js-sdk/src/models/user";
 import { throttle } from "lodash";
+
+import { ActionPayload } from "../dispatcher/payloads";
+import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
+import defaultDispatcher from "../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
-import {mediaFromMxc} from "../customisations/Media";
+import { mediaFromMxc } from "../customisations/Media";
 
 interface IState {
     displayName?: string;
@@ -134,7 +135,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         } else {
             window.localStorage.removeItem(KEY_AVATAR_URL);
         }
-        await this.updateState({displayName: profileInfo.displayname, avatarUrl: profileInfo.avatar_url});
+        await this.updateState({ displayName: profileInfo.displayname, avatarUrl: profileInfo.avatar_url });
     };
 
     private onStateEvents = throttle(async (ev: MatrixEvent) => {
@@ -142,5 +143,5 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         if (ev.getType() === 'm.room.member' && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
             await this.onProfileUpdate();
         }
-    }, 200, {trailing: true, leading: true});
+    }, 200, { trailing: true, leading: true });
 }

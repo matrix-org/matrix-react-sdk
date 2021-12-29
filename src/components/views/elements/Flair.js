@@ -16,12 +16,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import FlairStore from '../../../stores/FlairStore';
 import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
-import {mediaFromMxc} from "../../../customisations/Media";
-
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { mediaFromMxc } from "../../../customisations/Media";
 
 class FlairAvatar extends React.Component {
     constructor() {
@@ -93,7 +94,7 @@ export default class Flair extends React.Component {
             try {
                 groupProfile = await FlairStore.getGroupProfileCached(this.context, groupId);
             } catch (err) {
-                console.error('Could not get profile for group', groupId, err);
+                logger.error('Could not get profile for group', groupId, err);
             }
             profiles.push(groupProfile);
         }

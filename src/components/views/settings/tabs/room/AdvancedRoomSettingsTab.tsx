@@ -24,6 +24,7 @@ import RoomUpgradeDialog from "../../../dialogs/RoomUpgradeDialog";
 import DevtoolsDialog from "../../../dialogs/DevtoolsDialog";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
+import { Action } from '../../../../../dispatcher/actions';
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 
 interface IProps {
@@ -81,7 +82,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
     };
 
     private openDevtools = (e) => {
-        Modal.createDialog(DevtoolsDialog, {roomId: this.props.roomId});
+        Modal.createDialog(DevtoolsDialog, { roomId: this.props.roomId });
     };
 
     private onOldRoomClicked = (e) => {
@@ -89,7 +90,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
         e.stopPropagation();
 
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_id: this.state.oldRoomId,
             event_id: this.state.oldEventId,
         });
@@ -116,8 +117,8 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
                             "to the new version of the room.</i> We'll post a link to the new room in the old " +
                             "version of the room - room members will have to click this link to join the new room.",
                             {}, {
-                                "b": (sub) => <b>{sub}</b>,
-                                "i": (sub) => <i>{sub}</i>,
+                                "b": (sub) => <b>{ sub }</b>,
+                                "i": (sub) => <i>{ sub }</i>,
                             },
                         ) }
                     </p>

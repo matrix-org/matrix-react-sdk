@@ -64,7 +64,7 @@ const calculateUrls = (url, urls, lowBandwidth) => {
     return Array.from(new Set(_urls));
 };
 
-const useImageUrl = ({url, urls}): [string, () => void] => {
+const useImageUrl = ({ url, urls }): [string, () => void] => {
     // Since this is a hot code path and the settings store can be slow, we
     // use the cached lowBandwidth value from the room context if it exists
     const roomContext = useContext(RoomContext);
@@ -115,7 +115,7 @@ const BaseAvatar = (props: IProps) => {
         ...otherProps
     } = props;
 
-    const [imageUrl, onError] = useImageUrl({url, urls});
+    const [imageUrl, onError] = useImageUrl({ url, urls });
 
     if (!imageUrl && defaultToInitialLetter) {
         const initialLetter = AvatarLogic.getInitialLetter(name);
@@ -150,6 +150,7 @@ const BaseAvatar = (props: IProps) => {
             return (
                 <AccessibleButton
                     aria-label={_t("Avatar")}
+                    aria-live="off"
                     {...otherProps}
                     element="span"
                     className={classNames("mx_BaseAvatar", className)}
@@ -187,7 +188,8 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt={_t("Avatar")}
+                title={title}
+                alt={_t("Avatar")}
                 inputRef={inputRef}
                 {...otherProps} />
         );
@@ -201,7 +203,8 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt=""
+                title={title}
+                alt=""
                 ref={inputRef}
                 {...otherProps} />
         );
