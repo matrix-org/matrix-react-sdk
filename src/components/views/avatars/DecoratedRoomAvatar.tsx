@@ -31,6 +31,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import TooltipTarget from "../elements/TooltipTarget";
 
 interface IProps {
     room: Room;
@@ -39,6 +40,7 @@ interface IProps {
     forceCount?: boolean;
     oobData?: IOOBData;
     viewAvatarOnClick?: boolean;
+    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
 }
 
 interface IState {
@@ -190,6 +192,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             icon = <TextWithTooltip
                 tooltip={tooltipText(this.state.icon)}
                 class={`mx_DecoratedAvatar_icon mx_DecoratedAvatar_icon_${this.state.icon.toLowerCase()}`}
+                tooltipProps={this.props.tooltipProps}
             />;
         }
 
