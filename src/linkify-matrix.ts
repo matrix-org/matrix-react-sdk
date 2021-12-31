@@ -20,7 +20,7 @@ import linkifyElement from 'linkifyjs/element';
 import linkifyString from 'linkifyjs/string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
-import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
+import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,

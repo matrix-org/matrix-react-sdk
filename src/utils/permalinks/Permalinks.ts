@@ -23,11 +23,12 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import SpecPermalinkConstructor, { baseUrl as matrixtoBaseUrl } from "./SpecPermalinkConstructor";
+import MatrixToPermalinkConstructor, { baseUrl as matrixtoBaseUrl } from "./MatrixToPermalinkConstructor";
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 import ElementPermalinkConstructor from "./ElementPermalinkConstructor";
 import SdkConfig from "../../SdkConfig";
 import { ELEMENT_URL_PATTERN } from "../../linkify-matrix";
+import MatrixSchemePermalinkConstructor from "./MatrixSchemePermalinkConstructor";
 
 // The maximum number of servers to pick when working out which servers
 // to add to permalinks. The servers are appended as ?via=example.org
@@ -312,7 +313,7 @@ export function makeGroupPermalink(groupId: string): string {
 export function isPermalinkHost(host: string): boolean {
     // Always check if the permalink is a spec permalink (callers are likely to call
     // parsePermalink after this function).
-    if (new SpecPermalinkConstructor().isPermalinkHost(host)) return true;
+    if (new MatrixToPermalinkConstructor().isPermalinkHost(host)) return true;
     return getPermalinkConstructor().isPermalinkHost(host);
 }
 
@@ -342,7 +343,7 @@ export function tryTransformEntityToPermalink(entity: string): string {
  * @returns {string} The transformed permalink or original URL if unable.
  */
 export function tryTransformPermalinkToLocalHref(permalink: string): string {
-    if (!permalink.startsWith("http:") && !permalink.startsWith("https:")) {
+    if (!permalink.startsWith("http:") && !permalink.startsWith("https:") && !permalink.startsWith("matrix:")) {
         return permalink;
     }
 
@@ -364,7 +365,7 @@ export function tryTransformPermalinkToLocalHref(permalink: string): string {
                 const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : '';
                 permalink = `#/room/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
                 if (permalinkParts.viaServers.length > 0) {
-                    permalink += new SpecPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
+                    permalink += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
                 }
             } else if (permalinkParts.groupId) {
                 permalink = `#/group/${permalinkParts.groupId}`;
@@ -411,13 +412,15 @@ function getPermalinkConstructor(): PermalinkConstructor {
         return new ElementPermalinkConstructor(elementPrefix);
     }
 
-    return new SpecPermalinkConstructor();
+    return new MatrixToPermalinkConstructor();
 }
 
 export function parsePermalink(fullUrl: string): PermalinkParts {
     const elementPrefix = SdkConfig.get()['permalinkPrefix'];
     if (decodeURIComponent(fullUrl).startsWith(matrixtoBaseUrl)) {
-        return new SpecPermalinkConstructor().parsePermalink(decodeURIComponent(fullUrl));
+        return new MatrixToPermalinkConstructor().parsePermalink(decodeURIComponent(fullUrl));
+    } else if (fullUrl.startsWith("matrix:")) {
+        return new MatrixSchemePermalinkConstructor().parsePermalink(fullUrl);
     } else if (elementPrefix && fullUrl.startsWith(elementPrefix)) {
         return new ElementPermalinkConstructor(elementPrefix).parsePermalink(fullUrl);
     }
