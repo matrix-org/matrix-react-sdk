@@ -15,18 +15,28 @@ limitations under the License.
 import React, { ReactNode, HTMLAttributes } from 'react';
 import classNames from 'classnames';
 
-interface Props extends HTMLAttributes<HTMLFieldSetElement> {
+import Heading from '../typography/Heading';
+
+interface Props extends HTMLAttributes<HTMLFieldSetElement | HTMLDivElement> {
     // section title
     title: string | ReactNode;
     isFieldset?: boolean;
     description?: string | ReactNode;
 }
 
-const SettingsSubsection: React.FC<Props> = ({ title, isFieldset, className, children, description, ...rest }) =>
-    <fieldset {...rest} className={classNames('mx_SettingsSubsection', className)}>
-        <legend className='mx_SettingsSubsection_legend'>{ title }</legend>
+const Title: React.FC<{ isFieldset: boolean }> = ({ isFieldset, children }) =>
+    isFieldset ?
+        <legend className='mx_SettingsSubsection_title'>{ children }</legend> :
+        <Heading className='mx_SettingsSubsection_title' size='h3'>{ children }</Heading>;
+
+const SettingsSubsection: React.FC<Props> = ({ title, isFieldset, className, children, description, ...rest }) => {
+    const Container = isFieldset ? 'fieldset' : 'div';
+
+    return (<Container {...rest} className={classNames('mx_SettingsSubsection', className)}>
+        <Title isFieldset={isFieldset}>{ title }</Title>
         { description && <div className='mx_SettingsSubsection_description'>{ description }</div> }
         { children }
-    </fieldset>;
+    </Container>);
+};
 
 export default SettingsSubsection;

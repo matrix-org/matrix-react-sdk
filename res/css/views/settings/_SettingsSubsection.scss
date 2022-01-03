@@ -19,13 +19,15 @@ limitations under the License.
     box-sizing: content-box;
 }
 
-.mx_SettingsSubsection_legend {
-    font-size: $font-16px;
-    display: block;
+.mx_SettingsSubsection_title {
+    // match h3
+    font-size: $font-18px;
     font-weight: $font-semi-bold;
+    line-height: $font-22px;
+    display: block;
     color: $primary-content;
-    margin-bottom: 10px;
-    margin-top: 12px;
+    margin-bottom: 10px !important;
+    margin-top: 12px !important;
 }
 
 .mx_SettingsSubsection_description {

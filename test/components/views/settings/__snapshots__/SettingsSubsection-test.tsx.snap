@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SettingsSubsection /> when isFieldset is falsy renders fieldset with plain text description 1`] = `
+<div
+  class="mx_SettingsSubsection"
+  data-test-id="test"
+>
+  <h3
+    class="mx_Heading_h3 mx_SettingsSubsection_title"
+  >
+    Who can read history?
+  </h3>
+  <div
+    class="mx_SettingsSubsection_description"
+  >
+    Changes to who can read history.
+  </div>
+  <div>
+    test
+  </div>
+</div>
+`;
+
+exports[`<SettingsSubsection /> when isFieldset is falsy renders fieldset with react description 1`] = `
+<div
+  class="mx_SettingsSubsection"
+  data-test-id="test"
+>
+  <h3
+    class="mx_Heading_h3 mx_SettingsSubsection_title"
+  >
+    Who can read history?
+  </h3>
+  <div
+    class="mx_SettingsSubsection_description"
+  >
+    <p>
+      Test
+    </p>
+    <a
+      href="#"
+    >
+      a link
+    </a>
+  </div>
+  <div>
+    test
+  </div>
+</div>
+`;
+
+exports[`<SettingsSubsection /> when isFieldset is falsy renders fieldset without description 1`] = `
+<div
+  class="mx_SettingsSubsection"
+  data-test-id="test"
+>
+  <h3
+    class="mx_Heading_h3 mx_SettingsSubsection_title"
+  >
+    Who can read history?
+  </h3>
+  <div>
+    test
+  </div>
+</div>
+`;
+
+exports[`<SettingsSubsection /> when isFieldset is truthy renders fieldset with plain text description 1`] = `
+<fieldset
+  class="mx_SettingsSubsection"
+  data-test-id="test"
+>
+  <legend
+    class="mx_SettingsSubsection_title"
+  >
+    Who can read history?
+  </legend>
+  <div
+    class="mx_SettingsSubsection_description"
+  >
+    Changes to who can read history.
+  </div>
+  <div>
+    test
+  </div>
+</fieldset>
+`;
+
+exports[`<SettingsSubsection /> when isFieldset is truthy renders fieldset with react description 1`] = `
+<fieldset
+  class="mx_SettingsSubsection"
+  data-test-id="test"
+>
+  <legend
+    class="mx_SettingsSubsection_title"
+  >
+    Who can read history?
+  </legend>
+  <div
+    class="mx_SettingsSubsection_description"
+  >
+    <p>
+      Test
+    </p>
+    <a
+      href="#"
+    >
+      a link
+    </a>
+  </div>
+  <div>
+    test
+  </div>
+</fieldset>
+`;
+
+exports[`<SettingsSubsection /> when isFieldset is truthy renders fieldset without description 1`] = `
+<fieldset
+  class="mx_SettingsSubsection"
+  data-test-id="test"
+>
+  <legend
+    class="mx_SettingsSubsection_title"
+  >
+    Who can read history?
+  </legend>
+  <div>
+    test
+  </div>
+</fieldset>
+`;

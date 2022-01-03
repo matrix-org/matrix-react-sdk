@@ -46,4 +46,21 @@ describe('<SettingsSubsection />', () => {
             expect(getComponent({ description, isFieldset })).toMatchSnapshot();
         });
     });
+
+    describe('when isFieldset is falsy', () => {
+        const isFieldset = false;
+        it('renders fieldset without description', () => {
+            expect(getComponent({ isFieldset })).toMatchSnapshot();
+        });
+
+        it('renders fieldset with plain text description', () => {
+            const description = 'Changes to who can read history.';
+            expect(getComponent({ description, isFieldset })).toMatchSnapshot();
+        });
+
+        it('renders fieldset with react description', () => {
+            const description = <><p>Test</p><a href='#'>a link</a></>;
+            expect(getComponent({ description, isFieldset })).toMatchSnapshot();
+        });
+    });
 });

@@ -30,7 +30,7 @@ exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
     data-test-id="access-fieldset"
   >
     <legend
-      class="mx_SettingsSubsection_legend"
+      class="mx_SettingsSubsection_title"
     >
       Access
     </legend>
