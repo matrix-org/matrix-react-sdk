@@ -28,7 +28,7 @@ import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { useLocalEcho } from "../../../hooks/useLocalEcho";
 import JoinRuleSettings from "../settings/JoinRuleSettings";
 import { useRoomState } from "../../../hooks/useRoomState";
-import SettingsFieldset from "../settings/SettingsFieldset";
+import SettingsSubsection from "../settings/SettingsSubsection";
 
 interface IProps {
     matrixClient: MatrixClient;
@@ -113,9 +113,10 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
 
         { error && <div data-test-id='space-settings-error' className="mx_SpaceRoomView_errorText">{ error }</div> }
 
-        <SettingsFieldset
+        <SettingsSubsection
             data-test-id='access-fieldset'
-            legend={_t("Access")}
+            isFieldset
+            title={_t("Access")}
             description={_t("Decide who can view and join %(spaceName)s.", { spaceName: space.name })}
         >
             <JoinRuleSettings
@@ -138,7 +139,7 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
                     <b>{ _t("Recommended for public spaces.") }</b>
                 </p>
             </div>
-        </SettingsFieldset>
+        </SettingsSubsection>
 
         { addressesSection }
     </div>;

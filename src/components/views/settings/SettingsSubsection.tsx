@@ -17,13 +17,14 @@ import classNames from 'classnames';
 
 interface Props extends HTMLAttributes<HTMLFieldSetElement> {
     // section title
-    legend: string | ReactNode;
+    title: string | ReactNode;
+    isFieldset?: boolean;
     description?: string | ReactNode;
 }
 
-const SettingsSubsection: React.FC<Props> = ({ legend, className, children, description, ...rest }) =>
+const SettingsSubsection: React.FC<Props> = ({ title, isFieldset, className, children, description, ...rest }) =>
     <fieldset {...rest} className={classNames('mx_SettingsSubsection', className)}>
-        <legend className='mx_SettingsSubsection_legend'>{ legend }</legend>
+        <legend className='mx_SettingsSubsection_legend'>{ title }</legend>
         { description && <div className='mx_SettingsSubsection_description'>{ description }</div> }
         { children }
     </fieldset>;

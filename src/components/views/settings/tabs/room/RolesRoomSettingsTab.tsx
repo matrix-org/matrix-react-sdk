@@ -29,7 +29,7 @@ import { replaceableComponent } from "../../../../../utils/replaceableComponent"
 import { compare } from "../../../../../utils/strings";
 import ErrorDialog from '../../../dialogs/ErrorDialog';
 import PowerSelector from "../../../elements/PowerSelector";
-import SettingsFieldset from '../../SettingsFieldset';
+import SettingsSubsection from '../../SettingsSubsection';
 import SettingsStore from "../../../../../settings/SettingsStore";
 
 interface IEventShowOpts {
@@ -346,15 +346,15 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             if (privilegedUsers.length) {
                 privilegedUsersSection =
-                <SettingsFieldset legend={_t('Privileged Users')}>
-                    { privilegedUsers }
-                </SettingsFieldset>;
+                    <SettingsSubsection title={_t('Privileged Users')}>
+                        { privilegedUsers }
+                    </SettingsSubsection>;
             }
             if (mutedUsers.length) {
                 mutedUsersSection =
-                    <SettingsFieldset legend={_t('Muted Users')}>
+                    <SettingsSubsection title={_t('Muted Users')}>
                         { mutedUsers }
-                    </SettingsFieldset>;
+                    </SettingsSubsection>;
             }
         }
 
@@ -363,7 +363,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         if (banned.length) {
             const canBanUsers = currentUserLevel >= banLevel;
             bannedUsersSection =
-                <SettingsFieldset legend={_t('Banned users')}>
+                <SettingsSubsection title={_t('Banned users')}>
                     <ul>
                         { banned.map((member) => {
                             const banEvent = member.events.member.getContent();
@@ -381,7 +381,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                             );
                         }) }
                     </ul>
-                </SettingsFieldset>;
+                </SettingsSubsection>;
         }
 
         const powerSelectors = Object.keys(powerLevelDescriptors).map((key, index) => {
@@ -450,8 +450,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                 { privilegedUsersSection }
                 { mutedUsersSection }
                 { bannedUsersSection }
-                <SettingsFieldset
-                    legend={_t("Permissions")}
+                <SettingsSubsection
+                    title={_t("Permissions")}
                     description={
                         isSpaceRoom
                             ? _t('Select the roles required to change various parts of the space')
@@ -460,7 +460,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                 >
                     { powerSelectors }
                     { eventPowerSelectors }
-                </SettingsFieldset>
+                </SettingsSubsection>
             </div>
         );
     }

@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SettingsFieldset {
+.mx_SettingsSubsection {
     margin: 10px 80px 10px 0;
     box-sizing: content-box;
 }
 
-.mx_SettingsFieldset_legend {
+.mx_SettingsSubsection_legend {
     font-size: $font-16px;
     display: block;
     font-weight: $font-semi-bold;
@@ -28,7 +28,7 @@ limitations under the License.
     margin-top: 12px;
 }
 
-.mx_SettingsFieldset_description {
+.mx_SettingsSubsection_description {
     color: $settings-subsection-fg-color;
     font-size: $font-14px;
     display: block;

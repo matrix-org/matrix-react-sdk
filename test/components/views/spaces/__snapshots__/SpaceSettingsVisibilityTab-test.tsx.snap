@@ -26,16 +26,16 @@ exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
   </div>
   
   <fieldset
-    class="mx_SettingsFieldset"
+    class="mx_SettingsSubsection"
     data-test-id="access-fieldset"
   >
     <legend
-      class="mx_SettingsFieldset_legend"
+      class="mx_SettingsSubsection_legend"
     >
       Access
     </legend>
     <div
-      class="mx_SettingsFieldset_description"
+      class="mx_SettingsSubsection_description"
     >
       Decide who can view and join mock-space.
     </div>
@@ -43,8 +43,10 @@ exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
       class="mx_StyledRadioButton mx_JoinRuleSettings_radioButton mx_StyledRadioButton_disabled mx_StyledRadioButton_checked"
     >
       <input
+        aria-describedby="joinRule-invite-description"
         checked=""
         disabled=""
+        id="joinRule-invite"
         name="joinRule"
         type="radio"
         value="invite"
@@ -61,14 +63,18 @@ exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
         class="mx_StyledRadioButton_spacer"
       />
     </label>
-    <span>
+    <span
+      id="joinRule-invite-description"
+    >
       Only invited people can join.
     </span>
     <label
       class="mx_StyledRadioButton mx_JoinRuleSettings_radioButton mx_StyledRadioButton_disabled"
     >
       <input
+        aria-describedby="joinRule-public-description"
         disabled=""
+        id="joinRule-public"
         name="joinRule"
         type="radio"
         value="public"
@@ -85,7 +91,9 @@ exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
         class="mx_StyledRadioButton_spacer"
       />
     </label>
-    <span>
+    <span
+      id="joinRule-public-description"
+    >
       Anyone can find and join.
     </span>
     <div

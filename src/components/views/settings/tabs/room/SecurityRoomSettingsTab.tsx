@@ -36,7 +36,7 @@ import createRoom, { IOpts } from '../../../../../createRoom';
 import CreateRoomDialog from '../../../dialogs/CreateRoomDialog';
 import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
-import SettingsFieldset from '../../SettingsFieldset';
+import SettingsSubsection from '../../SettingsSubsection';
 
 interface IProps {
     roomId: string;
@@ -269,7 +269,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             roomName: room?.name,
         });
 
-        return <SettingsFieldset legend={_t("Access")} description={description}>
+        return <SettingsSubsection title={_t("Access")} description={description} isFieldset>
             <JoinRuleSettings
                 room={room}
                 beforeChange={this.onBeforeJoinRuleChange}
@@ -278,7 +278,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 promptUpgrade={true}
                 aliasWarning={aliasWarning}
             />
-        </SettingsFieldset>;
+        </SettingsSubsection>;
     }
 
     private onJoinRuleChangeError = (error: Error) => {
@@ -361,7 +361,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const description = _t('Changes to who can read history will only apply to future messages in this room. ' +
         'The visibility of existing history will be unchanged.');
 
-        return (<SettingsFieldset legend={_t("Who can read history?")} description={description}>
+        return (<SettingsSubsection title={_t("Who can read history?")} description={description} isFieldset>
             <StyledRadioGroup
                 name="historyVis"
                 value={history}
@@ -369,7 +369,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 disabled={!canChangeHistory}
                 definitions={options}
             />
-        </SettingsFieldset>);
+        </SettingsSubsection>);
     }
 
     private toggleAdvancedSection = () => {
@@ -435,7 +435,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             <div className="mx_SettingsTab mx_SecurityRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Security & Privacy") }</div>
 
-                <SettingsFieldset legend={_t("Encryption")} description={_t("Once enabled, encryption cannot be disabled.")}>
+                <SettingsSubsection title={_t("Encryption")} description={_t("Once enabled, encryption cannot be disabled.")} isFieldset>
                     <LabelledToggleSwitch
                         value={isEncrypted}
                         onChange={this.onEncryptionChange}
@@ -443,7 +443,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         disabled={!canEnableEncryption}
                     />
                     { encryptionSettings }
-                </SettingsFieldset>
+                </SettingsSubsection>
 
                 { this.renderJoinRule() }
 

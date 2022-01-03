@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SettingsFieldset /> renders fieldset with plain text description 1`] = `
+exports[`<SettingsSubsection /> when isFieldset is truthy renders fieldset with plain text description 1`] = `
 <fieldset
-  class="mx_SettingsFieldset"
+  class="mx_SettingsSubsection"
   data-test-id="test"
 >
   <legend
-    class="mx_SettingsFieldset_legend"
+    class="mx_SettingsSubsection_legend"
   >
     Who can read history?
   </legend>
   <div
-    class="mx_SettingsFieldset_description"
+    class="mx_SettingsSubsection_description"
   >
     Changes to who can read history.
   </div>
@@ -21,18 +21,18 @@ exports[`<SettingsFieldset /> renders fieldset with plain text description 1`] =
 </fieldset>
 `;
 
-exports[`<SettingsFieldset /> renders fieldset with react description 1`] = `
+exports[`<SettingsSubsection /> when isFieldset is truthy renders fieldset with react description 1`] = `
 <fieldset
-  class="mx_SettingsFieldset"
+  class="mx_SettingsSubsection"
   data-test-id="test"
 >
   <legend
-    class="mx_SettingsFieldset_legend"
+    class="mx_SettingsSubsection_legend"
   >
     Who can read history?
   </legend>
   <div
-    class="mx_SettingsFieldset_description"
+    class="mx_SettingsSubsection_description"
   >
     <p>
       Test
@@ -49,13 +49,13 @@ exports[`<SettingsFieldset /> renders fieldset with react description 1`] = `
 </fieldset>
 `;
 
-exports[`<SettingsFieldset /> renders fieldset without description 1`] = `
+exports[`<SettingsSubsection /> when isFieldset is truthy renders fieldset without description 1`] = `
 <fieldset
-  class="mx_SettingsFieldset"
+  class="mx_SettingsSubsection"
   data-test-id="test"
 >
   <legend
-    class="mx_SettingsFieldset_legend"
+    class="mx_SettingsSubsection_legend"
   >
     Who can read history?
   </legend>

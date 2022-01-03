@@ -29,7 +29,7 @@ import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAliasField from "../elements/RoomAliasField";
-import SettingsFieldset from "../settings/SettingsFieldset";
+import SettingsSubsection from "../settings/SettingsSubsection";
 
 interface IEditableAliasesListProps {
     domain?: string;
@@ -380,9 +380,10 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         return (
             <div className='mx_AliasSettings'>
-                <SettingsFieldset
+                <SettingsSubsection
+                    isFieldset
                     data-test-id='published-address-fieldset'
-                    legend={_t("Published Addresses")}
+                    title={_t("Published Addresses")}
                     description={<>
                         { isSpaceRoom
                             ? _t("Published addresses can be used by anyone on any server to join your space.")
@@ -426,10 +427,10 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         noItemsLabel={_t('No other published addresses yet, add one below')}
                         placeholder={_t('New published address (e.g. #alias:server)')}
                     />
-                </SettingsFieldset>
-                <SettingsFieldset
+                </SettingsSubsection>
+                <SettingsSubsection
                     data-test-id='local-address-fieldset'
-                    legend={_t("Local Addresses")}
+                    title={_t("Local Addresses")}
                     description={isSpaceRoom
                         ? _t("Set addresses for this space so users can find this space " +
                             "through your homeserver (%(localDomain)s)", { localDomain })
@@ -439,7 +440,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more") }</summary>
                         { localAliasesList }
                     </details>
-                </SettingsFieldset>
+                </SettingsSubsection>
 
             </div>
         );

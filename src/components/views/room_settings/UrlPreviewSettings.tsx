@@ -28,7 +28,7 @@ import { Action } from "../../../dispatcher/actions";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsFlag from "../elements/SettingsFlag";
-import SettingsFieldset from '../settings/SettingsFieldset';
+import SettingsSubsection from '../settings/SettingsSubsection';
 
 interface IProps {
     room: Room;
@@ -107,10 +107,10 @@ export default class UrlPreviewSettings extends React.Component<IProps> {
         </>;
 
         return (
-            <SettingsFieldset legend={_t("URL Previews")} description={description}>
+            <SettingsSubsection title={_t("URL Previews")} description={description}>
                 { previewsForRoom }
                 <label>{ previewsForRoomAccount }</label>
-            </SettingsFieldset>
+            </SettingsSubsection>
         );
     }
 }

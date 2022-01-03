@@ -15,32 +15,35 @@ limitations under the License.
 import React from 'react';
 import { renderIntoDocument } from 'react-dom/test-utils';
 
-import SettingsFieldset from '../../../../src/components/views/settings/SettingsFieldset';
+import SettingsSubsection from '../../../../src/components/views/settings/SettingsSubsection';
 
-describe('<SettingsFieldset />', () => {
+describe('<SettingsSubsection />', () => {
     const defaultProps = {
-        "legend": 'Who can read history?',
+        "title": 'Who can read history?',
         "children": <div>test</div>,
         'data-test-id': 'test',
     };
     const getComponent = (props = {}) => {
         const wrapper = renderIntoDocument<HTMLDivElement>(
-            <div><SettingsFieldset {...defaultProps} {...props} /></div>,
+            <div><SettingsSubsection {...defaultProps} {...props} /></div>,
         ) as HTMLDivElement;
         return wrapper.children[0];
     };
 
-    it('renders fieldset without description', () => {
-        expect(getComponent()).toMatchSnapshot();
-    });
+    describe('when isFieldset is truthy', () => {
+        const isFieldset = true;
+        it('renders fieldset without description', () => {
+            expect(getComponent({ isFieldset })).toMatchSnapshot();
+        });
 
-    it('renders fieldset with plain text description', () => {
-        const description = 'Changes to who can read history.';
-        expect(getComponent({ description })).toMatchSnapshot();
-    });
+        it('renders fieldset with plain text description', () => {
+            const description = 'Changes to who can read history.';
+            expect(getComponent({ description, isFieldset })).toMatchSnapshot();
+        });
 
-    it('renders fieldset with react description', () => {
-        const description = <><p>Test</p><a href='#'>a link</a></>;
-        expect(getComponent({ description })).toMatchSnapshot();
+        it('renders fieldset with react description', () => {
+            const description = <><p>Test</p><a href='#'>a link</a></>;
+            expect(getComponent({ description, isFieldset })).toMatchSnapshot();
+        });
     });
 });
