@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641200470478,
+  "lastUpdate": 1641232689642,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50924,6 +50924,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4133.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "846fbfa2a0782f8f13c86af3a1180e54185b4cfa",
+          "message": "Add jsx-a11y eslint plugin (#7434)\n\n* add matrix-org a11y eslint plgin\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add eslint a11y, enable and fix anchor-has-content rule\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* enable and fix jsx-a11y/no-redundant-roles\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use jsx-a11y via matrix-org-eslint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-03T18:51:58+01:00",
+          "tree_id": "c5b20932882c4f9c4966fa7e009e2701168dd9b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/846fbfa2a0782f8f13c86af3a1180e54185b4cfa"
+        },
+        "date": 1641232686050,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5369.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 693.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
