@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1640725308234,
+  "lastUpdate": 1641200470478,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50876,6 +50876,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4444.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "03f5a3c3e6d603edd4634b700b98ab7c1c2ce34b",
+          "message": "Associate room alias warning with public option in settings (#7430)\n\n* add describedby to styledradiogroup description\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* alias warning in description\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update snapshot\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-03T09:55:09+01:00",
+          "tree_id": "d1c82c9e4703a7c57fb932a1823d91df89d6a0b9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/03f5a3c3e6d603edd4634b700b98ab7c1c2ce34b"
+        },
+        "date": 1641200466837,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4730.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 837.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1703.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4133.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
