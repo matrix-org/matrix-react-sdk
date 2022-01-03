@@ -67,7 +67,6 @@ export const PillCompletion = forwardRef<IPillCompletionProps, any>((props, ref)
         'aria-selected': ariaSelectedAttribute,
         ...restProps
     } = props;
-    console.log(restProps);
     return (
         <div {...restProps}
             className={classNames('mx_Autocomplete_Completion_pill', className)}
