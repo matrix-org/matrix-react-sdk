@@ -676,7 +676,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     <div
                         className="mx_ThreadInfo"
                         onClick={() => {
-                            showThread(this.props.mxEvent, undefined, undefined, context.isCard);
+                            showThread({ rootEvent: this.props.mxEvent, push: context.isCard });
                         }}
                     >
                         <span className="mx_ThreadInfo_threads-amount">
@@ -1420,7 +1420,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         { avatar }
                         <div
                             className={lineClasses}
-                            onClick={() => showThread(this.props.mxEvent, undefined, undefined, true)}
+                            onClick={() => showThread({ rootEvent: this.props.mxEvent, push: true })}
                             key="mx_EventTile_line"
                         >
                             { linkedTimestamp }
@@ -1434,7 +1434,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             <RovingAccessibleTooltipButton
                                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
                                 title={_t("Reply in thread")}
-                                onClick={() => showThread(this.props.mxEvent, undefined, undefined, true)}
+                                onClick={() => showThread({ rootEvent: this.props.mxEvent, push: true })}
                                 key="thread"
                             />
                             <RovingThreadListContextMenu

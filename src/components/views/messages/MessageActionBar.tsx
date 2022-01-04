@@ -221,7 +221,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     };
 
     private onThreadClick = (isCard: boolean): void => {
-        showThread(this.props.mxEvent, undefined, undefined, isCard);
+        showThread({ rootEvent: this.props.mxEvent, push: isCard });
         dis.dispatch({
             action: Action.FocusSendMessageComposer,
             context: TimelineRenderingType.Thread,

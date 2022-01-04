@@ -18,18 +18,19 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 
-export const showThread = (
-    rootEvent: MatrixEvent,
-    initialEvent?: MatrixEvent,
-    highlighted?: boolean,
-    push = false,
-) => {
+export const showThread = (props: {
+    rootEvent: MatrixEvent;
+    initialEvent?: MatrixEvent;
+    highlighted?: boolean;
+    push?: boolean;
+}) => {
+    const push = props.push ?? false;
     const threadViewCard = {
         phase: RightPanelPhases.ThreadView,
         state: {
-            threadHeadEvent: rootEvent,
-            initialEvent,
-            isInitialEventHighlighted: highlighted,
+            threadHeadEvent: props.rootEvent,
+            initialEvent: props.initialEvent,
+            isInitialEventHighlighted: props.highlighted,
         },
     };
     if (push) {
