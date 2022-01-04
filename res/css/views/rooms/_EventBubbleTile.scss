@@ -181,7 +181,7 @@ limitations under the License.
         }
     }
 
-    .mx_EventTile_line:not(.mx_EventTile_mediaLine) {
+    .mx_EventTile_line:not(.mx_EventTile_mediaLine):not(.mx_EventTile_locationLine) {
         padding: var(--gutterSize);
         padding-right: 60px; // space for the timestamp
         background: var(--backgroundColor);

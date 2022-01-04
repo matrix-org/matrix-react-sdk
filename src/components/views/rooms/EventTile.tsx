@@ -72,6 +72,7 @@ import { ThreadNotificationState } from '../../../stores/notifications/ThreadNot
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -1085,10 +1086,15 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const EventTileType = sdk.getComponent(tileHandler);
         const isProbablyMedia = MediaEventHelper.isEligible(this.props.mxEvent);
+        const isLocationEvent = (
+            LOCATION_EVENT_TYPE.matches(this.props.mxEvent.getType()) ||
+            (this.props.mxEvent.getType() === EventType.RoomMessage && msgtype === MsgType.Location)
+        ) && SettingsStore.getValue("feature_location_share");
 
         const lineClasses = classNames({
             mx_EventTile_line: true,
             mx_EventTile_mediaLine: isProbablyMedia,
+            mx_EventTile_locationLine: isLocationEvent,
         });
 
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
@@ -1119,7 +1125,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_unverified: !isBubbleMessage && this.state.verified === E2EState.Warning,
             mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2EState.Unknown,
             mx_EventTile_bad: isEncryptionFailure,
-            mx_EventTile_emote: msgtype === 'm.emote',
+            mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp: this.props.tileShape === TileShape.ThreadPanel,
             mx_EventTile_noBubble: noBubbleEvent,
