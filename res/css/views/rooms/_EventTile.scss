@@ -607,7 +607,7 @@ $left-gutter: 64px;
     opacity: 0.5;
 }
 
-.mx_EventTile_keyRequestInfo_text button {
+.mx_EventTile_keyRequestInfo_text .mx_AccessibleButton {
     @mixin ButtonResetDefault;
     color: $primary-content;
     text-decoration: underline;
