@@ -22,6 +22,7 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 
 import { GroupMember } from "../../components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "./RightPanelStorePhases";
+import { pendingVerificationRequestForUser } from "../../verification";
 
 export interface IRightPanelCardState {
     member?: RoomMember | User | GroupMember;
@@ -41,9 +42,8 @@ export interface IRightPanelCardState {
 }
 
 export interface IRightPanelCardStateStored {
-    member?: RoomMember | User | GroupMember;
-    verificationRequest?: VerificationRequest;
-    verificationRequestPromise?: Promise<VerificationRequest>;
+    memberId?: string;
+    // we do not store the things associated with verification
     // group
     groupId?: string;
     groupRoomId?: string;
@@ -100,9 +100,15 @@ export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCard
     if (!!panelState?.state?.initialEvent?.getId()) {
         panelStateThisRoomStored.initialEventId = panelState.state.initialEvent.getId();
     }
+    if (!!panelState?.state?.member?.userId) {
+        panelStateThisRoomStored.memberId = panelState.state.member.userId;
+    }
     delete panelStateThisRoomStored.threadHeadEvent;
     delete panelStateThisRoomStored.initialEvent;
     delete panelStateThisRoomStored.memberInfoEvent;
+    delete panelStateThisRoomStored.verificationRequest;
+    delete panelStateThisRoomStored.verificationRequestPromise;
+    delete panelStateThisRoomStored.member;
 
     const storedCard = { state: panelStateThisRoomStored as IRightPanelCardStored, phase: panelState.phase };
     return storedCard as IRightPanelCardStored;
@@ -119,9 +125,13 @@ function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room):
     if (!!panelStateThisRoom.initialEventId) {
         panelStateThisRoom.initialEvent = room.findEventById(panelStateThisRoom.initialEventId);
     }
+    if (!!panelStateThisRoom.memberId) {
+        panelStateThisRoom.member = room.getMember(panelStateThisRoom.memberId);
+    }
     delete panelStateThisRoom.threadHeadEventId;
     delete panelStateThisRoom.initialEventId;
     delete panelStateThisRoom.memberInfoEventId;
+    delete panelStateThisRoom.memberId;
 
     return { state: panelStateThisRoom as IRightPanelCardState, phase: panelStateStore.phase } as IRightPanelCard;
 }

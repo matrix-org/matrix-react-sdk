@@ -32,6 +32,7 @@ import {
     IRightPanelForRoom,
     convertCardToStore,
 } from './RightPanelStoreIPanelState';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 // import RoomViewStore from '../RoomViewStore';
 
 const GROUP_PHASES = [
@@ -77,6 +78,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.isReady = true;
         // TODO RightPanelStore (will be addressed when dropping groups): This should be used instead of the onDispatch callback when groups are removed.
         // RoomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
+        MatrixClientPeg.get().on("crypto.verification.request", this.onVerificationRequestUpdate.bind(this));
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
@@ -89,6 +91,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     protected async onNotReady(): Promise<any> {
         this.isReady = false;
+        MatrixClientPeg.get().off("crypto.verification.request", this.onVerificationRequestUpdate.bind(this));
         // TODO RightPanelStore (will be addressed when dropping groups): User this instead of the dispatcher.
         // RoomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
@@ -228,9 +231,11 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (!!room) {
             this.global = this.global ??
                 convertToStatePanel(SettingsStore.getValue("RightPanel.phasesGlobal"), room);
-
             this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
                 convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
+        } else {
+            console.warn("Could not restore the right panel after load, because there was no associated room object." +
+                "The right panel can only be restored, for rooms and spaces but not for groups");
         }
     }
 
@@ -299,6 +304,15 @@ export default class RightPanelStore extends ReadyWatchingStore {
             return false;
         }
         return true;
+    }
+
+    onVerificationRequestUpdate() {
+        const { member } = this.currentCard.state;
+        const pendingRequest = pendingVerificationRequestForUser(member);
+        if (pendingRequest) {
+            this.currentCard.state.verificationRequest = pendingRequest;
+            this.emitAndUpdateSettings();
+        }
     }
 
     onRoomViewStoreUpdate() {
