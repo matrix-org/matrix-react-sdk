@@ -187,6 +187,10 @@ limitations under the License.
         background: var(--backgroundColor);
     }
 
+    .mx_EventTile_locationLine > a {
+        z-index: 3; // render atop the map
+    }
+
     &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {
         border-top-left-radius: 0;
 
