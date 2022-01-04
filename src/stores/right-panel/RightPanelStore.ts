@@ -296,6 +296,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     onVerificationRequestUpdate() {
         const { member } = this.currentCard.state;
+        if (!member) return;
         const pendingRequest = pendingVerificationRequestForUser(member);
         if (pendingRequest) {
             this.currentCard.state.verificationRequest = pendingRequest;

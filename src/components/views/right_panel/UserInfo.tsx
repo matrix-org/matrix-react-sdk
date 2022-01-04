@@ -1659,7 +1659,7 @@ const UserInfo: React.FC<IProps> = ({
     }
 
     const onEncryptionPanelClose = () => {
-        RightPanelStore.instance.togglePanel();
+        RightPanelStore.instance.popCard();
     };
 
     let content;
