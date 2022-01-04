@@ -163,7 +163,7 @@ limitations under the License.
             padding: 4px 8px;
             bottom: 0;
             right: 0;
-            z-index: 1; // above media
+            z-index: 3; // above media and location share maps
         }
 
         //noinspection CssReplaceWithShorthandSafely
@@ -181,14 +181,10 @@ limitations under the License.
         }
     }
 
-    .mx_EventTile_line:not(.mx_EventTile_mediaLine):not(.mx_EventTile_locationLine) {
+    &:not(.mx_EventTile_noBubble) .mx_EventTile_line:not(.mx_EventTile_mediaLine) {
         padding: var(--gutterSize);
         padding-right: 60px; // space for the timestamp
         background: var(--backgroundColor);
-    }
-
-    .mx_EventTile_locationLine > a {
-        z-index: 3; // render atop the map
     }
 
     &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {

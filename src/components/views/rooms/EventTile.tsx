@@ -1086,15 +1086,10 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const EventTileType = sdk.getComponent(tileHandler);
         const isProbablyMedia = MediaEventHelper.isEligible(this.props.mxEvent);
-        const isLocationEvent = (
-            LOCATION_EVENT_TYPE.matches(this.props.mxEvent.getType()) ||
-            (this.props.mxEvent.getType() === EventType.RoomMessage && msgtype === MsgType.Location)
-        ) && SettingsStore.getValue("feature_location_share");
 
         const lineClasses = classNames({
             mx_EventTile_line: true,
             mx_EventTile_mediaLine: isProbablyMedia,
-            mx_EventTile_locationLine: isLocationEvent,
         });
 
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
