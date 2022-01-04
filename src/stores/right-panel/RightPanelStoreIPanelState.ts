@@ -22,7 +22,6 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 
 import { GroupMember } from "../../components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "./RightPanelStorePhases";
-import { pendingVerificationRequestForUser } from "../../verification";
 
 export interface IRightPanelCardState {
     member?: RoomMember | User | GroupMember;
