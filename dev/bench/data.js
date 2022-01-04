@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641289597094,
+  "lastUpdate": 1641290604929,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51212,6 +51212,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 742.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f4a94f6e7f18c9fd5a2fd65bae56c60ee413299e",
+          "message": "Add new line in settings label (#7451)",
+          "timestamp": "2022-01-04T10:57:29+01:00",
+          "tree_id": "4c951a929b8f47441998139510bde1e01e892d57",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f4a94f6e7f18c9fd5a2fd65bae56c60ee413299e"
+        },
+        "date": 1641290601678,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4843.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 656.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
