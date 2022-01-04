@@ -127,7 +127,6 @@ function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room):
     }
     if (!!panelStateThisRoom.memberId) {
         panelStateThisRoom.member = room.getMember(panelStateThisRoom.memberId);
-        panelStateThisRoom.verificationRequest = pendingVerificationRequestForUser(panelStateThisRoom.member);
     }
     delete panelStateThisRoom.threadHeadEventId;
     delete panelStateThisRoom.initialEventId;
