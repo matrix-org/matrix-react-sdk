@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641290604929,
+  "lastUpdate": 1641316886293,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51248,6 +51248,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 656.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "00feb248778a5b8598317a783b787535592eb490",
+          "message": "add spacing variables (#7456)\n\n* add spacing variables\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* eof\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-04T10:15:20-07:00",
+          "tree_id": "bf082bbab9eb72d336bf7e12880a1e951a7a2303",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/00feb248778a5b8598317a783b787535592eb490"
+        },
+        "date": 1641316882737,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5434.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 922.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4303.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
