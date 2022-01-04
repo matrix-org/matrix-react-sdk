@@ -110,8 +110,8 @@ export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCard
     delete panelStateThisRoomStored.verificationRequestPromise;
     delete panelStateThisRoomStored.member;
 
-    const storedCard = { state: panelStateThisRoomStored as IRightPanelCardStored, phase: panelState.phase };
-    return storedCard as IRightPanelCardStored;
+    const storedCard = { state: panelStateThisRoomStored, phase: panelState.phase };
+    return storedCard;
 }
 
 function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room): IRightPanelCard {
@@ -133,5 +133,5 @@ function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room):
     delete panelStateThisRoom.memberInfoEventId;
     delete panelStateThisRoom.memberId;
 
-    return { state: panelStateThisRoom as IRightPanelCardState, phase: panelStateStore.phase } as IRightPanelCard;
+    return { state: panelStateThisRoom, phase: panelStateStore.phase };
 }
