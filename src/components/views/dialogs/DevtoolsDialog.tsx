@@ -1083,7 +1083,7 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                                                 <code>{ i }</code>
                                             </AccessibleButton>
                                             <AccessibleButton
-                                                alt='edit setting'
+                                                alt={_t('Edit setting')}
                                                 onClick={(e) => this.onEditClick(e, i)}
                                                 className='mx_DevTools_SettingsExplorer_edit'
                                             >
