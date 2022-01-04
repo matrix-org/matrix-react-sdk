@@ -72,7 +72,6 @@ import { ThreadNotificationState } from '../../../stores/notifications/ThreadNot
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
-import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
