@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import defaultDispatcher from './dispatcher/dispatcher';
 import { SetRightPanelPhasePayload } from './dispatcher/payloads/SetRightPanelPhasePayload';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
+import { EmoteEvent, NoticeEvent, MessageEvent as ExtEvMessageEvent } from "matrix-events-sdk";
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
@@ -333,10 +334,23 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
             if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
                 const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
                 const sender = room?.getMember(redactedBecauseUserId);
-                message = _t("Message deleted by %(name)s", { name: sender?.name
- || redactedBecauseUserId });
+                message = _t("Message deleted by %(name)s", {
+                    name: sender?.name || redactedBecauseUserId,
+                });
             }
         }
+
+        if (SettingsStore.isEnabled("feature_extensible_events")) {
+            const extev = ev.unstable_extensibleEvent;
+            if (extev) {
+                if (extev instanceof EmoteEvent) {
+                    return `* ${senderDisplayName} ${extev.text}`;
+                } else if (extev instanceof NoticeEvent || extev instanceof ExtEvMessageEvent) {
+                    return `${senderDisplayName}: ${extev.text}`;
+                }
+            }
+        }
+
         if (ev.getContent().msgtype === MsgType.Emote) {
             message = "* " + senderDisplayName + " " + message;
         } else if (ev.getContent().msgtype === MsgType.Image) {

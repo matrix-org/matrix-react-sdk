@@ -45,6 +45,7 @@ import EditMessageComposer from '../rooms/EditMessageComposer';
 import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
 import { IBodyProps } from "./IBodyProps";
 import RoomContext from "../../../contexts/RoomContext";
+import { isEventLike, LegacyMsgType, MessageEvent } from "matrix-events-sdk/lib";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -508,17 +509,44 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
+        let isNotice = false;
+        let isEmote = false;
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!ReplyChain.getParentEventId(mxEvent);
-        let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
-            disableBigEmoji: content.msgtype === MsgType.Emote
-                || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
-            // Part of Replies fallback support
-            stripReplyFallback: stripReply,
-            ref: this.contentRef,
-            returnString: false,
-        });
+        let body;
+        if (SettingsStore.isEnabled("feature_extensible_events")) {
+            const extev = this.props.mxEvent.unstable_extensibleEvent;
+            if (extev && extev instanceof MessageEvent) {
+                isEmote = isEventLike(extev.wireFormat, LegacyMsgType.Emote);
+                isNotice = isEventLike(extev.wireFormat, LegacyMsgType.Notice);
+                body = HtmlUtils.bodyToHtml({
+                    body: extev.text,
+                    format: extev.html ? "org.matrix.custom.html" : undefined,
+                    formatted_body: extev.html,
+                    msgtype: MsgType.Text,
+                }, this.props.highlights, {
+                    disableBigEmoji: isEmote
+                        || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                    // Part of Replies fallback support
+                    stripReplyFallback: stripReply,
+                    ref: this.contentRef,
+                    returnString: false,
+                });
+            }
+        }
+        if (!body) {
+            isEmote = content.msgtype === MsgType.Emote;
+            isNotice = content.msgtype === MsgType.Notice;
+            body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
+                disableBigEmoji: isEmote
+                    || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                // Part of Replies fallback support
+                stripReplyFallback: stripReply,
+                ref: this.contentRef,
+                returnString: false,
+            });
+        }
         if (this.props.replacingEventId) {
             body = <>
                 { body }
@@ -544,36 +572,35 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             />;
         }
 
-        switch (content.msgtype) {
-            case MsgType.Emote:
-                return (
-                    <div className="mx_MEmoteBody mx_EventTile_content">
-                        *&nbsp;
-                        <span
-                            className="mx_MEmoteBody_sender"
-                            onClick={this.onEmoteSenderClick}
-                        >
+        if (isEmote) {
+            return (
+                <div className="mx_MEmoteBody mx_EventTile_content">
+                    *&nbsp;
+                    <span
+                        className="mx_MEmoteBody_sender"
+                        onClick={this.onEmoteSenderClick}
+                    >
                             { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
                         </span>
-                        &nbsp;
-                        { body }
-                        { widgets }
-                    </div>
-                );
-            case MsgType.Notice:
-                return (
-                    <div className="mx_MNoticeBody mx_EventTile_content">
-                        { body }
-                        { widgets }
-                    </div>
-                );
-            default: // including "m.text"
-                return (
-                    <div className="mx_MTextBody mx_EventTile_content">
-                        { body }
-                        { widgets }
-                    </div>
-                );
+                    &nbsp;
+                    { body }
+                    { widgets }
+                </div>
+            );
         }
+        if (isNotice) {
+            return (
+                <div className="mx_MNoticeBody mx_EventTile_content">
+                    { body }
+                    { widgets }
+                </div>
+            );
+        }
+        return (
+            <div className="mx_MTextBody mx_EventTile_content">
+                { body }
+                { widgets }
+            </div>
+        );
     }
 }
