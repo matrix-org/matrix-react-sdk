@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641287063378,
+  "lastUpdate": 1641287071799,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51092,6 +51092,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 694.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cdbe59900c779605fe608f48be91accecf141c5a",
+          "message": "Fix offscreen canvas breaking with split-brained firefox support (#7440)",
+          "timestamp": "2022-01-04T08:57:35Z",
+          "tree_id": "242e053b7c558093c597e0f5bbdd499feed8db06",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cdbe59900c779605fe608f48be91accecf141c5a"
+        },
+        "date": 1641287067152,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4708.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 683.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
