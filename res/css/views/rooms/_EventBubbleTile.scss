@@ -147,6 +147,10 @@ limitations under the License.
             right: -35px;
         }
 
+        .mx_MediaBody {
+            background: $eventbubble-self-bg;
+        }
+
         --backgroundColor: $eventbubble-self-bg;
     }
 
