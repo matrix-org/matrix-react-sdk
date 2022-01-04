@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641286346740,
+  "lastUpdate": 1641286793957,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51008,6 +51008,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4265.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "anknerd.12@gmail.com",
+            "name": "Ankur",
+            "username": "ankur12-1610"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8339d5fdeeadaa62d3bc4a90ff9a102a71d1cb6b",
+          "message": "Removed red shield in forwarding preview. (#7447)",
+          "timestamp": "2022-01-04T08:53:39Z",
+          "tree_id": "3be23978d316ccc6817f134138d943e2d98d917f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8339d5fdeeadaa62d3bc4a90ff9a102a71d1cb6b"
+        },
+        "date": 1641286789743,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5156.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 954.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1659.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4289.5,
             "unit": "ms",
             "extra": "type: measure"
           }
