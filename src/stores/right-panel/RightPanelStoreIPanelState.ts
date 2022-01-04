@@ -22,6 +22,7 @@ import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/reque
 
 import { GroupMember } from "../../components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "./RightPanelStorePhases";
+import { pendingVerificationRequestForUser } from "../../verification";
 
 export interface IRightPanelCardState {
     member?: RoomMember | User | GroupMember;
@@ -126,6 +127,7 @@ function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room):
     }
     if (!!panelStateThisRoom.memberId) {
         panelStateThisRoom.member = room.getMember(panelStateThisRoom.memberId);
+        panelStateThisRoom.verificationRequest = pendingVerificationRequestForUser(panelStateThisRoom.member);
     }
     delete panelStateThisRoom.threadHeadEventId;
     delete panelStateThisRoom.initialEventId;
