@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641288533801,
+  "lastUpdate": 1641289597094,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51176,6 +51176,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4382.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b6c2b5c995dc02997b7ac4a245ae06797db9545c",
+          "message": "Fix handling incoming redactions in EventIndex (#7443)",
+          "timestamp": "2022-01-04T09:39:07Z",
+          "tree_id": "c0f35fb8e8653d9ec03d175ee14796f678d4760c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b6c2b5c995dc02997b7ac4a245ae06797db9545c"
+        },
+        "date": 1641289592356,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 742.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
