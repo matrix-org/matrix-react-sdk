@@ -20,6 +20,7 @@ import classNames from 'classnames';
 
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from '../../../languageHandler';
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -76,6 +77,7 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
         return <span className={classes}>
             { content }
             <button
+                title={_t('toggle event')}
                 className="mx_ViewSourceEvent_toggle"
                 onClick={this.onToggle}
             />
