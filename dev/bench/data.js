@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641232689642,
+  "lastUpdate": 1641286346740,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -50960,6 +50960,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 693.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aaf14aacd23478bdc414329b72ac0ebbda91a322",
+          "message": "A11y fix role-has-required-aria-props (#7455)\n\n* remove jsx a11y direct use in eslintrc\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* split aria-selected out from restProps in Autocomplete\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update Dropdown to aria 1.1 aria-owns -> aria-controls\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* unignore jsx-a11y/role-has-required-aria-props rule\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-04T08:46:21Z",
+          "tree_id": "51fe2c65920706f69f2ab7f7fb140e6e787d1016",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aaf14aacd23478bdc414329b72ac0ebbda91a322"
+        },
+        "date": 1641286343428,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5289.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 968.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1670.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4265.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
