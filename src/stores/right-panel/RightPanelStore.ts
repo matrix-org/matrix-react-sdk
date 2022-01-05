@@ -78,7 +78,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     protected async onReady(): Promise<any> {
         // TODO RightPanelStore (will be addressed when dropping groups): This should be used instead of the onDispatch callback when groups are removed.
         // RoomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
-        MatrixClientPeg.get().on("crypto.verification.request", this.onVerificationRequestUpdate.bind(this));
+        MatrixClientPeg.get().on("crypto.verification.request", this.onVerificationRequestUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
@@ -93,7 +93,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
         }
-        MatrixClientPeg.get().off("crypto.verification.request", this.onVerificationRequestUpdate.bind(this));
+        MatrixClientPeg.get().off("crypto.verification.request", this.onVerificationRequestUpdate);
         // TODO RightPanelStore (will be addressed when dropping groups): User this instead of the dispatcher.
         // RoomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
@@ -303,7 +303,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return true;
     }
 
-    onVerificationRequestUpdate() {
+    private onVerificationRequestUpdate = () => {
         const { member } = this.currentCard.state;
         const pendingRequest = pendingVerificationRequestForUser(member);
         if (pendingRequest) {
