@@ -34,9 +34,9 @@ import { Action } from "../../../dispatcher/actions";
 import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import CallViewHeader from './CallView/CallViewHeader';
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/ActiveWidgetStore';
-import RightPanelStore from '../../../stores/RightPanelStore';
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
-import { ActionPayload } from '../../../dispatcher/payloads';
+import { UPDATE_EVENT } from '../../../stores/AsyncStore';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -109,7 +109,6 @@ function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall
 @replaceableComponent("views.voip.CallPreview")
 export default class PiPView extends React.Component<IProps, IState> {
     private roomStoreToken: EventSubscription;
-    private dispatcherRef: string;
     private settingsWatcherRef: string;
 
     constructor(props: IProps) {
@@ -125,7 +124,7 @@ export default class PiPView extends React.Component<IProps, IState> {
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
             persistentWidgetId: ActiveWidgetStore.instance.getPersistentWidgetId(),
-            rightPanelPhase: RightPanelStore.getSharedInstance().roomPanelPhase,
+            rightPanelPhase: RightPanelStore.instance.currentCard.phase,
             showWidgetInPip: false,
         };
     }
@@ -139,7 +138,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
-        this.dispatcherRef = dis.register(this.onAction);
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
         document.addEventListener("mouseup", this.onEndMoving.bind(this));
     }
@@ -154,9 +153,7 @@ export default class PiPView extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
-        if (this.dispatcherRef) {
-            dis.unregister(this.dispatcherRef);
-        }
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
         document.removeEventListener("mouseup", this.onEndMoving.bind(this));
     }
@@ -194,13 +191,11 @@ export default class PiPView extends React.Component<IProps, IState> {
         this.updateShowWidgetInPip();
     };
 
-    private onAction = (payload: ActionPayload): void => {
-        if (payload.action ==Action.AfterRightPanelPhaseChange ) {
-            this.setState({
-                rightPanelPhase: RightPanelStore.getSharedInstance().roomPanelPhase,
-            });
-            this.updateShowWidgetInPip();
-        }
+    private onRightPanelStoreUpdate = () => {
+        this.setState({
+            rightPanelPhase: RightPanelStore.instance.currentCard.phase,
+        });
+        this.updateShowWidgetInPip();
     };
 
     private onActiveWidgetStoreUpdate = (): void => {
@@ -265,7 +260,7 @@ export default class PiPView extends React.Component<IProps, IState> {
 
             notInRightPanel =
                 !(this.state.rightPanelPhase == RightPanelPhases.Widget &&
-                wId == RightPanelStore.getSharedInstance().roomPanelPhaseParams?.widgetId);
+                wId == RightPanelStore.instance.currentCard.state?.widgetId);
             notInCenterContainer =
                     !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center).some((app)=>app.id == wId);
             notInTopContainer =
