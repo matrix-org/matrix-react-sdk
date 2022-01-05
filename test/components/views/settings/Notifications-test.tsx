@@ -57,7 +57,7 @@ const flushPromises = async () => await new Promise(process.nextTick);
 describe('<Notifications />', () => {
     const getComponent = () => mount(<Notifications />);
 
-    // get component and wait for async data
+    // get component, wait for async data and force a render
     const getComponentAndWait = async () => {
         const component = getComponent();
         await flushPromises();
@@ -132,7 +132,7 @@ describe('<Notifications />', () => {
             expect(findByTestId(component, 'notif-setting-audioNotificationsEnabled').length).toBeTruthy();
         });
 
-        describe('email swtiches', () => {
+        describe('email switches', () => {
             const testEmail = 'tester@test.com';
             beforeEach(() => {
                 mockClient.getThreePids.mockResolvedValue({
@@ -190,7 +190,11 @@ describe('<Notifications />', () => {
                     emailToggle.simulate('click');
                 });
 
-                expect(findByTestId(component, 'error-message')).toMatchSnapshot();
+                // force render
+                await flushPromises();
+                await component.setProps({});
+
+                expect(findByTestId(component, 'error-message').length).toBeTruthy();
             });
 
             it('enables email notification when toggling off', async () => {
