@@ -259,7 +259,7 @@ export default class PiPView extends React.Component<IProps, IState> {
             fromAnotherRoom = this.state.viewedRoomId !== persistentWidgetInRoomId;
 
             notInRightPanel =
-                !(this.state.rightPanelPhase == RightPanelPhases.Widget &&
+                !(RightPanelStore.instance.currentCard.phase == RightPanelPhases.Widget &&
                 wId == RightPanelStore.instance.currentCard.state?.widgetId);
             notInCenterContainer =
                     !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center).some((app)=>app.id == wId);
