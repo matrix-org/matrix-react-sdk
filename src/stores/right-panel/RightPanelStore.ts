@@ -146,13 +146,16 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
         // Checks for wrong SetRightPanelPhase requests
         if (!this.isPhaseActionValid(targetPhase)) return;
+
         if ((targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState)) {
             // Update state: set right panel with a new state but keep the phase (dont know it this is ever needed...)
             const hist = this.byRoom[rId]?.history ?? [];
             hist[hist.length - 1].state = cardState;
             this.emitAndUpdateSettings();
             return;
-        } else if (targetPhase !== this.currentCard?.phase) {
+        }
+
+        if (targetPhase !== this.currentCard?.phase) {
             // Set right panel and erase history.
             this.setRightPanelCache({ phase: targetPhase, state: cardState ?? {} }, rId);
         }
