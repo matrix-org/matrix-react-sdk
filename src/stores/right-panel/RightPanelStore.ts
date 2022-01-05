@@ -30,7 +30,6 @@ import {
     convertToStatePanel,
     convertToStorePanel,
     IRightPanelForRoom,
-    convertCardToStore,
 } from './RightPanelStoreIPanelState';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 // import RoomViewStore from '../RoomViewStore';
