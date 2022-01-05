@@ -159,7 +159,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             // - the same phase
             // - the panel can be closed
             // - does not contain any state information (state)
-            if(targetPhase != RightPanelPhases.EncryptionPanel){
+            if (targetPhase != RightPanelPhases.EncryptionPanel) {
                 this.togglePanel(rId);
             }
             return;
