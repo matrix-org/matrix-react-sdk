@@ -25,9 +25,7 @@ import { _t } from '../../../languageHandler';
 import RoomAvatar from "../avatars/RoomAvatar";
 import AccessibleButton from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import Modal from "../../../Modal";
 import ShareDialog from '../dialogs/ShareDialog';
 import { useEventEmitter } from "../../../hooks/useEventEmitter";
@@ -48,6 +46,7 @@ import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widget
 import RoomName from "../elements/RoomName";
 import UIStore from "../../../stores/UIStore";
 import ExportDialog from "../dialogs/ExportDialog";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 interface IProps {
     room: Room;
@@ -103,12 +102,9 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     }, [room.roomId]);
 
     const onOpenWidgetClick = () => {
-        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
+        RightPanelStore.instance.pushCard({
             phase: RightPanelPhases.Widget,
-            refireParams: {
-                widgetId: app.id,
-            },
+            state: { widgetId: app.id },
         });
     };
 
@@ -237,19 +233,11 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
 };
 
 export const onRoomMembersClick = (allowClose = true) => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.RoomMemberList,
-        allowClose,
-    });
+    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, allowClose);
 };
 
 export const onRoomFilesClick = (allowClose = true) => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.FilePanel,
-        allowClose,
-    });
+    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, allowClose);
 };
 
 const onRoomSettingsClick = () => {
