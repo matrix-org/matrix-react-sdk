@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641376842177,
+  "lastUpdate": 1641377652820,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51332,6 +51332,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 671.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ea7ac453bcafefd9714cb54890b46c89b3e1f1f4",
+          "message": "Fix spotlight cmd-k wrongly expanding left panel (#7463)",
+          "timestamp": "2022-01-05T10:07:04Z",
+          "tree_id": "65dcb2e51eb1da46a774cb8f8201c703adc0d7dd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ea7ac453bcafefd9714cb54890b46c89b3e1f1f4"
+        },
+        "date": 1641377648152,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4818.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 712.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
