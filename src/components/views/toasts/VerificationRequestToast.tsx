@@ -116,13 +116,15 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                     should_peek: false,
                 });
                 const member = cli.getUser(request.otherUserId);
-                RightPanelStore.instance.setCards([
-                    { phase: RightPanelPhases.RoomSummary },
-                    { phase: RightPanelPhases.RoomMemberInfo, state: { member } },
-                    { phase: RightPanelPhases.EncryptionPanel, state: { verificationRequest: request, member } },
-                ],
-                undefined,
-                request.channel.roomId);
+                RightPanelStore.instance.setCards(
+                    [
+                        { phase: RightPanelPhases.RoomSummary },
+                        { phase: RightPanelPhases.RoomMemberInfo, state: { member } },
+                        { phase: RightPanelPhases.EncryptionPanel, state: { verificationRequest: request, member } },
+                    ],
+                    undefined,
+                    request.channel.roomId,
+                );
             } else {
                 Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {
                     verificationRequest: request,
