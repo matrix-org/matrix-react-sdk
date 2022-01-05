@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.36.1",
+  "version": "3.37.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -25,7 +25,7 @@
   "bin": {
     "reskindex": "scripts/reskindex.js"
   },
-  "main": "./src/index.ts",
+  "main": "./src/index.js",
   "matrix_src_main": "./src/index.ts",
   "matrix_lib_main": "./lib/index.ts",
   "matrix_lib_typings": "./lib/index.d.ts",
@@ -166,7 +166,8 @@
     "enzyme-to-json": "^3.6.2",
     "eslint": "7.18.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-matrix-org": "github:matrix-org/eslint-plugin-matrix-org#48ec1e6af2cfb8310b9a6e23edf2dc7a26ddd580",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-matrix-org": "github:matrix-org/eslint-plugin-matrix-org#2fc59ae12ff551e91c41a1b185be25c77ad02190",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "glob": "^7.1.6",

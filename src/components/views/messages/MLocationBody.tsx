@@ -18,11 +18,13 @@ import React from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
+import MemberAvatar from '../avatars/MemberAvatar';
 
 interface IState {
     error: Error;
@@ -32,7 +34,6 @@ interface IState {
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
     private map: maplibregl.Map;
     private coords: GeolocationCoordinates;
-    private description: string;
 
     constructor(props: IBodyProps) {
         super(props);
@@ -45,38 +46,16 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         const loc = content[LOCATION_EVENT_TYPE.name];
         const uri = loc ? loc.uri : content['geo_uri'];
 
-        this.coords = this.parseGeoUri(uri);
+        this.coords = parseGeoUri(uri);
         this.state = {
             error: undefined,
         };
-
-        this.description = loc?.description ?? content['body'];
     }
-
-    private parseGeoUri = (uri: string): GeolocationCoordinates => {
-        const m = uri.match(/^\s*geo:(.*?)\s*$/);
-        if (!m) return;
-        const parts = m[1].split(';');
-        const coords = parts[0].split(',');
-        let uncertainty: number;
-        for (const param of parts.slice(1)) {
-            const m = param.match(/u=(.*)/);
-            if (m) uncertainty = parseFloat(m[1]);
-        }
-        return {
-            latitude: parseFloat(coords[0]),
-            longitude: parseFloat(coords[1]),
-            altitude: parseFloat(coords[2]),
-            accuracy: uncertainty,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
-        };
-    };
 
     componentDidMount() {
         const config = SdkConfig.get();
-        const coordinates = new maplibregl.LngLat(this.coords.longitude, this.coords.latitude);
+        const coordinates = new maplibregl.LngLat(
+            this.coords.longitude, this.coords.latitude);
 
         this.map = new maplibregl.Map({
             container: this.getBodyId(),
@@ -85,23 +64,30 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             zoom: 13,
         });
 
-        new maplibregl.Popup({
-            closeButton: false,
-            closeOnClick: false,
-            closeOnMove: false,
+        new maplibregl.Marker({
+            element: document.getElementById(this.getMarkerId()),
+            anchor: 'bottom',
+            offset: [0, -1],
         })
             .setLngLat(coordinates)
-            .setHTML(this.description)
             .addTo(this.map);
 
         this.map.on('error', (e)=>{
-            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
+            logger.error(
+                "Failed to load map: check map_style_url in config.json has a "
+                + "valid URL and API key",
+                e.error,
+            );
             this.setState({ error: e.error });
         });
     }
 
     private getBodyId = () => {
         return `mx_MLocationBody_${this.props.mxEvent.getId()}`;
+    };
+
+    private getMarkerId = () => {
+        return `mx_MLocationBody_marker_${this.props.mxEvent.getId()}`;
     };
 
     render() {
@@ -113,6 +99,78 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         return <div className="mx_MLocationBody">
             <div id={this.getBodyId()} className="mx_MLocationBody_map" />
             { error }
+            <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
+                <div className="mx_MLocationBody_markerBorder">
+                    <MemberAvatar
+                        member={this.props.mxEvent.sender}
+                        width={27}
+                        height={27}
+                        viewUserOnClick={false}
+                    />
+                </div>
+                <img
+                    className="mx_MLocationBody_pointer"
+                    src={require("../../../../res/img/location/pointer.svg")}
+                    width="9"
+                    height="5"
+                />
+            </div>
         </div>;
     }
+}
+
+export function parseGeoUri(uri: string): GeolocationCoordinates {
+    function parse(s: string): number {
+        const ret = parseFloat(s);
+        if (Number.isNaN(ret)) {
+            return undefined;
+        } else {
+            return ret;
+        }
+    }
+
+    const m = uri.match(/^\s*geo:(.*?)\s*$/);
+    if (!m) return;
+    const parts = m[1].split(';');
+    const coords = parts[0].split(',');
+    let uncertainty: number;
+    for (const param of parts.slice(1)) {
+        const m = param.match(/u=(.*)/);
+        if (m) uncertainty = parse(m[1]);
+    }
+    return {
+        latitude: parse(coords[0]),
+        longitude: parse(coords[1]),
+        altitude: parse(coords[2]),
+        accuracy: uncertainty,
+        altitudeAccuracy: undefined,
+        heading: undefined,
+        speed: undefined,
+    };
+}
+
+function makeLink(coords: GeolocationCoordinates): string {
+    return (
+        "https://www.openstreetmap.org/" +
+        `?mlat=${coords.latitude}` +
+        `&mlon=${coords.longitude}` +
+        `#map=16/${coords.latitude}/${coords.longitude}`
+    );
+}
+
+export function createMapSiteLink(event: MatrixEvent): string {
+    const content: Object = event.getContent();
+    const mLocation = content[LOCATION_EVENT_TYPE.name];
+    if (mLocation !== undefined) {
+        const uri = mLocation["uri"];
+        if (uri !== undefined) {
+            return makeLink(parseGeoUri(uri));
+        }
+    } else {
+        const geoUri = content["geo_uri"];
+        if (geoUri) {
+            return makeLink(parseGeoUri(geoUri));
+        }
+    }
+    return null;
 }
