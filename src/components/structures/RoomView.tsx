@@ -53,7 +53,7 @@ import WidgetEchoStore from '../../stores/WidgetEchoStore';
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
 import AccessibleButton from "../views/elements/AccessibleButton";
-import RightPanelStore from "../../stores/RightPanelStore";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { haveTileForEvent } from "../views/rooms/EventTile";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import MatrixClientContext, { withMatrixClientHOC, MatrixClientProps } from "../../contexts/MatrixClientContext";
@@ -101,6 +101,7 @@ import AppsDrawer from '../views/rooms/AppsDrawer';
 import { SetRightPanelPhasePayload } from '../../dispatcher/payloads/SetRightPanelPhasePayload';
 import { RightPanelPhases } from '../../stores/RightPanelStorePhases';
 import { ActionPayload } from "../../dispatcher/payloads";
+import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -215,7 +216,6 @@ export interface IRoomState {
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private readonly dispatcherRef: string;
     private readonly roomStoreToken: EventSubscription;
-    private readonly rightPanelStoreToken: EventSubscription;
     private settingWatchers: string[];
 
     private unmounted = false;
@@ -247,7 +247,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             canPeek: false,
             showApps: false,
             isPeeking: false,
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom,
             joining: false,
             atEndOfLiveTimeline: true,
             atEndOfLiveTimelineInit: false,
@@ -290,7 +290,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.context.on("Event.decrypted", this.onEventDecrypted);
         // Start listening for RoomViewStore updates
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        this.rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this.onRightPanelStoreUpdate);
+
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
 
         WidgetEchoStore.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
@@ -338,13 +339,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
         if (WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)) {
             // Show chat in right panel when a widget is maximised
-            dis.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.Timeline,
-            });
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.Timeline });
         }
         this.checkWidgets(this.state.room);
-        this.checkRightPanel(this.state.room);
     };
 
     private checkWidgets = (room) => {
@@ -360,22 +357,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return (WidgetLayoutStore.instance.hasMaximisedWidget(room))
             ? MainSplitContentType.MaximisedWidget
             : MainSplitContentType.Timeline;
-    };
-
-    private checkRightPanel = (room) => {
-        // This is a hack to hide the chat. This should not be necessary once the right panel
-        // phase is stored per room. (need to be done after check widget so that mainSplitContentType is updated)
-        if (
-            RightPanelStore.getSharedInstance().roomPanelPhase === RightPanelPhases.Timeline &&
-            this.state.showRightPanel &&
-            !WidgetLayoutStore.instance.hasMaximisedWidget(this.state.room)
-        ) {
-            // Two timelines are shown prevent this by hiding the right panel
-            dis.dispatch({
-                action: Action.ToggleRightPanel,
-                type: "room",
-            });
-        }
     };
 
     private onReadReceiptsChange = () => {
@@ -755,11 +736,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (this.roomStoreToken) {
             this.roomStoreToken.remove();
         }
-        // Remove RightPanelStore listener
-        if (this.rightPanelStoreToken) {
-            this.rightPanelStoreToken.remove();
-        }
 
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         WidgetEchoStore.removeListener(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
         WidgetStore.instance.removeListener(UPDATE_EVENT, this.onWidgetStoreUpdate);
 
@@ -794,7 +772,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom,
         });
     };
 
@@ -1046,7 +1024,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateE2EStatus(room);
         this.updatePermissions(room);
         this.checkWidgets(room);
-        this.checkRightPanel(room);
 
         this.setState({
             liveTimeline: room.getLiveTimeline(),
