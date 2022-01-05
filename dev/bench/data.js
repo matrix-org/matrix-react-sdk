@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641377652820,
+  "lastUpdate": 1641379427458,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51368,6 +51368,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 712.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7f13a1b40aa5259b8fe6e5641ee546f8893f4e9f",
+          "message": "Attribute fallback i18n strings with lang attribute (#7323)\n\n* add lang attribute to fallback translations\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* readability improvement\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* split _t and _tDom\r\n\r\nSigned-off-by: Kerry <kerry@Kerrys-MBP.fritz.box>\r\n\r\n* use tDom in HomePage\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* bump matrix-web-i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-05T11:37:28+01:00",
+          "tree_id": "431ee7aa8ffe361b0d11d335c8cca000f748c666",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7f13a1b40aa5259b8fe6e5641ee546f8893f4e9f"
+        },
+        "date": 1641379423206,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4968.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 682.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
