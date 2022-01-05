@@ -77,7 +77,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.isReady = true;
         // TODO RightPanelStore (will be addressed when dropping groups): This should be used instead of the onDispatch callback when groups are removed.
         // RoomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
-        MatrixClientPeg.get().on("crypto.verification.request", this.onVerificationRequestUpdate.bind(this));
+        MatrixClientPeg.get().on("crypto.verification.request", this.onVerificationRequestUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
@@ -90,7 +90,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     protected async onNotReady(): Promise<any> {
         this.isReady = false;
-        MatrixClientPeg.get().off("crypto.verification.request", this.onVerificationRequestUpdate.bind(this));
+        MatrixClientPeg.get().off("crypto.verification.request", this.onVerificationRequestUpdate);
         // TODO RightPanelStore (will be addressed when dropping groups): User this instead of the dispatcher.
         // RoomViewStore.off(UPDATE_EVENT, this.onRoomViewStoreUpdate);
     }
@@ -224,8 +224,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
             this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
                 convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
         } else {
-            console.warn("Could not restore the right panel after load, because there was no associated room object." +
-                "The right panel can only be restored, for rooms and spaces but not for groups");
+            console.warn("Could not restore the right panel after load because there was no associated room object." +
+                "The right panel can only be restored for rooms and spaces but not for groups");
         }
     }
 
@@ -290,7 +290,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return true;
     }
 
-    onVerificationRequestUpdate() {
+    private onVerificationRequestUpdate = () => {
         const { member } = this.currentCard.state;
         if (!member) return;
         const pendingRequest = pendingVerificationRequestForUser(member);
@@ -298,15 +298,15 @@ export default class RightPanelStore extends ReadyWatchingStore {
             this.currentCard.state.verificationRequest = pendingRequest;
             this.emitAndUpdateSettings();
         }
-    }
+    };
 
-    onRoomViewStoreUpdate() {
+    onRoomViewStoreUpdate = () => {
         // TODO: use this function instead of the onDispatch (the whole onDispatch can get removed!) as soon groups are removed
         // this.viewedRoomId = RoomViewStore.getRoomId();
         // this.isViewingRoom = true; // Is viewing room will of course be removed when removing groups
         // // load values from byRoomCache with the viewedRoomId.
         // this.loadCacheFromSettings();
-    }
+    };
 
     onDispatch(payload: ActionPayload) {
         switch (payload.action) {

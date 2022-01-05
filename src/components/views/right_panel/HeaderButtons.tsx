@@ -58,13 +58,13 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     }
 
     public componentDidMount() {
-        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate.bind(this));
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction.bind(this)); // used by subclasses
     }
 
     public componentWillUnmount() {
         this.unmounted = true;
-        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate.bind(this));
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
@@ -88,12 +88,12 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         }
     }
 
-    private onRightPanelStoreUpdate() {
+    private onRightPanelStoreUpdate = () => {
         if (this.unmounted) return;
         let phase = RightPanelStore.instance.currentCard.phase;
         if (!RightPanelStore.instance.isOpenForGroup) {phase = null;}
         this.setState({ phase });
-    }
+    };
 
     // XXX: Make renderButtons a prop
     public abstract renderButtons(): JSX.Element;
