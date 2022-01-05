@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641316886293,
+  "lastUpdate": 1641376842177,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51296,6 +51296,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4303.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "bink@users.noreply.github.com",
+            "name": "bink",
+            "username": "bink"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6eea416e7e645ae8703c2a98b987552e95e5bb06",
+          "message": "Fix room_id check when adding user widgets (#7448)",
+          "timestamp": "2022-01-05T09:54:38Z",
+          "tree_id": "6d9b7e5084c10b4cbc477415ca444aaf45613009",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6eea416e7e645ae8703c2a98b987552e95e5bb06"
+        },
+        "date": 1641376837935,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4661.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 671.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
