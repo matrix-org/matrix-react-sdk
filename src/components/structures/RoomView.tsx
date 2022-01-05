@@ -435,7 +435,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 if (thread && initialEvent?.isThreadRoot) {
                     showThread({
                         rootEvent: thread.rootEvent,
-                        initialEvent: initialEvent,
+                        initialEvent,
                         highlighted: RoomViewStore.isInitialEventHighlighted(),
                     });
                 }
