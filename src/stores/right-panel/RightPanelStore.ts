@@ -159,7 +159,9 @@ export default class RightPanelStore extends ReadyWatchingStore {
             // - the same phase
             // - the panel can be closed
             // - does not contain any state information (state)
-            this.togglePanel(rId);
+            if(targetPhase != RightPanelPhases.EncryptionPanel){
+                this.togglePanel(rId);
+            }
             return;
         } else if ((targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState)) {
             // Update state: set right panel with a new state but keep the phase (dont know it this is ever needed...)
