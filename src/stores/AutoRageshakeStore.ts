@@ -80,6 +80,17 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         if (ev.isDecryptionFailure() && !this.state.reportedSessionIds.has(sessionId)) {
             const newReportedSessionIds = new Set(this.state.reportedSessionIds);
             await this.updateState({ reportedSessionIds: newReportedSessionIds.add(sessionId) });
+
+            const now = new Date().getTime();
+            if (now - this.state.lastRageshakeTime < RAGESHAKE_INTERVAL) { return; }
+
+            await this.updateState({ lastRageshakeTime: now });
+            const matchingIssue = await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
+                userText: "Auto-reporting decryption error (recipient)",
+                sendLogs: true,
+                label: "Z-UISI",
+            });
+
             const messageContent = {
                 "event_id": ev.getId(),
                 "room_id": ev.getRoomId(),
@@ -87,21 +98,12 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 "device_id": wireContent.device_id,
                 "user_id": ev.getSender(),
                 "sender_key": wireContent.sender_key,
+                "matching_issue": matchingIssue,
             };
             this.matrixClient.sendToDevice(
                 AUTO_RS_REQUEST,
                 { [messageContent.user_id]: { [messageContent.device_id]: messageContent } },
             );
-
-            const now = new Date().getTime();
-            if (now - this.state.lastRageshakeTime > RAGESHAKE_INTERVAL) {
-                await this.updateState({ lastRageshakeTime: now });
-                await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
-                    userText: "Auto-reporting decryption error (recipient)",
-                    sendLogs: true,
-                    label: "Z-UISI",
-                });
-            }
         }
     }
 
@@ -114,6 +116,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 userText: "Auto-reporting decryption error (sender)",
                 sendLogs: true,
                 label: "Z-UISI",
+                customFields: new Map([["matching_issue", ev.getContent().matching_issue || ""]]),
             });
         }
     }
