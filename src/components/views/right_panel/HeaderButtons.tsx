@@ -87,7 +87,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         let phase = RightPanelStore.instance.currentCard.phase;
         if (!RightPanelStore.instance.isOpenForGroup) {phase = null;}
         this.setState({ phase });
-    }
+    };
 
     // XXX: Make renderButtons a prop
     public abstract renderButtons(): JSX.Element;

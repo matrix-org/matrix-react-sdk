@@ -310,7 +310,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             this.currentCard.state.verificationRequest = pendingRequest;
             this.emitAndUpdateSettings();
         }
-    }
+    };
 
     onRoomViewStoreUpdate() {
         // TODO: use this function instead of the onDispatch (the whole onDispatch can get removed!) as soon groups are removed
