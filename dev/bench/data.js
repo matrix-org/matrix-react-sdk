@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641379471673,
+  "lastUpdate": 1641396119743,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51440,6 +51440,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 667.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "325e2ba99b25b253db453a7b7027fc86e4e1582c",
+          "message": "Right panel store refactor (#7313)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2022-01-05T16:14:44+01:00",
+          "tree_id": "6deda13e7ba91799ff3e7f853e47aa2baae42fb8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/325e2ba99b25b253db453a7b7027fc86e4e1582c"
+        },
+        "date": 1641396115512,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5500.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1011.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1708.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4458.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
