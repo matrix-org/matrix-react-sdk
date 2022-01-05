@@ -898,7 +898,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "automaticDecryptionErrorReporting": {
         displayName: _td("Automatically send debug logs on decryption errors"),
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new ReloadOnChangeController(),
     },
