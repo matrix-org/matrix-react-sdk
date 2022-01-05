@@ -111,7 +111,7 @@ export async function verifyUser(user: User) {
 }
 
 function setRightPanel(state: IRightPanelCardState) {
-    if (RightPanelStore.instance.roomPhaseHistory.some((card)=> (card.phase == RightPanelPhases.RoomSummary))) {
+    if (RightPanelStore.instance.roomPhaseHistory.some((card) => (card.phase == RightPanelPhases.RoomSummary))) {
         RightPanelStore.instance.pushCard(
             { phase: RightPanelPhases.EncryptionPanel, state },
         );
