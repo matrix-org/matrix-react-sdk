@@ -37,11 +37,6 @@ interface IProps extends HTMLProps<HTMLInputElement> {
     autoFocus?: boolean;
     initialValue?: string;
     collapsed?: boolean;
-
-    // If true, the search box will focus and clear itself
-    // on room search focus action (it would be nicer to take
-    // this functionality out, but not obvious how that would work)
-    enableRoomSearchFocus?: boolean;
 }
 
 interface IState {
@@ -51,12 +46,7 @@ interface IState {
 
 @replaceableComponent("structures.SearchBox")
 export default class SearchBox extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
     private search = createRef<HTMLInputElement>();
-
-    static defaultProps: Partial<IProps> = {
-        enableRoomSearchFocus: false,
-    };
 
     constructor(props: IProps) {
         super(props);
@@ -66,31 +56,6 @@ export default class SearchBox extends React.Component<IProps, IState> {
             blurred: true,
         };
     }
-
-    public componentDidMount(): void {
-        this.dispatcherRef = dis.register(this.onAction);
-    }
-
-    public componentWillUnmount(): void {
-        dis.unregister(this.dispatcherRef);
-    }
-
-    private onAction = (payload): void => {
-        if (!this.props.enableRoomSearchFocus) return;
-
-        switch (payload.action) {
-            case Action.ViewRoom:
-                if (this.search.current && payload.clear_search) {
-                    this.clearSearch();
-                }
-                break;
-            case 'focus_room_filter':
-                if (this.search.current) {
-                    this.search.current.focus();
-                }
-                break;
-        }
-    };
 
     private onChange = (): void => {
         if (!this.search.current) return;
@@ -137,7 +102,7 @@ export default class SearchBox extends React.Component<IProps, IState> {
     public render(): JSX.Element {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const { onSearch, onCleared, onKeyDown, onFocus, onBlur, className = "", placeholder, blurredPlaceholder,
-            autoFocus, initialValue, collapsed, enableRoomSearchFocus, ...props } = this.props;
+            autoFocus, initialValue, collapsed, ...props } = this.props;
 
         // check for collapsed here and
         // not at parent so we keep
