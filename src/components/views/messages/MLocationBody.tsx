@@ -68,7 +68,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     private onClick = (
-        event: React.MouseEvent<HTMLDivElement, MouseEvent>
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     ) => {
         // Don't open map if we clicked the attribution button
         const target = event.target as Element;
@@ -94,7 +94,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             markerId={this.getMarkerId()}
             error={this.state.error}
             onClick={this.onClick}
-        />
+        />;
     }
 }
 
@@ -144,14 +144,14 @@ export function createMap(
     interactive: boolean,
     bodyId: string,
     markerId: string,
-    onError: (error: Error) => void
+    onError: (error: Error) => void,
 ): maplibregl.Map {
-    const style_url = SdkConfig.get().map_style_url;
+    const styleUrl = SdkConfig.get().map_style_url;
     const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
 
     const map = new maplibregl.Map({
         container: bodyId,
-        style: style_url,
+        style: styleUrl,
         center: coordinates,
         zoom: 13,
         interactive,

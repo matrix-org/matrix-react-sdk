@@ -18,7 +18,6 @@ import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { _t } from '../../../languageHandler';
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
 import { createMap, LocationBodyContent, locationEventGeoUri, parseGeoUri } from '../messages/MLocationBody';
@@ -62,7 +61,7 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
         // attribution button as if it were a dialog submit/cancel button.
         const container: Element = document.getElementById(this.getBodyId());
         container.querySelectorAll("button").forEach(
-            (b: Element) => b.classList.add("mx_Dialog_nonDialogButton")
+            (b: Element) => b.classList.add("mx_Dialog_nonDialogButton"),
         );
     }
 
