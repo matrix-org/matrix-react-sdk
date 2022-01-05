@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641379427458,
+  "lastUpdate": 1641379471673,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51404,6 +51404,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 682.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8e881336ab09cd6d7eb87bfcb6d7019d0f1ad460",
+          "message": "Fix regression in space preferences dialog (#7464)",
+          "timestamp": "2022-01-05T10:38:30Z",
+          "tree_id": "be3d79ba726c7ff50c40c13fd251ac4477363cdf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8e881336ab09cd6d7eb87bfcb6d7019d0f1ad460"
+        },
+        "date": 1641379468054,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4921.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 667.5,
             "unit": "ms",
             "extra": "type: measure"
           }
