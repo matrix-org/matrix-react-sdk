@@ -146,7 +146,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         const cardState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
 
         // Checks for wrong SetRightPanelPhase requests
-        if (!this.isPhaseActionIsValid(targetPhase)) return;
+        if (!this.isPhaseActionValid(targetPhase)) return;
         if ((targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState)) {
             // Update state: set right panel with a new state but keep the phase (dont know it this is ever needed...)
             const hist = this.byRoom[rId]?.history ?? [];
@@ -177,7 +177,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         const pState = redirect?.state ?? (Object.keys(card.state ?? {}).length === 0 ? null : card.state);
 
         // Checks for wrong SetRightPanelPhase requests
-        if (!this.isPhaseActionIsValid(targetPhase)) return;
+        if (!this.isPhaseActionValid(targetPhase)) return;
 
         let roomCache = this.byRoom[rId];
         if (!!roomCache) {
@@ -227,10 +227,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
 
-    private compareCards(a: IRightPanelCard, b: IRightPanelCard): boolean {
-        return JSON.stringify(convertCardToStore(a)) == JSON.stringify(convertCardToStore(b));
-    }
-
     private emitAndUpdateSettings() {
         const storePanelGlobal = convertToStorePanel(this.global);
         SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, storePanelGlobal);
@@ -248,10 +244,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     private setRightPanelCache(card: IRightPanelCard, roomId?: string) {
-        this.byRoom[roomId ?? this.viewedRoomId] = {
-            history: [{ phase: card.phase, state: card.state ?? {} }],
-            isOpen: true,
-        };
+        const history = [{ phase: card.phase, state: card.state ?? {} }];
+        this.byRoom[roomId ?? this.viewedRoomId] = { history, isOpen: true };
         this.emitAndUpdateSettings();
     }
 
@@ -273,7 +267,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         return null;
     }
 
-    private isPhaseActionIsValid(targetPhase) {
+    private isPhaseActionValid(targetPhase) {
         if (!RightPanelPhases[targetPhase]) {
             logger.warn(`Tried to switch right panel to unknown phase: ${targetPhase}`);
             return false;
