@@ -98,8 +98,8 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             </div> : null;
 
         return <div className="mx_MLocationBody">
-            <div id={this.getBodyId()} className="mx_MLocationBody_map" />
             { error }
+            <div id={this.getBodyId()} className="mx_MLocationBody_map" />
             <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
                 <div className="mx_MLocationBody_markerBorder">
                     <MemberAvatar
