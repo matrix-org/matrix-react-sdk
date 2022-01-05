@@ -98,10 +98,8 @@ import { dispatchShowThreadEvent } from '../../dispatcher/dispatch-actions/threa
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
-import { SetRightPanelPhasePayload } from '../../dispatcher/payloads/SetRightPanelPhasePayload';
-import { RightPanelPhases } from '../../stores/RightPanelStorePhases';
-import { ActionPayload } from "../../dispatcher/payloads";
 import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
+import { ActionPayload } from "../../dispatcher/payloads";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
