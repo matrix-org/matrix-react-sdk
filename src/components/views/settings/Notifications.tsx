@@ -575,6 +575,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 key={r.ruleId}
                 name={r.ruleId}
                 checked={r.vectorState === s}
+                aria-label={VectorStateToLabel[r.vectorState]}
                 onChange={this.onRadioChecked.bind(this, r, s)}
                 disabled={this.state.phase === Phase.Persisting}
                 aria-label={VectorStateToLabel[s]}
@@ -613,9 +614,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         return <>
             <div data-test-id={`notif-section-${category}`} className='mx_UserNotifSettings_grid'>
                 <span className='mx_UserNotifSettings_gridRowLabel mx_UserNotifSettings_gridRowHeading'>{ sectionName }</span>
-                <span className='mx_UserNotifSettings_gridColumnLabel'>{ _t("Off") }</span>
-                <span className='mx_UserNotifSettings_gridColumnLabel'>{ _t("On") }</span>
-                <span className='mx_UserNotifSettings_gridColumnLabel'>{ _t("Noisy") }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Off] }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.On] }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Loud] }</span>
                 { fieldsetRows }
             </div>
             { clearNotifsButton }
