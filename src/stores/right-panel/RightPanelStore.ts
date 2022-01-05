@@ -138,7 +138,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     public get previousGroup(): IRightPanelCard { return this.previousCard; }
 
     // Setters
-    public setCard(card: IRightPanelCard, allowClose = true, roomId: string = null) {
+    public setCard(card: IRightPanelCard, allowClose = true, roomId?: string) {
         const rId = roomId ?? this.viewedRoomId;
         // this was previously a very multifunctional command:
         // Toggle panel: if the same phase is send but without a state
@@ -169,7 +169,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
             return;
         } else if (targetPhase !== this.currentCard?.phase) {
             // Set right panel and erase history.
-            this.setRightPanelCache({ phase: targetPhase, state: cardState ?? {} });
+            this.setRightPanelCache({ phase: targetPhase, state: cardState ?? {} }, rId);
         }
     }
 
@@ -254,8 +254,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emit(UPDATE_EVENT, null);
     }
 
-    private setRightPanelCache(card: IRightPanelCard) {
-        this.byRoom[this.viewedRoomId] = {
+    private setRightPanelCache(card: IRightPanelCard, roomId?: string) {
+        this.byRoom[roomId ?? this.viewedRoomId] = {
             history: [{ phase: card.phase, state: card.state ?? {} }],
             isOpen: true,
         };
