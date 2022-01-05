@@ -20,10 +20,8 @@ import { throttle } from 'lodash';
 import classNames from 'classnames';
 
 import { Key } from '../../Keyboard';
-import dis from '../../dispatcher/dispatcher';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import { Action } from '../../dispatcher/actions';
 
 interface IProps extends HTMLProps<HTMLInputElement> {
     onSearch?: (query: string) => void;
