@@ -175,6 +175,8 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         }
     });
 
+    const spaceName = useEventEmitterState(activeSpace, "Room.name", () => activeSpace?.name);
+
     useEffect(() => {
         if (onVisibilityChange) {
             onVisibilityChange();
@@ -321,7 +323,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
 
     let title: string;
     if (activeSpace) {
-        title = activeSpace.name;
+        title = spaceName;
     } else if (communityId) {
         title = CommunityPrototypeStore.instance.getSelectedCommunityName();
     } else {
@@ -345,7 +347,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
             isExpanded={mainMenuDisplayed}
             className="mx_RoomListHeader_contextMenuButton"
             title={activeSpace
-                ? _t("%(spaceName)s menu", { spaceName: activeSpace.name })
+                ? _t("%(spaceName)s menu", { spaceName })
                 : _t("Home options")}
         >
             { title }

@@ -1414,13 +1414,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-
+                        "onClick": () => showThread({ rootEvent: this.props.mxEvent, push: true }),
                     }, <>
                         { sender }
                         { avatar }
                         <div
                             className={lineClasses}
-                            onClick={() => showThread({ rootEvent: this.props.mxEvent, push: true })}
                             key="mx_EventTile_line"
                         >
                             { linkedTimestamp }
