@@ -572,10 +572,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         const makeRadio = (r: IVectorPushRule, s: VectorState) => (
             <StyledRadioButton
-                key={r.ruleId}
+                key={r.ruleId + s}
                 name={r.ruleId}
                 checked={r.vectorState === s}
-                aria-label={VectorStateToLabel[r.vectorState]}
                 onChange={this.onRadioChecked.bind(this, r, s)}
                 disabled={this.state.phase === Phase.Persisting}
                 aria-label={VectorStateToLabel[s]}
