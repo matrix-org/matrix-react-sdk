@@ -27,6 +27,8 @@ import { _t } from '../../../languageHandler';
 import MemberAvatar from '../avatars/MemberAvatar';
 import Modal from '../../../Modal';
 import LocationViewDialog from '../location/LocationViewDialog';
+import TooltipTarget from '../elements/TooltipTarget';
+import {Alignment} from '../elements/Tooltip';
 
 interface IState {
     error: Error;
@@ -93,16 +95,19 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             bodyId={this.getBodyId()}
             markerId={this.getMarkerId()}
             error={this.state.error}
+            tooltip={_t("Expand map")}
             onClick={this.onClick}
         />;
     }
 }
+
 
 interface ILocationBodyContentProps {
     mxEvent: MatrixEvent;
     bodyId: string;
     markerId: string;
     error: Error;
+    tooltip?: String;
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
@@ -115,11 +120,25 @@ export function LocationBodyContent(props: ILocationBodyContentProps) {
                 </div>
                 : null
         }
-        <div
-            id={props.bodyId}
-            onClick={props.onClick}
-            className="mx_MLocationBody_map"
-        />
+        {
+            props.tooltip
+                ? <TooltipTarget
+                    label={props.tooltip}
+                    alignment={Alignment.InnerBottom}
+                    maxParentWidth={450}
+                >
+                        <div
+                        id={props.bodyId}
+                        onClick={props.onClick}
+                        className="mx_MLocationBody_map"
+                    />
+                </TooltipTarget>
+                : <div
+                    id={props.bodyId}
+                    onClick={props.onClick}
+                    className="mx_MLocationBody_map"
+                />
+        }
         <div className="mx_MLocationBody_marker" id={props.markerId}>
             <div className="mx_MLocationBody_markerBorder">
                 <MemberAvatar
