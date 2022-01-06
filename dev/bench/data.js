@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641491931750,
+  "lastUpdate": 1641497936635,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51776,6 +51776,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4325.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dominik.henneke@nordeck.net",
+            "name": "Dominik Henneke",
+            "username": "dhenneke"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b3202de81447f43ac085015135dfeede45b7953b",
+          "message": "Only return the approved widget capabilities instead of accepting all requested capabilities (#7454)\n\n* Only return the approved widget capabilities instead of accepting all requested capabilities\r\n\r\n* Restore the original logic that only keeps accepted permissions if they were requested\r\n\r\nSigned-off-by: Dominik Henneke <dominik.henneke@nordeck.net>",
+          "timestamp": "2022-01-06T12:31:30-07:00",
+          "tree_id": "bcfb0f38f9f798d1dad6e6cb279a84aa5702e172",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b3202de81447f43ac085015135dfeede45b7953b"
+        },
+        "date": 1641497932208,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5716.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1167.3999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1660.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4535.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
