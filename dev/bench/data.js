@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641462840067,
+  "lastUpdate": 1641464186705,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51680,6 +51680,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4455.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b1066a56994c9a78805824a690aa9806d1786c52",
+          "message": "Wrap inputs in fieldsets in Space visibility settings (#7350)\n\n* use fieldset in space settings > visibility\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add basic tests for space setttings visibility\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix toggle button placement\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update settings separator color to quinary\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-06T10:09:26Z",
+          "tree_id": "b7de62cf1b3ec6f16ee8978bb07b704bc14b86a2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b1066a56994c9a78805824a690aa9806d1786c52"
+        },
+        "date": 1641464183285,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5182.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 904,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1674.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4411.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
