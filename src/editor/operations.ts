@@ -189,7 +189,7 @@ export function formatRangeAsCode(range: Range): void {
         // Remove previously pushed backticks and new lines
         parts.shift();
         parts.pop();
-        if (parts[0]?.text == "\n" && parts[parts.length - 1]?.text == "\n") {
+        if (parts[0]?.text === "\n" && parts[parts.length - 1]?.text === "\n") {
             parts.shift();
             parts.pop();
         }
