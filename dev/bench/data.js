@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641497936635,
+  "lastUpdate": 1641506753852,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51824,6 +51824,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4535.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a4fda7e25df91819090fab0e9fb9d34ae1d71f60",
+          "message": "Consistently use the word \"device\", rather than \"session\" or \"login\", in verification dialog (#7474)",
+          "timestamp": "2022-01-06T16:57:49-05:00",
+          "tree_id": "3d3f95106365e6fedd56d15d560b6808f28b19ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a4fda7e25df91819090fab0e9fb9d34ae1d71f60"
+        },
+        "date": 1641506749499,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4719.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 646.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
