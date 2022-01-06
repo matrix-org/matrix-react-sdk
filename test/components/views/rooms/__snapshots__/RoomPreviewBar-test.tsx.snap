@@ -18,7 +18,7 @@ exports[`<RoomPreviewBar /> renders kicked message 1`] = `
   class="mx_RoomPreviewBar_message"
 >
   <h3>
-    You were kicked from RoomPreviewBar-test-room by @kicker:test.com
+    You were removed from RoomPreviewBar-test-room by @kicker:test.com
   </h3>
   <p>
     Reason: test reason
@@ -58,7 +58,7 @@ exports[`<RoomPreviewBar /> with an error renders other errors 1`] = `
   </p>
   <p>
     <span>
-      Something_else was returned while trying to access the room. If you think you're seeing this message in error, please 
+      Something_else was returned while trying to access the room. If you think you're seeing this message in error, please
       <a
         href="https://github.com/vector-im/element-web/issues/new/choose"
         rel="noreferrer noopener"
