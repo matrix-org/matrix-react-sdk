@@ -149,7 +149,7 @@ export default class Tooltip extends React.Component<ITooltipProps> {
             case Alignment.InnerBottom:
                 style.top = baseTop + parentBox.height - 50;
                 style.left = horizontalCenter;
-                style.transform = "translate(-50%)"
+                style.transform = "translate(-50%)";
         }
 
         return style;

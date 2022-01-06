@@ -28,7 +28,7 @@ import MemberAvatar from '../avatars/MemberAvatar';
 import Modal from '../../../Modal';
 import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
-import {Alignment} from '../elements/Tooltip';
+import { Alignment } from '../elements/Tooltip';
 
 interface IState {
     error: Error;
@@ -101,7 +101,6 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     }
 }
 
-
 interface ILocationBodyContentProps {
     mxEvent: MatrixEvent;
     bodyId: string;
@@ -127,7 +126,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps) {
                     alignment={Alignment.InnerBottom}
                     maxParentWidth={450}
                 >
-                        <div
+                    <div
                         id={props.bodyId}
                         onClick={props.onClick}
                         className="mx_MLocationBody_map"
