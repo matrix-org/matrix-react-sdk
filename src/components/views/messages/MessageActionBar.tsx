@@ -39,8 +39,9 @@ import DownloadActionButton from "./DownloadActionButton";
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
-import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
+import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import ReactionPicker from "../emojipicker/ReactionPicker";
+import { CardContext } from '../right_panel/BaseCard';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -91,7 +92,13 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         <ContextMenuTooltipButton
             className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
             title={_t("Options")}
-            onClick={openMenu}
+            onClick={() => {
+                openMenu();
+                // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
+                // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
+                // position in the page even when someone is clicking around.
+                onFocus();
+            }}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -127,7 +134,13 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
         <ContextMenuTooltipButton
             className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton"
             title={_t("React")}
-            onClick={openMenu}
+            onClick={() => {
+                openMenu();
+                // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
+                // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
+                // position in the page even when someone is clicking around.
+                onFocus();
+            }}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -196,10 +209,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     };
 
     private onFocusChange = (focused: boolean): void => {
-        if (!this.props.onFocusChange) {
-            return;
-        }
-        this.props.onFocusChange(focused);
+        this.props.onFocusChange?.(focused);
     };
 
     private onReplyClick = (ev: React.MouseEvent): void => {
@@ -210,8 +220,8 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         });
     };
 
-    private onThreadClick = (): void => {
-        dispatchShowThreadEvent(this.props.mxEvent);
+    private onThreadClick = (isCard: boolean): void => {
+        showThread({ rootEvent: this.props.mxEvent, push: isCard });
         dis.dispatch({
             action: Action.FocusSendMessageComposer,
             context: TimelineRenderingType.Thread,
@@ -294,6 +304,17 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
+        const threadTooltipButton = <CardContext.Consumer>
+            { context =>
+                <RovingAccessibleTooltipButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                    title={_t("Reply in thread")}
+                    onClick={this.onThreadClick.bind(null, context.isCard)}
+                    key="thread"
+                />
+            }
+        </CardContext.Consumer>;
+
         // We show a different toolbar for failed events, so detect that first.
         const mxEvent = this.props.mxEvent;
         const editStatus = mxEvent.replacingEvent() && mxEvent.replacingEvent().status;
@@ -326,12 +347,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             key="reply"
                         />
                         { (this.showReplyInThreadAction) && (
-                            <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                title={_t("Reply in thread")}
-                                onClick={this.onThreadClick}
-                                key="thread"
-                            />
+                            threadTooltipButton
                         ) }
                     </>);
                 }
@@ -359,12 +375,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 this.props.mxEvent.getThread() &&
                 !isContentActionable(this.props.mxEvent)
             ) {
-                toolbarOpts.unshift(<RovingAccessibleTooltipButton
-                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                    title={_t("Reply in thread")}
-                    onClick={this.onThreadClick}
-                    key="thread"
-                />);
+                toolbarOpts.unshift(threadTooltipButton);
             }
 
             if (allowCancel) {

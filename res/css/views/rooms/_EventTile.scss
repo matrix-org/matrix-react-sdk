@@ -24,6 +24,24 @@ $left-gutter: 64px;
     font-size: $font-14px;
     position: relative;
 
+    &[data-shape=thread_list][data-notification]::before {
+        content: "";
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        right: -16px;
+        top: 7px;
+    }
+
+    &[data-shape=thread_list][data-notification=total]::before {
+        background-color: $roomtile-default-badge-bg-color;
+    }
+
+    &[data-shape=thread_list][data-notification=highlight]::before {
+        background-color: $alert;
+    }
+
     .mx_ThreadInfo {
         margin-right: 110px;
         margin-left: 64px;
@@ -471,7 +489,7 @@ $left-gutter: 64px;
     }
 
     code {
-        white-space: pre; // don't collapse spaces in inline code blocks
+        white-space: pre-wrap; // don't collapse spaces in inline code blocks
     }
 }
 
@@ -756,6 +774,17 @@ $left-gutter: 64px;
         height: 1px;
         bottom: calc(-1 * var(--topOffset));
         background-color: $quinary-content;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        /* enough to cover all sibling elements */
+        z-index: 10;
     }
 
     &:last-child {
