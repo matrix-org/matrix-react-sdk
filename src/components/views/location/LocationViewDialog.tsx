@@ -55,14 +55,6 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
             this.getMarkerId(),
             (e: Error) => this.setState({ error: e }),
         );
-
-        // Set class mx_Dialog_nonDialogButton on all buttons inside
-        // the map container. This prevents our CSS from styling the
-        // attribution button as if it were a dialog submit/cancel button.
-        const container: Element = document.getElementById(this.getBodyId());
-        container.querySelectorAll("button").forEach(
-            (b: Element) => b.classList.add("mx_Dialog_nonDialogButton"),
-        );
     }
 
     private getBodyId = () => {

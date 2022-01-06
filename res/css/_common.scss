@@ -423,7 +423,7 @@ legend {
  * We should go through and have one consistent set of styles for buttons throughout the app.
  * For now, I am duplicating the selectors here for mx_Dialog and mx_DialogButtons.
  */
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton),
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton || .maplibregl-ctrl-attrib-button),
 .mx_Dialog input[type="submit"],
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton),
 .mx_Dialog_buttons input[type="submit"] {
@@ -440,18 +440,18 @@ legend {
     font-family: inherit;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):last-child {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton || .maplibregl-ctrl-attrib-button):last-child {
     margin-right: 0px;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):hover,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton || .maplibregl-ctrl-attrib-button):hover,
 .mx_Dialog input[type="submit"]:hover,
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):hover,
 .mx_Dialog_buttons input[type="submit"]:hover {
     @mixin mx_DialogButton_hover;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):focus,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton || .maplibregl-ctrl-attrib-button):focus,
 .mx_Dialog input[type="submit"]:focus,
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):focus,
 .mx_Dialog_buttons input[type="submit"]:focus {
@@ -482,7 +482,7 @@ legend {
     color: $alert;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):disabled,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton || .maplibregl-ctrl-attrib-button):disabled,
 .mx_Dialog input[type="submit"]:disabled,
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):disabled,
 .mx_Dialog_buttons input[type="submit"]:disabled {
