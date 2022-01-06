@@ -111,6 +111,12 @@ interface ILocationBodyContentProps {
 }
 
 export function LocationBodyContent(props: ILocationBodyContentProps) {
+    const mapDiv = <div
+        id={props.bodyId}
+        onClick={props.onClick}
+        className="mx_MLocationBody_map"
+    />;
+
     return <div className="mx_MLocationBody">
         {
             props.error
@@ -126,17 +132,9 @@ export function LocationBodyContent(props: ILocationBodyContentProps) {
                     alignment={Alignment.InnerBottom}
                     maxParentWidth={450}
                 >
-                    <div
-                        id={props.bodyId}
-                        onClick={props.onClick}
-                        className="mx_MLocationBody_map"
-                    />
+                    { mapDiv }
                 </TooltipTarget>
-                : <div
-                    id={props.bodyId}
-                    onClick={props.onClick}
-                    className="mx_MLocationBody_map"
-                />
+                : mapDiv
         }
         <div className="mx_MLocationBody_marker" id={props.markerId}>
             <div className="mx_MLocationBody_markerBorder">
