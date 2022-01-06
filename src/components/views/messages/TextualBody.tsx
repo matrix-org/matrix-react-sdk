@@ -580,8 +580,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                         className="mx_MEmoteBody_sender"
                         onClick={this.onEmoteSenderClick}
                     >
-                            { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
-                        </span>
+                        { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
+                    </span>
                     &nbsp;
                     { body }
                     { widgets }
