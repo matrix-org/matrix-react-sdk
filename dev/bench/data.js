@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641464186705,
+  "lastUpdate": 1641491931750,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51728,6 +51728,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4411.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dc2d52c1f2f01102a1eef7576ff6ea8c58b13d22",
+          "message": "a11y - wrap notification level radios in fieldsets (#7471)\n\n* notification settings radios table -> fieldset\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* aria-label for inputs\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update tests for fielset\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove unneccessary wrapping div\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix stylelint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-06T18:52:06+01:00",
+          "tree_id": "e9fc4ebbb93e8c7fad15b3f1eae73ca794655b29",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dc2d52c1f2f01102a1eef7576ff6ea8c58b13d22"
+        },
+        "date": 1641491928138,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5344.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 997.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1623.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4325.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
