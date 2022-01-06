@@ -516,7 +516,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const stripReply = !mxEvent.replacingEvent() && !!ReplyChain.getParentEventId(mxEvent);
         let body;
         if (SettingsStore.isEnabled("feature_extensible_events")) {
-            const extev = this.props.mxEvent.unstable_extensibleEvent;
+            const extev = this.props.mxEvent.unstableExtensibleEvent;
             if (extev && extev instanceof MessageEvent) {
                 isEmote = isEventLike(extev.wireFormat, LegacyMsgType.Emote);
                 isNotice = isEventLike(extev.wireFormat, LegacyMsgType.Notice);

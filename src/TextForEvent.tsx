@@ -341,7 +341,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
         }
 
         if (SettingsStore.isEnabled("feature_extensible_events")) {
-            const extev = ev.unstable_extensibleEvent;
+            const extev = ev.unstableExtensibleEvent;
             if (extev) {
                 if (extev instanceof EmoteEvent) {
                     return `* ${senderDisplayName} ${extev.text}`;
