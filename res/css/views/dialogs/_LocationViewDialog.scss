@@ -25,8 +25,8 @@ limitations under the License.
 
 .mx_LocationViewDialog {
     /* subtract 0.5px to prevent single-pixel margin due to rounding */
-    width: calc(79vw - 0.5px);
-    height: calc(79vh - 0.5px);
+    width: calc(80vw - 0.5px);
+    height: calc(80vh - 0.5px);
     overflow: hidden;
 
     .mx_Dialog_header {
@@ -50,7 +50,7 @@ limitations under the License.
     }
 
     .mx_MLocationBody .mx_MLocationBody_map {
-        width: 79vw;
-        height: 79vh;
+        width: 80vw;
+        height: 80vh;
     }
 }
