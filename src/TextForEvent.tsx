@@ -20,6 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EmoteEvent, NoticeEvent, MessageEvent } from "matrix-events-sdk";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -33,7 +34,6 @@ import defaultDispatcher from './dispatcher/dispatcher';
 import { SetRightPanelPhasePayload } from './dispatcher/payloads/SetRightPanelPhasePayload';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
-import { EmoteEvent, NoticeEvent, MessageEvent as ExtEvMessageEvent } from "matrix-events-sdk";
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
@@ -345,7 +345,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
             if (extev) {
                 if (extev instanceof EmoteEvent) {
                     return `* ${senderDisplayName} ${extev.text}`;
-                } else if (extev instanceof NoticeEvent || extev instanceof ExtEvMessageEvent) {
+                } else if (extev instanceof NoticeEvent || extev instanceof MessageEvent) {
                     return `${senderDisplayName}: ${extev.text}`;
                 }
             }

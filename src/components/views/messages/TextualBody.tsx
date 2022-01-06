@@ -18,6 +18,7 @@ import React, { createRef, SyntheticEvent } from 'react';
 import ReactDOM from 'react-dom';
 import highlight from 'highlight.js';
 import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { isEventLike, LegacyMsgType, MessageEvent } from "matrix-events-sdk";
 
 import * as HtmlUtils from '../../../HtmlUtils';
 import { formatDate } from '../../../DateUtils';
@@ -45,7 +46,6 @@ import EditMessageComposer from '../rooms/EditMessageComposer';
 import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
 import { IBodyProps } from "./IBodyProps";
 import RoomContext from "../../../contexts/RoomContext";
-import { isEventLike, LegacyMsgType, MessageEvent } from "matrix-events-sdk/lib";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
