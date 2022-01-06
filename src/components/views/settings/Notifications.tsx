@@ -585,15 +585,13 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             <fieldset
                 key={category + r.ruleId}
                 data-test-id={category + r.ruleId}
-                className='mx_UserNotifSettings_gridRowContainer'>
-                { /* fieldset is not styled sanely, needs div wrapper */ }
-
-                <div className='mx_UserNotifSettings_gridRow'>
-                    <legend className='mx_UserNotifSettings_gridRowLabel'>{ r.description }</legend>
-                    { makeRadio(r, VectorState.Off) }
-                    { makeRadio(r, VectorState.On) }
-                    { makeRadio(r, VectorState.Loud) }
-                </div></fieldset>);
+                className='mx_UserNotifSettings_gridRowContainer'
+            >
+                <legend className='mx_UserNotifSettings_gridRowLabel'>{ r.description }</legend>
+                { makeRadio(r, VectorState.Off) }
+                { makeRadio(r, VectorState.On) }
+                { makeRadio(r, VectorState.Loud) }
+            </fieldset>);
 
         let sectionName: TranslatedString;
         switch (category) {
