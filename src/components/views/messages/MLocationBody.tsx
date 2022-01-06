@@ -106,7 +106,7 @@ interface ILocationBodyContentProps {
     bodyId: string;
     markerId: string;
     error: Error;
-    tooltip?: String;
+    tooltip?: string;
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
