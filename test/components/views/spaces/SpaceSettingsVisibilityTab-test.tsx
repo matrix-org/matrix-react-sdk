@@ -9,10 +9,12 @@ import { act } from "react-dom/test-utils";
 import { EventType, MatrixClient, Room } from 'matrix-js-sdk';
 import { GuestAccess, HistoryVisibility, JoinRule } from 'matrix-js-sdk/src/@types/partials';
 
-import SpaceSettingsVisibilityTab from "../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
-import { createTestClient, mkEvent } from '../../../test-utils';
+import _SpaceSettingsVisibilityTab from "../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
+import { createTestClient, mkEvent, wrapInMatrixClientContext } from '../../../test-utils';
 import { mkSpace, mockStateEventImplementation } from '../../../utils/test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
+
+const SpaceSettingsVisibilityTab = wrapInMatrixClientContext(_SpaceSettingsVisibilityTab);
 
 jest.useFakeTimers();
 
