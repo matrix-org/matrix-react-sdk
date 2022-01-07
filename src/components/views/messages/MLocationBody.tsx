@@ -179,13 +179,13 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
             onClick={props.onZoomIn}
             title={_t("Zoom in")}
         >
-            <div className="mx_MLocationBody_zoomButton mx_MLocationBody_plusButton"/>
+            <div className="mx_MLocationBody_zoomButton mx_MLocationBody_plusButton" />
         </AccessibleButton>
         <AccessibleButton
             onClick={props.onZoomOut}
             title={_t("Zoom out")}
         >
-            <div className="mx_MLocationBody_zoomButton mx_MLocationBody_minusButton"/>
+            <div className="mx_MLocationBody_zoomButton mx_MLocationBody_minusButton" />
         </AccessibleButton>
     </div>;
 }
