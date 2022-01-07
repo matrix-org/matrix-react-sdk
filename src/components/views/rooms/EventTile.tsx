@@ -159,7 +159,7 @@ export function getHandlerTile(ev: MatrixEvent): string {
     // XXX: This is extremely a hack. Possibly these components should have an interface for
     // declining to render?
     if (type === EventType.KeyVerificationCancel || type === EventType.KeyVerificationDone) {
-        if (!MKeyVerificationConclusion.shouldRender(ev, ev.request)) {
+        if (!MKeyVerificationConclusion.shouldRender(ev, ev.verificationRequest)) {
             return;
         }
     }
