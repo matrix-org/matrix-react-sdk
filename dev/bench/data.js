@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641547877077,
+  "lastUpdate": 1641548652229,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51896,6 +51896,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 613.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2b9eed53577c861d9ae8b185e936aa44cc1b4ac5",
+          "message": "update yarn.lock and i18n (#7476)\n\n* add hash to matrix-web-i18n dep, update i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove hash from dep\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-07T10:37:12+01:00",
+          "tree_id": "aea5520e922ac50abc51b4dfd96f26295828706f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2b9eed53577c861d9ae8b185e936aa44cc1b4ac5"
+        },
+        "date": 1641548648131,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4742.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 645.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
