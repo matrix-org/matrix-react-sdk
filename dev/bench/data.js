@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641548890161,
+  "lastUpdate": 1641554530256,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51980,6 +51980,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4868.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9fd933a0b6c2c5ce3b0bbe42d5c363350cb7cf77",
+          "message": "Don't send typing notification when restoring composer draft (#7477)",
+          "timestamp": "2022-01-07T11:15:20Z",
+          "tree_id": "a9f1f2aad0b2099fb4ce66ca745004a81f8d72d9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9fd933a0b6c2c5ce3b0bbe42d5c363350cb7cf77"
+        },
+        "date": 1641554526027,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4999.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 610.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
