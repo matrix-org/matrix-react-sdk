@@ -19,7 +19,6 @@ import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SdkConfig from '../../../SdkConfig';
-import Field from "../elements/Field";
 import DialogButtons from "../elements/DialogButtons";
 import Dropdown from "../elements/Dropdown";
 import LocationShareType from "./LocationShareType";
@@ -91,13 +90,11 @@ interface IProps {
         uri: string,
         ts: number,
         type: LocationShareType,
-        description: string,
     ): boolean;
     onFinished(ev?: SyntheticEvent): void;
 }
 
 interface IState {
-    description: string;
     type: LocationShareType;
     position?: GeolocationPosition;
     manualPosition?: GeolocationPosition;
@@ -114,7 +111,6 @@ class LocationPicker extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            description: _t("My location"),
             type: LocationShareType.OnceOff,
             position: undefined,
             manualPosition: undefined,
@@ -209,10 +205,6 @@ class LocationPicker extends React.Component<IProps, IState> {
         this.setState({ position });
     };
 
-    private onDescriptionChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ description: ev.target.value });
-    };
-
     private onOk = () => {
         const position = (this.state.type == LocationShareType.Custom) ?
             this.state.manualPosition : this.state.position;
@@ -221,7 +213,6 @@ class LocationPicker extends React.Component<IProps, IState> {
             position ? getGeoUri(position) : undefined,
             position ? position.timestamp : undefined,
             this.state.type,
-            this.state.description,
         );
         this.props.onFinished();
     };
@@ -261,14 +252,6 @@ class LocationPicker extends React.Component<IProps, IState> {
                             label={_t("Type of location share")}
                             onChange={this.onTypeChange}
                             width={400}
-                        />
-
-                        <Field
-                            label={_t('Description')}
-                            onChange={this.onDescriptionChange}
-                            value={this.state.description}
-                            width={400}
-                            className="mx_LocationPicker_description"
                         />
 
                         <DialogButtons primaryButton={_t('Share')}

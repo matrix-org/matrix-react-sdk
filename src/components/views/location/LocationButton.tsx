@@ -30,7 +30,6 @@ interface IProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
         uri: string,
         ts: number,
         type: LocationShareType,
-        description: string,
     ) => boolean;
     menuPosition: AboveLeftOf;
     narrowMode: boolean;

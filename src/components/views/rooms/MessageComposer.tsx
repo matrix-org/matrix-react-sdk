@@ -457,14 +457,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         uri: string,
         ts: number,
         _type: LocationShareType,
-        description: string | null,
     ): boolean => {
         if (!uri) return false;
         try {
-            const text = textForLocation(uri, ts, description);
+            const text = textForLocation(uri, ts, null);
             MatrixClientPeg.get().sendMessage(
                 this.props.room.roomId,
-                makeLocationContent(text, uri, ts, description),
+                makeLocationContent(text, uri, ts, null),
             );
         } catch (e) {
             logger.error("Error sending location:", e);
