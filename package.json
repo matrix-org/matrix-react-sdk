@@ -178,7 +178,7 @@
     "jest-raw-loader": "^1.0.1",
     "matrix-mock-request": "^1.2.3",
     "matrix-react-test-utils": "^0.2.3",
-    "matrix-web-i18n": "github:matrix-org/matrix-web-i18n#a8a01807c057595948a6da3587516c46df77de18",
+    "matrix-web-i18n": "github:matrix-org/matrix-web-i18n",
     "raw-loader": "^4.0.2",
     "react-test-renderer": "^17.0.2",
     "rimraf": "^3.0.2",

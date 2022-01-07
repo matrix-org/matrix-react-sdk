@@ -6174,7 +6174,7 @@ matrix-react-test-utils@^0.2.3:
   resolved "https://registry.yarnpkg.com/matrix-react-test-utils/-/matrix-react-test-utils-0.2.3.tgz#27653f9d6bbfddd1856e51860fad1503b039d617"
   integrity sha512-NKZDlMEQzDZDQhBYyKBUtqidRvpkww3n9/GmGICkxtU2D6NetyBIfvm1Lf9o7167KSkPHJUVvDS9dzaS55jUnA==
 
-"matrix-web-i18n@github:matrix-org/matrix-web-i18n#a8a01807c057595948a6da3587516c46df77de18":
+"matrix-web-i18n@github:matrix-org/matrix-web-i18n":
   version "1.1.2"
   resolved "https://codeload.github.com/matrix-org/matrix-web-i18n/tar.gz/a8a01807c057595948a6da3587516c46df77de18"
   dependencies:
