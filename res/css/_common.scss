@@ -426,9 +426,9 @@ legend {
  * Elements that should not be styled like a dialog button are mentioned in a :not() pseudo-class.
  * For the widest browser support, we use multiple :not pseudo-classes instead of :not(.a, .b).
  */
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button),
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):not(.mx_AccessibleButton),
 .mx_Dialog input[type="submit"],
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton),
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
 .mx_Dialog_buttons input[type="submit"] {
     @mixin mx_DialogButton;
     margin-left: 0px;
@@ -443,20 +443,20 @@ legend {
     font-family: inherit;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):last-child {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):not(.mx_AccessibleButton):last-child {
     margin-right: 0px;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):hover,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):not(.mx_AccessibleButton):hover,
 .mx_Dialog input[type="submit"]:hover,
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):hover,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):hover,
 .mx_Dialog_buttons input[type="submit"]:hover {
     @mixin mx_DialogButton_hover;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):focus,
+.mx_Dialog button:button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):not(.mx_AccessibleButton):focus,
 .mx_Dialog input[type="submit"]:focus,
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):focus,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):focus,
 .mx_Dialog_buttons input[type="submit"]:focus {
     filter: brightness($focus-brightness);
 }
@@ -485,9 +485,9 @@ legend {
     color: $alert;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):disabled,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):not(.mx_AccessibleButton):disabled,
 .mx_Dialog input[type="submit"]:disabled,
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):disabled,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):disabled,
 .mx_Dialog_buttons input[type="submit"]:disabled {
     background-color: $light-fg-color;
     border: solid 1px $light-fg-color;
@@ -657,4 +657,16 @@ legend {
         outline-color: -webkit-focus-ring-color;
         outline-style: auto;
     }
+}
+
+@define-mixin ButtonResetDefault {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    cursor: pointer;
 }
