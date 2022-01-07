@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641569220444,
+  "lastUpdate": 1641571332572,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52184,6 +52184,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4214.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cb76358230a274d1ce4f168ee5c8de1d200fb017",
+          "message": "Fix right panel soft crashes chat rooms (#7479)",
+          "timestamp": "2022-01-07T16:55:21+01:00",
+          "tree_id": "2bd3246ba50d138fdc8f693617dbabd489dc20cb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cb76358230a274d1ce4f168ee5c8de1d200fb017"
+        },
+        "date": 1641571328267,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4628.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 596.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
