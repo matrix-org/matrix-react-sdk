@@ -21,6 +21,13 @@ describe('languageHandler', function() {
     const testCasesEn: TestCase[] = [
         ['translates a basic string', basicString, {}, undefined, 'Rooms'],
         [
+            'handles plurals when count is 0',
+            plurals,
+            { count: 0 },
+            undefined,
+            'and 0 others...',
+        ],
+        [
             'handles plurals when count is 1',
             plurals,
             { count: 1 },
