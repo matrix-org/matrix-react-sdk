@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641548652229,
+  "lastUpdate": 1641548890161,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -51932,6 +51932,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 645.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fed53a268ba4f60d24f363e5e38e8a7886c7f23e",
+          "message": "A11y - fix anchors-as-buttons (#7444)\n\n* add link_inline accessiblebutton variant\r\n\r\n* valid anchors in SecurityRoomSettingsTab\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* new room intro link button\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* replace anchor with button in rerequest encryption keys message\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* inline button in UrlPreviewSettings\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* ButtonResetDefault mixin\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* inline link buttons in TextForEvent\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix anchors in InviteDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix anchors in DevToolsDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix anchors in login/registration/reset pword flows\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix types after fixing anchors in devtools\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix anchors in MemberEventListSummary\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix anchors in ReactionsRow and RoomUpgrade\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix anchors in ReplyChain\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix more anchors\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix anchors in auth comps\r\n\r\n* stylelint fixes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove ignore of jsx-a11y rule that is not added yet\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* devtools style important explainer\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* translate button alt in devtools dialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* AccessibleButton is reactionsrow\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix viewsourcevent button placement, use AccessibleButton\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use AccessibleButton in EventTile\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* unignore jsx-a11y/anchor-is-valid\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix lint issue in test jsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update coment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-07T10:40:53+01:00",
+          "tree_id": "d94b38ec60d30f0045e0d4e5aa8427b5b34babc5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fed53a268ba4f60d24f363e5e38e8a7886c7f23e"
+        },
+        "date": 1641548885824,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5043.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1087.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1685.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4868.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
