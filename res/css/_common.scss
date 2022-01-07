@@ -454,7 +454,7 @@ legend {
     @mixin mx_DialogButton_hover;
 }
 
-.mx_Dialog button:button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):not(.mx_AccessibleButton):focus,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not(.maplibregl-ctrl-attrib-button):not(.mx_AccessibleButton):focus,
 .mx_Dialog input[type="submit"]:focus,
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):focus,
 .mx_Dialog_buttons input[type="submit"]:focus {
