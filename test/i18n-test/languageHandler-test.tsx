@@ -130,8 +130,19 @@ describe('languageHandler', function() {
             setMissingEntryGenerator(counterpartDefaultMissingEntryGen);
         });
 
+        const lvExistingPlural = 'Uploading %(filename)s and %(count)s others';
+
+        // lv does not have a pluralizer function
+        const noPluralizerCase = [
+            'handles plural strings when no pluralizer exists for language',
+            lvExistingPlural,
+            { count: 1, filename: 'test.txt' },
+            undefined,
+            'Uploading test.txt and 1 other',
+        ] as TestCase;
+
         describe('_t', () => {
-            it.each(testCasesEn)(
+            it.each([...testCasesEn, noPluralizerCase])(
                 "%s and translates with fallback locale",
                 async (_d, translationString, variables, tags, result) => {
                     expect(_t(translationString, variables, tags)).toEqual(result);
@@ -140,7 +151,7 @@ describe('languageHandler', function() {
         });
 
         describe('_tDom()', () => {
-            it.each(testCasesEn)(
+            it.each([...testCasesEn, noPluralizerCase])(
                 "%s and translates with fallback locale, attributes fallback locale",
                 async (_d, translationString, variables, tags, result) => {
                     expect(_tDom(translationString, variables, tags)).toEqual(<span lang="en">{ result }</span>);
