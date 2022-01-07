@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641567774357,
+  "lastUpdate": 1641568690504,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52100,6 +52100,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 794.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "309f7bb23527f75eecf4b61a6b31b69695bf8ba8",
+          "message": "Display a tooltip when you hover over a location (#7472)",
+          "timestamp": "2022-01-07T15:11:30Z",
+          "tree_id": "bed5007f0ea544fe0c999c30fe32f2fd2dbfd545",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/309f7bb23527f75eecf4b61a6b31b69695bf8ba8"
+        },
+        "date": 1641568686603,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4632.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 624.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
