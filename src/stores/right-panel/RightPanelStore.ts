@@ -30,6 +30,7 @@ import {
     convertToStatePanel,
     convertToStorePanel,
     IRightPanelForRoom,
+    IRightPanelCardState,
 } from './RightPanelStoreIPanelState';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 // import RoomViewStore from '../RoomViewStore';
@@ -230,18 +231,13 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     private emitAndUpdateSettings() {
-        if (this.global?.history) {
-            this.global.history = this.global?.history.filter((card)=>this.isCardStateValid(card));
-        }
+        this.filterValidCards(this.global);
         const storePanelGlobal = convertToStorePanel(this.global);
         SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, storePanelGlobal);
 
         if (!!this.viewedRoomId) {
             const panelThisRoom = this.byRoom[this.viewedRoomId];
-            if (panelThisRoom?.history) {
-                // remove all right panel cards that would fail to render (result in a soft crash)
-                panelThisRoom.history = panelThisRoom?.history.filter((card)=>this.isCardStateValid(card));
-            }
+            this.filterValidCards(panelThisRoom);
             const storePanelThisRoom = convertToStorePanel(panelThisRoom);
             SettingsStore.setValue(
                 "RightPanel.phases",
@@ -253,6 +249,11 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emit(UPDATE_EVENT, null);
     }
 
+    private filterValidCards(rightPanelForRoom?: IRightPanelForRoom) {
+        if (!rightPanelForRoom?.history) return;
+        rightPanelForRoom.history = rightPanelForRoom.history.filter((card) => this.isCardStateValid(card));
+    }
+
     private isCardStateValid(card: IRightPanelCard) {
         // this function does a sanity check on the card. this is required because
         // some phases require specific state properties that might not be available.
@@ -262,7 +263,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // (A nicer fix could be to indicate, that the right panel is loading if there is missing state data and re-emit if the data is available)
         switch (card.phase) {
             case RightPanelPhases.ThreadView:
-                if ( !card.state.threadHeadEvent) {
+                if (!card.state.threadHeadEvent) {
                     console.warn("removed card from right panel because of missing threadHeadEvent in card state");
                 }
                 return !!card.state.threadHeadEvent;
@@ -270,28 +271,28 @@ export default class RightPanelStore extends ReadyWatchingStore {
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel:
             case RightPanelPhases.GroupMemberInfo:
-                if ( !card.state.member) {
+                if (!card.state.member) {
                     console.warn("removed card from right panel because of missing member in card state");
                 }
                 return !!card.state.member;
             case RightPanelPhases.SpaceMemberList:
-                if ( !card.state.spaceId) {
+                if (!card.state.spaceId) {
                     console.warn("removed card from right panel because of missing spaceId in card state");
                 }
                 return !!card.state.spaceId;
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
-                if ( !card.state.memberInfoEvent) {
+                if (!card.state.memberInfoEvent) {
                     console.warn("removed card from right panel because of missing memberInfoEvent in card state");
                 }
                 return !!card.state.memberInfoEvent;
             case RightPanelPhases.GroupRoomInfo:
-                if ( !card.state.groupRoomId) {
+                if (!card.state.groupRoomId) {
                     console.warn("removed card from right panel because of missing groupRoomId in card state");
                 }
                 return !!card.state.groupRoomId;
             case RightPanelPhases.Widget:
-                if ( !card.state.widgetId) {
+                if (!card.state.widgetId) {
                     console.warn("removed card from right panel because of missing widgetId in card state");
                 }
                 return !!card.state.widgetId;
