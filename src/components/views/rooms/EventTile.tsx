@@ -1099,6 +1099,11 @@ export default class EventTile extends React.Component<IProps, IState> {
         const isRedacted = isMessageEvent(this.props.mxEvent) && this.props.isRedacted;
         const isEncryptionFailure = this.props.mxEvent.isDecryptionFailure();
 
+        let isContinuation = this.props.continuation;
+        if (this.props.tileShape && this.props.layout !== Layout.Bubble) {
+            isContinuation = false;
+        }
+
         const isEditing = !!this.props.editState;
         const classes = classNames({
             mx_EventTile_bubbleContainer: isBubbleMessage,
@@ -1111,10 +1116,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_sending: !isEditing && isSending,
             mx_EventTile_highlight: this.props.tileShape === TileShape.Notif ? false : this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent,
-            mx_EventTile_continuation: (
-                (this.props.tileShape ? '' : this.props.continuation) ||
-                eventType === EventType.CallInvite
-            ),
+            mx_EventTile_continuation: isContinuation || eventType === EventType.CallInvite,
             mx_EventTile_last: this.props.last,
             mx_EventTile_lastInSection: this.props.lastInSection,
             mx_EventTile_contextual: this.props.contextual,
@@ -1374,6 +1376,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
                     "data-has-reply": !!replyChain,
+                    "data-layout": this.props.layout,
+                    "data-self": isOwnEvent,
                     "onMouseEnter": () => this.setState({ hover: true }),
                     "onMouseLeave": () => this.setState({ hover: false }),
                 }, [

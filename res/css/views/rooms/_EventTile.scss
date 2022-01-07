@@ -825,24 +825,6 @@ $left-gutter: 64px;
     display: flex;
     flex-direction: column;
 
-    .mx_EventTile_senderDetails {
-        display: flex;
-        align-items: center;
-        gap: calc(6px + $selected-message-border-width);
-
-        a {
-            flex: 1;
-            min-width: none;
-            max-width: 100%;
-            display: flex;
-            align-items: center;
-
-            .mx_SenderProfile {
-                flex: 1;
-            }
-        }
-    }
-
     .mx_ThreadView_List {
         flex: 1;
         overflow: scroll;
@@ -853,7 +835,6 @@ $left-gutter: 64px;
     }
 
     .mx_EventTile {
-        width: 100%;
         display: flex;
         flex-direction: column;
         padding-top: 0;
@@ -864,11 +845,7 @@ $left-gutter: 64px;
         }
 
         .mx_MessageTimestamp {
-            left: auto;
-            right: 2px !important;
-            top: 1px !important;
-            font-size: 1rem;
-            text-align: right;
+            font-size: $font-10px;
         }
 
         .mx_ReactionsRow {
@@ -880,16 +857,54 @@ $left-gutter: 64px;
         }
     }
 
-    .mx_EventTile_content,
-    .mx_RedactedBody,
-    .mx_ReplyChain_wrapper {
-        margin-left: 36px;
-        margin-right: 50px;
+    .mx_EventTile[data-layout=bubble][data-self=true] .mx_EventTile_line {
+        margin-left: auto;
+
+        &.mx_EventTile_mediaLine {
+            margin: 0 0 0 auto;
+            padding: 0 !important;
+        }
+    }
+
+    .mx_EventTile[data-layout=group] {
+        width: 100%;
 
         .mx_EventTile_content,
         .mx_RedactedBody,
-        .mx_MImageBody {
-            margin: 0;
+        .mx_ReplyChain_wrapper {
+            margin-left: 36px;
+            margin-right: 50px;
+
+            .mx_EventTile_content,
+            .mx_RedactedBody,
+            .mx_MImageBody {
+                margin: 0;
+            }
+        }
+
+        .mx_MessageTimestamp {
+            left: auto;
+            right: 2px !important;
+            top: 1px !important;
+            text-align: right;
+        }
+
+        .mx_EventTile_senderDetails {
+            display: flex;
+            align-items: center;
+            gap: calc(6px + $selected-message-border-width);
+
+            a {
+                flex: 1;
+                min-width: none;
+                max-width: 100%;
+                display: flex;
+                align-items: center;
+
+                .mx_SenderProfile {
+                    flex: 1;
+                }
+            }
         }
     }
 
