@@ -69,11 +69,11 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
 
     private onZoomIn = () => {
         this.map?.zoomIn();
-    }
+    };
 
     private onZoomOut = () => {
         this.map?.zoomOut();
-    }
+    };
 
     render() {
         return (
