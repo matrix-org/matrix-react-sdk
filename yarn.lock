@@ -3729,9 +3729,10 @@ eslint-plugin-jsx-a11y@^6.5.1:
     language-tags "^1.0.5"
     minimatch "^3.0.4"
 
-"eslint-plugin-matrix-org@github:matrix-org/eslint-plugin-matrix-org#2fc59ae12ff551e91c41a1b185be25c77ad02190":
-  version "0.3.5"
-  resolved "https://codeload.github.com/matrix-org/eslint-plugin-matrix-org/tar.gz/2fc59ae12ff551e91c41a1b185be25c77ad02190"
+eslint-plugin-matrix-org@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-matrix-org/-/eslint-plugin-matrix-org-0.4.0.tgz#de2d2db1cd471d637728133ce9a2b921690e5cd1"
+  integrity sha512-yVkNwtc33qtrQB4PPzpU+PUdFzdkENPan3JF4zhtAQJRUYXyvKEXnYSrXLUWYRXoYFxs9LbyI2CnhJL/RnHJaQ==
 
 eslint-plugin-react-hooks@^4.2.0:
   version "4.3.0"
