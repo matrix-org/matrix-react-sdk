@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641568690504,
+  "lastUpdate": 1641569220444,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52136,6 +52136,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 624.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d4250918cf7673a6f01a6e95e27833ea5ce21ec5",
+          "message": "fix fallback for pluralized strings (#7480)\n\n* fix fallback for pluralized cases\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add test case for no pluralizer\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-07T16:20:24+01:00",
+          "tree_id": "6a79d96bd4949b4851a883832796892e93abfdd7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d4250918cf7673a6f01a6e95e27833ea5ce21ec5"
+        },
+        "date": 1641569216779,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4851.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 876,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1668.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4214.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
