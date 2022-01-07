@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641554530256,
+  "lastUpdate": 1641565387695,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52016,6 +52016,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 610.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "59ef2704f04216e9fe9575cbbf776bce55ffa7fa",
+          "message": "Give Posthog a correct total count of decryption failures (#7475)",
+          "timestamp": "2022-01-07T09:15:33-05:00",
+          "tree_id": "b7d52c4dfbf20141225d63b8ce1363bee1a13415",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/59ef2704f04216e9fe9575cbbf776bce55ffa7fa"
+        },
+        "date": 1641565382575,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5731.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1072.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1747.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4900.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
