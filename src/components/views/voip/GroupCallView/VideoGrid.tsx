@@ -14,15 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useDrag } from "react-use-gesture";
 import { useSprings } from "@react-spring/web";
 import useMeasure from "react-use-measure";
 import { ResizeObserver } from "@juggle/resize-observer";
 import moveArrItem from "lodash-move";
-import VideoTile from "./VideoTile";
-import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 export function useVideoGridLayout(): [string, (layout: string) => void] {
     return useState("freedom");
@@ -539,32 +536,39 @@ function getSubGridPositions(
     return newTilePositions;
 }
 
-interface IVideoGridItem {
+export type IVideoGridItem<I> = {
     id: string;
-    callFeed: CallFeed;
     focused: boolean;
     presenter: boolean;
-}
+} & I;
 
-interface IVideoGridTile {
+interface IVideoGridTile<I> {
     key: string;
-    item: IVideoGridItem;
+    item: IVideoGridItem<I>;
     remove: boolean;
     focused: boolean;
     presenter: boolean;
 }
 
-interface IVideoGridState {
-    tiles: IVideoGridTile[];
+interface IVideoGridState<I> {
+    tiles: IVideoGridTile<I>[];
     tilePositions: ITilePosition[];
 }
 
-interface IVideoGridProps {
+interface IVideoGridItemProps<I> {
+    key: string;
+    style?: any;
+    width: number;
+    height: number;
+    item: IVideoGridItem<I>;
+}
+
+interface IVideoGridProps<I> {
     disableAnimations?: boolean;
-    items: IVideoGridItem[];
+    items: IVideoGridItem<I>[];
     layout: string;
-    onFocusTile?: (tiles: IVideoGridTile[], item: IVideoGridTile) => IVideoGridTile[];
-    getAvatar?: (member: RoomMember, width: number, height: number) => ReactNode;
+    onFocusTile?: (tiles: IVideoGridTile<I>[], item: IVideoGridTile<I>) => IVideoGridTile<I>[];
+    children: (props: IVideoGridItemProps<I>) => ReactElement;
 }
 
 interface IDraggingTile {
@@ -575,8 +579,8 @@ interface IDraggingTile {
     y: number;
 }
 
-export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disableAnimations }: IVideoGridProps) {
-    const [{ tiles, tilePositions }, setTileState] = useState<IVideoGridState>({
+export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimations, children }: IVideoGridProps<I>) {
+    const [{ tiles, tilePositions }, setTileState] = useState<IVideoGridState<I>>({
         tiles: [],
         tilePositions: [],
     });
@@ -785,7 +789,7 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
             setTileState((state) => {
                 let presenterTileCount = 0;
 
-                let newTiles: IVideoGridTile[];
+                let newTiles: IVideoGridTile<I>[];
 
                 if (onFocusTile) {
                     newTiles = onFocusTile(state.tiles, tile);
@@ -926,22 +930,19 @@ export default function VideoGrid({ items, layout, onFocusTile, getAvatar, disab
                 const tile = tiles[i];
                 const tilePosition = tilePositions[i];
 
-                return (
-                    <VideoTile
-                        {...bind(tile.key)}
-                        key={tile.key}
-                        style={{
-                            boxShadow: shadow.to(
-                                (s) => `rgba(0, 0, 0, 0.5) 0px ${s}px ${2 * s}px 0px`,
-                            ),
-                            ...style,
-                        }}
-                        width={tilePosition.width}
-                        height={tilePosition.height}
-                        getAvatar={getAvatar}
-                        callFeed={tile.item.callFeed}
-                    />
-                );
+                return children({
+                    ...bind(tile.key),
+                    key: tile.key,
+                    style: {
+                        boxShadow: shadow.to(
+                            (s) => `rgba(0, 0, 0, 0.5) 0px ${s}px ${2 * s}px 0px`,
+                        ),
+                        ...style,
+                    },
+                    width: tilePosition.width,
+                    height: tilePosition.height,
+                    item: tile.item,
+                });
             }) }
         </div>
     );

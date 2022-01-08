@@ -1,10 +1,12 @@
 import React, { useCallback, memo, useRef, useEffect, useMemo } from "react";
 import { GroupCall, GroupCallState, GroupCallType } from "matrix-js-sdk/src/webrtc/groupCall";
 import { useGroupCall } from "../../../hooks/useGroupCall";
-import VideoGrid, { useVideoGridLayout } from "./GroupCallView/VideoGrid";
+import VideoGrid, { useVideoGridLayout, IVideoGridItem } from "./GroupCallView/VideoGrid";
 import CallViewButtons from "./CallView/CallViewButtons";
 import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from "../../../languageHandler";
+import { VideoTileContainer } from "./GroupCallView/VideoTileContainer";
+import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 
 interface IProps {
     groupCall: GroupCall;
@@ -26,10 +28,11 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
     } = useGroupCall(groupCall);
     const [layout] = useVideoGridLayout();
 
-    const items = useMemo(() => userMediaFeeds.map((callFeed) => ({
+    const items = useMemo<IVideoGridItem<{ callFeed: CallFeed }>[]>(() => userMediaFeeds.map((callFeed) => ({
         id: callFeed.userId,
-        usermediaCallFeed: callFeed,
-        isActiveSpeaker: callFeed.userId === activeSpeaker,
+        callFeed,
+        focused: callFeed.userId === activeSpeaker,
+        presenter: false,
     })), [userMediaFeeds, activeSpeaker]);
 
     useEffect(() => {
@@ -44,7 +47,9 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
         <div className="mx_GroupCallView" onMouseMove={onMouseMove}> {
             (state === GroupCallState.Entered || state === GroupCallState.Entering)
                 ? <React.Fragment>
-                    <VideoGrid items={items} layout={layout} />
+                    <VideoGrid items={items} layout={layout}>
+                        { (props) => <VideoTileContainer key={props.item.id} {...props} /> }
+                    </VideoGrid>
                     <CallViewButtons
                         ref={callViewButtonsRef}
                         pipMode={pipMode}
