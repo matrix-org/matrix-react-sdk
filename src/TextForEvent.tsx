@@ -33,6 +33,7 @@ import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
+import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 
 // These functions are frequently used just to check whether an event has
@@ -230,9 +231,9 @@ function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string
                     { _t('%(senderDisplayName)s changed who can join this room. <a>View settings</a>.', {
                         senderDisplayName,
                     }, {
-                        "a": (sub) => <a onClick={onViewJoinRuleSettingsClick}>
+                        "a": (sub) => <AccessibleButton kind='link_inline' onClick={onViewJoinRuleSettingsClick}>
                             { sub }
-                        </a>,
+                        </AccessibleButton>,
                     }) }
                 </span>;
             }
@@ -542,13 +543,13 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                         { senderName },
                         {
                             "a": (sub) =>
-                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                             "b": (sub) =>
-                                <a onClick={onPinnedMessagesClick}>
+                                <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                         },
                     ) }
                 </span>
@@ -570,13 +571,13 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                         { senderName },
                         {
                             "a": (sub) =>
-                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                             "b": (sub) =>
-                                <a onClick={onPinnedMessagesClick}>
+                                <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                         },
                     ) }
                 </span>
@@ -592,7 +593,12 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                 { _t(
                     "%(senderName)s changed the <a>pinned messages</a> for the room.",
                     { senderName },
-                    { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> },
+                    {
+                        "a": (sub) =>
+                            <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
+                                { sub }
+                            </AccessibleButton>,
+                    },
                 ) }
             </span>
         );
