@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641819882445,
+  "lastUpdate": 1641820795126,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52964,6 +52964,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 724.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "32841439+ajbura@users.noreply.github.com",
+            "name": "Ajay Bura",
+            "username": "ajbura"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4854a53b74ee335438379f419255b147fd310e9e",
+          "message": "Align room tile info in space hierarchy (#7499)",
+          "timestamp": "2022-01-10T13:12:47Z",
+          "tree_id": "caaccd11c4abea8fa154998f70fa91958002abe1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4854a53b74ee335438379f419255b147fd310e9e"
+        },
+        "date": 1641820790575,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5302.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 976.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4427.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
