@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641819599982,
+  "lastUpdate": 1641819609171,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52844,6 +52844,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4295.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fbfd2c3d201bf6b4f5e14e712ee590fae0b06c52",
+          "message": "Fix read receipts and sent indicators for bubble layout (#7460)",
+          "timestamp": "2022-01-10T12:53:23Z",
+          "tree_id": "5b8d13316794bbee8d0185bbc4dc9eec27d88760",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fbfd2c3d201bf6b4f5e14e712ee590fae0b06c52"
+        },
+        "date": 1641819603685,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4608,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 587.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
