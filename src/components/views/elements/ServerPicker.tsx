@@ -70,11 +70,9 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
     }
 
     let serverName: React.ReactNode = serverConfig.isNameResolvable ? serverConfig.hsName : serverConfig.hsUrl;
-    if (serverConfig.hsNameIsDifferent) {
-        serverName = <TextWithTooltip class="mx_Login_underlinedServerName" tooltip={serverConfig.hsUrl}>
-            { serverConfig.hsName }
-        </TextWithTooltip>;
-    }
+    serverName = <TextWithTooltip class={serverConfig.hsNameIsDifferent ? "mx_Login_underlinedServerName" : ""} tooltip={serverConfig.hsUrl}>
+        { serverConfig.hsName }
+    </TextWithTooltip>;
 
     let desc;
     if (serverConfig.hsName === "matrix.org") {
@@ -86,7 +84,7 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
     return <div className="mx_ServerPicker">
         <h3>{ title || _t("Homeserver") }</h3>
         { !disableCustomUrls ? <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} /> : null }
-        <span className="mx_ServerPicker_server" title={serverName}>{ serverName }</span>
+        <span className="mx_ServerPicker_server">{ serverName }</span>
         { editBtn }
         { desc }
     </div>;
