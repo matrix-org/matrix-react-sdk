@@ -17,6 +17,7 @@ limitations under the License.
 
 import filesize from 'filesize';
 import DOMPurify from 'dompurify';
+
 import { IMediaEventContent } from '../customisations/models/IMediaEventContent';
 import { _t } from '../languageHandler';
 
