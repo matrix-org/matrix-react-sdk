@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641835429101,
+  "lastUpdate": 1641847585712,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53288,6 +53288,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4374.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ac6177053adbcf0426a08ea09913b223919ca1ca",
+          "message": "Fix layout of message bubble preview in settings (#7497)",
+          "timestamp": "2022-01-10T13:39:12-07:00",
+          "tree_id": "150b19da5170a972ddaa4b3f8144342fa108620e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ac6177053adbcf0426a08ea09913b223919ca1ca"
+        },
+        "date": 1641847581123,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5049.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 719.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
