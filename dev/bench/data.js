@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641814923237,
+  "lastUpdate": 1641814984169,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52652,6 +52652,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 701.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fdd0a2ada3023f10663a74367337f97a35e49d5e",
+          "message": "Add permission dropdown for sending reactions (#7492)",
+          "timestamp": "2022-01-10T11:35:41Z",
+          "tree_id": "37a53b9a607911ff20c3349fc848c2019e9e53e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fdd0a2ada3023f10663a74367337f97a35e49d5e"
+        },
+        "date": 1641814979598,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5464.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1065.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1733.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4409.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
