@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641807439225,
+  "lastUpdate": 1641809374536,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52436,6 +52436,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 611.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe16f224eaa3d4769ac71e3c2bbe38ab7fb37f93",
+          "message": "Fix look of the untrusted device dialog (#7487)",
+          "timestamp": "2022-01-10T10:02:03Z",
+          "tree_id": "c61a38e42d84050002ca3b3264603846b4cca8db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe16f224eaa3d4769ac71e3c2bbe38ab7fb37f93"
+        },
+        "date": 1641809370600,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4780.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1030.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1750.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4408.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
