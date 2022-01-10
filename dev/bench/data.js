@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641817387134,
+  "lastUpdate": 1641819599982,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52796,6 +52796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4441.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8b88b48edcd1a1bd3914e01b842fa9e394cee515",
+          "message": "Remove bubble from around location events (#7459)",
+          "timestamp": "2022-01-10T12:53:11Z",
+          "tree_id": "21a78f1077fceb279a7a0f848f5c667e5b4497c6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8b88b48edcd1a1bd3914e01b842fa9e394cee515"
+        },
+        "date": 1641819596130,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4675,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 956.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1622.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4295.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
