@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641815611163,
+  "lastUpdate": 1641817387134,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52748,6 +52748,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4450.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "aaron@raim.ist",
+            "name": "Aaron Raimist",
+            "username": "aaronraimist"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dbd7949e79cdeceef9692cd3faedae93c6ea7a31",
+          "message": "Allow clicking on avatar in room intro (#7496)",
+          "timestamp": "2022-01-10T12:16:14Z",
+          "tree_id": "01b054110460c3e6fb810dd2e332f572f5176768",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dbd7949e79cdeceef9692cd3faedae93c6ea7a31"
+        },
+        "date": 1641817383218,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4949.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 937.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4441.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
