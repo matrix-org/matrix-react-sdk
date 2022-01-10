@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641814984169,
+  "lastUpdate": 1641815611163,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52700,6 +52700,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4409.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "aaron@raim.ist",
+            "name": "Aaron Raimist",
+            "username": "aaronraimist"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c03cb67aefb104e630e7b83ebda358bafc021894",
+          "message": "Disable \"Publish this room\" option in invite only rooms (#7441)",
+          "timestamp": "2022-01-10T11:46:30Z",
+          "tree_id": "459d4f383dfa8e2f5322bffce5b8882f13fb3499",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c03cb67aefb104e630e7b83ebda358bafc021894"
+        },
+        "date": 1641815606558,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4800.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1016.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1691.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4450.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
