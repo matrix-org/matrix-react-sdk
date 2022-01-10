@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641805768837,
+  "lastUpdate": 1641807439225,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52400,6 +52400,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4785.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9cb8ce7c20eef87918a60a0573ac1e02a0318ca4",
+          "message": "Add zoom buttons to the location view (#7482)",
+          "timestamp": "2022-01-10T09:30:24Z",
+          "tree_id": "28359544a836597a4ff9f48cc445a22734b6eb16",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9cb8ce7c20eef87918a60a0573ac1e02a0318ca4"
+        },
+        "date": 1641807435270,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4940.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 611.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
