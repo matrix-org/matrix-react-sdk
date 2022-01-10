@@ -85,20 +85,26 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
             if (now - this.state.lastRageshakeTime < RAGESHAKE_INTERVAL) { return; }
 
             await this.updateState({ lastRageshakeTime: now });
-            const matchingIssue = await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
-                userText: "Auto-reporting decryption error (recipient)",
-                sendLogs: true,
-                label: "Z-UISI",
-            });
 
-            const messageContent = {
+            const eventInfo = {
                 "event_id": ev.getId(),
                 "room_id": ev.getRoomId(),
                 "session_id": sessionId,
                 "device_id": wireContent.device_id,
                 "user_id": ev.getSender(),
                 "sender_key": wireContent.sender_key,
-                "matching_issue": matchingIssue,
+            };
+
+            const rageshakeURL = await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
+                userText: "Auto-reporting decryption error (recipient)",
+                sendLogs: true,
+                label: "Z-UISI",
+                customFields: { "auto-uisi": JSON.stringify(eventInfo) },
+            });
+
+            const messageContent = {
+                ...eventInfo,
+                "recipient_rageshake": rageshakeURL,
             };
             this.matrixClient.sendToDevice(
                 AUTO_RS_REQUEST,
@@ -109,14 +115,19 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
 
     private async onDeviceMessage(ev: MatrixEvent): Promise<void> {
         if (ev.getType() !== AUTO_RS_REQUEST) return;
+        const messageContent = ev.getContent();
+        const recipientRageshake = messageContent["recipient_rageshake"] || "";
         const now = new Date().getTime();
         if (now - this.state.lastRageshakeTime > RAGESHAKE_INTERVAL) {
             await this.updateState({ lastRageshakeTime: now });
             await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
-                userText: "Auto-reporting decryption error (sender)",
+                userText: `Auto-reporting decryption error (sender) ${recipientRageshake}`,
                 sendLogs: true,
                 label: "Z-UISI",
-                customFields: new Map([["matching_issue", ev.getContent().matching_issue || ""]]),
+                customFields: {
+                    "recipient_rageshake": recipientRageshake,
+                    "auto-uisi": JSON.stringify(messageContent),
+                },
             });
         }
     }

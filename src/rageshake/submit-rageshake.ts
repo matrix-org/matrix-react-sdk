@@ -32,7 +32,7 @@ interface IOpts {
     userText?: string;
     sendLogs?: boolean;
     progressCallback?: (string) => void;
-    customFields?: Map<string, string>;
+    customFields?: Record<string, string>;
 }
 
 async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
@@ -74,8 +74,8 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
     body.append('touch_input', touchInput);
 
     if (opts.customFields) {
-        for (const [key, value] of opts.customFields.entries()) {
-            body.append(key, value);
+        for (const key in opts.customFields) {
+            body.append(key, opts.customFields[key]);
         }
     }
 
