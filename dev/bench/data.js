@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641814903426,
+  "lastUpdate": 1641814923237,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52616,6 +52616,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4356.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "31ab91359a6bdba984c807244e152bb8b399f0d3",
+          "message": "Fix avatar container overlapping give feedback cta (#7491)",
+          "timestamp": "2022-01-10T11:34:42Z",
+          "tree_id": "46b26bc61344a99f30021c09c04d439bda81b555",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/31ab91359a6bdba984c807244e152bb8b399f0d3"
+        },
+        "date": 1641814918718,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5399.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 701.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
