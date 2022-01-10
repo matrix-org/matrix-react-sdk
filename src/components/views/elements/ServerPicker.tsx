@@ -69,8 +69,7 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
         </AccessibleButton>;
     }
 
-    let serverName: React.ReactNode = serverConfig.isNameResolvable ? serverConfig.hsName : serverConfig.hsUrl;
-    serverName = <TextWithTooltip
+    const serverName: JSX.Element = <TextWithTooltip
                     class={serverConfig.hsNameIsDifferent ? "mx_Login_underlinedServerName" : ""}
                     tooltip={serverConfig.hsUrl}>
         { serverConfig.hsName }
