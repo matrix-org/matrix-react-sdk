@@ -199,6 +199,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "feature_mark_unread": {
         isFeature: true,
+        labsGroup: LabGroup.Rooms,
         displayName: _td("Mark rooms as unread"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
