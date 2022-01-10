@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641809679244,
+  "lastUpdate": 1641814877210,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52520,6 +52520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 630.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "474cbf4c095df6416783d5388b40c5fabc32136c",
+          "message": "Fix jump to bottom button working when on a permalink (#7494)",
+          "timestamp": "2022-01-10T11:34:27Z",
+          "tree_id": "77282169ee638d7699c03178dae666b5dbf416a8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/474cbf4c095df6416783d5388b40c5fabc32136c"
+        },
+        "date": 1641814873371,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5163.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 978.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4437.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
