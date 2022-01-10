@@ -16,30 +16,26 @@ limitations under the License.
 */
 
 import React from 'react';
-
 import { Filter } from 'matrix-js-sdk/src/filter';
 import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import EventIndexPeg from "../../indexing/EventIndexPeg";
 import { _t } from '../../languageHandler';
-import BaseCard from "../views/right_panel/BaseCard";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import DesktopBuildsNotice, { WarningKind } from "../views/elements/DesktopBuildsNotice";
+import BaseCard from "../views/right_panel/BaseCard";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
 import { TileShape } from '../views/rooms/EventTile';
 import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     roomId: string;
@@ -224,7 +220,6 @@ class FilePanel extends React.Component<IProps, IState> {
             return <BaseCard
                 className="mx_FilePanel mx_RoomView_messageListWrapper"
                 onClose={this.props.onClose}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <div className="mx_RoomView_empty">
                     { _t("You must <a>register</a> to use this functionality",
@@ -237,7 +232,6 @@ class FilePanel extends React.Component<IProps, IState> {
             return <BaseCard
                 className="mx_FilePanel mx_RoomView_messageListWrapper"
                 onClose={this.props.onClose}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <div className="mx_RoomView_empty">{ _t("You must join the room to see its files") }</div>
             </BaseCard>;
@@ -261,7 +255,6 @@ class FilePanel extends React.Component<IProps, IState> {
                     <BaseCard
                         className="mx_FilePanel"
                         onClose={this.props.onClose}
-                        previousPhase={RightPanelPhases.RoomSummary}
                         withoutScrollContainer
                     >
                         <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
@@ -288,7 +281,6 @@ class FilePanel extends React.Component<IProps, IState> {
                     <BaseCard
                         className="mx_FilePanel"
                         onClose={this.props.onClose}
-                        previousPhase={RightPanelPhases.RoomSummary}
                     >
                         <Spinner />
                     </BaseCard>

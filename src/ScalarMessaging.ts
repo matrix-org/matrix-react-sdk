@@ -53,7 +53,7 @@ All actions can return an error response instead of the response outlined below.
 
 invite
 ------
-Invites a user into a room.
+Invites a user into a room. The request will no-op if the user is already joined OR invited to the room.
 
 Request:
  - room_id is the room to invite the user into.
@@ -235,8 +235,10 @@ Example:
 }
 */
 
-import { MatrixClientPeg } from './MatrixClientPeg';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
 import RoomViewStore from './stores/RoomViewStore';
@@ -245,12 +247,9 @@ import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { WidgetType } from "./widgets/WidgetType";
 import { objectClone } from "./utils/objects";
 
-import { logger } from "matrix-js-sdk/src/logger";
-
 enum Action {
     CloseScalar = "close_scalar",
     GetWidgets = "get_widgets",
-    SetWidgets = "set_widgets",
     SetWidget = "set_widget",
     JoinRulesState = "join_rules_state",
     SetPlumbingState = "set_plumbing_state",
@@ -295,9 +294,9 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     }
     const room = client.getRoom(roomId);
     if (room) {
-        // if they are already invited we can resolve immediately.
+        // if they are already invited or joined we can resolve immediately.
         const member = room.getMember(userId);
-        if (member && member.membership === "invite") {
+        if (member && ["join", "invite"].includes(member.membership)) {
             sendResponse(event, {
                 success: true,
             });
@@ -473,10 +472,7 @@ async function setBotPower(
         // If the PL is equal to or greater than the requested PL, ignore.
         if (ignoreIfGreater === true) {
             // As per https://matrix.org/docs/spec/client_server/r0.6.0#m-room-power-levels
-            const currentPl = (
-                powerLevels.content.users && powerLevels.content.users[userId]
-            ) || powerLevels.content.users_default || 0;
-
+            const currentPl = powerLevels.users?.[userId] ?? powerLevels.users_default ?? 0;
             if (currentPl >= level) {
                 return sendResponse(event, {
                     success: true,
@@ -633,7 +629,7 @@ const onMessage = function(event: MessageEvent<any>): void {
         if (event.data.action === Action.GetWidgets) {
             getWidgets(event, null);
             return;
-        } else if (event.data.action === Action.SetWidgets) {
+        } else if (event.data.action === Action.SetWidget) {
             setWidget(event, null);
             return;
         } else {

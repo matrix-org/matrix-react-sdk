@@ -129,7 +129,9 @@ function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLEl
         case "U":
             return partCreator.plain(`<u>${n.textContent}</u>`);
         case "LI": {
-            const indent = "  ".repeat(state.listDepth - 1);
+            const BASE_INDENT = 4;
+            const depth = state.listDepth - 1;
+            const indent = " ".repeat(BASE_INDENT * depth);
             if (n.parentElement.nodeName === "OL") {
                 // The markdown parser doesn't do nested indexed lists at all, but this supports it anyway.
                 const index = state.listIndex[state.listIndex.length - 1];
@@ -240,7 +242,19 @@ function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessag
         }
 
         if (n.nodeType === Node.TEXT_NODE) {
-            newParts.push(...parseAtRoomMentions(n.nodeValue, partCreator));
+            let { nodeValue } = n;
+
+            // Sometimes commonmark adds a newline at the end of the list item text
+            if (n.parentNode.nodeName === "LI") {
+                nodeValue = nodeValue.trimEnd();
+            }
+            newParts.push(...parseAtRoomMentions(nodeValue, partCreator));
+
+            const grandParent = n.parentNode.parentNode;
+            const isTight = n.parentNode.nodeName !== "P" || grandParent?.nodeName !== "LI";
+            if (!isTight) {
+                newParts.push(partCreator.newline());
+            }
         } else if (n.nodeType === Node.ELEMENT_NODE) {
             const parseResult = parseElement(n, partCreator, lastNode, state);
             if (parseResult) {

@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import React, { createRef, CSSProperties, ReactNode, SyntheticEvent, KeyboardEvent } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Timer from '../../utils/Timer';
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { getKeyBindingsManager, RoomAction } from "../../KeyBindingsManager";
 import ResizeNotifier from "../../utils/ResizeNotifier";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const DEBUG_SCROLL = false;
 
@@ -958,7 +958,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             >
                 { this.props.fixedChildren }
                 <div className="mx_RoomView_messageListWrapper">
-                    <ol ref={this.itemlist} className="mx_RoomView_MessageList" aria-live="polite" role="list">
+                    <ol ref={this.itemlist} className="mx_RoomView_MessageList" aria-live="polite">
                         { this.props.children }
                     </ol>
                 </div>

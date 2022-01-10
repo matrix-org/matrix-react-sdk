@@ -26,6 +26,8 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import dis from '../../../dispatcher/dispatcher';
 import Modal from '../../../Modal';
@@ -34,7 +36,6 @@ import createRoom, { findDMForUser, privateShouldBeEncrypted } from '../../../cr
 import DMRoomMap from '../../../utils/DMRoomMap';
 import AccessibleButton from '../elements/AccessibleButton';
 import SdkConfig from '../../../SdkConfig';
-import SettingsStore from "../../../settings/SettingsStore";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
 import GroupStore from "../../../stores/GroupStore";
@@ -43,7 +44,7 @@ import E2EIcon from "../rooms/E2EIcon";
 import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import { textualPowerLevel } from '../../../Roles';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import EncryptionPanel from "./EncryptionPanel";
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import { legacyVerifyUser, verifyDevice, verifyUser } from '../../../verification';
@@ -62,8 +63,6 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import InfoDialog from "../dialogs/InfoDialog";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
@@ -72,11 +71,12 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
+import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
+import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 
 export interface IDevice {
     deviceId: string;
@@ -94,7 +94,7 @@ const disambiguateDevices = (devices: IDevice[]) => {
     }
     for (const name in names) {
         if (names[name].length > 1) {
-            names[name].forEach((j)=>{
+            names[name].forEach((j) => {
                 devices[j].ambiguous = true;
             });
         }
@@ -121,7 +121,7 @@ export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice
     return anyDeviceUnverified ? E2EStatus.Warning : E2EStatus.Verified;
 };
 
-async function openDMForUser(matrixClient: MatrixClient, userId: string) {
+async function openDMForUser(matrixClient: MatrixClient, userId: string): Promise<void> {
     const lastActiveRoom = findDMForUser(matrixClient, userId);
 
     if (lastActiveRoom) {
@@ -150,7 +150,7 @@ async function openDMForUser(matrixClient: MatrixClient, userId: string) {
         }
     }
 
-    return createRoom(createRoomOptions);
+    await createRoom(createRoomOptions);
 }
 
 type SetUpdating = (updating: boolean) => void;
@@ -319,6 +319,26 @@ function DevicesSection({ devices, userId, loading }: {devices: IDevice[], userI
     );
 }
 
+const MessageButton = ({ userId }: { userId: string }) => {
+    const cli = useContext(MatrixClientContext);
+    const [busy, setBusy] = useState(false);
+
+    return (
+        <AccessibleButton
+            onClick={async () => {
+                if (busy) return;
+                setBusy(true);
+                await openDMForUser(cli, userId);
+                setBusy(false);
+            }}
+            className="mx_UserInfo_field"
+            disabled={busy}
+        >
+            { _t("Message") }
+        </AccessibleButton>
+    );
+};
+
 const UserOptionsSection: React.FC<{
     member: RoomMember;
     isIgnored: boolean;
@@ -433,13 +453,9 @@ const UserOptionsSection: React.FC<{
         </AccessibleButton>
     );
 
-    let directMessageButton;
+    let directMessageButton: JSX.Element;
     if (!isMe) {
-        directMessageButton = (
-            <AccessibleButton onClick={() => { openDMForUser(cli, member.userId); }} className="mx_UserInfo_field">
-                { _t("Message") }
-            </AccessibleButton>
-        );
+        directMessageButton = <MessageButton userId={member.userId} />;
     }
 
     return (
@@ -1496,13 +1512,14 @@ const BasicUserInfo: React.FC<{
     </React.Fragment>;
 };
 
-type Member = User | RoomMember | GroupMember;
+export type Member = User | RoomMember | GroupMember;
 
 const UserInfoHeader: React.FC<{
     member: Member;
     e2eStatus: E2EStatus;
 }> = ({ member, e2eStatus }) => {
     const cli = useContext(MatrixClientContext);
+    const statusMessage = useUserStatusMessage(member);
 
     const onMemberAvatarClick = useCallback(() => {
         const avatarUrl = (member as RoomMember).getMxcAvatarUrl
@@ -1540,20 +1557,10 @@ const UserInfoHeader: React.FC<{
     let presenceState;
     let presenceLastActiveAgo;
     let presenceCurrentlyActive;
-    let statusMessage;
-
     if (member instanceof RoomMember && member.user) {
         presenceState = member.user.presence;
         presenceLastActiveAgo = member.user.lastActiveAgo;
         presenceCurrentlyActive = member.user.currentlyActive;
-
-        if (SettingsStore.getValue("feature_custom_status")) {
-            if ((member as RoomMember).user) {
-                statusMessage = member.user.unstable_statusMessage;
-            } else {
-                statusMessage = (member as unknown as User).unstable_statusMessage;
-            }
-        }
     }
 
     const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
@@ -1643,25 +1650,16 @@ const UserInfo: React.FC<IProps> = ({
 
     const classes = ["mx_UserInfo"];
 
-    let refireParams;
-    let previousPhase: RightPanelPhases;
+    let cardState: IRightPanelCardState;
     // We have no previousPhase for when viewing a UserInfo from a Group or without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {
-        previousPhase = RightPanelPhases.RoomMemberInfo;
-        refireParams = { member };
+        cardState = { member };
     } else if (room?.isSpaceRoom() && SpaceStore.spacesEnabled) {
-        previousPhase = previousPhase = RightPanelPhases.SpaceMemberList;
-        refireParams = { space: room };
-    } else if (room) {
-        previousPhase = RightPanelPhases.RoomMemberList;
+        cardState = { spaceId: room.roomId };
     }
 
     const onEncryptionPanelClose = () => {
-        dis.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: previousPhase,
-            refireParams: refireParams,
-        });
+        RightPanelStore.instance.popCard();
     };
 
     let content;
@@ -1675,7 +1673,8 @@ const UserInfo: React.FC<IProps> = ({
                     member={member as User}
                     groupId={groupId as string}
                     devices={devices}
-                    isRoomEncrypted={isRoomEncrypted} />
+                    isRoomEncrypted={isRoomEncrypted}
+                />
             );
             break;
         case RightPanelPhases.EncryptionPanel:
@@ -1716,8 +1715,7 @@ const UserInfo: React.FC<IProps> = ({
         header={header}
         onClose={onClose}
         closeLabel={closeLabel}
-        previousPhase={previousPhase}
-        refireParams={refireParams}
+        cardState={cardState}
     >
         { content }
     </BaseCard>;

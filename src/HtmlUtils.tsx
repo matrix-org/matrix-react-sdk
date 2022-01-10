@@ -20,24 +20,20 @@ limitations under the License.
 import React, { ReactNode } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import cheerio from 'cheerio';
-import * as linkify from 'linkifyjs';
-import _linkifyElement from 'linkifyjs/element';
-import _linkifyString from 'linkifyjs/string';
 import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
 import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
 
+import { _linkifyElement, _linkifyString } from './linkify-matrix';
 import { IExtendedSanitizeOptions } from './@types/sanitize-html';
-import linkifyMatrix from './linkify-matrix';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
 import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
-
-linkifyMatrix(linkify);
+import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
@@ -180,7 +176,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             attribs.target = '_blank'; // by default
 
             const transformed = tryTransformPermalinkToLocalHref(attribs.href);
-            if (transformed !== attribs.href || attribs.href.match(linkifyMatrix.ELEMENT_URL_PATTERN)) {
+            if (transformed !== attribs.href || attribs.href.match(ELEMENT_URL_PATTERN)) {
                 attribs.href = transformed;
                 delete attribs.target;
             }
@@ -211,8 +207,12 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             return { tagName, attribs: {} };
         }
 
-        const width = Number(attribs.width) || 800;
-        const height = Number(attribs.height) || 600;
+        const width = Math.min(Number(attribs.width) || 800, 800);
+        const height = Math.min(Number(attribs.height) || 600, 600);
+        // specify width/height as max values instead of absolute ones to allow object-fit to do its thing
+        // we only allow our own styles for this tag so overwrite the attribute
+        attribs.style = `max-width: ${width}px; max-height: ${height}px;`;
+
         attribs.src = mediaFromMxc(src).getThumbnailOfSourceHttp(width, height);
         return { tagName, attribs };
     },
@@ -227,9 +227,12 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         return { tagName, attribs };
     },
     '*': function(tagName: string, attribs: sanitizeHtml.Attributes) {
-        // Delete any style previously assigned, style is an allowedTag for font and span
-        // because attributes are stripped after transforming
-        delete attribs.style;
+        // Delete any style previously assigned, style is an allowedTag for font, span & img,
+        // because attributes are stripped after transforming.
+        // For img this is trusted as it is generated wholly within the img transformation method.
+        if (tagName !== "img") {
+            delete attribs.style;
+        }
 
         // Sanitise and transform data-mx-color and data-mx-bg-color to their CSS
         // equivalents
@@ -253,7 +256,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         });
 
         if (style) {
-            attribs.style = style;
+            attribs.style = style + (attribs.style || "");
         }
 
         return { tagName, attribs };
@@ -270,12 +273,15 @@ const sanitizeHtmlParams: IExtendedSanitizeOptions = {
         'details', 'summary',
     ],
     allowedAttributes: {
+        // attribute sanitization happens after transformations, so we have to accept `style` for font, span & img
+        // but strip during the transformation.
         // custom ones first:
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
         span: ['data-mx-maths', 'data-mx-bg-color', 'data-mx-color', 'data-mx-spoiler', 'style'], // custom to matrix
         div: ['data-mx-maths'],
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
-        img: ['src', 'width', 'height', 'alt', 'title'],
+        // img tags also accept width/height, we just map those to max-width & max-height during transformation
+        img: ['src', 'alt', 'title', 'style'],
         ol: ['start'],
         code: ['class'], // We don't actually allow all classes, we filter them in transformTags
     },
@@ -411,8 +417,9 @@ export interface IOptsReturnString extends IOpts {
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnString): string;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnNode): ReactNode;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts = {}) {
-    const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
+    const isFormattedBody = content.format === "org.matrix.custom.html" && content.formatted_body;
     let bodyHasEmoji = false;
+    let isHtmlMessage = false;
 
     let sanitizeParams = sanitizeHtmlParams;
     if (opts.forComposerQuote) {
@@ -449,20 +456,23 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyChain.stripHTMLReply(formattedBody);
         strippedBody = opts.stripReplyFallback ? ReplyChain.stripPlainReply(plainBody) : plainBody;
 
-        bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : plainBody);
+        bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
 
         // Only generate safeBody if the message was sent as org.matrix.custom.html
-        if (isHtmlMessage) {
+        if (isFormattedBody) {
             isDisplayedWithHtml = true;
-            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
 
-            if (SettingsStore.getValue("feature_latex_maths")) {
-                const phtml = cheerio.load(safeBody, {
-                    // @ts-ignore: The `_useHtmlParser2` internal option is the
-                    // simplest way to both parse and render using `htmlparser2`.
-                    _useHtmlParser2: true,
-                    decodeEntities: false,
-                });
+            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
+            const phtml = cheerio.load(safeBody, {
+                // @ts-ignore: The `_useHtmlParser2` internal option is the
+                // simplest way to both parse and render using `htmlparser2`.
+                _useHtmlParser2: true,
+                decodeEntities: false,
+            });
+            const isPlainText = phtml.html() === phtml.root().text();
+            isHtmlMessage = isFormattedBody && !isPlainText;
+
+            if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
                 // @ts-ignore - The types for `replaceWith` wrongly expect
                 // Cheerio instance to be returned.
                 phtml('div, span[data-mx-maths!=""]').replaceWith(function(i, e) {
@@ -533,10 +543,10 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
  * Linkifies the given string. This is a wrapper around 'linkifyjs/string'.
  *
  * @param {string} str string to linkify
- * @param {object} [options] Options for linkifyString. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyString. Default: linkifyMatrixOptions
  * @returns {string} Linkified string
  */
-export function linkifyString(str: string, options = linkifyMatrix.options): string {
+export function linkifyString(str: string, options = linkifyMatrixOptions): string {
     return _linkifyString(str, options);
 }
 
@@ -544,10 +554,10 @@ export function linkifyString(str: string, options = linkifyMatrix.options): str
  * Linkifies the given DOM element. This is a wrapper around 'linkifyjs/element'.
  *
  * @param {object} element DOM element to linkify
- * @param {object} [options] Options for linkifyElement. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyElement. Default: linkifyMatrixOptions
  * @returns {object}
  */
-export function linkifyElement(element: HTMLElement, options = linkifyMatrix.options): HTMLElement {
+export function linkifyElement(element: HTMLElement, options = linkifyMatrixOptions): HTMLElement {
     return _linkifyElement(element, options);
 }
 
@@ -555,10 +565,10 @@ export function linkifyElement(element: HTMLElement, options = linkifyMatrix.opt
  * Linkify the given string and sanitize the HTML afterwards.
  *
  * @param {string} dirtyHtml The HTML string to sanitize and linkify
- * @param {object} [options] Options for linkifyString. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyString. Default: linkifyMatrixOptions
  * @returns {string}
  */
-export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatrix.options): string {
+export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatrixOptions): string {
     return sanitizeHtml(linkifyString(dirtyHtml, options), sanitizeHtmlParams);
 }
 

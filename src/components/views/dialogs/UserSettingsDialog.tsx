@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab";
@@ -51,7 +52,7 @@ export enum UserTab {
 }
 
 interface IProps extends IDialogProps {
-    initialTabId?: string;
+    initialTabId?: UserTab;
 }
 
 interface IState {

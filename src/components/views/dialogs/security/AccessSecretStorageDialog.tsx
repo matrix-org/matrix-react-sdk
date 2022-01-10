@@ -18,6 +18,7 @@ import { debounce } from "lodash";
 import classNames from 'classnames';
 import React, { ChangeEvent, FormEvent } from 'react';
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import * as sdk from '../../../../index';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
@@ -27,8 +28,6 @@ import { _t } from '../../../../languageHandler';
 import { IDialogProps } from "../IDialogProps";
 import { accessSecretStorage } from "../../../../SecurityManager";
 import Modal from "../../../../Modal";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // Maximum acceptable size of a key file. It's 59 characters including the spaces we encode,
 // so this should be plenty and allow for people putting extra whitespace in the file because
@@ -288,10 +287,10 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         const resetButton = (
             <div className="mx_AccessSecretStorageDialog_reset">
                 { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
-                    a: (sub) => <a
-                        href=""
+                    a: (sub) => <AccessibleButton
+                        kind="link_inline"
                         onClick={this.onResetAllClick}
-                        className="mx_AccessSecretStorageDialog_reset_link">{ sub }</a>,
+                        className="mx_AccessSecretStorageDialog_reset_link">{ sub }</AccessibleButton>,
                 }) }
             </div>
         );
@@ -394,6 +393,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry_textInput">
                             <Field
                                 type="password"
+                                id="mx_securityKey"
                                 label={_t('Security Key')}
                                 value={this.state.recoveryKey}
                                 onChange={this.onRecoveryKeyChange}

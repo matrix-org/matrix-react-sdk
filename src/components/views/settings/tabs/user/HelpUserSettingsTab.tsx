@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import { _t, getCurrentLanguage } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -31,8 +33,6 @@ import * as ContextMenu from "../../../../structures/ContextMenu";
 import { toRightOf } from "../../../../structures/ContextMenu";
 import BugReportDialog from '../../../dialogs/BugReportDialog';
 import GenericTextContextMenu from "../../../context_menus/GenericTextContextMenu";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -337,7 +337,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         <details>
                             <summary>{ _t("Access Token") }</summary><br />
                             <b>{ _t("Your access token gives full access to your account."
-                               + " Do not share it with anyone." ) }</b>
+                               + " Do not share it with anyone.") }</b>
                             <div className="mx_HelpUserSettingsTab_copy">
                                 <code>{ MatrixClientPeg.get().getAccessToken() }</code>
                                 <AccessibleTooltipButton

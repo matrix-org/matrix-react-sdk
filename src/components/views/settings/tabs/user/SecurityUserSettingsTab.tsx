@@ -17,9 +17,10 @@ limitations under the License.
 
 import React from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
-import SdkConfig from "../../../../../SdkConfig";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Analytics from "../../../../../Analytics";
@@ -32,17 +33,15 @@ import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
 import CountlyAnalytics from "../../../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
-import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
-import { Room } from "matrix-js-sdk/src/models/room";
 import CryptographyPanel from "../../CryptographyPanel";
 import DevicesPanel from "../../DevicesPanel";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import CrossSigningPanel from "../../CrossSigningPanel";
 import EventIndexPanel from "../../EventIndexPanel";
 import InlineSpinner from "../../../elements/InlineSpinner";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
+import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -97,10 +96,10 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         };
     }
 
-    private onAction = ({ action }: ActionPayload)=> {
+    private onAction = ({ action }: ActionPayload) => {
         if (action === "ignore_state_changed") {
             const ignoredUserIds = MatrixClientPeg.get().getIgnoredUsers();
-            const newWaitingUnignored = this.state.waitingUnignored.filter(e=> ignoredUserIds.includes(e));
+            const newWaitingUnignored = this.state.waitingUnignored.filter(e => ignoredUserIds.includes(e));
             this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
         }
     };
@@ -118,7 +117,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     private updateAnalytics = (checked: boolean): void => {
         checked ? Analytics.enable() : Analytics.disable();
         CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
-        PosthogAnalytics.instance.updateAnonymityFromSettings(MatrixClientPeg.get().getUserId());
     };
 
     private onMyMembership = (room: Room, membership: string): void => {
@@ -272,8 +270,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     public render(): JSX.Element {
-        const brand = SdkConfig.get().brand;
-
         const secureBackup = (
             <div className='mx_SettingsTab_section'>
                 <span className="mx_SettingsTab_subheading">{ _t("Secure Backup") }</span>
@@ -312,24 +308,41 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         let privacySection;
-        if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
+        if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable() || PosthogAnalytics.instance.isEnabled()) {
+            const onClickAnalyticsLearnMore = () => {
+                if (PosthogAnalytics.instance.isEnabled()) {
+                    showAnalyticsLearnMoreDialog({
+                        primaryButton: _t("Okay"),
+                        hasCancel: false,
+                    });
+                } else {
+                    Analytics.showDetailsModal();
+                }
+            };
             privacySection = <React.Fragment>
                 <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
                     <div className="mx_SettingsTab_subsectionText">
-                        { _t(
-                            "%(brand)s collects anonymous analytics to allow us to improve the application.",
-                            { brand },
-                        ) }
-                        &nbsp;
-                        { _t("Privacy is important to us, so we don't collect any personal or " +
-                            "identifiable data for our analytics.") }
-                        <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
-                            { _t("Learn more about how we use analytics.") }
-                        </AccessibleButton>
+                        <p>
+                            { _t("Share anonymous data to help us identify issues. Nothing personal. " +
+                                 "No third parties.") }
+                        </p>
+                        <p>
+                            <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
+                                { _t("Learn more") }
+                            </AccessibleButton>
+                        </p>
                     </div>
-                    <SettingsFlag name="analyticsOptIn" level={SettingLevel.DEVICE} onChange={this.updateAnalytics} />
+                    {
+                        PosthogAnalytics.instance.isEnabled() ?
+                            <SettingsFlag name="pseudonymousAnalyticsOptIn"
+                                level={SettingLevel.ACCOUNT}
+                                onChange={this.updateAnalytics} /> :
+                            <SettingsFlag name="analyticsOptIn"
+                                level={SettingLevel.DEVICE}
+                                onChange={this.updateAnalytics} />
+                    }
                 </div>
             </React.Fragment>;
         }

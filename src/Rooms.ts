@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import AliasCustomisations from './customisations/Alias';
@@ -90,10 +91,10 @@ export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> 
 export async function setDMRoom(roomId: string, userId: string): Promise<void> {
     if (MatrixClientPeg.get().isGuest()) return;
 
-    const mDirectEvent = MatrixClientPeg.get().getAccountData('m.direct');
+    const mDirectEvent = MatrixClientPeg.get().getAccountData(EventType.Direct);
     let dmRoomMap = {};
 
-    if (mDirectEvent !== undefined) dmRoomMap = mDirectEvent.getContent();
+    if (mDirectEvent !== undefined) dmRoomMap = { ...mDirectEvent.getContent() }; // copy as we will mutate
 
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
@@ -117,7 +118,7 @@ export async function setDMRoom(roomId: string, userId: string): Promise<void> {
         dmRoomMap[userId] = roomList;
     }
 
-    await MatrixClientPeg.get().setAccountData('m.direct', dmRoomMap);
+    await MatrixClientPeg.get().setAccountData(EventType.Direct, dmRoomMap);
 }
 
 /**
@@ -162,7 +163,7 @@ export function roomContextDetailsText(room: Room): string {
 
     const dmPartner = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
     if (dmPartner) {
-        return room.getMember(dmPartner)?.rawDisplayName;
+        return dmPartner;
     }
 
     const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(room.roomId);

@@ -15,9 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
+import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
+import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import {
     ContentRules,
     IContentRules,
@@ -26,7 +29,6 @@ import {
     VectorState,
 } from "../../../notifications";
 import { _t, TranslatedString } from "../../../languageHandler";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import SettingsStore from "../../../settings/SettingsStore";
 import StyledRadioButton from "../elements/StyledRadioButton";
@@ -38,8 +40,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -148,7 +148,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private async refreshRules(): Promise<Partial<IState>> {
         const ruleSets = await MatrixClientPeg.get().getPushRules();
-
         const categories = {
             [RuleId.Master]: RuleClass.Master,
 
@@ -182,6 +181,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         for (const k in ruleSets.global) {
             // noinspection JSUnfilteredForInLoop
             const kind = k as PushRuleKind;
+
             for (const r of ruleSets.global[kind]) {
                 const rule: IAnnotatedPushRule = Object.assign(r, { kind });
                 const category = categories[rule.rule_id] ?? RuleClass.Other;
@@ -471,6 +471,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private renderTopSection() {
         const masterSwitch = <LabelledToggleSwitch
+            data-test-id='notif-master-switch'
             value={!this.isInhibited}
             label={_t("Enable for this account")}
             onChange={this.onMasterRuleChanged}
@@ -484,6 +485,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         const emailSwitches = (this.state.threepids || []).filter(t => t.medium === ThreepidMedium.Email)
             .map(e => <LabelledToggleSwitch
+                data-test-id='notif-email-switch'
                 key={e.address}
                 value={this.state.pushers.some(p => p.kind === "email" && p.pushkey === e.address)}
                 label={_t("Enable email notifications for %(email)s", { email: e.address })}
@@ -495,6 +497,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             { masterSwitch }
 
             <LabelledToggleSwitch
+                data-test-id='notif-setting-notificationsEnabled'
                 value={SettingsStore.getValue("notificationsEnabled")}
                 onChange={this.onDesktopNotificationsChanged}
                 label={_t('Enable desktop notifications for this session')}
@@ -502,6 +505,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             />
 
             <LabelledToggleSwitch
+                data-test-id='notif-setting-notificationBodyEnabled'
                 value={SettingsStore.getValue("notificationBodyEnabled")}
                 onChange={this.onDesktopShowBodyChanged}
                 label={_t('Show message in desktop notification')}
@@ -509,6 +513,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             />
 
             <LabelledToggleSwitch
+                data-test-id='notif-setting-audioNotificationsEnabled'
                 value={SettingsStore.getValue("audioNotificationsEnabled")}
                 onChange={this.onAudioNotificationsChanged}
                 label={_t('Enable audible notifications for this session')}
@@ -559,22 +564,34 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             />;
         }
 
+        const VectorStateToLabel = {
+            [VectorState.On]: _t('On'),
+            [VectorState.Off]: _t('Off'),
+            [VectorState.Loud]: _t('Noisy'),
+        };
+
         const makeRadio = (r: IVectorPushRule, s: VectorState) => (
             <StyledRadioButton
-                key={r.ruleId}
+                key={r.ruleId + s}
                 name={r.ruleId}
                 checked={r.vectorState === s}
                 onChange={this.onRadioChecked.bind(this, r, s)}
                 disabled={this.state.phase === Phase.Persisting}
+                aria-label={VectorStateToLabel[s]}
             />
         );
 
-        const rows = this.state.vectorPushRules[category].map(r => <tr key={category + r.ruleId}>
-            <td>{ r.description }</td>
-            <td>{ makeRadio(r, VectorState.Off) }</td>
-            <td>{ makeRadio(r, VectorState.On) }</td>
-            <td>{ makeRadio(r, VectorState.Loud) }</td>
-        </tr>);
+        const fieldsetRows = this.state.vectorPushRules[category].map(r =>
+            <fieldset
+                key={category + r.ruleId}
+                data-test-id={category + r.ruleId}
+                className='mx_UserNotifSettings_gridRowContainer'
+            >
+                <legend className='mx_UserNotifSettings_gridRowLabel'>{ r.description }</legend>
+                { makeRadio(r, VectorState.Off) }
+                { makeRadio(r, VectorState.On) }
+                { makeRadio(r, VectorState.Loud) }
+            </fieldset>);
 
         let sectionName: TranslatedString;
         switch (category) {
@@ -592,19 +609,13 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
 
         return <>
-            <table className='mx_UserNotifSettings_pushRulesTable'>
-                <thead>
-                    <tr>
-                        <th>{ sectionName }</th>
-                        <th>{ _t("Off") }</th>
-                        <th>{ _t("On") }</th>
-                        <th>{ _t("Noisy") }</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { rows }
-                </tbody>
-            </table>
+            <div data-test-id={`notif-section-${category}`} className='mx_UserNotifSettings_grid'>
+                <span className='mx_UserNotifSettings_gridRowLabel mx_UserNotifSettings_gridRowHeading'>{ sectionName }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Off] }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.On] }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Loud] }</span>
+                { fieldsetRows }
+            </div>
             { clearNotifsButton }
             { keywordComposer }
         </>;
@@ -635,7 +646,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // Ends up default centered
             return <Spinner />;
         } else if (this.state.phase === Phase.Error) {
-            return <p>{ _t("There was an error loading your notification settings.") }</p>;
+            return <p data-test-id='error-message'>{ _t("There was an error loading your notification settings.") }</p>;
         }
 
         return <div className='mx_UserNotifSettings'>
