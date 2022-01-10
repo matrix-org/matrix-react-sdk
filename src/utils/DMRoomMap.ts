@@ -132,7 +132,7 @@ export default class DMRoomMap {
         }
     }
 
-    public getDMRoomsForUserId(userId): string[] {
+    public getDMRoomsForUserId(userId: string): string[] {
         // Here, we return the empty list if there are no rooms,
         // since the number of conversations you have with this user is zero.
         return this.getUserToRooms()[userId] || [];
