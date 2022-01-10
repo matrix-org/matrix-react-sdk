@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641804609285,
+  "lastUpdate": 1641804613309,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52268,6 +52268,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4164.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9501d3b2267019141df58b681793543a6182b3bd",
+          "message": "Fix typing notification colors (#7490)",
+          "timestamp": "2022-01-10T08:42:34Z",
+          "tree_id": "b2a85285909b0753188929fa3bb154331f6df1b9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9501d3b2267019141df58b681793543a6182b3bd"
+        },
+        "date": 1641804608537,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5461.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 737.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
