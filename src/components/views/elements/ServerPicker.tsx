@@ -70,8 +70,8 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
     }
 
     const serverName: JSX.Element = <TextWithTooltip
-                    class={serverConfig.hsNameIsDifferent ? "mx_Login_underlinedServerName" : ""}
-                    tooltip={serverConfig.hsUrl}>
+        class={serverConfig.hsNameIsDifferent ? "mx_Login_underlinedServerName" : ""}
+        tooltip={serverConfig.hsUrl}>
         { serverConfig.hsName }
     </TextWithTooltip>;
 
