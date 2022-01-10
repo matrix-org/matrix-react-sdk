@@ -451,9 +451,9 @@ $left-gutter: 64px;
         border: 1px solid transparent;
     }
 
+    // selector wrongly applies to pill avatars but those have explicit width/height passed at a higher specificity
     &.markdown-body img {
         // the image will have max-width and max-height applied during sanitization
-        // wrongly applies to pill avatars but those have explicit width/height passed at a higher specificity
         width: 100%;
         height: 100%;
         object-fit: contain;

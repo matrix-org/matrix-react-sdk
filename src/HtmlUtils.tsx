@@ -280,6 +280,7 @@ const sanitizeHtmlParams: IExtendedSanitizeOptions = {
         span: ['data-mx-maths', 'data-mx-bg-color', 'data-mx-color', 'data-mx-spoiler', 'style'], // custom to matrix
         div: ['data-mx-maths'],
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
+        // img tags also accept width/height, we just map those to max-width & max-height during transformation
         img: ['src', 'alt', 'title', 'style'],
         ol: ['start'],
         code: ['class'], // We don't actually allow all classes, we filter them in transformTags
