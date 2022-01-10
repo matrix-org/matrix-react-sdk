@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641819609171,
+  "lastUpdate": 1641819633791,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52880,6 +52880,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 587.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f60d8d2c79064736bac2aa8bc101984ba69af27",
+          "message": "Consider continuations when resolving whether a tile is last in section (#7461)",
+          "timestamp": "2022-01-10T12:53:37Z",
+          "tree_id": "01614d8302431cfcfc8557994778fca58560e7e8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f60d8d2c79064736bac2aa8bc101984ba69af27"
+        },
+        "date": 1641819629204,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4791.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 914.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1688.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4318.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
