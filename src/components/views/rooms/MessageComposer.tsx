@@ -58,7 +58,6 @@ import Modal from "../../../Modal";
 import RoomContext from '../../../contexts/RoomContext';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
-import LocationShareType from "../location/LocationShareType";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import { CollapsibleButton, ICollapsibleButtonProps } from './CollapsibleButton';
 import { LocationButton, textForLocation } from '../location/LocationButton';
@@ -453,11 +452,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private shareLocation = (
-        uri: string,
-        ts: number,
-        _type: LocationShareType,
-    ): boolean => {
+    private shareLocation = (uri: string, ts: number): boolean => {
         if (!uri) return false;
         try {
             const text = textForLocation(uri, ts, null);
