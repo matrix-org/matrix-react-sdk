@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641823316787,
+  "lastUpdate": 1641829143877,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53096,6 +53096,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 643.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c1ce77d483accc3cfafb9a1127a7978e872d186",
+          "message": "Properly maintain aspect ratio of inline images (#7503)",
+          "timestamp": "2022-01-10T15:32:06Z",
+          "tree_id": "7280ef0d2bf0b9931b1366ff360a264ea32a8721",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c1ce77d483accc3cfafb9a1127a7978e872d186"
+        },
+        "date": 1641829139908,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5113.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 973,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1752.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4583.5,
             "unit": "ms",
             "extra": "type: measure"
           }
