@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641820795126,
+  "lastUpdate": 1641821837915,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53012,6 +53012,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4427.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "aaron@raim.ist",
+            "name": "Aaron Raimist",
+            "username": "aaronraimist"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "368085982f050e81b9068dfdcb4cf4daf5228ebc",
+          "message": "Add hover background color to SSO buttons (#7500)",
+          "timestamp": "2022-01-10T13:30:31Z",
+          "tree_id": "784a56c6a97ac3d89a64753e1b8d5b4405a859a4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/368085982f050e81b9068dfdcb4cf4daf5228ebc"
+        },
+        "date": 1641821833982,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5120.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 993.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1614.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4359.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
