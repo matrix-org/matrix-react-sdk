@@ -31,7 +31,7 @@ interface IOpts {
     label?: string;
     userText?: string;
     sendLogs?: boolean;
-    progressCallback?: (string) => void;
+    progressCallback?: (s: string) => void;
     customFields?: Record<string, string>;
 }
 
