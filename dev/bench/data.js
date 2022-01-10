@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641809374536,
+  "lastUpdate": 1641809679244,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -52484,6 +52484,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4408.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9562deb28cfc91588530ff30d4140976cb2f32b4",
+          "message": "Remove the Description from the location picker (#7485)",
+          "timestamp": "2022-01-10T10:07:51Z",
+          "tree_id": "d496ea3d8581b5bef9ce04d19984e105c0869fad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9562deb28cfc91588530ff30d4140976cb2f32b4"
+        },
+        "date": 1641809675439,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4745.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 630.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
