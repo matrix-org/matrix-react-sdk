@@ -31,6 +31,7 @@ import SettingsStore from "../../settings/SettingsStore";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
     private featureMarkedUnreadWatcherRef = null;
+
     constructor(public readonly room: Room) {
         super();
         this.room.on("Room.receipt", this.handleReadReceipt);
@@ -38,7 +39,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.on("Room.redaction", this.handleRoomEventUpdate);
         this.room.on("Room.myMembership", this.handleMembershipUpdate);
         this.room.on("Room.localEchoUpdated", this.handleLocalEchoUpdated);
-        this.room.on("Room.accountData", this.handleRoomAccountDataUpdate)
+        this.room.on("Room.accountData", this.handleRoomAccountDataUpdate);
         MatrixClientPeg.get().on("Event.decrypted", this.handleRoomEventUpdate);
         MatrixClientPeg.get().on("accountData", this.handleAccountDataUpdate);
 

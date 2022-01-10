@@ -236,4 +236,12 @@ limitations under the License.
     .mx_RoomTile_iconSignOut::before {
         mask-image: url('$(res)/img/element-icons/leave.svg');
     }
+
+    .mx_RoomTile_markAsUnread::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/mark-as-unread.svg');
+    }
+
+    .mx_RoomTile_markAsRead::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/mark-as-read.svg');
+    }
 }

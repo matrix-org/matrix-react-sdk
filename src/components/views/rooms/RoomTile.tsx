@@ -52,8 +52,6 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { getUnsentMessages } from "../../structures/RoomStatusBar";
-import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import { isRoomMarkedAsUnread, setRoomMarkedAsUnread } from "../../../Rooms";
 import SettingsStore from "../../../settings/SettingsStore";
 import SpaceStore from "../../../stores/spaces/SpaceStore";

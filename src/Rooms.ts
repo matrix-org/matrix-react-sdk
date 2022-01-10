@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import AliasCustomisations from './customisations/Alias';
 import DMRoomMap from "./utils/DMRoomMap";
 import SpaceStore from "./stores/spaces/SpaceStore";
 import { _t } from "./languageHandler";
-import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 /**
  * Given a room object, return the alias we should use for it,
