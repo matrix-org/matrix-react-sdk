@@ -32,7 +32,6 @@ import SystemFontController from './controllers/SystemFontController';
 import UseSystemFontController from './controllers/UseSystemFontController';
 import { SettingLevel } from "./SettingLevel";
 import SettingController from "./controllers/SettingController";
-import { RightPanelPhases } from "../stores/RightPanelStorePhases";
 import { isMac } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
@@ -417,6 +416,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("Use a more compact 'Modern' layout"),
         default: false,
+        controller: new IncompatibleController("layout", false, v => v !== Layout.Group),
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
@@ -770,21 +770,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show previews/thumbnails for images"),
         default: true,
     },
-    "showRightPanelInRoom": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
+    "RightPanel.phasesGlobal": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: null,
     },
-    "showRightPanelInGroup": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
-    },
-    "lastRightPanelPhaseForRoom": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: RightPanelPhases.RoomSummary,
-    },
-    "lastRightPanelPhaseForGroup": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: RightPanelPhases.GroupMemberList,
+    "RightPanel.phases": {
+        supportedLevels: [SettingLevel.ROOM_DEVICE],
+        default: null,
     },
     "enableEventIndexing": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -871,6 +863,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             [MetaSpace.Home]: true,
         }, false),
     },
+    "Spaces.showPeopleInSpace": {
+        supportedLevels: [SettingLevel.ROOM_ACCOUNT],
+        default: true,
+        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
+    },
     "showCommunitiesInsteadOfSpaces": {
         displayName: _td("Display Communities instead of Spaces"),
         description: _td("Temporarily show communities instead of Spaces for this session. " +
@@ -956,6 +953,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
     },
     [UIFeature.AdvancedSettings]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.TimelineEnableRelativeDates]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },

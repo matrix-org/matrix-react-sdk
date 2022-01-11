@@ -24,6 +24,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType } from 'matrix-js-sdk/src/models/room';
+import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -60,18 +61,19 @@ import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
 import SettingsStore from "../../../settings/SettingsStore";
 import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
-import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
+import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
 import { RovingThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
 import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
+import AccessibleButton from '../elements/AccessibleButton';
+import { CardContext } from '../right_panel/BaseCard';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -449,7 +451,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         // Check to make sure the sending state is appropriate. A null/undefined send status means
         // that the message is 'sent', so we're just double checking that it's explicitly not sent.
-        if (this.props.eventSendStatus && this.props.eventSendStatus !== 'sent') return false;
+        if (this.props.eventSendStatus && this.props.eventSendStatus !== EventStatus.SENT) return false;
 
         // If anyone has read the event besides us, we don't want to show a sent receipt.
         const receipts = this.props.readReceipts || [];
@@ -466,7 +468,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         // Check the event send status to see if we are pending. Null/undefined status means the
         // message was sent, so check for that and 'sent' explicitly.
-        if (!this.props.eventSendStatus || this.props.eventSendStatus === 'sent') return false;
+        if (!this.props.eventSendStatus || this.props.eventSendStatus === EventStatus.SENT) return false;
 
         // Default to showing - there's no other event properties/behaviours we care about at
         // this point.
@@ -513,7 +515,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(room);
 
-        this.threadState = notifications.threadsState.get(thread);
+        this.threadState = notifications.getThreadRoomState(thread);
 
         this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
         this.onThreadStateUpdate();
@@ -670,21 +672,23 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         return (
-            <div
-                className="mx_ThreadInfo"
-                onClick={() => {
-                    dispatchShowThreadEvent(
-                        this.props.mxEvent,
-                    );
-                }}
-            >
-                <span className="mx_ThreadInfo_threads-amount">
-                    { _t("%(count)s reply", {
-                        count: this.thread.length,
-                    }) }
-                </span>
-                { this.renderThreadLastMessagePreview() }
-            </div>
+            <CardContext.Consumer>
+                { context =>
+                    <div
+                        className="mx_ThreadInfo"
+                        onClick={() => {
+                            showThread({ rootEvent: this.props.mxEvent, push: context.isCard });
+                        }}
+                    >
+                        <span className="mx_ThreadInfo_threads-amount">
+                            { _t("%(count)s reply", {
+                                count: this.thread.length,
+                            }) }
+                        </span>
+                        { this.renderThreadLastMessagePreview() }
+                    </div>
+                }
+            </CardContext.Consumer>
         );
     }
 
@@ -1067,6 +1071,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             isBubbleMessage,
             isInfoMessage,
             isLeftAlignedBubbleMessage,
+            noBubbleEvent,
         } = getEventDisplayInfo(this.props.mxEvent);
         const { isQuoteExpanded } = this.state;
 
@@ -1118,9 +1123,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_unverified: !isBubbleMessage && this.state.verified === E2EState.Warning,
             mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2EState.Unknown,
             mx_EventTile_bad: isEncryptionFailure,
-            mx_EventTile_emote: msgtype === 'm.emote',
+            mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp: this.props.tileShape === TileShape.ThreadPanel,
+            mx_EventTile_noBubble: noBubbleEvent,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -1239,16 +1245,16 @@ export default class EventTile extends React.Component<IProps, IState> {
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
                 <p>
                     { this.state.previouslyRequestedKeys ?
-                        _t( 'Your key share request has been sent - please check your other sessions ' +
-                            'for key share requests.') :
-                        _t( 'Key share requests are sent to your other sessions automatically. If you ' +
-                            'rejected or dismissed the key share request on your other sessions, click ' +
-                            'here to request the keys for this session again.')
+                        _t('Your key share request has been sent - please check your other sessions ' +
+                           'for key share requests.') :
+                        _t('Key share requests are sent to your other sessions automatically. If you ' +
+                           'rejected or dismissed the key share request on your other sessions, click ' +
+                           'here to request the keys for this session again.')
                     }
                 </p>
                 <p>
-                    { _t( 'If your other sessions do not have the key for this message you will not ' +
-                            'be able to decrypt them.')
+                    { _t('If your other sessions do not have the key for this message you will not ' +
+                         'be able to decrypt them.')
                     }
                 </p>
             </div>;
@@ -1257,7 +1263,17 @@ export default class EventTile extends React.Component<IProps, IState> {
             _t(
                 '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
                 {},
-                { 'requestLink': (sub) => <a tabIndex={0} onClick={this.onRequestKeysClick}>{ sub }</a> },
+                {
+                    'requestLink': (sub) =>
+                        <AccessibleButton
+                            className="mx_EventTile_rerequestKeysCta"
+                            kind='link_inline'
+                            tabIndex={0}
+                            onClick={this.onRequestKeysClick}
+                        >
+                            { sub }
+                        </AccessibleButton>,
+                },
             );
 
         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
@@ -1409,13 +1425,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-
+                        "onClick": () => showThread({ rootEvent: this.props.mxEvent, push: true }),
                     }, <>
                         { sender }
                         { avatar }
                         <div
                             className={lineClasses}
-                            onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
                             key="mx_EventTile_line"
                         >
                             { linkedTimestamp }
@@ -1429,7 +1444,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             <RovingAccessibleTooltipButton
                                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
                                 title={_t("Reply in thread")}
-                                onClick={() => dispatchShowThreadEvent(this.props.mxEvent)}
+                                onClick={() => showThread({ rootEvent: this.props.mxEvent, push: true })}
                                 key="thread"
                             />
                             <RovingThreadListContextMenu

@@ -19,6 +19,8 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import classNames from 'classnames';
+import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
+import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
 
 import { Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -42,7 +44,6 @@ import CallContainer from '../views/voip/CallContainer';
 import { ViewRoomDeltaPayload } from "../../dispatcher/payloads/ViewRoomDeltaPayload";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import NonUrgentToastContainer from "./NonUrgentToastContainer";
-import { ToggleRightPanelPayload } from "../../dispatcher/payloads/ToggleRightPanelPayload";
 import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import Modal from "../../Modal";
 import { ICollapseConfig } from "../../resizer/distributors/collapse";
@@ -66,13 +67,17 @@ import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
 import LegacyCommunityPreview from "./LegacyCommunityPreview";
+import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
 // NB. this is just for server notices rather than pinned messages in general.
 const MAX_PINNED_NOTICES_PER_ROOM = 2;
 
-export function getInputableElement(el: HTMLElement): HTMLElement | null {
+// Used to find the closest inputable thing. Because of how our composer works,
+// your caret might be within a paragraph/font/div/whatever within the
+// contenteditable rather than directly in something inputable.
+function getInputableElement(el: HTMLElement): HTMLElement | null {
     return el.closest("input, textarea, select, [contenteditable=true]");
 }
 
@@ -104,24 +109,8 @@ interface IProps {
     forceTimeline?: boolean; // see props on MatrixChat
 }
 
-interface IUsageLimit {
-    // "hs_disabled" is NOT a specced string, but is used in Synapse
-    // This is tracked over at https://github.com/matrix-org/synapse/issues/9237
-    // eslint-disable-next-line camelcase
-    limit_type: "monthly_active_user" | "hs_disabled" | string;
-    // eslint-disable-next-line camelcase
-    admin_contact?: string;
-}
-
 interface IState {
-    syncErrorData?: {
-        error: {
-            // This is not specced, but used in Synapse. See
-            // https://github.com/matrix-org/synapse/issues/9237#issuecomment-768238922
-            data: IUsageLimit;
-            errcode: string;
-        };
-    };
+    syncErrorData?: ISyncStateData;
     usageLimitDismissed: boolean;
     usageLimitEventContent?: IUsageLimit;
     usageLimitEventTs?: number;
@@ -147,6 +136,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     protected readonly _roomView: React.RefObject<any>;
     protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
     protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
+    protected layoutWatcherRef: string;
     protected compactLayoutWatcherRef: string;
     protected backgroundImageWatcherRef: string;
     protected resizer: Resizer;
@@ -190,6 +180,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         );
         this._matrixClient.on("RoomState.events", this.onRoomStateEvents);
 
+        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, this.onCompactLayoutChanged);
         this.compactLayoutWatcherRef = SettingsStore.watchSetting(
             "useCompactLayout", null, this.onCompactLayoutChanged,
         );
@@ -212,6 +203,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         this._matrixClient.removeListener("sync", this.onSync);
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
+        SettingsStore.unwatchSetting(this.layoutWatcherRef);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
         SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
         this.resizer.detach();
@@ -295,39 +287,29 @@ class LoggedInView extends React.Component<IProps, IState> {
         }
     };
 
-    onCompactLayoutChanged = (setting, roomId, level, valueAtLevel, newValue) => {
+    private onCompactLayoutChanged = () => {
         this.setState({
-            useCompactLayout: valueAtLevel,
+            useCompactLayout: SettingsStore.getValue("useCompactLayout"),
         });
     };
 
-    onSync = (syncState, oldSyncState, data) => {
-        const oldErrCode = (
-            this.state.syncErrorData &&
-            this.state.syncErrorData.error &&
-            this.state.syncErrorData.error.errcode
-        );
+    private onSync = (syncState: SyncState, oldSyncState?: SyncState, data?: ISyncStateData): void => {
+        const oldErrCode = this.state.syncErrorData?.error?.errcode;
         const newErrCode = data && data.error && data.error.errcode;
         if (syncState === oldSyncState && oldErrCode === newErrCode) return;
 
-        if (syncState === 'ERROR') {
-            this.setState({
-                syncErrorData: data,
-            });
-        } else {
-            this.setState({
-                syncErrorData: null,
-            });
-        }
+        this.setState({
+            syncErrorData: syncState === SyncState.Error ? data : null,
+        });
 
-        if (oldSyncState === 'PREPARED' && syncState === 'SYNCING') {
+        if (oldSyncState === SyncState.Prepared && syncState === SyncState.Syncing) {
             this.updateServerNoticeEvents();
         } else {
             this.calculateServerLimitToast(this.state.syncErrorData, this.state.usageLimitEventContent);
         }
     };
 
-    onRoomStateEvents = (ev, state) => {
+    private onRoomStateEvents = (ev: MatrixEvent): void => {
         const serverNoticeList = RoomListStore.instance.orderedLists[DefaultTagID.ServerNotice];
         if (serverNoticeList && serverNoticeList.some(r => r.roomId === ev.getRoomId())) {
             this.updateServerNoticeEvents();
@@ -343,7 +325,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     private calculateServerLimitToast(syncError: IState["syncErrorData"], usageLimitEventContent?: IUsageLimit) {
         const error = syncError && syncError.error && syncError.error.errcode === "M_RESOURCE_LIMIT_EXCEEDED";
         if (error) {
-            usageLimitEventContent = syncError.error.data;
+            usageLimitEventContent = syncError.error.data as IUsageLimit;
         }
 
         // usageLimitDismissed is true when the user has explicitly hidden the toast
@@ -507,10 +489,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
             case NavigationAction.ToggleRoomSidePanel:
                 if (this.props.page_type === "room_view" || this.props.page_type === "group_view") {
-                    dis.dispatch<ToggleRightPanelPayload>({
-                        action: Action.ToggleRightPanel,
-                        type: this.props.page_type === "room_view" ? "room" : "group",
-                    });
+                    RightPanelStore.instance.togglePanel();
                     handled = true;
                 }
                 break;

@@ -20,7 +20,7 @@ import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import BaseCard from "../views/right_panel/BaseCard";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import { TileShape } from '../views/rooms/EventTile';
@@ -30,7 +30,6 @@ import { Layout } from '../../settings/enums/Layout';
 import TimelinePanel from './TimelinePanel';
 import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from '../../dispatcher/payloads';
-import { SetRightPanelPhasePayload } from '../../dispatcher/payloads/SetRightPanelPhasePayload';
 import { Action } from '../../dispatcher/actions';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import { E2EStatus } from '../../utils/ShieldUtils';
@@ -40,9 +39,7 @@ import ContentMessages from '../../ContentMessages';
 import UploadBar from './UploadBar';
 import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
-import RightPanelStore from '../../stores/RightPanelStore';
-import SettingsStore from '../../settings/SettingsStore';
-import { WidgetLayoutStore } from '../../stores/widgets/WidgetLayoutStore';
+import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 
 interface IProps {
     room: Room;
@@ -52,7 +49,7 @@ interface IProps {
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
-    initialEventHighlighted?: boolean;
+    isInitialEventHighlighted?: boolean;
 }
 interface IState {
     thread?: Thread;
@@ -94,10 +91,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
 
         if (prevProps.room !== this.props.room) {
-            dis.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
-                phase: RightPanelPhases.RoomSummary,
-            });
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary });
         }
     }
 
@@ -135,16 +129,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private setupThread = (mxEv: MatrixEvent) => {
         let thread = this.props.room.threads.get(mxEv.getId());
         if (!thread) {
-            const client = MatrixClientPeg.get();
-            // Do not attach this thread object to the event for now
-            // TODO: When local echo gets reintroduced it will be important
-            // to add that back in, and the threads model should go through the
-            // same reconciliation algorithm as events
-            thread = new Thread(
-                [mxEv],
-                this.props.room,
-                client,
-            );
+            thread = this.props.room.createThread([mxEv]);
         }
         thread.on(ThreadEvent.Update, this.updateThread);
         thread.once(ThreadEvent.Ready, this.updateThread);
@@ -177,7 +162,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private onScroll = (): void => {
-        if (this.props.initialEvent && this.props.initialEventHighlighted) {
+        if (this.props.initialEvent && this.props.isInitialEventHighlighted) {
             dis.dispatch({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
@@ -198,7 +183,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        const highlightedEventId = this.props.initialEventHighlighted
+        const highlightedEventId = this.props.isInitialEventHighlighted
             ? this.props.initialEvent?.getId()
             : null;
 
@@ -206,24 +191,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
             rel_type: RelationType.Thread,
             event_id: this.state.thread?.id,
         };
-
-        let previousPhase = RightPanelStore.getSharedInstance().previousPhase;
-        if (!SettingsStore.getValue("feature_maximised_widgets")) {
-            previousPhase = RightPanelPhases.ThreadPanel;
-        }
-
-        // change the previous phase to the threadPanel in case there is no maximised widget anymore
-        if (!WidgetLayoutStore.instance.hasMaximisedWidget(this.props.room)) {
-            previousPhase = RightPanelPhases.ThreadPanel;
-        }
-
-        // Make sure the previous Phase is always one of the two: Timeline or ThreadPanel
-        if (![RightPanelPhases.ThreadPanel, RightPanelPhases.Timeline].includes(previousPhase)) {
-            previousPhase = RightPanelPhases.ThreadPanel;
-        }
-        const previousPhaseLabels = {};
-        previousPhaseLabels[RightPanelPhases.ThreadPanel] = _t("All threads");
-        previousPhaseLabels[RightPanelPhases.Timeline] = _t("Chat");
 
         return (
             <RoomContext.Provider value={{
@@ -235,8 +202,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 <BaseCard
                     className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
-                    previousPhase={previousPhase}
-                    previousPhaseLabel={previousPhaseLabels[previousPhase]}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
                 >

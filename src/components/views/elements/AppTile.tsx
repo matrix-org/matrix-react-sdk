@@ -77,6 +77,7 @@ interface IProps {
     // sets the pointer-events property on the iframe
     pointerEvents?: string;
     widgetPageTitle?: string;
+    hideMaximiseButton?: boolean;
 }
 
 interface IState {
@@ -508,7 +509,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                     // Also wrap the PersistedElement in a div to fix the height, otherwise
                     // AppTile's border is in the wrong place
                     appTileBody = <div className="mx_AppTile_persistedWrapper">
-                        <PersistedElement persistKey={this.persistKey}>
+                        <PersistedElement zIndex={this.props.miniMode ? 10 : 9}persistKey={this.persistKey}>
                             { appTileBody }
                         </PersistedElement>
                     </div>;
@@ -541,7 +542,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         }
         let maxMinButton;
-        if (SettingsStore.getValue("feature_maximised_widgets")) {
+        if (SettingsStore.getValue("feature_maximised_widgets") && !this.props.hideMaximiseButton) {
             const widgetIsMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);
             maxMinButton = <AccessibleButton
