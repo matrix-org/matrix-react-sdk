@@ -309,6 +309,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                                 showPopout={false}
                                 handleMinimisePointerEvents={true}
                                 userWidget={true}
+                                hideMaximiseButton={true}
                             />
                         </PersistedElement>
                     </div>
