@@ -260,11 +260,11 @@ export default class PipView extends React.Component<IProps, IState> {
 
             notInRightPanel =
                 !(RightPanelStore.instance.currentCard.phase == RightPanelPhases.Widget &&
-                wId == RightPanelStore.instance.currentCard.state?.widgetId);
+                    wId == RightPanelStore.instance.currentCard.state?.widgetId);
             notInCenterContainer =
-                    !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center).some((app)=>app.id == wId);
+                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Center).some((app) => app.id == wId);
             notInTopContainer =
-                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).some(app=>app.id == wId);
+                !wls.getContainerWidgets(persistentWidgetInRoom, Container.Top).some(app => app.id == wId);
         }
 
         // The widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
@@ -304,7 +304,7 @@ export default class PipView extends React.Component<IProps, IState> {
                 <div className={pipViewClasses}>
                     <CallViewHeader
                         type={undefined}
-                        onPipMouseDown={(event)=>{onStartMoving(event); this.onStartMoving.bind(this)();}}
+                        onPipMouseDown={(event) => { onStartMoving(event); this.onStartMoving.bind(this)(); }}
                         pipMode={pipMode}
                         callRooms={[roomForWidget]}
                     />
