@@ -590,7 +590,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             }
 
             this.setState<null>(updatedState, () => {
-                this.messagePanel.current.updateTimelineMinHeight();
+                this.messagePanel.current?.updateTimelineMinHeight();
                 if (callRMUpdated) {
                     this.props.onReadMarkerUpdated?.();
                 }
@@ -680,6 +680,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     private onSync = (clientSyncState: SyncState, prevState: SyncState, data: object): void => {
+        if (this.unmounted) return;
         this.setState({ clientSyncState });
     };
 
