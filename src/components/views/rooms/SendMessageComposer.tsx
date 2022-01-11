@@ -346,12 +346,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
                 if (cmd.category === CommandCategories.messages) {
                     content = await runSlashCommand(cmd, args, this.props.room.roomId, threadId);
+                    if (!content) {
+                        return; // errored
+                    }
+
                     if (replyToEvent) {
-                        addReplyToMessageContent(
-                            content,
-                            replyToEvent,
-                            this.props.permalinkCreator,
-                        );
+                        addReplyToMessageContent(content, replyToEvent, this.props.permalinkCreator);
                     }
                     attachRelation(content, this.props.relation);
                 } else {

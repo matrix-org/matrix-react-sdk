@@ -323,6 +323,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     const threadId = this.props.editState?.getEvent()?.getThread()?.id || null;
                     if (cmd.category === CommandCategories.messages) {
                         editContent["m.new_content"] = await runSlashCommand(cmd, args, roomId, threadId);
+                        if (!editContent["m.new_content"]) {
+                            return; // errored
+                        }
                     } else {
                         runSlashCommand(cmd, args, roomId, threadId);
                         shouldSend = false;
