@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641918343704,
+  "lastUpdate": 1641921486210,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53696,6 +53696,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 958.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3ca84fcd25e33e1fbc6c572edae10cc23e105fa6",
+          "message": "Improve look of call events in bubble layout (#7445)",
+          "timestamp": "2022-01-11T17:11:08Z",
+          "tree_id": "989052736442cc43f34067e5ba411a7ae0a1d0f2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3ca84fcd25e33e1fbc6c572edae10cc23e105fa6"
+        },
+        "date": 1641921481871,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5026.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 992.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1625.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4511.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
