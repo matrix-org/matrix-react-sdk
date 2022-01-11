@@ -169,10 +169,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
         </AccessibleTooltipButton>
 
         { canModifyWidget && <ContextMenuTooltipButton
-            className={classNames({
-                "mx_RoomSummaryCard_app_options": true,
-                "mx_RoomSummaryCard_maximised_widget": true,
-            })}
+            className="mx_RoomSummaryCard_app_options mx_RoomSummaryCard_maximised_widget"
             isExpanded={menuDisplayed}
             onClick={openMenu}
             title={_t("Options")}
