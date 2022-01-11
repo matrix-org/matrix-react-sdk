@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641847585712,
+  "lastUpdate": 1641897127805,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53324,6 +53324,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 719.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f6effc52fd2868f9b51f824fe9cb51eb087c9bf7",
+          "message": "Fix active Jitsi calls (and other active widgets) not being visible on screen, by showing them in PiP if they are not visible in any other container (#7435)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2022-01-11T11:25:21+01:00",
+          "tree_id": "87c59f0bac50c64b04494fec4567a151047d34ae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f6effc52fd2868f9b51f824fe9cb51eb087c9bf7"
+        },
+        "date": 1641897123895,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4644.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 633.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
