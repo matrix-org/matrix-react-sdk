@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IContent } from "matrix-js-sdk/src/models/event";
 
 import EditorModel from "./model";
 import { Type } from "./parts";
@@ -58,9 +59,9 @@ export async function runSlashCommand(
     args: string,
     roomId: string,
     threadId: string | null,
-): Promise<void> {
+): Promise<IContent | null> {
     const result = cmd.run(roomId, threadId, args);
-    let messageContent; // TODO
+    let messageContent: IContent | null = null;
     let error = result.error;
     if (result.promise) {
         try {

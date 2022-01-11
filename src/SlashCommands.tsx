@@ -24,6 +24,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
 import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IContent } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
@@ -60,6 +61,7 @@ import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpD
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from './contexts/RoomContext';
 import RoomViewStore from "./stores/RoomViewStore";
+import { XOR } from "./@types/common";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -94,7 +96,9 @@ export const CommandCategories = {
     "other": _td("Other"),
 };
 
-type RunFn = ((roomId: string, args: string, cmd: string) => {error: any} | {promise: Promise<any>});
+export type RunResult = XOR<{ error: Error }, { promise: Promise<IContent | undefined> }>;
+
+type RunFn = ((roomId: string, args: string, cmd: string) => RunResult);
 
 interface ICommandOpts {
     command: string;
@@ -109,15 +113,15 @@ interface ICommandOpts {
 }
 
 export class Command {
-    command: string;
-    aliases: string[];
-    args: undefined | string;
-    description: string;
-    runFn: undefined | RunFn;
-    category: string;
-    hideCompletionAfterSpace: boolean;
-    private _isEnabled?: () => boolean;
-    public renderingTypes?: TimelineRenderingType[];
+    public readonly command: string;
+    public readonly aliases: string[];
+    public readonly args: undefined | string;
+    public readonly description: string;
+    public readonly runFn: undefined | RunFn;
+    public readonly category: string;
+    public readonly hideCompletionAfterSpace: boolean;
+    public readonly renderingTypes?: TimelineRenderingType[];
+    private readonly _isEnabled?: () => boolean;
 
     constructor(opts: ICommandOpts) {
         this.command = opts.command;
@@ -131,15 +135,15 @@ export class Command {
         this.renderingTypes = opts.renderingTypes;
     }
 
-    getCommand() {
+    public getCommand() {
         return `/${this.command}`;
     }
 
-    getCommandWithArgs() {
+    public getCommandWithArgs() {
         return this.getCommand() + " " + this.args;
     }
 
-    run(roomId: string, threadId: string, args: string) {
+    public run(roomId: string, threadId: string, args: string): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) return reject(_t("Command error"));
 
@@ -153,11 +157,11 @@ export class Command {
         return this.runFn.bind(this)(roomId, args);
     }
 
-    getUsage() {
+    public getUsage() {
         return _t('Usage') + ': ' + this.getCommandWithArgs();
     }
 
-    isEnabled(): boolean {
+    public isEnabled(): boolean {
         return this._isEnabled ? this._isEnabled() : true;
     }
 }
