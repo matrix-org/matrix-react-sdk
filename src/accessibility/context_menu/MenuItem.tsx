@@ -41,4 +41,3 @@ export const MenuItem: React.FC<IProps> = ({ children, label, tooltip, ...props 
         </RovingAccessibleButton>
     );
 };
-

@@ -22,7 +22,7 @@ import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
-import { SyncState } from 'matrix-js-sdk/src/sync.api';
+import { SyncState } from 'matrix-js-sdk/src/sync';
 import { debounce } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -1222,9 +1222,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // should use this list, so that they don't advance into pending events.
         const liveEvents = [...events];
 
+        const thread = events[0]?.getThread();
+
         // if we're at the end of the live timeline, append the pending events
         if (!this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
-            events.push(...this.props.timelineSet.getPendingEvents());
+            events.push(...this.props.timelineSet.getPendingEvents(thread));
         }
 
         return {

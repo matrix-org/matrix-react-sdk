@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -41,43 +42,21 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         // events - so folks can read their old chat history correctly.
         // https://github.com/matrix-org/matrix-doc/issues/3516
         const content = this.props.mxEvent.getContent();
-        const uri = content['org.matrix.msc3488.location'] ?
-            content['org.matrix.msc3488.location'].uri :
-            content['geo_uri'];
+        const loc = content[LOCATION_EVENT_TYPE.name];
+        const uri = loc ? loc.uri : content['geo_uri'];
 
-        this.coords = this.parseGeoUri(uri);
+        this.coords = parseGeoUri(uri);
         this.state = {
             error: undefined,
         };
 
-        this.description =
-            content['org.matrix.msc3488.location']?.description ?? content['body'];
+        this.description = loc?.description ?? content['body'];
     }
-
-    private parseGeoUri = (uri: string): GeolocationCoordinates => {
-        const m = uri.match(/^\s*geo:(.*?)\s*$/);
-        if (!m) return;
-        const parts = m[1].split(';');
-        const coords = parts[0].split(',');
-        let uncertainty: number;
-        for (const param of parts.slice(1)) {
-            const m = param.match(/u=(.*)/);
-            if (m) uncertainty = parseFloat(m[1]);
-        }
-        return {
-            latitude: parseFloat(coords[0]),
-            longitude: parseFloat(coords[1]),
-            altitude: parseFloat(coords[2]),
-            accuracy: uncertainty,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
-        };
-    };
 
     componentDidMount() {
         const config = SdkConfig.get();
-        const coordinates = new maplibregl.LngLat(this.coords.longitude, this.coords.latitude);
+        const coordinates = new maplibregl.LngLat(
+            this.coords.longitude, this.coords.latitude);
 
         this.map = new maplibregl.Map({
             container: this.getBodyId(),
@@ -96,7 +75,11 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             .addTo(this.map);
 
         this.map.on('error', (e)=>{
-            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
+            logger.error(
+                "Failed to load map: check map_style_url in config.json has a "
+                + "valid URL and API key",
+                e.error,
+            );
             this.setState({ error: e.error });
         });
     }
@@ -116,4 +99,34 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             { error }
         </div>;
     }
+}
+
+export function parseGeoUri(uri: string): GeolocationCoordinates {
+    function parse(s: string): number {
+        const ret = parseFloat(s);
+        if (Number.isNaN(ret)) {
+            return undefined;
+        } else {
+            return ret;
+        }
+    }
+
+    const m = uri.match(/^\s*geo:(.*?)\s*$/);
+    if (!m) return;
+    const parts = m[1].split(';');
+    const coords = parts[0].split(',');
+    let uncertainty: number;
+    for (const param of parts.slice(1)) {
+        const m = param.match(/u=(.*)/);
+        if (m) uncertainty = parse(m[1]);
+    }
+    return {
+        latitude: parse(coords[0]),
+        longitude: parse(coords[1]),
+        altitude: parse(coords[2]),
+        accuracy: uncertainty,
+        altitudeAccuracy: undefined,
+        heading: undefined,
+        speed: undefined,
+    };
 }

@@ -25,8 +25,7 @@ import { Key } from "../../Keyboard";
 import { Writeable } from "../../@types/common";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import UIStore from "../../stores/UIStore";
-import { getInputableElement } from "./LoggedInView";
-import { RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
+import { checkInputableElement, RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -181,68 +180,41 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         if (this.props.onFinished) this.props.onFinished();
     };
 
-    private onMoveFocus = (element: Element, up: boolean) => {
-        let descending = false; // are we currently descending or ascending through the DOM tree?
-
-        do {
-            const child = up ? element.lastElementChild : element.firstElementChild;
-            const sibling = up ? element.previousElementSibling : element.nextElementSibling;
-
-            if (descending) {
-                if (child) {
-                    element = child;
-                } else if (sibling) {
-                    element = sibling;
-                } else {
-                    descending = false;
-                    element = element.parentElement;
-                }
-            } else {
-                if (sibling) {
-                    element = sibling;
-                    descending = true;
-                } else {
-                    element = element.parentElement;
-                }
-            }
-
-            if (element) {
-                if (element.classList.contains("mx_ContextualMenu")) { // we hit the top
-                    element = up ? element.lastElementChild : element.firstElementChild;
-                    descending = true;
-                }
-            }
-        } while (element && !element.getAttribute("role")?.startsWith("menuitem"));
-
-        if (element) {
-            (element as HTMLElement).focus();
-        }
-    };
-
-    private onMoveFocusHomeEnd = (element: Element, up: boolean) => {
-        let results = element.querySelectorAll('[role^="menuitem"]');
-        if (!results) {
-            results = element.querySelectorAll('[tab-index]');
-        }
-        if (results && results.length) {
-            if (up) {
-                (results[0] as HTMLElement).focus();
-            } else {
-                (results[results.length - 1] as HTMLElement).focus();
-            }
-        }
-    };
-
     private onClick = (ev: React.MouseEvent) => {
         // Don't allow clicks to escape the context menu wrapper
         ev.stopPropagation();
     };
 
+    // We now only handle closing the ContextMenu in this keyDown handler.
+    // All of the item/option navigation is delegated to RovingTabIndex.
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        if ((ev.key === Key.TAB && !this.props.focusLock) || ev.key === Key.ESCAPE) {
+        // If someone is managing their own focus, we will only exit for them with Escape.
+        // They are probably using props.focusLock along with this option as well.
+        if (!this.props.managed) {
+            if (ev.key === Key.ESCAPE) {
+                this.props.onFinished();
+            }
+            return;
+        }
+
+        // When an <input> is focused, only handle the Escape key
+        if (checkInputableElement(ev.target as HTMLElement) && ev.key !== Key.ESCAPE) {
+            return;
+        }
+
+        if (
+            ev.key === Key.ESCAPE ||
+            // You can only navigate the ContextMenu by arrow keys and Home/End (see RovingTabIndex).
+            // Tabbing to the next section of the page, will close the ContextMenu.
+            ev.key === Key.TAB ||
+            // When someone moves left or right along a <Toolbar /> (like the
+            // MessageActionBar), we should close any ContextMenu that is open.
+            ev.key === Key.ARROW_LEFT ||
+            ev.key === Key.ARROW_RIGHT
+        ) {
             this.props.onFinished();
         }
-    }
+    };
 
     protected renderMenu(hasBackground = this.props.hasBackground) {
         const position: Partial<Writeable<DOMRect>> = {};
