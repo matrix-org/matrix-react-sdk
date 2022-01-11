@@ -17,9 +17,9 @@ limitations under the License.
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
@@ -149,7 +149,12 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
     );
     // Some non-info messages want to be rendered in the appropriate bubble column but without the bubble background
     const noBubbleEvent = (
-        POLL_START_EVENT_TYPE.matches(eventType)
+        POLL_START_EVENT_TYPE.matches(eventType) ||
+        LOCATION_EVENT_TYPE.matches(eventType) ||
+        (
+            eventType === EventType.RoomMessage &&
+            LOCATION_EVENT_TYPE.matches(msgtype)
+        )
     );
 
     // If we're showing hidden events in the timeline, we should use the
@@ -185,7 +190,7 @@ export async function fetchInitialEvent(
         const eventData = await client.fetchRoomEvent(roomId, eventId);
         initialEvent = new MatrixEvent(eventData);
     } catch (e) {
-        logger.warn("Could not find initial event: " + initialEvent.threadRootId);
+        logger.warn("Could not find initial event: " + eventId);
         initialEvent = null;
     }
 
@@ -194,13 +199,7 @@ export async function fetchInitialEvent(
             const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
             const rootEvent = new MatrixEvent(rootEventData);
             const room = client.getRoom(roomId);
-            const thread = new Thread(
-                [rootEvent],
-                room,
-                client,
-            );
-            thread.addEvent(initialEvent);
-            room.threads.set(thread.id, thread);
+            room.createThread([rootEvent]);
         } catch (e) {
             logger.warn("Could not find root event: " + initialEvent.threadRootId);
         }

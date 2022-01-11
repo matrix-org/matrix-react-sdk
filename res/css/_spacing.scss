@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
+// 1rem :: 10px
 
-export interface ToggleRightPanelPayload extends ActionPayload {
-    action: Action.ToggleRightPanel;
-
-    /**
-     * The type of room that the panel is toggled in.
-     */
-    type: "group" | "room";
-}
+$spacing-4: 4px;
+$spacing-8: 8px;
+$spacing-12: 12px;
+$spacing-16: 16px;
+$spacing-20: 20px;
+$spacing-24: 24px;
+$spacing-28: 28px;
+$spacing-32: 32px;
+$spacing-40: 40px;

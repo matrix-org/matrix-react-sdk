@@ -36,7 +36,7 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import EditCommunityPrototypeDialog from "../dialogs/EditCommunityPrototypeDialog";
 import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { showCommunityInviteDialog } from "../../../RoomInvite";
 import { useDispatcher } from "../../../hooks/useDispatcher";
@@ -50,6 +50,7 @@ import {
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_SELECTED_SPACE,
 } from "../../../stores/spaces";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import TooltipTarget from "../elements/TooltipTarget";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
@@ -99,7 +100,7 @@ const PrototypeCommunityContextMenu = (props: ComponentProps<typeof SpaceContext
                 action: 'view_room',
                 room_id: chat.roomId,
             }, true);
-            dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList }, undefined, chat.roomId);
         } else {
             // "This should never happen" clauses go here for the prototype.
             Modal.createTrackedDialog('Failed to find general chat', '', ErrorDialog, {
@@ -173,6 +174,8 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
             return null;
         }
     });
+
+    const spaceName = useEventEmitterState(activeSpace, "Room.name", () => activeSpace?.name);
 
     useEffect(() => {
         if (onVisibilityChange) {
@@ -320,7 +323,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
 
     let title: string;
     if (activeSpace) {
-        title = activeSpace.name;
+        title = spaceName;
     } else if (communityId) {
         title = CommunityPrototypeStore.instance.getSelectedCommunityName();
     } else {
@@ -344,7 +347,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
             isExpanded={mainMenuDisplayed}
             className="mx_RoomListHeader_contextMenuButton"
             title={activeSpace
-                ? _t("%(spaceName)s menu", { spaceName: activeSpace.name })
+                ? _t("%(spaceName)s menu", { spaceName })
                 : _t("Home options")}
         >
             { title }

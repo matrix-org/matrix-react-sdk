@@ -25,6 +25,8 @@ import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
 
+import SettingsStore from '../../../settings/SettingsStore';
+import { UIFeature } from '../../../settings/UIFeature';
 import Modal from '../../../Modal';
 import ErrorDialog from '../dialogs/ErrorDialog';
 import { contextMenuBelow } from '../rooms/RoomTile';
@@ -32,11 +34,8 @@ import { ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
-    IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
 import JumpToDatePicker from './JumpToDatePicker';
-import { Alignment } from '../elements/Tooltip';
-
 
 function getDaysArray(): string[] {
     return [
@@ -86,9 +85,10 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
     private getLabel(): string {
         const date = new Date(this.props.ts);
+        const disableRelativeTimestamps = !SettingsStore.getValue(UIFeature.TimelineEnableRelativeDates);
 
         // During the time the archive is being viewed, a specific day might not make sense, so we return the full date
-        if (this.props.forExport) return formatFullDateNoTime(date);
+        if (this.props.forExport || disableRelativeTimestamps) return formatFullDateNoTime(date);
 
         const today = new Date();
         const yesterday = new Date();
@@ -214,9 +214,10 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     }
 
     render() {
+        const label = this.getLabel();
         // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one
         // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
-        return <h2 className="mx_DateSeparator" role="separator" aria-label={this.getLabel()}>
+        return <h2 className="mx_DateSeparator" role="separator" aria-label={label}>
             <hr role="none" />
             { this.renderNotificationsMenu() }
             <hr role="none" />

@@ -14,17 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-enum LocationShareType {
-    Custom = -1,
-    OnceOff = 0,
-    OneMine = 60,
-    FiveMins = 5 * 60,
-    ThirtyMins = 30 * 60,
-    OneHour = 60 * 60,
-    ThreeHours = 3 * 60 * 60,
-    SixHours = 6 * 60 * 60,
-    OneDay = 24 * 60 * 60,
-    Forever = Number.MAX_SAFE_INTEGER,
+import React, { ComponentProps } from 'react';
+
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+
+export interface ICollapsibleButtonProps
+    extends ComponentProps<typeof AccessibleTooltipButton>
+{
+    narrowMode: boolean;
+    title: string;
 }
 
-export default LocationShareType;
+export const CollapsibleButton = ({ narrowMode, title, ...props }: ICollapsibleButtonProps) => {
+    return <AccessibleTooltipButton
+        {...props}
+        title={narrowMode ? undefined : title}
+        label={narrowMode ? title : undefined}
+    />;
+};
+
+export default CollapsibleButton;

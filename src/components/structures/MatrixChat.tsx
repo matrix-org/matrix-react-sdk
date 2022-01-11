@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ComponentType, createRef } from 'react';
-import { createClient, MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { createClient, EventType, MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
@@ -794,6 +794,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 });
                 break;
             case 'focus_room_filter': // for CtrlOrCmd+K to work by expanding the left panel first
+                if (SettingsStore.getValue("feature_spotlight")) break; // don't expand if spotlight enabled
+                // fallthrough
             case 'show_left_panel':
                 this.setState({
                     collapseLhs: false,
@@ -1295,16 +1297,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // run without the update to m.direct, making another welcome
             // user room (it doesn't wait for new data from the server, just
             // the saved sync to be loaded).
-            const saveWelcomeUser = (ev) => {
-                if (
-                    ev.getType() === 'm.direct' &&
-                    ev.getContent() &&
-                    ev.getContent()[this.props.config.welcomeUserId]
-                ) {
+            const saveWelcomeUser = (ev: MatrixEvent) => {
+                if (ev.getType() === EventType.Direct && ev.getContent()[this.props.config.welcomeUserId]) {
                     MatrixClientPeg.get().store.save(true);
-                    MatrixClientPeg.get().removeListener(
-                        "accountData", saveWelcomeUser,
-                    );
+                    MatrixClientPeg.get().removeListener("accountData", saveWelcomeUser);
                 }
             };
             MatrixClientPeg.get().on("accountData", saveWelcomeUser);
@@ -1523,7 +1519,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 showNotificationsToast(false);
             }
 
-            if (!localStorage.getItem("mx_seen_ia_1.1_changes_toast")) {
+            if (!localStorage.getItem("mx_seen_ia_1.1_changes_toast") && SettingsStore.getValue(UIFeature.Feedback)) {
                 const key = "IA_1.1_TOAST";
                 ToastStore.sharedInstance().addOrReplaceToast({
                     key,
@@ -1630,11 +1626,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const dft = new DecryptionFailureTracker((total, errorCode) => {
             Analytics.trackEvent('E2E', 'Decryption failure', errorCode, String(total));
             CountlyAnalytics.instance.track("decryption_failure", { errorCode }, null, { sum: total });
-            PosthogAnalytics.instance.trackEvent<ErrorEvent>({
-                eventName: "Error",
-                domain: "E2EE",
-                name: errorCode,
-            });
+            for (let i = 0; i < total; i++) {
+                PosthogAnalytics.instance.trackEvent<ErrorEvent>({
+                    eventName: "Error",
+                    domain: "E2EE",
+                    name: errorCode,
+                });
+            }
         }, (errorCode) => {
             // Map JS-SDK error codes to tracker codes for aggregation
             switch (errorCode) {
@@ -2160,9 +2158,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     <div className="mx_MatrixChat_splash">
                         { errorBox }
                         <Spinner />
-                        <a href="#" className="mx_MatrixChat_splashButtons" onClick={this.onLogoutClick}>
+                        <AccessibleButton kind='link_inline' className="mx_MatrixChat_splashButtons" onClick={this.onLogoutClick}>
                             { _t('Logout') }
-                        </a>
+                        </AccessibleButton>
                     </div>
                 );
             }
