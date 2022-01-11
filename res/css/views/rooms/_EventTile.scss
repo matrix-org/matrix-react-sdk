@@ -873,12 +873,21 @@ $left-gutter: 64px;
         }
     }
 
-    .mx_EventTile[data-layout=bubble][data-self=true] .mx_EventTile_line {
-        margin-left: auto;
+    .mx_EventTile[data-layout=bubble] {
+        margin-left: 36px;
+        margin-right: 36px;
 
-        &.mx_EventTile_mediaLine {
-            margin: 0 0 0 auto;
-            padding: 0 !important;
+        &[data-self=true] {
+            align-items: flex-end;
+
+            .mx_EventTile_line.mx_EventTile_mediaLine {
+                margin: 0 -13px 0 0; // align with normal messages
+                padding: 0 !important;
+
+                .mx_MFileBody ~ .mx_MessageTimestamp {
+                    bottom: calc($font-14px + 4px); // above the Decrypt/Download text line
+                }
+            }
         }
     }
 
