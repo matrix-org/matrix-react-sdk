@@ -95,6 +95,11 @@ limitations under the License.
         z-index: 9; // above the avatar
     }
 
+    .mx_MediaBody {
+        // leave space for the timestamp
+        padding-right: 48px;
+    }
+
     &[data-self=false] {
         .mx_EventTile_line {
             border-bottom-right-radius: var(--cornerRadius);
@@ -147,6 +152,10 @@ limitations under the License.
             right: -35px;
         }
 
+        .mx_MediaBody {
+            background: $eventbubble-self-bg;
+        }
+
         --backgroundColor: $eventbubble-self-bg;
     }
 
@@ -163,7 +172,7 @@ limitations under the License.
             padding: 4px 8px;
             bottom: 0;
             right: 0;
-            z-index: 1; // above media
+            z-index: 3; // above media and location share maps
         }
 
         //noinspection CssReplaceWithShorthandSafely
@@ -181,7 +190,7 @@ limitations under the License.
         }
     }
 
-    .mx_EventTile_line:not(.mx_EventTile_mediaLine) {
+    &:not(.mx_EventTile_noBubble) .mx_EventTile_line:not(.mx_EventTile_mediaLine) {
         padding: var(--gutterSize);
         padding-right: 60px; // space for the timestamp
         background: var(--backgroundColor);
@@ -190,14 +199,14 @@ limitations under the License.
     &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {
         border-top-left-radius: 0;
 
-        .mx_MImageBody .mx_MImageBody_thumbnail {
+        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
             border-top-left-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=false] .mx_EventTile_line {
         border-bottom-left-radius: var(--cornerRadius);
 
-        .mx_MImageBody .mx_MImageBody_thumbnail {
+        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
             border-bottom-left-radius: var(--cornerRadius);
         }
     }
@@ -205,14 +214,14 @@ limitations under the License.
     &.mx_EventTile_continuation[data-self=true] .mx_EventTile_line {
         border-top-right-radius: 0;
 
-        .mx_MImageBody .mx_MImageBody_thumbnail {
+        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
             border-top-right-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=true] .mx_EventTile_line {
         border-bottom-right-radius: var(--cornerRadius);
 
-        .mx_MImageBody .mx_MImageBody_thumbnail {
+        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
             border-bottom-right-radius: var(--cornerRadius);
         }
     }
@@ -306,7 +315,7 @@ limitations under the License.
 
     .mx_EventTile_readAvatars {
         position: absolute;
-        right: -110px;
+        right: -78px; // as close to right gutter without clipping as possible
         bottom: 0;
         top: auto;
     }
