@@ -37,8 +37,6 @@ import CountlyAnalytics from "../../../CountlyAnalytics";
 import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SendHistoryManager from '../../../SendHistoryManager';
-import Modal from '../../../Modal';
-import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import AccessibleButton from '../elements/AccessibleButton';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
