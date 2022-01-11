@@ -1,6 +1,5 @@
 /*
-Copyright 2017, 2018 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2017 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -102,11 +101,12 @@ function getPrimarySecondaryCallsForPip(roomId: string): [MatrixCall, MatrixCall
 }
 
 /**
- * CallPreview shows a small version of CallView hovering over the UI in 'picture-in-picture'
- * (PiP mode). It displays the call(s) which is *not* in the room the user is currently viewing.
+ * PiPView shows a small version of the CallView or a sticky widget hovering over the UI in 'picture-in-picture'
+ * (PiP mode). It displays the call(s) which is *not* in the room the user is currently viewing
+ * and all widgets that are active but not shown in any other possible container.
  */
 
-@replaceableComponent("views.voip.CallPreview")
+@replaceableComponent("views.voip.PiPView")
 export default class PiPView extends React.Component<IProps, IState> {
     private roomStoreToken: EventSubscription;
     private settingsWatcherRef: string;

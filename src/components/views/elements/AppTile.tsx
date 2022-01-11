@@ -507,8 +507,13 @@ export default class AppTile extends React.Component<IProps, IState> {
 
                     // Also wrap the PersistedElement in a div to fix the height, otherwise
                     // AppTile's border is in the wrong place
+
+                    // For persistent apps in PiP we want the zIndex to be higher then for other persistent apps (100)
+                    // otherwise there are issues that the PiP view is drawn UNDER another widget (Persistent app) when dragged around.
+                    const zIndexAboveOtherPersistentElements = 101;
+
                     appTileBody = <div className="mx_AppTile_persistedWrapper">
-                        <PersistedElement zIndex={this.props.miniMode ? 101 : 9}persistKey={this.persistKey}>
+                        <PersistedElement zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9} persistKey={this.persistKey}>
                             { appTileBody }
                         </PersistedElement>
                     </div>;
@@ -547,12 +552,12 @@ export default class AppTile extends React.Component<IProps, IState> {
             maxMinButton = <AccessibleButton
                 className={
                     "mx_AppTileMenuBar_iconButton"
-                                    + (widgetIsMaximised
-                                        ? " mx_AppTileMenuBar_iconButton_minWidget"
-                                        : " mx_AppTileMenuBar_iconButton_maxWidget")
+                    + (widgetIsMaximised
+                        ? " mx_AppTileMenuBar_iconButton_minWidget"
+                        : " mx_AppTileMenuBar_iconButton_maxWidget")
                 }
                 title={
-                    widgetIsMaximised ? _t('Close'): _t('Maximise widget')
+                    widgetIsMaximised ? _t('Close') : _t('Maximise widget')
                 }
                 onClick={this.onMaxMinWidgetClick}
             />;
