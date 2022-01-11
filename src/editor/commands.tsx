@@ -43,8 +43,8 @@ export function isSlashCommand(model: EditorModel): boolean {
 
 export function getSlashCommand(model: EditorModel): [Command, string, string] {
     const commandText = model.parts.reduce((text, part) => {
-        // use mxid to textify user pills in a command
-        if (part.type === Type.UserPill) {
+        // use mxid to textify user pills in a command and room alias/id for room pills
+        if (part.type === Type.UserPill || part.type === Type.RoomPill) {
             return text + part.resourceId;
         }
         return text + part.text;
