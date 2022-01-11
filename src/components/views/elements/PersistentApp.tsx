@@ -24,6 +24,7 @@ import WidgetUtils from '../../../utils/WidgetUtils';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AppTile from "./AppTile";
+
 interface IProps {
     persistentWidgetId: string;
     pointerEvents?: string;
