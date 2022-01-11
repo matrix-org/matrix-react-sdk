@@ -99,7 +99,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 userText: "Auto-reporting decryption error (recipient)",
                 sendLogs: true,
                 label: "Z-UISI",
-                customFields: { "auto-uisi": JSON.stringify(eventInfo) },
+                customFields: { "auto_uisi": JSON.stringify(eventInfo) },
             });
 
             const messageContent = {
@@ -126,7 +126,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 label: "Z-UISI",
                 customFields: {
                     "recipient_rageshake": recipientRageshake,
-                    "auto-uisi": JSON.stringify(messageContent),
+                    "auto_uisi": JSON.stringify(messageContent),
                 },
             });
         }
