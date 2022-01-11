@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from 'react';
 
-import PiPViewer from './PiPView';
+import PipView from './PipView';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
@@ -32,7 +32,7 @@ interface IState {
 export default class PiPContainer extends React.PureComponent<IProps, IState> {
     public render() {
         return <div className="mx_PiPContainer">
-            <PiPViewer />
+            <PipView />
         </div>;
     }
 }
