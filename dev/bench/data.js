@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641897127805,
+  "lastUpdate": 1641897588525,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53360,6 +53360,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 633.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "81257933efdb0618a5e3ef87d6f2d2957f5cc5c0",
+          "message": "Set header buttons to no phase when right panel is closed (#7506)",
+          "timestamp": "2022-01-11T10:32:55Z",
+          "tree_id": "06791b67b75b477b4a6b44f99f1474ac1f5adac7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/81257933efdb0618a5e3ef87d6f2d2957f5cc5c0"
+        },
+        "date": 1641897584590,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5069.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 962.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4536.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
