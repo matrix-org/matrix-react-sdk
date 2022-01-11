@@ -52,8 +52,8 @@ import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 import { createMapSiteLink } from "../messages/MLocationBody";
 
-export function canCancel(eventStatus): boolean {
-    return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
+export function canCancel(status: EventStatus): boolean {
+    return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
 }
 
 export interface IEventTileOps {
@@ -316,10 +316,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         });
     }
 
-    private getUnsentReactions(): Array<MatrixEvent> {
-        return this.getReactions(e => e.status === EventStatus.NOT_SENT);
-    }
-
     private getSelectedText(): string {
         return window.getSelection().toString();
     }
@@ -328,6 +324,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         if (!this.props.permalinkCreator) return;
         if (!canShare(this.props.mxEvent)) return;
         return this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+    }
+
+    private getUnsentReactions(): MatrixEvent[] {
+        return this.getReactions(e => e.status === EventStatus.NOT_SENT);
     }
 
     private viewInRoom = () => {

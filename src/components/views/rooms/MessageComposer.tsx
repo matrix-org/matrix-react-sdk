@@ -58,7 +58,6 @@ import Modal from "../../../Modal";
 import RoomContext from '../../../contexts/RoomContext';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
-import LocationShareType from "../location/LocationShareType";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import { CollapsibleButton, ICollapsibleButtonProps } from './CollapsibleButton';
 import { LocationButton, textForLocation } from '../location/LocationButton';
@@ -453,18 +452,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private shareLocation = (
-        uri: string,
-        ts: number,
-        _type: LocationShareType,
-        description: string | null,
-    ): boolean => {
+    private shareLocation = (uri: string, ts: number): boolean => {
         if (!uri) return false;
         try {
-            const text = textForLocation(uri, ts, description);
+            const text = textForLocation(uri, ts, null);
             MatrixClientPeg.get().sendMessage(
                 this.props.room.roomId,
-                makeLocationContent(text, uri, ts, description),
+                makeLocationContent(text, uri, ts, null),
             );
         } catch (e) {
             logger.error("Error sending location:", e);
@@ -605,10 +599,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 <ContextMenu
                     onFinished={this.toggleButtonMenu}
                     {...menuPosition}
-                    menuPaddingRight={10}
-                    menuPaddingTop={5}
-                    menuPaddingBottom={5}
-                    menuWidth={150}
                     wrapperClassName="mx_MessageComposer_Menu"
                 >
                     { buttons.map((button, index) => (
