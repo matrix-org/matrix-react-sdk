@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641914062420,
+  "lastUpdate": 1641917496489,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53612,6 +53612,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 682.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "beac9563d6a13ae3fc5d0ceeb6b1d0e8fb9c96ba",
+          "message": "Make files & voice memos in bubble layout match colouring (#7457)",
+          "timestamp": "2022-01-11T16:04:39Z",
+          "tree_id": "771196214e6b0f63770c6c106e8254a1d00258e9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/beac9563d6a13ae3fc5d0ceeb6b1d0e8fb9c96ba"
+        },
+        "date": 1641917492233,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5454.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 962.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1667.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4301.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
