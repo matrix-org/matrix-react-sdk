@@ -43,7 +43,6 @@ async function getThreadTimelineSet(
     room: Room,
     filterType = ThreadFilterType.All,
 ): Promise<EventTimelineSet> {
-
     const capabilities = await client.getCapabilities();
     const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
 
@@ -79,9 +78,7 @@ async function getThreadTimelineSet(
             timelineSet.getLiveTimeline(),
             { backwards: true, limit: 20 },
         );
-
         return timelineSet;
-
     } else {
         // Filter creation fails if HomeServer does not support the new relation
         // filter fields. We fallback to the threads that have been discovered in
