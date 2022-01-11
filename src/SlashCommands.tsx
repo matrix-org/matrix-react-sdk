@@ -1248,7 +1248,6 @@ interface ICmd {
 
 /**
  * Process the given text for /commands and return a bound method to perform them.
- * @param {string} roomId The room in which the command was performed.
  * @param {string} input The raw text input by the user.
  * @return {null|function(): Object} Function returning an object with the property 'error' if there was an error
  * processing the command, or 'promise' if a request was sent out.
