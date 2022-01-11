@@ -29,6 +29,7 @@ import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayo
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
+
 interface IProps {
     // none
 }
