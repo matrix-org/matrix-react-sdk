@@ -95,6 +95,11 @@ limitations under the License.
         z-index: 9; // above the avatar
     }
 
+    .mx_MediaBody {
+        // leave space for the timestamp
+        padding-right: 48px;
+    }
+
     &[data-self=false] {
         .mx_EventTile_line {
             border-bottom-right-radius: var(--cornerRadius);
