@@ -97,7 +97,6 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
 };
 
 const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButtonProps) => {
-    if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
     let unreadIndicator;
     const color = RoomNotificationStateStore.instance.getRoomState(room).color;
     switch (color) {
@@ -265,7 +264,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         return <>
             {
                 Array.from(rightPanelPhaseButtons.keys()).map((phase) =>
-                    ( this.props.excludedRightPanelPhaseButtons.includes(phase)
+                    (this.props.excludedRightPanelPhaseButtons.includes(phase)
                         ? null
                         : rightPanelPhaseButtons.get(phase)))
             }

@@ -21,6 +21,13 @@ describe('languageHandler', function() {
     const testCasesEn: TestCase[] = [
         ['translates a basic string', basicString, {}, undefined, 'Rooms'],
         [
+            'handles plurals when count is 0',
+            plurals,
+            { count: 0 },
+            undefined,
+            'and 0 others...',
+        ],
+        [
             'handles plurals when count is 1',
             plurals,
             { count: 1 },
@@ -111,7 +118,7 @@ describe('languageHandler', function() {
         });
     });
 
-    describe('when a translation string does not exist in active language', () => {
+    describe('for a non-en language', () => {
         beforeEach(async () => {
             stubClient();
             await setLanguage('lv');
@@ -123,22 +130,75 @@ describe('languageHandler', function() {
             setMissingEntryGenerator(counterpartDefaultMissingEntryGen);
         });
 
-        describe('_t', () => {
-            it.each(testCasesEn)(
-                "%s and translates with fallback locale",
-                async (_d, translationString, variables, tags, result) => {
-                    expect(_t(translationString, variables, tags)).toEqual(result);
-                },
-            );
+        // mocked lv has only `"Uploading %(filename)s and %(count)s others|one"`
+        const lvExistingPlural = 'Uploading %(filename)s and %(count)s others';
+        const lvNonExistingPlural = '%(spaceName)s and %(count)s others';
+
+        describe('pluralization', () => {
+            const pluralCases = [
+                [
+                    'falls back when plural string exists but not for for count',
+                    lvExistingPlural,
+                    { count: 2, filename: 'test.txt' },
+                    undefined,
+                    'Uploading test.txt and 2 others',
+                ],
+                [
+                    'falls back when plural string does not exists at all',
+                    lvNonExistingPlural,
+                    { count: 2, spaceName: 'test' },
+                    undefined,
+                    'test and 2 others',
+                ],
+            ] as TestCase[];
+
+            describe('_t', () => {
+                it('translated correctly when plural string exists for count', () => {
+                    expect(_t(
+                        lvExistingPlural,
+                        { count: 1, filename: 'test.txt' }, undefined)).toEqual('Качване на test.txt и 1 друг');
+                });
+                it.each(pluralCases)(
+                    "%s",
+                    async (_d, translationString, variables, tags, result) => {
+                        expect(_t(translationString, variables, tags)).toEqual(result);
+                    },
+                );
+            });
+
+            describe('_tDom()', () => {
+                it('translated correctly when plural string exists for count', () => {
+                    expect(_tDom(
+                        lvExistingPlural,
+                        { count: 1, filename: 'test.txt' }, undefined)).toEqual('Качване на test.txt и 1 друг');
+                });
+                it.each(pluralCases)(
+                    "%s and translates with fallback locale, attributes fallback locale",
+                    async (_d, translationString, variables, tags, result) => {
+                        expect(_tDom(translationString, variables, tags)).toEqual(<span lang="en">{ result }</span>);
+                    },
+                );
+            });
         });
 
-        describe('_tDom()', () => {
-            it.each(testCasesEn)(
-                "%s and translates with fallback locale, attributes fallback locale",
-                async (_d, translationString, variables, tags, result) => {
-                    expect(_tDom(translationString, variables, tags)).toEqual(<span lang="en">{ result }</span>);
-                },
-            );
+        describe('when a translation string does not exist in active language', () => {
+            describe('_t', () => {
+                it.each(testCasesEn)(
+                    "%s and translates with fallback locale",
+                    async (_d, translationString, variables, tags, result) => {
+                        expect(_t(translationString, variables, tags)).toEqual(result);
+                    },
+                );
+            });
+
+            describe('_tDom()', () => {
+                it.each(testCasesEn)(
+                    "%s and translates with fallback locale, attributes fallback locale",
+                    async (_d, translationString, variables, tags, result) => {
+                        expect(_tDom(translationString, variables, tags)).toEqual(<span lang="en">{ result }</span>);
+                    },
+                );
+            });
         });
     });
 });

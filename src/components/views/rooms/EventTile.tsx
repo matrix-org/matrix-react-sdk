@@ -451,7 +451,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         // Check to make sure the sending state is appropriate. A null/undefined send status means
         // that the message is 'sent', so we're just double checking that it's explicitly not sent.
-        if (this.props.eventSendStatus && this.props.eventSendStatus !== 'sent') return false;
+        if (this.props.eventSendStatus && this.props.eventSendStatus !== EventStatus.SENT) return false;
 
         // If anyone has read the event besides us, we don't want to show a sent receipt.
         const receipts = this.props.readReceipts || [];
@@ -468,7 +468,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         // Check the event send status to see if we are pending. Null/undefined status means the
         // message was sent, so check for that and 'sent' explicitly.
-        if (!this.props.eventSendStatus || this.props.eventSendStatus === 'sent') return false;
+        if (!this.props.eventSendStatus || this.props.eventSendStatus === EventStatus.SENT) return false;
 
         // Default to showing - there's no other event properties/behaviours we care about at
         // this point.
@@ -1123,7 +1123,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_unverified: !isBubbleMessage && this.state.verified === E2EState.Warning,
             mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2EState.Unknown,
             mx_EventTile_bad: isEncryptionFailure,
-            mx_EventTile_emote: msgtype === 'm.emote',
+            mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp: this.props.tileShape === TileShape.ThreadPanel,
             mx_EventTile_noBubble: noBubbleEvent,
@@ -1245,16 +1245,16 @@ export default class EventTile extends React.Component<IProps, IState> {
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
                 <p>
                     { this.state.previouslyRequestedKeys ?
-                        _t( 'Your key share request has been sent - please check your other sessions ' +
-                            'for key share requests.') :
-                        _t( 'Key share requests are sent to your other sessions automatically. If you ' +
-                            'rejected or dismissed the key share request on your other sessions, click ' +
-                            'here to request the keys for this session again.')
+                        _t('Your key share request has been sent - please check your other sessions ' +
+                           'for key share requests.') :
+                        _t('Key share requests are sent to your other sessions automatically. If you ' +
+                           'rejected or dismissed the key share request on your other sessions, click ' +
+                           'here to request the keys for this session again.')
                     }
                 </p>
                 <p>
-                    { _t( 'If your other sessions do not have the key for this message you will not ' +
-                            'be able to decrypt them.')
+                    { _t('If your other sessions do not have the key for this message you will not ' +
+                         'be able to decrypt them.')
                     }
                 </p>
             </div>;

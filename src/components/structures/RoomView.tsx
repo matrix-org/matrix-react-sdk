@@ -407,6 +407,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showAvatarChanges: SettingsStore.getValue("showAvatarChanges", roomId),
             showDisplaynameChanges: SettingsStore.getValue("showDisplaynameChanges", roomId),
             wasContextSwitch: RoomViewStore.getWasContextSwitch(),
+            initialEventId: null, // default to clearing this, will get set later in the method if needed
         };
 
         const initialEventId = RoomViewStore.getInitialEventId();
@@ -2171,7 +2172,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 // keep the timeline in as the mainSplitBody
                 break;
             case MainSplitContentType.MaximisedWidget:
-                if (!SettingsStore.getValue("feature_maximised_widgets")) break;
                 mainSplitBody = <AppsDrawer
                     room={this.state.room}
                     userId={this.context.credentials.userId}
