@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641917496489,
+  "lastUpdate": 1641918343704,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53660,6 +53660,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4301.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ec02f8241637f5e428b45a96bbacbb9fb976bb81",
+          "message": "Update default Jitsi URLs to meet.element.io (#7514)",
+          "timestamp": "2022-01-11T16:15:20Z",
+          "tree_id": "b95bfecdd998feaa7b59663f0c27b1426cbcf1c9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ec02f8241637f5e428b45a96bbacbb9fb976bb81"
+        },
+        "date": 1641918339413,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5195.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 958.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
