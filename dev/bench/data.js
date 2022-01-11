@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641922117488,
+  "lastUpdate": 1641925967668,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53840,6 +53840,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4142.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "038a6bc204e41e21e8b6f930c4b7cb7bbdad14a0",
+          "message": "Make slash command errors translatable but also work in rageshakes (#7377)\n\nSee https://github.com/matrix-org/matrix-react-sdk/pull/7372#discussion_r769556546\r\n\r\nWe want the error to be translated for the user but not in our rageshake logs.\r\n\r\nAlso updates some error messages to give more info.",
+          "timestamp": "2022-01-11T12:25:28-06:00",
+          "tree_id": "0237543e1063d886ecf99da35f15a5a59ec82d31",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/038a6bc204e41e21e8b6f930c4b7cb7bbdad14a0"
+        },
+        "date": 1641925962588,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5230.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 978.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1654.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4616.5,
             "unit": "ms",
             "extra": "type: measure"
           }
