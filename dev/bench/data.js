@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641897588525,
+  "lastUpdate": 1641898646710,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53408,6 +53408,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4536.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f8871969fdb2df6019ede87a73b2feca1a5ef90a",
+          "message": "Fix wrongly wrapping code blocks, breaking line numbers (#7507)",
+          "timestamp": "2022-01-11T10:50:29Z",
+          "tree_id": "e09db9678b872d360adce4e2b32f6a35e5c4f0a1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f8871969fdb2df6019ede87a73b2feca1a5ef90a"
+        },
+        "date": 1641898642383,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5005.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 668.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
