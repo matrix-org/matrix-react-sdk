@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641993682423,
+  "lastUpdate": 1641994726921,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54044,6 +54044,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4510.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "11c8e720b25ddebdb5d8ba9627fb0abb58abe0dc",
+          "message": "Add user avatar to location sharing dialog (#7520)",
+          "timestamp": "2022-01-12T13:32:08Z",
+          "tree_id": "d98940109f90f629435d9193fcc31d2065e7829e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/11c8e720b25ddebdb5d8ba9627fb0abb58abe0dc"
+        },
+        "date": 1641994722902,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5213.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 946.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1627.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4465.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
