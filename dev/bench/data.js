@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641997837393,
+  "lastUpdate": 1642008098045,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54176,6 +54176,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 736.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "61116377f37eb5783b8eef351833c07e98e27664",
+          "message": "Fix composer localStorage key for draft event in a thread (#7526)",
+          "timestamp": "2022-01-12T17:13:47Z",
+          "tree_id": "19347ad67e26774317e479f7aceab05cf2bd3ff5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/61116377f37eb5783b8eef351833c07e98e27664"
+        },
+        "date": 1642008092421,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5189.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1081.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1714.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4653,
             "unit": "ms",
             "extra": "type: measure"
           }
