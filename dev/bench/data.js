@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641994726921,
+  "lastUpdate": 1641996158820,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54092,6 +54092,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4465.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f81120f35f092c4abc4e74eb0efa06f9121fcaaf",
+          "message": "Set the default zoom level for location to 15, matching iOS and Android (#7524)",
+          "timestamp": "2022-01-12T14:55:52+01:00",
+          "tree_id": "77872bf729c5e8d55830a09386368c55dd427fc0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f81120f35f092c4abc4e74eb0efa06f9121fcaaf"
+        },
+        "date": 1641996154990,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4720.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 951.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1597.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4364.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
