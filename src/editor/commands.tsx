@@ -21,7 +21,7 @@ import { IContent } from "matrix-js-sdk/src/models/event";
 import EditorModel from "./model";
 import { Type } from "./parts";
 import { Command, CommandCategories, getCommand } from "../SlashCommands";
-import { _t, _td } from "../languageHandler";
+import { ITranslatableError, _t, _td } from "../languageHandler";
 import Modal from "../Modal";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import QuestionDialog from "../components/views/dialogs/QuestionDialog";
@@ -83,6 +83,9 @@ export async function runSlashCommand(
         let errText;
         if (typeof error === 'string') {
             errText = error;
+        } else if ((error as ITranslatableError).translatedMessage) {
+            // Check for translatable errors (newTranslatableError)
+            errText = (error as ITranslatableError).translatedMessage;
         } else if (error.message) {
             errText = error.message;
         } else {
