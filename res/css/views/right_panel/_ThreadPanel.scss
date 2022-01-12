@@ -211,10 +211,6 @@ limitations under the License.
     font-size: $font-12px;
 }
 
-.mx_ThreadPanel_viewInRoom::before {
-    mask-image: url('$(res)/img/element-icons/view-in-room.svg');
-}
-
 .mx_ThreadPanel_copyLinkToThread::before {
     mask-image: url('$(res)/img/element-icons/link.svg');
 }

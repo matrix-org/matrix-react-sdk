@@ -72,18 +72,6 @@ const ThreadListContextMenu: React.FC<IExtendedProps> = ({
     const [menuDisplayed, _ref, openMenu, closeThreadOptions] = useContextMenu();
     const button = inputRef ?? _ref; // prefer the ref we receive via props in case we are being controlled
 
-    const viewInRoom = useCallback((evt: ButtonEvent): void => {
-        evt.preventDefault();
-        evt.stopPropagation();
-        dis.dispatch({
-            action: Action.ViewRoom,
-            event_id: mxEvent.getId(),
-            highlighted: true,
-            room_id: mxEvent.getRoomId(),
-        });
-        closeThreadOptions();
-    }, [mxEvent, closeThreadOptions]);
-
     const copyLinkToThread = useCallback(async (evt: ButtonEvent) => {
         evt.preventDefault();
         evt.stopPropagation();
@@ -99,9 +87,6 @@ const ThreadListContextMenu: React.FC<IExtendedProps> = ({
         onFocus?.();
     }, [menuDisplayed, onMenuToggle, onFocus]);
 
-    const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
-        MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
-    );
     return <React.Fragment>
         <ContextMenuTooltipButton
             {...props}
@@ -119,12 +104,6 @@ const ThreadListContextMenu: React.FC<IExtendedProps> = ({
             {...contextMenuBelow(button.current.getBoundingClientRect())}
         >
             <IconizedContextMenuOptionList>
-                { isMainSplitTimelineShown &&
-                 <IconizedContextMenuOption
-                     onClick={(e) => viewInRoom(e)}
-                     label={_t("View in room")}
-                     iconClassName="mx_ThreadPanel_viewInRoom"
-                 /> }
                 <IconizedContextMenuOption
                     onClick={(e) => copyLinkToThread(e)}
                     label={_t("Copy link to thread")}

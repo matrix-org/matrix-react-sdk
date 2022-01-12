@@ -691,6 +691,17 @@ export default class EventTile extends React.Component<IProps, IState> {
         );
     }
 
+    private viewInRoom(evt: MouseEvent): void {
+        evt.preventDefault();
+        evt.stopPropagation();
+        dis.dispatch({
+            action: Action.ViewRoom,
+            event_id: this.props.mxEvent.getId(),
+            highlighted: true,
+            room_id: this.props.mxEvent.getRoomId(),
+        });
+    }
+
     private onRoomReceipt = (ev: MatrixEvent, room: Room): void => {
         // ignore events for other rooms
         const tileRoom = this.context.getRoom(this.props.mxEvent.getRoomId());
@@ -1446,10 +1457,10 @@ export default class EventTile extends React.Component<IProps, IState> {
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                title={_t("Reply in thread")}
-                                onClick={() => showThread({ rootEvent: this.props.mxEvent, push: true })}
-                                key="thread"
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoom"
+                                onClick={(e) => this.viewInRoom(e)}
+                                title={_t("View in room")}
+                                key="view_in_room"
                             />
                             <RovingThreadListContextMenu
                                 mxEvent={this.props.mxEvent}
