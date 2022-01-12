@@ -17,6 +17,9 @@ limitations under the License.
 import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 
 import { _t } from '../../../languageHandler';
 import LocationPicker from './LocationPicker';
@@ -24,14 +27,15 @@ import { CollapsibleButton, ICollapsibleButtonProps } from '../rooms/Collapsible
 import ContextMenu, { aboveLeftOf, useContextMenu, AboveLeftOf } from "../../structures/ContextMenu";
 
 interface IProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
+    client: MatrixClient;
+    roomId: string;
     sender: RoomMember;
-    shareLocation: (uri: string, ts: number) => boolean;
     menuPosition: AboveLeftOf;
     narrowMode: boolean;
 }
 
 export const LocationButton: React.FC<IProps> = (
-    { sender, shareLocation, menuPosition, narrowMode },
+    { client, roomId, sender, menuPosition, narrowMode },
 ) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
@@ -47,7 +51,7 @@ export const LocationButton: React.FC<IProps> = (
         >
             <LocationPicker
                 sender={sender}
-                onChoose={shareLocation}
+                onChoose={shareLocation(client, roomId)}
                 onFinished={closeMenu}
             />
         </ContextMenu>;
@@ -73,6 +77,20 @@ export const LocationButton: React.FC<IProps> = (
 
         { contextMenu }
     </React.Fragment>;
+};
+
+const shareLocation = (client: MatrixClient, roomId: string) => (uri: string, ts: number) => {
+    if (!uri) return false;
+    try {
+        const text = textForLocation(uri, ts, null);
+        client.sendMessage(
+            roomId,
+            makeLocationContent(text, uri, ts, null),
+        );
+    } catch (e) {
+        logger.error("Error sending location:", e);
+    }
+    return true;
 };
 
 export function textForLocation(
