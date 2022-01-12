@@ -2172,7 +2172,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 // keep the timeline in as the mainSplitBody
                 break;
             case MainSplitContentType.MaximisedWidget:
-                if (!SettingsStore.getValue("feature_maximised_widgets")) break;
                 mainSplitBody = <AppsDrawer
                     room={this.state.room}
                     userId={this.context.credentials.userId}
@@ -2219,7 +2218,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
-                            <div className="mx_RoomView_body">
+                            <div className="mx_RoomView_body" data-layout={this.state.layout}>
                                 { mainSplitBody }
                             </div>
                         </MainSplit>
