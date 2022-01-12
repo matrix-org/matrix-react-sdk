@@ -25,6 +25,8 @@ import { _t } from '../../../languageHandler';
 import LocationPicker from './LocationPicker';
 import { CollapsibleButton, ICollapsibleButtonProps } from '../rooms/CollapsibleButton';
 import ContextMenu, { aboveLeftOf, useContextMenu, AboveLeftOf } from "../../structures/ContextMenu";
+import Modal from '../../../Modal';
+import QuestionDialog from '../dialogs/QuestionDialog';
 
 interface IProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
     client: MatrixClient;
@@ -51,7 +53,7 @@ export const LocationButton: React.FC<IProps> = (
         >
             <LocationPicker
                 sender={sender}
-                onChoose={shareLocation(client, roomId)}
+                onChoose={shareLocation(client, roomId, openMenu)}
                 onFinished={closeMenu}
             />
         </ContextMenu>;
@@ -79,19 +81,37 @@ export const LocationButton: React.FC<IProps> = (
     </React.Fragment>;
 };
 
-const shareLocation = (client: MatrixClient, roomId: string) => (uri: string, ts: number) => {
-    if (!uri) return false;
-    try {
-        const text = textForLocation(uri, ts, null);
-        client.sendMessage(
-            roomId,
-            makeLocationContent(text, uri, ts, null),
-        );
-    } catch (e) {
-        logger.error("Error sending location:", e);
-    }
-    return true;
-};
+const shareLocation = (client: MatrixClient, roomId: string, openMenu: () => void) =>
+    (uri: string, ts: number) => {
+        if (!uri) return false;
+        try {
+            const text = textForLocation(uri, ts, null);
+            client.sendMessage(
+                roomId,
+                makeLocationContent(text, uri, ts, null),
+            );
+        } catch (e) {
+            logger.error("We couldn’t send your location", e);
+            Modal.createTrackedDialog(
+                'We couldn’t send your location',
+                '',
+                QuestionDialog,
+                {
+                    title: _t("We couldn’t send your location"),
+                    description: _t(
+                        "Element could not send your location. Please try again later."),
+                    button: _t('Try again'),
+                    cancelButton: _t('Cancel'),
+                    onFinished: (tryAgain: boolean) => {
+                        if (tryAgain) {
+                            openMenu();
+                        }
+                    },
+                },
+            );
+        }
+        return true;
+    };
 
 export function textForLocation(
     uri: string,
