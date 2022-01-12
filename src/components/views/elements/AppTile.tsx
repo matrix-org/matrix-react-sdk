@@ -550,13 +550,13 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_maximised_widgets") && !this.props.hideMaximiseButton) {
             const widgetIsMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);
+            const className = classNames({
+                "mx_AppTileMenuBar_iconButton": true,
+                "mx_AppTileMenuBar_iconButton_minWidget": widgetIsMaximised,
+                "mx_AppTileMenuBar_iconButton_maxWidget": !widgetIsMaximised,
+            });
             maxMinButton = <AccessibleButton
-                className={
-                    "mx_AppTileMenuBar_iconButton"
-                    + (widgetIsMaximised
-                        ? " mx_AppTileMenuBar_iconButton_minWidget"
-                        : " mx_AppTileMenuBar_iconButton_maxWidget")
-                }
+                className={className}
                 title={
                     widgetIsMaximised ? _t('Close') : _t('Maximise widget')
                 }
