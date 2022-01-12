@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642008173223,
+  "lastUpdate": 1642018756700,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54260,6 +54260,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 667.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ec6c1b82725f5261c2af022fe842f2a8bac4a8e8",
+          "message": "Fix RoomViewStore forgetting some details of a view room call (#7512)",
+          "timestamp": "2022-01-12T13:12:28-07:00",
+          "tree_id": "934a1ef672e3bc4ca51701ba1aedaafacc24a130",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ec6c1b82725f5261c2af022fe842f2a8bac4a8e8"
+        },
+        "date": 1642018752337,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5014.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 943.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1672.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4324.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
