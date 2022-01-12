@@ -67,13 +67,13 @@ import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import Toolbar from '../../../accessibility/Toolbar';
 import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
-import { RovingThreadListContextMenu } from '../context_menus/ThreadListContextMenu';
 import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { CardContext } from '../right_panel/BaseCard';
+import { copyPlaintext } from '../../../utils/strings';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -691,7 +691,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         );
     }
 
-    private viewInRoom(evt: MouseEvent): void {
+    private viewInRoom = (evt: ButtonEvent): void => {
         evt.preventDefault();
         evt.stopPropagation();
         dis.dispatch({
@@ -700,7 +700,13 @@ export default class EventTile extends React.Component<IProps, IState> {
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
         });
-    }
+    };
+
+    private copyLinkToThread = async (evt: ButtonEvent): Promise<void> => {
+        const { permalinkCreator, mxEvent } = this.props;
+        const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
+        await copyPlaintext(matrixToUrl);
+    };
 
     private onRoomReceipt = (ev: MatrixEvent, room: Room): void => {
         // ignore events for other rooms
@@ -1458,14 +1464,15 @@ export default class EventTile extends React.Component<IProps, IState> {
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
                                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoom"
-                                onClick={(e) => this.viewInRoom(e)}
+                                onClick={this.viewInRoom}
                                 title={_t("View in room")}
                                 key="view_in_room"
                             />
-                            <RovingThreadListContextMenu
-                                mxEvent={this.props.mxEvent}
-                                permalinkCreator={this.props.permalinkCreator}
-                                onMenuToggle={this.onActionBarFocusChange}
+                            <RovingAccessibleTooltipButton
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkToThread"
+                                onClick={this.copyLinkToThread}
+                                title={_t("Copy link to thread")}
+                                key="copy_link_to_thread"
                             />
                         </Toolbar>
                         { msgOption }
