@@ -95,14 +95,11 @@ export default class TimelineCard extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         // Remove RoomStore listener
-        if (this.roomStoreToken) {
-            this.roomStoreToken.remove();
-        }
+        if (this.roomStoreToken) this.roomStoreToken.remove();
+        if (this.readReceiptsSettingWatcher) SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
+        if (this.layoutWatcherRef) SettingsStore.unwatchSetting(this.layoutWatcherRef);
+
         dis.unregister(this.dispatcherRef);
-        if (this.readReceiptsSettingWatcher) {
-            SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
-        }
-        SettingsStore.unwatchSetting(this.layoutWatcherRef);
     }
 
     private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
