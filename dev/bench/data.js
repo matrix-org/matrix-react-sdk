@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641979560752,
+  "lastUpdate": 1641980828565,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53960,6 +53960,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 597.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8355883313e6fc467bda00ec3d6537d14809468",
+          "message": "Allow using room pills in slash commands (#7513)",
+          "timestamp": "2022-01-12T09:40:18Z",
+          "tree_id": "2069c016fee24b833088f2ff06cd226f89446214",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8355883313e6fc467bda00ec3d6537d14809468"
+        },
+        "date": 1641980823861,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4732.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 628.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
