@@ -520,7 +520,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 buttons.push(
                     <LocationButton
                         key="location"
-                        client={MatrixClientPeg.get()}
                         roomId={this.props.room.roomId}
                         sender={sender}
                         menuPosition={menuPosition}

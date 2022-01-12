@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import classNames from 'classnames';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { logger } from "matrix-js-sdk/src/logger";
@@ -27,9 +27,9 @@ import { CollapsibleButton, ICollapsibleButtonProps } from '../rooms/Collapsible
 import ContextMenu, { aboveLeftOf, useContextMenu, AboveLeftOf } from "../../structures/ContextMenu";
 import Modal from '../../../Modal';
 import QuestionDialog from '../dialogs/QuestionDialog';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 interface IProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
-    client: MatrixClient;
     roomId: string;
     sender: RoomMember;
     menuPosition: AboveLeftOf;
@@ -37,9 +37,10 @@ interface IProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
 }
 
 export const LocationButton: React.FC<IProps> = (
-    { client, roomId, sender, menuPosition, narrowMode },
+    { roomId, sender, menuPosition, narrowMode },
 ) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const matrixClient = useContext(MatrixClientContext);
 
     let contextMenu: ReactElement;
     if (menuDisplayed) {
@@ -53,7 +54,7 @@ export const LocationButton: React.FC<IProps> = (
         >
             <LocationPicker
                 sender={sender}
-                onChoose={shareLocation(client, roomId, openMenu)}
+                onChoose={shareLocation(matrixClient, roomId, openMenu)}
                 onFinished={closeMenu}
             />
         </ContextMenu>;
