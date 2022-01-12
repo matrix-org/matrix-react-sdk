@@ -630,36 +630,32 @@ class TimelinePanel extends React.Component<IProps, IState> {
     // Called whenever the visibility of an event changes, as per
     // MSC3531. We typically need to re-render the tile.
     private onEventVisibilityChange = (ev: MatrixEvent): void => {
-        const roomId = ev.getRoomId();
         if (this.unmounted) {
             return;
         }
 
         // ignore events for other rooms
-        if (roomId !== this.props.timelineSet.room.roomId) {
+        const roomId = ev.getRoomId();
+        if (roomId !== this.props.timelineSet.room?.roomId) {
             return;
         }
 
         // we could skip an update if the event isn't in our timeline,
         // but that's probably an early optimisation.
         const tile = this.messagePanel.current?.getTileForEventId(ev.getId());
-        if (!tile) {
-            // The event is not visible, nothing to re-render.
-            return;
+        if (tile) {
+            tile.forceUpdate();
         }
-        tile.forceUpdate();
     };
 
     private onVisibilityPowerLevelChange = (ev: MatrixEvent, member: RoomMember): void => {
-        logger.debug("TimelinePanel.onVisibilityPowerLevelChange",
-            member.userId, MatrixClientPeg.get().credentials.userId);
         if (this.unmounted) return;
 
         // ignore events for other rooms
-        if (member.roomId !== this.props.timelineSet.room.roomId) return;
+        if (member.roomId !== this.props.timelineSet.room?.roomId) return;
 
         // ignore events for other users
-        if (member.userId != MatrixClientPeg.get().credentials.userId) return;
+        if (member.userId != MatrixClientPeg.get().credentials?.userId) return;
 
         // We could skip an update if the power level change didn't cross the
         // threshold for `VISIBILITY_CHANGE_TYPE`.
