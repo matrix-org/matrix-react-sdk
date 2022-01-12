@@ -121,7 +121,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         if (now - this.state.lastRageshakeTime > RAGESHAKE_INTERVAL) {
             await this.updateState({ lastRageshakeTime: now });
             await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
-                userText: `Auto-reporting decryption error (sender) ${recipientRageshake}`,
+                userText: `Auto-reporting decryption error (sender)\nRecipient rageshake: ${recipientRageshake}`,
                 sendLogs: true,
                 label: "Z-UISI",
                 customFields: {
