@@ -17,7 +17,7 @@ limitations under the License.
 import React, { SyntheticEvent } from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomMember } from 'matrix-js-sdk';
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
 import SdkConfig from '../../../SdkConfig';
 import DialogButtons from "../elements/DialogButtons";
