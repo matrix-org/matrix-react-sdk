@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641978612662,
+  "lastUpdate": 1641979560752,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -53924,6 +53924,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 801.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "31247a50cab1ef98d040c9a5d6703f2e8b53b057",
+          "message": "Make LocationPicker appearance cleaner (#7516)",
+          "timestamp": "2022-01-12T09:19:26Z",
+          "tree_id": "c7d9598dff753dafe61cbee93d08f7ef53f1dfdc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/31247a50cab1ef98d040c9a5d6703f2e8b53b057"
+        },
+        "date": 1641979557072,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4912.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 597.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
