@@ -3387,5 +3387,8 @@
     "Esc": "Esc",
     "Enter": "Enter",
     "End": "End",
-    "[number]": "[number]"
+    "[number]": "[number]",
+    "Message pending moderation": "Message pending moderation",
+    "Message pending moderation: %(reason)s": "Message pending moderation: %(reason)s",
+    "Let moderators hide messages pending moderation.": "Let moderators hide messages pending moderation."
 }
