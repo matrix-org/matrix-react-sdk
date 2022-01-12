@@ -291,13 +291,6 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it('correctly sets the editorStateKey for threads', () => {
-            const mockThread ={
-                getThread: () => {
-                    return {
-                        id: 'myFakeThreadId',
-                    };
-                },
-            } as any;
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={roomContext}>
 
