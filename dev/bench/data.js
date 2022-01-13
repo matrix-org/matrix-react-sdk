@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642089744320,
+  "lastUpdate": 1642092613722,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54704,6 +54704,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4313.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6d9d9a56b4bef9501439d847da59420c241902e0",
+          "message": "Apply border-radius onto linear gradient in bubble layout (#7536)",
+          "timestamp": "2022-01-13T16:42:32Z",
+          "tree_id": "a991dae2c07187dec228cf7596d267b169efe5c9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6d9d9a56b4bef9501439d847da59420c241902e0"
+        },
+        "date": 1642092608484,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5301.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 740.5,
             "unit": "ms",
             "extra": "type: measure"
           }
