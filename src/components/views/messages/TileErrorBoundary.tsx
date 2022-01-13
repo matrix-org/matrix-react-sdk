@@ -85,7 +85,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
             if (mxEvent && SettingsStore.getValue("developerMode")) {
                 viewSourceButton = <AccessibleButton onClick={this.onViewSource} kind="link_inline">
                     { _t("View Source") }
-                </AccessibleButton>
+                </AccessibleButton>;
             }
 
             return (<div className={classNames(classes)}>
