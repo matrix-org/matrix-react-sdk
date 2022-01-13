@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642093878015,
+  "lastUpdate": 1642114358031,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54788,6 +54788,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4939.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "657b0a4c28cb354cdc8eb8d2ee7abdccf6c5f608",
+          "message": "Fix alignment of timestamps in bubble layout (#7535)",
+          "timestamp": "2022-01-13T22:45:54Z",
+          "tree_id": "e874e75f0e0177860af1ec856b2ff241a04720b2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/657b0a4c28cb354cdc8eb8d2ee7abdccf6c5f608"
+        },
+        "date": 1642114353917,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4622,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 625.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
