@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642070222004,
+  "lastUpdate": 1642072662523,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54476,6 +54476,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4472.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef95644e2398737753bd85765e63523fc08f3f0c",
+          "message": "Render Jitsi (and other sticky widgets) in PiP container, so it can be dragged and the \"jump to room functionality\" is provided (#7450)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2022-01-13T12:10:41+01:00",
+          "tree_id": "e3e3f178d1417d591c0332289ba352e885b8cfe9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ef95644e2398737753bd85765e63523fc08f3f0c"
+        },
+        "date": 1642072658355,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5035.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 629.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
