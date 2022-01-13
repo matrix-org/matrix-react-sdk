@@ -25,7 +25,7 @@ import {
     NamespacedValue,
     PollAnswerSubevent,
     PollResponseEvent,
-    PollStartEvent
+    PollStartEvent,
 } from "matrix-events-sdk";
 import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 
