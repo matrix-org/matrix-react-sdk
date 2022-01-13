@@ -93,23 +93,21 @@ const shareLocation = (client: MatrixClient, roomId: string, openMenu: () => voi
             );
         } catch (e) {
             logger.error("We couldn’t send your location", e);
-            Modal.createTrackedDialog(
-                'We couldn’t send your location',
-                '',
-                QuestionDialog,
-                {
-                    title: _t("We couldn’t send your location"),
-                    description: _t(
-                        "Element could not send your location. Please try again later."),
-                    button: _t('Try again'),
-                    cancelButton: _t('Cancel'),
-                    onFinished: (tryAgain: boolean) => {
-                        if (tryAgain) {
-                            openMenu();
-                        }
-                    },
+
+            const analyticsAction = 'We couldn’t send your location';
+            const params = {
+                title: _t("We couldn’t send your location"),
+                description: _t(
+                    "Element could not send your location. Please try again later."),
+                button: _t('Try again'),
+                cancelButton: _t('Cancel'),
+                onFinished: (tryAgain: boolean) => {
+                    if (tryAgain) {
+                        openMenu();
+                    }
                 },
-            );
+            };
+            Modal.createTrackedDialog(analyticsAction, '', QuestionDialog, params);
         }
         return true;
     };
