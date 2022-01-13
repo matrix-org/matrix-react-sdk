@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642068896772,
+  "lastUpdate": 1642070222004,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54428,6 +54428,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 595.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8b01b68fa35ced469f576cb4456f1bf41ce1a9ce",
+          "message": "Use published matrix-web-i18n (#7530)",
+          "timestamp": "2022-01-13T10:30:09Z",
+          "tree_id": "258d08c6bbb75b968977f17ed1d37cf0701c34ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8b01b68fa35ced469f576cb4456f1bf41ce1a9ce"
+        },
+        "date": 1642070217827,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4780.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 920.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1652.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4472.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
