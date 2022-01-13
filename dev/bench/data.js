@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642066768292,
+  "lastUpdate": 1642068321220,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54344,6 +54344,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 632.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78ff685caf85bc101b9ae62b2b3b7e45616642f5",
+          "message": "Copy bubble layout changes to timelineCard (#7527)",
+          "timestamp": "2022-01-13T10:58:22+01:00",
+          "tree_id": "e70816774b8ad1dc3c1bc7f707f6a0b56aa8c283",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78ff685caf85bc101b9ae62b2b3b7e45616642f5"
+        },
+        "date": 1642068317188,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5102.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 946,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1670.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4323.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
