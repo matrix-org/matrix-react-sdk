@@ -25,9 +25,7 @@ import { _t } from '../../../languageHandler';
 import RoomAvatar from "../avatars/RoomAvatar";
 import AccessibleButton from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import Modal from "../../../Modal";
 import ShareDialog from '../dialogs/ShareDialog';
 import { useEventEmitter } from "../../../hooks/useEventEmitter";
@@ -48,6 +46,7 @@ import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widget
 import RoomName from "../elements/RoomName";
 import UIStore from "../../../stores/UIStore";
 import ExportDialog from "../dialogs/ExportDialog";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 interface IProps {
     room: Room;
@@ -103,12 +102,9 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     }, [room.roomId]);
 
     const onOpenWidgetClick = () => {
-        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
+        RightPanelStore.instance.pushCard({
             phase: RightPanelPhases.Widget,
-            refireParams: {
-                widgetId: app.id,
-            },
+            state: { widgetId: app.id },
         });
     };
 
@@ -173,10 +169,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
         </AccessibleTooltipButton>
 
         { canModifyWidget && <ContextMenuTooltipButton
-            className={classNames({
-                "mx_RoomSummaryCard_app_options": true,
-                "mx_RoomSummaryCard_maximised_widget": SettingsStore.getValue("feature_maximised_widgets"),
-            })}
+            className="mx_RoomSummaryCard_app_options mx_RoomSummaryCard_maximised_widget"
             isExpanded={menuDisplayed}
             onClick={openMenu}
             title={_t("Options")}
@@ -190,13 +183,12 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             disabled={cannotPin}
             yOffset={-24}
         />
-        { SettingsStore.getValue("feature_maximised_widgets") &&
         <AccessibleTooltipButton
             className={isMaximised ? "mx_RoomSummaryCard_app_minimise" : "mx_RoomSummaryCard_app_maximise"}
             onClick={toggleMaximised}
             title={maximiseTitle}
             yOffset={-24}
-        /> }
+        />
 
         { contextMenu }
     </div>;
@@ -237,19 +229,11 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
 };
 
 export const onRoomMembersClick = (allowClose = true) => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.RoomMemberList,
-        allowClose,
-    });
+    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, allowClose);
 };
 
 export const onRoomFilesClick = (allowClose = true) => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.FilePanel,
-        allowClose,
-    });
+    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, allowClose);
 };
 
 const onRoomSettingsClick = () => {

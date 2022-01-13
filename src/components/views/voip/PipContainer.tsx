@@ -1,5 +1,6 @@
 /*
 Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
+import React from 'react';
 
-export interface ToggleRightPanelPayload extends ActionPayload {
-    action: Action.ToggleRightPanel;
+import PipView from './PipView';
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
-    /**
-     * The type of room that the panel is toggled in.
-     */
-    type: "group" | "room";
+interface IProps {
+
+}
+
+interface IState {
+
+}
+
+@replaceableComponent("views.voip.PiPContainer")
+export default class PiPContainer extends React.PureComponent<IProps, IState> {
+    public render() {
+        return <div className="mx_PiPContainer">
+            <PipView />
+        </div>;
+    }
 }

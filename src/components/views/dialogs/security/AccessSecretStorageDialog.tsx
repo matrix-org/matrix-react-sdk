@@ -287,10 +287,10 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         const resetButton = (
             <div className="mx_AccessSecretStorageDialog_reset">
                 { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
-                    a: (sub) => <a
-                        href=""
+                    a: (sub) => <AccessibleButton
+                        kind="link_inline"
                         onClick={this.onResetAllClick}
-                        className="mx_AccessSecretStorageDialog_reset_link">{ sub }</a>,
+                        className="mx_AccessSecretStorageDialog_reset_link">{ sub }</AccessibleButton>,
                 }) }
             </div>
         );
@@ -393,6 +393,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry_textInput">
                             <Field
                                 type="password"
+                                id="mx_securityKey"
                                 label={_t('Security Key')}
                                 value={this.state.recoveryKey}
                                 onChange={this.onRecoveryKeyChange}
