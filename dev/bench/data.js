@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642085144436,
+  "lastUpdate": 1642089744320,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54656,6 +54656,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4692.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3eb5130cda6340454ea912c7193e2561cefc7866",
+          "message": "Add labs flag to automatically rageshake on decryption errors (#7307)\n\nAlso sends a to-device message to the sender, prompting them to auto-rageshake too if they have this lab enabled as well.\r\n\r\nCo-authored-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-01-13T10:55:25-05:00",
+          "tree_id": "9753d162b9ea35325e536037028fd6144d864614",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3eb5130cda6340454ea912c7193e2561cefc7866"
+        },
+        "date": 1642089739230,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4830.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 899.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1624.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4313.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
