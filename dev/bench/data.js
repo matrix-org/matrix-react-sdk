@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642114358031,
+  "lastUpdate": 1642114366853,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54824,6 +54824,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 625.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "47c112b12e5d60c6db806713262adb5a2e9ea522",
+          "message": "Fix alignment of reactions in bubble layout thread view (#7534)\n\n* Fix alignment of reactions in bubble layout thread view\n\n* Remove duplicate download link in thread view panel\n\n* Fix bugs with layout of file pills",
+          "timestamp": "2022-01-13T22:46:11Z",
+          "tree_id": "175dfd9b304e368ce320f656a31ed1a202d73afe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/47c112b12e5d60c6db806713262adb5a2e9ea522"
+        },
+        "date": 1642114362983,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4578.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 615,
             "unit": "ms",
             "extra": "type: measure"
           }
