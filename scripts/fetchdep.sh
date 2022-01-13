@@ -49,7 +49,7 @@ elif [ -n "$REVIEW_ID" ]; then
     getPRInfo $REVIEW_ID
 fi
 
-# for forks, $head will be in teh format "fork:branch", so we split it by ":"
+# for forks, $head will be in the format "fork:branch", so we split it by ":"
 # into an array. On non-forks, this has the effect of splitting into a single
 # element array given ":" shouldn't appear in the head - it'll just be the
 # branch name. Based on the results, we clone.
