@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642018756700,
+  "lastUpdate": 1642066768292,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54308,6 +54308,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4324.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "db3be7d49e982430151b93664872337d87a00e9c",
+          "message": "Add linear gradient to images in bubble layout (#7521)",
+          "timestamp": "2022-01-13T09:32:27Z",
+          "tree_id": "d32fdb49e4fa9ccc3735468962d76ed37fb4351b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/db3be7d49e982430151b93664872337d87a00e9c"
+        },
+        "date": 1642066763682,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4775.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 632.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
