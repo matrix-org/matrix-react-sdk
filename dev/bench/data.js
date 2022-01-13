@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642072662523,
+  "lastUpdate": 1642078398539,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54512,6 +54512,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 629.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "44b9b6ca57ba40706d87864ff4c474e80730bef6",
+          "message": "Restore ability to click to lightbox image in bubble layout (#7533)",
+          "timestamp": "2022-01-13T12:45:35Z",
+          "tree_id": "ed8e800ff9a4481c16958a5f9e9a00119f5b21e7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/44b9b6ca57ba40706d87864ff4c474e80730bef6"
+        },
+        "date": 1642078393096,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5784.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1045.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4866.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
