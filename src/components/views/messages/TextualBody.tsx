@@ -524,7 +524,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 break;
         }
         return (
-            <span className="mx_EventTile_hidden">{ `(${text})` }</span>
+            <span className="mx_EventTile_pendingModeration">{ `(${text})` }</span>
         );
     }
 

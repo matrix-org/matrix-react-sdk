@@ -17,7 +17,7 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from "classnames";
-import { EventType, MsgType, EVENT_VISIBILITY_CHANGE_TYPE } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -1072,14 +1072,13 @@ export default class EventTile extends React.Component<IProps, IState> {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
         const eventDisplayInfo = getEventDisplayInfo(this.props.mxEvent);
-        let {
-            tileHandler,
-        } = eventDisplayInfo;
         const {
+            tileHandler,
             isBubbleMessage,
             isInfoMessage,
             isLeftAlignedBubbleMessage,
             noBubbleEvent,
+            isSeeingThroughMessageHiddenForModeration,
         } = eventDisplayInfo;
         const { isQuoteExpanded } = this.state;
 
@@ -1093,23 +1092,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                     { _t('This event could not be displayed') }
                 </div>
             </div>;
-        }
-
-        let isSeeingThroughMessageHiddenForModeration = false;
-        if (SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
-            switch (this.getMessageModerationState()) {
-                case MessageModerationState.VISIBLE_FOR_ALL:
-                    // Default behavior, nothing to do.
-                    break;
-                case MessageModerationState.HIDDEN_TO_CURRENT_USER:
-                    // Hide message.
-                    tileHandler = "messages.HiddenBody";
-                    break;
-                case MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER:
-                    // Show message with a marker.
-                    isSeeingThroughMessageHiddenForModeration = true;
-                    break;
-            }
         }
 
         const EventTileType = sdk.getComponent(tileHandler);
@@ -1577,46 +1559,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
         }
     }
-
-    // Determine whether this message should be rendered as
-    // visible to all, hidden from this user, hidden from some
-    // users but not current user.
-    private getMessageModerationState(): MessageModerationState {
-        if (!SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
-            throw new Error(
-                "This method should only be called when feature_msc3531_hide_messages_pending_moderation is on",
-            );
-        }
-        const visibility = this.props.mxEvent.messageVisibility();
-        if (visibility.visible) {
-            return MessageModerationState.VISIBLE_FOR_ALL;
-        }
-
-        // At this point, we know that the message is marked as hidden
-        // pending moderation. However, if we're the author or a moderator,
-        // we still need to display it.
-
-        if (this.props.mxEvent.sender.userId === this.context.getUserId()) {
-            // We're the author, show the message.
-            return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
-        }
-
-        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
-        if (EVENT_VISIBILITY_CHANGE_TYPE.name
-            && room.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.name, this.context.getUserId())
-        ) {
-            // We're a moderator (as indicated by prefixed event name), show the message.
-            return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
-        }
-        if (EVENT_VISIBILITY_CHANGE_TYPE.altName
-            && room.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.altName, this.context.getUserId())
-        ) {
-            // We're a moderator (as indicated by unprefixed event name), show the message.
-            return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
-        }
-        // For everybody else, hide the message.
-        return MessageModerationState.HIDDEN_TO_CURRENT_USER;
-    }
 }
 
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
@@ -1791,25 +1733,4 @@ class SentReceipt extends React.PureComponent<ISentReceiptProps, ISentReceiptSta
             </div>
         );
     }
-}
-
-/**
- * How we should render the message depending on its moderation state.
- */
-enum MessageModerationState {
-    /**
-     * The message is visible to all.
-     */
-    VISIBLE_FOR_ALL = "VISIBLE_FOR_ALL",
-    /**
-     * The message is hidden pending moderation and we're not a user who should
-     * see it nevertheless.
-     */
-    HIDDEN_TO_CURRENT_USER = "HIDDEN_TO_CURRENT_USER",
-    /**
-     * The message is hidden pending moderation and we're either the author of
-     * the message or a moderator. In either case, we need to see the message
-     * with a marker.
-     */
-    SEE_THROUGH_FOR_CURRENT_USER = "SEE_THROUGH_FOR_CURRENT_USER",
 }
