@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642068321220,
+  "lastUpdate": 1642068896772,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54392,6 +54392,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4323.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "57274151+c-cal@users.noreply.github.com",
+            "name": "Charlie Calendre",
+            "username": "c-cal"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c2393cade794bc2470a71bb1bde267ed2288ab59",
+          "message": "Fix translation for the \"Add room\" tooltip (#7532)",
+          "timestamp": "2022-01-13T10:08:22Z",
+          "tree_id": "4f104fa643c3d03020e5dc12845775c908be9b4e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c2393cade794bc2470a71bb1bde267ed2288ab59"
+        },
+        "date": 1642068892683,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4974.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 595.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
