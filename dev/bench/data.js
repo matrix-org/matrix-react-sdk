@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642092613722,
+  "lastUpdate": 1642093878015,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54740,6 +54740,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 740.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "61a0be7d46c8a72614af9123869e0fd89a54310e",
+          "message": "Render events as extensible events (behind labs) (#7462)\n\n* Render events as extensible events (behind labs)\r\n\r\n* Include the SDK\r\n\r\n* Appease linter\r\n\r\n* Update for changed property name\r\n\r\n* Fix formatting error\r\n\r\n* Fix branch matching for build steps\r\n\r\n* Update SDK\r\n\r\n* Update scripts/fetchdep.sh\r\n\r\nCo-authored-by: Andy Balaam <andyb@element.io>\r\n\r\nCo-authored-by: Andy Balaam <andyb@element.io>",
+          "timestamp": "2022-01-13T17:03:37Z",
+          "tree_id": "0409b3b33732014c0b50df893d6850266c43dde4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/61a0be7d46c8a72614af9123869e0fd89a54310e"
+        },
+        "date": 1642093872807,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5514.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1913.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4939.5,
             "unit": "ms",
             "extra": "type: measure"
           }
