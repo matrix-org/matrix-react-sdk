@@ -39,7 +39,8 @@ export default class MatrixSchemePermalinkConstructor extends PermalinkConstruct
     }
 
     forEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
-        return `matrix:${this.encodeEntity(roomId)}/${this.encodeEntity(eventId)}${this.encodeServerCandidates(serverCandidates)}`;
+        return `matrix:${this.encodeEntity(roomId)}` +
+            `/${this.encodeEntity(eventId)}${this.encodeServerCandidates(serverCandidates)}`;
     }
 
     forRoom(roomIdOrAlias: string, serverCandidates: string[]): string {
@@ -84,14 +85,14 @@ export default class MatrixSchemePermalinkConstructor extends PermalinkConstruct
             const sigil = identifier === 'r' ? '#' : '!';
 
             if (parts.length === 2) { // room without event permalink
-                const [roomId, query=""] = entityNoSigil.split("?");
+                const [roomId, query = ""] = entityNoSigil.split("?");
                 const via = query.split(/&?via=/g).filter(p => !!p);
                 return PermalinkParts.forRoom(`${sigil}${roomId}`, via);
             }
 
             if (parts[2] === 'e') { // event permalink
                 const eventIdAndQuery = parts.length > 3 ? parts.slice(3).join('/') : "";
-                const [eventId, query=""] = eventIdAndQuery.split("?");
+                const [eventId, query = ""] = eventIdAndQuery.split("?");
                 const via = query.split(/&?via=/g).filter(p => !!p);
                 return PermalinkParts.forEvent(`${sigil}${entityNoSigil}`, `$${eventId}`, via);
             }
