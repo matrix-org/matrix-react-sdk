@@ -249,16 +249,12 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
     }
 
     public render(): JSX.Element {
-        const hangupReason = this.props.callEventGrouper.hangupReason;
-
-        // If the call was replaced we don't render anything since we render the other call
-        if (hangupReason === CallErrorCode.Replaced) return null;
-
         const event = this.props.mxEvent;
         const sender = event.sender ? event.sender.name : event.getSender();
         const isVoice = this.props.callEventGrouper.isVoice;
         const callType = isVoice ? _t("Voice call") : _t("Video call");
         const callState = this.state.callState;
+        const hangupReason = this.props.callEventGrouper.hangupReason;
         const content = this.renderContent(callState);
         const className = classNames("mx_CallEvent", {
             mx_CallEvent_voice: isVoice,
