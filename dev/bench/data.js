@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642171721106,
+  "lastUpdate": 1642171844575,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55292,6 +55292,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4659.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aa4131ed2e283f1f3a4f10e50d37aa05cf07d754",
+          "message": "Add a developer mode 'view source' button to crashed event tiles (#7537)\n\n* Add a developer mode 'view source' button to crashed event tiles\n\n* appease the linter",
+          "timestamp": "2022-01-14T07:43:13-07:00",
+          "tree_id": "79193bb079855625c7b9d325f9b5dd21d712233d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aa4131ed2e283f1f3a4f10e50d37aa05cf07d754"
+        },
+        "date": 1642171839580,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5936.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1111.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1782.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4922.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
