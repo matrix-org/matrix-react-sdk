@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642173088976,
+  "lastUpdate": 1642176263655,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55388,6 +55388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4414.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "18c82d57ae0a36d7a46ad072143734de59b5ceb9",
+          "message": "Add setting for enabling location sharing (#7547)",
+          "timestamp": "2022-01-14T15:57:39Z",
+          "tree_id": "592c543c94fdf1f319598750b1e8457177ff38e2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/18c82d57ae0a36d7a46ad072143734de59b5ceb9"
+        },
+        "date": 1642176259051,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4857.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 893.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1622.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4086.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
