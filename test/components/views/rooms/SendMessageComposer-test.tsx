@@ -19,6 +19,7 @@ import React from "react";
 import { act } from "react-dom/test-utils";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { mount } from 'enzyme';
+import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import SendMessageComposer, {
     createMessageContent,
@@ -290,13 +291,6 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it('correctly sets the editorStateKey for threads', () => {
-            const mockThread ={
-                getThread: () => {
-                    return {
-                        id: 'myFakeThreadId',
-                    };
-                },
-            } as any;
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={roomContext}>
 
@@ -304,14 +298,15 @@ describe('<SendMessageComposer/>', () => {
                         room={mockRoom as any}
                         placeholder=""
                         permalinkCreator={new MatrixToPermalinkConstructor() as any}
-                        replyToEvent={mockThread}
+                        relation={{
+                            rel_type: RelationType.Thread,
+                            event_id: "myFakeThreadId",
+                        }}
                     />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>);
-
             const instance = wrapper.find(SendMessageComposerClass).instance();
             const key = instance.editorStateKey;
-
             expect(key).toEqual('mx_cider_state_myfakeroom_myFakeThreadId');
         });
     });
@@ -340,10 +335,10 @@ describe('<SendMessageComposer/>', () => {
             const model2 = new EditorModel([], createPartCreator(), createRenderer());
             const model3 = new EditorModel([], createPartCreator(), createRenderer());
             const model4 = new EditorModel([], createPartCreator(), createRenderer());
-            model.update("+😊hello", "insertText", new DocumentOffset( 8, true));
-            model2.update(" +😊", "insertText", new DocumentOffset( 4, true));
-            model3.update("+ 😊😊", "insertText", new DocumentOffset( 6, true));
-            model4.update("+smiley", "insertText", new DocumentOffset( 7, true));
+            model.update("+😊hello", "insertText", new DocumentOffset(8, true));
+            model2.update(" +😊", "insertText", new DocumentOffset(4, true));
+            model3.update("+ 😊😊", "insertText", new DocumentOffset(6, true));
+            model4.update("+smiley", "insertText", new DocumentOffset(7, true));
 
             expect(isQuickReaction(model)).toBeFalsy();
             expect(isQuickReaction(model2)).toBeFalsy();

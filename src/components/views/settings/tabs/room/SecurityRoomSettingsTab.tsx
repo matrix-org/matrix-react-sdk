@@ -37,6 +37,7 @@ import CreateRoomDialog from '../../../dialogs/CreateRoomDialog';
 import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import SettingsFieldset from '../../SettingsFieldset';
+import ExternalLink from '../../../elements/ExternalLink';
 
 interface IProps {
     roomId: string;
@@ -139,12 +140,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         "To avoid these issues, create a <a>new encrypted room</a> for " +
                         "the conversation you plan to have.",
                         null,
-                        { "a": (sub) => <a
-                            className="mx_linkButton"
-                            onClick={() => {
-                                dialog.close();
-                                this.createNewRoom(false, true);
-                            }}> { sub } </a> },
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline'
+                                onClick={() => {
+                                    dialog.close();
+                                    this.createNewRoom(false, true);
+                                }}> { sub } </AccessibleButton>,
+                        },
                     ) } </p>
                 </div>,
 
@@ -163,11 +165,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 "may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>",
                 {},
                 {
-                    a: sub => <a
+                    a: sub => <ExternalLink
                         href="https://element.io/help#encryption"
-                        rel="noreferrer noopener"
-                        target="_blank"
-                    >{ sub }</a>,
+                    >{ sub }</ExternalLink>,
                 },
             ),
             onFinished: (confirm) => {
@@ -270,14 +270,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         });
 
         return <SettingsFieldset legend={_t("Access")} description={description}>
-            { aliasWarning }
-
             <JoinRuleSettings
                 room={room}
                 beforeChange={this.onBeforeJoinRuleChange}
                 onError={this.onJoinRuleChangeError}
                 closeSettingsFn={this.props.closeSettingsFn}
                 promptUpgrade={true}
+                aliasWarning={aliasWarning}
             />
         </SettingsFieldset>;
     }
@@ -307,12 +306,12 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         "you plan to have.",
                         null,
                         {
-                            "a": (sub) => <a
-                                className="mx_linkButton"
+                            "a": (sub) => <AccessibleButton
+                                kind='link_inline'
                                 onClick={() => {
                                     dialog.close();
                                     this.createNewRoom(true, false);
-                                }}> { sub } </a>,
+                                }}> { sub } </AccessibleButton>,
                         },
                     ) } </p>
                 </div>,

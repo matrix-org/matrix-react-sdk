@@ -15,29 +15,23 @@ limitations under the License.
 */
 
 import React, { ReactElement } from 'react';
-import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from 'classnames';
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
 import { _t } from '../../../languageHandler';
-import LocationShareType from "./LocationShareType";
 import LocationPicker from './LocationPicker';
 import { CollapsibleButton, ICollapsibleButtonProps } from '../rooms/CollapsibleButton';
 import ContextMenu, { aboveLeftOf, useContextMenu, AboveLeftOf } from "../../structures/ContextMenu";
 
 interface IProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
-    room: Room;
-    shareLocation: (
-        uri: string,
-        ts: number,
-        type: LocationShareType,
-        description: string,
-    ) => boolean;
+    sender: RoomMember;
+    shareLocation: (uri: string, ts: number) => boolean;
     menuPosition: AboveLeftOf;
     narrowMode: boolean;
 }
 
 export const LocationButton: React.FC<IProps> = (
-    { shareLocation, menuPosition, narrowMode },
+    { sender, shareLocation, menuPosition, narrowMode },
 ) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
@@ -51,7 +45,11 @@ export const LocationButton: React.FC<IProps> = (
             onFinished={closeMenu}
             managed={false}
         >
-            <LocationPicker onChoose={shareLocation} onFinished={closeMenu} />
+            <LocationPicker
+                sender={sender}
+                onChoose={shareLocation}
+                onFinished={closeMenu}
+            />
         </ContextMenu>;
     }
 
