@@ -791,6 +791,10 @@ $left-gutter: 64px;
     margin: var(--topOffset) 16px var(--topOffset) 0;
     border-radius: 8px;
 
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+
     &:hover {
         background-color: $system;
     }
@@ -836,16 +840,21 @@ $left-gutter: 64px;
 
     .mx_SenderProfile {
         margin-left: var(--leftOffset) !important;
+        flex: 1;
+        margin-right: 12px;
+        text-overflow: ellipsis;
     }
 
     .mx_EventTile_line {
+        width: 100%;
         padding-left: var(--leftOffset) !important;
         padding-bottom: 0;
     }
+
     .mx_MessageTimestamp {
-        right: 0;
-        left: auto !important;
-        top: -23px;
+        position: initial !important;
+        max-width: 80px;
+        width: auto !important;
     }
 }
 
