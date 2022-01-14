@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642166112866,
+  "lastUpdate": 1642167106968,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55172,6 +55172,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4113,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2ef36507fd56be787dcf927e742edabf3c6bc3d6",
+          "message": "Support deserialising HR tags for editing (#7543)",
+          "timestamp": "2022-01-14T13:24:51Z",
+          "tree_id": "7c386c8fc578cc2b1c609a474ee0dcc330a9a72b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2ef36507fd56be787dcf927e742edabf3c6bc3d6"
+        },
+        "date": 1642167102626,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5053.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 664.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
