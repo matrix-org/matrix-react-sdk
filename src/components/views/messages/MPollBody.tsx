@@ -22,6 +22,7 @@ import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
     M_POLL_END,
     M_POLL_RESPONSE,
+    M_POLL_START,
     NamespacedValue,
     PollAnswerSubevent,
     PollResponseEvent,
@@ -58,7 +59,7 @@ export function findTopAnswer(
     }
 
     const poll = pollEvent.unstableExtensibleEvent as PollStartEvent;
-    if (!(poll instanceof PollStartEvent)) {
+    if (!poll?.isEquivalentTo(M_POLL_START)) {
         console.warn("Failed to parse poll to determine top answer - assuming no best answer");
         return "";
     }
@@ -369,7 +370,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
     render() {
         const poll = this.props.mxEvent.unstableExtensibleEvent as PollStartEvent;
-        if (!(poll instanceof PollStartEvent)) return null; // invalid
+        if (!poll?.isEquivalentTo(M_POLL_START)) return null; // invalid
 
         const ended = this.isEnded();
         const pollId = this.props.mxEvent.getId();
@@ -518,7 +519,7 @@ export class UserVote {
 
 function userResponseFromPollResponseEvent(event: MatrixEvent): UserVote {
     const response = event.unstableExtensibleEvent as PollResponseEvent;
-    if (!(response instanceof PollResponseEvent)) {
+    if (!response?.isEquivalentTo(M_POLL_RESPONSE)) {
         throw new Error("Failed to parse Poll Response Event to determine user response");
     }
 
@@ -592,7 +593,7 @@ export function pollEndTs(
 }
 
 function isPollResponse(responseEvent: MatrixEvent): boolean {
-    return responseEvent.unstableExtensibleEvent instanceof PollResponseEvent;
+    return responseEvent.unstableExtensibleEvent?.isEquivalentTo(M_POLL_RESPONSE);
 }
 
 /**
