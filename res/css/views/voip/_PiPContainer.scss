@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-enum LocationShareType {
-    Custom = -1,
-    OnceOff = 0,
-    OneMine = 60,
-    FiveMins = 5 * 60,
-    ThirtyMins = 30 * 60,
-    OneHour = 60 * 60,
-    ThreeHours = 3 * 60 * 60,
-    SixHours = 6 * 60 * 60,
-    OneDay = 24 * 60 * 60,
-    Forever = Number.MAX_SAFE_INTEGER,
-}
+.mx_PiPContainer {
+    position: absolute;
+    right: 20px;
+    bottom: 72px;
+    z-index: 100;
 
-export default LocationShareType;
+    // Disable pointer events for Jitsi widgets to function. Direct
+    // calls have their own cursor and behaviour, but we need to make
+    // sure the cursor hits the iframe for Jitsi which will be at a
+    // different level.
+    pointer-events: none;
+}

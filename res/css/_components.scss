@@ -97,6 +97,7 @@
 @import "./views/dialogs/_JoinRuleDropdown.scss";
 @import "./views/dialogs/_KeyboardShortcutsDialog.scss";
 @import "./views/dialogs/_LeaveSpaceDialog.scss";
+@import "./views/dialogs/_LocationViewDialog.scss";
 @import "./views/dialogs/_ManageRestrictedJoinRuleDialog.scss";
 @import "./views/dialogs/_MessageEditHistoryDialog.scss";
 @import "./views/dialogs/_ModalWidgetDialog.scss";
@@ -303,7 +304,6 @@
 @import "./views/typography/_Heading.scss";
 @import "./views/verification/_VerificationShowSas.scss";
 @import "./views/voip/CallView/_CallViewButtons.scss";
-@import "./views/voip/_CallContainer.scss";
 @import "./views/voip/_CallPreview.scss";
 @import "./views/voip/_CallView.scss";
 @import "./views/voip/_CallViewForRoom.scss";
@@ -312,4 +312,5 @@
 @import "./views/voip/_DialPad.scss";
 @import "./views/voip/_DialPadContextMenu.scss";
 @import "./views/voip/_DialPadModal.scss";
+@import "./views/voip/_PiPContainer.scss";
 @import "./views/voip/_VideoFeed.scss";

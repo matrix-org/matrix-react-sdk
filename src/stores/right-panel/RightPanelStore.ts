@@ -230,11 +230,14 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     private emitAndUpdateSettings() {
+        this.filterValidCards(this.global);
         const storePanelGlobal = convertToStorePanel(this.global);
         SettingsStore.setValue("RightPanel.phasesGlobal", null, SettingLevel.DEVICE, storePanelGlobal);
 
         if (!!this.viewedRoomId) {
-            const storePanelThisRoom = convertToStorePanel(this.byRoom[this.viewedRoomId]);
+            const panelThisRoom = this.byRoom[this.viewedRoomId];
+            this.filterValidCards(panelThisRoom);
+            const storePanelThisRoom = convertToStorePanel(panelThisRoom);
             SettingsStore.setValue(
                 "RightPanel.phases",
                 this.viewedRoomId,
@@ -243,6 +246,57 @@ export default class RightPanelStore extends ReadyWatchingStore {
             );
         }
         this.emit(UPDATE_EVENT, null);
+    }
+
+    private filterValidCards(rightPanelForRoom?: IRightPanelForRoom) {
+        if (!rightPanelForRoom?.history) return;
+        rightPanelForRoom.history = rightPanelForRoom.history.filter((card) => this.isCardStateValid(card));
+    }
+
+    private isCardStateValid(card: IRightPanelCard) {
+        // this function does a sanity check on the card. this is required because
+        // some phases require specific state properties that might not be available.
+        // This can be caused on if element is reloaded and the tries to reload right panel data from id's stored in the local storage.
+        // we store id's of users and matrix events. If are not yet fetched on reload the right panel cannot display them.
+        // or potentially other errors.
+        // (A nicer fix could be to indicate, that the right panel is loading if there is missing state data and re-emit if the data is available)
+        switch (card.phase) {
+            case RightPanelPhases.ThreadView:
+                if (!card.state.threadHeadEvent) {
+                    console.warn("removed card from right panel because of missing threadHeadEvent in card state");
+                }
+                return !!card.state.threadHeadEvent;
+            case RightPanelPhases.RoomMemberInfo:
+            case RightPanelPhases.SpaceMemberInfo:
+            case RightPanelPhases.EncryptionPanel:
+            case RightPanelPhases.GroupMemberInfo:
+                if (!card.state.member) {
+                    console.warn("removed card from right panel because of missing member in card state");
+                }
+                return !!card.state.member;
+            case RightPanelPhases.SpaceMemberList:
+                if (!card.state.spaceId) {
+                    console.warn("removed card from right panel because of missing spaceId in card state");
+                }
+                return !!card.state.spaceId;
+            case RightPanelPhases.Room3pidMemberInfo:
+            case RightPanelPhases.Space3pidMemberInfo:
+                if (!card.state.memberInfoEvent) {
+                    console.warn("removed card from right panel because of missing memberInfoEvent in card state");
+                }
+                return !!card.state.memberInfoEvent;
+            case RightPanelPhases.GroupRoomInfo:
+                if (!card.state.groupRoomId) {
+                    console.warn("removed card from right panel because of missing groupRoomId in card state");
+                }
+                return !!card.state.groupRoomId;
+            case RightPanelPhases.Widget:
+                if (!card.state.widgetId) {
+                    console.warn("removed card from right panel because of missing widgetId in card state");
+                }
+                return !!card.state.widgetId;
+        }
+        return true;
     }
 
     private setRightPanelCache(card: IRightPanelCard, roomId?: string) {
@@ -308,44 +362,43 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // this.loadCacheFromSettings();
     };
 
-    onDispatch(payload: ActionPayload) {
+    onDispatch = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'view_group':
             case Action.ViewRoom: {
-                const _this = RightPanelStore.instance;
-                if (payload.room_id === _this.viewedRoomId) break; // skip this transition, probably a permalink
+                if (payload.room_id === this.viewedRoomId) break; // skip this transition, probably a permalink
 
                 // Put group in the same/similar view to what was open from the previously viewed room
                 // Is contradictory to the new "per room" philosophy but it is the legacy behavior for groups.
-                if ((_this.isViewingRoom ? Action.ViewRoom : "view_group") != payload.action) {
-                    if (payload.action == Action.ViewRoom && MEMBER_INFO_PHASES.includes(_this.currentCard?.phase)) {
+                if ((this.isViewingRoom ? Action.ViewRoom : "view_group") != payload.action) {
+                    if (payload.action == Action.ViewRoom && MEMBER_INFO_PHASES.includes(this.currentCard?.phase)) {
                         // switch from group to room
-                        _this.setRightPanelCache({ phase: RightPanelPhases.RoomMemberList, state: {} });
+                        this.setRightPanelCache({ phase: RightPanelPhases.RoomMemberList, state: {} });
                     } else if (
                         payload.action == "view_group" &&
-                        _this.currentCard?.phase === RightPanelPhases.GroupMemberInfo
+                        this.currentCard?.phase === RightPanelPhases.GroupMemberInfo
                     ) {
                         // switch from room to group
-                        _this.setRightPanelCache({ phase: RightPanelPhases.GroupMemberList, state: {} });
+                        this.setRightPanelCache({ phase: RightPanelPhases.GroupMemberList, state: {} });
                     }
                 }
 
                 // Update the current room here, so that all the other functions dont need to be room dependant.
                 // The right panel store always will return the state for the current room.
-                _this.viewedRoomId = payload.room_id;
-                _this.isViewingRoom = payload.action == Action.ViewRoom;
+                this.viewedRoomId = payload.room_id;
+                this.isViewingRoom = payload.action == Action.ViewRoom;
                 // load values from byRoomCache with the viewedRoomId.
-                if (_this.isReady) {
+                if (this.isReady) {
                     // we need the client to be ready to get the events form the ids of the settings
                     // the loading will be done in the onReady function (to catch up with the changes done here before it was ready)
                     // all the logic in this case is not necessary anymore as soon as groups are dropped and we use: onRoomViewStoreUpdate
-                    _this.loadCacheFromSettings();
-                    _this.emitAndUpdateSettings();
+                    this.loadCacheFromSettings();
+                    this.emitAndUpdateSettings();
                 }
                 break;
             }
         }
-    }
+    };
 
     public static get instance(): RightPanelStore {
         if (!RightPanelStore.internalInstance) {

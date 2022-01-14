@@ -41,8 +41,9 @@ counterpart.setSeparator('|');
 
 // see `translateWithFallback` for an explanation of fallback handling
 const FALLBACK_LOCALE = 'en';
+counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
-interface ITranslatableError extends Error {
+export interface ITranslatableError extends Error {
     translatedMessage: string;
 }
 
@@ -50,11 +51,12 @@ interface ITranslatableError extends Error {
  * Helper function to create an error which has an English message
  * with a translatedMessage property for use by the consumer.
  * @param {string} message Message to translate.
+ * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
  * @returns {Error} The constructed error.
  */
-export function newTranslatableError(message: string) {
+export function newTranslatableError(message: string, variables?: IVariables): ITranslatableError {
     const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _t(message);
+    error.translatedMessage = _t(message, variables);
     return error;
 }
 
@@ -79,13 +81,13 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
  * should be wrapped with an appropriate `lang='en'` attribute
  * counterpart's `translate` doesn't expose a way to determine if the resulting translation
  * is in the target locale or a fallback locale
- * for this reason, we do not set a fallback via `counterpart.setFallbackLocale`
+ * for this reason, force fallbackLocale === locale in the first call to translate
  * and fallback 'manually' so we can mark fallback strings appropriately
  * */
 const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
-    const translated = counterpart.translate(text, options);
-    if (/^missing translation:/.test(translated)) {
-        const fallbackTranslated = counterpart.translate(text, { ...options, fallbackLocale: FALLBACK_LOCALE });
+    const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
+    if (!translated || /^missing translation:/.test(translated)) {
+        const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
         return { translated: fallbackTranslated, isFallback: true };
     }
     return { translated };
@@ -168,7 +170,6 @@ export function _t(text: string, variables: IVariables, tags: Tags): React.React
 export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
     const { translated } = safeCounterpartTranslate(text, variables);
-
     const substituted = substitute(translated, variables, tags);
 
     return annotateStrings(substituted, text);

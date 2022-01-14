@@ -223,7 +223,8 @@ export default class MFileBody extends React.Component<IProps, IState> {
             </span>;
         }
 
-        const showDownloadLink = this.props.tileShape || !this.props.showGenericPlaceholder;
+        const showDownloadLink = (this.props.tileShape || !this.props.showGenericPlaceholder) &&
+            this.props.tileShape !== TileShape.Thread;
 
         if (isEncrypted) {
             if (!this.state.decryptedBlob) {
@@ -258,7 +259,9 @@ export default class MFileBody extends React.Component<IProps, IState> {
                               * We'll use it to learn how the download link
                               * would have been styled if it was rendered inline.
                               */ }
-                            { /* eslint-disable-next-line jsx-a11y/anchor-has-content */ }
+                            { /* this violates multiple eslint rules
+                            so ignore it completely */ }
+                            { /* eslint-disable-next-line */ }
                             <a ref={this.dummyLink} />
                         </div>
                         { /*

@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EmoteEvent, NoticeEvent, MessageEvent } from "matrix-events-sdk";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -32,6 +33,7 @@ import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
+import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 
 // These functions are frequently used just to check whether an event has
@@ -229,9 +231,9 @@ function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string
                     { _t('%(senderDisplayName)s changed who can join this room. <a>View settings</a>.', {
                         senderDisplayName,
                     }, {
-                        "a": (sub) => <a onClick={onViewJoinRuleSettingsClick}>
+                        "a": (sub) => <AccessibleButton kind='link_inline' onClick={onViewJoinRuleSettingsClick}>
                             { sub }
-                        </a>,
+                        </AccessibleButton>,
                     }) }
                 </span>;
             }
@@ -333,10 +335,23 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
             if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
                 const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
                 const sender = room?.getMember(redactedBecauseUserId);
-                message = _t("Message deleted by %(name)s", { name: sender?.name
- || redactedBecauseUserId });
+                message = _t("Message deleted by %(name)s", {
+                    name: sender?.name || redactedBecauseUserId,
+                });
             }
         }
+
+        if (SettingsStore.isEnabled("feature_extensible_events")) {
+            const extev = ev.unstableExtensibleEvent;
+            if (extev) {
+                if (extev instanceof EmoteEvent) {
+                    return `* ${senderDisplayName} ${extev.text}`;
+                } else if (extev instanceof NoticeEvent || extev instanceof MessageEvent) {
+                    return `${senderDisplayName}: ${extev.text}`;
+                }
+            }
+        }
+
         if (ev.getContent().msgtype === MsgType.Emote) {
             message = "* " + senderDisplayName + " " + message;
         } else if (ev.getContent().msgtype === MsgType.Image) {
@@ -528,13 +543,13 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                         { senderName },
                         {
                             "a": (sub) =>
-                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                             "b": (sub) =>
-                                <a onClick={onPinnedMessagesClick}>
+                                <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                         },
                     ) }
                 </span>
@@ -556,13 +571,13 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                         { senderName },
                         {
                             "a": (sub) =>
-                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                             "b": (sub) =>
-                                <a onClick={onPinnedMessagesClick}>
+                                <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                         },
                     ) }
                 </span>
@@ -578,7 +593,12 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                 { _t(
                     "%(senderName)s changed the <a>pinned messages</a> for the room.",
                     { senderName },
-                    { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> },
+                    {
+                        "a": (sub) =>
+                            <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
+                                { sub }
+                            </AccessibleButton>,
+                    },
                 ) }
             </span>
         );
