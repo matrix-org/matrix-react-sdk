@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642160482756,
+  "lastUpdate": 1642163283735,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54932,6 +54932,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 647.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6444aaeeff414e0666cd9a0893523020665c2ae0",
+          "message": "Set initial zoom level to 1 to make zooming to location faster (#7541)",
+          "timestamp": "2022-01-14T12:21:22Z",
+          "tree_id": "62f66c7413f965135f0cde007027c33505fcd7e9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6444aaeeff414e0666cd9a0893523020665c2ae0"
+        },
+        "date": 1642163279546,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4674.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 877.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1717.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4395.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
