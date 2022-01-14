@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642165524579,
+  "lastUpdate": 1642166112866,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55124,6 +55124,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4444.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f4a6219c882c83f7b69ac114956ee19d9893028e",
+          "message": "Replace `kick` terminology with `Remove from chat` (#7469)",
+          "timestamp": "2022-01-14T13:08:34Z",
+          "tree_id": "b3978ada7c61fd2ed548a7dddb40ab40b2a98704",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f4a6219c882c83f7b69ac114956ee19d9893028e"
+        },
+        "date": 1642166108468,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4968.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 902.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4113,
             "unit": "ms",
             "extra": "type: measure"
           }
