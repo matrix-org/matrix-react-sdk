@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642164980518,
+  "lastUpdate": 1642165524579,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55076,6 +55076,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4332.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "54357c2d633a908de47d150c6cb72b830cf0ca0c",
+          "message": "Fix thread summary sometimes not updating (#7542)",
+          "timestamp": "2022-01-14T12:58:37Z",
+          "tree_id": "49503733129fea7f1afbe5466b6b1b865fbfc67a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/54357c2d633a908de47d150c6cb72b830cf0ca0c"
+        },
+        "date": 1642165520290,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5469.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 889.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1698.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4444.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
