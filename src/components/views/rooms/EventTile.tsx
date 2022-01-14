@@ -381,7 +381,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
-        const thread =this.props.mxEvent?.getThread();
+        const thread = this.props.mxEvent?.getThread();
 
         this.state = {
             // Whether the action bar is focused.
