@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642163283735,
+  "lastUpdate": 1642164965353,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -54980,6 +54980,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4395.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "de28d82b8133acc8cd1cf3c8d5372e2a3c47a7b3",
+          "message": "Add onPaste fallback when getInputableElement returns null (#7540)",
+          "timestamp": "2022-01-14T12:49:09Z",
+          "tree_id": "98a583328941fa77a083fc194f52f817ec274ddd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/de28d82b8133acc8cd1cf3c8d5372e2a3c47a7b3"
+        },
+        "date": 1642164960473,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5170.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 918.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1630,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4409.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
