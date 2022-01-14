@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642167106968,
+  "lastUpdate": 1642170702369,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55208,6 +55208,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 664.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7ccbf814df1d6e4c3f634e4a01acdb2c5250551f",
+          "message": "Always show right panel after setting a card (#7544)",
+          "timestamp": "2022-01-14T15:24:46+01:00",
+          "tree_id": "777eda0c67f4bf767ef4a4007a64c8b0172c7f43",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7ccbf814df1d6e4c3f634e4a01acdb2c5250551f"
+        },
+        "date": 1642170697523,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5021.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 669.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
