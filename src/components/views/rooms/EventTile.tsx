@@ -25,8 +25,6 @@ import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
 import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
-import { User } from 'matrix-js-sdk';
-import { threadId } from 'worker_threads';
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
