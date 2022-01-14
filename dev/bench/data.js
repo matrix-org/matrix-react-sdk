@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642170702369,
+  "lastUpdate": 1642171721106,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55244,6 +55244,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 669.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "52dd590b4999bef03ed4680cf15d1da2dafbe965",
+          "message": "Override hide redaction preference for thread root (#7546)",
+          "timestamp": "2022-01-14T14:41:40Z",
+          "tree_id": "364af83cfd7dd7354a0f5b8e65fa4ecc3ad2c69a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/52dd590b4999bef03ed4680cf15d1da2dafbe965"
+        },
+        "date": 1642171716442,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4711.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 940.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1729.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4659.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
