@@ -327,12 +327,17 @@ export function tryTransformEntityToPermalink(entity: string): string {
     if (!entity) return null;
 
     // Check to see if it is a bare entity for starters
-    if (entity[0] === '#' || entity[0] === '!') return makeRoomPermalink(entity);
-    if (entity[0] === '@') return makeUserPermalink(entity);
-    if (entity[0] === '+') return makeGroupPermalink(entity);
+    let globalLink = null;
+    if (entity[0] === '#' || entity[0] === '!') {
+        globalLink = makeRoomPermalink(entity);
+    } else if (entity[0] === '@') {
+        globalLink = makeUserPermalink(entity);
+    } else if (entity[0] === '+') {
+        globalLink = makeGroupPermalink(entity);
+    }
 
     // Then try and merge it into a permalink
-    return tryTransformPermalinkToLocalHref(entity);
+    return tryTransformPermalinkToLocalHref(globalLink ?? entity);
 }
 
 /**
