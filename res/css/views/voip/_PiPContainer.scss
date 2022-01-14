@@ -1,6 +1,5 @@
 /*
 Copyright 2020 The Matrix.org Foundation C.I.C.
-Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,24 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+.mx_PiPContainer {
+    position: absolute;
+    right: 20px;
+    bottom: 72px;
+    z-index: 100;
 
-import CallPreview from './CallPreview';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-interface IProps {
-
-}
-
-interface IState {
-
-}
-
-@replaceableComponent("views.voip.CallContainer")
-export default class CallContainer extends React.PureComponent<IProps, IState> {
-    public render() {
-        return <div className="mx_CallContainer">
-            <CallPreview />
-        </div>;
-    }
+    // Disable pointer events for Jitsi widgets to function. Direct
+    // calls have their own cursor and behaviour, but we need to make
+    // sure the cursor hits the iframe for Jitsi which will be at a
+    // different level.
+    pointer-events: none;
 }
