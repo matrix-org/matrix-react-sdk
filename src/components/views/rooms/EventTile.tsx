@@ -25,6 +25,8 @@ import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
 import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { User } from 'matrix-js-sdk';
+import { threadId } from 'worker_threads';
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -350,7 +352,10 @@ interface IState {
 
     hover: boolean;
     isQuoteExpanded?: boolean;
-    thread?: Thread;
+
+    thread: Thread;
+    threadReplyCount: number;
+    threadLastReply: MatrixEvent;
     threadNotification?: NotificationCountType;
 }
 
@@ -378,6 +383,8 @@ export default class EventTile extends React.Component<IProps, IState> {
     constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
+        const thread =this.props.mxEvent?.getThread();
+
         this.state = {
             // Whether the action bar is focused.
             actionBarFocused: false,
@@ -393,7 +400,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             hover: false,
 
-            thread: this.props.mxEvent?.getThread(),
+            thread,
+            threadReplyCount: thread?.length,
+            threadLastReply: thread?.lastReply,
         };
 
         // don't do RR animations until we are mounted
@@ -543,12 +552,13 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
 
             this.setupNotificationListener(thread);
-            this.setState({
-                thread,
-            });
-
-            this.forceUpdate();
         }
+
+        this.setState({
+            threadLastReply: thread.lastReply,
+            threadReplyCount: thread.length,
+            thread,
+        });
     };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -642,21 +652,19 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadLastMessagePreview(): JSX.Element | null {
-        if (!this.thread) {
+        const { threadLastReply } = this.state;
+        if (!threadLastReply) {
             return null;
         }
 
-        const [lastEvent] = this.thread.events
-            .filter(event => event.isThreadRelation)
-            .slice(-1);
-        const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(lastEvent);
+        const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(threadLastReply);
 
-        if (!threadMessagePreview || !lastEvent.sender) {
+        if (!threadMessagePreview || !threadLastReply.sender) {
             return null;
         }
 
         return <>
-            <MemberAvatar member={lastEvent.sender} width={24} height={24} className="mx_ThreadInfo_avatar" />
+            <MemberAvatar member={threadLastReply.sender} width={24} height={24} className="mx_ThreadInfo_avatar" />
             <div className="mx_ThreadInfo_content">
                 <span className="mx_ThreadInfo_message-preview">
                     { threadMessagePreview }
@@ -670,7 +678,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
-        } else if (this.thread) {
+        } else if (this.state.threadReplyCount) {
             return (
                 <CardContext.Consumer>
                     { context =>
@@ -682,7 +690,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         >
                             <span className="mx_ThreadInfo_threads-amount">
                                 { _t("%(count)s reply", {
-                                    count: this.thread.length,
+                                    count: this.state.threadReplyCount,
                                 }) }
                             </span>
                             { this.renderThreadLastMessagePreview() }
