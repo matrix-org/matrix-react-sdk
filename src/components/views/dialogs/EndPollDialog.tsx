@@ -56,10 +56,10 @@ export default class EndPollDialog extends React.Component<IProps> {
         );
 
         if (endPoll) {
-            const closure = PollEndEvent.from(this.props.event.getId(), message).serialize();
+            const endEvent = PollEndEvent.from(this.props.event.getId(), message).serialize();
 
             this.props.matrixClient.sendEvent(
-                this.props.event.getRoomId(), closure.type, closure.content,
+                this.props.event.getRoomId(), endEvent.type, endEvent.content,
             ).catch((e: any) => {
                 console.error("Failed to submit poll response event:", e);
                 Modal.createTrackedDialog(

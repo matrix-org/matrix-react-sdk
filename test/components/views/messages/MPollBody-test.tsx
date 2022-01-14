@@ -467,7 +467,9 @@ describe("MPollBody", () => {
         const votes = [];
         const ends = [];
         const body = newMPollBody(votes, ends, answers);
-        expect(body).toMatchSnapshot();
+        expect(
+            body.find('.mx_MPollBody_option').length,
+        ).toBe(20);
     });
 
     it("sends a vote event when I choose an option", () => {
