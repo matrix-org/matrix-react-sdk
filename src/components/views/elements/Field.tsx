@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, RefObject } from 'react';
 import classNames from 'classnames';
 import { debounce } from "lodash";
 
@@ -79,6 +79,8 @@ interface IProps {
 }
 
 export interface IInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
+    // The ref pass through to the input
+    inputRef?: RefObject<HTMLInputElement>;
     // The element to create. Defaults to "input".
     element?: "input";
     // The input's value. This is a controlled component, so the value is required.
@@ -86,6 +88,8 @@ export interface IInputProps extends IProps, InputHTMLAttributes<HTMLInputElemen
 }
 
 interface ISelectProps extends IProps, SelectHTMLAttributes<HTMLSelectElement> {
+    // The ref pass through to the select
+    inputRef?: RefObject<HTMLSelectElement>;
     // To define options for a select, use <Field><option ... /></Field>
     element: "select";
     // The select's value. This is a controlled component, so the value is required.
@@ -93,18 +97,20 @@ interface ISelectProps extends IProps, SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElement> {
+    // The ref pass through to the textrea
+    inputRef?: RefObject<HTMLTextAreaElement>;
     element: "textarea";
     // The textarea's value. This is a controlled component, so the value is required.
     value: string;
 }
 
 export interface ICustomInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
+    // The ref pass through to the input
+    inputRef?: RefObject<HTMLInputElement>;
     // The element to create.
     element: ComponentClass;
     // The input's value. This is a controlled component, so the value is required.
     value: string;
-    // Optionally can be used for the CustomInput
-    onInput?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 type PropShapes = IInputProps | ISelectProps | ITextareaProps | ICustomInputProps;
@@ -118,7 +124,7 @@ interface IState {
 
 export default class Field extends React.PureComponent<PropShapes, IState> {
     private id: string;
-    private input: HTMLInputElement;
+    private inputRef: RefObject<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
 
     public static readonly defaultProps = {
         element: "input",
@@ -156,7 +162,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
     }
 
     public focus() {
-        this.input.focus();
+        this.inputRef.current?.focus();
         // programmatic does not fire onFocus handler
         this.setState({
             focused: true,
@@ -207,7 +213,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         if (!this.props.onValidate) {
             return;
         }
-        const value = this.input ? this.input.value : null;
+        const value = this.inputRef.current?.value ?? null;
         const { valid, feedback } = await this.props.onValidate({
             value,
             focused,
@@ -238,13 +244,13 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
     public render() {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { element, prefixComponent, postfixComponent, className, onValidate, children,
+        const { element, inputRef, prefixComponent, postfixComponent, className, onValidate, children,
             tooltipContent, forceValidity, tooltipClassName, list, validateOnBlur, validateOnChange, validateOnFocus,
             usePlaceholderAsHint, forceTooltipVisible,
             ...inputProps } = this.props;
 
-        // Set some defaults for the <input> element
-        const ref = input => this.input = input;
+        this.inputRef = inputRef || React.createRef();
+
         inputProps.placeholder = inputProps.placeholder || inputProps.label;
         inputProps.id = this.id; // this overwrites the id from props
 
@@ -253,7 +259,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         inputProps.onBlur = this.onBlur;
 
         // Appease typescript's inference
-        const inputProps_ = { ...inputProps, ref, list };
+        const inputProps_ = { ...inputProps, ref: this.inputRef, list };
 
         const fieldInput = React.createElement(this.props.element, inputProps_, children);
 
