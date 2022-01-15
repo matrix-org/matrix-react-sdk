@@ -36,12 +36,16 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 
+export function getSenderName(event: MatrixEvent): string {
+    return event.sender?.name ?? event.getSender() ?? _t("Someone");
+}
+
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
 
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
-    const getSenderName = () => event.sender ? event.sender.name : _t('Someone');
+    const senderName = getSenderName(event);
     // FIXME: Find a better way to determine this from the event?
     let isVoice = true;
     if (event.getContent().offer && event.getContent().offer.sdp &&
@@ -55,19 +59,19 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     // and more accurate, we break out the string-based variables to a couple booleans.
     if (isVoice && isSupported) {
         return () => _t("%(senderName)s placed a voice call.", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     } else if (isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     } else if (!isVoice && isSupported) {
         return () => _t("%(senderName)s placed a video call.", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     } else if (!isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     }
 }
@@ -418,7 +422,7 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForThreePidInviteEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
 
     if (!isValid3pidInvite(event)) {
         return () => _t('%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.', {
@@ -434,7 +438,7 @@ function textForThreePidInviteEvent(event: MatrixEvent): () => string | null {
 }
 
 function textForHistoryVisibilityEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     switch (event.getContent().history_visibility) {
         case HistoryVisibility.Invited:
             return () => _t('%(senderName)s made future room history visible to all room members, '
@@ -456,7 +460,7 @@ function textForHistoryVisibilityEvent(event: MatrixEvent): () => string | null 
 
 // Currently will only display a change if a user's power level is changed
 function textForPowerEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     if (!event.getPrevContent() || !event.getPrevContent().users ||
         !event.getContent() || !event.getContent().users) {
         return null;
@@ -523,7 +527,7 @@ const onPinnedMessagesClick = (): void => {
 
 function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
     if (!SettingsStore.getValue("feature_pinning")) return null;
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     const roomId = event.getRoomId();
 
     const pinned = event.getContent().pinned ?? [];
