@@ -97,7 +97,7 @@ interface ISelectProps extends IProps, SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElement> {
-    // The ref pass through to the textrea
+    // The ref pass through to the textarea
     inputRef?: RefObject<HTMLTextAreaElement>;
     element: "textarea";
     // The textarea's value. This is a controlled component, so the value is required.

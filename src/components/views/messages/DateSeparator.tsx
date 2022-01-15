@@ -24,6 +24,7 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from '../../../settings/SettingsStore';
 import { UIFeature } from '../../../settings/UIFeature';
@@ -56,14 +57,29 @@ interface IProps {
 }
 
 interface IState {
-    contextMenuPosition?: DOMRect
+    contextMenuPosition?: DOMRect,
+    jumpToDateEnabled: boolean;
 }
 
 @replaceableComponent("views.messages.DateSeparator")
 export default class DateSeparator extends React.Component<IProps, IState> {
+    settingWatcherRef = null;
+
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = {
+            jumpToDateEnabled: SettingsStore.getValue("feature_jump_to_date"),
+        };
+    }
+    
+    componentWillMount() {
+        this.settingWatcherRef = SettingsStore.watchSetting("feature_jump_to_date", null, (settingName, roomId, level, newValAtLevel, newVal) => {
+            this.setState({ jumpToDateEnabled: newVal });
+        });
+    }
+    
+    componentWillUnmount() {
+        SettingsStore.unwatchSetting(this.settingWatcherRef);
     }
 
     private onContextMenuOpenClick = (e: React.MouseEvent): void => {
@@ -107,7 +123,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     }
 
     private pickDate = async (inputTimestamp): Promise<void> => {
-        console.log('pickDate', inputTimestamp)
         const unixTimestamp = new Date(inputTimestamp).getTime();
 
         const cli = MatrixClientPeg.get();
@@ -118,7 +133,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 unixTimestamp,
                 Direction.Forward
             );
-            console.log(`/timestamp_to_event: found ${event_id} (${origin_server_ts}) for timestamp=${unixTimestamp}`)
+            logger.log(`/timestamp_to_event: found ${event_id} (${origin_server_ts}) for timestamp=${unixTimestamp} (looking forward)`)
 
             dis.dispatch({
                 action: Action.ViewRoom,
@@ -215,11 +230,19 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
     render() {
         const label = this.getLabel();
+
+        let dateHeaderContent;
+        if(this.state.jumpToDateEnabled) {
+            dateHeaderContent = this.renderNotificationsMenu()
+        } else {
+            dateHeaderContent = <div aria-hidden="true">{ label }</div>
+        }
+
         // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one
         // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
         return <h2 className="mx_DateSeparator" role="separator" aria-label={label}>
             <hr role="none" />
-            { this.renderNotificationsMenu() }
+            { dateHeaderContent }
             <hr role="none" />
         </h2>;
     }
