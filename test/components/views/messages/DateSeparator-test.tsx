@@ -65,7 +65,7 @@ describe("DateSeparator", () => {
     beforeEach(() => {
         global.Date = MockDate as unknown as DateConstructor;
         (SettingsStore.getValue as jest.Mock) = jest.fn((arg) => {
-            if(arg === UIFeature.TimelineEnableRelativeDates) {
+            if (arg === UIFeature.TimelineEnableRelativeDates) {
                 return true;
             }
         });
@@ -94,7 +94,7 @@ describe("DateSeparator", () => {
     describe('when Settings.TimelineEnableRelativeDates is falsy', () => {
         beforeEach(() => {
             (SettingsStore.getValue as jest.Mock) = jest.fn((arg) => {
-                if(arg === UIFeature.TimelineEnableRelativeDates) {
+                if (arg === UIFeature.TimelineEnableRelativeDates) {
                     return false;
                 }
             });
@@ -107,7 +107,7 @@ describe("DateSeparator", () => {
     describe('when feature_jump_to_date is enabled', () => {
         beforeEach(() => {
             (SettingsStore.getValue as jest.Mock) = jest.fn((arg) => {
-                if(arg === "feature_jump_to_date") {
+                if (arg === "feature_jump_to_date") {
                     return true;
                 }
             });
