@@ -38,7 +38,7 @@ interface CustomInputProps extends Omit<React.InputHTMLAttributes<HTMLInputEleme
 * from a final date picker selection vs navigating the months in the date
 * picker which trigger an `input`(and `onChange` in React).
 */
-const CustomInput = React.forwardRef((props: CustomInputProps, ref) => {
+const CustomInput: React.FC<CustomInputProps> = React.forwardRef((props: CustomInputProps, ref) => {
     const registerCallbacks = (input: HTMLInputElement | null) => {
         if (input) {
             input.onchange = props.onChange;
