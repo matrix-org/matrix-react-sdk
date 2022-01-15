@@ -101,7 +101,6 @@ export default class Tooltip extends React.Component<ITooltipProps> {
 
     private updatePosition(style: CSSProperties) {
         const parentBox = this.parent.getBoundingClientRect();
-        console.log('updatePosition', 'alignment', this.props.alignment, 'parentBox', parentBox);
         let offset = 0;
         if (parentBox.height > MIN_TOOLTIP_HEIGHT) {
             offset = Math.floor((parentBox.height - MIN_TOOLTIP_HEIGHT) / 2);
@@ -111,7 +110,6 @@ export default class Tooltip extends React.Component<ITooltipProps> {
             offset = Math.floor(parentBox.height - MIN_TOOLTIP_HEIGHT);
         }
         const width = UIStore.instance.windowWidth;
-        console.log('tooltip width', width)
         const parentWidth = (
             this.props.maxParentWidth
                 ? Math.min(parentBox.width, this.props.maxParentWidth)
@@ -127,14 +125,12 @@ export default class Tooltip extends React.Component<ITooltipProps> {
         switch (this.props.alignment) {
             case Alignment.Natural:
                 if (parentBox.right > width / 2) {
-                    console.log('natural left');
                     style.right = right;
                     style.top = top;
                     break;
                 }
                 // fall through to Right
             case Alignment.Right:
-                console.log('right');
                 style.left = left;
                 style.top = top;
                 break;
