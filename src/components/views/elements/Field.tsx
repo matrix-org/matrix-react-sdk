@@ -273,17 +273,22 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         }
 
         const hasValidationFlag = forceValidity !== null && forceValidity !== undefined;
-        const fieldClasses = classNames("mx_Field", `mx_Field_${typeof this.props.element === "string" ? this.props.element : "input"}`, className, {
-            // If we have a prefix element, leave the label always at the top left and
-            // don't animate it, as it looks a bit clunky and would add complexity to do
-            // properly.
-            mx_Field_labelAlwaysTopLeft: prefixComponent || usePlaceholderAsHint,
-            mx_Field_placeholderIsHint: usePlaceholderAsHint,
-            mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
-            mx_Field_invalid: hasValidationFlag
-                ? !forceValidity
-                : onValidate && this.state.valid === false,
-        });
+        const fieldClasses = classNames(
+            "mx_Field",
+            `mx_Field_${typeof this.props.element === "string" ? this.props.element : "input"}`,
+            className,
+            {
+                // If we have a prefix element, leave the label always at the top left and
+                // don't animate it, as it looks a bit clunky and would add complexity to do
+                // properly.
+                mx_Field_labelAlwaysTopLeft: prefixComponent || usePlaceholderAsHint,
+                mx_Field_placeholderIsHint: usePlaceholderAsHint,
+                mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
+                mx_Field_invalid: hasValidationFlag
+                    ? !forceValidity
+                    : onValidate && this.state.valid === false,
+            },
+        );
 
         // Handle displaying feedback on validity
         // FIXME: Using an import will result in test failures

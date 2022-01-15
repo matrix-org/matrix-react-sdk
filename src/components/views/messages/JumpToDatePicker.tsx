@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { _t } from '../../../languageHandler';
 
+import { _t } from '../../../languageHandler';
 import Field from "../elements/Field";
 import CustomInput from "../elements/CustomInput";
 import { RovingAccessibleButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
@@ -14,8 +14,8 @@ interface IProps {
 const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
     const date = new Date(ts);
     const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, "0")
-    const day = `${date.getDate()}`.padStart(2, "0")
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
     const dateDefaultValue = `${year}-${month}-${day}`;
 
     const [dateValue, setDateValue] = useState(dateDefaultValue);
@@ -38,7 +38,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
         setDateValue(e.target.value);
 
         // Don't auto navigate if they were manually typing out a date
-        if(navigateOnDatePickerSelection) {
+        if (navigateOnDatePickerSelection) {
             onDatePicked(dateValue);
         }
     };
@@ -47,7 +47,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
 
     const onDateInputKeyDown = (e: React.KeyboardEvent): void => {
         // Go and navigate if they submitted
-        if(e.key === "Enter") {
+        if (e.key === "Enter") {
             onDatePicked(dateValue);
             return;
         }
@@ -59,7 +59,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
 
     const onJumpToDateSubmit = (): void => {
         onDatePicked(dateValue);
-    }
+    };
 
     return (
         <form
@@ -88,7 +88,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
                 { _t("Go") }
             </RovingAccessibleButton>
         </form>
-    )
+    );
 };
 
 export default JumpToDatePicker;

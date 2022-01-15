@@ -16,16 +16,15 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { formatFullDateNoTime } from '../../../DateUtils';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
-import { logger } from "matrix-js-sdk/src/logger";
-
 import SettingsStore from '../../../settings/SettingsStore';
 import { UIFeature } from '../../../settings/UIFeature';
 import Modal from '../../../Modal';
@@ -51,13 +50,13 @@ function getDaysArray(): string[] {
 }
 
 interface IProps {
-    roomId: string,
+    roomId: string;
     ts: number;
     forExport?: boolean;
 }
 
 interface IState {
-    contextMenuPosition?: DOMRect,
+    contextMenuPosition?: DOMRect;
     jumpToDateEnabled: boolean;
 }
 
@@ -71,15 +70,19 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             jumpToDateEnabled: SettingsStore.getValue("feature_jump_to_date"),
         };
     }
-    
+
     componentWillMount() {
         // We're using a watcher so the date headers in the timeline are updated
         // when the lab setting is toggled.
-        this.settingWatcherRef = SettingsStore.watchSetting("feature_jump_to_date", null, (settingName, roomId, level, newValAtLevel, newVal) => {
-            this.setState({ jumpToDateEnabled: newVal });
-        });
+        this.settingWatcherRef = SettingsStore.watchSetting(
+            "feature_jump_to_date",
+            null,
+            (settingName, roomId, level, newValAtLevel, newVal) => {
+                this.setState({ jumpToDateEnabled: newVal });
+            },
+        );
     }
-    
+
     componentWillUnmount() {
         SettingsStore.unwatchSetting(this.settingWatcherRef);
     }
@@ -129,17 +132,20 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
         const cli = MatrixClientPeg.get();
         try {
-            const roomId = this.props.roomId
-            const { event_id, origin_server_ts } = await cli.timestampToEvent(
+            const roomId = this.props.roomId;
+            const { event_id: eventId, origin_server_ts: originServerTs } = await cli.timestampToEvent(
                 roomId,
                 unixTimestamp,
-                Direction.Forward
+                Direction.Forward,
             );
-            logger.log(`/timestamp_to_event: found ${event_id} (${origin_server_ts}) for timestamp=${unixTimestamp} (looking forward)`)
+            logger.log(
+                `/timestamp_to_event: ` +
+                `found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp} (looking forward)`,
+            );
 
             dis.dispatch({
                 action: Action.ViewRoom,
-                event_id,
+                eventId,
                 highlighted: true,
                 room_id: roomId,
             });
@@ -158,7 +164,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         }
     };
 
-
     private onLastWeekClicked = (): void => {
         const date = new Date();
         // This just goes back 7 days.
@@ -166,7 +171,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         date.setDate(date.getDate() - 7);
         this.pickDate(date);
         this.closeMenu();
-    }
+    };
 
     private onLastMonthClicked = (): void => {
         const date = new Date();
@@ -174,18 +179,18 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         date.setMonth(date.getMonth() - 1, 1);
         this.pickDate(date);
         this.closeMenu();
-    }
+    };
 
     private onTheBeginningClicked = (): void => {
         const date = new Date(0);
         this.pickDate(date);
         this.closeMenu();
-    }
+    };
 
     private onDatePicked = (dateString): void => {
         this.pickDate(dateString);
         this.closeMenu();
-    }
+    };
 
     private renderNotificationsMenu(): React.ReactElement {
         let contextMenu: JSX.Element;
@@ -234,10 +239,10 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         const label = this.getLabel();
 
         let dateHeaderContent;
-        if(this.state.jumpToDateEnabled) {
-            dateHeaderContent = this.renderNotificationsMenu()
+        if (this.state.jumpToDateEnabled) {
+            dateHeaderContent = this.renderNotificationsMenu();
         } else {
-            dateHeaderContent = <div aria-hidden="true">{ label }</div>
+            dateHeaderContent = <div aria-hidden="true">{ label }</div>;
         }
 
         // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one

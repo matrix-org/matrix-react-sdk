@@ -2,21 +2,21 @@ import React, { useRef, useEffect } from 'react';
 
 // via https://itnext.io/reusing-the-ref-from-forwardref-with-react-hooks-4ce9df693dd
 function useCombinedRefs(...refs) {
-    const targetRef = useRef()
+    const targetRef = useRef();
 
     useEffect(() => {
         refs.forEach(ref => {
-            if (!ref) return
+            if (!ref) return;
 
             if (typeof ref === 'function') {
-                ref(targetRef.current)
+                ref(targetRef.current);
             } else {
-                ref.current = targetRef.current
+                ref.current = targetRef.current;
             }
-        })
-    }, [refs])
+        });
+    }, [refs]);
 
-    return targetRef
+    return targetRef;
 }
 
 interface CustomInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'onInput'> {

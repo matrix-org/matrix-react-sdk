@@ -723,7 +723,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // do we need a date separator since the last event?
         const wantsDateSeparator = this.wantsDateSeparator(prevEvent, eventDate);
         if (wantsDateSeparator && !isGrouped && this.props.room) {
-            const dateSeparator = <li key={ts1}><DateSeparator key={ts1} roomId={this.props.room.roomId} ts={ts1} /></li>;
+            const dateSeparator = (
+                <li key={ts1}>
+                    <DateSeparator key={ts1} roomId={this.props.room.roomId} ts={ts1} />
+                </li>
+            );
             ret.push(dateSeparator);
         }
 
