@@ -57,6 +57,7 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
     [EventType.RoomEncryption]: { isState: true, hideForSpace: true },
     [EventType.RoomServerAcl]: { isState: true, hideForSpace: true },
     [EventType.RoomPinnedEvents]: { isState: true, hideForSpace: true },
+    [EventType.Reaction]: { isState: false, hideForSpace: true },
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": { isState: true, hideForSpace: true },
@@ -235,6 +236,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             [EventType.RoomTombstone]: _td("Upgrade the room"),
             [EventType.RoomEncryption]: _td("Enable room encryption"),
             [EventType.RoomServerAcl]: _td("Change server ACLs"),
+            [EventType.Reaction]: _td("Send reactions"),
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
@@ -263,7 +265,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                 defaultValue: 50,
             },
             "kick": {
-                desc: _t('Kick users'),
+                desc: _t('Remove users'),
                 defaultValue: 50,
             },
             "ban": {

@@ -114,7 +114,7 @@ const CommunityMigrator = ({ onFinished }) => {
                     onClick={() => {
                         if (community.spaceId) {
                             dis.dispatch({
-                                action: "view_room",
+                                action: Action.ViewRoom,
                                 room_id: community.spaceId,
                             });
                             onFinished();
@@ -304,6 +304,16 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     };
 
+    getShowLocationIfEnabled(): string[] {
+        // TODO: when location sharing is out of labs, this can be deleted and
+        //       we can just add this to COMPOSER_SETTINGS
+        if (SettingsStore.getValue("feature_location_share")) {
+            return ['MessageComposerInput.showLocationButton'];
+        } else {
+            return [];
+        }
+    }
+
     render() {
         let autoLaunchOption = null;
         if (this.state.autoLaunchSupported) {
@@ -385,7 +395,10 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Composer") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.COMPOSER_SETTINGS) }
+                    { this.renderGroup([
+                        ...PreferencesUserSettingsTab.COMPOSER_SETTINGS,
+                        ...this.getShowLocationIfEnabled(),
+                    ]) }
                 </div>
 
                 <div className="mx_SettingsTab_section">
