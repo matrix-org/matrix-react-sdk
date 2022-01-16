@@ -21,6 +21,9 @@ import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { EmoteEvent, NoticeEvent, MessageEvent } from "matrix-events-sdk";
+import { POLL_END_EVENT_TYPE, POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
+import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -329,6 +332,17 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
+    const type = ev.getType();
+    const content = ev.getContent();
+    const msgtype = content.msgtype;
+
+    if (
+        (LOCATION_EVENT_TYPE.matches(type) || LOCATION_EVENT_TYPE.matches(msgtype)) &&
+        SettingsStore.getValue("feature_location_share")
+    ) {
+        return textForLocationEvent(ev);
+    }
+
     return () => {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
@@ -733,6 +747,26 @@ function textForMjolnirEvent(event: MatrixEvent): () => string | null {
         "for %(reason)s", { senderName, oldGlob: prevEntity, newGlob: entity, reason });
 }
 
+export function textForLocationEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has shared their location", {
+        senderName: getSenderName(event),
+    });
+}
+
+function textForPollStartEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has started a poll - %(pollQuestions)s", {
+        senderName: getSenderName(event),
+        pollQuestions: event.getContent()[POLL_START_EVENT_TYPE.name].question[TEXT_NODE_TYPE.name],
+    });
+}
+
+function textForPollEndEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has ended a poll - %(pollQuestions)s", {
+        senderName: getSenderName(event),
+        pollQuestions: event.getContent()[POLL_START_EVENT_TYPE.name].question[TEXT_NODE_TYPE.name],
+    });
+}
+
 interface IHandlers {
     [type: string]:
         (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
@@ -743,6 +777,10 @@ const handlers: IHandlers = {
     [EventType.RoomMessage]: textForMessageEvent,
     [EventType.Sticker]: textForMessageEvent,
     [EventType.CallInvite]: textForCallInviteEvent,
+    [POLL_START_EVENT_TYPE.name]: textForPollStartEvent,
+    [POLL_END_EVENT_TYPE.name]: textForPollEndEvent,
+    [POLL_START_EVENT_TYPE.altName]: textForPollStartEvent,
+    [POLL_END_EVENT_TYPE.altName]: textForPollEndEvent,
 };
 
 const stateHandlers: IHandlers = {
