@@ -50,6 +50,7 @@ import TileErrorBoundary from '../views/messages/TileErrorBoundary';
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
+import { getEventDisplayInfo } from "../../utils/EventUtils";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -185,6 +186,7 @@ interface IProps {
 interface IState {
     ghostReadMarkers: string[];
     showTypingNotifications: boolean;
+    hideSender: boolean;
 }
 
 interface IReadReceiptForUser {
@@ -253,8 +255,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // A map of <callId, CallEventGrouper>
     private callEventGroupers = new Map<string, CallEventGrouper>();
 
-    private membersCount = 0;
-
     constructor(props, context) {
         super(props, context);
 
@@ -263,6 +263,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // display 'ghost' read markers that are animating away
             ghostReadMarkers: [],
             showTypingNotifications: SettingsStore.getValue("showTypingNotifications"),
+            hideSender: this.shouldHideSender(),
         };
 
         // Cache hidden events setting on mount since Settings is expensive to
@@ -305,8 +306,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
     }
 
+    private shouldHideSender(): boolean {
+        return this.props.room?.getInvitedAndJoinedMemberCount() <= 2 && this.props.layout === Layout.Bubble;
+    }
+
     private calculateRoomMembersCount = (): void => {
-        this.membersCount = this.props.room?.getMembers().length || 0;
+        this.setState({
+            hideSender: this.shouldHideSender(),
+        });
     };
 
     private onShowTypingNotificationsChange = (): void => {
@@ -720,11 +727,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             ret.push(dateSeparator);
         }
 
-        let willWantDateSeparator = false;
         let lastInSection = true;
         if (nextEventWithTile) {
-            willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEventWithTile.getDate() || new Date());
-            lastInSection = willWantDateSeparator || mxEv.getSender() !== nextEventWithTile.getSender();
+            const nextEv = nextEventWithTile;
+            const willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEv.getDate() || new Date());
+            lastInSection = willWantDateSeparator ||
+                mxEv.getSender() !== nextEv.getSender() ||
+                getEventDisplayInfo(nextEv).isInfoMessage ||
+                !shouldFormContinuation(mxEv, nextEv, this.showHiddenEvents, this.context.timelineRenderingType);
         }
 
         // is this a continuation of the previous message?
@@ -792,7 +802,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     enableFlair={this.props.enableFlair}
                     showReadReceipts={this.props.showReadReceipts}
                     callEventGrouper={callEventGrouper}
-                    hideSender={this.membersCount <= 2 && this.props.layout === Layout.Bubble}
+                    hideSender={this.state.hideSender}
                     timelineRenderingType={this.context.timelineRenderingType}
                 />
             </TileErrorBoundary>,

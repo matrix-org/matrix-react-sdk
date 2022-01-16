@@ -294,7 +294,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === "view_room" && payload.show_room_tile && this.state.rooms) {
+        if (payload.action === Action.ViewRoom && payload.show_room_tile && this.state.rooms) {
             // XXX: we have to do this a tick later because we have incorrect intermediate props during a room change
             // where we lose the room we are changing from temporarily and then it comes back in an update right after.
             setImmediate(() => {
@@ -402,6 +402,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
     private onTagSortChanged = async (sort: SortAlgorithm) => {
         await RoomListStore.instance.setTagSorting(this.props.tagId, sort);
+        this.forceUpdate();
     };
 
     private onMessagePreviewChanged = () => {
@@ -552,6 +553,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     private renderMenu(): React.ReactElement {
+        if (this.props.tagId === DefaultTagID.Suggested) return null; // not sortable
+
         let contextMenu = null;
         if (this.state.contextMenuPosition) {
             const isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;

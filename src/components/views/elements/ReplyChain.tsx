@@ -22,6 +22,7 @@ import escapeHtml from "escape-html";
 import sanitizeHtml from "sanitize-html";
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { Relations } from 'matrix-js-sdk/src/models/relations';
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -35,6 +36,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
 import SettingsStore from "../../../settings/SettingsStore";
+import { ButtonEvent } from './AccessibleButton';
 
 /**
  * This number is based on the previous behavior - if we have message of height
@@ -55,6 +57,9 @@ interface IProps {
     forExport?: boolean;
     isQuoteExpanded?: boolean;
     setQuoteExpanded: (isExpanded: boolean) => void;
+    getRelationsForEvent?: (
+        (eventId: string, relationType: string, eventType: string) => Relations
+    );
 }
 
 interface IState {
@@ -339,7 +344,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         this.initialize();
     };
 
-    private onQuoteClick = async (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): Promise<void> => {
+    private onQuoteClick = async (event: ButtonEvent): Promise<void> => {
         const events = [this.state.loadedEv, ...this.state.events];
 
         let loadedEv = null;
@@ -372,9 +377,9 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         } else if (this.state.loadedEv) {
             header = (
                 <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(this.state.loadedEv)}`}>
-                    <a className="mx_ReplyChain_show" onClick={this.onQuoteClick}>
+                    <button className="mx_ReplyChain_show" onClick={this.onQuoteClick}>
                         { _t("Expand replies") }
-                    </a>
+                    </button>
                 </blockquote>
             );
         } else if (this.props.forExport) {
@@ -405,6 +410,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
                         onHeightChanged={this.props.onHeightChanged}
                         permalinkCreator={this.props.permalinkCreator}
                         toggleExpandedQuote={() => this.props.setQuoteExpanded(!this.props.isQuoteExpanded)}
+                        getRelationsForEvent={this.props.getRelationsForEvent}
                     />
                 </blockquote>
             );

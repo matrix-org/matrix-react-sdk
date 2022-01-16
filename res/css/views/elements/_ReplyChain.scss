@@ -24,6 +24,8 @@ limitations under the License.
     border-radius: 2px;
 
     .mx_ReplyChain_show {
+        @mixin ButtonResetDefault;
+
         cursor: pointer;
         color: var(--username-color);
 

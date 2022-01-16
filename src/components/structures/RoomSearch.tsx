@@ -93,11 +93,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private onAction = (payload: ActionPayload) => {
         if (payload.action === Action.ViewRoom && payload.clear_search) {
             this.clearInput();
-        } else if (payload.action === 'focus_room_filter' && this.inputRef.current) {
+        } else if (payload.action === 'focus_room_filter') {
             if (SettingsStore.getValue("feature_spotlight")) {
                 this.openSpotlight();
             } else {
-                this.inputRef.current.focus();
+                this.inputRef.current?.focus();
             }
         }
     };
@@ -109,8 +109,12 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     };
 
     private openSearch = () => {
-        defaultDispatcher.dispatch({ action: "show_left_panel" });
-        defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        if (SettingsStore.getValue("feature_spotlight")) {
+            this.openSpotlight();
+        } else {
+            defaultDispatcher.dispatch({ action: "show_left_panel" });
+            defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        }
     };
 
     private onChange = () => {
@@ -118,17 +122,15 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         this.setState({ query: this.inputRef.current.value });
     };
 
-    private onMouseDown = (ev: React.MouseEvent<HTMLInputElement>) => {
+    private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {
         if (SettingsStore.getValue("feature_spotlight")) {
             ev.preventDefault();
             ev.stopPropagation();
             this.openSpotlight();
+        } else {
+            this.setState({ focused: true });
+            ev.target.select();
         }
-    };
-
-    private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {
-        this.setState({ focused: true });
-        ev.target.select();
     };
 
     private onBlur = (ev: React.FocusEvent<HTMLInputElement>) => {
@@ -156,7 +158,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     };
 
     public focus = (): void => {
-        this.inputRef.current?.focus();
+        if (SettingsStore.getValue("feature_spotlight")) {
+            this.openSpotlight();
+        } else {
+            this.inputRef.current?.focus();
+        }
     };
 
     public render(): React.ReactNode {
@@ -181,7 +187,6 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
                 ref={this.inputRef}
                 className={inputClasses}
                 value={this.state.query}
-                onMouseDown={this.onMouseDown}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onChange={this.onChange}

@@ -177,7 +177,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         const lcQuery = trimmedQuery.toLowerCase();
         const normalizedQuery = normalize(trimmedQuery);
 
-        return cli.getRooms().filter(r => {
+        return cli.getVisibleRooms().filter(r => {
             return r.getCanonicalAlias()?.includes(lcQuery) || r.normalizedName.includes(normalizedQuery);
         });
     }, [cli, query]);
@@ -221,7 +221,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         }
 
         defaultDispatcher.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_id: roomId,
         });
         onFinished();
