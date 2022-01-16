@@ -18,6 +18,7 @@ import React from 'react';
 import { EventSubscription } from "fbemitter";
 import { EventTimelineSet, IEventRelation, MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
+import classNames from 'classnames';
 
 import BaseCard from "./BaseCard";
 import ResizeNotifier from '../../../utils/ResizeNotifier';
@@ -44,6 +45,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
+    classNames?: string;
     timelineSet?: EventTimelineSet;
     timelineRenderingType?: TimelineRenderingType;
     showComposer?: boolean;
@@ -54,7 +56,8 @@ interface IState {
     editState?: EditorStateTransfer;
     replyToEvent?: MatrixEvent;
     initialEventId?: string;
-    initialEventHighlighted?: boolean;
+    isInitialEventHighlighted?: boolean;
+    layout: Layout;
 
     // settings:
     showReadReceipts?: boolean;
@@ -65,51 +68,56 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     static contextType = RoomContext;
 
     private dispatcherRef: string;
+    private layoutWatcherRef: string;
     private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
     private roomStoreToken: EventSubscription;
-    private settingWatchers: string[];
+    private readReceiptsSettingWatcher: string;
 
     constructor(props: IProps) {
         super(props);
         this.state = {
-            showReadReceipts: false,
+            showReadReceipts: SettingsStore.getValue("showReadReceipts", props.room.roomId),
+            layout: SettingsStore.getValue("layout"),
         };
-        this.settingWatchers = [];
+        this.readReceiptsSettingWatcher = null;
     }
 
     public componentDidMount(): void {
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction);
+        this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[,,, value]) =>
+            this.setState({ showReadReceipts: value as boolean }),
+        );
+        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
+            this.setState({ layout: value as Layout }),
+        );
     }
 
     public componentWillUnmount(): void {
         // Remove RoomStore listener
-        if (this.roomStoreToken) {
-            this.roomStoreToken.remove();
+
+        this.roomStoreToken?.remove();
+
+        if (this.readReceiptsSettingWatcher) {
+            SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
         }
+        if (this.layoutWatcherRef) {
+            SettingsStore.unwatchSetting(this.layoutWatcherRef);
+        }
+
         dis.unregister(this.dispatcherRef);
-        for (const watcher of this.settingWatchers) {
-            SettingsStore.unwatchSetting(watcher);
-        }
     }
 
     private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
-        const roomId = this.props.room.roomId;
         const newState: Pick<IState, any> = {
             // roomLoading: RoomViewStore.isRoomLoading(),
             // roomLoadError: RoomViewStore.getRoomLoadError(),
 
-            showReadReceipts: SettingsStore.getValue("showReadReceipts", roomId),
             initialEventId: RoomViewStore.getInitialEventId(),
-            initialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
+            isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
             replyToEvent: RoomViewStore.getQuotingEvent(),
         };
 
-        this.settingWatchers = this.settingWatchers.concat([
-            SettingsStore.watchSetting("showReadReceipts", roomId, (...[,,, value]) =>
-                this.setState({ showReadReceipts: value as boolean }),
-            ),
-        ]);
         this.setState(newState);
     };
 
@@ -130,7 +138,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     };
 
     private onScroll = (): void => {
-        if (this.state.initialEventId && this.state.initialEventHighlighted) {
+        if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
             dis.dispatch({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
@@ -148,9 +156,14 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        const highlightedEventId = this.state.initialEventHighlighted
+        const highlightedEventId = this.state.isInitialEventHighlighted
             ? this.state.initialEventId
             : null;
+
+        const messagePanelClassNames = classNames({
+            "mx_RoomView_messagePanel": true,
+            "mx_GroupLayout": this.state.layout === Layout.Group,
+        });
 
         return (
             <RoomContext.Provider value={{
@@ -159,24 +172,25 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 liveTimeline: this.props.timelineSet.getLiveTimeline(),
             }}>
                 <BaseCard
-                    className="mx_ThreadPanel mx_TimelineCard"
+                    className={this.props.classNames}
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                     header={this.renderTimelineCardHeader()}
                 >
                     <TimelinePanel
                         ref={this.timelinePanelRef}
-                        showReadReceipts={/*this.state.showReadReceipts*/ false} // TODO: RR's cause issues with limited horizontal space
+                        showReadReceipts={this.state.showReadReceipts}
                         manageReadReceipts={true}
                         manageReadMarkers={false} // No RM support in the TimelineCard
                         sendReadReceiptOnLoad={true}
                         timelineSet={this.props.timelineSet}
                         showUrlPreview={true}
-                        layout={Layout.Group}
+                        // The right panel timeline (and therefore threads) don't support IRC layout at this time
+                        layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
                         hideThreadedMessages={false}
                         hidden={false}
                         showReactions={true}
-                        className="mx_RoomView_messagePanel mx_GroupLayout"
+                        className={messagePanelClassNames}
                         permalinkCreator={this.props.permalinkCreator}
                         membersLoaded={true}
                         editState={this.state.editState}

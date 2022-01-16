@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-enum LocationShareType {
-    Custom = -1,
-    OnceOff = 0,
-    OneMine = 60,
-    FiveMins = 5 * 60,
-    ThirtyMins = 30 * 60,
-    OneHour = 60 * 60,
-    ThreeHours = 3 * 60 * 60,
-    SixHours = 6 * 60 * 60,
-    OneDay = 24 * 60 * 60,
-    Forever = Number.MAX_SAFE_INTEGER,
+import React, { HTMLAttributes } from 'react';
+import classNames from 'classnames';
+
+type Size = 'h1' | 'h2' | 'h3';
+interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
+    size: Size;
 }
 
-export default LocationShareType;
+const Heading: React.FC<HeadingProps> = ({ size, className, children, ...rest }) => React.createElement(size || 'h1', {
+    ...rest,
+    className: classNames(`mx_Heading_${size}`, className),
+    children,
+});
+
+export default Heading;
