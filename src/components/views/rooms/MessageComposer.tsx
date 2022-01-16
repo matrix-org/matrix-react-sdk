@@ -19,9 +19,7 @@ import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
-import { logger } from "matrix-js-sdk/src/logger";
 import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -58,10 +56,9 @@ import Modal from "../../../Modal";
 import RoomContext from '../../../contexts/RoomContext';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
-import LocationShareType from "../location/LocationShareType";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import { CollapsibleButton, ICollapsibleButtonProps } from './CollapsibleButton';
-import { LocationButton, textForLocation } from '../location/LocationButton';
+import LocationButton from '../location/LocationButton';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -257,6 +254,7 @@ interface IState {
     showStickers: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+    showLocationButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -288,12 +286,18 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             showStickers: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("feature_polls"),
+            showLocationButton: (
+                SettingsStore.getValue("feature_location_share") &&
+                SettingsStore.getValue("MessageComposerInput.showLocationButton")
+            ),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
+        SettingsStore.monitorSetting("MessageComposerInput.showLocationButton", null);
         SettingsStore.monitorSetting("feature_polls", null);
+        SettingsStore.monitorSetting("feature_location_share", null);
     }
 
     componentDidMount() {
@@ -344,6 +348,20 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         const showPollsButton = SettingsStore.getValue("feature_polls");
                         if (this.state.showPollsButton !== showPollsButton) {
                             this.setState({ showPollsButton });
+                        }
+                        break;
+                    }
+
+                    case "MessageComposerInput.showLocationButton":
+                    case "feature_location_share": {
+                        const showLocationButton = (
+                            SettingsStore.getValue("feature_location_share") &&
+                            SettingsStore.getValue(
+                                "MessageComposerInput.showLocationButton",
+                            )
+                        );
+                        if (this.state.showLocationButton !== showLocationButton) {
+                            this.setState({ showLocationButton });
                         }
                         break;
                     }
@@ -453,25 +471,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private shareLocation = (
-        uri: string,
-        ts: number,
-        _type: LocationShareType,
-        description: string | null,
-    ): boolean => {
-        if (!uri) return false;
-        try {
-            const text = textForLocation(uri, ts, description);
-            MatrixClientPeg.get().sendMessage(
-                this.props.room.roomId,
-                makeLocationContent(text, uri, ts, description),
-            );
-        } catch (e) {
-            logger.error("Error sending location:", e);
-        }
-        return true;
-    };
-
     private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
@@ -535,12 +534,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             buttons.push(
                 <UploadButton key="controls_upload" roomId={this.props.room.roomId} relation={this.props.relation} />,
             );
-            if (SettingsStore.getValue("feature_location_share")) {
+            if (this.state.showLocationButton) {
+                const sender = this.props.room.getMember(
+                    MatrixClientPeg.get().getUserId(),
+                );
                 buttons.push(
                     <LocationButton
                         key="location"
-                        room={this.props.room}
-                        shareLocation={this.shareLocation}
+                        roomId={this.props.room.roomId}
+                        sender={sender}
                         menuPosition={menuPosition}
                         narrowMode={this.state.narrowMode}
                     />,
