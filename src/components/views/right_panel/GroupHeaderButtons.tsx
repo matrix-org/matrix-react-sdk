@@ -19,14 +19,16 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { _t } from '../../../languageHandler';
 import HeaderButton from './HeaderButton';
 import HeaderButtons, { HeaderKind } from './HeaderButtons';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { Action } from "../../../dispatcher/actions";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 const GROUP_PHASES = [
     RightPanelPhases.GroupMemberInfo,
@@ -48,7 +50,11 @@ export default class GroupHeaderButtons extends HeaderButtons {
     protected onAction(payload: ActionPayload) {
         if (payload.action === Action.ViewUser) {
             if ((payload as ViewUserPayload).member) {
-                this.setPhase(RightPanelPhases.RoomMemberInfo, { member: payload.member });
+                RightPanelStore.instance.setCards([
+                    { phase: RightPanelPhases.GroupRoomInfo },
+                    { phase: RightPanelPhases.GroupMemberList },
+                    { phase: RightPanelPhases.RoomMemberInfo, state: { member: payload.member } },
+                ]);
             } else {
                 this.setPhase(RightPanelPhases.GroupMemberList);
             }

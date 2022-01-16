@@ -15,9 +15,6 @@ limitations under the License.
 */
 
 import * as React from 'react';
-import BaseDialog from './BaseDialog';
-import { _t, getUserLanguage } from '../../../languageHandler';
-import AccessibleButton from "../elements/AccessibleButton";
 import {
     ClientWidgetApi,
     IModalWidgetCloseRequest,
@@ -33,6 +30,10 @@ import {
     WidgetApiFromWidgetAction,
     WidgetKind,
 } from "matrix-widget-api";
+
+import BaseDialog from './BaseDialog';
+import { _t, getUserLanguage } from '../../../languageHandler';
+import AccessibleButton from "../elements/AccessibleButton";
 import { StopGapWidgetDriver } from "../../../stores/widgets/StopGapWidgetDriver";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
@@ -79,7 +80,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
     }
 
     public componentDidMount() {
-        const driver = new StopGapWidgetDriver( [], this.widget, WidgetKind.Modal);
+        const driver = new StopGapWidgetDriver([], this.widget, WidgetKind.Modal);
         const messaging = new ClientWidgetApi(this.widget, this.appFrame.current, driver);
         this.setState({ messaging });
     }

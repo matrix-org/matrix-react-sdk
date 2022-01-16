@@ -19,6 +19,7 @@ import React, {
     Dispatch,
     ReactNode,
     SetStateAction,
+    useCallback,
     useEffect,
     useLayoutEffect,
     useRef,
@@ -33,7 +34,7 @@ import { useContextMenu } from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
 import { SpaceButton, SpaceItem } from "./SpaceTreeLevel";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
     getMetaSpaceName,
@@ -45,7 +46,10 @@ import {
     UPDATE_TOP_LEVEL_SPACES,
 } from "../../../stores/spaces";
 import { RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
-import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import {
+    RoomNotificationStateStore,
+    UPDATE_STATUS_INDICATOR,
+} from "../../../stores/notifications/RoomNotificationStateStore";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
@@ -58,6 +62,12 @@ import QuickSettingsButton from "./QuickSettingsButton";
 import { useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
+import { isMac } from "../../../Keyboard";
+import { useDispatcher } from "../../../hooks/useDispatcher";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { ActionPayload } from "../../../dispatcher/payloads";
+import { Action } from "../../../dispatcher/actions";
+import { NotificationState } from "../../../stores/notifications/NotificationState";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -87,9 +97,7 @@ export const HomeButtonContextMenu = ({
     hideHeader,
     ...props
 }: ComponentProps<typeof SpaceContextMenu>) => {
-    const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
-        return SpaceStore.instance.allRoomsInHome;
-    });
+    const allRoomsInHome = useSettingValue<boolean>("Spaces.allRoomsInHome");
 
     return <IconizedContextMenu
         {...props}
@@ -131,10 +139,22 @@ const MetaSpaceButton = ({ selected, isPanelCollapsed, ...props }: IMetaSpaceBut
     </li>;
 };
 
+const getHomeNotificationState = (): NotificationState => {
+    return SpaceStore.instance.allRoomsInHome
+        ? RoomNotificationStateStore.instance.globalState
+        : SpaceStore.instance.getNotificationState(MetaSpace.Home);
+};
+
 const HomeButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
+    const [notificationState, setNotificationState] = useState(getHomeNotificationState());
+    const updateNotificationState = useCallback(() => {
+        setNotificationState(getHomeNotificationState());
+    }, []);
+    useEffect(updateNotificationState, [updateNotificationState, allRoomsInHome]);
+    useEventEmitter(RoomNotificationStateStore.instance, UPDATE_STATUS_INDICATOR, updateNotificationState);
 
     return <MetaSpaceButton
         spaceKey={MetaSpace.Home}
@@ -142,9 +162,7 @@ const HomeButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
         selected={selected}
         isPanelCollapsed={isPanelCollapsed}
         label={getMetaSpaceName(MetaSpace.Home, allRoomsInHome)}
-        notificationState={allRoomsInHome
-            ? RoomNotificationStateStore.instance.globalState
-            : SpaceStore.instance.getNotificationState(MetaSpace.Home)}
+        notificationState={notificationState}
         ContextMenuComponent={HomeButtonContextMenu}
         contextMenuTooltip={_t("Options")}
     />;
@@ -293,6 +311,12 @@ const SpacePanel = () => {
         return () => UIStore.instance.stopTrackingElementDimensions("SpacePanel");
     }, []);
 
+    useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
+        if (payload.action === Action.ToggleSpacePanel) {
+            setPanelCollapsed(!isPanelCollapsed);
+        }
+    });
+
     return (
         <DragDropContext onDragEnd={result => {
             if (!result.destination) return; // dropped outside the list
@@ -307,7 +331,21 @@ const SpacePanel = () => {
                         aria-label={_t("Spaces")}
                         ref={ref}
                     >
-                        <UserMenu isPanelCollapsed={isPanelCollapsed} />
+                        <UserMenu isPanelCollapsed={isPanelCollapsed}>
+                            <AccessibleTooltipButton
+                                className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
+                                onClick={() => setPanelCollapsed(!isPanelCollapsed)}
+                                title={isPanelCollapsed ? _t("Expand") : _t("Collapse")}
+                                tooltip={<div>
+                                    <div className="mx_Tooltip_title">
+                                        { isPanelCollapsed ? _t("Expand") : _t("Collapse") }
+                                    </div>
+                                    <div className="mx_Tooltip_sub">
+                                        { isMac ? "⌘ + ⇧ + D" : "Ctrl + Shift + D" }
+                                    </div>
+                                </div>}
+                            />
+                        </UserMenu>
                         <Droppable droppableId="top-level-spaces">
                             { (provided, snapshot) => (
                                 <IndicatorScrollbar
@@ -327,14 +365,7 @@ const SpacePanel = () => {
                                 </IndicatorScrollbar>
                             ) }
                         </Droppable>
-                        <AccessibleTooltipButton
-                            className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
-                            onClick={() => setPanelCollapsed(!isPanelCollapsed)}
-                            title={isPanelCollapsed ? _t("Expand space panel") : _t("Collapse space panel")}
-                            forceHide={!isPanelCollapsed}
-                        >
-                            { !isPanelCollapsed ? _t("Collapse") : null }
-                        </AccessibleTooltipButton>
+
                         { metaSpacesEnabled && <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> }
                     </ul>
                 ) }

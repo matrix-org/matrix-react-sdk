@@ -19,6 +19,7 @@ import React, { createRef, ClipboardEvent } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
@@ -49,8 +50,6 @@ import DocumentPosition from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
@@ -235,7 +234,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         });
         this.historyManager.tryPush(this.props.model, selection, inputType, diff);
 
-        let isTyping = !this.props.model.isEmpty;
+        // inputType is falsy during initial mount, don't consider re-loading the draft as typing
+        let isTyping = !this.props.model.isEmpty && !!inputType;
         // If the user is entering a command, only consider them typing if it is one which sends a message into the room
         if (isTyping && this.props.model.parts[0].type === "command") {
             const { cmd } = parseCommandString(this.props.model.parts[0].text);

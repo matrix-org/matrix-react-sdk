@@ -18,6 +18,7 @@ import React, { ChangeEvent, createRef, FormEvent, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -28,8 +29,6 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
 import CaptchaForm from "./CaptchaForm";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 /* This file contains a collection of components which are used by the
  * InteractiveAuth to prompt the user to enter the information needed
@@ -756,7 +755,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 @replaceableComponent("views.auth.FallbackAuthEntry")
 export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     private popupWindow: Window;
-    private fallbackButton = createRef<HTMLAnchorElement>();
+    private fallbackButton = createRef<HTMLButtonElement>();
 
     constructor(props) {
         super(props);
@@ -815,9 +814,9 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         }
         return (
             <div>
-                <a href="" ref={this.fallbackButton} onClick={this.onShowFallbackClick}>{
+                <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
                     _t("Start authentication")
-                }</a>
+                }</AccessibleButton>
                 { errorSection }
             </div>
         );

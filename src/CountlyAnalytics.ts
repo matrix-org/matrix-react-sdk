@@ -17,6 +17,7 @@ limitations under the License.
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { getCurrentLanguage } from './languageHandler';
 import PlatformPeg from './PlatformPeg';
@@ -24,8 +25,6 @@ import SdkConfig from './SdkConfig';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import RoomViewStore from "./stores/RoomViewStore";
 import { Action } from "./dispatcher/actions";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const INACTIVITY_TIME = 20; // seconds
 const HEARTBEAT_INTERVAL = 5_000; // ms
@@ -440,7 +439,7 @@ export default class CountlyAnalytics {
 
     public async disable() {
         if (this.disabled) return;
-        await this.track("Opt-Out" );
+        await this.track("Opt-Out");
         this.endSession();
         window.clearInterval(this.heartbeatIntervalId);
         window.clearTimeout(this.activityIntervalId);

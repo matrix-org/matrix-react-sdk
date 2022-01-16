@@ -18,6 +18,7 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { Resizable } from "re-resizable";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import AppTile from '../elements/AppTile';
 import dis from '../../../dispatcher/dispatcher';
@@ -33,7 +34,6 @@ import { clamp, percentageOf, percentageWithin } from "../../../utils/numbers";
 import { useStateCallback } from "../../../hooks/useStateCallback";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { IApp } from "../../../stores/WidgetStore";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import Spinner from "../elements/Spinner";
@@ -56,6 +56,7 @@ interface IState {
 
 @replaceableComponent("views.rooms.AppsDrawer")
 export default class AppsDrawer extends React.Component<IProps, IState> {
+    private unmounted = false;
     private resizeContainer: HTMLDivElement;
     private resizer: Resizer;
     private dispatcherRef: string;
@@ -85,6 +86,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
+        this.unmounted = true;
         ScalarMessaging.stopListening();
         WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(this.props.room), this.updateApps);
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
@@ -213,6 +215,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     private centerApps = (): IApp[] => this.state.apps[Container.Center];
 
     private updateApps = (): void => {
+        if (this.unmounted) return;
         this.setState({
             apps: this.getApps(),
         });

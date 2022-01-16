@@ -18,16 +18,16 @@ limitations under the License.
 
 import React from 'react';
 import request from 'browser-request';
-import { _t } from '../../languageHandler';
 import sanitizeHtml from 'sanitize-html';
+import classnames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { _t } from '../../languageHandler';
 import dis from '../../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
-import classnames from 'classnames';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { ActionPayload } from "../../dispatcher/payloads";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     // URL to request embedded page content from
@@ -86,7 +86,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
                     return;
                 }
 
-                body = body.replace(/_t\(['"]([\s\S]*?)['"]\)/mg, (match, g1)=>this.translate(g1));
+                body = body.replace(/_t\(['"]([\s\S]*?)['"]\)/mg, (match, g1) => this.translate(g1));
 
                 if (this.props.replaceMap) {
                     Object.keys(this.props.replaceMap).forEach(key => {

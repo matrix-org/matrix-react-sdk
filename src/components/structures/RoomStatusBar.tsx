@@ -15,20 +15,20 @@ limitations under the License.
 */
 
 import React from 'react';
+import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import { _t, _td } from '../../languageHandler';
 import Resend from '../../Resend';
 import dis from '../../dispatcher/dispatcher';
 import { messageForResourceLimitError } from '../../utils/ErrorUtils';
 import { Action } from "../../dispatcher/actions";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import NotificationBadge from "../views/rooms/NotificationBadge";
 import { StaticNotificationState } from "../../stores/notifications/StaticNotificationState";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
-import { SyncState } from "matrix-js-sdk/src/sync.api";
-import { ISyncStateData } from "matrix-js-sdk/src/sync";
-import { Room } from "matrix-js-sdk/src/models/room";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 
 const STATUS_BAR_HIDDEN = 0;
@@ -84,6 +84,7 @@ interface IState {
 
 @replaceableComponent("structures.RoomStatusBar")
 export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
+    private unmounted = false;
     public static contextType = MatrixClientContext;
 
     constructor(props: IProps, context: typeof MatrixClientContext) {
@@ -110,6 +111,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
+        this.unmounted = true;
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = this.context;
         if (client) {
@@ -122,6 +124,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         if (state === "SYNCING" && prevState === "SYNCING") {
             return;
         }
+        if (this.unmounted) return;
         this.setState({
             syncState: state,
             syncStateData: data,

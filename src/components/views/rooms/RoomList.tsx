@@ -47,11 +47,12 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
+    isMetaSpace,
     ISuggestedRoom,
     MetaSpace,
     SpaceKey,
-    UPDATE_SUGGESTED_ROOMS,
     UPDATE_SELECTED_SPACE,
+    UPDATE_SUGGESTED_ROOMS,
 } from "../../../stores/spaces";
 import { shouldShowSpaceInvite, showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -62,6 +63,7 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import SettingsStore from "../../../settings/SettingsStore";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -213,7 +215,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.stopPropagation();
                     closeMenu();
                     defaultDispatcher.dispatch({
-                        action: "view_room",
+                        action: Action.ViewRoom,
                         room_id: activeSpace.roomId,
                     });
                 }}
@@ -291,8 +293,8 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
             onClick={openMenu}
             className="mx_RoomSublist_auxButton"
             tooltipClassName="mx_RoomSublist_addRoomTooltip"
-            aria-label={_td("Add room")}
-            title={_td("Add room")}
+            aria-label={_t("Add room")}
+            title={_t("Add room")}
             isExpanded={menuDisplayed}
             inputRef={handle}
         />
@@ -493,10 +495,10 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     };
 
     private onExplore = () => {
-        if (this.props.activeSpace[0] === "!") {
+        if (!isMetaSpace(this.props.activeSpace)) {
             defaultDispatcher.dispatch({
-                action: "view_room",
-                room_id: SpaceStore.instance.activeSpace,
+                action: Action.ViewRoom,
+                room_id: this.props.activeSpace,
             });
         } else {
             const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
@@ -520,7 +522,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             );
             const viewRoom = () => {
                 defaultDispatcher.dispatch({
-                    action: "view_room",
+                    action: Action.ViewRoom,
                     room_alias: room.canonical_alias || room.aliases?.[0],
                     room_id: room.room_id,
                     via_servers: room.viaServers,
@@ -611,9 +613,22 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 if (
                     (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
                     (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM) ||
-                    (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM)
+                    (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM) ||
+                    (
+                        !isMetaSpace(this.props.activeSpace) &&
+                        orderedTagId === DefaultTagID.DM &&
+                        !SettingsStore.getValue("Spaces.showPeopleInSpace", this.props.activeSpace)
+                    )
                 ) {
                     alwaysVisible = false;
+                }
+
+                let forceExpanded = false;
+                if (
+                    (this.props.activeSpace === MetaSpace.Favourites && orderedTagId === DefaultTagID.Favourite) ||
+                    (this.props.activeSpace === MetaSpace.People && orderedTagId === DefaultTagID.DM)
+                ) {
+                    forceExpanded = true;
                 }
 
                 // The cost of mounting/unmounting this component offsets the cost
@@ -631,6 +646,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     alwaysVisible={alwaysVisible}
                     onListCollapse={this.props.onListCollapse}
+                    forceExpanded={forceExpanded}
                 />;
             });
     }
@@ -659,7 +675,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         kind="link"
                         onClick={this.onExplore}
                     >
-                        { this.props.activeSpace[0] === "!" ? _t("Explore rooms") : _t("Explore all public rooms") }
+                        { !isMetaSpace(this.props.activeSpace) ? _t("Explore rooms") : _t("Explore all public rooms") }
                     </AccessibleButton>
                 </div>;
             }

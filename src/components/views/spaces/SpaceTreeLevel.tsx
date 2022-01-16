@@ -23,6 +23,7 @@ import React, {
 } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import RoomAvatar from "../avatars/RoomAvatar";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -40,7 +41,6 @@ import { getKeyBindingsManager, RoomListAction } from "../../../KeyBindingsManag
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 
 interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick"> {
@@ -146,7 +146,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
 };
 
 interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
-    space?: Room;
+    space: Room;
     activeSpaces: SpaceKey[];
     isNested?: boolean;
     isPanelCollapsed?: boolean;
@@ -157,6 +157,7 @@ interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
 }
 
 interface IItemState {
+    name: string;
     collapsed: boolean;
     childSpaces: Room[];
 }
@@ -176,20 +177,29 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         );
 
         this.state = {
-            collapsed: collapsed,
+            name: this.props.space.name,
+            collapsed,
             childSpaces: this.childSpaces,
         };
 
         SpaceStore.instance.on(this.props.space.roomId, this.onSpaceUpdate);
+        this.props.space.on("Room.name", this.onRoomNameChange);
     }
 
     componentWillUnmount() {
         SpaceStore.instance.off(this.props.space.roomId, this.onSpaceUpdate);
+        this.props.space.off("Room.name", this.onRoomNameChange);
     }
 
     private onSpaceUpdate = () => {
         this.setState({
             childSpaces: this.childSpaces,
+        });
+    };
+
+    private onRoomNameChange = () => {
+        this.setState({
+            name: this.props.space.name,
         });
     };
 
@@ -318,7 +328,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     space={space}
                     className={isInvite ? "mx_SpaceButton_invite" : undefined}
                     selected={activeSpaces.includes(space.roomId)}
-                    label={space.name}
+                    label={this.state.name}
                     contextMenuTooltip={_t("Space options")}
                     notificationState={notificationState}
                     isNarrow={isPanelCollapsed}
