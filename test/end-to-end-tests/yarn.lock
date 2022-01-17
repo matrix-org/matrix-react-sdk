@@ -7,6 +7,13 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.12.1.tgz#d90123f6c61fdf2f7cddd286ddae891586dd3488"
   integrity sha512-sKDlqv6COJrR7ar0+GqqhrXQDzQlMcqMnF2iEU6m9hLo8kxozoAGUazwPyELHlRVmjsbvlnGXjnzyptSXVmceA==
 
+"@types/puppeteer@^5.4.4":
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-5.4.4.tgz#e92abeccc4f46207c3e1b38934a1246be080ccd0"
+  integrity sha512-3Nau+qi69CN55VwZb0ATtdUAlYlqOOQ3OfQfq0Hqgc4JMFXiQT/XInlwQ9g6LbicDslE6loIFsXFklGh5XmI6Q==
+  dependencies:
+    "@types/node" "*"
+
 "@types/yauzl@^2.9.1":
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/@types/yauzl/-/yauzl-2.9.1.tgz#d10f69f9f522eef3cf98e30afb684a1e1ec923af"
@@ -793,6 +800,11 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
+
+typescript@^4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.3.tgz#afaa858e68c7103317d89eb90c5d8906268d353c"
+  integrity sha512-eVYaEHALSt+s9LbvgEv4Ef+Tdq7hBiIZgii12xXJnukryt3pMgJf6aKhoCZ3FWQsu6sydEnkg11fYXLzhLBjeQ==
 
 unbzip2-stream@1.3.3:
   version "1.3.3"

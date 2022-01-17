@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ActionPayload } from "../dispatcher/payloads";
-import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
-import defaultDispatcher from "../dispatcher/dispatcher";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { User } from "matrix-js-sdk/src/models/user";
 import { throttle } from "lodash";
+
+import { ActionPayload } from "../dispatcher/payloads";
+import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
+import defaultDispatcher from "../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
 import { mediaFromMxc } from "../customisations/Media";
@@ -27,6 +28,7 @@ import { mediaFromMxc } from "../customisations/Media";
 interface IState {
     displayName?: string;
     avatarUrl?: string;
+    fetchedAt?: number;
 }
 
 const KEY_DISPLAY_NAME = "mx_profile_displayname";
@@ -64,6 +66,10 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         } else {
             return this.matrixClient.getUserId();
         }
+    }
+
+    public get isProfileInfoFetched(): boolean {
+        return !!this.state.fetchedAt;
     }
 
     /**
@@ -134,7 +140,12 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         } else {
             window.localStorage.removeItem(KEY_AVATAR_URL);
         }
-        await this.updateState({ displayName: profileInfo.displayname, avatarUrl: profileInfo.avatar_url });
+
+        await this.updateState({
+            displayName: profileInfo.displayname,
+            avatarUrl: profileInfo.avatar_url,
+            fetchedAt: Date.now(),
+        });
     };
 
     private onStateEvents = throttle(async (ev: MatrixEvent) => {

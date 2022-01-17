@@ -32,8 +32,11 @@ import {
     IWidgetApiErrorResponseData,
     WidgetKind,
 } from "matrix-widget-api";
-import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { EventEmitter } from "events";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
 import RoomViewStore from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -52,13 +55,10 @@ import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
 import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // TODO: Destroy all of this code
 
@@ -109,8 +109,8 @@ export class ElementWidget extends Widget {
         }
         let domain = super.rawData['domain'];
         if (domain === undefined) {
-            // v1 widgets default to jitsi.riot.im regardless of user settings
-            domain = "jitsi.riot.im";
+            // v1 widgets default to meet.element.io regardless of user settings
+            domain = "meet.element.io";
         }
 
         let theme = new ThemeWatcher().getEffectiveTheme();

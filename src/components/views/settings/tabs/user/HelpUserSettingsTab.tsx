@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import { _t, getCurrentLanguage } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -23,7 +25,6 @@ import SdkConfig from "../../../../../SdkConfig";
 import createRoom from "../../../../../createRoom";
 import Modal from "../../../../../Modal";
 import PlatformPeg from "../../../../../PlatformPeg";
-import * as KeyboardShortcuts from "../../../../../accessibility/KeyboardShortcuts";
 import UpdateCheckButton from "../../UpdateCheckButton";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import { copyPlaintext } from "../../../../../utils/strings";
@@ -31,8 +32,10 @@ import * as ContextMenu from "../../../../structures/ContextMenu";
 import { toRightOf } from "../../../../structures/ContextMenu";
 import BugReportDialog from '../../../dialogs/BugReportDialog';
 import GenericTextContextMenu from "../../../context_menus/GenericTextContextMenu";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
+import { Action } from "../../../../../dispatcher/actions";
+import { UserTab } from "../../../dialogs/UserSettingsDialog";
+import dis from "../../../../../dispatcher/dispatcher";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -211,6 +214,13 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         this.copy(`${appVersion}\n${olmVersion}`, e);
     };
 
+    private onKeyboardShortcutsClicked = (): void => {
+        dis.dispatch<OpenToTabPayload>({
+            action: Action.ViewUserSettings,
+            initialTabId: UserTab.Keyboard,
+        });
+    };
+
     render() {
         const brand = SdkConfig.get().brand;
 
@@ -307,7 +317,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <div className='mx_SettingsTab_subsectionText'>
                         { faqText }
                     </div>
-                    <AccessibleButton kind="primary" onClick={KeyboardShortcuts.toggleDialog}>
+                    <AccessibleButton kind="primary" onClick={this.onKeyboardShortcutsClicked}>
                         { _t("Keyboard Shortcuts") }
                     </AccessibleButton>
                 </div>
@@ -337,7 +347,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         <details>
                             <summary>{ _t("Access Token") }</summary><br />
                             <b>{ _t("Your access token gives full access to your account."
-                               + " Do not share it with anyone." ) }</b>
+                               + " Do not share it with anyone.") }</b>
                             <div className="mx_HelpUserSettingsTab_copy">
                                 <code>{ MatrixClientPeg.get().getAccessToken() }</code>
                                 <AccessibleTooltipButton

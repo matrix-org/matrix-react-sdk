@@ -78,6 +78,11 @@ export enum Action {
     ToggleUserMenu = "toggle_user_menu",
 
     /**
+     * Toggles the Space panel. No additional payload information required.
+     */
+    ToggleSpacePanel = "toggle_space_panel",
+
+    /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
      */
     UpdateFontSize = "update_font_size",
@@ -96,21 +101,6 @@ export enum Action {
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */
     ViewRoomDelta = "view_room_delta",
-
-    /**
-     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
-     */
-    SetRightPanelPhase = "set_right_panel_phase",
-
-    /**
-     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
-     */
-    ToggleRightPanel = "toggle_right_panel",
-
-    /**
-     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
-     */
-    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 
     /**
      * Opens the modal dial pad
@@ -188,7 +178,7 @@ export enum Action {
     SwitchSpace = "switch_space",
 
     /**
-     * Signals to the visible space hierarchy that a change has occurred an that it should refresh.
+     * Signals to the visible space hierarchy that a change has occurred and that it should refresh.
      */
     UpdateSpaceHierarchy = "update_space_hierarchy",
 
@@ -203,4 +193,29 @@ export enum Action {
      * Fires when a user starts to edit event (e.g. up arrow in compositor)
      */
     EditEvent = "edit_event",
+
+    /**
+     * The user accepted pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsAccept = "pseudonymous_analytics_accept",
+
+    /**
+     * The user rejected pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
+
+    /**
+     * The user accepted anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     * (this action and its handler can be removed once posthog is rolled out)
+     * Payload: none
+     */
+    AnonymousAnalyticsAccept = "anonymous_analytics_accept",
+
+    /**
+     * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     * Payload: none
+     */
+    AnonymousAnalyticsReject = "anonymous_analytics_reject",
 }

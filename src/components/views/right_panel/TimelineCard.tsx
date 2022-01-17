@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MatrixEvent, Room } from 'matrix-js-sdk/src';
+import { EventSubscription } from "fbemitter";
+import { EventTimelineSet, IEventRelation, MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
+import classNames from 'classnames';
 
 import BaseCard from "./BaseCard";
-
 import ResizeNotifier from '../../../utils/ResizeNotifier';
 import MessageComposer from '../rooms/MessageComposer';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
@@ -27,10 +28,16 @@ import { Layout } from '../../../settings/enums/Layout';
 import TimelinePanel from '../../structures/TimelinePanel';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import EditorStateTransfer from '../../../utils/EditorStateTransfer';
-import RoomContext from '../../../contexts/RoomContext';
-
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from '../../../utils/replaceableComponent';
+import { ActionPayload } from '../../../dispatcher/payloads';
+import { Action } from '../../../dispatcher/actions';
+import RoomViewStore from '../../../stores/RoomViewStore';
+import ContentMessages from '../../../ContentMessages';
+import UploadBar from '../../structures/UploadBar';
+import SettingsStore from '../../../settings/SettingsStore';
 
 interface IProps {
     room: Room;
@@ -38,23 +45,109 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
-    initialEvent?: MatrixEvent;
-    initialEventHighlighted?: boolean;
+    classNames?: string;
+    timelineSet?: EventTimelineSet;
+    timelineRenderingType?: TimelineRenderingType;
+    showComposer?: boolean;
+    composerRelation?: IEventRelation;
 }
 interface IState {
     thread?: Thread;
     editState?: EditorStateTransfer;
     replyToEvent?: MatrixEvent;
+    initialEventId?: string;
+    isInitialEventHighlighted?: boolean;
+    layout: Layout;
+
+    // settings:
+    showReadReceipts?: boolean;
 }
 
 @replaceableComponent("structures.TimelineCard")
 export default class TimelineCard extends React.Component<IProps, IState> {
     static contextType = RoomContext;
 
+    private dispatcherRef: string;
+    private layoutWatcherRef: string;
+    private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
+    private roomStoreToken: EventSubscription;
+    private readReceiptsSettingWatcher: string;
+
     constructor(props: IProps) {
         super(props);
-        this.state = {};
+        this.state = {
+            showReadReceipts: SettingsStore.getValue("showReadReceipts", props.room.roomId),
+            layout: SettingsStore.getValue("layout"),
+        };
+        this.readReceiptsSettingWatcher = null;
     }
+
+    public componentDidMount(): void {
+        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        this.dispatcherRef = dis.register(this.onAction);
+        this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[,,, value]) =>
+            this.setState({ showReadReceipts: value as boolean }),
+        );
+        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
+            this.setState({ layout: value as Layout }),
+        );
+    }
+
+    public componentWillUnmount(): void {
+        // Remove RoomStore listener
+
+        this.roomStoreToken?.remove();
+
+        if (this.readReceiptsSettingWatcher) {
+            SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
+        }
+        if (this.layoutWatcherRef) {
+            SettingsStore.unwatchSetting(this.layoutWatcherRef);
+        }
+
+        dis.unregister(this.dispatcherRef);
+    }
+
+    private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
+        const newState: Pick<IState, any> = {
+            // roomLoading: RoomViewStore.isRoomLoading(),
+            // roomLoadError: RoomViewStore.getRoomLoadError(),
+
+            initialEventId: RoomViewStore.getInitialEventId(),
+            isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
+            replyToEvent: RoomViewStore.getQuotingEvent(),
+        };
+
+        this.setState(newState);
+    };
+
+    private onAction = (payload: ActionPayload): void => {
+        switch (payload.action) {
+            case Action.EditEvent:
+                this.setState({
+                    editState: payload.event ? new EditorStateTransfer(payload.event) : null,
+                }, () => {
+                    if (payload.event) {
+                        this.timelinePanelRef.current?.scrollToEventIfNeeded(payload.event.getId());
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+    };
+
+    private onScroll = (): void => {
+        if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
+            dis.dispatch({
+                action: Action.ViewRoom,
+                room_id: this.props.room.roomId,
+                event_id: this.state.initialEventId,
+                highlighted: false,
+                replyingToEvent: this.state.replyToEvent,
+            });
+        }
+    };
 
     private renderTimelineCardHeader = (): JSX.Element => {
         return <div className="mx_TimelineCard__header">
@@ -63,41 +156,65 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        return (
-            <BaseCard
-                className="mx_ThreadPanel mx_TimelineCard"
-                onClose={this.props.onClose}
-                withoutScrollContainer={true}
-                header={this.renderTimelineCardHeader()}
-            >
-                <TimelinePanel
-                    showReadReceipts={false} // TODO: RR's cause issues with limited horizontal space
-                    manageReadReceipts={true}
-                    manageReadMarkers={false} // No RM support in the TimelineCard
-                    sendReadReceiptOnLoad={true}
-                    timelineSet={this.props.room.getUnfilteredTimelineSet()}
-                    showUrlPreview={true}
-                    layout={Layout.Group}
-                    hideThreadedMessages={false}
-                    hidden={false}
-                    showReactions={true}
-                    className="mx_RoomView_messagePanel mx_GroupLayout"
-                    permalinkCreator={this.props.permalinkCreator}
-                    membersLoaded={true}
-                    editState={this.state.editState}
-                    eventId={this.props.initialEvent?.getId()}
-                    resizeNotifier={this.props.resizeNotifier}
-                />
+        const highlightedEventId = this.state.isInitialEventHighlighted
+            ? this.state.initialEventId
+            : null;
 
-                <MessageComposer
-                    room={this.props.room}
-                    resizeNotifier={this.props.resizeNotifier}
-                    replyToEvent={this.state.replyToEvent}
-                    permalinkCreator={this.props.permalinkCreator}
-                    e2eStatus={this.props.e2eStatus}
-                    compact={true}
-                />
-            </BaseCard>
+        const messagePanelClassNames = classNames({
+            "mx_RoomView_messagePanel": true,
+            "mx_GroupLayout": this.state.layout === Layout.Group,
+        });
+
+        return (
+            <RoomContext.Provider value={{
+                ...this.context,
+                timelineRenderingType: this.props.timelineRenderingType ?? this.context.timelineRenderingType,
+                liveTimeline: this.props.timelineSet.getLiveTimeline(),
+            }}>
+                <BaseCard
+                    className={this.props.classNames}
+                    onClose={this.props.onClose}
+                    withoutScrollContainer={true}
+                    header={this.renderTimelineCardHeader()}
+                >
+                    <TimelinePanel
+                        ref={this.timelinePanelRef}
+                        showReadReceipts={this.state.showReadReceipts}
+                        manageReadReceipts={true}
+                        manageReadMarkers={false} // No RM support in the TimelineCard
+                        sendReadReceiptOnLoad={true}
+                        timelineSet={this.props.timelineSet}
+                        showUrlPreview={true}
+                        // The right panel timeline (and therefore threads) don't support IRC layout at this time
+                        layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
+                        hideThreadedMessages={false}
+                        hidden={false}
+                        showReactions={true}
+                        className={messagePanelClassNames}
+                        permalinkCreator={this.props.permalinkCreator}
+                        membersLoaded={true}
+                        editState={this.state.editState}
+                        eventId={this.state.initialEventId}
+                        resizeNotifier={this.props.resizeNotifier}
+                        highlightedEventId={highlightedEventId}
+                        onUserScroll={this.onScroll}
+                    />
+
+                    { ContentMessages.sharedInstance().getCurrentUploads(this.props.composerRelation).length > 0 && (
+                        <UploadBar room={this.props.room} relation={this.props.composerRelation} />
+                    ) }
+
+                    <MessageComposer
+                        room={this.props.room}
+                        relation={this.props.composerRelation}
+                        resizeNotifier={this.props.resizeNotifier}
+                        replyToEvent={this.state.replyToEvent}
+                        permalinkCreator={this.props.permalinkCreator}
+                        e2eStatus={this.props.e2eStatus}
+                        compact={true}
+                    />
+                </BaseCard>
+            </RoomContext.Provider>
         );
     }
 }

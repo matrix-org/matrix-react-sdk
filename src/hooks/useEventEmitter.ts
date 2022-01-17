@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { useRef, useEffect, useState, useCallback } from "react";
+
 import type { EventEmitter } from "events";
 
 type Handler = (...args: any[]) => void;
@@ -64,6 +65,8 @@ export const useEventEmitterState = <T>(
     const handler = useCallback((...args: any[]) => {
         setValue(fn(...args));
     }, [fn]);
+    // re-run when the emitter changes
+    useEffect(handler, [emitter]); // eslint-disable-line react-hooks/exhaustive-deps
     useEventEmitter(emitter, eventName, handler);
     return value;
 };

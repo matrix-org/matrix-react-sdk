@@ -19,6 +19,11 @@ limitations under the License.
 
 import url from 'url';
 import React, { createRef } from 'react';
+import classNames from 'classnames';
+import { MatrixCapabilities } from "matrix-widget-api";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import AccessibleButton from './AccessibleButton';
 import { _t } from '../../../languageHandler';
@@ -27,21 +32,21 @@ import AppWarning from './AppWarning';
 import Spinner from './Spinner';
 import dis from '../../../dispatcher/dispatcher';
 import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
-import classNames from 'classnames';
 import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, ContextMenuButton } from "../../structures/ContextMenu";
 import PersistedElement, { getPersistKey } from "./PersistedElement";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { StopGapWidget } from "../../../stores/widgets/StopGapWidget";
 import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
-import { MatrixCapabilities } from "matrix-widget-api";
 import RoomWidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CallHandler from '../../../CallHandler';
-import { Room } from "matrix-js-sdk/src/models/room";
 import { IApp } from "../../../stores/WidgetStore";
 import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
+import { OwnProfileStore } from '../../../stores/OwnProfileStore';
+import { UPDATE_EVENT } from '../../../stores/AsyncStore';
+
 interface IProps {
     app: IApp;
     // If room is not specified then it is an account level widget
@@ -74,6 +79,7 @@ interface IProps {
     // sets the pointer-events property on the iframe
     pointerEvents?: string;
     widgetPageTitle?: string;
+    hideMaximiseButton?: boolean;
 }
 
 interface IState {
@@ -83,13 +89,13 @@ interface IState {
     // Assume that widget has permission to load if we are the user who
     // added it to the room, or if explicitly granted by the user
     hasPermissionToLoad: boolean;
+    // Wait for user profile load to display correct name
+    isUserProfileReady: boolean;
     error: Error;
     menuDisplayed: boolean;
     widgetPageTitle: string;
     requiresClient: boolean;
 }
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 @replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component<IProps, IState> {
@@ -128,9 +134,21 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         this.state = this.getNewState(props);
+        this.watchUserReady();
 
         this.allowedWidgetsWatchRef = SettingsStore.watchSetting("allowedWidgets", null, this.onAllowedWidgetsChange);
     }
+
+    private watchUserReady = () => {
+        if (OwnProfileStore.instance.isProfileInfoFetched) {
+            return;
+        }
+        OwnProfileStore.instance.once(UPDATE_EVENT, this.onUserReady);
+    };
+
+    private onUserReady = (): void => {
+        this.setState({ isUserProfileReady: true });
+    };
 
     // This is a function to make the impact of calling SettingsStore slightly less
     private hasPermissionToLoad = (props: IProps): boolean => {
@@ -158,6 +176,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             // Assume that widget has permission to load if we are the user who
             // added it to the room, or if explicitly granted by the user
             hasPermissionToLoad: this.hasPermissionToLoad(newProps),
+            isUserProfileReady: OwnProfileStore.instance.isProfileInfoFetched,
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
@@ -218,6 +237,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
+        OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
     }
 
     private resetWidget(newProps: IProps): void {
@@ -443,7 +463,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
         const appTileBodyStyles = {};
         if (this.props.pointerEvents) {
-            appTileBodyStyles['pointer-events'] = this.props.pointerEvents;
+            appTileBodyStyles['pointerEvents'] = this.props.pointerEvents;
         }
 
         const loadingElement = (
@@ -471,7 +491,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                     />
                 </div>
             );
-        } else if (this.state.initialising) {
+        } else if (this.state.initialising || !this.state.isUserProfileReady) {
             appTileBody = (
                 <div className={appTileBodyClass + (this.state.loading ? 'mx_AppLoading' : '')} style={appTileBodyStyles}>
                     { loadingElement }
@@ -506,8 +526,13 @@ export default class AppTile extends React.Component<IProps, IState> {
 
                     // Also wrap the PersistedElement in a div to fix the height, otherwise
                     // AppTile's border is in the wrong place
+
+                    // For persistent apps in PiP we want the zIndex to be higher then for other persistent apps (100)
+                    // otherwise there are issues that the PiP view is drawn UNDER another widget (Persistent app) when dragged around.
+                    const zIndexAboveOtherPersistentElements = 101;
+
                     appTileBody = <div className="mx_AppTile_persistedWrapper">
-                        <PersistedElement persistKey={this.persistKey}>
+                        <PersistedElement zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9} persistKey={this.persistKey}>
                             { appTileBody }
                         </PersistedElement>
                     </div>;
@@ -540,18 +565,18 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         }
         let maxMinButton;
-        if (SettingsStore.getValue("feature_maximised_widgets")) {
+        if (!this.props.hideMaximiseButton) {
             const widgetIsMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);
+            const className = classNames({
+                "mx_AppTileMenuBar_iconButton": true,
+                "mx_AppTileMenuBar_iconButton_minWidget": widgetIsMaximised,
+                "mx_AppTileMenuBar_iconButton_maxWidget": !widgetIsMaximised,
+            });
             maxMinButton = <AccessibleButton
-                className={
-                    "mx_AppTileMenuBar_iconButton"
-                                    + (widgetIsMaximised
-                                        ? " mx_AppTileMenuBar_iconButton_minWidget"
-                                        : " mx_AppTileMenuBar_iconButton_maxWidget")
-                }
+                className={className}
                 title={
-                    widgetIsMaximised ? _t('Close'): _t('Maximise widget')
+                    widgetIsMaximised ? _t('Close') : _t('Maximise widget')
                 }
                 onClick={this.onMaxMinWidgetClick}
             />;

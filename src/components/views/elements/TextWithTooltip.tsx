@@ -15,52 +15,40 @@
  */
 
 import React from 'react';
+import classNames from 'classnames';
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Tooltip from "./Tooltip";
+import TooltipTarget from './TooltipTarget';
 
 interface IProps {
     class?: string;
     tooltipClass?: string;
     tooltip: React.ReactNode;
-    tooltipProps?: {};
+    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
     onClick?: (ev?: React.MouseEvent) => void;
 }
 
-interface IState {
-    hover: boolean;
-}
-
 @replaceableComponent("views.elements.TextWithTooltip")
-export default class TextWithTooltip extends React.Component<IProps, IState> {
+export default class TextWithTooltip extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
-
-        this.state = {
-            hover: false,
-        };
     }
-
-    private onMouseOver = (): void => {
-        this.setState({ hover: true });
-    };
-
-    private onMouseLeave = (): void => {
-        this.setState({ hover: false });
-    };
 
     public render(): JSX.Element {
         const { class: className, children, tooltip, tooltipClass, tooltipProps, ...props } = this.props;
 
         return (
-            <span {...props} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave} onClick={this.props.onClick} className={className}>
+            <TooltipTarget
+                onClick={this.props.onClick}
+                tooltipTargetClassName={classNames("mx_TextWithTooltip_target", className)}
+                {...tooltipProps}
+                label={tooltip}
+                tooltipClassName={tooltipClass}
+                className="mx_TextWithTooltip_tooltip"
+                {...props}
+            >
                 { children }
-                { this.state.hover && <Tooltip
-                    {...tooltipProps}
-                    label={tooltip}
-                    tooltipClassName={tooltipClass}
-                    className="mx_TextWithTooltip_tooltip"
-                /> }
-            </span>
+            </TooltipTarget>
         );
     }
 }

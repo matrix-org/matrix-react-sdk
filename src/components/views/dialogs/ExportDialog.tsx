@@ -16,6 +16,8 @@ limitations under the License.
 
 import React, { useRef, useState } from "react";
 import { Room } from "matrix-js-sdk/src";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
@@ -38,8 +40,6 @@ import Exporter from "../../../utils/exportUtils/Exporter";
 import Spinner from "../elements/Spinner";
 import InfoDialog from "./InfoDialog";
 
-import { logger } from "matrix-js-sdk/src/logger";
-
 interface IProps extends IDialogProps {
     room: Room;
 }
@@ -53,7 +53,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
     const [sizeLimit, setSizeLimit] = useState<number | null>(8);
     const sizeLimitRef = useRef<Field>();
     const messageCountRef = useRef<Field>();
-    const [exportProgressText, setExportProgressText] = useState("Processing...");
+    const [exportProgressText, setExportProgressText] = useState(_t("Processing..."));
     const [displayCancel, setCancelWarning] = useState(false);
     const [exportCancelled, setExportCancelled] = useState(false);
     const [exportSuccessful, setExportSuccessful] = useState(false);

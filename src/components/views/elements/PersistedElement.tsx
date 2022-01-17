@@ -17,11 +17,11 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { throttle } from "lodash";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 
 import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ActionPayload } from "../../../dispatcher/payloads";
 
@@ -184,7 +184,7 @@ export default class PersistedElement extends React.Component<IProps> {
             width: parentRect.width + 'px',
             height: parentRect.height + 'px',
         });
-    }, 100, { trailing: true, leading: true });
+    }, 16, { trailing: true, leading: true });
 
     public render(): JSX.Element {
         return <div ref={this.collectChildContainer} />;

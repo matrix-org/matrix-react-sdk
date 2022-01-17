@@ -105,12 +105,14 @@ export enum RoomAction {
 export enum NavigationAction {
     /** Jump to room search (search for a room) */
     FocusRoomSearch = 'FocusRoomSearch',
+    /** Toggle the space panel */
+    ToggleSpacePanel = 'ToggleSpacePanel',
     /** Toggle the room side panel */
     ToggleRoomSidePanel = 'ToggleRoomSidePanel',
     /** Toggle the user menu */
     ToggleUserMenu = 'ToggleUserMenu',
     /** Toggle the short cut help dialog */
-    ToggleShortCutDialog = 'ToggleShortCutDialog',
+    OpenShortCutDialog = 'OpenShortCutDialog',
     /** Got to the Element home screen */
     GoToHome = 'GoToHome',
     /** Select prev room */

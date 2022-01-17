@@ -15,9 +15,13 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import SettingsStore from "../../settings/SettingsStore";
 import { DefaultTagID, isCustomTag, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { IListOrderingMap, ITagMap, ITagSortingMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
 import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -27,7 +31,6 @@ import { TagWatcher } from "./TagWatcher";
 import RoomViewStore from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -38,8 +41,6 @@ import { SpaceWatcher } from "./SpaceWatcher";
 import SpaceStore from "../spaces/SpaceStore";
 import { Action } from "../../dispatcher/actions";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IState {
     tagsEnabled?: boolean;
@@ -281,7 +282,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             }
             await this.handleRoomUpdate(room, RoomUpdateCause.Timeline);
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.accountData' && payload.event_type === 'm.direct') {
+        } else if (payload.action === 'MatrixActions.accountData' && payload.event_type === EventType.Direct) {
             const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
             const dmMap = eventPayload.event.getContent();
             for (const userId of Object.keys(dmMap)) {

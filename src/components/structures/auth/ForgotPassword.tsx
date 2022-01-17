@@ -17,11 +17,13 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t, _td } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 import ServerPicker from "../../views/elements/ServerPicker";
@@ -30,13 +32,13 @@ import PassphraseField from '../../views/auth/PassphraseField';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
 import InlineSpinner from '../../views/elements/InlineSpinner';
-import { logger } from "matrix-js-sdk/src/logger";
 import Spinner from "../../views/elements/Spinner";
 import QuestionDialog from "../../views/dialogs/QuestionDialog";
 import ErrorDialog from "../../views/dialogs/ErrorDialog";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
 import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
+import AccessibleButton from '../../views/elements/AccessibleButton';
 
 enum Phase {
     // Show the forgot password inputs
@@ -337,9 +339,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     value={_t('Send Reset Email')}
                 />
             </form>
-            <a className="mx_AuthBody_changeFlow" onClick={this.onLoginClick} href="#">
+            <AccessibleButton kind='link_inline' className="mx_AuthBody_changeFlow" onClick={this.onLoginClick}>
                 { _t('Sign in instead') }
-            </a>
+            </AccessibleButton>
         </div>;
     }
 

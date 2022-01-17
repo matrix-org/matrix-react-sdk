@@ -14,8 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AutocompleteAction, IKeyBindingsProvider, KeyBinding, MessageComposerAction, NavigationAction, RoomAction,
-    RoomListAction } from "./KeyBindingsManager";
+import {
+    AutocompleteAction,
+    IKeyBindingsProvider,
+    KeyBinding,
+    MessageComposerAction,
+    NavigationAction,
+    RoomAction,
+    RoomListAction,
+} from "./KeyBindingsManager";
 import { isMac, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
 
@@ -322,6 +329,14 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             },
         },
         {
+            action: NavigationAction.ToggleSpacePanel,
+            keyCombo: {
+                key: Key.D,
+                ctrlOrCmd: true,
+                shiftKey: true,
+            },
+        },
+        {
             action: NavigationAction.ToggleRoomSidePanel,
             keyCombo: {
                 key: Key.PERIOD,
@@ -340,14 +355,14 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             },
         },
         {
-            action: NavigationAction.ToggleShortCutDialog,
+            action: NavigationAction.OpenShortCutDialog,
             keyCombo: {
                 key: Key.SLASH,
                 ctrlOrCmd: true,
             },
         },
         {
-            action: NavigationAction.ToggleShortCutDialog,
+            action: NavigationAction.OpenShortCutDialog,
             keyCombo: {
                 key: Key.SLASH,
                 ctrlOrCmd: true,

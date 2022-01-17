@@ -17,11 +17,12 @@ limitations under the License.
 import { CallType } from 'matrix-js-sdk/src/webrtc/call';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import React from 'react';
+import classNames from 'classnames';
+
 import { _t, _td } from '../../../../languageHandler';
 import RoomAvatar from '../../avatars/RoomAvatar';
 import dis from '../../../../dispatcher/dispatcher';
 import { Action } from '../../../../dispatcher/actions';
-import classNames from 'classnames';
 import AccessibleTooltipButton from '../../elements/AccessibleTooltipButton';
 
 const callTypeTranslationByType: Record<CallType, string> = {
@@ -31,7 +32,7 @@ const callTypeTranslationByType: Record<CallType, string> = {
 
 interface CallViewHeaderProps {
     pipMode: boolean;
-    type: CallType;
+    type?: CallType;
     callRooms?: Room[];
     onPipMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
 }
@@ -92,9 +93,9 @@ const CallViewHeader: React.FC<CallViewHeaderProps> = ({
     onPipMouseDown,
 }) => {
     const [callRoom, onHoldCallRoom] = callRooms;
-    const callTypeText = _t(callTypeTranslationByType[type]);
-    const callRoomName = callRoom.name;
-    const { roomId } = callRoom;
+    const callTypeText = type ? _t(callTypeTranslationByType[type]) : _t("Widget");
+    const callRoomName = callRoom?.name;
+    const roomId = callRoom?.roomId;
 
     if (!pipMode) {
         return <div className="mx_CallViewHeader">
@@ -110,7 +111,7 @@ const CallViewHeader: React.FC<CallViewHeaderProps> = ({
         >
             <RoomAvatar room={callRoom} height={32} width={32} />
             <div className="mx_CallViewHeader_callInfo">
-                <div className="mx_CallViewHeader_roomName">{ callRoomName }</div>
+                <div className="mx_CallViewHeader_roomName" title={callRoomName}>{ callRoomName }</div>
                 <div className="mx_CallViewHeader_callTypeSmall">
                     { callTypeText }
                     { onHoldCallRoom && <SecondaryCallInfo callRoom={onHoldCallRoom} /> }

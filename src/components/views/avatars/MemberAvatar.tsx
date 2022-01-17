@@ -18,14 +18,14 @@ limitations under the License.
 import React from 'react';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import BaseAvatar from "./BaseAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { CardContext } from '../right_panel/BaseCard';
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember;
@@ -37,6 +37,7 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     onClick?: React.MouseEventHandler;
     // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
     viewUserOnClick?: boolean;
+    pushUserOnClick?: boolean;
     title?: string;
     style?: any;
 }
@@ -100,6 +101,7 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
                 dis.dispatch({
                     action: Action.ViewUser,
                     member: this.props.member,
+                    push: this.context.isCard,
                 });
             };
         }
@@ -110,7 +112,10 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
                 title={this.state.title}
                 idName={userId}
                 url={this.state.imageUrl}
-                onClick={onClick} />
+                onClick={onClick}
+            />
         );
     }
 }
+
+MemberAvatar.contextType = CardContext;
