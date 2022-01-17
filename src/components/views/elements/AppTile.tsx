@@ -89,8 +89,8 @@ interface IState {
     // Assume that widget has permission to load if we are the user who
     // added it to the room, or if explicitly granted by the user
     hasPermissionToLoad: boolean;
-    //
-    isUserReady: boolean;
+    // Wait for user profile load to display correct name
+    isUserProfileReady: boolean;
     error: Error;
     menuDisplayed: boolean;
     widgetPageTitle: string;
@@ -148,7 +148,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private onUserReady = (): void => {
         if (OwnProfileStore.instance.profileInfoFetchedAt) {
-            this.setState({ isUserReady: true });
+            this.setState({ isUserProfileReady: true });
             OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
         }
     };
@@ -179,7 +179,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             // Assume that widget has permission to load if we are the user who
             // added it to the room, or if explicitly granted by the user
             hasPermissionToLoad: this.hasPermissionToLoad(newProps),
-            isUserReady: !!OwnProfileStore.instance.profileInfoFetchedAt,
+            isUserProfileReady: !!OwnProfileStore.instance.profileInfoFetchedAt,
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,
@@ -494,7 +494,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                     />
                 </div>
             );
-        } else if (this.state.initialising || !this.state.isUserReady) {
+        } else if (this.state.initialising || !this.state.isUserProfileReady) {
             appTileBody = (
                 <div className={appTileBodyClass + (this.state.loading ? 'mx_AppLoading' : '')} style={appTileBodyStyles}>
                     { loadingElement }
