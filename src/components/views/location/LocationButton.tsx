@@ -119,9 +119,9 @@ export function textForLocation(
 ): string {
     const date = new Date(ts).toISOString();
     if (description) {
-        return `Location "${description}" ${uri} at ${date}`;
+        return `Shared location "${description}" (${uri} at ${date})`;
     } else {
-        return `Location ${uri} at ${date}`;
+        return `Shared their location (${uri} at ${date})`;
     }
 }
 
