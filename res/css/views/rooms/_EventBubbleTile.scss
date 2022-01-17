@@ -444,7 +444,6 @@ limitations under the License.
         }
         &[aria-expanded=true] {
             text-align: right;
-            margin-right: 100px;
         }
     }
 
@@ -467,9 +466,26 @@ limitations under the License.
     padding: 0 49px;
 }
 
+// ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
+// that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
 .mx_EventListSummary[data-expanded=true][data-layout=bubble] {
+    margin: 0;
+
     .mx_EventTile {
         padding: 2px 0;
+        margin-right: 0;
+
+        .mx_MessageActionBar {
+            right: 127px; // align with that of right-column bubbles
+        }
+
+        .mx_EventTile_readAvatars {
+            right: -18px; // match alignment to RRs of chat bubbles
+        }
+
+        &::before {
+            right: 0; // match alignment of the hover background to that of chat bubbles
+        }
     }
 }
 
