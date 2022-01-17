@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642439605991,
+  "lastUpdate": 1642452820857,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55880,6 +55880,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4503.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8ced6e6117b734a154db7f64b1a63c4f07bf56b1",
+          "message": "Start a conference in a room with 2 people + invitee rather than a 1:1 call (#7557)\n\n* Start a conference call in a room with 2 people + invitee rather than a 1:1\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix tests\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-01-17T13:46:55-07:00",
+          "tree_id": "da0b416587080f5fd985037b99b01e681588d777",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8ced6e6117b734a154db7f64b1a63c4f07bf56b1"
+        },
+        "date": 1642452816615,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4684.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 617,
             "unit": "ms",
             "extra": "type: measure"
           }
