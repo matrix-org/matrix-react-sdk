@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642414099439,
+  "lastUpdate": 1642420798601,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55520,6 +55520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 607.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1f298250b93d5b42d9fab86a13f254e228f82313",
+          "message": "Make the `Keyboard Shortcuts` dialog into a settings tab (#7198)",
+          "timestamp": "2022-01-17T11:53:10Z",
+          "tree_id": "bfe1504b3aed788c370ae09364dec04c940fb907",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1f298250b93d5b42d9fab86a13f254e228f82313"
+        },
+        "date": 1642420793894,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5248.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 938.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1626.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4292.5,
             "unit": "ms",
             "extra": "type: measure"
           }
