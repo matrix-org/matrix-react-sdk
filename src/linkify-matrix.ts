@@ -107,6 +107,7 @@ function parseFreeformMatrixLinks(linkify, token: MatrixLinkInitialToken, type: 
 }
 
 function onUserClick(event: MouseEvent, userId: string) {
+    event.preventDefault();
     const member = new RoomMember(null, userId);
     if (!member) { return; }
     dis.dispatch<ViewUserPayload>({
@@ -114,6 +115,7 @@ function onUserClick(event: MouseEvent, userId: string) {
         member: member,
     });
 }
+
 function onAliasClick(event: MouseEvent, roomAlias: string) {
     event.preventDefault();
     dis.dispatch({
@@ -121,6 +123,7 @@ function onAliasClick(event: MouseEvent, roomAlias: string) {
         room_alias: roomAlias,
     });
 }
+
 function onGroupClick(event: MouseEvent, groupId: string) {
     event.preventDefault();
     dis.dispatch({ action: 'view_group', group_id: groupId });

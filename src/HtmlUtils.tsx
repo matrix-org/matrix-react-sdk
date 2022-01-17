@@ -29,7 +29,7 @@ import { IContent } from 'matrix-js-sdk/src/models/event';
 import { _linkifyElement, _linkifyString } from './linkify-matrix';
 import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import SettingsStore from './settings/SettingsStore';
-import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
+import { tryTransformEntityToPermalink } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
 import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
@@ -175,7 +175,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         if (attribs.href) {
             attribs.target = '_blank'; // by default
 
-            const transformed = tryTransformPermalinkToLocalHref(attribs.href);
+            const transformed = tryTransformEntityToPermalink(attribs.href);
             if (transformed !== attribs.href || attribs.href.match(ELEMENT_URL_PATTERN)) {
                 attribs.href = transformed;
                 delete attribs.target;

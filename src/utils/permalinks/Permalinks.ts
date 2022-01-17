@@ -331,6 +331,9 @@ export function tryTransformEntityToPermalink(entity: string): string {
     if (entity[0] === '@') return makeUserPermalink(entity);
     if (entity[0] === '+') return makeGroupPermalink(entity);
 
+    // does not need conversion
+    return entity;
+
     // Then try and merge it into a permalink
     return tryTransformPermalinkToLocalHref(entity);
 }
