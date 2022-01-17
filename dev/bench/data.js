@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642427648930,
+  "lastUpdate": 1642428927946,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55616,6 +55616,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4486.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5c44cb5cc66472400a7e1b28f0d3f341b99642dd",
+          "message": "Improve QueryMatcher TypeScript definition (#7555)",
+          "timestamp": "2022-01-17T14:08:36Z",
+          "tree_id": "4b9f47ee8ba5eaa6295546379b7fb2cb645a8ba6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5c44cb5cc66472400a7e1b28f0d3f341b99642dd"
+        },
+        "date": 1642428923179,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5130.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 921.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1640.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4475.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
