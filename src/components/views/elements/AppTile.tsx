@@ -147,9 +147,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onUserReady = (): void => {
-        if (OwnProfileStore.instance.isProfileInfoFetched) {
-            this.setState({ isUserProfileReady: true });
-        }
+        this.setState({ isUserProfileReady: true });
     };
 
     // This is a function to make the impact of calling SettingsStore slightly less
