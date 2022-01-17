@@ -143,13 +143,12 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (OwnProfileStore.instance.isProfileInfoFetched) {
             return;
         }
-        OwnProfileStore.instance.on(UPDATE_EVENT, this.onUserReady);
+        OwnProfileStore.instance.once(UPDATE_EVENT, this.onUserReady);
     };
 
     private onUserReady = (): void => {
         if (OwnProfileStore.instance.isProfileInfoFetched) {
             this.setState({ isUserProfileReady: true });
-            OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
         }
     };
 
