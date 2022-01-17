@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642430014890,
+  "lastUpdate": 1642431674813,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55700,6 +55700,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 627.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c612014936df3df51e2ee9fbf85bd169cfbca701",
+          "message": "Fix ThreadsRoomNotificationState listeners removal on destroy (#7558)",
+          "timestamp": "2022-01-17T14:54:19Z",
+          "tree_id": "2670498cd852d9ec96e29a9b2046bbe3e4c254be",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c612014936df3df51e2ee9fbf85bd169cfbca701"
+        },
+        "date": 1642431670624,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5512,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 964.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1731.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4491.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
