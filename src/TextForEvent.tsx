@@ -20,8 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { EmoteEvent, NoticeEvent, MessageEvent } from "matrix-events-sdk";
-import { POLL_END_EVENT_TYPE, POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { M_EMOTE, M_NOTICE, M_MESSAGE, MessageEvent, M_POLL_START, M_POLL_END } from "matrix-events-sdk";
 import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
 import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
 
@@ -360,11 +359,11 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
         }
 
         if (SettingsStore.isEnabled("feature_extensible_events")) {
-            const extev = ev.unstableExtensibleEvent;
+            const extev = ev.unstableExtensibleEvent as MessageEvent;
             if (extev) {
-                if (extev instanceof EmoteEvent) {
+                if (extev.isEquivalentTo(M_EMOTE)) {
                     return `* ${senderDisplayName} ${extev.text}`;
-                } else if (extev instanceof NoticeEvent || extev instanceof MessageEvent) {
+                } else if (extev.isEquivalentTo(M_NOTICE) || extev.isEquivalentTo(M_MESSAGE)) {
                     return `${senderDisplayName}: ${extev.text}`;
                 }
             }
@@ -756,14 +755,14 @@ export function textForLocationEvent(event: MatrixEvent): () => string | null {
 function textForPollStartEvent(event: MatrixEvent): () => string | null {
     return () => _t("%(senderName)s has started a poll - %(pollQuestions)s", {
         senderName: getSenderName(event),
-        pollQuestions: event.getContent()[POLL_START_EVENT_TYPE.name].question[TEXT_NODE_TYPE.name],
+        pollQuestions: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
     });
 }
 
 function textForPollEndEvent(event: MatrixEvent): () => string | null {
     return () => _t("%(senderName)s has ended a poll - %(pollQuestions)s", {
         senderName: getSenderName(event),
-        pollQuestions: event.getContent()[POLL_START_EVENT_TYPE.name].question[TEXT_NODE_TYPE.name],
+        pollQuestions: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
     });
 }
 
@@ -777,10 +776,10 @@ const handlers: IHandlers = {
     [EventType.RoomMessage]: textForMessageEvent,
     [EventType.Sticker]: textForMessageEvent,
     [EventType.CallInvite]: textForCallInviteEvent,
-    [POLL_START_EVENT_TYPE.name]: textForPollStartEvent,
-    [POLL_END_EVENT_TYPE.name]: textForPollEndEvent,
-    [POLL_START_EVENT_TYPE.altName]: textForPollStartEvent,
-    [POLL_END_EVENT_TYPE.altName]: textForPollEndEvent,
+    [M_POLL_START.name]: textForPollStartEvent,
+    [M_POLL_END.name]: textForPollEndEvent,
+    [M_POLL_START.altName]: textForPollStartEvent,
+    [M_POLL_END.altName]: textForPollEndEvent,
 };
 
 const stateHandlers: IHandlers = {
