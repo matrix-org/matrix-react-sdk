@@ -19,6 +19,8 @@ import * as linkifyjs from 'linkifyjs';
 import linkifyElement from 'linkify-element';
 import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { registerPlugin } from 'linkifyjs';
+
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
     parsePermalink,
@@ -28,7 +30,6 @@ import {
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
-import { registerPlugin } from 'linkifyjs';
 
 enum Type {
     URL = "url",
@@ -198,9 +199,11 @@ export const options = {
         }
     },
 
-    linkAttributes: {
+    attributes: {
         rel: 'noreferrer noopener',
     },
+
+    className: 'linkified',
 
     target: function(href: string, type: Type | string): string {
         if (type === Type.URL) {
