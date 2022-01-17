@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642428927946,
+  "lastUpdate": 1642430014890,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55664,6 +55664,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4475.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "releases@riot.im",
+            "name": "RiotRobot",
+            "username": "RiotRobot"
+          },
+          "committer": {
+            "email": "releases@riot.im",
+            "name": "RiotRobot",
+            "username": "RiotRobot"
+          },
+          "distinct": true,
+          "id": "4028b5ef2e779e121333c88e5795e636ba31359c",
+          "message": "Resetting package fields for development",
+          "timestamp": "2022-01-17T14:26:25Z",
+          "tree_id": "9db8916fe0b025cebcbfffb3344af33bb428e5ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4028b5ef2e779e121333c88e5795e636ba31359c"
+        },
+        "date": 1642430010673,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4628.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 627.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
