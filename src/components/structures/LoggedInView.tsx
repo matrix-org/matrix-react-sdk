@@ -32,7 +32,6 @@ import SettingsStore from "../../settings/SettingsStore";
 import ResizeHandle from '../views/elements/ResizeHandle';
 import { CollapseDistributor, Resizer } from '../../resizer';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import * as KeyboardShortcuts from "../../accessibility/KeyboardShortcuts";
 import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
@@ -40,7 +39,7 @@ import { DefaultTagID } from "../../stores/room-list/models";
 import { hideToast as hideServerLimitToast, showToast as showServerLimitToast } from "../../toasts/ServerLimitToast";
 import { Action } from "../../dispatcher/actions";
 import LeftPanel from "./LeftPanel";
-import CallContainer from '../views/voip/CallContainer';
+import PipContainer from '../views/voip/PipContainer';
 import { ViewRoomDeltaPayload } from "../../dispatcher/payloads/ViewRoomDeltaPayload";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import NonUrgentToastContainer from "./NonUrgentToastContainer";
@@ -67,6 +66,8 @@ import GroupFilterPanel from './GroupFilterPanel';
 import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
 import LegacyCommunityPreview from "./LegacyCommunityPreview";
+import { UserTab } from "../views/dialogs/UserSettingsDialog";
+import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 
 // We need to fetch each pinned message individually (if we don't already have it)
@@ -385,9 +386,9 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     private onPaste = (ev: ClipboardEvent) => {
         const element = ev.target as HTMLElement;
-        const inputableElement = getInputableElement(element);
+        const inputableElement = getInputableElement(element) || document.activeElement as HTMLElement;
 
-        if (inputableElement) {
+        if (inputableElement?.focus) {
             inputableElement.focus();
         } else {
             // refocusing during a paste event will make the
@@ -472,8 +473,11 @@ class LoggedInView extends React.Component<IProps, IState> {
                 dis.fire(Action.ToggleUserMenu);
                 handled = true;
                 break;
-            case NavigationAction.ToggleShortCutDialog:
-                KeyboardShortcuts.toggleDialog();
+            case NavigationAction.OpenShortCutDialog:
+                dis.dispatch<OpenToTabPayload>({
+                    action: Action.ViewUserSettings,
+                    initialTabId: UserTab.Keyboard,
+                });
                 handled = true;
                 break;
             case NavigationAction.GoToHome:
@@ -674,7 +678,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                         </div>
                     </div>
                 </div>
-                <CallContainer />
+                <PipContainer />
                 <NonUrgentToastContainer />
                 <HostSignupContainer />
                 { audioFeedArraysForCalls }

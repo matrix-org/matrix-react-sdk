@@ -292,6 +292,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_extensible_events": {
+        isFeature: true,
+        labsGroup: LabGroup.Developer, // developer for now, eventually Messaging and default on
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Show extensible event representation of events"),
+        default: false,
+    },
     "feature_polls": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -400,6 +407,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
     },
+    "MessageComposerInput.showLocationButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Enable location sharing'),
+        default: true,
+        controller: new UIFeatureController(UIFeature.Widgets, false),
+    },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
@@ -419,7 +432,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "showJoinLeaves": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show join/leave messages (invites/kicks/bans unaffected)'),
+        displayName: _td('Show join/leave messages (invites/removes/bans unaffected)'),
         default: true,
         invertedSettingName: 'hideJoinLeaves',
     },
@@ -877,6 +890,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "automaticErrorReporting": {
         displayName: _td("Automatically send debug logs on any error"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: false,
+        controller: new ReloadOnChangeController(),
+    },
+    "automaticDecryptionErrorReporting": {
+        displayName: _td("Automatically send debug logs on decryption errors"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new ReloadOnChangeController(),
     },
