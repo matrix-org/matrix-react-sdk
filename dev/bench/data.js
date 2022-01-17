@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642432343394,
+  "lastUpdate": 1642438501391,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55796,6 +55796,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4945.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "50846879+Gnuxie@users.noreply.github.com",
+            "name": "Gnuxie",
+            "username": "Gnuxie"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12e967a97c07ddaff1a72431f3088351ea9cf48c",
+          "message": "Add stable prefix for MSC2313 policy rules. (#7511)\n\nhttps://github.com/matrix-org/mjolnir/issues/177",
+          "timestamp": "2022-01-17T16:48:09Z",
+          "tree_id": "1ff16b5e6ac97715bab48c28bec1cfa764de271e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12e967a97c07ddaff1a72431f3088351ea9cf48c"
+        },
+        "date": 1642438497154,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4634.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 613.5,
             "unit": "ms",
             "extra": "type: measure"
           }
