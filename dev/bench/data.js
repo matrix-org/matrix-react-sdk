@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642412238742,
+  "lastUpdate": 1642414099439,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55484,6 +55484,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4284.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cb42173e11f4d800d1d44212414825b940813add",
+          "message": "Make widgets and calls span across the whole room width when using bubble layout (#7553)",
+          "timestamp": "2022-01-17T10:01:31Z",
+          "tree_id": "d0577aaafbf9a5f800222a5d9c7dcfa8a4bf7be2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cb42173e11f4d800d1d44212414825b940813add"
+        },
+        "date": 1642414094771,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4955.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 607.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
