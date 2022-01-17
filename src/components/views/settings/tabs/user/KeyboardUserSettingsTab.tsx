@@ -1,6 +1,6 @@
 /*
 Copyright 2020 The Matrix.org Foundation C.I.C.
-Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
+Copyright 2021 - 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,102 +15,87 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from "classnames";
 import React from "react";
 
-import { Categories, DIGITS, IShortcut, Modifiers, shortcuts } from "../../../../../accessibility/KeyboardShortcuts";
+import {
+    KEYBOARD_SHORTCUTS,
+    ALTERNATE_KEY_NAME,
+    KEY_ICON,
+    ICategory,
+    CATEGORIES,
+} from "../../../../../accessibility/KeyboardShortcuts";
 import { isMac, Key } from "../../../../../Keyboard";
-import { _t, _td } from "../../../../../languageHandler";
+import { _t } from "../../../../../languageHandler";
 
-// TS: once languageHandler is TS we can probably inline this into the enum
-_td("Alt");
-_td("Alt Gr");
-_td("Shift");
-_td("Super");
-_td("Ctrl");
-_td("Navigation");
-_td("Calls");
-_td("Composer");
-_td("Room List");
-_td("Autocomplete");
-
-const categoryOrder = [
-    Categories.COMPOSER,
-    Categories.AUTOCOMPLETE,
-    Categories.ROOM,
-    Categories.ROOM_LIST,
-    Categories.NAVIGATION,
-    Categories.CALLS,
-];
-
-const modifierIcon: Record<string, string> = {
-    [Modifiers.COMMAND]: "⌘",
-};
-
-if (isMac) {
-    modifierIcon[Modifiers.ALT] = "⌥";
+interface IKeyboardKeyProps {
+    name: string;
+    last?: boolean;
 }
 
-const alternateKeyName: Record<string, string> = {
-    [Key.PAGE_UP]: _td("Page Up"),
-    [Key.PAGE_DOWN]: _td("Page Down"),
-    [Key.ESCAPE]: _td("Esc"),
-    [Key.ENTER]: _td("Enter"),
-    [Key.SPACE]: _td("Space"),
-    [Key.HOME]: _td("Home"),
-    [Key.END]: _td("End"),
-    [DIGITS]: _td("[number]"),
-};
-const keyIcon: Record<string, string> = {
-    [Key.ARROW_UP]: "↑",
-    [Key.ARROW_DOWN]: "↓",
-    [Key.ARROW_LEFT]: "←",
-    [Key.ARROW_RIGHT]: "→",
+const KeyboardKey: React.FC<IKeyboardKeyProps> = ({ name, last }) => {
+    return <React.Fragment key={name}>
+        <kbd> { KEY_ICON[name] || ALTERNATE_KEY_NAME[name] || name } </kbd>
+        { !last && "+" }
+    </React.Fragment>;
 };
 
-interface IShortcutProps {
-    shortcut: IShortcut;
+interface IKeyboardShortcutProps {
+    name: string;
 }
 
-const Shortcut: React.FC<IShortcutProps> = ({ shortcut }) => {
-    const classes = classNames({
-        "mx_KeyboardShortcutsDialog_inline": shortcut.keybinds.every(k => !k.modifiers || k.modifiers.length === 0),
-    });
+const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ name }) => {
+    const keybind = KEYBOARD_SHORTCUTS[name];
+    const value = keybind.default;
 
-    return <div className={classes}>
-        <h5>{ _t(shortcut.description) }</h5>
-        { shortcut.keybinds.map(s => {
-            let text = s.key;
-            if (alternateKeyName[s.key]) {
-                text = _t(alternateKeyName[s.key]);
-            } else if (keyIcon[s.key]) {
-                text = keyIcon[s.key];
-            }
+    const modifiersElement = [];
+    if (value.ctrlOrCmdKey) {
+        modifiersElement.push(<KeyboardKey name={isMac ? Key.META : Key.CONTROL} />);
+    } else if (value.ctrlKey) {
+        modifiersElement.push(<KeyboardKey name={Key.CONTROL} />);
+    } else if (value.metaKey) {
+        modifiersElement.push(<KeyboardKey name={Key.META} />);
+    }
+    if (value.altKey) {
+        modifiersElement.push(<KeyboardKey name={Key.ALT} />);
+    }
+    if (value.shiftKey) {
+        modifiersElement.push(<KeyboardKey name={Key.SHIFT} />);
+    }
 
-            return <div key={s.key}>
-                { s.modifiers && s.modifiers.map(m => {
-                    return <React.Fragment key={m}>
-                        <kbd>{ modifierIcon[m] || _t(m) }</kbd>+
-                    </React.Fragment>;
-                }) }
-                <kbd>{ text }</kbd>
-            </div>;
-        }) }
+    return <div>
+        { modifiersElement }
+        <KeyboardKey name={value.key} last />
+    </div>;
+};
+
+interface IKeyboardShortcutRowProps {
+    name: string;
+}
+
+const KeyboardShortcutRow: React.FC<IKeyboardShortcutRowProps> = ({ name }) => {
+    return <div className="mx_KeyboardShortcut_shortcutRow">
+        { KEYBOARD_SHORTCUTS[name].displayName }
+        <KeyboardShortcut name={name} />
+    </div>;
+};
+
+interface IKeyboardShortcutSectionProps {
+    category: ICategory;
+}
+
+const KeyboardShortcutSection: React.FC<IKeyboardShortcutSectionProps> = ({ category: category }) => {
+    return <div className="mx_SettingsTab_section" key={category.categoryName}>
+        <div className="mx_SettingsTab_subheading">{ _t(category.categoryLabel) }</div>
+        <div> { category.settingNames.map((shortcutName) => {
+            return <KeyboardShortcutRow key={shortcutName} name={shortcutName} />;
+        }) } </div>
     </div>;
 };
 
 const KeyboardUserSettingsTab: React.FC = () => {
     return <div className="mx_SettingsTab mx_KeyboardUserSettingsTab">
         <div className="mx_SettingsTab_heading">{ _t("Keyboard") }</div>
-        <div className="mx_SettingsTab_section">
-            { categoryOrder.map(category => {
-                const list = shortcuts[category];
-                return <div className="mx_KeyboardShortcutsDialog_category" key={category}>
-                    <h3>{ _t(category) }</h3>
-                    <div>{ list.map(shortcut => <Shortcut key={shortcut.description} shortcut={shortcut} />) }</div>
-                </div>;
-            }) }
-        </div>
+        { CATEGORIES.map((category) => <KeyboardShortcutSection key={category.categoryName} category={category} />) }
     </div>;
 };
 
