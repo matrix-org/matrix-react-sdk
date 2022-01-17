@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642176263655,
+  "lastUpdate": 1642412238742,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55436,6 +55436,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4086.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2fd06ac0c68ddc068ad587b1b59ba281b392b232",
+          "message": "Fix the colour of the map attribution text in dark theme (#7548)",
+          "timestamp": "2022-01-17T09:30:26Z",
+          "tree_id": "39d8afe0724551a3da6879a64def52f97320e992",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2fd06ac0c68ddc068ad587b1b59ba281b392b232"
+        },
+        "date": 1642412233838,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5260.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 948,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1663,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4284.5,
             "unit": "ms",
             "extra": "type: measure"
           }
