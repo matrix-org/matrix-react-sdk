@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642438501391,
+  "lastUpdate": 1642439605991,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55832,6 +55832,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 613.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "65987e6b728db6134fa04b5a5457cd4cfdd16ebb",
+          "message": "Move all polls processing to events-sdk & prep for stable polls (#7517)\n\n* Move all polls processing to events-sdk\r\n\r\nThis makes polls support the full range of extensible events (both parsing and generation).\r\n\r\n* Appease the linter\r\n\r\n* Fix & update tests\r\n\r\n* Update events-sdk for polls bugfix\r\n\r\n* Update events-sdk for typechecking\r\n\r\n* Add missing type cast\r\n\r\n* Update per review",
+          "timestamp": "2022-01-17T10:06:30-07:00",
+          "tree_id": "ebde1a4a8bf2823c2810046f0f9393ca187f4bdd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/65987e6b728db6134fa04b5a5457cd4cfdd16ebb"
+        },
+        "date": 1642439601096,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5039.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 996.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1650.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4503.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
