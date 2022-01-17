@@ -333,9 +333,6 @@ export function tryTransformEntityToPermalink(entity: string): string {
 
     // does not need conversion
     return entity;
-
-    // Then try and merge it into a permalink
-    return tryTransformPermalinkToLocalHref(entity);
 }
 
 /**
