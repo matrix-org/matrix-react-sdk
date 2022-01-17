@@ -140,14 +140,14 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private watchUserReady = () => {
-        if (!!OwnProfileStore.instance.profileInfoFetchedAt) {
+        if (OwnProfileStore.instance.isProfileInfoFetched) {
             return;
         }
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onUserReady);
     };
 
     private onUserReady = (): void => {
-        if (OwnProfileStore.instance.profileInfoFetchedAt) {
+        if (OwnProfileStore.instance.isProfileInfoFetched) {
             this.setState({ isUserProfileReady: true });
             OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
         }
@@ -179,7 +179,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             // Assume that widget has permission to load if we are the user who
             // added it to the room, or if explicitly granted by the user
             hasPermissionToLoad: this.hasPermissionToLoad(newProps),
-            isUserProfileReady: !!OwnProfileStore.instance.profileInfoFetchedAt,
+            isUserProfileReady: OwnProfileStore.instance.isProfileInfoFetched,
             error: null,
             menuDisplayed: false,
             widgetPageTitle: this.props.widgetPageTitle,

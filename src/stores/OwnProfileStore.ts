@@ -68,8 +68,8 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         }
     }
 
-    public get profileInfoFetchedAt(): number | undefined {
-        return this.state.fetchedAt;
+    public get isProfileInfoFetched(): boolean {
+        return !!this.state.fetchedAt;
     }
 
     /**
