@@ -842,11 +842,17 @@ $left-gutter: 64px;
         margin-left: var(--leftOffset) !important;
         flex: 1;
         margin-right: 12px;
+    }
+
+    .mx_SenderProfile_displayName {
+        display: block;
+        overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .mx_EventTile_line {
         width: 100%;
+        box-sizing: border-box;
         padding-left: var(--leftOffset) !important;
         padding-bottom: 0;
     }
