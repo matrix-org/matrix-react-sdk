@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642431674813,
+  "lastUpdate": 1642432343394,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55748,6 +55748,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4491.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "davidt@element.io",
+            "name": "David Teller",
+            "username": "Yoric"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6b870ba1a9bf40823da9278e23913248c4a3de0b",
+          "message": "MSC3531 - Implementing message hiding pending moderation (#7518)\n\nSigned-off-by: David Teller <davidt@element.io>",
+          "timestamp": "2022-01-17T16:04:37+01:00",
+          "tree_id": "1399cbb1fa85648f1f3789c7c3871c7c4b62e770",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6b870ba1a9bf40823da9278e23913248c4a3de0b"
+        },
+        "date": 1642432338971,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4798.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1060.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1833.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4945.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
