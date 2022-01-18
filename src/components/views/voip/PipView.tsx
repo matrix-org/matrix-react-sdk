@@ -30,7 +30,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import PictureInPictureDragger from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
-import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
+import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import CallViewHeader from './CallView/CallViewHeader';
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/ActiveWidgetStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
