@@ -64,7 +64,6 @@ import { arrayFastClone } from "../../utils/arrays";
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-
     app: IWidget;
     room: Room;
     userId: string;
@@ -72,6 +71,8 @@ interface IAppTileProps {
     waitForIframeLoad: boolean;
     whitelistCapabilities?: string[];
     userWidget: boolean;
+    // Additional url parameters to pass along to the Widget.
+    additionalUrlParams?: {[key: string]: string};
 }
 
 // TODO: Don't use this because it's wrong
@@ -206,8 +207,12 @@ export class StopGapWidget extends EventEmitter {
             clientId: ELEMENT_CLIENT_ID,
             clientTheme: SettingsStore.getValue("theme"),
             clientLanguage: getUserLanguage(),
+            ...this.appTileProps.additionalUrlParams,
         };
-        const templated = this.mockWidget.getCompleteUrl(Object.assign(defaults, fromCustomisation), opts?.asPopout);
+        let templated = this.mockWidget.getCompleteUrl(Object.assign(defaults, fromCustomisation), opts?.asPopout);
+
+        // DIRTY HACK:
+        templated += "&" + Object.entries(this.appTileProps.additionalUrlParams || {}).map(([k, v]) => `${k}=${v}`).join('&');
 
         const parsed = new URL(templated);
 

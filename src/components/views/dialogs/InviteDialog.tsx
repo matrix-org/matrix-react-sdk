@@ -72,6 +72,9 @@ import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import CallHandler from "../../../CallHandler";
+import BridgeInviteTile, { BridgeInviteWidgetContent } from '../bridge_invites/BridgeInviteTile';
+import { MatrixEvent } from 'matrix-js-sdk';
+import BridgeInviteDialogue, { BridgeInviteCandidate } from './BridgeInviteDialog';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -1206,6 +1209,41 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         );
     }
 
+    private renderBridgeInvites() {
+        const rooms = Object.entries(
+            SettingsStore.getValue<{[roomId: string]: {[key: string]: boolean}}>(
+                "uk.half-shot.bridge_room_subscriptions",
+            )).filter(([, subs]) => subs.inviteWidget === true).map(([a]) => a);
+
+        if (rooms.length === 0) {
+            return null; // Hide if we have no rooms configured
+        }
+
+        const onSelect = (room: Room, widgetEvent: MatrixEvent) => {
+            Modal.createTrackedDialog('Bridge invite requested', '', BridgeInviteDialogue, {
+                room,
+                widgetEvent,
+                onFinished: (success: boolean, payload?: BridgeInviteCandidate) => {
+                    if (!payload) {
+                        return;
+                    }
+                    this.toggleMember(new DirectoryMember({
+                        user_id: payload.userId,
+                        display_name: payload.displayName,
+                        avatar_url: payload.avatarMxc,
+                    }));
+                },
+            });
+        };
+
+        return <div className='mx_InviteDialog_section'>
+            <h3>{ _t("Bridges") }</h3>
+            { rooms.map(roomId =>
+                <BridgeInviteTile room={MatrixClientPeg.get().getRoom(roomId)} onSelect={onSelect} key={roomId} />)
+            }
+        </div>;
+    }
+
     private renderEditor() {
         const hasPlaceholder = (
             this.props.kind == KIND_CALL_TRANSFER &&
@@ -1359,6 +1397,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         const cli = MatrixClientPeg.get();
         const userId = cli.getUserId();
+
         if (this.props.kind === KIND_DM) {
             title = _t("Direct Messages");
 
@@ -1544,6 +1583,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             <div className='error'>{ this.state.errorText }</div>
             <div className='mx_InviteDialog_userSections'>
                 { this.renderSection('recents') }
+                { this.renderBridgeInvites() }
                 { this.renderSection('suggestions') }
                 { extraSection }
             </div>

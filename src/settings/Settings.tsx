@@ -899,6 +899,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new ReloadOnChangeController(),
     },
+    "uk.half-shot.bridge_room_subscriptions": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: {},
+    },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,

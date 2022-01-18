@@ -78,6 +78,14 @@ interface IProps {
     pointerEvents?: string;
     widgetPageTitle?: string;
     hideMaximiseButton?: boolean;
+
+    // Additional url parameters to pass along to the Widget.
+    additionalUrlParams?: {[key: string]: string};
+    onNewInviteCandidate?: (data: {
+        userId: string;
+        displayName?: string;
+        avatarMxc?: string;
+    }) => void;
 }
 
 interface IState {
@@ -240,6 +248,13 @@ export default class AppTile extends React.Component<IProps, IState> {
     private startWidget(): void {
         this.sgWidget.prepare().then(() => {
             this.setState({ initialising: false });
+
+            this.sgWidget.widgetApi.on('action:invite_candidate', (ev: CustomEvent) => {
+                if (this.props.onNewInviteCandidate) {
+                    ev.preventDefault();
+                    this.props.onNewInviteCandidate(ev.detail.data);
+                }
+            });
         });
     }
 
