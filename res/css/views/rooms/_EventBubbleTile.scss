@@ -131,6 +131,10 @@ limitations under the License.
             left: -34px;
         }
 
+        .mx_MessageActionBar {
+            right: -100px; // to make sure it doesn't overflow to the left or cover sender profile
+        }
+
         --backgroundColor: $eventbubble-others-bg;
     }
 
