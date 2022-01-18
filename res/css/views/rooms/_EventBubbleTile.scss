@@ -15,8 +15,11 @@ limitations under the License.
 */
 
 .mx_RoomView_body[data-layout=bubble] {
-    max-width: 1200px;
-    margin: 0 auto;
+    .mx_RoomView_timeline, .mx_RoomView_statusArea, .mx_MessageComposer {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 }
 
 .mx_EventTile[data-layout=bubble],
@@ -117,7 +120,9 @@ limitations under the License.
         .mx_EventTile_line {
             border-bottom-right-radius: var(--cornerRadius);
 
-            .mx_MImageBody .mx_MImageBody_thumbnail {
+            .mx_MImageBody .mx_MImageBody_thumbnail,
+            .mx_MImageBody::before,
+            .mx_MLocationBody_map {
                 border-bottom-right-radius: var(--cornerRadius);
             }
         }
@@ -132,7 +137,9 @@ limitations under the License.
             float: right;
             border-bottom-left-radius: var(--cornerRadius);
 
-            .mx_MImageBody .mx_MImageBody_thumbnail {
+            .mx_MImageBody .mx_MImageBody_thumbnail,
+            .mx_MImageBody::before,
+            .mx_MLocationBody_map {
                 border-bottom-left-radius: var(--cornerRadius);
             }
         }
@@ -180,7 +187,7 @@ limitations under the License.
         border-top-left-radius: var(--cornerRadius);
         border-top-right-radius: var(--cornerRadius);
 
-        > a, .mx_MessageTimestamp {
+        > a { // timestamp wrapper anchor
             position: absolute;
             padding: 4px 8px;
             bottom: 0;
@@ -203,6 +210,7 @@ limitations under the License.
                 bottom: 0;
                 left: 0;
                 right: 0;
+                pointer-events: none;
             }
         }
 
@@ -230,14 +238,18 @@ limitations under the License.
     &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {
         border-top-left-radius: 0;
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-top-left-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=false] .mx_EventTile_line {
         border-bottom-left-radius: var(--cornerRadius);
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-bottom-left-radius: var(--cornerRadius);
         }
     }
@@ -245,14 +257,18 @@ limitations under the License.
     &.mx_EventTile_continuation[data-self=true] .mx_EventTile_line {
         border-top-right-radius: 0;
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-top-right-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=true] .mx_EventTile_line {
         border-bottom-right-radius: var(--cornerRadius);
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-bottom-right-radius: var(--cornerRadius);
         }
     }
@@ -393,12 +409,15 @@ limitations under the License.
         margin-left: 9px;
     }
 
-    .mx_EventTile_line > a,
-    .mx_EventTile_line .mx_MessageTimestamp {
-        // Align timestamps with those of normal bubble tiles
+    .mx_EventTile_line > a { // timestamp wrapper anchor
         right: auto;
-        top: -11px;
         left: -77px;
+        bottom: unset;
+        align-self: center;
+
+        .mx_MessageTimestamp {
+            vertical-align: middle;
+        }
     }
 }
 
