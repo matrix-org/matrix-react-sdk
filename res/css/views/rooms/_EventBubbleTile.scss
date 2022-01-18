@@ -42,6 +42,10 @@ limitations under the License.
         width: fit-content;
     }
 
+    .mx_EventTile_content {
+        margin-right: 0;
+    }
+
     &.mx_EventTile_continuation {
         margin-top: 2px;
     }
@@ -408,6 +412,16 @@ limitations under the License.
 
 .mx_EventTile.mx_EventTile_noBubble[data-layout=bubble] {
     --backgroundColor: transparent;
+
+    .mx_EventTile_line {
+        padding-right: 60px; // align with bubbles text
+
+        > a { // timestamp anchor wrapper
+            align-self: center;
+            bottom: unset;
+            top: unset;
+        }
+    }
 }
 
 .mx_EventTile.mx_EventTile_bubbleContainer[data-layout=bubble],
