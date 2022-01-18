@@ -221,7 +221,7 @@ export const options = {
     target: function(href: string, type: Type | string): string {
         if (type === Type.URL) {
             try {
-                const transformed = tryTransformPermalinkToLocalHref(href);
+                const transformed = tryTransformEntityToPermalink(href);
                 if (transformed !== href || decodeURIComponent(href).match(ELEMENT_URL_PATTERN)) {
                     return null;
                 } else {
