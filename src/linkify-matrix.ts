@@ -19,7 +19,7 @@ import * as linkifyjs from 'linkifyjs';
 import linkifyElement from 'linkify-element';
 import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { registerPlugin } from 'linkifyjs';
+import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
 
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
@@ -68,7 +68,7 @@ function matrixOpaqueIdLinkifyParser({
     } = scanner.tokens;
 
     const S_START = parser.start;
-    const Localpart = utils.createTokenClass(name, { isLink: true });
+    const matrixSymbol = utils.createTokenClass(name, { isLink: true });
 
     const localpartTokens = [
         DOMAIN,
@@ -83,30 +83,32 @@ function matrixOpaqueIdLinkifyParser({
         UNDERSCORE,
         TEXT,
     ];
+    const domainpartTokens = [DOMAIN, NUM, TLD, LOCALHOST];
 
-    const INITIAL_TOKEN_STATE = S_START.tt(token);
-    const LOCALPART_STATE = INITIAL_TOKEN_STATE.tt(DOMAIN, Localpart);
+    const INITIAL_STATE = S_START.tt(token);
 
-    for (const token of localpartTokens) {
-        INITIAL_TOKEN_STATE.tt(token, LOCALPART_STATE);
+    const LOCALPART_STATE = INITIAL_STATE.tt(DOMAIN);
+    for (const token of localpartTokens.filter((token) => token != DOMAIN)) {
+        INITIAL_STATE.tt(token, LOCALPART_STATE);
         LOCALPART_STATE.tt(token, LOCALPART_STATE);
     }
 
-    const COLON_STATE = LOCALPART_STATE.tt(COLON);
+    const DOMAINPART_STATE = LOCALPART_STATE.tt(COLON);
+    for (const token of domainpartTokens) {
+        DOMAINPART_STATE.tt(token, DOMAINPART_STATE);
+        // we are done if we have a domain
+        DOMAINPART_STATE.tt(token, matrixSymbol);
+    }
 
-    COLON_STATE.tt(LOCALHOST, LOCALPART_STATE);
-    COLON_STATE.tt(TLD, LOCALPART_STATE);
-    COLON_STATE.tt(DOMAIN, LOCALPART_STATE);
+    // accept repeated TLDs (e.g .org.uk) but do not accept double dots: ..
+    const DOMAINPART_STATE_DOT = DOMAINPART_STATE.tt(DOT);
+    for (const token of domainpartTokens) {
+        DOMAINPART_STATE_DOT.tt(token, DOMAINPART_STATE);
+    }
 
-    const TLD_STATE = LOCALPART_STATE.tt(TLD);
-    TLD_STATE.tt(DOMAIN, LOCALPART_STATE);
-    TLD_STATE.tt(TLD, LOCALPART_STATE);
+    const PORT_STATE = DOMAINPART_STATE.tt(COLON);
 
-    const DOT_STATE = LOCALPART_STATE.tt(DOT, TLD_STATE);
-    LOCALPART_STATE.tt(COLON, COLON_STATE);
-    LOCALPART_STATE.tt(DOT, DOT_STATE); // accept repeated TLDs (e.g .org.uk)
-    const PORT_STATE = LOCALPART_STATE.tt(COLON);
-    PORT_STATE.tt(NUM, LOCALPART_STATE);
+    PORT_STATE.tt(NUM, matrixSymbol);
 }
 
 function onUserClick(event: MouseEvent, userId: string) {
@@ -236,6 +238,7 @@ registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
         name: Type.RoomAlias,
     });
 });
+
 registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
     const token = scanner.tokens.PLUS as '+';
     return matrixOpaqueIdLinkifyParser({
@@ -246,6 +249,7 @@ registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
         name: Type.GroupId,
     });
 });
+
 registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
     const token = scanner.tokens.AT as '@';
     return matrixOpaqueIdLinkifyParser({
@@ -256,6 +260,8 @@ registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
         name: Type.UserId,
     });
 });
+
+registerCustomProtocol("matrix");
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;
