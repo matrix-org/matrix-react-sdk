@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642513242702,
+  "lastUpdate": 1642520210235,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56168,6 +56168,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4685.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "67a4d22e79b795156d1fa7f2f8d097fb78d6ccc4",
+          "message": "Update sidebar icon from Compound (#7572)",
+          "timestamp": "2022-01-18T15:29:43Z",
+          "tree_id": "946418d57dd3ad36c9f7f1d938ee337dd4c26f72",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/67a4d22e79b795156d1fa7f2f8d097fb78d6ccc4"
+        },
+        "date": 1642520205614,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5353.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 976.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1647.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4652.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
