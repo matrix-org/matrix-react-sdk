@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642504071520,
+  "lastUpdate": 1642505714513,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56084,6 +56084,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4064.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e1cdbe1e541296fde794025c310092cde78ebfad",
+          "message": "Use IncompatibleController to disable showLocation via labs flag (#7566)",
+          "timestamp": "2022-01-18T11:28:23Z",
+          "tree_id": "634294ef4ddb24d092e63f8a772c75f6a118a5db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e1cdbe1e541296fde794025c310092cde78ebfad"
+        },
+        "date": 1642505710224,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4661.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 595.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
