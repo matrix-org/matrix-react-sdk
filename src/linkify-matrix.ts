@@ -19,7 +19,7 @@ import * as linkifyjs from 'linkifyjs';
 import linkifyElement from 'linkify-element';
 import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
+import { registerPlugin } from 'linkifyjs';
 
 import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
 import {
