@@ -88,9 +88,13 @@ function matrixOpaqueIdLinkifyParser({
     const INITIAL_STATE = S_START.tt(token);
 
     const LOCALPART_STATE = INITIAL_STATE.tt(DOMAIN);
-    for (const token of localpartTokens.filter((token) => token != DOMAIN)) {
+    for (const token of localpartTokens) {
         INITIAL_STATE.tt(token, LOCALPART_STATE);
         LOCALPART_STATE.tt(token, LOCALPART_STATE);
+    }
+    const LOCALPART_STATE_DOT = LOCALPART_STATE.tt(DOT);
+    for (const token of localpartTokens) {
+        LOCALPART_STATE_DOT.tt(token, LOCALPART_STATE);
     }
 
     const DOMAINPART_STATE = LOCALPART_STATE.tt(COLON);
