@@ -319,8 +319,8 @@ export function isPermalinkHost(host: string): boolean {
 
 /**
  * Transforms an entity (permalink, room alias, user ID, etc) into a local URL
- * if possible. If the given entity is not found to be valid enough to be converted
- * then a null value will be returned.
+ * if possible. If it is already a permalink (matrix.to) it gets returned
+ * unchanged.
  * @param {string} entity The entity to transform.
  * @returns {string|null} The transformed permalink or null if unable.
  */
@@ -352,7 +352,7 @@ export function tryTransformEntityToPermalink(entity: string): string {
         } catch {}
     }
 
-    return null;
+    return entity;
 }
 
 /**
@@ -445,23 +445,6 @@ export function parsePermalink(fullUrl: string): PermalinkParts {
     }
 
     return null; // not a permalink we can handle
-}
-
-/**
- * Parses an app local link (`#/(user|room|group)/identifer`) to a Matrix entity
- * (room, user, group). Such links are produced by `HtmlUtils` when encountering
- * links, which calls `tryTransformPermalinkToLocalHref` in this module.
- * @param {string} localLink The app local link
- * @returns {PermalinkParts}
- */
-export function parseAppLocalLink(localLink: string): PermalinkParts {
-    try {
-        const segments = localLink.replace("#/", "");
-        return ElementPermalinkConstructor.parseAppRoute(segments);
-    } catch (e) {
-        // Ignore failures
-    }
-    return null;
 }
 
 function getServerName(userId: string): string {

@@ -173,6 +173,7 @@ function matrixURILinkifyParser({ scanner, parser, utils }) {
 }
 
 function onUserClick(event: MouseEvent, userId: string) {
+    event.preventDefault();
     const member = new RoomMember(null, userId);
     if (!member) { return; }
     dis.dispatch<ViewUserPayload>({
@@ -180,6 +181,7 @@ function onUserClick(event: MouseEvent, userId: string) {
         member: member,
     });
 }
+
 function onAliasClick(event: MouseEvent, roomAlias: string) {
     event.preventDefault();
     dis.dispatch({
@@ -187,6 +189,7 @@ function onAliasClick(event: MouseEvent, roomAlias: string) {
         room_alias: roomAlias,
     });
 }
+
 function onGroupClick(event: MouseEvent, groupId: string) {
     event.preventDefault();
     dis.dispatch({ action: 'view_group', group_id: groupId });
@@ -274,8 +277,11 @@ export const options = {
     target: function(href: string, type: Type | string): string {
         if (type === Type.URL) {
             try {
-                const transformed = tryTransformPermalinkToLocalHref(href);
-                if (transformed !== href || decodeURIComponent(href).match(ELEMENT_URL_PATTERN)) {
+                const transformed = tryTransformEntityToPermalink(href);
+                if (transformed !== href || // for matrix symbols e.g. @user:server.tdl
+                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) || // for https:vector|riot...
+                    decodeURIComponent(href).match(MATRIXTO_URL_PATTERN) // for matrix.to
+                ) {
                     return null;
                 } else {
                     return '_blank';
