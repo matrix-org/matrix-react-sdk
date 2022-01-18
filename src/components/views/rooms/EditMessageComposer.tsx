@@ -46,25 +46,6 @@ import RoomContext from '../../../contexts/RoomContext';
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 
-function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
-    const html = mxEvent.getContent().formatted_body;
-    if (!html) {
-        return "";
-    }
-    const rootNode = new DOMParser().parseFromString(html, "text/html").body;
-    const mxReply = rootNode.querySelector("mx-reply");
-    return (mxReply && mxReply.outerHTML) || "";
-}
-
-function getTextReplyFallback(mxEvent: MatrixEvent): string {
-    const body = mxEvent.getContent().body;
-    const lines = body.split("\n").map(l => l.trim());
-    if (lines.length > 2 && lines[0].startsWith("> ") && lines[1].length === 0) {
-        return `${lines[0]}\n\n`;
-    }
-    return "";
-}
-
 function createEditContent(
     model: EditorModel,
     editedEvent: MatrixEvent,
@@ -72,14 +53,6 @@ function createEditContent(
     const isEmote = containsEmote(model);
     if (isEmote) {
         model = stripEmoteCommand(model);
-    }
-    const isReply = !!editedEvent.replyEventId;
-    let plainPrefix = "";
-    let htmlPrefix = "";
-
-    if (isReply) {
-        plainPrefix = getTextReplyFallback(editedEvent);
-        htmlPrefix = getHtmlReplyFallback(editedEvent);
     }
 
     const body = textSerialize(model);
@@ -89,16 +62,16 @@ function createEditContent(
         "body": body,
     };
     const contentBody: IContent = {
-        msgtype: newContent.msgtype,
-        body: `${plainPrefix} * ${body}`,
+        "msgtype": newContent.msgtype,
+        "body": body,
     };
 
-    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: isReply });
+    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: false });
     if (formattedBody) {
         newContent.format = "org.matrix.custom.html";
         newContent.formatted_body = formattedBody;
         contentBody.format = newContent.format;
-        contentBody.formatted_body = `${htmlPrefix} * ${formattedBody}`;
+        contentBody.formatted_body = formattedBody;
     }
 
     const relation = {
