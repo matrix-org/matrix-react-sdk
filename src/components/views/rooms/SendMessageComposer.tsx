@@ -170,7 +170,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
     onChange?(model: EditorModel): void;
-    includeReplyLegacyFallback: boolean;
+    includeReplyLegacyFallback?: boolean;
 }
 
 @replaceableComponent("views.rooms.SendMessageComposer")
