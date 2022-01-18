@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import escapeHtml from "escape-html";
 import sanitizeHtml from "sanitize-html";
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -111,10 +111,8 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         // can't just rely on ev.getContent() by itself because historically we
         // still show the reply from the original message even though the edit
         // event does not include the relation reply.
-        const mRelatesTo = ev.getContent()['m.relates_to'] || ev.getWireContent()['m.relates_to'];
-        if (mRelatesTo && mRelatesTo['m.in_reply_to']) {
-            const mInReplyTo = mRelatesTo['m.in_reply_to'];
-            if (mInReplyTo && mInReplyTo['event_id']) return mInReplyTo['event_id'];
+        if (ev.replyEventId) {
+            return ev.replyEventId;
         } else if (!SettingsStore.getValue("feature_thread") && ev.isThreadRelation) {
             return ev.threadRootId;
         }
@@ -232,7 +230,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         return { body, html };
     }
 
-    public static makeReplyMixIn(ev: MatrixEvent) {
+    public static makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
         if (!ev) return {};
 
         const mixin: any = {
@@ -242,6 +240,10 @@ export default class ReplyChain extends React.Component<IProps, IState> {
                 },
             },
         };
+
+        if (renderIn) {
+            mixin['m.relates_to']['m.in_reply_to']['m.render_in'] = renderIn;
+        }
 
         /**
          * If the event replied is part of a thread
@@ -260,8 +262,25 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         return mixin;
     }
 
-    public static hasReply(event: MatrixEvent) {
-        return Boolean(ReplyChain.getParentEventId(event));
+    private static DEFAULT_RENDER_TARGET = "m.room";
+
+    public static shouldDisplayReply(event: MatrixEvent, renderTarget = ReplyChain.DEFAULT_RENDER_TARGET): boolean {
+        const parentExist = Boolean(ReplyChain.getParentEventId(event));
+
+        const relations = event.getWireContent()["m.relates_to"];
+        const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"];
+
+        const shouldRenderInTarget = !renderIn || renderIn.includes(renderTarget);
+
+        return parentExist && shouldRenderInTarget;
+    }
+
+    public static getRenderInMixin(relation?: IEventRelation): string[] {
+        const renderIn = ["m.room"];
+        if (relation?.rel_type === RelationType.Thread) {
+            renderIn.push(RelationType.Thread);
+        }
+        return renderIn;
     }
 
     componentDidMount() {
