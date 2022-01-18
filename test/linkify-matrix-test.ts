@@ -231,14 +231,6 @@ describe('linkify-matrix', () => {
             const test = '' + char + 'foo:::bar.com';
             const found = linkify.find(test);
             expect(found).toEqual(([{
-                href: char + "foo",
-                type,
-                value: '' + char + 'foo',
-                isLink: true,
-                start: 0,
-                end: test.indexOf("::"),
-            },
-            {
                 href: "http://bar.com",
                 type: "url",
                 value: "bar.com",

@@ -97,7 +97,9 @@ function matrixOpaqueIdLinkifyParser({
         LOCALPART_STATE_DOT.tt(token, LOCALPART_STATE);
     }
 
-    const DOMAINPART_STATE = LOCALPART_STATE.tt(COLON);
+    const DOMAINPART_STATE_DOT = LOCALPART_STATE.tt(COLON);
+    const DOMAINPART_STATE = DOMAINPART_STATE_DOT.tt(DOMAIN);
+    DOMAINPART_STATE.tt(DOT, DOMAINPART_STATE_DOT);
     for (const token of domainpartTokens) {
         DOMAINPART_STATE.tt(token, DOMAINPART_STATE);
         // we are done if we have a domain
@@ -105,7 +107,6 @@ function matrixOpaqueIdLinkifyParser({
     }
 
     // accept repeated TLDs (e.g .org.uk) but do not accept double dots: ..
-    const DOMAINPART_STATE_DOT = DOMAINPART_STATE.tt(DOT);
     for (const token of domainpartTokens) {
         DOMAINPART_STATE_DOT.tt(token, DOMAINPART_STATE);
     }
