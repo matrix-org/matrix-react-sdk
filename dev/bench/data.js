@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642498720219,
+  "lastUpdate": 1642500162359,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55952,6 +55952,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 664.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aed09ee2f6ebd60669783b065190273811810b63",
+          "message": "Differentiate between hover and roving focus in spotlight dialog (#7564)",
+          "timestamp": "2022-01-18T09:56:04Z",
+          "tree_id": "60c44bba5a5ae7dfefa9f62273b37622ae171fea",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aed09ee2f6ebd60669783b065190273811810b63"
+        },
+        "date": 1642500157880,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4910.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 888.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1677.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4195.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
