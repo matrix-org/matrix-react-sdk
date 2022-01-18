@@ -189,7 +189,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     private onAction = (action: ActionPayload): void => {
         const hideWidgetKey = this.props.room.roomId + '_hide_widget_drawer';
         switch (action.action) {
-            case 'appsDrawer':
+            case "appsDrawer":
                 // Note: these booleans are awkward because localstorage is fundamentally
                 // string-based. We also do exact equality on the strings later on.
                 if (action.show) {
