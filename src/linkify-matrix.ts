@@ -266,8 +266,6 @@ registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
     });
 });
 
-registerCustomProtocol("matrix");
-
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;
 export const _linkifyString = linkifyString;
