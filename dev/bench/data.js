@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642521524825,
+  "lastUpdate": 1642527131561,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56300,6 +56300,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4673.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3636685+Palid@users.noreply.github.com",
+            "name": "Dariusz Niemczyk",
+            "username": "Palid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "336e1ae3b676c152fad6be2e32c30f34947ca2ac",
+          "message": "Upgrade linkify to v3.0 (#7282)\n\nCo-authored-by: Timo K <toger5@hotmail.de>",
+          "timestamp": "2022-01-18T18:24:16+01:00",
+          "tree_id": "ca1439a636beacad965b7169b548f8863a0dd0ff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/336e1ae3b676c152fad6be2e32c30f34947ca2ac"
+        },
+        "date": 1642527126211,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4723.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1174.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1840.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5071.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
