@@ -246,7 +246,7 @@ describe("<TextualBody />", () => {
             expect(content.html()).toBe(
                 '<span class="mx_EventTile_body markdown-body" dir="auto">' +
                 'An <a href="https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/' +
-                '$16085560162aNpaH:example.com?via=example.com" target="_blank" ' +
+                '$16085560162aNpaH:example.com?via=example.com" ' +
                 'rel="noreferrer noopener">event link</a> with text</span>',
             );
         });

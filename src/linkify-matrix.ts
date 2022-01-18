@@ -222,7 +222,10 @@ export const options = {
         if (type === Type.URL) {
             try {
                 const transformed = tryTransformEntityToPermalink(href);
-                if (transformed !== href || decodeURIComponent(href).match(ELEMENT_URL_PATTERN)) {
+                if (transformed !== href || // for matrix symbols e.g. @user:server.tdl
+                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) || // for https:vector|riot...
+                    decodeURIComponent(href).match(MATRIXTO_URL_PATTERN) // for matrix.to
+                ) {
                     return null;
                 } else {
                     return '_blank';
