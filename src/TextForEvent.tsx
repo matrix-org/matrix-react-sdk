@@ -753,16 +753,16 @@ export function textForLocationEvent(event: MatrixEvent): () => string | null {
 }
 
 function textForPollStartEvent(event: MatrixEvent): () => string | null {
-    return () => _t("%(senderName)s has started a poll - %(pollQuestions)s", {
+    return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
         senderName: getSenderName(event),
-        pollQuestions: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
+        pollQuestion: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
     });
 }
 
 function textForPollEndEvent(event: MatrixEvent): () => string | null {
-    return () => _t("%(senderName)s has ended a poll - %(pollQuestions)s", {
+    return () => _t("%(senderName)s has ended a poll - %(pollQuestion)s", {
         senderName: getSenderName(event),
-        pollQuestions: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
+        pollQuestion: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
     });
 }
 
