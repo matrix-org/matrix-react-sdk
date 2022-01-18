@@ -413,7 +413,7 @@ limitations under the License.
 .mx_EventTile.mx_EventTile_noBubble[data-layout=bubble] {
     --backgroundColor: transparent;
 
-    .mx_EventTile_line {
+    .mx_EventTile_line.mx_EventTile_emote {
         padding-right: 60px; // align with bubbles text
         font-style: italic;
 
@@ -422,6 +422,10 @@ limitations under the License.
             bottom: unset;
             top: unset;
             font-style: normal; // undo italic above
+        }
+
+        .mx_MEmoteBody {
+            padding: 4px 0;
         }
     }
 }
