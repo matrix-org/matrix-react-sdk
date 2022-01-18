@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642520249411,
+  "lastUpdate": 1642521524825,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56252,6 +56252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 764.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c0681333bf9d9bbcd3e824075464408b2b87755d",
+          "message": "Fix /jumptodate using wrong MSC feature flag (#7563)\n\nAs reported by @turt2live, https://matrix.to/#/!EMAlzkQQlZGEVTkDnD:matrix.org/$gnoVWQnIkYYL1i1cL8A4qRKJCFpNtq0Oj5khpzOq1mQ?via=half-shot.uk&via=matrix.org&via=element.io\r\n\r\nAlso fixes camelCase typo",
+          "timestamp": "2022-01-18T09:51:25-06:00",
+          "tree_id": "23a6b65b9146d656c6fb5f2dcd4ee35703450e47",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c0681333bf9d9bbcd3e824075464408b2b87755d"
+        },
+        "date": 1642521519837,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5043.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1002.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1777.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4673.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
