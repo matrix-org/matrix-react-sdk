@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642502718054,
+  "lastUpdate": 1642504071520,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56036,6 +56036,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 745.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a2f09480ee3221f45ceee1736f8ef881faa36768",
+          "message": "Use PR number directly in netlify github action (#7561)\n\n* Use PR number directly in netlify github action\r\n\r\nLooks like we can get the PR number for the workflow run that triggered\r\nthe workflow_run event, so there's no need for the massive faff we were\r\ndoing here.\r\n\r\n* No need to create pr.json anymore",
+          "timestamp": "2022-01-18T11:01:25Z",
+          "tree_id": "ffa33cbe9d111559289cc08bd44fba5d4defb70c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a2f09480ee3221f45ceee1736f8ef881faa36768"
+        },
+        "date": 1642504067728,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4512,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 884.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1653.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4064.5,
             "unit": "ms",
             "extra": "type: measure"
           }
