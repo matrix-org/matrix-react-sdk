@@ -328,9 +328,29 @@ export function tryTransformEntityToPermalink(entity: string): string {
     if (!entity) return null;
 
     // Check to see if it is a bare entity for starters
-    if (entity[0] === '#' || entity[0] === '!') return makeRoomPermalink(entity);
+    {if (entity[0] === '#' || entity[0] === '!') return makeRoomPermalink(entity);}
     if (entity[0] === '@') return makeUserPermalink(entity);
     if (entity[0] === '+') return makeGroupPermalink(entity);
+
+    if (entity.slice(0, 7) === "matrix:") {
+        try {
+            const permalinkParts = parsePermalink(entity);
+            if (permalinkParts) {
+                if (permalinkParts.roomIdOrAlias) {
+                    const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : '';
+                    let pl = matrixtoBaseUrl+`/#/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
+                    if (permalinkParts.viaServers.length > 0) {
+                        pl += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
+                    }
+                    return pl;
+                } else if (permalinkParts.groupId) {
+                    return matrixtoBaseUrl + `/#/${permalinkParts.groupId}`;
+                } else if (permalinkParts.userId) {
+                    return matrixtoBaseUrl + `/#/${permalinkParts.userId}`;
+                }
+            }
+        } catch {}
+    }
 
     // Then try and merge it into a permalink
     return tryTransformPermalinkToLocalHref(entity);

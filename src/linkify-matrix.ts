@@ -116,7 +116,7 @@ function matrixOpaqueIdLinkifyParser({
     PORT_STATE.tt(NUM, matrixSymbol);
 }
 
-// This is sadly necassary for linkifyjs v3 In v4 it will be possible to just
+// This is sadly necessary for linkifyjs v3 In v4 it will be possible to just
 // call registerCustomProtocol("matrix") but currently this does not support
 // matrid:u/ but only matrix://
 function matrixURILinkifyParser({ scanner, parser, utils }) {
