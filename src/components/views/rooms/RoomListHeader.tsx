@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -257,16 +257,6 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         >
             <IconizedContextMenuOptionList first>
                 { inviteOption }
-                <IconizedContextMenuOption
-                    label={_t("Start new chat")}
-                    iconClassName="mx_RoomListHeader_iconStartChat"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: "view_create_chat" });
-                        closePlusMenu();
-                    }}
-                />
                 { createNewRoomOption }
                 <IconizedContextMenuOption
                     label={_t("Explore rooms")}
