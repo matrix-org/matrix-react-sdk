@@ -1332,7 +1332,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const renderTarget = this.props.tileShape === TileShape.Thread
             ? RelationType.Thread
-            : "m.room";
+            : undefined;
 
         const replyChain = haveTileForEvent(this.props.mxEvent)
             && ReplyChain.shouldDisplayReply(this.props.mxEvent, renderTarget)

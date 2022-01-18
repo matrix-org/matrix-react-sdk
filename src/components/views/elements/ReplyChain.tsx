@@ -250,25 +250,21 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         return mixin;
     }
 
-    private static DEFAULT_RENDER_TARGET = "m.room";
-
-    public static shouldDisplayReply(event: MatrixEvent, renderTarget = ReplyChain.DEFAULT_RENDER_TARGET): boolean {
+    public static shouldDisplayReply(event: MatrixEvent, renderTarget?: string): boolean {
         const parentExist = Boolean(ReplyChain.getParentEventId(event));
 
         const relations = event.getRelation();
         const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"];
 
-        const shouldRenderInTarget = !renderIn || renderIn.includes(renderTarget);
+        const shouldRenderInTarget = !renderIn || (renderTarget && renderIn.includes(renderTarget));
 
         return parentExist && shouldRenderInTarget;
     }
 
-    public static getRenderInMixin(relation?: IEventRelation): string[] {
-        const renderIn = ["m.room"];
+    public static getRenderInMixin(relation?: IEventRelation): string[] | undefined {
         if (relation?.rel_type === RelationType.Thread) {
-            renderIn.push(RelationType.Thread);
+            return [RelationType.Thread];
         }
-        return renderIn;
     }
 
     componentDidMount() {
