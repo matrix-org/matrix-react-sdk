@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642520210235,
+  "lastUpdate": 1642520249411,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56216,6 +56216,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4652.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d5412e52edac3bff093ea87f69010638fd367c79",
+          "message": "Replace home icon with new one (#7571)",
+          "timestamp": "2022-01-18T15:29:01Z",
+          "tree_id": "3fa72f20c9a95ba189f5670a354b76544c2d1fb9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d5412e52edac3bff093ea87f69010638fd367c79"
+        },
+        "date": 1642520243819,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4806.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 764.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
