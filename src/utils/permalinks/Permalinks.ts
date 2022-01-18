@@ -424,23 +424,6 @@ export function parsePermalink(fullUrl: string): PermalinkParts {
     return null; // not a permalink we can handle
 }
 
-/**
- * Parses an app local link (`#/(user|room|group)/identifer`) to a Matrix entity
- * (room, user, group). Such links are produced by `HtmlUtils` when encountering
- * links, which calls `tryTransformPermalinkToLocalHref` in this module.
- * @param {string} localLink The app local link
- * @returns {PermalinkParts}
- */
-export function parseAppLocalLink(localLink: string): PermalinkParts {
-    try {
-        const segments = localLink.replace("#/", "");
-        return ElementPermalinkConstructor.parseAppRoute(segments);
-    } catch (e) {
-        // Ignore failures
-    }
-    return null;
-}
-
 function getServerName(userId: string): string {
     return userId.split(":").splice(1).join(":");
 }
