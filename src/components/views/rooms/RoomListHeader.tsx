@@ -30,7 +30,12 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import dis from "../../../dispatcher/dispatcher";
-import { shouldShowSpaceInvite, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
+import {
+    shouldShowSpaceInvite,
+    showCreateNewRoom,
+    showCreateNewSubspace,
+    showSpaceInvite,
+} from "../../../utils/space";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
@@ -52,6 +57,7 @@ import {
 } from "../../../stores/spaces";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import TooltipTarget from "../elements/TooltipTarget";
+import { BetaPill } from "../beta/BetaCard";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -268,6 +274,28 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+                <IconizedContextMenuOption
+                    label={_t("Add existing room")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewRoom(activeSpace);
+                        closePlusMenu();
+                    }}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Add space")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewSubspace(activeSpace);
+                        closePlusMenu();
+                    }}
+                >
+                    <BetaPill />
+                </IconizedContextMenuOption>
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {
