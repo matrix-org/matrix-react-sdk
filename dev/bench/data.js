@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642452820857,
+  "lastUpdate": 1642498720219,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -55916,6 +55916,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 617,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4b5ca1d7a9bd4a369c51f81e6cd5ea4ca50a563e",
+          "message": "Fix timeline jumping issues related to bubble layout (#7529)",
+          "timestamp": "2022-01-18T09:31:21Z",
+          "tree_id": "91b5fb2b79b8cba4c572f63a82c993e1cc0abb9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4b5ca1d7a9bd4a369c51f81e6cd5ea4ca50a563e"
+        },
+        "date": 1642498715338,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5337.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 664.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
