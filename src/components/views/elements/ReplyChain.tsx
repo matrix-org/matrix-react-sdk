@@ -99,18 +99,6 @@ export default class ReplyChain extends React.Component<IProps, IState> {
 
     public static getParentEventId(ev: MatrixEvent): string | undefined {
         if (!ev || ev.isRedacted()) return;
-
-        // XXX: For newer relations (annotations, replacements, etc.), we now
-        // have a `getRelation` helper on the event, and you might assume it
-        // could be used here for replies as well... However, the helper
-        // currently assumes the relation has a `rel_type`, which older replies
-        // do not, so this block is left as-is for now.
-        //
-        // We're prefer ev.getContent() over ev.getWireContent() to make sure
-        // we grab the latest edit with potentially new relations. But we also
-        // can't just rely on ev.getContent() by itself because historically we
-        // still show the reply from the original message even though the edit
-        // event does not include the relation reply.
         if (ev.replyEventId) {
             return ev.replyEventId;
         } else if (!SettingsStore.getValue("feature_thread") && ev.isThreadRelation) {
@@ -267,7 +255,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
     public static shouldDisplayReply(event: MatrixEvent, renderTarget = ReplyChain.DEFAULT_RENDER_TARGET): boolean {
         const parentExist = Boolean(ReplyChain.getParentEventId(event));
 
-        const relations = event.getWireContent()["m.relates_to"];
+        const relations = event.getRelation();
         const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"];
 
         const shouldRenderInTarget = !renderIn || renderIn.includes(renderTarget);
