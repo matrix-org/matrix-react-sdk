@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642505714513,
+  "lastUpdate": 1642513242702,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56120,6 +56120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 595.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "47cbef2af2c920ba3103a1038cb05f623c6c14e4",
+          "message": "Ensure maps show up in replies and threads, by creating unique IDs (#7568)",
+          "timestamp": "2022-01-18T13:33:53Z",
+          "tree_id": "4cd5d4ed0a951a5de91d0d8c01cfd250942864a4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/47cbef2af2c920ba3103a1038cb05f623c6c14e4"
+        },
+        "date": 1642513238490,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5255.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 927.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1675.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4685.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
