@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642500162359,
+  "lastUpdate": 1642502718054,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56000,6 +56000,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4195.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f217c6fd61bd464eb200753a45860ab921693669",
+          "message": "Update bubble layout styling for stickers (#7560)",
+          "timestamp": "2022-01-18T10:37:44Z",
+          "tree_id": "b7715e4f8b087f240fc29c4237eda996b9899678",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f217c6fd61bd464eb200753a45860ab921693669"
+        },
+        "date": 1642502713452,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4845.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 745.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
