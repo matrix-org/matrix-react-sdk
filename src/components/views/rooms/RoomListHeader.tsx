@@ -270,7 +270,10 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        defaultDispatcher.dispatch({
+                            action: Action.ViewRoom,
+                            room_id: activeSpace.roomId,
+                        });
                         closePlusMenu();
                     }}
                 />
