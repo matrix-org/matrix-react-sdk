@@ -318,21 +318,23 @@ export function isPermalinkHost(host: string): boolean {
 
 /**
  * Transforms an entity (permalink, room alias, user ID, etc) into a local URL
- * if possible. If the given entity is not found to be valid enough to be converted
- * then a null value will be returned.
+ * if possible. If the given entity is not found to be valid enough to be
+ * converted then a null value will be returned. If it is already a permalink
+ * (matrix.to) it gets returned unchanged.
  * @param {string} entity The entity to transform.
  * @returns {string|null} The transformed permalink or null if unable.
  */
 export function tryTransformEntityToPermalink(entity: string): string {
     if (!entity) return null;
 
-    // Check to see if it is a bare entity for starters
+    // Check if it is a bare entity for starters
     if (entity[0] === '#' || entity[0] === '!') return makeRoomPermalink(entity);
     if (entity[0] === '@') return makeUserPermalink(entity);
     if (entity[0] === '+') return makeGroupPermalink(entity);
+    // Check if it is already a permalink
+    if (entity.includes("matrix.to")) return entity;
 
-    // does not need conversion
-    return entity;
+    return null;
 }
 
 /**
