@@ -2009,6 +2009,8 @@
     "Ban them from specific things I'm able to": "Ban them from specific things I'm able to",
     "They won't be able to access whatever you're not an admin of.": "They won't be able to access whatever you're not an admin of.",
     "Failed to ban user": "Failed to ban user",
+    "Ban from room": "Ban from room",
+    "Unban from room": "Unban from room",
     "Failed to mute user": "Failed to mute user",
     "Unmute": "Unmute",
     "Mute": "Mute",

@@ -772,9 +772,9 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
         });
     };
 
-    let label = _t("Ban");
+    let label = _t("Ban from room");
     if (isBanned) {
-        label = _t("Unban");
+        label = _t("Unban from room");
     }
 
     const classes = classNames("mx_UserInfo_field", {
