@@ -127,12 +127,6 @@ limitations under the License.
             }
         }
 
-        .mx_EventTile_sticker > a {
-            // position timestamps for left-column stickers to the right of the sticker
-            right: unset;
-            left: 100%;
-        }
-
         .mx_EventTile_avatar {
             left: -34px;
         }
@@ -152,9 +146,9 @@ limitations under the License.
             }
         }
 
-        .mx_EventTile_sticker > a {
-            // position timestamps for right-column stickers to the left of the sticker
-            right: 100%;
+        .mx_EventTile_sticker {
+            // align timestamp with those inside bubbles
+            margin-right: 32px;
         }
 
         .mx_ThreadInfo {
@@ -228,8 +222,16 @@ limitations under the License.
             }
         }
 
-        &.mx_EventTile_sticker .mx_MStickerBody_wrapper {
-            padding: 0;
+        &.mx_EventTile_sticker {
+            > a {
+                // position timestamps for stickers to the right of the un-bubbled sticker
+                right: unset;
+                left: 100%;
+            }
+
+            .mx_MStickerBody_wrapper {
+                padding: 0;
+            }
         }
 
         //noinspection CssReplaceWithShorthandSafely
