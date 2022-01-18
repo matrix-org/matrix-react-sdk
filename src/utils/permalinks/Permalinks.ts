@@ -352,8 +352,7 @@ export function tryTransformEntityToPermalink(entity: string): string {
         } catch {}
     }
 
-    // Then try and merge it into a permalink
-    return tryTransformPermalinkToLocalHref(entity);
+    return null;
 }
 
 /**
