@@ -254,9 +254,9 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         const parentExist = Boolean(ReplyChain.getParentEventId(event));
 
         const relations = event.getRelation();
-        const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"];
+        const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"] ?? [];
 
-        const shouldRenderInTarget = !renderIn || (renderTarget && renderIn.includes(renderTarget));
+        const shouldRenderInTarget = !renderTarget || (renderIn.includes(renderTarget));
 
         return parentExist && shouldRenderInTarget;
     }
