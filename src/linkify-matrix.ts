@@ -25,7 +25,6 @@ import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
-    tryTransformPermalinkToLocalHref,
 } from "./utils/permalinks/Permalinks";
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
