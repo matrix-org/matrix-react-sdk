@@ -20,9 +20,16 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { M_EMOTE, M_NOTICE, M_MESSAGE, MessageEvent, M_POLL_START, M_POLL_END } from "matrix-events-sdk";
+import {
+    M_EMOTE,
+    M_NOTICE,
+    M_MESSAGE,
+    MessageEvent,
+    M_POLL_START,
+    M_POLL_END,
+    PollStartEvent,
+} from "matrix-events-sdk";
 import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
-import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -755,14 +762,13 @@ export function textForLocationEvent(event: MatrixEvent): () => string | null {
 function textForPollStartEvent(event: MatrixEvent): () => string | null {
     return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
         senderName: getSenderName(event),
-        pollQuestion: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
+        pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
     });
 }
 
 function textForPollEndEvent(event: MatrixEvent): () => string | null {
-    return () => _t("%(senderName)s has ended a poll - %(pollQuestion)s", {
+    return () => _t("%(senderName)s has ended a poll", {
         senderName: getSenderName(event),
-        pollQuestion: event.getContent()[M_POLL_START.name].question[TEXT_NODE_TYPE.name],
     });
 }
 
