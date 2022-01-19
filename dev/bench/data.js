@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642562090294,
+  "lastUpdate": 1642583629185,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56516,6 +56516,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 640.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "41b9e4aa4f6fbc6814c6d91d6f38fc14aac2276d",
+          "message": "Implement reply chain fallback for threads backwards compatibility (#7565)",
+          "timestamp": "2022-01-19T09:06:48Z",
+          "tree_id": "9e91e78afb01487e4e3d54573ce9e93531430c3d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/41b9e4aa4f6fbc6814c6d91d6f38fc14aac2276d"
+        },
+        "date": 1642583624174,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4670.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 662.5,
             "unit": "ms",
             "extra": "type: measure"
           }
