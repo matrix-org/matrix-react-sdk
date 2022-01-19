@@ -122,6 +122,7 @@ export const CATEGORIES: Array<ICategory> = [
             "KeyBinding.previousUnreadRoom",
             "KeyBinding.nextRoom",
             "KeyBinding.previousRoom",
+            "KeyBinding.toggleSpacePanel",
         ],
     }, {
         categoryName: CategoryName.AUTOCOMPLETE,
@@ -342,7 +343,7 @@ export const KEYBOARD_SHORTCUTS: { [setting: string]: ISetting } = {
             ctrlOrCmdKey: true,
             key: Key.SLASH,
         },
-        displayName: _td("Show keybinding settings"),
+        displayName: _td("Open this settings tab"),
     },
     "KeyBinding.goToHomeView": {
         default: {
@@ -399,6 +400,14 @@ export const KEYBOARD_SHORTCUTS: { [setting: string]: ISetting } = {
             key: Key.ARROW_DOWN,
         },
         displayName: _td("Previous autocomplete suggestion"),
+    },
+    "KeyBinding.toggleSpacePanel": {
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.D,
+        },
+        displayName: _td("Toggle space panel"),
     },
 };
 
