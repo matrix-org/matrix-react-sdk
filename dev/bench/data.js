@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642599868006,
+  "lastUpdate": 1642621191569,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56744,6 +56744,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4421.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "582a1b093fc0b77538052f45cbb9c7295f991b51",
+          "message": "Track decryption failures for visible events only, with a shorter grace period (#7579)",
+          "timestamp": "2022-01-19T14:31:43-05:00",
+          "tree_id": "677be732b6873bbfc51f6b75734cfaa8583b4e44",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/582a1b093fc0b77538052f45cbb9c7295f991b51"
+        },
+        "date": 1642621185680,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5929.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1146,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1726,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4923.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
