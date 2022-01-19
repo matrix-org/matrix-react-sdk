@@ -170,9 +170,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!isVisibleOnScreen && !isActiveWidget) {
             ActiveWidgetStore.instance.destroyPersistentWidget(app.id);
             PersistedElement.destroyElement(this.persistKey);
-            if (this.sgWidget) {
-                this.sgWidget.stop();
-            }
+            this.sgWidget?.stop();
         }
     };
 
@@ -183,9 +181,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!isActiveWidget) {
             ActiveWidgetStore.instance.destroyPersistentWidget(app.id);
             PersistedElement.destroyElement(this.persistKey);
-            if (this.sgWidget) {
-                this.sgWidget.stop();
-            }
+            this.sgWidget?.stop();
         }
     };
 
@@ -221,7 +217,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             // Force the widget to be non-persistent (able to be deleted/forgotten)
             ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
             PersistedElement.destroyElement(this.persistKey);
-            if (this.sgWidget) this.sgWidget.stop();
+            this.sgWidget?.stop();
         }
 
         this.setState({ hasPermissionToLoad });
@@ -265,7 +261,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private resetWidget(newProps: IProps): void {
         if (this.sgWidget) {
-            this.sgWidget.stop();
+            this.sgWidget?.stop();
         }
         try {
             this.sgWidget = new StopGapWidget(newProps);
