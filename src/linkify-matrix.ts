@@ -25,6 +25,7 @@ import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
+    tryTransformPermalinkToLocalHref,
 } from "./utils/permalinks/Permalinks";
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
@@ -32,6 +33,7 @@ import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
 
 enum Type {
     URL = "url",
+    MatrixURI = "matrix_uri",
     UserId = "userid",
     RoomAlias = "roomalias",
     GroupId = "groupid"
@@ -116,7 +118,7 @@ function matrixOpaqueIdLinkifyParser({
 }
 
 // This is (sadly) necessary for linkifyjs v3 In v4 it will be possible to just
-// call registerCustomProtocol("matrix") but currently this does not support
+// call registerCustomProtocol(Type.MatrixURI) but currently this does not support
 // matrid:u/ but only matrix://
 function matrixURILinkifyParser({ scanner, parser, utils }) {
     const {
@@ -134,7 +136,7 @@ function matrixURILinkifyParser({ scanner, parser, utils }) {
         EQUALS,
     } = scanner.tokens;
 
-    const matrixDone = utils.createTokenClass("matrix", { isLink: true });
+    const matrixDone = utils.createTokenClass(Type.MatrixURI, { isLink: true });
 
     const S_START = parser.start;
 
@@ -212,9 +214,25 @@ export const MATRIXTO_MD_LINK_PATTERN =
     '\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
 export const MATRIXTO_BASE_URL= baseUrl;
 
+function getActualType(href: string, type: Type | string) {
+    if (type !== Type.MatrixURI) return type;
+    /*
+     for Type.MatrixURI we need to be carful since the linkify matcher is too
+     generous we were using the PROTOCOL token to match the "matrix:" part of
+     the link. But "https:", "ftp" .. are also part of this token. So our plugin
+     is too aggressive and labels Type.URL links as Type.MatrixURI. Here we
+     filter out and see if the labelling actually was correct
+    */
+
+    const beginsWithMatrix = href.indexOf("matrix:") === 0;
+    return beginsWithMatrix ? type : Type.URL;
+}
+
 export const options = {
     events: function(href: string, type: Type | string): Partial<GlobalEventHandlers> {
-        switch (type) {
+        const actualType = getActualType(href, type);
+        switch (actualType) {
+            case Type.MatrixURI:
             case Type.URL: {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
                 try {
@@ -226,6 +244,18 @@ export const options = {
                                 onUserClick(e, permalink.userId);
                             },
                         };
+                    } else {
+                        // for events, rooms etc. (anything other then users)
+                        const localHref = tryTransformPermalinkToLocalHref(href);
+                        if (localHref !== href) {
+                            // it could be converted to a localHref -> therefore handle locally
+                            return {
+                            // @ts-ignore see https://linkify.js.org/docs/options.html
+                                click: function(e) {
+                                    window.location.hash = localHref;
+                                },
+                            };
+                        }
                     }
                 } catch (e) {
                     // OK fine, it's not actually a permalink
@@ -274,12 +304,12 @@ export const options = {
     className: 'linkified',
 
     target: function(href: string, type: Type | string): string {
-        if (type === Type.URL) {
+        const actualType = getActualType(href, type);
+        if (actualType === Type.URL) {
             try {
-                const transformed = tryTransformEntityToPermalink(href);
-                if (transformed !== href || // for matrix symbols e.g. @user:server.tdl
-                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) || // for https:vector|riot...
-                    decodeURIComponent(href).match(MATRIXTO_URL_PATTERN) // for matrix.to
+                const transformed = tryTransformPermalinkToLocalHref(href);
+                if (transformed !== href || // if could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
+                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https:vector|riot...
                 ) {
                     return null;
                 } else {
@@ -328,7 +358,7 @@ registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
 });
 
 registerCustomProtocol("matrix");
-registerPlugin("matrixURI", matrixURILinkifyParser);
+registerPlugin(Type.MatrixURI, matrixURILinkifyParser);
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;

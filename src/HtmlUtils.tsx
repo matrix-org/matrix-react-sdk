@@ -26,10 +26,10 @@ import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
 
-import { MATRIXTO_URL_PATTERN, _linkifyElement, _linkifyString } from './linkify-matrix';
+import { _linkifyElement, _linkifyString } from './linkify-matrix';
 import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import SettingsStore from './settings/SettingsStore';
-import { tryTransformEntityToPermalink } from "./utils/permalinks/Permalinks";
+import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
 import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
@@ -175,12 +175,10 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         if (attribs.href) {
             attribs.target = '_blank'; // by default
 
-            const transformed = tryTransformEntityToPermalink(attribs.href);
-            if (transformed !== attribs.href || // for matrix symbols e.g. @user:server.tdl
-                attribs.href.match(ELEMENT_URL_PATTERN) || // for https:vector|riot...
-                attribs.href.match(MATRIXTO_URL_PATTERN) // for matrix.to
+            const transformed = tryTransformPermalinkToLocalHref(attribs.href); // only used to check if it is a link that can be handled locally
+            if (transformed !== attribs.href || // it could be converted so handle locally symbols e.g. @user:server.tdl, matrix: and matrix.to
+                attribs.href.match(ELEMENT_URL_PATTERN) // for https:vector|riot...
             ) {
-                attribs.href = transformed;
                 delete attribs.target;
             }
         }
