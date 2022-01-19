@@ -19,8 +19,8 @@ import React, { ReactElement } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
-import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
 import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
+import { M_POLL_START } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -48,8 +48,8 @@ import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 import { createMapSiteLink } from "../messages/MLocationBody";
 
-export function canCancel(eventStatus: EventStatus): boolean {
-    return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
+export function canCancel(status: EventStatus): boolean {
+    return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
 }
 
 export interface IEventTileOps {
@@ -140,7 +140,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private canEndPoll(mxEvent: MatrixEvent): boolean {
         return (
-            POLL_START_EVENT_TYPE.matches(mxEvent.getType()) &&
+            M_POLL_START.matches(mxEvent.getType()) &&
             this.state.canRedact &&
             !isPollEnded(mxEvent, MatrixClientPeg.get(), this.props.getRelationsForEvent)
         );
@@ -256,10 +256,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             const relation = e.getRelation();
             return relation?.rel_type === RelationType.Annotation && relation.event_id === eventId && filter(e);
         });
-    }
-
-    private getPendingReactions(): MatrixEvent[] {
-        return this.getReactions(e => canCancel(e.status));
     }
 
     private getUnsentReactions(): MatrixEvent[] {

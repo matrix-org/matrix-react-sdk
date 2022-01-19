@@ -18,6 +18,7 @@ import React, { createRef, SyntheticEvent } from 'react';
 import ReactDOM from 'react-dom';
 import highlight from 'highlight.js';
 import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { isEventLike, LegacyMsgType, M_MESSAGE, MessageEvent } from "matrix-events-sdk";
 
 import * as HtmlUtils from '../../../HtmlUtils';
 import { formatDate } from '../../../DateUtils';
@@ -296,7 +297,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 nextProps.showUrlPreview !== this.props.showUrlPreview ||
                 nextProps.editState !== this.props.editState ||
                 nextState.links !== this.state.links ||
-                nextState.widgetHidden !== this.state.widgetHidden);
+                nextState.widgetHidden !== this.state.widgetHidden ||
+                nextProps.isSeeingThroughMessageHiddenForModeration
+                    !== this.props.isSeeingThroughMessageHiddenForModeration);
     }
 
     private calculateUrlPreview(): void {
@@ -503,27 +506,83 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         );
     }
 
+    /**
+     * Render a marker informing the user that, while they can see the message,
+     * it is hidden for other users.
+     */
+    private renderPendingModerationMarker() {
+        let text;
+        const visibility = this.props.mxEvent.messageVisibility();
+        switch (visibility.visible) {
+            case true:
+                throw new Error("renderPendingModerationMarker should only be applied to hidden messages");
+            case false:
+                if (visibility.reason) {
+                    text = _t("Message pending moderation: %(reason)s", { reason: visibility.reason });
+                } else {
+                    text = _t("Message pending moderation");
+                }
+                break;
+        }
+        return (
+            <span className="mx_EventTile_pendingModeration">{ `(${text})` }</span>
+        );
+    }
+
     render() {
         if (this.props.editState) {
             return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
         }
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
+        let isNotice = false;
+        let isEmote = false;
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!ReplyChain.getParentEventId(mxEvent);
-        let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
-            disableBigEmoji: content.msgtype === MsgType.Emote
-                || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
-            // Part of Replies fallback support
-            stripReplyFallback: stripReply,
-            ref: this.contentRef,
-            returnString: false,
-        });
+        let body;
+        if (SettingsStore.isEnabled("feature_extensible_events")) {
+            const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
+            if (extev?.isEquivalentTo(M_MESSAGE)) {
+                isEmote = isEventLike(extev.wireFormat, LegacyMsgType.Emote);
+                isNotice = isEventLike(extev.wireFormat, LegacyMsgType.Notice);
+                body = HtmlUtils.bodyToHtml({
+                    body: extev.text,
+                    format: extev.html ? "org.matrix.custom.html" : undefined,
+                    formatted_body: extev.html,
+                    msgtype: MsgType.Text,
+                }, this.props.highlights, {
+                    disableBigEmoji: isEmote
+                        || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                    // Part of Replies fallback support
+                    stripReplyFallback: stripReply,
+                    ref: this.contentRef,
+                    returnString: false,
+                });
+            }
+        }
+        if (!body) {
+            isEmote = content.msgtype === MsgType.Emote;
+            isNotice = content.msgtype === MsgType.Notice;
+            body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
+                disableBigEmoji: isEmote
+                    || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                // Part of Replies fallback support
+                stripReplyFallback: stripReply,
+                ref: this.contentRef,
+                returnString: false,
+            });
+        }
         if (this.props.replacingEventId) {
             body = <>
                 { body }
                 { this.renderEditedMarker() }
+            </>;
+        }
+        if (this.props.isSeeingThroughMessageHiddenForModeration) {
+            body = <>
+                { body }
+                { this.renderPendingModerationMarker() }
             </>;
         }
 
@@ -545,36 +604,35 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             />;
         }
 
-        switch (content.msgtype) {
-            case MsgType.Emote:
-                return (
-                    <div className="mx_MEmoteBody mx_EventTile_content">
-                        *&nbsp;
-                        <span
-                            className="mx_MEmoteBody_sender"
-                            onClick={this.onEmoteSenderClick}
-                        >
-                            { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
-                        </span>
-                        &nbsp;
-                        { body }
-                        { widgets }
-                    </div>
-                );
-            case MsgType.Notice:
-                return (
-                    <div className="mx_MNoticeBody mx_EventTile_content">
-                        { body }
-                        { widgets }
-                    </div>
-                );
-            default: // including "m.text"
-                return (
-                    <div className="mx_MTextBody mx_EventTile_content">
-                        { body }
-                        { widgets }
-                    </div>
-                );
+        if (isEmote) {
+            return (
+                <div className="mx_MEmoteBody mx_EventTile_content">
+                    *&nbsp;
+                    <span
+                        className="mx_MEmoteBody_sender"
+                        onClick={this.onEmoteSenderClick}
+                    >
+                        { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
+                    </span>
+                    &nbsp;
+                    { body }
+                    { widgets }
+                </div>
+            );
         }
+        if (isNotice) {
+            return (
+                <div className="mx_MNoticeBody mx_EventTile_content">
+                    { body }
+                    { widgets }
+                </div>
+            );
+        }
+        return (
+            <div className="mx_MTextBody mx_EventTile_content">
+                { body }
+                { widgets }
+            </div>
+        );
     }
 }

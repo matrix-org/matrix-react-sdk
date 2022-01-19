@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.37.0",
+  "version": "3.38.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -25,10 +25,13 @@
   "bin": {
     "reskindex": "scripts/reskindex.js"
   },
-  "main": "./src/index.js",
+  "main": "./src/index.ts",
   "matrix_src_main": "./src/index.ts",
   "matrix_lib_main": "./lib/index.ts",
   "matrix_lib_typings": "./lib/index.d.ts",
+  "matrix_i18n_extra_translation_funcs": [
+    "newTranslatableError"
+  ],
   "scripts": {
     "prepublishOnly": "yarn build",
     "i18n": "matrix-gen-i18n",
@@ -82,10 +85,13 @@
     "is-ip": "^3.1.0",
     "jszip": "^3.7.0",
     "katex": "^0.12.0",
-    "linkifyjs": "^2.1.9",
+    "linkify-element": "^3.0.4",
+    "linkify-string": "^3.0.4",
+    "linkifyjs": "^3.0.5",
     "lodash": "^4.17.20",
     "maplibre-gl": "^1.15.2",
     "matrix-analytics-events": "https://github.com/matrix-org/matrix-analytics-events.git#1eab4356548c97722a183912fda1ceabbe8cc7c1",
+    "matrix-events-sdk": "^0.0.1-beta.6",
     "matrix-js-sdk": "github:matrix-org/matrix-js-sdk#develop",
     "matrix-widget-api": "^0.1.0-beta.18",
     "minimist": "^1.2.5",
@@ -178,7 +184,7 @@
     "jest-raw-loader": "^1.0.1",
     "matrix-mock-request": "^1.2.3",
     "matrix-react-test-utils": "^0.2.3",
-    "matrix-web-i18n": "github:matrix-org/matrix-web-i18n",
+    "matrix-web-i18n": "^1.2.0",
     "raw-loader": "^4.0.2",
     "react-test-renderer": "^17.0.2",
     "rimraf": "^3.0.2",
