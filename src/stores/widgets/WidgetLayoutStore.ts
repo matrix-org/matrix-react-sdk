@@ -467,13 +467,10 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             case Container.Center:
                 // new "center" widget => all other widgets go into "right"
                 for (const w of this.getContainerWidgets(room, Container.Top)) {
-                    // skipping the update here, so that we
                     newLayout[w.id] = { container: Container.Right };
-                    // this.moveToContainer(room, w, Container.Right, true);
                 }
                 for (const w of this.getContainerWidgets(room, Container.Center)) {
                     newLayout[w.id] = { container: Container.Right };
-                    // this.moveToContainer(room, w, Container.Right, true);
                 }
                 break;
             case Container.Top:
