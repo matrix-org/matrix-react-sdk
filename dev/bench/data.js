@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642589331475,
+  "lastUpdate": 1642599868006,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56696,6 +56696,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5714.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ec6bb880682286216458d73560aa91746d4f099b",
+          "message": "Fix reply chain fallback for first event in a thread (#7580)",
+          "timestamp": "2022-01-19T13:37:19Z",
+          "tree_id": "ff651dda5407bb20674d6cb9976973bb3d1783cf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ec6bb880682286216458d73560aa91746d4f099b"
+        },
+        "date": 1642599863119,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5248.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 982.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1783,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4421.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
