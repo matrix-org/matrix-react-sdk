@@ -19,18 +19,6 @@ import { _td } from "../languageHandler";
 import { isMac, Key } from "../Keyboard";
 import { ISetting } from "../settings/Settings";
 
-// TS: once languageHandler is TS we can probably inline this into the enum
-_td("Alt");
-_td("Alt Gr");
-_td("Shift");
-_td("Super");
-_td("Ctrl");
-_td("Navigation");
-_td("Calls");
-_td("Composer");
-_td("Room List");
-_td("Autocomplete");
-
 export interface ICategory {
     categoryName: CategoryName;
     categoryLabel: string;
