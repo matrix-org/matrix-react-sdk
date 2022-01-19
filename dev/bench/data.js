@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642554335097,
+  "lastUpdate": 1642557370843,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56432,6 +56432,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1431.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b50060bcfcd0a4d27bee458ae89cb76ba8f79ccd",
+          "message": "Fix MAB overlapping or overflowing in bubbles layout and threads regressions (#7569)\n\n* Fix MAB overlapping or overflowing in bubbles layout\n\n* Fix bubbles in threads timestamps positioning regression",
+          "timestamp": "2022-01-19T01:48:07Z",
+          "tree_id": "7232564c67e179d8cad911ec9e1698f4914f53d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b50060bcfcd0a4d27bee458ae89cb76ba8f79ccd"
+        },
+        "date": 1642557365813,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5029.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1200.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1951.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4941.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
