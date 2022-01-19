@@ -21,6 +21,7 @@ import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
 
+//linkifyjs/src/core/fsm
 import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
     parsePermalink,
@@ -134,6 +135,9 @@ function matrixURILinkifyParser({ scanner, parser, utils }) {
         COLON,
         QUERY,
         EQUALS,
+        AT,
+        POUND,
+        EXCLAMATION,
     } = scanner.tokens;
 
     const matrixDone = utils.createTokenClass(Type.MatrixURI, { isLink: true });
@@ -159,6 +163,10 @@ function matrixURILinkifyParser({ scanner, parser, utils }) {
         LOCALHOST,
         SYM,
         UNDERSCORE,
+        AT,
+        POUND,
+        EXCLAMATION,
+        SLASH,
     ];
     const LOCALPART_STATE_SLASH = LOCALPART_STATE.tt(SLASH);
     for (const token of localpartTokens) {
