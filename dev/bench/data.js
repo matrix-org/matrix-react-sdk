@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642554328918,
+  "lastUpdate": 1642554335097,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56396,6 +56396,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4240.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aac5964121b848b8ca375c5d4796aa7fd1e7c26a",
+          "message": "Fix wrong icon being used for appearance tab in space preferences dialog (#7570)",
+          "timestamp": "2022-01-18T17:56:49-07:00",
+          "tree_id": "a4b4baddb18eb789ca5f7444de26e3086c689fe2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aac5964121b848b8ca375c5d4796aa7fd1e7c26a"
+        },
+        "date": 1642554329210,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5444.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1431.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
