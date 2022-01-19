@@ -98,7 +98,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
             const rageshakeURL = await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
                 userText: "Auto-reporting decryption error (recipient)",
                 sendLogs: true,
-                label: "Z-UISI",
+                labels: ["Z-UISI", "uisi-recipient"],
                 customFields: { "auto_uisi": JSON.stringify(eventInfo) },
             });
 
@@ -123,7 +123,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
             await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
                 userText: `Auto-reporting decryption error (sender)\nRecipient rageshake: ${recipientRageshake}`,
                 sendLogs: true,
-                label: "Z-UISI",
+                labels: ["Z-UISI", "uisi-sender"],
                 customFields: {
                     "recipient_rageshake": recipientRageshake,
                     "auto_uisi": JSON.stringify(messageContent),

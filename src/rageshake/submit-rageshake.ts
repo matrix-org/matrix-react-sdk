@@ -28,7 +28,7 @@ import SettingsStore from "../settings/SettingsStore";
 import SdkConfig from "../SdkConfig";
 
 interface IOpts {
-    label?: string;
+    labels?: string[];
     userText?: string;
     sendLogs?: boolean;
     progressCallback?: (s: string) => void;
@@ -120,8 +120,10 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
         }
     }
 
-    if (opts.label) {
-        body.append('label', opts.label);
+    if (opts.labels) {
+        for (const label of opts.labels) {
+            body.append('label', label);
+        }
     }
 
     // add labs options
