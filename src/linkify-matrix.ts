@@ -147,12 +147,13 @@ function matrixURILinkifyParser({ scanner, parser, utils }) {
     const INITIAL_TOKEN_STATE = S_START.tt(PROTOCOL);
     const LOCALPART_STATE = INITIAL_TOKEN_STATE.tt(DOMAIN).tt(SLASH); //.tt(SLASH);
 
-    const AUTHORITYPART_STATE_FIRSTSLASH = INITIAL_TOKEN_STATE.tt(SLASH);
-    const AUTHORITYPART_STATE_SECONDSLASH = AUTHORITYPART_STATE_FIRSTSLASH.tt(
-        SLASH,
-    );
-    const AUTHORITYPART_STATE = AUTHORITYPART_STATE_SECONDSLASH.tt(DOMAIN);
-    AUTHORITYPART_STATE.tt(SLASH, LOCALPART_STATE);
+    // dont parse authorities for now, they make this also match with http:// links which is a problem
+    // const AUTHORITYPART_STATE_FIRSTSLASH = INITIAL_TOKEN_STATE.tt(SLASH);
+    // const AUTHORITYPART_STATE_SECONDSLASH = AUTHORITYPART_STATE_FIRSTSLASH.tt(
+    //     SLASH,
+    // );
+    // const AUTHORITYPART_STATE = AUTHORITYPART_STATE_SECONDSLASH.tt(DOMAIN);
+    // AUTHORITYPART_STATE.tt(SLASH, LOCALPART_STATE);
 
     const localpartTokens = [
         DOT,
@@ -260,6 +261,7 @@ export const options = {
                             return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
                                 click: function(e) {
+                                    e.preventDefault();
                                     window.location.hash = localHref;
                                 },
                             };
