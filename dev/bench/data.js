@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642557370843,
+  "lastUpdate": 1642562090294,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56480,6 +56480,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4941.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a00d359422a6a31ad109808fdc546b9d371c328c",
+          "message": "Fix left positioned tooltips being wrong and offset by fixed value (#7551)\n\nPreviously, the `left` positioning seemed to only work with icons which are all about the same size so the arbitrary offset worked. Now we actually position off to the left of the element and we have equal `margin-left` and `margin-right` to determine the offset.\r\n\r\nSpawned from https://github.com/matrix-org/matrix-react-sdk/pull/7339#discussion_r767154349",
+          "timestamp": "2022-01-18T21:08:11-06:00",
+          "tree_id": "fbe464b240c16b7f9a8a45229d70682948f1dfa1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a00d359422a6a31ad109808fdc546b9d371c328c"
+        },
+        "date": 1642562086369,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4577.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 640.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
