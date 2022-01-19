@@ -35,7 +35,6 @@ import { PERMITTED_URL_SCHEMES } from "../../../HtmlUtils";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
-import SettingsStore from "../../../settings/SettingsStore";
 import { ButtonEvent } from './AccessibleButton';
 
 /**
