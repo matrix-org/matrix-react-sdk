@@ -23,6 +23,7 @@ import {
     KEY_ICON,
     ICategory,
     CATEGORIES,
+    CategoryName,
 } from "../../../../../accessibility/KeyboardShortcuts";
 import { isMac, Key } from "../../../../../Keyboard";
 import { _t } from "../../../../../languageHandler";
@@ -80,11 +81,12 @@ const KeyboardShortcutRow: React.FC<IKeyboardShortcutRowProps> = ({ name }) => {
 };
 
 interface IKeyboardShortcutSectionProps {
+    categoryName: CategoryName;
     category: ICategory;
 }
 
-const KeyboardShortcutSection: React.FC<IKeyboardShortcutSectionProps> = ({ category: category }) => {
-    return <div className="mx_SettingsTab_section" key={category.categoryName}>
+const KeyboardShortcutSection: React.FC<IKeyboardShortcutSectionProps> = ({ categoryName, category }) => {
+    return <div className="mx_SettingsTab_section" key={categoryName}>
         <div className="mx_SettingsTab_subheading">{ _t(category.categoryLabel) }</div>
         <div> { category.settingNames.map((shortcutName) => {
             return <KeyboardShortcutRow key={shortcutName} name={shortcutName} />;
@@ -95,7 +97,9 @@ const KeyboardShortcutSection: React.FC<IKeyboardShortcutSectionProps> = ({ cate
 const KeyboardUserSettingsTab: React.FC = () => {
     return <div className="mx_SettingsTab mx_KeyboardUserSettingsTab">
         <div className="mx_SettingsTab_heading">{ _t("Keyboard") }</div>
-        { CATEGORIES.map((category) => <KeyboardShortcutSection key={category.categoryName} category={category} />) }
+        { Object.entries(CATEGORIES).map(([categoryName, category]: [CategoryName, ICategory]) => {
+            return <KeyboardShortcutSection key={categoryName} categoryName={categoryName} category={category} />;
+        }) }
     </div>;
 };
 

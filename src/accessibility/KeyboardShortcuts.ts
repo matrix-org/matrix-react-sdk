@@ -20,7 +20,6 @@ import { isMac, Key } from "../Keyboard";
 import { ISetting } from "../settings/Settings";
 
 export interface ICategory {
-    categoryName: CategoryName;
     categoryLabel: string;
     settingNames: string[];
 }
@@ -61,9 +60,8 @@ if (isMac) {
     KEY_ICON[Key.SHIFT] = "⌥";
 }
 
-export const CATEGORIES: Array<ICategory> = [
-    {
-        categoryName: CategoryName.COMPOSER,
+export const CATEGORIES: Record<CategoryName, ICategory> = {
+    [CategoryName.COMPOSER]: {
         categoryLabel: _td("Composer"),
         settingNames: [
             "KeyBinding.toggleBoldInComposer",
@@ -78,15 +76,13 @@ export const CATEGORIES: Array<ICategory> = [
             "KeyBinding.nextMessageInComposerHistory",
             "KeyBinding.previousMessageInComposerHistory",
         ],
-    }, {
-        categoryName: CategoryName.CALLS,
+    }, [CategoryName.CALLS]: {
         categoryLabel: _td("Calls"),
         settingNames: [
             "KeyBinding.toggleMicInCall",
             "KeyBinding.toggleWebcamInCall",
         ],
-    }, {
-        categoryName: CategoryName.ROOM,
+    }, [CategoryName.ROOM]: {
         categoryLabel: _td("Room"),
         settingNames: [
             "KeyBinding.dismissReadMarkerAndJumpToBottom",
@@ -96,8 +92,7 @@ export const CATEGORIES: Array<ICategory> = [
             "KeyBinding.scrollUpInTimeline",
             "KeyBinding.scrollDownInTimeline",
         ],
-    }, {
-        categoryName: CategoryName.ROOM_LIST,
+    }, [CategoryName.ROOM_LIST]: {
         categoryLabel: _td("Room List"),
         settingNames: [
             "KeyBinding.filterRooms",
@@ -108,8 +103,7 @@ export const CATEGORIES: Array<ICategory> = [
             "KeyBinding.upperRoom",
             "KeyBinding.downerRoom",
         ],
-    }, {
-        categoryName: CategoryName.NAVIGATION,
+    }, [CategoryName.NAVIGATION]: {
         categoryLabel: _td("Navigation"),
         settingNames: [
             "KeyBinding.toggleTopLeftMenu",
@@ -124,8 +118,7 @@ export const CATEGORIES: Array<ICategory> = [
             "KeyBinding.previousRoom",
             "KeyBinding.toggleSpacePanel",
         ],
-    }, {
-        categoryName: CategoryName.AUTOCOMPLETE,
+    }, [CategoryName.AUTOCOMPLETE]: {
         categoryLabel: _td("Autocomplete"),
         settingNames: [
             "KeyBinding.cancelAutoComplete",
@@ -133,7 +126,7 @@ export const CATEGORIES: Array<ICategory> = [
             "KeyBinding.previousOptionInAutoComplete",
         ],
     },
-];
+};
 
 // This is very intentionally modelled after SETTINGS as it will make it easier
 // to implement customizable keyboard shortcuts
@@ -413,11 +406,5 @@ export const KEYBOARD_SHORTCUTS: { [setting: string]: ISetting } = {
 
 export const registerShortcut = (shortcutName: string, categoryName: CategoryName, shortcut: ISetting): void => {
     KEYBOARD_SHORTCUTS[shortcutName] = shortcut;
-
-    for (const category of CATEGORIES) {
-        if (category.categoryName = categoryName) {
-            category.settingNames.push(shortcutName);
-            break;
-        }
-    }
+    CATEGORIES[categoryName].settingNames.push(shortcutName);
 };
