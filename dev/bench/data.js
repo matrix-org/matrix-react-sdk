@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642585262244,
+  "lastUpdate": 1642589190071,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56600,6 +56600,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4546.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "336217f668f81bd1513ea401be985f83e2c3b62c",
+          "message": "Add view in room to action bar in thread list (#7519)",
+          "timestamp": "2022-01-19T10:39:33Z",
+          "tree_id": "c7d72f4d8c72394b4ff3cdc4fb6e2602cb709ae8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/336217f668f81bd1513ea401be985f83e2c3b62c"
+        },
+        "date": 1642589185110,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5022.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 924.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1634.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4573.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
