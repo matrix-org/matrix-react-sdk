@@ -607,6 +607,34 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
 }
 
 /**
+ * Similar to hydrateSession(), this will update the credentials used by the current
+ * session in-place. Services will not be restarted, and storage will not be deleted.
+ * @param {IMatrixClientCreds} credentials The credentials to use
+ * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
+ */
+export async function hydrateSessionInPlace(credentials: IMatrixClientCreds): Promise<MatrixClient> {
+    const oldUserId = MatrixClientPeg.get().getUserId();
+    const oldDeviceId = MatrixClientPeg.get().getDeviceId();
+    if (credentials.userId !== oldUserId || credentials.deviceId !== oldDeviceId) {
+        throw new Error("Attempted to hydrate in-place with a different session");
+    }
+
+    const cli = MatrixClientPeg.get();
+    if (!cli) {
+        throw new Error("Attempted to hydrate a non-existent MatrixClient");
+    }
+
+    logger.info("Lifecycle#hydrateInPlace: Persisting credentials and updating access token");
+    await persistCredentials(credentials);
+    MatrixClientPeg.updateUsingCreds(credentials);
+
+    // reset the token timers
+    TokenLifecycle.instance.startTimers(credentials);
+
+    return cli;
+}
+
+/**
  * fires on_logging_in, optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *

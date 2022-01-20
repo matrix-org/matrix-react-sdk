@@ -18,7 +18,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
-import { hydrateSession } from "./Lifecycle";
+import { hydrateSessionInPlace } from "./Lifecycle";
 
 export interface IRenewedMatrixClientCreds extends Pick<IMatrixClientCreds,
     "accessToken" | "accessTokenExpiryTs" | "accessTokenRefreshToken"> {}
@@ -144,11 +144,11 @@ export class TokenLifecycle {
                 this.startTimers(credentials);
             } else {
                 logger.info("TokenLifecycle#expireExchange: Updating client credentials using rehydration");
-                await hydrateSession({
+                await hydrateSessionInPlace({
                     ...credentials,
                     ...result, // override from credentials
                 });
-                // hydrateSession will ultimately call back to startTimers() for us, so no need to do it here.
+                // hydrateSessionInPlace will ultimately call back to startTimers() for us, so no need to do it here.
             }
         } catch (e) {
             logger.error("TokenLifecycle#expireExchange: Error getting new credentials. Rescheduling.", e);

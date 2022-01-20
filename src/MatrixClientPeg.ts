@@ -101,6 +101,14 @@ export interface IMatrixClientPeg {
      * @param {IMatrixClientCreds} creds The new credentials to use.
      */
     replaceUsingCreds(creds: IMatrixClientCreds): void;
+
+    /**
+     * Similar to replaceUsingCreds(), but without the replacement operation.
+     * Credentials that can be updated in-place will be updated. All others
+     * will be ignored.
+     * @param {IMatrixClientCreds} creds The new credentials to use.
+     */
+    updateUsingCreds(creds: IMatrixClientCreds): void;
 }
 
 /**
@@ -164,6 +172,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     public replaceUsingCreds(creds: IMatrixClientCreds): void {
         this.currentClientCreds = creds;
         this.createClient(creds);
+    }
+
+    public updateUsingCreds(creds: IMatrixClientCreds): void {
+        this.currentClientCreds = creds;
+        this.matrixClient.setAccessToken(creds.accessToken);
     }
 
     public async assign(): Promise<any> {
