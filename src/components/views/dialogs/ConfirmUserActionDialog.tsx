@@ -28,6 +28,8 @@ import BaseAvatar from '../avatars/BaseAvatar';
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import Field from '../elements/Field';
+import FeatureSettingWrapper from '../../../settings/helpers/FeatureSettingWrapper';
+import { UIFeature } from '../../../settings/UIFeature';
 
 interface IProps {
     // matrix-js-sdk (room) member object. Supply either this or 'groupMember'
@@ -139,7 +141,9 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
                             { avatar }
                         </div>
                         <div className="mx_ConfirmUserActionDialog_name">{ name }</div>
-                        <div className="mx_ConfirmUserActionDialog_userId">{ userId }</div>
+                        <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
+                            <div className="mx_ConfirmUserActionDialog_userId">{ userId }</div>
+                        </FeatureSettingWrapper>
                     </div>
 
                     { reasonBox }
