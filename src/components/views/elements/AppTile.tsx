@@ -260,9 +260,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private resetWidget(newProps: IProps): void {
-        if (this.sgWidget) {
-            this.sgWidget?.stop();
-        }
+        this.sgWidget?.stop();
         try {
             this.sgWidget = new StopGapWidget(newProps);
             this.sgWidget.on("preparing", this.onWidgetPreparing);
@@ -284,9 +282,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.iframe = ref;
         if (ref) {
             try {
-                if (this.sgWidget) {
-                    this.sgWidget.start(ref);
-                }
+                this.sgWidget?.start(ref);
             } catch (e) {
                 logger.error("Failed to start widget", e);
             }
@@ -339,7 +335,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         PersistedElement.destroyElement(this.persistKey);
         ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
 
-        if (this.sgWidget) this.sgWidget.stop({ forceDestroy: true });
+        this.sgWidget?.stop({ forceDestroy: true });
     }
 
     private onWidgetPreparing = (): void => {
