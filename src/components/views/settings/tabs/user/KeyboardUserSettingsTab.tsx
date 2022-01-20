@@ -34,8 +34,11 @@ interface IKeyboardKeyProps {
 }
 
 const KeyboardKey: React.FC<IKeyboardKeyProps> = ({ name, last }) => {
+    const icon = KEY_ICON[name];
+    const alternateName = ALTERNATE_KEY_NAME[name];
+
     return <React.Fragment key={name}>
-        <kbd> { KEY_ICON[name] || ALTERNATE_KEY_NAME[name] || name } </kbd>
+        <kbd> { icon || (alternateName && _t(alternateName)) || name } </kbd>
         { !last && "+" }
     </React.Fragment>;
 };
