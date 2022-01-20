@@ -45,8 +45,8 @@ interface IKeyboardShortcutProps {
 }
 
 const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ name }) => {
-    const keybind = KEYBOARD_SHORTCUTS[name];
-    const value = keybind.default;
+    const value = KEYBOARD_SHORTCUTS[name]?.default;
+    if (!value) return null;
 
     const modifiersElement = [];
     if (value.ctrlOrCmdKey) {
