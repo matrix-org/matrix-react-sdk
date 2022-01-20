@@ -44,6 +44,8 @@ export interface IMatrixClientCreds {
     userId: string;
     deviceId?: string;
     accessToken: string;
+    accessTokenExpiryTs?: number; // set if access token expires
+    accessTokenRefreshToken?: string; // set if access token can be renewed
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
@@ -240,6 +242,10 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             deviceId: this.matrixClient.getDeviceId(),
             accessToken: this.matrixClient.getAccessToken(),
             guest: this.matrixClient.isGuest(),
+
+            // Get these from the cached credentials instead of the live ones
+            accessTokenExpiryTs: this.currentClientCreds?.accessTokenExpiryTs,
+            accessTokenRefreshToken: this.currentClientCreds?.accessTokenRefreshToken,
         };
     }
 

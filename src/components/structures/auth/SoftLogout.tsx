@@ -154,6 +154,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
             },
             password: this.state.password,
             device_id: MatrixClientPeg.get().getDeviceId(),
+            refresh_token: true,
         };
 
         let credentials = null;
@@ -187,6 +188,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         const loginParams = {
             token: this.props.realQueryParams['loginToken'],
             device_id: MatrixClientPeg.get().getDeviceId(),
+            refresh_token: true,
         };
 
         let credentials = null;

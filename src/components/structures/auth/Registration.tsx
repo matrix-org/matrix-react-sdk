@@ -415,6 +415,7 @@ export default class Registration extends React.Component<IProps, IState> {
             initial_device_display_name: this.props.defaultDeviceDisplayName,
             auth: undefined,
             inhibit_login: undefined,
+            refresh_token: true, // always ask for a refresh token - does nothing if unsupported
         };
         if (auth) registerParams.auth = auth;
         if (inhibitLogin !== undefined && inhibitLogin !== null) registerParams.inhibit_login = inhibitLogin;
