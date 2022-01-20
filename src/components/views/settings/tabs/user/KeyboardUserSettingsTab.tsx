@@ -33,7 +33,7 @@ interface IKeyboardKeyProps {
     last?: boolean;
 }
 
-const KeyboardKey: React.FC<IKeyboardKeyProps> = ({ name, last }) => {
+export const KeyboardKey: React.FC<IKeyboardKeyProps> = ({ name, last }) => {
     const icon = KEY_ICON[name];
     const alternateName = ALTERNATE_KEY_NAME[name];
 
@@ -47,7 +47,7 @@ interface IKeyboardShortcutProps {
     name: string;
 }
 
-const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ name }) => {
+export const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ name }) => {
     const value = KEYBOARD_SHORTCUTS[name]?.default;
     if (!value) return null;
 
