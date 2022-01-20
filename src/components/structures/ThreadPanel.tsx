@@ -91,10 +91,7 @@ async function getThreadTimelineSet(
             .sort(([, threadA], [, threadB]) => threadA.lastReply.getTs() - threadB.lastReply.getTs())
             .forEach(([, thread]) => {
                 const isOwnEvent = thread.rootEvent.getSender() === client.getUserId();
-                console.log(`My: ${filterType !== ThreadFilterType.My}`);
                 if (filterType !== ThreadFilterType.My || isOwnEvent) {
-                    console.log("Add");
-                    console.log("Add");
                     timelineSet.getLiveTimeline().addEvent(thread.rootEvent, false);
                 }
             });
