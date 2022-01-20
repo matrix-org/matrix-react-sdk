@@ -57,10 +57,12 @@ function matrixOpaqueIdLinkifyParser({
     const {
         DOMAIN,
         DOT,
+        // IPV4 necessity
         NUM,
         TLD,
         COLON,
         SYM,
+        HYPHEN,
         UNDERSCORE,
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
@@ -71,18 +73,7 @@ function matrixOpaqueIdLinkifyParser({
     const S_START = parser.start;
     const matrixSymbol = utils.createTokenClass(name, { isLink: true });
 
-    const localpartTokens = [
-        DOMAIN,
-        // IPV4 necessity
-        NUM,
-        TLD,
-
-        // because 'localhost' is tokenised to the localhost token,
-        // usernames @localhost:foo.com are otherwise not matched!
-        LOCALHOST,
-        SYM,
-        UNDERSCORE,
-    ];
+    const localpartTokens = [DOMAIN, NUM, TLD, LOCALHOST, SYM, UNDERSCORE, HYPHEN];
     const domainpartTokens = [domain, NUM, TLD, LOCALHOST];
 
     const INITIAL_STATE = S_START.tt(token);
