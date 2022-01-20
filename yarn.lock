@@ -1395,9 +1395,9 @@
   integrity sha512-noHuFhU+VKR5kJCGwNUKbBcKo4yvS1YaQrtsR+KPKnMcpQrG8xXqyaWExmZKoo+jUjAzN/pcRuJog4bDt3lQWw==
 
 "@matrix-org/linkifyjs@^4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@matrix-org/linkifyjs/-/linkifyjs-4.0.0-rc.1.tgz#0117b4e2c9b7e84d5788f4df30e145a9eb57b909"
-  integrity sha512-h9CV8IHJNZL53UDZaxSJpnoDHO04MC1vYGTZwg0hpRE2y29ZQ6NWxdSL8OAy0RNpe4ZMY8yihaDuB4hFS/f0Cw==
+  version "4.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@matrix-org/linkifyjs/-/linkifyjs-4.0.0-rc.2.tgz#faaa3b458cc414c470f0202b4161254f8dcffaab"
+  integrity sha512-y36/0ZjpGPzVOB5Noq9OauTN389ivpfiMct3L5coNNqZHJ9UnF5Ke2qLxRb+v6go0nIhAidPZ+CHD71xRmruTA==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz":
   version "3.2.8"
