@@ -32,9 +32,8 @@ import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
 
-enum Type {
+export enum Type {
     URL = "url",
-    MatrixURI = "matrix_uri",
     UserId = "userid",
     RoomAlias = "roomalias",
     GroupId = "groupid"
@@ -147,25 +146,9 @@ export const MATRIXTO_MD_LINK_PATTERN =
     '\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
 export const MATRIXTO_BASE_URL= baseUrl;
 
-function getActualType(href: string, type: Type | string) {
-    if (type !== Type.MatrixURI) return type;
-    /*
-     for Type.MatrixURI we need to be carful since the linkify matcher is too
-     generous we were using the PROTOCOL token to match the "matrix:" part of
-     the link. But "https:", "ftp" .. are also part of this token. So our plugin
-     is too aggressive and labels Type.URL links as Type.MatrixURI. Here we
-     filter out and see if the labelling actually was correct
-    */
-
-    const beginsWithMatrix = href.indexOf("matrix:") === 0;
-    return beginsWithMatrix ? type : Type.URL;
-}
-
 export const options = {
     events: function(href: string, type: Type | string): Partial<GlobalEventHandlers> {
-        const actualType = getActualType(href, type);
-        switch (actualType) {
-            case Type.MatrixURI:
+        switch (type) {
             case Type.URL: {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
                 try {
@@ -241,11 +224,10 @@ export const options = {
     className: 'linkified',
 
     target: function(href: string, type: Type | string): string {
-        const actualType = getActualType(href, type);
-        if (actualType === Type.URL) {
+        if (type === Type.URL) {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
-                if (transformed !== href || // if could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
+                if (transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
                     decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https:vector|riot...
                 ) {
                     return null;
