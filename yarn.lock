@@ -1384,20 +1384,20 @@
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
   integrity sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==
 
-"@matrix-org/linkify-element@^4.0.0-rc.3":
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@matrix-org/linkify-element/-/linkify-element-4.0.0-rc.3.tgz#f71ae766d5a8d899df487ce2639a3da4f4e39206"
-  integrity sha512-JuPrqap+sc45ylf6hBOHxrPZixpXGQNUofUZqnvX3rtX1dWVcgyMRtYU76JIbNLiKrrb+aVYyQdsgKEgtcZdZQ==
+"@matrix-org/linkify-element@^4.0.0-rc.4":
+  version "4.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@matrix-org/linkify-element/-/linkify-element-4.0.0-rc.4.tgz#32e78a74d1966bc991d7e5c3dc9473ad4a4777e9"
+  integrity sha512-rTl+F/0IXKDjwBvSpHEe4JStzLIDfHa+Ho0ebLVt2xnxZQNjHp5ZguEF+UEh32EIhZckPh/F2fl0d7eKYFys1w==
 
-"@matrix-org/linkify-string@^4.0.0-rc.3":
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@matrix-org/linkify-string/-/linkify-string-4.0.0-rc.3.tgz#ce70b813ebb09914f45dc8c03ca216254da9a955"
-  integrity sha512-9q/EAxkIf7Rzfl/jpZC3lVxljPy4vRF2mk6sYpeUFS/k1S46Hgud+JjAw0NfVq8rBcgyPifl2FLfOLdDaZv1qQ==
+"@matrix-org/linkify-string@^4.0.0-rc.4":
+  version "4.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@matrix-org/linkify-string/-/linkify-string-4.0.0-rc.4.tgz#0e3aeab162ff9affb2abeaf7da2f53fcbc0fff75"
+  integrity sha512-xooQ0VGv1NAQljZ1lFLo7ev1ezSWzibRndc1fzKcN2TYAaoL8UqsJRc15k6TVailmXlr3B+omX1+oy84ZaFFCw==
 
-"@matrix-org/linkifyjs@^4.0.0-rc.3":
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@matrix-org/linkifyjs/-/linkifyjs-4.0.0-rc.3.tgz#f4daf386ed8e6bb273a1d25b7821e5ecf0710a86"
-  integrity sha512-NjpDbIj38kqGCU5Mdu4mR2HG26cnbLzVuKhovZUA49VHBclX6DsZs7jzT1val5gdl+sZFaDIjEa5lUKIA5idkg==
+"@matrix-org/linkifyjs@^4.0.0-rc.4":
+  version "4.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@matrix-org/linkifyjs/-/linkifyjs-4.0.0-rc.4.tgz#4ae35be7d64f57d490f19ee99e425fa95edc78bd"
+  integrity sha512-EuXKzleL/dP/upiGBHb+3UtQk1nx/vkVCGoSq/SyIMRgD9xWgH/wH/Oqlih+i8kG7JEKIUSghzhjoaXsYDYjmQ==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz":
   version "3.2.8"
