@@ -35,6 +35,7 @@ import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import { NameFilterCondition } from "./filters/NameFilterCondition";
+import { UnreadFilterCondition } from "./filters/UnreadFilterCondition";
 import { RoomNotificationStateStore } from "../notifications/RoomNotificationStateStore";
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
@@ -65,6 +66,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private prefilterConditions: IFilterCondition[] = [];
     private tagWatcher: TagWatcher;
     private spaceWatcher: SpaceWatcher;
+    private unreadFilter: UnreadFilterCondition = new UnreadFilterCondition();
     private updateFn = new MarkedExecution(() => {
         for (const tagId of Object.keys(this.orderedLists)) {
             RoomNotificationStateStore.instance.getListState(tagId).setRooms(this.orderedLists[tagId]);
@@ -461,6 +463,15 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private getStoredListOrder(tagId: TagID): ListAlgorithm {
         // TODO: Per-account? https://github.com/vector-im/element-web/issues/14114
         return <ListAlgorithm>localStorage.getItem(`mx_listOrder_${tagId}`);
+    }
+
+    public setShowOnlyUnreadRooms(showOnlyUnreadRooms: boolean) {
+        if (showOnlyUnreadRooms) {
+            this.algorithm.addFilterCondition(this.unreadFilter);
+        } else {
+            this.algorithm.removeFilterCondition(this.unreadFilter);
+        }
+        this.updateFn.trigger();
     }
 
     // logic must match calculateTagSorting

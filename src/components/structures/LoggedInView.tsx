@@ -116,6 +116,7 @@ interface IState {
     usageLimitEventContent?: IUsageLimit;
     usageLimitEventTs?: number;
     useCompactLayout: boolean;
+    showOnlyUnreadRooms: boolean;
     activeCalls: Array<MatrixCall>;
     backgroundImage?: string;
 }
@@ -139,6 +140,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
     protected layoutWatcherRef: string;
     protected compactLayoutWatcherRef: string;
+    protected showOnlyUnreadRoomsWatcherRef: string;
     protected backgroundImageWatcherRef: string;
     protected resizer: Resizer;
 
@@ -149,6 +151,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             syncErrorData: undefined,
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
+            showOnlyUnreadRooms: SettingsStore.getValue('showOnlyUnreadRooms'),
             usageLimitDismissed: false,
             activeCalls: CallHandler.instance.getAllActiveCalls(),
         };
@@ -185,6 +188,8 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.compactLayoutWatcherRef = SettingsStore.watchSetting(
             "useCompactLayout", null, this.onCompactLayoutChanged,
         );
+        this.showOnlyUnreadRoomsWatcherRef = SettingsStore.watchSetting(
+            "showOnlyUnreadRooms", null, this.onShowOnlyUnreadRoomsChanged);
         this.backgroundImageWatcherRef = SettingsStore.watchSetting(
             "RoomList.backgroundImage", null, this.refreshBackgroundImage,
         );
@@ -206,6 +211,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
         SettingsStore.unwatchSetting(this.layoutWatcherRef);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
+        SettingsStore.unwatchSetting(this.showOnlyUnreadRoomsWatcherRef);
         SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
         this.resizer.detach();
     }
@@ -292,6 +298,12 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.setState({
             useCompactLayout: SettingsStore.getValue("useCompactLayout"),
         });
+    };
+
+    private onShowOnlyUnreadRoomsChanged = () => {
+        const showOnlyUnreadRooms = SettingsStore.getValue("showOnlyUnreadRooms");
+        this.setState({ showOnlyUnreadRooms });
+        RoomListStore.instance.setShowOnlyUnreadRooms(showOnlyUnreadRooms);
     };
 
     private onSync = (syncState: SyncState, oldSyncState?: SyncState, data?: ISyncStateData): void => {

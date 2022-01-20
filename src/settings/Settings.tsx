@@ -431,6 +431,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new IncompatibleController("layout", false, v => v !== Layout.Group),
     },
+    "showOnlyUnreadRooms": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Only show rooms with unread messages"),
+        default: false,
+    },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td('Show a placeholder for removed messages'),

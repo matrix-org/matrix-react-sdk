@@ -119,6 +119,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             );
             advanced = <>
                 <SettingsFlag name="useCompactLayout" level={SettingLevel.DEVICE} useCheckbox={true} />
+                <SettingsFlag name="showOnlyUnreadRooms" level={SettingLevel.DEVICE} useCheckbox={true} />
 
                 { !SettingsStore.getValue("feature_new_layout_switcher") ?
                     <StyledCheckbox
