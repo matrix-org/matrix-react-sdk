@@ -235,17 +235,21 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public getCredentials(): IMatrixClientCreds {
+        let copiedCredentials = this.currentClientCreds;
+        if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
+            // cached credentials belong to a different user - don't use them
+            copiedCredentials = null;
+        }
         return {
+            // Copy the cached credentials before overriding what we can.
+            ...(copiedCredentials ?? {}),
+
             homeserverUrl: this.matrixClient.baseUrl,
             identityServerUrl: this.matrixClient.idBaseUrl,
             userId: this.matrixClient.credentials.userId,
             deviceId: this.matrixClient.getDeviceId(),
             accessToken: this.matrixClient.getAccessToken(),
             guest: this.matrixClient.isGuest(),
-
-            // Get these from the cached credentials instead of the live ones
-            accessTokenExpiryTs: this.currentClientCreds?.accessTokenExpiryTs,
-            accessTokenRefreshToken: this.currentClientCreds?.accessTokenRefreshToken,
         };
     }
 
