@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642722026609,
+  "lastUpdate": 1642723129068,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57068,6 +57068,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 608.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "oliver.sand@nordeck.net",
+            "name": "Oliver Sand",
+            "username": "Fox32"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e6f616e91f6a94b6443b0c6f00f8543d2a2796f",
+          "message": "Allow downloads from widgets (#7502)\n\nNotes: Allow downloads from widgets.\r\n\r\nWe are working on a widget that allows the user to download a file (a ICS calendar entry). Right now the sandbox of the widget iframe doesn't allow downloading. Instead, the following error is displayed in the console (for Google Chrome):\r\n\r\n```\r\nDownload is disallowed. The frame initiating or instantiating the download is sandboxed, but the flag ‘allow-downloads’ is not set. See https://www.chromestatus.com/feature/5706745674465280 for more details.\r\n```\r\n\r\nTherefore this PR adds `allow-downloads` to the sandbox capabilities.\r\n\r\nSteps to reproduce:\r\n1. Create a simple widget with an `index.html` file like, e.g.\r\n   ```\r\n     <a href=\"index.html\" download>Download</a>\r\n   ```\r\n2. Host the widget somewhere, add it to the room and open the widget\r\n3. Click on the download button\r\n  * Without the fix: Nothing happens, there is a warning in the console (see above)\r\n  * With the fix: The file is downloaded\r\n\r\nSigned-off-by: Oliver Sand <oliver.sand@nordeck.net>",
+          "timestamp": "2022-01-20T16:52:06-07:00",
+          "tree_id": "7e1a60f20d6f28e2d856c2f2d09733a2c1b20632",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e6f616e91f6a94b6443b0c6f00f8543d2a2796f"
+        },
+        "date": 1642723124417,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4896.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 697.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
