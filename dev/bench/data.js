@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642621191569,
+  "lastUpdate": 1642668915357,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56792,6 +56792,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4923.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "73a58705f60fb779b2c3017989f961e6e615546b",
+          "message": "Fix alignment of unread badge in thread list (#7582)",
+          "timestamp": "2022-01-20T08:47:37Z",
+          "tree_id": "fa66ee0ba2ef8c1d4b2f8469b1155093ddcfb85b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/73a58705f60fb779b2c3017989f961e6e615546b"
+        },
+        "date": 1642668910783,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4884.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1034.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1832.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4787.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
