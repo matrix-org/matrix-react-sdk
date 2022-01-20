@@ -37,7 +37,7 @@ const KeyboardKey: React.FC<IKeyboardKeyProps> = ({ name, last }) => {
     const icon = KEY_ICON[name];
     const alternateName = ALTERNATE_KEY_NAME[name];
 
-    return <React.Fragment key={name}>
+    return <React.Fragment>
         <kbd> { icon || (alternateName && _t(alternateName)) || name } </kbd>
         { !last && "+" }
     </React.Fragment>;
@@ -53,17 +53,17 @@ const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ name }) => {
 
     const modifiersElement = [];
     if (value.ctrlOrCmdKey) {
-        modifiersElement.push(<KeyboardKey name={isMac ? Key.META : Key.CONTROL} />);
+        modifiersElement.push(<KeyboardKey key="ctrlOrCmdKey" name={isMac ? Key.META : Key.CONTROL} />);
     } else if (value.ctrlKey) {
-        modifiersElement.push(<KeyboardKey name={Key.CONTROL} />);
+        modifiersElement.push(<KeyboardKey key="ctrlKey" name={Key.CONTROL} />);
     } else if (value.metaKey) {
-        modifiersElement.push(<KeyboardKey name={Key.META} />);
+        modifiersElement.push(<KeyboardKey key="metaKey" name={Key.META} />);
     }
     if (value.altKey) {
-        modifiersElement.push(<KeyboardKey name={Key.ALT} />);
+        modifiersElement.push(<KeyboardKey key="altKey" name={Key.ALT} />);
     }
     if (value.shiftKey) {
-        modifiersElement.push(<KeyboardKey name={Key.SHIFT} />);
+        modifiersElement.push(<KeyboardKey key="shiftKey" name={Key.SHIFT} />);
     }
 
     return <div>
