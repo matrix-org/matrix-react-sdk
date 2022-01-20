@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642672698238,
+  "lastUpdate": 1642699550492,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56960,6 +56960,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 619.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6712a5b1c54202d7c670a7bdb213e18e3b9eb4cf",
+          "message": "Parse matrix-schemed URIs (#7453)\n\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>\r\nCo-authored-by: Dariusz Niemczyk <dariuszn@element.io>\r\nCo-authored-by: Timo K <toger5@hotmail.de>\r\n\r\nWith this pr all href use matrix matrix.to links. As a consequence right-click copy link will always return get you a sharable matrix.to link.",
+          "timestamp": "2022-01-20T18:18:47+01:00",
+          "tree_id": "df4de9f5e37a6d5361bc5b5aeb166bc5270f1719",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6712a5b1c54202d7c670a7bdb213e18e3b9eb4cf"
+        },
+        "date": 1642699545416,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4641.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 624.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
