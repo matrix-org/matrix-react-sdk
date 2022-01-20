@@ -5,7 +5,10 @@ import renderer from 'react-test-renderer';
 
 import { getSenderName, textForEvent } from "../src/TextForEvent";
 import SettingsStore from "../src/settings/SettingsStore";
-import { SettingLevel } from "../src/settings/SettingLevel";
+import { createTestClient } from './test-utils';
+import { MatrixClientPeg } from '../src/MatrixClientPeg';
+
+jest.mock("../src/settings/SettingsStore");
 
 function mockPinnedEvent(
     pinnedMessageIds?: string[],
@@ -67,7 +70,10 @@ describe('TextForEvent', () => {
     });
 
     describe("TextForPinnedEvent", () => {
-        SettingsStore.setValue("feature_pinning", null, SettingLevel.DEVICE, true);
+        beforeAll(() => {
+            // enable feature_pinning setting
+            (SettingsStore.getValue as jest.Mock).mockImplementation(feature => feature === 'feature_pinning');
+        });
 
         it("mentions message when a single message was pinned, with no previously pinned messages", () => {
             const event = mockPinnedEvent(['message-1']);
@@ -141,6 +147,11 @@ describe('TextForEvent', () => {
     });
 
     describe("textForPowerEvent()", () => {
+        let mockClient;
+        const mockRoom = {
+            getMember: jest.fn(),
+        };
+
         const userA = {
             id: '@a',
             name: 'Alice',
@@ -173,6 +184,16 @@ describe('TextForEvent', () => {
                 users: prevUsers,
                 users_default: prevDefault,
             },
+        });
+
+        beforeAll(() => {
+            mockClient = createTestClient();
+            MatrixClientPeg.get = () => mockClient;
+            mockClient.getRoom.mockClear().mockReturnValue(mockRoom);
+            mockRoom.getMember.mockClear().mockImplementation(
+                userId => [userA, userB, userC].find(u => u.id === userId),
+            );
+            (SettingsStore.getValue as jest.Mock).mockReturnValue(true);
         });
 
         it("returns empty string when no users have changed power level", () => {
@@ -256,6 +277,26 @@ describe('TextForEvent', () => {
             const expectedText =
                 "@a changed the power level of @b from Moderator to Admin, @c from Custom (101) to Moderator.";
             expect(textForEvent(event)).toEqual(expectedText);
+        });
+
+        describe('when UIFeature.displayMxids is falsy', () => {
+            beforeAll(() => {
+                (SettingsStore.getValue as jest.Mock).mockReturnValue(false);
+            });
+
+            it("returns correct message for a single user with changed power level", () => {
+                const event = mockPowerEvent({
+                    users: {
+                        [userB.id]: 100,
+                    },
+                    prevUsers: {
+                        [userB.id]: 50,
+                    },
+                });
+                // uses Bob by name not mxid
+                const expectedText = "@a changed the power level of Bob from Moderator to Admin.";
+                expect(textForEvent(event)).toEqual(expectedText);
+            });
         });
     });
 

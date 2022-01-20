@@ -29,8 +29,6 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import AccessibleButton from '../elements/AccessibleButton';
 import AvatarSetting from './AvatarSetting';
 import ExternalLink from '../elements/ExternalLink';
-import FeatureSettingWrapper from '../../../settings/helpers/FeatureSettingWrapper';
-import { UIFeature } from '../../../settings/UIFeature';
 
 interface IState {
     userId?: string;
