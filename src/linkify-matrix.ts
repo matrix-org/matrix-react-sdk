@@ -210,21 +210,24 @@ export const options = {
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        onUserClick(e, href);
+                        const userId = parsePermalink(href).userId;
+                        onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        onAliasClick(e, href);
+                        const alias = parsePermalink(href).roomIdOrAlias;
+                        onAliasClick(e, alias);
                     },
                 };
             case Type.GroupId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        onGroupClick(e, href);
+                        const groupId = parsePermalink(href).groupId;
+                        onGroupClick(e, groupId);
                     },
                 };
         }
