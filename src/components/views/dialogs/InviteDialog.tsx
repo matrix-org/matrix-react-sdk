@@ -333,7 +333,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         const caption = (this.props.member as ThreepidMember).isEmail
             ? _t("Invite by email")
             : <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
-                this.highlightName(this.props.member.userId);
+                {this.highlightName(this.props.member.userId)}
             </FeatureSettingWrapper>;
 
         return (

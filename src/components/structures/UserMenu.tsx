@@ -501,7 +501,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     </span>
                     <span className="mx_UserMenu_contextMenu_userId">
                         <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
-                            {MatrixClientPeg.get().getUserId()}
+                            { MatrixClientPeg.get().getUserId() }
                         </FeatureSettingWrapper>
                     </span>
                 </div>

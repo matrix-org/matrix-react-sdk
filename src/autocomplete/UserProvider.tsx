@@ -34,6 +34,8 @@ import { makeUserPermalink } from "../utils/permalinks/Permalinks";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import MemberAvatar from '../components/views/avatars/MemberAvatar';
 import { TimelineRenderingType } from '../contexts/RoomContext';
+import SettingsStore from '../settings/SettingsStore';
+import { UIFeature } from '../settings/UIFeature';
 
 const USER_REGEX = /\B@\S*/g;
 
@@ -50,6 +52,7 @@ export default class UserProvider extends AutocompleteProvider {
     matcher: QueryMatcher<RoomMember>;
     users: RoomMember[];
     room: Room;
+    displayMxids: boolean;
 
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({
@@ -63,6 +66,8 @@ export default class UserProvider extends AutocompleteProvider {
             funcs: [obj => obj.userId.slice(1)], // index by user id minus the leading '@'
             shouldMatchWordsOnly: false,
         });
+
+        this.displayMxids = SettingsStore.getValue(UIFeature.DisplayMxids);
 
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
         MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
@@ -127,6 +132,7 @@ export default class UserProvider extends AutocompleteProvider {
             // Don't include the '@' in our search query - it's only used as a way to trigger completion
             const query = fullMatch.startsWith('@') ? fullMatch.substring(1) : fullMatch;
             completions = this.matcher.match(query, limit).map((user) => {
+                const description = this.displayMxids ? user.userId : null;
                 const displayName = (user.name || user.userId || '');
                 return {
                     // Length of completion should equal length of text in decorator. draft-js
@@ -137,7 +143,7 @@ export default class UserProvider extends AutocompleteProvider {
                     suffix: (selection.beginning && range.start === 0) ? ': ' : ' ',
                     href: makeUserPermalink(user.userId),
                     component: (
-                        <PillCompletion title={displayName} description={user.userId}>
+                        <PillCompletion title={displayName} description={description}>
                             <MemberAvatar member={user} width={24} height={24} />
                         </PillCompletion>
                     ),

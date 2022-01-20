@@ -201,11 +201,11 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                             onChange={this.onDisplayNameChanged}
                         />
                         <p>
-                            {/* <FeatureSettingWrapper feature={UIFeature.DisplayMxids}> */}
+                            { /* <FeatureSettingWrapper feature={UIFeature.DisplayMxids}> */ }
                             <span className="mx_ProfileSettings_userId">
-                                {this.state.userId}
+                                { this.state.userId }
                             </span>
-                            {/* </FeatureSettingWrapper> */}
+                            { /* </FeatureSettingWrapper> */ }
                             { hostingSignup }
                         </p>
                     </div>

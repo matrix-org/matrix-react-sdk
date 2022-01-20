@@ -1606,7 +1606,7 @@ const UserInfoHeader: React.FC<{
                     </h2>
                 </div>
                 <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
-                    <div>{member.userId}</div>
+                    <div>{ member.userId }</div>
                 </FeatureSettingWrapper>
                 <div className="mx_UserInfo_profileStatus">
                     { presenceLabel }
