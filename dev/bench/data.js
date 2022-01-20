@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642706291971,
+  "lastUpdate": 1642722026609,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57032,6 +57032,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 696.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "rkfg@rkfg.me",
+            "name": "rkfg",
+            "username": "rkfg"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "98e1c311c4a7113f13f4a9d828b9397e7544d333",
+          "message": "Make inline emojis bigger (#5401)",
+          "timestamp": "2022-01-20T16:33:41-07:00",
+          "tree_id": "994dfdc742fc4db35d60e90aaba5c0eac9166c19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/98e1c311c4a7113f13f4a9d828b9397e7544d333"
+        },
+        "date": 1642722021474,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4571.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 608.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
