@@ -118,70 +118,6 @@ function matrixOpaqueIdLinkifyParser({
     PORT_STATE.tt(NUM, matrixSymbol);
 }
 
-// This is (sadly) necessary for linkifyjs v3 In v4 it will be possible to just
-// call registerCustomProtocol(Type.MatrixURI) but currently this does not support
-// matrid:u/ but only matrix://
-function matrixURILinkifyParser({ scanner, parser, utils }) {
-    const {
-        DOMAIN,
-        PROTOCOL,
-        SLASH,
-        NUM,
-        TLD,
-        DOT,
-        LOCALHOST,
-        SYM,
-        UNDERSCORE,
-        COLON,
-        QUERY,
-        EQUALS,
-        AT,
-        POUND,
-        EXCLAMATION,
-    } = scanner.tokens;
-
-    const matrixDone = utils.createTokenClass(Type.MatrixURI, { isLink: true });
-
-    const S_START = parser.start;
-
-    const INITIAL_TOKEN_STATE = S_START.tt(PROTOCOL);
-    const LOCALPART_STATE = INITIAL_TOKEN_STATE.tt(DOMAIN).tt(SLASH); //.tt(SLASH);
-
-    // dont parse authorities for now, they make this also match with http:// links which is a problem
-    // const AUTHORITYPART_STATE_FIRSTSLASH = INITIAL_TOKEN_STATE.tt(SLASH);
-    // const AUTHORITYPART_STATE_SECONDSLASH = AUTHORITYPART_STATE_FIRSTSLASH.tt(
-    //     SLASH,
-    // );
-    // const AUTHORITYPART_STATE = AUTHORITYPART_STATE_SECONDSLASH.tt(DOMAIN);
-    // AUTHORITYPART_STATE.tt(SLASH, LOCALPART_STATE);
-
-    const localpartTokens = [
-        DOT,
-        DOMAIN,
-        NUM,
-        TLD,
-        COLON,
-        LOCALHOST,
-        SYM,
-        UNDERSCORE,
-        AT,
-        POUND,
-        EXCLAMATION,
-        SLASH,
-    ];
-    const LOCALPART_STATE_SLASH = LOCALPART_STATE.tt(SLASH);
-    for (const token of localpartTokens) {
-        LOCALPART_STATE.tt(token, LOCALPART_STATE);
-        LOCALPART_STATE_SLASH.tt(token, LOCALPART_STATE);
-    }
-    LOCALPART_STATE.tt(DOMAIN, matrixDone);
-    const AFTERQUERY_STATE = LOCALPART_STATE.tt(QUERY).tt(DOMAIN).tt(EQUALS);
-    for (const token of localpartTokens) {
-        AFTERQUERY_STATE.tt(token, AFTERQUERY_STATE);
-        AFTERQUERY_STATE.tt(token, matrixDone);
-    }
-}
-
 function onUserClick(event: MouseEvent, userId: string) {
     event.preventDefault();
     const member = new RoomMember(null, userId);
@@ -368,7 +304,6 @@ registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
 });
 
 registerCustomProtocol("matrix", true);
-// registerPlugin(Type.MatrixURI, matrixURILinkifyParser);
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;
