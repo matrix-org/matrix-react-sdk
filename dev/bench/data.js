@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642668915357,
+  "lastUpdate": 1642671567510,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -56840,6 +56840,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4787.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a7a7cb56fe0171a32f58f9deff5c1fa0177dfeb7",
+          "message": "Cancel pending events in virtual room when call placed (#7583)\n\nAs the comment hopefully explains.\r\n\r\nAlso add public qualifiers to the methods in Resend which lacked\r\nany visibility specifiers.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/17594",
+          "timestamp": "2022-01-20T09:32:15Z",
+          "tree_id": "8df3fa42dfc68e7143de71e2059af475eca4cb5d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a7a7cb56fe0171a32f58f9deff5c1fa0177dfeb7"
+        },
+        "date": 1642671562507,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5115.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1068.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1849.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4987.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
