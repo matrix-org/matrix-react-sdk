@@ -177,6 +177,18 @@ describe('linkify-matrix', () => {
                 isLink: true,
             }]));
         });
+        it('accept hyphens in name ' + char + 'foo-bar:server.com', () => {
+            const test = '' + char + 'foo-bar:server.com';
+            const found = linkify.find(test);
+            expect(found).toEqual(([{
+                href: char + "foo-bar:server.com",
+                type,
+                value: char + "foo-bar:server.com",
+                start: 0,
+                end: test.length,
+                isLink: true,
+            }]));
+        });
         it('ignores trailing `:`', () => {
             const test = '' + char + 'foo:bar.com:';
             const found = linkify.find(test);
