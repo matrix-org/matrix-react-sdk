@@ -55,7 +55,6 @@ function matrixOpaqueIdLinkifyParser({
     name: Type;
 }) {
     const {
-        DOMAIN,
         DOT,
         // IPV4 necessity
         NUM,
@@ -73,8 +72,8 @@ function matrixOpaqueIdLinkifyParser({
     const S_START = parser.start;
     const matrixSymbol = utils.createTokenClass(name, { isLink: true });
 
-    const localpartTokens = [domain, NUM, TLD, LOCALHOST, SYM, UNDERSCORE, HYPHEN];
-    const domainpartTokens = [domain, NUM, TLD, LOCALHOST, HYPHEN];
+    const localpartTokens = [domain, TLD, LOCALHOST, SYM, UNDERSCORE, HYPHEN];
+    const domainpartTokens = [domain, TLD, LOCALHOST, HYPHEN];
 
     const INITIAL_STATE = S_START.tt(token);
 
