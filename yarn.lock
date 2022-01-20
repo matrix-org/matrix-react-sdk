@@ -1394,7 +1394,7 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/linkify-string/-/linkify-string-4.0.0-rc.2.tgz#2b39d2af4d91d294d8b6663902bda4f9bfa92edb"
   integrity sha512-noHuFhU+VKR5kJCGwNUKbBcKo4yvS1YaQrtsR+KPKnMcpQrG8xXqyaWExmZKoo+jUjAzN/pcRuJog4bDt3lQWw==
 
-"@matrix-org/linkifyjs@^4.0.0-rc.1":
+"@matrix-org/linkifyjs@^4.0.0-rc.2":
   version "4.0.0-rc.2"
   resolved "https://registry.yarnpkg.com/@matrix-org/linkifyjs/-/linkifyjs-4.0.0-rc.2.tgz#faaa3b458cc414c470f0202b4161254f8dcffaab"
   integrity sha512-y36/0ZjpGPzVOB5Noq9OauTN389ivpfiMct3L5coNNqZHJ9UnF5Ke2qLxRb+v6go0nIhAidPZ+CHD71xRmruTA==
