@@ -57,8 +57,6 @@ function matrixOpaqueIdLinkifyParser({
     const {
         DOMAIN,
         DOT,
-        // A generic catchall text token
-        TEXT,
         NUM,
         TLD,
         COLON,
@@ -67,6 +65,7 @@ function matrixOpaqueIdLinkifyParser({
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
         LOCALHOST,
+        domain,
     } = scanner.tokens;
 
     const S_START = parser.start;
@@ -83,13 +82,12 @@ function matrixOpaqueIdLinkifyParser({
         LOCALHOST,
         SYM,
         UNDERSCORE,
-        TEXT,
     ];
-    const domainpartTokens = [DOMAIN, NUM, TLD, LOCALHOST];
+    const domainpartTokens = [domain, NUM, TLD, LOCALHOST];
 
     const INITIAL_STATE = S_START.tt(token);
 
-    const LOCALPART_STATE = INITIAL_STATE.tt(DOMAIN);
+    const LOCALPART_STATE = INITIAL_STATE.tt(domain);
     for (const token of localpartTokens) {
         INITIAL_STATE.tt(token, LOCALPART_STATE);
         LOCALPART_STATE.tt(token, LOCALPART_STATE);
@@ -100,7 +98,7 @@ function matrixOpaqueIdLinkifyParser({
     }
 
     const DOMAINPART_STATE_DOT = LOCALPART_STATE.tt(COLON);
-    const DOMAINPART_STATE = DOMAINPART_STATE_DOT.tt(DOMAIN);
+    const DOMAINPART_STATE = DOMAINPART_STATE_DOT.tt(domain);
     DOMAINPART_STATE.tt(DOT, DOMAINPART_STATE_DOT);
     for (const token of domainpartTokens) {
         DOMAINPART_STATE.tt(token, DOMAINPART_STATE);
