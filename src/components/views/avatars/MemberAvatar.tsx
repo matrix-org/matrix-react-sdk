@@ -26,6 +26,8 @@ import BaseAvatar from "./BaseAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { CardContext } from '../right_panel/BaseCard';
+import SettingsStore from '../../../settings/SettingsStore';
+import { UIFeature } from '../../../settings/UIFeature';
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember;
@@ -68,8 +70,10 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
     }
 
     private static getState(props: IProps): IState {
+        const displayMxids = SettingsStore.getValue(UIFeature.DisplayMxids);
         if (props.member?.name) {
             let imageUrl = null;
+            const userTitle = displayMxids ? props.member.userId : props.member.name;
             if (props.member.getMxcAvatarUrl()) {
                 imageUrl = mediaFromMxc(props.member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
                     props.width,
@@ -79,7 +83,7 @@ export default class MemberAvatar extends React.Component<IProps, IState> {
             }
             return {
                 name: props.member.name,
-                title: props.title || props.member.userId,
+                title: props.title || userTitle,
                 imageUrl: imageUrl,
             };
         } else if (props.fallbackUserId) {
