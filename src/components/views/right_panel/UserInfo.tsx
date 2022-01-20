@@ -72,11 +72,12 @@ import SpaceStore from "../../../stores/spaces/SpaceStore";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
-import { UIComponent } from "../../../settings/UIFeature";
+import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
+import FeatureSettingWrapper from '../../../settings/helpers/FeatureSettingWrapper';
 
 export interface IDevice {
     deviceId: string;
@@ -1604,7 +1605,9 @@ const UserInfoHeader: React.FC<{
                         </span>
                     </h2>
                 </div>
-                <div>{ member.userId }</div>
+                <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
+                    <div>{member.userId}</div>
+                </FeatureSettingWrapper>
                 <div className="mx_UserInfo_profileStatus">
                     { presenceLabel }
                     { statusLabel }

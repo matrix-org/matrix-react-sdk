@@ -72,6 +72,7 @@ import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import CallHandler from "../../../CallHandler";
+import FeatureSettingWrapper from '../../../settings/helpers/FeatureSettingWrapper';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -331,7 +332,9 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 
         const caption = (this.props.member as ThreepidMember).isEmail
             ? _t("Invite by email")
-            : this.highlightName(this.props.member.userId);
+            : <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
+                this.highlightName(this.props.member.userId);
+            </FeatureSettingWrapper>;
 
         return (
             <div className='mx_InviteDialog_roomTile' onClick={this.onClick}>
