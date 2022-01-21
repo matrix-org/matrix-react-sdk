@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642760425749,
+  "lastUpdate": 1642761757672,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57260,6 +57260,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 781.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "09a1bc66a899c349b2136b8a7cd41035d1812507",
+          "message": "Disable location sharing button on Desktop (#7590)",
+          "timestamp": "2022-01-21T10:36:00Z",
+          "tree_id": "0b5f3cdadc748e1324f5e4c43ad0a03979612dff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/09a1bc66a899c349b2136b8a7cd41035d1812507"
+        },
+        "date": 1642761753584,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4599.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 930,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1657.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4391.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
