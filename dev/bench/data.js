@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642766887556,
+  "lastUpdate": 1642780096109,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57344,6 +57344,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 696.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9fefce672145fa3cb8f507d5788cf1eaebafaef8",
+          "message": "Make the close button of the location share dialog visible in high-contrast theme (#7597)",
+          "timestamp": "2022-01-21T15:40:51Z",
+          "tree_id": "33962fc676f6bd56e5ad817a61e236d6c653f361",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9fefce672145fa3cb8f507d5788cf1eaebafaef8"
+        },
+        "date": 1642780091482,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4652.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 990.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1724.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4838.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
