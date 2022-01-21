@@ -279,7 +279,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
             drawer = <PersistentVResizer
                 room={this.props.room}
                 minHeight={100}
-                maxHeight={(this.props.maxHeight || !widgetIsMaxmised) ? this.props.maxHeight - 50 : undefined}
+                maxHeight={this.props.maxHeight - 50}
                 handleClass="mx_AppsContainer_resizerHandle"
                 handleWrapperClass="mx_AppsContainer_resizerHandleContainer"
                 className="mx_AppsContainer_resizer"
