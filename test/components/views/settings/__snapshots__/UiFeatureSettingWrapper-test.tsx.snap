@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UiFeatureSettingWrapper> renders children when setting is truthy 1`] = `
+<UiFeatureSettingWrapper
+  roomId="testabc"
+  uiFeature="UIFeature.flair"
+>
+  <div>
+    test
+  </div>
+</UiFeatureSettingWrapper>
+`;

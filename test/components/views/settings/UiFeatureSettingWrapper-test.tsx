@@ -1,19 +1,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import SettingsStore from '../../../src/settings/SettingsStore';
-import FeatureSettingWrapper from '../../../src/settings/helpers/FeatureSettingWrapper';
-import { UIFeature } from '../../../src/settings/UIFeature';
+import SettingsStore from '../../../../src/settings/SettingsStore';
+import UiFeatureSettingWrapper from '../../../../src/components/views/settings/UiFeatureSettingWrapper';
+import { UIFeature } from '../../../../src/settings/UIFeature';
 
-jest.mock('../../../src/settings/SettingsStore');
+jest.mock('../../../../src/settings/SettingsStore');
 
-describe('<FeatureSettingWrapper>', () => {
+describe('<UiFeatureSettingWrapper>', () => {
     const defaultProps = {
-        feature: UIFeature.Flair,
+        uiFeature: UIFeature.Flair,
         children: <div>test</div>,
         roomId: 'testabc',
     };
-    const getComponent = (props = {}) => mount(<FeatureSettingWrapper {...defaultProps} {...props} />);
+    const getComponent = (props = {}) => mount(<UiFeatureSettingWrapper {...defaultProps} {...props} />);
 
     beforeEach(() => {
         (SettingsStore.getValue as jest.Mock).mockClear().mockReturnValue(true);
@@ -23,7 +23,7 @@ describe('<FeatureSettingWrapper>', () => {
         const component = getComponent();
 
         expect(component).toMatchSnapshot();
-        expect(SettingsStore.getValue).toHaveBeenCalledWith(defaultProps.feature, defaultProps.roomId);
+        expect(SettingsStore.getValue).toHaveBeenCalledWith(defaultProps.uiFeature, defaultProps.roomId);
     });
 
     it('returns null when setting is truthy but children are undefined', () => {
