@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642759833605,
+  "lastUpdate": 1642760279613,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57188,6 +57188,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 764.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af8b3c2714520bd4f584a58325a6f41cf9dc3bbc",
+          "message": "Add tooltips to emoji in messages (#7592)",
+          "timestamp": "2022-01-21T10:10:57Z",
+          "tree_id": "302c51c897bbaf988b4103b186fa35764d1ad174",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af8b3c2714520bd4f584a58325a6f41cf9dc3bbc"
+        },
+        "date": 1642760274902,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4639.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 706.5,
             "unit": "ms",
             "extra": "type: measure"
           }
