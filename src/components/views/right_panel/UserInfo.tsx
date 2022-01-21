@@ -72,12 +72,12 @@ import SpaceStore from "../../../stores/spaces/SpaceStore";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
-import { UIComponent, UIFeature } from "../../../settings/UIFeature";
+import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
-import FeatureSettingWrapper from '../../../settings/helpers/FeatureSettingWrapper';
+import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 
 export interface IDevice {
     deviceId: string;
@@ -1518,7 +1518,8 @@ export type Member = User | RoomMember | GroupMember;
 const UserInfoHeader: React.FC<{
     member: Member;
     e2eStatus: E2EStatus;
-}> = ({ member, e2eStatus }) => {
+    roomId: string;
+}> = ({ member, e2eStatus, roomId }) => {
     const cli = useContext(MatrixClientContext);
     const statusMessage = useUserStatusMessage(member);
 
@@ -1605,9 +1606,7 @@ const UserInfoHeader: React.FC<{
                         </span>
                     </h2>
                 </div>
-                <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
-                    <div>{ member.userId }</div>
-                </FeatureSettingWrapper>
+                <div>{ UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, { roomId, withDisplayName: true }) }</div>
                 <div className="mx_UserInfo_profileStatus">
                     { presenceLabel }
                     { statusLabel }
@@ -1711,7 +1710,7 @@ const UserInfo: React.FC<IProps> = ({
 
     const header = <React.Fragment>
         { scopeHeader }
-        <UserInfoHeader member={member} e2eStatus={e2eStatus} />
+        <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room.roomId} />
     </React.Fragment>;
     return <BaseCard
         className={classes.join(" ")}

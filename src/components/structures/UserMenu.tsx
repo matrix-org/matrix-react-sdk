@@ -59,7 +59,7 @@ import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
-import FeatureSettingWrapper from "../../settings/helpers/FeatureSettingWrapper";
+import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
@@ -500,9 +500,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         { OwnProfileStore.instance.displayName }
                     </span>
                     <span className="mx_UserMenu_contextMenu_userId">
-                        <FeatureSettingWrapper feature={UIFeature.DisplayMxids}>
-                            { MatrixClientPeg.get().getUserId() }
-                        </FeatureSettingWrapper>
+                        { UserIdentifierCustomisations.getDisplayUserIdentifier(
+                            MatrixClientPeg.get().getUserId(), { withDisplayName: true }) }
                     </span>
                 </div>
 

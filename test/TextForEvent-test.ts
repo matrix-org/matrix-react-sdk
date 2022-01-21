@@ -7,8 +7,12 @@ import { getSenderName, textForEvent } from "../src/TextForEvent";
 import SettingsStore from "../src/settings/SettingsStore";
 import { createTestClient } from './test-utils';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
+import UserIdentifierCustomisations from '../src/customisations/UserIdentifier';
 
 jest.mock("../src/settings/SettingsStore");
+jest.mock('../src/customisations/UserIdentifier', () => ({
+    getDisplayUserIdentifier: jest.fn().mockImplementation(userId => userId),
+}));
 
 function mockPinnedEvent(
     pinnedMessageIds?: string[],
@@ -196,7 +200,13 @@ describe('TextForEvent', () => {
             (SettingsStore.getValue as jest.Mock).mockReturnValue(true);
         });
 
-        it("returns empty string when no users have changed power level", () => {
+        beforeEach(() => {
+            (UserIdentifierCustomisations.getDisplayUserIdentifier as jest.Mock)
+                .mockClear()
+                .mockImplementation(userId => userId);
+        });
+
+        it("returns falsy when no users have changed power level", () => {
             const event = mockPowerEvent({
                 users: {
                     [userA.id]: 100,
@@ -208,7 +218,7 @@ describe('TextForEvent', () => {
             expect(textForEvent(event)).toBeFalsy();
         });
 
-        it("returns empty string when users power levels have been changed by default settings", () => {
+        it("returns false when users power levels have been changed by default settings", () => {
             const event = mockPowerEvent({
                 usersDefault: 100,
                 prevDefault: 50,
@@ -279,24 +289,22 @@ describe('TextForEvent', () => {
             expect(textForEvent(event)).toEqual(expectedText);
         });
 
-        describe('when UIFeature.displayMxids is falsy', () => {
-            beforeAll(() => {
-                (SettingsStore.getValue as jest.Mock).mockReturnValue(false);
+        it("uses userIdentifier customisation", () => {
+            (UserIdentifierCustomisations.getDisplayUserIdentifier as jest.Mock)
+                .mockImplementation(userId => 'customised ' + userId);
+            const event = mockPowerEvent({
+                users: {
+                    [userB.id]: 100,
+                },
+                prevUsers: {
+                    [userB.id]: 50,
+                },
             });
-
-            it("returns correct message for a single user with changed power level", () => {
-                const event = mockPowerEvent({
-                    users: {
-                        [userB.id]: 100,
-                    },
-                    prevUsers: {
-                        [userB.id]: 50,
-                    },
-                });
-                // uses Bob by name not mxid
-                const expectedText = "@a changed the power level of Bob from Moderator to Admin.";
-                expect(textForEvent(event)).toEqual(expectedText);
-            });
+            // uses customised user id
+            const expectedText = "@a changed the power level of customised @b from Moderator to Admin.";
+            expect(textForEvent(event)).toEqual(expectedText);
+            expect(UserIdentifierCustomisations.getDisplayUserIdentifier)
+                .toHaveBeenCalledWith(userB.id, { roomId: event.getRoomId() });
         });
     });
 

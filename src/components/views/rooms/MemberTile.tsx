@@ -29,7 +29,7 @@ import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
-import { UIFeature } from '../../../settings/UIFeature';
+import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 
 interface IProps {
     member: RoomMember;
@@ -209,9 +209,10 @@ export default class MemberTile extends React.Component<IProps, IState> {
     }
 
     private getPowerLabel(): string {
-        const displayMxids = SettingsStore.getValue(UIFeature.DisplayMxids);
         return _t("%(userName)s (power %(powerLevelNumber)s)", {
-            userName: displayMxids ? this.props.member.userId : ' ',
+            userName: UserIdentifierCustomisations.getDisplayUserIdentifier(
+                this.props.member.userId, { roomId: this.props.member.roomId },
+            ),
             powerLevelNumber: this.props.member.powerLevel,
         }).trim();
     }

@@ -44,7 +44,7 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
 import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
-import { UIFeature } from './settings/UIFeature';
+import UserIdentifierCustomisations from './customisations/UserIdentifier';
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
@@ -501,9 +501,6 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
         },
     );
 
-    const displayMxids = SettingsStore.getValue(UIFeature.DisplayMxids);
-    const room = MatrixClientPeg.get().getRoom(event.getRoomId());
-
     const diffs = [];
     users.forEach((userId) => {
         // Previous power level
@@ -518,7 +515,7 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
         }
         if (from === previousUserDefault && to === currentUserDefault) { return; }
         if (to !== from) {
-            const name = displayMxids ? userId : room?.getMember(userId)?.name;
+            const name = UserIdentifierCustomisations.getDisplayUserIdentifier(userId, { roomId: event.getRoomId() });
             diffs.push({ userId, name, from, to });
         }
     });

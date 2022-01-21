@@ -29,6 +29,7 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import AccessibleButton from '../elements/AccessibleButton';
 import AvatarSetting from './AvatarSetting';
 import ExternalLink from '../elements/ExternalLink';
+import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 
 interface IState {
     userId?: string;
@@ -199,11 +200,12 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                             onChange={this.onDisplayNameChanged}
                         />
                         <p>
-                            { /* <FeatureSettingWrapper feature={UIFeature.DisplayMxids}> */ }
                             <span className="mx_ProfileSettings_userId">
-                                { this.state.userId }
+                                { UserIdentifierCustomisations.getDisplayUserIdentifier(
+                                    this.state.userId, { withDisplayName: true },
+                                )
+                                }
                             </span>
-                            { /* </FeatureSettingWrapper> */ }
                             { hostingSignup }
                         </p>
                     </div>

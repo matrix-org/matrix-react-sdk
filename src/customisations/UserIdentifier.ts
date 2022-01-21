@@ -14,11 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Customise display of the user identifier
+ * hide userId for guests, display 3pid
+ * 
+ * Set withDisplayName to true when user identifier will be displayed alongside user name
+ */
 function getDisplayUserIdentifier(
     userId: string,
     { roomId, withDisplayName }: { roomId?: string, withDisplayName?: boolean },
 ): string | null {
-    // E.g. hide userId for guest, display 3pid
     return userId;
 }
 
@@ -32,5 +37,5 @@ export interface IUserIdentifierCustomisations {
 // A real customisation module will define and export one or more of the
 // customisation points that make up `IAliasCustomisations`.
 export default {
-    getDisplayUserIdentifier
+    getDisplayUserIdentifier,
 } as IUserIdentifierCustomisations;
