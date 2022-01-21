@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642761757672,
+  "lastUpdate": 1642766887556,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57308,6 +57308,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4391.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "36052282+twigleingrid@users.noreply.github.com",
+            "name": "Ingrid",
+            "username": "twigleingrid"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cf0141467e7464dec98febfba76d816e8c5e1614",
+          "message": "Tooltip on send button in forward dialog is redundant (#7594)",
+          "timestamp": "2022-01-21T12:00:43Z",
+          "tree_id": "a0b9c84975e716dbd73b23d3c218624471a1eef4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cf0141467e7464dec98febfba76d816e8c5e1614"
+        },
+        "date": 1642766882377,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5302.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 696.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
