@@ -170,7 +170,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!isVisibleOnScreen && !isActiveWidget) {
             ActiveWidgetStore.instance.destroyPersistentWidget(app.id);
             PersistedElement.destroyElement(this.persistKey);
-            this.sgWidget?.stop();
+            this.sgWidget?.stopMessaging();
         }
     };
 
@@ -181,7 +181,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!isActiveWidget) {
             ActiveWidgetStore.instance.destroyPersistentWidget(app.id);
             PersistedElement.destroyElement(this.persistKey);
-            this.sgWidget?.stop();
+            this.sgWidget?.stopMessaging();
         }
     };
 
@@ -217,7 +217,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             // Force the widget to be non-persistent (able to be deleted/forgotten)
             ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
             PersistedElement.destroyElement(this.persistKey);
-            this.sgWidget?.stop();
+            this.sgWidget?.stopMessaging();
         }
 
         this.setState({ hasPermissionToLoad });
@@ -260,7 +260,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private resetWidget(newProps: IProps): void {
-        this.sgWidget?.stop();
+        this.sgWidget?.stopMessaging();
         try {
             this.sgWidget = new StopGapWidget(newProps);
             this.sgWidget.on("preparing", this.onWidgetPreparing);
@@ -282,7 +282,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.iframe = ref;
         if (ref) {
             try {
-                this.sgWidget?.start(ref);
+                this.sgWidget?.startMessaging(ref);
             } catch (e) {
                 logger.error("Failed to start widget", e);
             }
@@ -335,7 +335,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         PersistedElement.destroyElement(this.persistKey);
         ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
 
-        this.sgWidget?.stop({ forceDestroy: true });
+        this.sgWidget?.stopMessaging({ forceDestroy: true });
     }
 
     private onWidgetPreparing = (): void => {
