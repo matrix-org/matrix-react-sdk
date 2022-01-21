@@ -233,11 +233,6 @@ $left-gutter: 64px;
         overflow-y: hidden;
     }
 
-    .mx_EventTile_Emoji {
-        font-size: 1.8rem;
-        vertical-align: bottom;
-    }
-
     &.mx_EventTile_selected .mx_EventTile_line,
     &:hover .mx_EventTile_line {
         border-top-left-radius: 4px;
@@ -389,6 +384,11 @@ $left-gutter: 64px;
     color: $event-timestamp-color;
     font-size: $font-11px;
     position: absolute;
+}
+
+.mx_EventTile_Emoji {
+    font-size: 1.8rem;
+    vertical-align: bottom;
 }
 
 /* HACK to override line-height which is already marked important elsewhere */
