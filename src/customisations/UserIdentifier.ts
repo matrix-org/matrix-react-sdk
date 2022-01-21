@@ -17,7 +17,7 @@ limitations under the License.
 /**
  * Customise display of the user identifier
  * hide userId for guests, display 3pid
- * 
+ *
  * Set withDisplayName to true when user identifier will be displayed alongside user name
  */
 function getDisplayUserIdentifier(
