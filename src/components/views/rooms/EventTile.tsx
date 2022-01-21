@@ -556,8 +556,8 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread.lastReply,
-            threadReplyCount: thread.length,
+            threadLastReply: thread?.lastReply,
+            threadReplyCount: thread?.length,
             thread,
         });
     };
