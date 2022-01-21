@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642780096109,
+  "lastUpdate": 1642780731398,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57392,6 +57392,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4838.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "distinct": true,
+          "id": "010cbadc8ecf9f15ade94d87950734c873ca6095",
+          "message": "Tweak lockfile",
+          "timestamp": "2022-01-21T15:51:15Z",
+          "tree_id": "f4a61963a6b74ec2769b70a06ff60f144fae7c52",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/010cbadc8ecf9f15ade94d87950734c873ca6095"
+        },
+        "date": 1642780726012,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5344.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 731,
             "unit": "ms",
             "extra": "type: measure"
           }
