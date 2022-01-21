@@ -40,12 +40,6 @@ const GROUP_PHASES = [
     RightPanelPhases.GroupMemberInfo,
 ];
 
-// const MEMBER_INFO_PHASES = [
-//     RightPanelPhases.RoomMemberInfo,
-//     RightPanelPhases.Room3pidMemberInfo,
-//     RightPanelPhases.EncryptionPanel,
-// ];
-
 /**
  * A class for tracking the state of the right panel between layouts and
  * sessions. This state includes a history for each room. Each history element
