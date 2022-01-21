@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642723129068,
+  "lastUpdate": 1642757963716,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57104,6 +57104,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 697.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "91743c9a1aec795d01a905fc27c2dd5449723bbb",
+          "message": "Switch to github: URL to be consistent with other deps (#7588)\n\nand resolves to a tarball which can be cached nicely. Also\r\nsome other yarn.lock change that yarn seems to be insisting on.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/20628",
+          "timestamp": "2022-01-21T09:32:09Z",
+          "tree_id": "3fac669e0d83cc98b4ac35e536a84d9be1ea1225",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/91743c9a1aec795d01a905fc27c2dd5449723bbb"
+        },
+        "date": 1642757958573,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5373.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1038.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1900.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4475,
             "unit": "ms",
             "extra": "type: measure"
           }
