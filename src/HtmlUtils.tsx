@@ -404,9 +404,9 @@ export interface IOptsReturnString extends IOpts {
 }
 
 const emojiToHtmlSpan = (emoji: string) =>
-    `<span class='mx_EventTile_Emoji' title='${unicodeToShortcode(emoji)}'>${emoji}</span>`;
+    `<span class='mx_Emoji' title='${unicodeToShortcode(emoji)}'>${emoji}</span>`;
 const emojiToJsxSpan = (emoji: string, key: number) =>
-    <span key={key} className='mx_EventTile_Emoji' title={unicodeToShortcode(emoji)}>{ emoji }</span>;
+    <span key={key} className='mx_Emoji' title={unicodeToShortcode(emoji)}>{ emoji }</span>;
 
 /**
  * Wraps emojis in <span> to style them separately from the rest of message. Consecutive emojis (and modifiers) are wrapped
