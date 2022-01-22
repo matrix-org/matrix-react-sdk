@@ -89,9 +89,8 @@ const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)
  * Uses a much, much simpler regex than emojibase's so will give false
  * positives, but useful for fast-path testing strings to see if they
  * need emojification.
- * unicodeToImage uses this function.
  */
-function mightContainEmoji(str: string): boolean {
+export function mightContainEmoji(str: string): boolean {
     return SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str);
 }
 
