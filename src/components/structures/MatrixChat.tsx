@@ -119,6 +119,7 @@ import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
+import { getKeyBindingsManager, WindowAction } from "../../KeyBindingsManager";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -439,6 +440,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setState({ pendingInitialSync: false });
     }
 
+    public componentDidMount(): void {
+        window.addEventListener("keydown", this.onKeyDown);
+    }
+
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle stage
     // eslint-disable-next-line
     UNSAFE_componentWillUpdate(props, state) {
@@ -461,6 +466,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     componentWillUnmount() {
+        window.removeEventListener("keydown", this.onKeyDown);
         Lifecycle.stopMatrixClient();
         dis.unregister(this.dispatcherRef);
         this.themeWatcher.stop();
@@ -470,6 +476,35 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
     }
+
+    private onKeyDown = (event: KeyboardEvent): void => {
+        const windowAction = getKeyBindingsManager().getWindowAction(event);
+        switch (windowAction) {
+            case WindowAction.OpenBrowserDevtools: {
+                const largeFontSize = "50px";
+                const normalFontSize = "15px";
+
+                const waitText = _t("Wait!");
+                const scamText = _t(
+                    "If someone told you to copy/paste something here, " +
+                    "there is a high likelihood you're being scammed!",
+                );
+                const devText = _t(
+                    "If you know what you're doing, Element is open-source, "+
+                    "be sure to check out our GitHub (https://github.com/vector-im/element-web/) " +
+                    "and contribute!",
+                );
+
+                console.log(
+                    `%c${waitText}\n%c${scamText}\n%c${devText}`,
+                    `font-size:${largeFontSize}; color:blue;`,
+                    `font-size:${normalFontSize}; color:red;`,
+                    `font-size:${normalFontSize};`,
+                );
+                break;
+            }
+        }
+    };
 
     public trackScreenChange(durationMs: number): void {
         const notLoggedInMap = {};
