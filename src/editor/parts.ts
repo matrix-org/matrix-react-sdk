@@ -58,6 +58,7 @@ interface IBasePart {
     text: string;
     type: Type.Plain | Type.Newline | Type.Emoji;
     canEdit: boolean;
+    acceptsCaret: boolean;
 
     createAutoComplete(updateCallback: UpdateCallback): void;
 
@@ -166,6 +167,10 @@ abstract class BasePart {
 
     public get canEdit(): boolean {
         return true;
+    }
+
+    public get acceptsCaret(): boolean {
+        return this.canEdit;
     }
 
     public toString(): string {
@@ -385,6 +390,14 @@ class EmojiPart extends BasePart implements IBasePart {
 
     public get type(): IBasePart["type"] {
         return Type.Emoji;
+    }
+
+    public get canEdit(): boolean {
+        return false;
+    }
+
+    public get acceptsCaret(): boolean {
+        return true;
     }
 }
 
