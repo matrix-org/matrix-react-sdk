@@ -18,9 +18,7 @@ import React, { useContext } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import {
-    IProps as IContextMenuProps,
-} from "../../structures/ContextMenu";
+import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { _t } from "../../../languageHandler";
 import {
@@ -130,7 +128,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
 
     const canAddRooms = space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
 
-    let newRoomSection;
+    let newRoomSection: JSX.Element;
     if (space.currentState.maySendStateEvent(EventType.SpaceChild, userId)) {
         const onNewRoomClick = (ev: ButtonEvent) => {
             ev.preventDefault();
@@ -180,7 +178,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
         ev.stopPropagation();
 
         defaultDispatcher.dispatch({
-            action: "view_room",
+            action: Action.ViewRoom,
             room_id: space.roomId,
         });
         onFinished();
@@ -196,6 +194,11 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             { space.name }
         </div> }
         <IconizedContextMenuOptionList first>
+            <IconizedContextMenuOption
+                iconClassName="mx_SpacePanel_iconHome"
+                label={_t("Space home")}
+                onClick={onExploreRoomsClick}
+            />
             { inviteOption }
             <IconizedContextMenuOption
                 iconClassName="mx_SpacePanel_iconExplore"

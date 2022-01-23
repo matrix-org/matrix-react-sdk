@@ -19,9 +19,7 @@ import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
-import { logger } from "matrix-js-sdk/src/logger";
-import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
+import { M_POLL_START } from "matrix-events-sdk";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -60,7 +58,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import { CollapsibleButton, ICollapsibleButtonProps } from './CollapsibleButton';
-import { LocationButton, textForLocation } from '../location/LocationButton';
+import LocationButton from '../location/LocationButton';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -199,7 +197,7 @@ interface IPollButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
 class PollButton extends React.PureComponent<IPollButtonProps> {
     private onCreateClick = () => {
         const canSend = this.props.room.currentState.maySendEvent(
-            POLL_START_EVENT_TYPE.name,
+            M_POLL_START.name,
             MatrixClientPeg.get().getUserId(),
         );
         if (!canSend) {
@@ -255,7 +253,7 @@ interface IState {
     isMenuOpen: boolean;
     showStickers: boolean;
     showStickersButton: boolean;
-    showPollsButton: boolean;
+    showLocationButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -286,13 +284,17 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: false,
             showStickers: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
-            showPollsButton: SettingsStore.getValue("feature_polls"),
+            showLocationButton: (
+                !window.electron &&
+                SettingsStore.getValue("MessageComposerInput.showLocationButton")
+            ),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
-        SettingsStore.monitorSetting("feature_polls", null);
+        SettingsStore.monitorSetting("MessageComposerInput.showLocationButton", null);
+        SettingsStore.monitorSetting("feature_location_share", null);
     }
 
     componentDidMount() {
@@ -339,10 +341,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         break;
                     }
 
-                    case "feature_polls": {
-                        const showPollsButton = SettingsStore.getValue("feature_polls");
-                        if (this.state.showPollsButton !== showPollsButton) {
-                            this.setState({ showPollsButton });
+                    case "MessageComposerInput.showLocationButton":
+                    case "feature_location_share": {
+                        const showLocationButton = (
+                            !window.electron &&
+                            SettingsStore.getValue("MessageComposerInput.showLocationButton")
+                        );
+
+                        if (this.state.showLocationButton !== showLocationButton) {
+                            this.setState({ showLocationButton });
                         }
                         break;
                     }
@@ -452,20 +459,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private shareLocation = (uri: string, ts: number): boolean => {
-        if (!uri) return false;
-        try {
-            const text = textForLocation(uri, ts, null);
-            MatrixClientPeg.get().sendMessage(
-                this.props.room.roomId,
-                makeLocationContent(text, uri, ts, null),
-            );
-        } catch (e) {
-            logger.error("Error sending location:", e);
-        }
-        return true;
-    };
-
     private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
@@ -520,21 +513,26 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         let uploadButtonIndex = 0;
         const buttons: JSX.Element[] = [];
         if (!this.state.haveRecording) {
-            if (this.state.showPollsButton) {
-                buttons.push(
-                    <PollButton key="polls" room={this.props.room} narrowMode={this.state.narrowMode} />,
-                );
-            }
+            buttons.push(
+                <PollButton
+                    key="polls"
+                    room={this.props.room}
+                    narrowMode={this.state.narrowMode}
+                />,
+            );
             uploadButtonIndex = buttons.length;
             buttons.push(
                 <UploadButton key="controls_upload" roomId={this.props.room.roomId} relation={this.props.relation} />,
             );
-            if (SettingsStore.getValue("feature_location_share")) {
+            if (this.state.showLocationButton) {
+                const sender = this.props.room.getMember(
+                    MatrixClientPeg.get().getUserId(),
+                );
                 buttons.push(
                     <LocationButton
-                        sender={this.props.room.getMember(MatrixClientPeg.get().getUserId())}
                         key="location"
-                        shareLocation={this.shareLocation}
+                        roomId={this.props.room.roomId}
+                        sender={sender}
                         menuPosition={menuPosition}
                         narrowMode={this.state.narrowMode}
                     />,

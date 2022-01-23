@@ -15,8 +15,11 @@ limitations under the License.
 */
 
 .mx_RoomView_body[data-layout=bubble] {
-    max-width: 1200px;
-    margin: 0 auto;
+    .mx_RoomView_timeline, .mx_RoomView_statusArea, .mx_MessageComposer {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 }
 
 .mx_EventTile[data-layout=bubble],
@@ -117,24 +120,39 @@ limitations under the License.
         .mx_EventTile_line {
             border-bottom-right-radius: var(--cornerRadius);
 
-            .mx_MImageBody .mx_MImageBody_thumbnail {
+            .mx_MImageBody .mx_MImageBody_thumbnail,
+            .mx_MImageBody::before,
+            .mx_MLocationBody_map {
                 border-bottom-right-radius: var(--cornerRadius);
             }
         }
+
         .mx_EventTile_avatar {
             left: -34px;
         }
 
+        .mx_MessageActionBar {
+            right: -100px; // to make sure it doesn't overflow to the left or cover sender profile
+        }
+
         --backgroundColor: $eventbubble-others-bg;
     }
+
     &[data-self=true] {
         .mx_EventTile_line {
             float: right;
             border-bottom-left-radius: var(--cornerRadius);
 
-            .mx_MImageBody .mx_MImageBody_thumbnail {
+            .mx_MImageBody .mx_MImageBody_thumbnail,
+            .mx_MImageBody::before,
+            .mx_MLocationBody_map {
                 border-bottom-left-radius: var(--cornerRadius);
             }
+        }
+
+        .mx_EventTile_sticker {
+            // align timestamp with those inside bubbles
+            margin-right: 32px;
         }
 
         .mx_ThreadInfo {
@@ -180,7 +198,10 @@ limitations under the License.
         border-top-left-radius: var(--cornerRadius);
         border-top-right-radius: var(--cornerRadius);
 
-        > a, .mx_MessageTimestamp {
+        // the selector here is quite weird because timestamps can appear linked & unlinked and in different places
+        // in the DOM depending on the specific rendering context
+        > a, // timestamp wrapper anchor
+        .mx_MessageActionBar + .mx_MessageTimestamp {
             position: absolute;
             padding: 4px 8px;
             bottom: 0;
@@ -188,14 +209,57 @@ limitations under the License.
             z-index: 3; // above media and location share maps
         }
 
+        // we put the timestamps for media (other than stickers) atop the media along with a gradient to aid visibility
+        &.mx_EventTile_mediaLine:not(.mx_EventTile_sticker) {
+            .mx_MessageTimestamp {
+                color: #ffffff; // regardless of theme, always visible on the below gradient
+            }
+
+            // linear gradient to make the timestamp more visible
+            .mx_MImageBody::before {
+                content: "";
+                position: absolute;
+                background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+                z-index: 1;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                pointer-events: none;
+            }
+        }
+
+        &.mx_EventTile_sticker {
+            > a, // timestamp wrapper anchor
+            .mx_MessageActionBar + .mx_MessageTimestamp {
+                // position timestamps for stickers to the right of the un-bubbled sticker
+                right: unset;
+                left: 100%;
+            }
+
+            .mx_MStickerBody_wrapper {
+                padding: 0;
+            }
+        }
+
         //noinspection CssReplaceWithShorthandSafely
-        .mx_MImageBody .mx_MImageBody_thumbnail {
-            // Note: This is intentionally not compressed because the browser gets confused
-            // when it is all combined. We're effectively unsetting the border radius then
-            // setting the two corners we care about manually.
-            border-radius: unset;
-            border-top-left-radius: var(--cornerRadius);
-            border-top-right-radius: var(--cornerRadius);
+        .mx_MImageBody {
+            width: 100%;
+            height: 100%;
+
+            //noinspection CssReplaceWithShorthandSafely
+            .mx_MImageBody_thumbnail {
+                // Note: This is intentionally not compressed because the browser gets confused
+                // when it is all combined. We're effectively unsetting the border radius then
+                // setting the two corners we care about manually.
+                border-radius: unset;
+                border-top-left-radius: var(--cornerRadius);
+                border-top-right-radius: var(--cornerRadius);
+
+                &.mx_MImageBody_thumbnail--blurhash {
+                    position: unset;
+                }
+            }
         }
 
         .mx_EventTile_e2eIcon {
@@ -212,14 +276,18 @@ limitations under the License.
     &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {
         border-top-left-radius: 0;
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-top-left-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=false] .mx_EventTile_line {
         border-bottom-left-radius: var(--cornerRadius);
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-bottom-left-radius: var(--cornerRadius);
         }
     }
@@ -227,14 +295,18 @@ limitations under the License.
     &.mx_EventTile_continuation[data-self=true] .mx_EventTile_line {
         border-top-right-radius: 0;
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-top-right-radius: 0;
         }
     }
     &.mx_EventTile_lastInSection[data-self=true] .mx_EventTile_line {
         border-bottom-right-radius: var(--cornerRadius);
 
-        .mx_MImageBody .mx_MImageBody_thumbnail, .mx_MLocationBody_map {
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MImageBody::before,
+        .mx_MLocationBody_map {
             border-bottom-right-radius: var(--cornerRadius);
         }
     }
@@ -274,7 +346,8 @@ limitations under the License.
             .mx_EventTile_reply {
                 max-width: 90%;
                 padding: 0;
-                > a {
+                > a, // timestamp wrapper anchor
+                .mx_MessageActionBar + .mx_MessageTimestamp {
                     display: none !important;
                 }
             }
@@ -375,12 +448,18 @@ limitations under the License.
         margin-left: 9px;
     }
 
-    .mx_EventTile_line > a,
-    .mx_EventTile_line .mx_MessageTimestamp {
-        // Align timestamps with those of normal bubble tiles
-        right: auto;
-        top: -11px;
-        left: -77px;
+    .mx_EventTile_line {
+        > a, // timestamp wrapper anchor
+        .mx_MessageActionBar + .mx_MessageTimestamp {
+            right: auto;
+            left: -77px;
+            bottom: unset;
+            align-self: center;
+
+            .mx_MessageTimestamp, &.mx_MessageTimestamp {
+                vertical-align: middle;
+            }
+        }
     }
 }
 
@@ -397,7 +476,6 @@ limitations under the License.
         }
         &[aria-expanded=true] {
             text-align: right;
-            margin-right: 100px;
         }
     }
 
@@ -420,11 +498,26 @@ limitations under the License.
     padding: 0 49px;
 }
 
+// ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
+// that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
 .mx_EventListSummary[data-expanded=true][data-layout=bubble] {
-    display: contents;
+    margin: 0;
 
     .mx_EventTile {
         padding: 2px 0;
+        margin-right: 0;
+
+        .mx_MessageActionBar {
+            right: 127px; // align with that of right-column bubbles
+        }
+
+        .mx_EventTile_readAvatars {
+            right: -18px; // match alignment to RRs of chat bubbles
+        }
+
+        &::before {
+            right: 0; // match alignment of the hover background to that of chat bubbles
+        }
     }
 }
 

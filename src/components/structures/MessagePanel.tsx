@@ -35,6 +35,7 @@ import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
 import NewRoomIntro from "../views/rooms/NewRoomIntro";
+import HistoryTile from "../views/rooms/HistoryTile";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import CallEventGrouper from "./CallEventGrouper";
@@ -129,8 +130,8 @@ interface IProps {
     // for pending messages.
     ourUserId?: string;
 
-    // true to suppress the date at the start of the timeline
-    suppressFirstDateSeparator?: boolean;
+    // whether the timeline can visually go back any further
+    canBackPaginate?: boolean;
 
     // whether to show read receipts
     showReadReceipts?: boolean;
@@ -250,7 +251,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private scrollPanel = createRef<ScrollPanel>();
 
     private readonly showTypingNotificationsWatcherRef: string;
-    private eventNodes: Record<string, HTMLElement>;
+    private eventTiles: Record<string, EventTile> = {};
 
     // A map of <callId, CallEventGrouper>
     private callEventGroupers = new Map<string, CallEventGrouper>();
@@ -324,11 +325,18 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     /* get the DOM node representing the given event */
     public getNodeForEventId(eventId: string): HTMLElement {
-        if (!this.eventNodes) {
+        if (!this.eventTiles) {
             return undefined;
         }
 
-        return this.eventNodes[eventId];
+        return this.eventTiles[eventId]?.ref?.current;
+    }
+
+    public getTileForEventId(eventId: string): EventTile {
+        if (!this.eventTiles) {
+            return undefined;
+        }
+        return this.eventTiles[eventId];
     }
 
     /* return true if the content is fully scrolled down right now; else false.
@@ -429,7 +437,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public scrollToEventIfNeeded(eventId: string): void {
-        const node = this.eventNodes[eventId];
+        const node = this.getNodeForEventId(eventId);
         if (node) {
             node.scrollIntoView({
                 block: "nearest",
@@ -584,8 +592,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
     }
     private getEventTiles(): ReactNode[] {
-        this.eventNodes = {};
-
         let i;
 
         // first figure out which is the last event in the list which we're
@@ -776,7 +782,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             <TileErrorBoundary key={mxEv.getTxnId() || eventId} mxEvent={mxEv}>
                 <EventTile
                     as="li"
-                    ref={this.collectEventNode.bind(this, eventId)}
+                    ref={this.collectEventTile.bind(this, eventId)}
                     alwaysShowTimestamps={this.props.alwaysShowTimestamps}
                     mxEvent={mxEv}
                     continuation={continuation}
@@ -818,7 +824,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         if (prevEvent == null) {
             // first event in the panel: depends if we could back-paginate from
             // here.
-            return !this.props.suppressFirstDateSeparator;
+            return !this.props.canBackPaginate;
         }
         return wantsDateSeparator(prevEvent.getDate(), nextEventDate);
     }
@@ -909,8 +915,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return receiptsByEvent;
     }
 
-    private collectEventNode = (eventId: string, node: EventTile): void => {
-        this.eventNodes[eventId] = node?.ref?.current;
+    private collectEventTile = (eventId: string, node: EventTile): void => {
+        this.eventTiles[eventId] = node;
     };
 
     // once dynamic content in the events load, make the scrollPanel check the
@@ -1358,6 +1364,12 @@ class MemberGrouper extends BaseGrouper {
 
         if (eventTiles.length === 0) {
             eventTiles = null;
+        }
+
+        // If a membership event is the start of visible history, tell the user
+        // why they can't see earlier messages
+        if (!this.panel.props.canBackPaginate && !this.prevEvent) {
+            ret.push(<HistoryTile key="historytile" />);
         }
 
         ret.push(

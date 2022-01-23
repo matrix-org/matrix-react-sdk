@@ -17,8 +17,13 @@ limitations under the License.
 import React from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
-import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import {
+    ASSET_NODE_TYPE,
+    ASSET_TYPE_SELF,
+    ILocationContent,
+    LOCATION_EVENT_TYPE,
+} from 'matrix-js-sdk/src/@types/location';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -38,11 +43,18 @@ interface IState {
 @replaceableComponent("views.messages.MLocationBody")
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
     private coords: GeolocationCoordinates;
+    private bodyId: string;
+    private markerId: string;
 
     constructor(props: IBodyProps) {
         super(props);
 
+        const randomString = Math.random().toString(16).slice(2, 10);
+        const idSuffix = `${props.mxEvent.getId()}_${randomString}`;
+        this.bodyId = `mx_MLocationBody_${idSuffix}`;
+        this.markerId = `mx_MLocationBody_marker_${idSuffix}`;
         this.coords = parseGeoUri(locationEventGeoUri(this.props.mxEvent));
+
         this.state = {
             error: undefined,
         };
@@ -56,19 +68,11 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         createMap(
             this.coords,
             false,
-            this.getBodyId(),
-            this.getMarkerId(),
+            this.bodyId,
+            this.markerId,
             (e: Error) => this.setState({ error: e }),
         );
     }
-
-    private getBodyId = () => {
-        return `mx_MLocationBody_${this.props.mxEvent.getId()}`;
-    };
-
-    private getMarkerId = () => {
-        return `mx_MLocationBody_marker_${this.props.mxEvent.getId()}`;
-    };
 
     private onClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -93,13 +97,19 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     render(): React.ReactElement<HTMLDivElement> {
         return <LocationBodyContent
             mxEvent={this.props.mxEvent}
-            bodyId={this.getBodyId()}
-            markerId={this.getMarkerId()}
+            bodyId={this.bodyId}
+            markerId={this.markerId}
             error={this.state.error}
             tooltip={_t("Expand map")}
             onClick={this.onClick}
         />;
     }
+}
+
+export function isSelfLocation(locationContent: ILocationContent): boolean {
+    const asset = ASSET_NODE_TYPE.findIn(locationContent) as { type: string };
+    const assetType = asset?.type ?? ASSET_TYPE_SELF;
+    return assetType == ASSET_TYPE_SELF;
 }
 
 interface ILocationBodyContentProps {
@@ -122,6 +132,17 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
         className="mx_MLocationBody_map"
     />;
 
+    const markerContents = (
+        isSelfLocation(props.mxEvent.getContent())
+            ? <MemberAvatar
+                member={props.mxEvent.sender}
+                width={27}
+                height={27}
+                viewUserOnClick={false}
+            />
+            : <div className="mx_MLocationBody_markerContents" />
+    );
+
     return <div className="mx_MLocationBody">
         {
             props.error
@@ -143,12 +164,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
         }
         <div className="mx_MLocationBody_marker" id={props.markerId}>
             <div className="mx_MLocationBody_markerBorder">
-                <MemberAvatar
-                    member={props.mxEvent.sender}
-                    width={27}
-                    height={27}
-                    viewUserOnClick={false}
-                />
+                { markerContents }
             </div>
             <img
                 className="mx_MLocationBody_pointer"
