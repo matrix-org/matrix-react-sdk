@@ -22,6 +22,7 @@ import {
     NavigationAction,
     RoomAction,
     RoomListAction,
+    WindowAction,
 } from "./KeyBindingsManager";
 import { isMac, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
@@ -411,10 +412,30 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
     ];
 };
 
+const windowBindings = (): KeyBinding<WindowAction>[] => {
+    return [
+        {
+            action: WindowAction.OpenBrowserDevtools,
+            keyCombo: {
+                key: Key.F12,
+            },
+        },
+        {
+            action: WindowAction.OpenBrowserDevtools,
+            keyCombo: {
+                key: Key.I,
+                shiftKey: true,
+                ctrlOrCmd: true,
+            },
+        },
+    ];
+};
+
 export const defaultBindingsProvider: IKeyBindingsProvider = {
     getMessageComposerBindings: messageComposerBindings,
     getAutocompleteBindings: autocompleteBindings,
     getRoomListBindings: roomListBindings,
     getRoomBindings: roomBindings,
     getNavigationBindings: navigationBindings,
+    getWindowBindings: windowBindings,
 };

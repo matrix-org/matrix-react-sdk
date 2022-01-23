@@ -125,6 +125,12 @@ export enum NavigationAction {
     SelectNextUnreadRoom = 'SelectNextUnreadRoom',
 }
 
+/** Actions for navigating do various menus, dialogs or screens */
+export enum WindowAction {
+    /** Open browser devtools */
+    OpenBrowserDevtools = 'OpenBrowserDevtools'
+}
+
 /**
  * Represent a key combination.
  *
@@ -213,6 +219,7 @@ export interface IKeyBindingsProvider {
     getRoomListBindings: KeyBindingGetter<RoomListAction>;
     getRoomBindings: KeyBindingGetter<RoomAction>;
     getNavigationBindings: KeyBindingGetter<NavigationAction>;
+    getWindowBindings: KeyBindingGetter<WindowAction>;
 }
 
 export class KeyBindingsManager {
@@ -263,6 +270,10 @@ export class KeyBindingsManager {
 
     getNavigationAction(ev: KeyboardEvent | React.KeyboardEvent): NavigationAction | undefined {
         return this.getAction(this.bindingsProviders.map(it => it.getNavigationBindings), ev);
+    }
+
+    getWindowAction(ev: KeyboardEvent | React.KeyboardEvent): WindowAction | undefined {
+        return this.getAction(this.bindingsProviders.map(it => it.getWindowBindings), ev);
     }
 }
 
