@@ -52,13 +52,11 @@ export enum MessageComposerAction {
 
 /** Actions for text editing autocompletion */
 export enum AutocompleteAction {
-    /**
-     * Select previous selection or, if the autocompletion window is not shown, open the window and select the first
-     * selection.
-     */
-    CompleteOrPrevSelection = 'ApplySelection',
-    /** Select next selection or, if the autocompletion window is not shown, open it and select the first selection */
-    CompleteOrNextSelection = 'CompleteOrNextSelection',
+    /** Accepts chosen autocomplete selection */
+    Complete = 'Complete',
+    /** Accepts chosen autocomplete selection or,
+     * if the autocompletion window is not shown, open the window and select the first selection */
+    ForceComplete = 'ForceComplete',
     /** Move to the previous autocomplete selection */
     PrevSelection = 'PrevSelection',
     /** Move to the next autocomplete selection */
@@ -107,12 +105,14 @@ export enum RoomAction {
 export enum NavigationAction {
     /** Jump to room search (search for a room) */
     FocusRoomSearch = 'FocusRoomSearch',
+    /** Toggle the space panel */
+    ToggleSpacePanel = 'ToggleSpacePanel',
     /** Toggle the room side panel */
     ToggleRoomSidePanel = 'ToggleRoomSidePanel',
     /** Toggle the user menu */
     ToggleUserMenu = 'ToggleUserMenu',
     /** Toggle the short cut help dialog */
-    ToggleShortCutDialog = 'ToggleShortCutDialog',
+    OpenShortCutDialog = 'OpenShortCutDialog',
     /** Got to the Element home screen */
     GoToHome = 'GoToHome',
     /** Select prev room */
@@ -140,12 +140,12 @@ export type KeyCombo = {
     ctrlKey?: boolean;
     metaKey?: boolean;
     shiftKey?: boolean;
-}
+};
 
 export type KeyBinding<T extends string> = {
     action: T;
     keyCombo: KeyCombo;
-}
+};
 
 /**
  * Helper method to check if a KeyboardEvent matches a KeyCombo

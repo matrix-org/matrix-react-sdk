@@ -25,8 +25,11 @@ export class DecryptionFailure {
     }
 }
 
-type TrackingFn = (count: number, trackedErrCode: string) => void;
-type ErrCodeMapFn = (errcode: string) => string;
+type ErrorCode = "OlmKeysNotSentError" | "OlmIndexError" | "UnknownError" | "OlmUnspecifiedError";
+
+type TrackingFn = (count: number, trackedErrCode: ErrorCode) => void;
+
+export type ErrCodeMapFn = (errcode: string) => ErrorCode;
 
 export class DecryptionFailureTracker {
     // Array of items of type DecryptionFailure. Every `CHECK_INTERVAL_MS`, this list
@@ -46,8 +49,8 @@ export class DecryptionFailureTracker {
     };
 
     // Set to an interval ID when `start` is called
-    public checkInterval: NodeJS.Timeout = null;
-    public trackInterval: NodeJS.Timeout = null;
+    public checkInterval: number = null;
+    public trackInterval: number = null;
 
     // Spread the load on `Analytics` by tracking at a low frequency, `TRACK_INTERVAL_MS`.
     static TRACK_INTERVAL_MS = 60000;
@@ -73,12 +76,12 @@ export class DecryptionFailureTracker {
      * @param {function?} errorCodeMapFn The function used to map error codes to the
      * trackedErrorCode. If not provided, the `.code` of errors will be used.
      */
-    constructor(private readonly fn: TrackingFn, private readonly errorCodeMapFn?: ErrCodeMapFn) {
+    constructor(private readonly fn: TrackingFn, private readonly errorCodeMapFn: ErrCodeMapFn) {
         if (!fn || typeof fn !== 'function') {
             throw new Error('DecryptionFailureTracker requires tracking function');
         }
 
-        if (errorCodeMapFn && typeof errorCodeMapFn !== 'function') {
+        if (typeof errorCodeMapFn !== 'function') {
             throw new Error('DecryptionFailureTracker second constructor argument should be a function');
         }
     }
@@ -91,9 +94,9 @@ export class DecryptionFailureTracker {
     //     localStorage.setItem('mx-decryption-failure-event-id-hashes', JSON.stringify(this.trackedEventHashMap));
     // }
 
-    public eventDecrypted(e: MatrixEvent, err: MatrixError | Error): void {
+    public eventDecrypted(e: MatrixEvent, err: MatrixError): void {
         if (err) {
-            this.addDecryptionFailure(new DecryptionFailure(e.getId(), err.code));
+            this.addDecryptionFailure(new DecryptionFailure(e.getId(), err.errcode));
         } else {
             // Could be an event in the failures, remove it
             this.removeDecryptionFailuresForEvent(e);
@@ -168,7 +171,7 @@ export class DecryptionFailureTracker {
         const trackedEventIds = [...dedupedFailuresMap.keys()];
 
         this.trackedEventHashMap = trackedEventIds.reduce(
-            (result, eventId) => ({...result, [eventId]: true}),
+            (result, eventId) => ({ ...result, [eventId]: true }),
             this.trackedEventHashMap,
         );
 
@@ -195,7 +198,7 @@ export class DecryptionFailureTracker {
     public trackFailures(): void {
         for (const errorCode of Object.keys(this.failureCounts)) {
             if (this.failureCounts[errorCode] > 0) {
-                const trackedErrorCode = this.errorCodeMapFn ? this.errorCodeMapFn(errorCode) : errorCode;
+                const trackedErrorCode = this.errorCodeMapFn(errorCode);
 
                 this.fn(this.failureCounts[errorCode], trackedErrorCode);
                 this.failureCounts[errorCode] = 0;

@@ -56,14 +56,31 @@ export enum Action {
     CheckUpdates = "check_updates",
 
     /**
-     * Focuses the user's cursor to the composer. No additional payload information required.
+     * Focuses the user's cursor to the send message composer. Should be used with a FocusComposerPayload.
      */
-    FocusComposer = "focus_composer",
+    FocusSendMessageComposer = "focus_send_message_composer",
+
+    /**
+     * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
+     */
+    FocusEditMessageComposer = "focus_edit_message_composer",
+
+    /**
+     * Focuses the user's cursor to the edit message composer or send message
+     * composer based on the current edit state. No additional payload
+     * information required.
+     */
+    FocusAComposer = "focus_a_composer",
 
     /**
      * Opens the user menu (previously known as the top left menu). No additional payload information required.
      */
     ToggleUserMenu = "toggle_user_menu",
+
+    /**
+     * Toggles the Space panel. No additional payload information required.
+     */
+    ToggleSpacePanel = "toggle_space_panel",
 
     /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
@@ -76,24 +93,14 @@ export enum Action {
     UpdateSystemFont = "update_system_font",
 
     /**
+     * Changes room based on payload parameters.
+     */
+    ViewRoom = "view_room",
+
+    /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */
     ViewRoomDelta = "view_room_delta",
-
-    /**
-     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
-     */
-    SetRightPanelPhase = "set_right_panel_phase",
-
-    /**
-     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
-     */
-    ToggleRightPanel = "toggle_right_panel",
-
-    /**
-     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
-     */
-    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 
     /**
      * Opens the modal dial pad
@@ -169,4 +176,46 @@ export enum Action {
      * Switches space. Should be used with SwitchSpacePayload.
      */
     SwitchSpace = "switch_space",
+
+    /**
+     * Signals to the visible space hierarchy that a change has occurred and that it should refresh.
+     */
+    UpdateSpaceHierarchy = "update_space_hierarchy",
+
+    /**
+     * Fires when a monitored setting is updated,
+     * see SettingsStore::monitorSetting for more details.
+     * Should be used with SettingUpdatedPayload.
+     */
+    SettingUpdated = "setting_updated",
+
+    /**
+     * Fires when a user starts to edit event (e.g. up arrow in compositor)
+     */
+    EditEvent = "edit_event",
+
+    /**
+     * The user accepted pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsAccept = "pseudonymous_analytics_accept",
+
+    /**
+     * The user rejected pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
+
+    /**
+     * The user accepted anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     * (this action and its handler can be removed once posthog is rolled out)
+     * Payload: none
+     */
+    AnonymousAnalyticsAccept = "anonymous_analytics_accept",
+
+    /**
+     * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
+     * Payload: none
+     */
+    AnonymousAnalyticsReject = "anonymous_analytics_reject",
 }

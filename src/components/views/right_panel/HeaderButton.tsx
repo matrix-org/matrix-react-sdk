@@ -20,6 +20,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
+
 import Analytics from '../../../Analytics';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -48,7 +49,7 @@ export default class HeaderButton extends React.Component<IProps> {
 
     public render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {isHighlighted, onClick, analytics, name, title, ...props} = this.props;
+        const { isHighlighted, onClick, analytics, name, title, ...props } = this.props;
 
         const classes = classNames({
             mx_RightPanel_headerButton: true,

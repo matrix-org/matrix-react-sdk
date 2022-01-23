@@ -17,17 +17,14 @@ limitations under the License.
 import "../../../skinned-sdk";
 
 import React from "react";
-import {configure, mount} from "enzyme";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import {act} from "react-dom/test-utils";
+import { mount } from "enzyme";
+import { act } from "react-dom/test-utils";
 
 import * as TestUtils from "../../../test-utils";
-import {MatrixClientPeg} from "../../../../src/MatrixClientPeg";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import {RoomPermalinkCreator} from "../../../../src/utils/permalinks/Permalinks";
+import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import ForwardDialog from "../../../../src/components/views/dialogs/ForwardDialog";
-
-configure({ adapter: new Adapter() });
 
 describe("ForwardDialog", () => {
     const sourceRoom = "!111111111111111111:example.org";
@@ -145,7 +142,7 @@ describe("ForwardDialog", () => {
         });
 
         const wrapper = await mountForwardDialog(replyMessage);
-        expect(wrapper.find("ReplyThread")).toBeTruthy();
+        expect(wrapper.find("ReplyChain")).toBeTruthy();
     });
 
     it("disables buttons for rooms without send permissions", async () => {

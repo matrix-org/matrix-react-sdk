@@ -1,7 +1,6 @@
 import RoomViewStore from '../../src/stores/RoomViewStore';
-
-import {MatrixClientPeg as peg} from '../../src/MatrixClientPeg';
-
+import { Action } from '../../src/dispatcher/actions';
+import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import * as testUtils from '../test-utils';
 
 const dispatch = testUtils.getDispatchForStore(RoomViewStore);
@@ -21,7 +20,7 @@ describe('RoomViewStore', function() {
             done();
         };
 
-        dispatch({ action: 'view_room', room_id: '!randomcharacters:aser.ver' });
+        dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
         dispatch({ action: 'join_room' });
         expect(RoomViewStore.isJoining()).toBe(true);
     });
@@ -36,13 +35,13 @@ describe('RoomViewStore', function() {
             }
         });
 
-        peg.get().getRoomIdForAlias.mockResolvedValue({room_id: "!randomcharacters:aser.ver"});
+        peg.get().getRoomIdForAlias.mockResolvedValue({ room_id: "!randomcharacters:aser.ver" });
         peg.get().joinRoom = async (roomAddress) => {
             token.remove(); // stop RVS listener
             expect(roomAddress).toBe("#somealias2:aser.ver");
             done();
         };
 
-        dispatch({ action: 'view_room', room_alias: '#somealias2:aser.ver' });
+        dispatch({ action: Action.ViewRoom, room_alias: '#somealias2:aser.ver' });
     });
 });

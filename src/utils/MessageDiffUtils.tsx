@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch';
 import { DiffDOM, IDiff } from "diff-dom";
 import { IContent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { bodyToHtml, checkBlockNode, IOptsReturnString } from "../HtmlUtils";
 
@@ -147,7 +148,7 @@ function stringAsTextNode(string: string): Text {
 }
 
 function renderDifferenceInDOM(originalRootNode: Node, diff: IDiff, diffMathPatch: DiffMatchPatch): void {
-    const {refNode, refParentNode} = findRefNodes(originalRootNode, diff.route);
+    const { refNode, refParentNode } = findRefNodes(originalRootNode, diff.route);
     switch (diff.action) {
         case "replaceElement": {
             const container = document.createElement("span");
@@ -218,7 +219,7 @@ function renderDifferenceInDOM(originalRootNode: Node, diff: IDiff, diffMathPatc
         }
         default:
             // Should not happen (modifyComment, ???)
-            console.warn("MessageDiffUtils::editBodyDiffToHtml: diff action not supported atm", diff);
+            logger.warn("MessageDiffUtils::editBodyDiffToHtml: diff action not supported atm", diff);
     }
 }
 

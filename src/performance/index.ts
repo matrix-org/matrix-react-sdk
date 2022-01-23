@@ -14,28 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { PerformanceEntryNames } from "./entry-names";
 
 interface GetEntriesOptions {
-    name?: string,
-    type?: string,
+    name?: string;
+    type?: string;
 }
 
 type PerformanceCallbackFunction = (entry: PerformanceEntry[]) => void;
 
 interface PerformanceDataListener {
-    entryNames?: string[],
-    callback: PerformanceCallbackFunction
+    entryNames?: string[];
+    callback: PerformanceCallbackFunction;
 }
 
 export default class PerformanceMonitor {
     static _instance: PerformanceMonitor;
 
-    private START_PREFIX = "start:"
-    private STOP_PREFIX = "stop:"
+    private START_PREFIX = "start:";
+    private STOP_PREFIX = "stop:";
 
-    private listeners: PerformanceDataListener[] = []
-    private entries: PerformanceEntry[] = []
+    private listeners: PerformanceDataListener[] = [];
+    private entries: PerformanceEntry[] = [];
 
     public static get instance(): PerformanceMonitor {
         if (!PerformanceMonitor._instance) {
@@ -57,7 +59,7 @@ export default class PerformanceMonitor {
         const key = this.buildKey(name, id);
 
         if (performance.getEntriesByName(this.START_PREFIX + key).length > 0) {
-            console.warn(`Recording already started for: ${name}`);
+            logger.warn(`Recording already started for: ${name}`);
             return;
         }
 
@@ -77,7 +79,7 @@ export default class PerformanceMonitor {
         }
         const key = this.buildKey(name, id);
         if (performance.getEntriesByName(this.START_PREFIX + key).length === 0) {
-            console.warn(`No recording started for: ${name}`);
+            logger.warn(`No recording started for: ${name}`);
             return;
         }
 
@@ -99,7 +101,7 @@ export default class PerformanceMonitor {
 
         this.listeners.forEach(listener => {
             if (this.shouldEmit(listener, measurement)) {
-                listener.callback([measurement])
+                listener.callback([measurement]);
             }
         });
 
@@ -167,11 +169,10 @@ export default class PerformanceMonitor {
     }
 }
 
-
 // Convenience exports
 export {
     PerformanceEntryNames,
-}
+};
 
 // Exposing those to the window object to bridge them from tests
 window.mxPerformanceMonitor = PerformanceMonitor.instance;

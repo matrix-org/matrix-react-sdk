@@ -24,20 +24,23 @@ import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from '../rooms/NotificationBadge';
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
-import {isPresenceEnabled} from "../../../utils/presence";
-import {MatrixClientPeg} from "../../../MatrixClientPeg";
-import {_t} from "../../../languageHandler";
+import { isPresenceEnabled } from "../../../utils/presence";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import TooltipTarget from "../elements/TooltipTarget";
 
 interface IProps {
     room: Room;
     avatarSize: number;
     displayBadge?: boolean;
     forceCount?: boolean;
-    oobData?: object;
+    oobData?: IOOBData;
     viewAvatarOnClick?: boolean;
+    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
 }
 
 interface IState {
@@ -121,7 +124,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (ev.getType() === 'm.room.join_rules' || ev.getType() === 'm.room.member') {
             const newIcon = this.calculateIcon();
             if (newIcon !== this.state.icon) {
-                this.setState({icon: newIcon});
+                this.setState({ icon: newIcon });
             }
         }
     };
@@ -130,7 +133,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.isUnmounted) return;
 
         const newIcon = this.getPresenceIcon();
-        if (newIcon !== this.state.icon) this.setState({icon: newIcon});
+        if (newIcon !== this.state.icon) this.setState({ icon: newIcon });
     };
 
     private getPresenceIcon(): Icon {
@@ -188,6 +191,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.state.icon !== Icon.None) {
             icon = <TextWithTooltip
                 tooltip={tooltipText(this.state.icon)}
+                tooltipProps={this.props.tooltipProps}
                 class={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
             />;
         }
@@ -204,8 +208,8 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
                 oobData={this.props.oobData}
                 viewAvatarOnClick={this.props.viewAvatarOnClick}
             />
-            {icon}
-            {badge}
+            { icon }
+            { badge }
         </div>;
     }
 }

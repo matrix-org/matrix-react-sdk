@@ -15,11 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient } from "matrix-js-sdk/src/client";
+
 import Analytics from '../Analytics';
 import { asyncAction } from './actionCreators';
 import GroupFilterOrderStore from '../stores/GroupFilterOrderStore';
 import { AsyncActionPayload } from "../dispatcher/payloads";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 export default class TagOrderActions {
     /**
@@ -53,11 +54,11 @@ export default class TagOrderActions {
             Analytics.trackEvent('TagOrderActions', 'commitTagOrdering');
             return matrixClient.setAccountData(
                 'im.vector.web.tag_ordering',
-                {tags, removedTags, _storeId: storeId},
+                { tags, removedTags, _storeId: storeId },
             );
         }, () => {
             // For an optimistic update
-            return {tags, removedTags};
+            return { tags, removedTags };
         });
     }
 
@@ -100,11 +101,11 @@ export default class TagOrderActions {
             Analytics.trackEvent('TagOrderActions', 'removeTag');
             return matrixClient.setAccountData(
                 'im.vector.web.tag_ordering',
-                {tags, removedTags, _storeId: storeId},
+                { tags, removedTags, _storeId: storeId },
             );
         }, () => {
             // For an optimistic update
-            return {removedTags};
+            return { removedTags };
         });
     }
 }

@@ -1,11 +1,11 @@
 // TODO: Rewrite room settings tests for dialog support
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import * as testUtils from '../../../test-utils';
 import sdk from '../../../skinned-sdk';
-import {MatrixClientPeg} from '../../../../src/MatrixClientPeg';
+import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import SettingsStore from '../../../../src/settings/SettingsStore';
-
 
 describe.skip('RoomSettings', () => {
     const WrappedRoomSettings = testUtils.wrapInMatrixClientContext(sdk.getComponent('views.rooms.RoomSettings'));
@@ -36,7 +36,7 @@ describe.skip('RoomSettings', () => {
     beforeEach(function(done) {
         testUtils.stubClient();
         client = MatrixClientPeg.get();
-        client.credentials = {userId: '@me:domain.com'};
+        client.credentials = { userId: '@me:domain.com' };
 
         client.setRoomName = jest.fn().mockReturnValue(Promise.resolve());
         client.setRoomTopic = jest.fn().mockReturnValue(Promise.resolve());
@@ -128,7 +128,7 @@ describe.skip('RoomSettings', () => {
         roomSettings.save().then(() => {
             expectSentStateEvent(
                 "!DdJkzRliezrwpNebLk:matrix.org",
-                "m.room.history_visibility", {history_visibility: historyVisibility},
+                "m.room.history_visibility", { history_visibility: historyVisibility },
             );
             done();
         });

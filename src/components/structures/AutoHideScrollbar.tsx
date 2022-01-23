@@ -15,19 +15,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes } from "react";
+import React, { HTMLAttributes, WheelEvent } from "react";
 
-interface IProps extends HTMLAttributes<HTMLDivElement> {
+interface IProps extends Omit<HTMLAttributes<HTMLDivElement>, "onScroll"> {
     className?: string;
-    onScroll?: () => void;
-    onWheel?: () => void;
-    style?: React.CSSProperties
-    tabIndex?: number,
+    onScroll?: (event: Event) => void;
+    onWheel?: (event: WheelEvent) => void;
+    style?: React.CSSProperties;
+    tabIndex?: number;
     wrappedRef?: (ref: HTMLDivElement) => void;
 }
 
 export default class AutoHideScrollbar extends React.Component<IProps> {
-    private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
+    public readonly containerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     public componentDidMount() {
         if (this.containerRef.current && this.props.onScroll) {
@@ -61,7 +61,9 @@ export default class AutoHideScrollbar extends React.Component<IProps> {
             style={style}
             className={["mx_AutoHideScrollbar", className].join(" ")}
             onWheel={onWheel}
-            tabIndex={tabIndex}
+            // Firefox sometimes makes this element focusable due to
+            // overflow:scroll;, so force it out of tab order by default.
+            tabIndex={tabIndex ?? -1}
         >
             { children }
         </div>);

@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
+
 import {
     RovingAccessibleButton,
     RovingAccessibleTooltipButton,
@@ -46,11 +47,11 @@ export default class ExtraTile extends React.Component<IProps, IState> {
     }
 
     private onTileMouseEnter = () => {
-        this.setState({hover: true});
+        this.setState({ hover: true });
     };
 
     private onTileMouseLeave = () => {
-        this.setState({hover: false});
+        this.setState({ hover: false });
     };
 
     public render(): React.ReactElement {
@@ -84,7 +85,7 @@ export default class ExtraTile extends React.Component<IProps, IState> {
         let nameContainer = (
             <div className="mx_RoomTile_nameContainer">
                 <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
-                    {name}
+                    { name }
                 </div>
             </div>
         );
@@ -106,11 +107,11 @@ export default class ExtraTile extends React.Component<IProps, IState> {
                     title={this.props.isMinimized ? name : undefined}
                 >
                     <div className="mx_RoomTile_avatarContainer">
-                        {this.props.avatar}
+                        { this.props.avatar }
                     </div>
-                    {nameContainer}
+                    { nameContainer }
                     <div className="mx_RoomTile_badgeContainer">
-                        {badge}
+                        { badge }
                     </div>
                 </Button>
             </React.Fragment>

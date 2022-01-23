@@ -14,13 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {useRef, useEffect} from "react";
-import type {EventEmitter} from "events";
+import { useRef, useEffect, useState, useCallback } from "react";
+
+import type { EventEmitter } from "events";
 
 type Handler = (...args: any[]) => void;
 
 // Hook to wrap event emitter on and removeListener in hook lifecycle
-export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbol, handler: Handler) => {
+export const useEventEmitter = (
+    emitter: EventEmitter | undefined,
+    eventName: string | symbol,
+    handler: Handler,
+) => {
     // Create a ref that stores handler
     const savedHandler = useRef(handler);
 
@@ -47,4 +52,21 @@ export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbo
         },
         [eventName, emitter], // Re-run if eventName or emitter changes
     );
+};
+
+type Mapper<T> = (...args: any[]) => T;
+
+export const useEventEmitterState = <T>(
+    emitter: EventEmitter | undefined,
+    eventName: string | symbol,
+    fn: Mapper<T>,
+): T => {
+    const [value, setValue] = useState<T>(fn());
+    const handler = useCallback((...args: any[]) => {
+        setValue(fn(...args));
+    }, [fn]);
+    // re-run when the emitter changes
+    useEffect(handler, [emitter]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEventEmitter(emitter, eventName, handler);
+    return value;
 };

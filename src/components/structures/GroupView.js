@@ -18,7 +18,12 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {MatrixClientPeg} from '../../MatrixClientPeg';
+import classnames from 'classnames';
+import { Group } from "matrix-js-sdk/src/models/group";
+import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { MatrixClientPeg } from '../../MatrixClientPeg';
 import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
 import { getHostingLink } from '../../utils/HostingLink';
@@ -29,18 +34,18 @@ import GroupHeaderButtons from '../views/right_panel/GroupHeaderButtons';
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
 import Modal from '../../Modal';
-import classnames from 'classnames';
-
 import GroupStore from '../../stores/GroupStore';
 import FlairStore from '../../stores/FlairStore';
 import { showGroupAddRoomDialog } from '../../GroupAddressPicker';
-import {makeGroupPermalink, makeUserPermalink} from "../../utils/permalinks/Permalinks";
-import {Group} from "matrix-js-sdk/src/models/group";
-import {sleep} from "../../utils/promise";
-import RightPanelStore from "../../stores/RightPanelStore";
+import { makeGroupPermalink, makeUserPermalink } from "../../utils/permalinks/Permalinks";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import AutoHideScrollbar from "./AutoHideScrollbar";
-import {mediaFromMxc} from "../../customisations/Media";
-import {replaceableComponent} from "../../utils/replaceableComponent";
+import { mediaFromMxc } from "../../customisations/Media";
+import { replaceableComponent } from "../../utils/replaceableComponent";
+import { createSpaceFromCommunity } from "../../utils/space";
+import { Action } from "../../dispatcher/actions";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 
 const LONG_DESC_PLACEHOLDER = _td(
     `<h1>HTML for your community's page</h1>
@@ -115,7 +120,7 @@ class CategoryRoomList extends React.Component {
                         {
                             title: _t(
                                 "Failed to add the following rooms to the summary of %(groupId)s:",
-                                {groupId: this.props.groupId},
+                                { groupId: this.props.groupId },
                             ),
                             description: errorList.join(", "),
                         },
@@ -126,12 +131,11 @@ class CategoryRoomList extends React.Component {
     };
 
     render() {
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
         const addButton = this.props.editing ?
             (<AccessibleButton className="mx_GroupView_featuredThings_addButton"
                 onClick={this.onAddRoomsToSummaryClicked}
             >
-                <TintableSvg src={require("../../../res/img/icons-create-room.svg")} width="64" height="64" />
+                <img src={require("../../../res/img/icons-create-room.svg")} width="64" height="64" />
                 <div className="mx_GroupView_featuredThings_addButton_label">
                     { _t('Add a Room') }
                 </div>
@@ -171,7 +175,7 @@ class FeaturedRoom extends React.Component {
         e.stopPropagation();
 
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_alias: this.props.summaryInfo.profile.canonical_alias,
             room_id: this.props.summaryInfo.room_id,
         });
@@ -184,7 +188,7 @@ class FeaturedRoom extends React.Component {
             this.props.groupId,
             this.props.summaryInfo.room_id,
         ).catch((err) => {
-            console.error('Error whilst removing room from group summary', err);
+            logger.error('Error whilst removing room from group summary', err);
             const roomName = this.props.summaryInfo.name ||
                 this.props.summaryInfo.canonical_alias ||
                 this.props.summaryInfo.room_id;
@@ -195,9 +199,9 @@ class FeaturedRoom extends React.Component {
                 {
                     title: _t(
                         "Failed to remove the room from the summary of %(groupId)s",
-                        {groupId: this.props.groupId},
+                        { groupId: this.props.groupId },
                     ),
-                    description: _t("The room '%(roomName)s' could not be removed from the summary.", {roomName}),
+                    description: _t("The room '%(roomName)s' could not be removed from the summary.", { roomName }),
                 },
             );
         });
@@ -223,7 +227,7 @@ class FeaturedRoom extends React.Component {
 
         let roomNameNode = null;
         if (permalink) {
-            roomNameNode = <a href={permalink} onClick={this.onClick} >{ roomName }</a>;
+            roomNameNode = <a href={permalink} onClick={this.onClick}>{ roomName }</a>;
         } else {
             roomNameNode = <span>{ roomName }</span>;
         }
@@ -289,7 +293,7 @@ class RoleUserList extends React.Component {
                         {
                             title: _t(
                                 "Failed to add the following users to the summary of %(groupId)s:",
-                                {groupId: this.props.groupId},
+                                { groupId: this.props.groupId },
                             ),
                             description: errorList.join(", "),
                         },
@@ -300,10 +304,9 @@ class RoleUserList extends React.Component {
     };
 
     render() {
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
         const addButton = this.props.editing ?
             (<AccessibleButton className="mx_GroupView_featuredThings_addButton" onClick={this.onAddUsersClicked}>
-                <TintableSvg src={require("../../../res/img/icons-create-room.svg")} width="64" height="64" />
+                <img src={require("../../../res/img/icons-create-room.svg")} width="64" height="64" />
                 <div className="mx_GroupView_featuredThings_addButton_label">
                     { _t('Add a User') }
                 </div>
@@ -351,7 +354,7 @@ class FeaturedUser extends React.Component {
             this.props.groupId,
             this.props.summaryInfo.user_id,
         ).catch((err) => {
-            console.error('Error whilst removing user from group summary', err);
+            logger.error('Error whilst removing user from group summary', err);
             const displayName = this.props.summaryInfo.displayname || this.props.summaryInfo.user_id;
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog(
@@ -361,9 +364,12 @@ class FeaturedUser extends React.Component {
                 {
                     title: _t(
                         "Failed to remove a user from the summary of %(groupId)s",
-                        {groupId: this.props.groupId},
+                        { groupId: this.props.groupId },
                     ),
-                    description: _t("The user '%(displayName)s' could not be removed from the summary.", {displayName}),
+                    description: _t(
+                        "The user '%(displayName)s' could not be removed from the summary.",
+                        { displayName },
+                    ),
                 },
             );
         });
@@ -398,6 +404,8 @@ class FeaturedUser extends React.Component {
 const GROUP_JOINPOLICY_OPEN = "open";
 const GROUP_JOINPOLICY_INVITE = "invite";
 
+const UPGRADE_NOTICE_LS_KEY = "mx_hide_community_upgrade_notice";
+
 @replaceableComponent("structures.GroupView")
 export default class GroupView extends React.Component {
     static propTypes = {
@@ -420,7 +428,8 @@ export default class GroupView extends React.Component {
         membershipBusy: false,
         publicityBusy: false,
         inviterProfile: null,
-        showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+        showRightPanel: RightPanelStore.instance.isOpenForGroup,
+        showUpgradeNotice: !localStorage.getItem(UPGRADE_NOTICE_LS_KEY),
     };
 
     componentDidMount() {
@@ -431,7 +440,7 @@ export default class GroupView extends React.Component {
         this._initGroupStore(this.props.groupId, true);
 
         this._dispatcherRef = dis.register(this._onAction);
-        this._rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this._onRightPanelStoreUpdate);
+        RightPanelStore.instance.on(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     componentWillUnmount() {
@@ -439,10 +448,7 @@ export default class GroupView extends React.Component {
         this._matrixClient.removeListener("Group.myMembership", this._onGroupMyMembership);
         dis.unregister(this._dispatcherRef);
 
-        // Remove RightPanelStore listener
-        if (this._rightPanelStoreToken) {
-            this._rightPanelStoreToken.remove();
-        }
+        RightPanelStore.instance.off(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -460,7 +466,7 @@ export default class GroupView extends React.Component {
 
     _onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+            showRightPanel: RightPanelStore.instance.isOpenForGroup,
         });
     };
 
@@ -470,7 +476,7 @@ export default class GroupView extends React.Component {
             // Leave settings - the user might have clicked the "Leave" button
             this._closeSettings();
         }
-        this.setState({membershipBusy: false});
+        this.setState({ membershipBusy: false });
     };
 
     _initGroupStore(groupId, firstInit) {
@@ -491,7 +497,7 @@ export default class GroupView extends React.Component {
                         group_id: groupId,
                     },
                 });
-                dis.dispatch({action: 'require_registration', screen_after: {screen: `group/${groupId}`}});
+                dis.dispatch({ action: 'require_registration', screen_after: { screen: `group/${groupId}` } });
                 willDoOnboarding = true;
             }
             if (stateKey === GroupStore.STATE_KEY.Summary) {
@@ -544,7 +550,7 @@ export default class GroupView extends React.Component {
                 },
             });
         }).catch((e) => {
-            console.error('Error getting group inviter profile', e);
+            logger.error('Error getting group inviter profile', e);
         }).finally(() => {
             if (this._unmounted) return;
             this.setState({
@@ -592,7 +598,7 @@ export default class GroupView extends React.Component {
     };
 
     _closeSettings = () => {
-        dis.dispatch({action: 'close_settings'});
+        dis.dispatch({ action: 'close_settings' });
     };
 
     _onNameChange = (value) => {
@@ -620,7 +626,7 @@ export default class GroupView extends React.Component {
         const file = ev.target.files[0];
         if (!file) return;
 
-        this.setState({uploadingAvatar: true});
+        this.setState({ uploadingAvatar: true });
         this._matrixClient.uploadContent(file).then((url) => {
             const newProfileForm = Object.assign(this.state.profileForm, { avatar_url: url });
             this.setState({
@@ -632,9 +638,9 @@ export default class GroupView extends React.Component {
                 avatarChanged: true,
             });
         }).catch((e) => {
-            this.setState({uploadingAvatar: false});
+            this.setState({ uploadingAvatar: false });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            console.error("Failed to upload avatar image", e);
+            logger.error("Failed to upload avatar image", e);
             Modal.createTrackedDialog('Failed to upload image', '', ErrorDialog, {
                 title: _t('Error'),
                 description: _t('Failed to upload image'),
@@ -649,7 +655,7 @@ export default class GroupView extends React.Component {
     };
 
     _onSaveClick = () => {
-        this.setState({saving: true});
+        this.setState({ saving: true });
         const savePromise = this.state.isUserPrivileged ? this._saveGroup() : Promise.resolve();
         savePromise.then((result) => {
             this.setState({
@@ -668,7 +674,7 @@ export default class GroupView extends React.Component {
                 saving: false,
             });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            console.error("Failed to save community profile", e);
+            logger.error("Failed to save community profile", e);
             Modal.createTrackedDialog('Failed to update group', '', ErrorDialog, {
                 title: _t('Error'),
                 description: _t('Failed to update community'),
@@ -688,7 +694,7 @@ export default class GroupView extends React.Component {
     }
 
     _onAcceptInviteClick = async () => {
-        this.setState({membershipBusy: true});
+        this.setState({ membershipBusy: true });
 
         // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
         // spinner disappearing after we have fetched new group data.
@@ -697,7 +703,7 @@ export default class GroupView extends React.Component {
         GroupStore.acceptGroupInvite(this.props.groupId).then(() => {
             // don't reset membershipBusy here: wait for the membership change to come down the sync
         }).catch((e) => {
-            this.setState({membershipBusy: false});
+            this.setState({ membershipBusy: false });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Error accepting invite', '', ErrorDialog, {
                 title: _t("Error"),
@@ -707,7 +713,7 @@ export default class GroupView extends React.Component {
     };
 
     _onRejectInviteClick = async () => {
-        this.setState({membershipBusy: true});
+        this.setState({ membershipBusy: true });
 
         // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
         // spinner disappearing after we have fetched new group data.
@@ -716,7 +722,7 @@ export default class GroupView extends React.Component {
         GroupStore.leaveGroup(this.props.groupId).then(() => {
             // don't reset membershipBusy here: wait for the membership change to come down the sync
         }).catch((e) => {
-            this.setState({membershipBusy: false});
+            this.setState({ membershipBusy: false });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Error rejecting invite', '', ErrorDialog, {
                 title: _t("Error"),
@@ -727,11 +733,11 @@ export default class GroupView extends React.Component {
 
     _onJoinClick = async () => {
         if (this._matrixClient.isGuest()) {
-            dis.dispatch({action: 'require_registration', screen_after: {screen: `group/${this.props.groupId}`}});
+            dis.dispatch({ action: 'require_registration', screen_after: { screen: `group/${this.props.groupId}` } });
             return;
         }
 
-        this.setState({membershipBusy: true});
+        this.setState({ membershipBusy: true });
 
         // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
         // spinner disappearing after we have fetched new group data.
@@ -740,7 +746,7 @@ export default class GroupView extends React.Component {
         GroupStore.joinGroup(this.props.groupId).then(() => {
             // don't reset membershipBusy here: wait for the membership change to come down the sync
         }).catch((e) => {
-            this.setState({membershipBusy: false});
+            this.setState({ membershipBusy: false });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Error joining room', '', ErrorDialog, {
                 title: _t("Error"),
@@ -773,7 +779,7 @@ export default class GroupView extends React.Component {
             title: _t("Leave Community"),
             description: (
                 <span>
-                    { _t("Leave %(groupName)s?", {groupName: this.props.groupId}) }
+                    { _t("Leave %(groupName)s?", { groupName: this.props.groupId }) }
                     { warnings }
                 </span>
             ),
@@ -782,7 +788,7 @@ export default class GroupView extends React.Component {
             onFinished: async (confirmed) => {
                 if (!confirmed) return;
 
-                this.setState({membershipBusy: true});
+                this.setState({ membershipBusy: true });
 
                 // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
                 // spinner disappearing after we have fetched new group data.
@@ -791,7 +797,7 @@ export default class GroupView extends React.Component {
                 GroupStore.leaveGroup(this.props.groupId).then(() => {
                     // don't reset membershipBusy here: wait for the membership change to come down the sync
                 }).catch((e) => {
-                    this.setState({membershipBusy: false});
+                    this.setState({ membershipBusy: false });
                     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                     Modal.createTrackedDialog('Error leaving community', '', ErrorDialog, {
                         title: _t("Error"),
@@ -806,6 +812,19 @@ export default class GroupView extends React.Component {
         showGroupAddRoomDialog(this.props.groupId);
     };
 
+    _dismissUpgradeNotice = () => {
+        localStorage.setItem(UPGRADE_NOTICE_LS_KEY, "true");
+        this.setState({ showUpgradeNotice: false });
+    }
+
+    _onCreateSpaceClick = () => {
+        createSpaceFromCommunity(this._matrixClient, this.props.groupId);
+    };
+
+    _onAdminsLinkClick = () => {
+        RightPanelStore.instance.setCard({ phase: RightPanelPhases.GroupMemberList });
+    };
+
     _getGroupSection() {
         const groupSettingsSectionClasses = classnames({
             "mx_GroupView_group": this.state.editing,
@@ -818,12 +837,12 @@ export default class GroupView extends React.Component {
         let hostingSignup = null;
         if (hostingSignupLink && this.state.isUserPrivileged) {
             hostingSignup = <div className="mx_GroupView_hostingSignup">
-                {_t(
+                { _t(
                     "Want more than a community? <a>Get your own server</a>", {},
                     {
-                        a: sub => <a href={hostingSignupLink} target="_blank" rel="noreferrer noopener">{sub}</a>,
+                        a: sub => <a href={hostingSignupLink} target="_blank" rel="noreferrer noopener">{ sub }</a>,
                     },
-                )}
+                ) }
                 <a href={hostingSignupLink} target="_blank" rel="noreferrer noopener">
                     <img src={require("../../../res/img/external-link.svg")} width="11" height="10" alt='' />
                 </a>
@@ -842,10 +861,46 @@ export default class GroupView extends React.Component {
                     },
                 ) }
             </div> : <div />;
+
+        let communitiesUpgradeNotice;
+        if (this.state.showUpgradeNotice) {
+            let text;
+            if (this.state.isUserPrivileged) {
+                text = _t("You can create a Space from this community <a>here</a>.", {}, {
+                    a: sub => <AccessibleButton onClick={this._onCreateSpaceClick} kind="link">
+                        { sub }
+                    </AccessibleButton>,
+                });
+            } else {
+                text = _t("Ask the <a>admins</a> of this community to make it into a Space " +
+                    "and keep a look out for the invite.", {}, {
+                    a: sub => <AccessibleButton onClick={this._onAdminsLinkClick} kind="link">
+                        { sub }
+                    </AccessibleButton>,
+                });
+            }
+
+            communitiesUpgradeNotice = <div className="mx_GroupView_spaceUpgradePrompt">
+                <h2>{ _t("Communities can now be made into Spaces") }</h2>
+                <p>
+                    { _t("Spaces are a new way to make a community, with new features coming.") }
+                    &nbsp;
+                    { text }
+                    &nbsp;
+                    { _t("Communities won't receive further updates.") }
+                </p>
+                <AccessibleButton
+                    className="mx_GroupView_spaceUpgradePrompt_close"
+                    onClick={this._dismissUpgradeNotice}
+                />
+            </div>;
+        }
+
         return <div className={groupSettingsSectionClasses}>
             { header }
             { hostingSignup }
             { changeDelayWarning }
+            { communitiesUpgradeNotice }
             { this._getJoinableNode() }
             { this._getLongDescriptionNode() }
             { this._getRoomsNode() }
@@ -855,7 +910,6 @@ export default class GroupView extends React.Component {
     _getRoomsNode() {
         const RoomDetailList = sdk.getComponent('rooms.RoomDetailList');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const TintableSvg = sdk.getComponent('elements.TintableSvg');
         const Spinner = sdk.getComponent('elements.Spinner');
         const TooltipButton = sdk.getComponent('elements.TooltipButton');
 
@@ -871,7 +925,7 @@ export default class GroupView extends React.Component {
                 onClick={this._onAddRoomsClick}
             >
                 <div className="mx_GroupView_rooms_header_addRow_button">
-                    <TintableSvg src={require("../../../res/img/icons-room-add.svg")} width="24" height="24" />
+                    <img src={require("../../../res/img/icons-room-add.svg")} width="24" height="24" />
                 </div>
                 <div className="mx_GroupView_rooms_header_addRow_label">
                     { _t('Add rooms to this community') }
@@ -1185,10 +1239,13 @@ export default class GroupView extends React.Component {
                     avatarImage = <Spinner />;
                 } else {
                     const GroupAvatar = sdk.getComponent('avatars.GroupAvatar');
-                    avatarImage = <GroupAvatar groupId={this.props.groupId}
+                    avatarImage = <GroupAvatar
+                        groupId={this.props.groupId}
                         groupName={this.state.profileForm.name}
                         groupAvatarUrl={this.state.profileForm.avatar_url}
-                        width={28} height={28} resizeMethod='crop'
+                        width={28}
+                        height={28}
+                        resizeMethod='crop'
                     />;
                 }
 
@@ -1199,9 +1256,12 @@ export default class GroupView extends React.Component {
                         </label>
                         <div className="mx_GroupView_avatarPicker_edit">
                             <label htmlFor="avatarInput" className="mx_GroupView_avatarPicker_label">
-                                <img src={require("../../../res/img/camera.svg")}
-                                    alt={_t("Upload avatar")} title={_t("Upload avatar")}
-                                    width="17" height="15" />
+                                <img
+                                    src={require("../../../res/img/camera.svg")}
+                                    alt={_t("Upload avatar")}
+                                    title={_t("Upload avatar")}
+                                    width="17"
+                                    height="15" />
                             </label>
                             <input id="avatarInput" className="mx_GroupView_uploadInput" type="file" onChange={this._onAvatarSelected} />
                         </div>
@@ -1238,7 +1298,8 @@ export default class GroupView extends React.Component {
                     groupAvatarUrl={groupAvatarUrl}
                     groupName={groupName}
                     onClick={onGroupHeaderItemClick}
-                    width={28} height={28}
+                    width={28}
+                    height={28}
                 />;
                 if (summary.profile && summary.profile.name) {
                     nameNode = <div onClick={onGroupHeaderItemClick}>
@@ -1269,28 +1330,32 @@ export default class GroupView extends React.Component {
                         key="_cancelButton"
                         onClick={this._onCancelClick}
                     >
-                        <img src={require("../../../res/img/cancel.svg")} className="mx_filterFlipColor"
-                            width="18" height="18" alt={_t("Cancel")} />
+                        <img
+                            src={require("../../../res/img/cancel.svg")}
+                            className="mx_filterFlipColor"
+                            width="18"
+                            height="18"
+                            alt={_t("Cancel")} />
                     </AccessibleButton>,
                 );
             } else {
                 if (summary.user && summary.user.membership === 'join') {
                     rightButtons.push(
-                        <AccessibleButton className="mx_GroupHeader_button mx_GroupHeader_editButton"
+                        <AccessibleButton
+                            className="mx_GroupHeader_button mx_GroupHeader_editButton"
                             key="_editButton"
                             onClick={this._onEditClick}
                             title={_t("Community Settings")}
-                        >
-                        </AccessibleButton>,
+                        />,
                     );
                 }
                 rightButtons.push(
-                    <AccessibleButton className="mx_GroupHeader_button mx_GroupHeader_shareButton"
+                    <AccessibleButton
+                        className="mx_GroupHeader_button mx_GroupHeader_shareButton"
                         key="_shareButton"
                         onClick={this._onShareClick}
                         title={_t('Share Community')}
-                    >
-                    </AccessibleButton>,
+                    />,
                 );
             }
 
@@ -1336,7 +1401,7 @@ export default class GroupView extends React.Component {
             if (this.state.error.httpStatus === 404) {
                 return (
                     <div className="mx_GroupView_error">
-                        { _t('Community %(groupId)s not found', {groupId: this.props.groupId}) }
+                        { _t('Community %(groupId)s not found', { groupId: this.props.groupId }) }
                     </div>
                 );
             } else {
@@ -1346,13 +1411,13 @@ export default class GroupView extends React.Component {
                 }
                 return (
                     <div className="mx_GroupView_error">
-                        { _t('Failed to load %(groupId)s', {groupId: this.props.groupId }) }
+                        { _t('Failed to load %(groupId)s', { groupId: this.props.groupId }) }
                         { extraText }
                     </div>
                 );
             }
         } else {
-            console.error("Invalid state for GroupView");
+            logger.error("Invalid state for GroupView");
             return <div />;
         }
     }

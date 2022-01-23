@@ -17,6 +17,8 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import dis from '../../../dispatcher/dispatcher';
 import Modal from '../../../Modal';
 import * as sdk from '../../../index';
@@ -24,8 +26,8 @@ import { _t } from '../../../languageHandler';
 import GroupStore from '../../../stores/GroupStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
-import {mediaFromMxc} from "../../../customisations/Media";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { mediaFromMxc } from "../../../customisations/Media";
 
 @replaceableComponent("views.groups.GroupRoomInfo")
 export default class GroupRoomInfo extends React.Component {
@@ -90,12 +92,12 @@ export default class GroupRoomInfo extends React.Component {
         e.stopPropagation();
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createTrackedDialog('Confirm removal of group from room', '', QuestionDialog, {
-            title: _t("Are you sure you want to remove '%(roomName)s' from %(groupId)s?", {roomName, groupId}),
+            title: _t("Are you sure you want to remove '%(roomName)s' from %(groupId)s?", { roomName, groupId }),
             description: _t("Removing a room from the community will also remove it from the community page."),
             button: _t("Remove"),
             onFinished: (proceed) => {
                 if (!proceed) return;
-                this.setState({groupRoomRemoveLoading: true});
+                this.setState({ groupRoomRemoveLoading: true });
                 const groupId = this.props.groupId;
                 const roomId = this.props.groupRoomId;
                 GroupStore.removeRoomFromGroup(this.props.groupId, roomId).then(() => {
@@ -103,16 +105,16 @@ export default class GroupRoomInfo extends React.Component {
                         action: "view_group_room_list",
                     });
                 }).catch((err) => {
-                    console.error(`Error whilst removing ${roomId} from ${groupId}`, err);
+                    logger.error(`Error whilst removing ${roomId} from ${groupId}`, err);
                     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                     Modal.createTrackedDialog('Failed to remove room from group', '', ErrorDialog, {
                         title: _t("Failed to remove room from community"),
                         description: _t(
-                            "Failed to remove '%(roomName)s' from %(groupId)s", {groupId, roomName},
+                            "Failed to remove '%(roomName)s' from %(groupId)s", { groupId, roomName },
                         ),
                     });
                 }).finally(() => {
-                    this.setState({groupRoomRemoveLoading: false});
+                    this.setState({ groupRoomRemoveLoading: false });
                 });
             },
         });
@@ -133,13 +135,13 @@ export default class GroupRoomInfo extends React.Component {
         const roomId = this.props.groupRoomId;
         const roomName = this.state.groupRoom.displayname;
         GroupStore.updateGroupRoomVisibility(this.props.groupId, roomId, isPublic).catch((err) => {
-            console.error(`Error whilst changing visibility of ${roomId} in ${groupId} to ${isPublic}`, err);
+            logger.error(`Error whilst changing visibility of ${roomId} in ${groupId} to ${isPublic}`, err);
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Failed to remove room from group', '', ErrorDialog, {
                 title: _t("Something went wrong!"),
                 description: _t(
                     "The visibility of '%(roomName)s' in %(groupId)s could not be updated.",
-                    {roomName, groupId},
+                    { roomName, groupId },
                 ),
             });
         }).finally(() => {

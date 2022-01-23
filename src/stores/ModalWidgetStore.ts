@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IModalWidgetOpenRequestData, IModalWidgetReturnData, Widget } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
-import Modal, {IHandle, IModal} from "../Modal";
+import Modal, { IHandle, IModal } from "../Modal";
 import ModalWidgetDialog from "../components/views/dialogs/ModalWidgetDialog";
-import {WidgetMessagingStore} from "./widgets/WidgetMessagingStore";
-import {IModalWidgetOpenRequestData, IModalWidgetReturnData, Widget} from "matrix-widget-api";
+import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
 
 interface IState {
     modal?: IModal<any>;
@@ -56,7 +58,7 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
         if (this.modalInstance) return;
         this.openSourceWidgetId = sourceWidget.id;
         this.modalInstance = Modal.createTrackedDialog('Modal Widget', '', ModalWidgetDialog, {
-            widgetDefinition: {...requestData},
+            widgetDefinition: { ...requestData },
             widgetRoomId,
             sourceWidgetId: sourceWidget.id,
             onFinished: (success: boolean, data?: IModalWidgetReturnData) => {
@@ -81,7 +83,7 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
 
             const sourceMessaging = WidgetMessagingStore.instance.getMessaging(sourceWidget);
             if (!sourceMessaging) {
-                console.error("No source widget messaging for modal widget");
+                logger.error("No source widget messaging for modal widget");
                 return;
             }
             sourceMessaging.notifyModalWidgetClose(data);

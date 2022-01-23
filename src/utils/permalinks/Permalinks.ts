@@ -16,22 +16,22 @@ limitations under the License.
 
 import isIp from "is-ip";
 import * as utils from "matrix-js-sdk/src/utils";
-import {Room} from "matrix-js-sdk/src/models/room";
-import {EventType} from "matrix-js-sdk/src/@types/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import {MatrixClientPeg} from "../../MatrixClientPeg";
-import SpecPermalinkConstructor, {baseUrl as matrixtoBaseUrl} from "./SpecPermalinkConstructor";
-import PermalinkConstructor, {PermalinkParts} from "./PermalinkConstructor";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
+import SpecPermalinkConstructor, { baseUrl as matrixtoBaseUrl } from "./SpecPermalinkConstructor";
+import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 import ElementPermalinkConstructor from "./ElementPermalinkConstructor";
-import matrixLinkify from "../../linkify-matrix";
 import SdkConfig from "../../SdkConfig";
+import { ELEMENT_URL_PATTERN } from "../../linkify-matrix";
 
 // The maximum number of servers to pick when working out which servers
 // to add to permalinks. The servers are appended as ?via=example.org
 const MAX_SERVER_CANDIDATES = 3;
-
 
 // Permalinks can have servers appended to them so that the user
 // receiving them can have a fighting chance at joining the room.
@@ -110,7 +110,7 @@ export class RoomPermalinkCreator {
             // currentState, at least potentially at the early stages of joining a room.
             // To avoid breaking everything, we'll just warn rather than throw as well as
             // not bother updating the various aspects of the share link.
-            console.warn("Tried to load a permalink creator with no room state");
+            logger.warn("Tried to load a permalink creator with no room state");
             return;
         }
         this.updateAllowedServers();
@@ -172,7 +172,7 @@ export class RoomPermalinkCreator {
                 this.updateServerCandidates();
                 return;
         }
-    }
+    };
 
     private onMembership = (evt: MatrixEvent, member: RoomMember, oldMembership: string) => {
         const userId = member.userId;
@@ -189,7 +189,7 @@ export class RoomPermalinkCreator {
 
         this.updateHighestPlUser();
         this.updateServerCandidates();
-    }
+    };
 
     private updateHighestPlUser() {
         const plEvent = this.room.currentState.getStateEvents("m.room.power_levels", "");
@@ -347,7 +347,7 @@ export function tryTransformPermalinkToLocalHref(permalink: string): string {
     }
 
     try {
-        const m = decodeURIComponent(permalink).match(matrixLinkify.ELEMENT_URL_PATTERN);
+        const m = decodeURIComponent(permalink).match(ELEMENT_URL_PATTERN);
         if (m) {
             return m[1];
         }
@@ -385,7 +385,7 @@ export function getPrimaryPermalinkEntity(permalink: string): string {
 
         // If not a permalink, try the vector patterns.
         if (!permalinkParts) {
-            const m = permalink.match(matrixLinkify.ELEMENT_URL_PATTERN);
+            const m = permalink.match(ELEMENT_URL_PATTERN);
             if (m) {
                 // A bit of a hack, but it gets the job done
                 const handler = new ElementPermalinkConstructor("http://localhost");

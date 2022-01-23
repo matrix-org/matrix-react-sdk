@@ -16,8 +16,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import TabbedView, {Tab} from "../../structures/TabbedView";
-import {_t, _td} from "../../../languageHandler";
+
+import TabbedView, { Tab } from "../../structures/TabbedView";
+import { _t, _td } from "../../../languageHandler";
 import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab";
 import SettingsStore, { CallbackFn } from "../../../settings/SettingsStore";
 import LabsUserSettingsTab from "../settings/tabs/user/LabsUserSettingsTab";
@@ -28,11 +29,14 @@ import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSet
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
 import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
 import FlairUserSettingsTab from "../settings/tabs/user/FlairUserSettingsTab";
-import * as sdk from "../../../index";
 import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
-import {UIFeature} from "../../../settings/UIFeature";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { UIFeature } from "../../../settings/UIFeature";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
+import { IDialogProps } from "./IDialogProps";
+import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab";
+import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
 
 export enum UserTab {
     General = "USER_GENERAL_TAB",
@@ -40,6 +44,8 @@ export enum UserTab {
     Flair = "USER_FLAIR_TAB",
     Notifications = "USER_NOTIFICATIONS_TAB",
     Preferences = "USER_PREFERENCES_TAB",
+    Keyboard = "USER_KEYBOARD_TAB",
+    Sidebar = "USER_SIDEBAR_TAB",
     Voice = "USER_VOICE_TAB",
     Security = "USER_SECURITY_TAB",
     Labs = "USER_LABS_TAB",
@@ -47,9 +53,8 @@ export enum UserTab {
     Help = "USER_HELP_TAB",
 }
 
-interface IProps {
-    onFinished: (success: boolean) => void;
-    initialTabId?: string;
+interface IProps extends IDialogProps {
+    initialTabId?: UserTab;
 }
 
 interface IState {
@@ -78,10 +83,10 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
 
     private mjolnirChanged: CallbackFn = (settingName, roomId, atLevel, newValue) => {
         // We can cheat because we know what levels a feature is tracked at, and how it is tracked
-        this.setState({mjolnirEnabled: newValue});
-    }
+        this.setState({ mjolnirEnabled: newValue });
+    };
 
-    _getTabs() {
+    private getTabs() {
         const tabs = [];
 
         tabs.push(new Tab(
@@ -114,8 +119,23 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             UserTab.Preferences,
             _td("Preferences"),
             "mx_UserSettingsDialog_preferencesIcon",
-            <PreferencesUserSettingsTab />,
+            <PreferencesUserSettingsTab closeSettingsFn={this.props.onFinished} />,
         ));
+        tabs.push(new Tab(
+            UserTab.Keyboard,
+            _td("Keyboard"),
+            "mx_UserSettingsDialog_keyboardIcon",
+            <KeyboardUserSettingsTab />,
+        ));
+
+        if (SettingsStore.getValue("feature_spaces_metaspaces")) {
+            tabs.push(new Tab(
+                UserTab.Sidebar,
+                _td("Sidebar"),
+                "mx_UserSettingsDialog_sidebarIcon",
+                <SidebarUserSettingsTab />,
+            ));
+        }
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
             tabs.push(new Tab(
@@ -162,8 +182,6 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
     }
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         return (
             <BaseDialog
                 className='mx_UserSettingsDialog'
@@ -172,7 +190,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 title={_t("Settings")}
             >
                 <div className='mx_SettingsDialog_content'>
-                    <TabbedView tabs={this._getTabs()} initialTabId={this.props.initialTabId} />
+                    <TabbedView tabs={this.getTabs()} initialTabId={this.props.initialTabId} />
                 </div>
             </BaseDialog>
         );

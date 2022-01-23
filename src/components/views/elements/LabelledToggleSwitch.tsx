@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 
 import ToggleSwitch from "./ToggleSwitch";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // The value for the toggle switch
@@ -57,8 +57,8 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
         const classes = `mx_SettingsFlag ${this.props.className || ""}`;
         return (
             <div className={classes}>
-                {firstPart}
-                {secondPart}
+                { firstPart }
+                { secondPart }
             </div>
         );
     }

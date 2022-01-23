@@ -15,6 +15,9 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, FormEvent } from 'react';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import BaseDialog from "./BaseDialog";
 import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
@@ -23,15 +26,14 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { arrayFastClone } from "../../../utils/arrays";
 import SdkConfig from "../../../SdkConfig";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import InviteDialog from "./InviteDialog";
 import BaseAvatar from "../avatars/BaseAvatar";
-import {inviteMultipleToRoom, showAnyInviteErrors} from "../../../RoomInvite";
+import { inviteMultipleToRoom, showAnyInviteErrors } from "../../../RoomInvite";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
-import {mediaFromMxc} from "../../../customisations/Media";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { mediaFromMxc } from "../../../customisations/Media";
 
 interface IProps extends IDialogProps {
     roomId: string;
@@ -86,7 +88,7 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
         ev.preventDefault();
         ev.stopPropagation();
 
-        this.setState({busy: true});
+        this.setState({ busy: true });
         try {
             const targets = [...this.state.emailTargets, ...this.state.userTargets];
             const result = await inviteMultipleToRoom(this.props.roomId, targets);
@@ -95,11 +97,11 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
             if (success) {
                 this.props.onFinished(true);
             } else {
-                this.setState({busy: false});
+                this.setState({ busy: false });
             }
         } catch (e) {
-            this.setState({busy: false});
-            console.error(e);
+            this.setState({ busy: false });
+            logger.error(e);
             Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
                 title: _t("Failed to invite"),
                 description: ((e && e.message) ? e.message : _t("Operation failed")),
@@ -114,7 +116,7 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
         } else {
             targets[index] = ev.target.value;
         }
-        this.setState({emailTargets: targets});
+        this.setState({ emailTargets: targets });
     };
 
     private onAddressBlur = (index: number) => {
@@ -122,12 +124,12 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
         if (index >= targets.length) return; // not important
         if (targets[index].trim() === "") {
             targets.splice(index, 1);
-            this.setState({emailTargets: targets});
+            this.setState({ emailTargets: targets });
         }
     };
 
     private onShowPeopleClick = () => {
-        this.setState({showPeople: !this.state.showPeople});
+        this.setState({ showPeople: !this.state.showPeople });
     };
 
     private setPersonToggle = (person: IPerson, selected: boolean) => {
@@ -137,7 +139,7 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
         } else if (!selected && targets.includes(person.userId)) {
             targets.splice(targets.indexOf(person.userId), 1);
         }
-        this.setState({userTargets: targets});
+        this.setState({ userTargets: targets });
     };
 
     private renderPerson(person: IPerson, key: any) {
@@ -156,8 +158,8 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
                     height={avatarSize}
                 />
                 <div className="mx_CommunityPrototypeInviteDialog_personIdentifiers">
-                    <span className="mx_CommunityPrototypeInviteDialog_personName">{person.user.name}</span>
-                    <span className="mx_CommunityPrototypeInviteDialog_personId">{person.userId}</span>
+                    <span className="mx_CommunityPrototypeInviteDialog_personName">{ person.user.name }</span>
+                    <span className="mx_CommunityPrototypeInviteDialog_personId">{ person.userId }</span>
                 </div>
                 <StyledCheckbox onChange={(e) => this.setPersonToggle(person, e.target.checked)} />
             </div>
@@ -165,7 +167,7 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
     }
 
     private onShowMorePeople = () => {
-        this.setState({numPeople: this.state.numPeople + 5}); // arbitrary increase
+        this.setState({ numPeople: this.state.numPeople + 5 }); // arbitrary increase
     };
 
     public render() {
@@ -187,7 +189,7 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
         emailAddresses.push((
             <Field
                 key={emailAddresses.length}
-                value={""}
+                value=""
                 onChange={(e) => this.onAddressChange(e, emailAddresses.length)}
                 label={emailAddresses.length > 0 ? _t("Add another email") : _t("Email address")}
                 placeholder={emailAddresses.length > 0 ? _t("Add another email") : _t("Email address")}
@@ -205,18 +207,21 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
                 people.push((
                     <AccessibleButton
                         onClick={this.onShowMorePeople}
-                        kind="link" key="more"
+                        kind="link"
+                        key="more"
                         className="mx_CommunityPrototypeInviteDialog_morePeople"
-                    >{_t("Show more")}</AccessibleButton>
+                    >
+                        { _t("Show more") }
+                    </AccessibleButton>
                 ));
             }
         }
         if (this.state.people.length > 0) {
             peopleIntro = (
                 <div className="mx_CommunityPrototypeInviteDialog_people">
-                    <span>{_t("People you know on %(brand)s", {brand: SdkConfig.get().brand})}</span>
+                    <span>{ _t("People you know on %(brand)s", { brand: SdkConfig.get().brand }) }</span>
                     <AccessibleButton onClick={this.onShowPeopleClick}>
-                        {this.state.showPeople ? _t("Hide") : _t("Show")}
+                        { this.state.showPeople ? _t("Hide") : _t("Show") }
                     </AccessibleButton>
                 </div>
             );
@@ -225,25 +230,28 @@ export default class CommunityPrototypeInviteDialog extends React.PureComponent<
         let buttonText = _t("Skip");
         const targetCount = this.state.userTargets.length + this.state.emailTargets.length;
         if (targetCount > 0) {
-            buttonText = _t("Send %(count)s invites", {count: targetCount});
+            buttonText = _t("Send %(count)s invites", { count: targetCount });
         }
 
         return (
             <BaseDialog
                 className="mx_CommunityPrototypeInviteDialog"
                 onFinished={this.props.onFinished}
-                title={_t("Invite people to join %(communityName)s", {communityName: this.props.communityName})}
+                title={_t("Invite people to join %(communityName)s", { communityName: this.props.communityName })}
             >
                 <form onSubmit={this.onSubmit}>
                     <div className="mx_Dialog_content">
-                        {emailAddresses}
-                        {peopleIntro}
-                        {people}
+                        { emailAddresses }
+                        { peopleIntro }
+                        { people }
                         <AccessibleButton
-                            kind="primary" onClick={this.onSubmit}
+                            kind="primary"
+                            onClick={this.onSubmit}
                             disabled={this.state.busy}
                             className="mx_CommunityPrototypeInviteDialog_primaryButton"
-                        >{buttonText}</AccessibleButton>
+                        >
+                            { buttonText }
+                        </AccessibleButton>
                     </div>
                 </form>
             </BaseDialog>

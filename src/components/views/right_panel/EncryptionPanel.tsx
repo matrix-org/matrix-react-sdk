@@ -15,10 +15,13 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useState } from "react";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import {
+    VerificationRequest,
+    PHASE_REQUESTED,
+    PHASE_UNSENT,
+} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
-import { PHASE_REQUESTED, PHASE_UNSENT } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
 import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
@@ -28,9 +31,8 @@ import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import * as sdk from "../../../index";
 import { _t } from "../../../languageHandler";
-import dis from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
@@ -39,9 +41,8 @@ interface IProps {
     member: RoomMember | User;
     onClose: () => void;
     verificationRequest: VerificationRequest;
-    verificationRequestPromise: Promise<VerificationRequest>;
+    verificationRequestPromise?: Promise<VerificationRequest>;
     layout: string;
-    inDialog: boolean;
     isRoomEncrypted: boolean;
 }
 
@@ -58,7 +59,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     // state to show a spinner immediately after clicking "start verification",
     // before we have a request
     const [isRequesting, setRequesting] = useState(false);
-    const [phase, setPhase] = useState(request && request.phase);
+    const [phase, setPhase] = useState(request?.phase);
     useEffect(() => {
         setRequest(verificationRequest);
         if (verificationRequest) {
@@ -82,17 +83,18 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     const changeHandler = useCallback(() => {
         // handle transitions -> cancelled for mismatches which fire a modal instead of showing a card
         if (request && request.cancelled && MISMATCHES.includes(request.cancellationCode)) {
+            // FIXME: Using an import will result in test failures
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog("Verification failed", "insecure", ErrorDialog, {
                 headerImage: require("../../../../res/img/e2e/warning.svg"),
                 title: _t("Your messages are not secure"),
                 description: <div>
-                    {_t("One of the following may be compromised:")}
+                    { _t("One of the following may be compromised:") }
                     <ul>
-                        <li>{_t("Your homeserver")}</li>
-                        <li>{_t("The homeserver the user you’re verifying is connected to")}</li>
-                        <li>{_t("Yours, or the other users’ internet connection")}</li>
-                        <li>{_t("Yours, or the other users’ session")}</li>
+                        <li>{ _t("Your homeserver") }</li>
+                        <li>{ _t("The homeserver the user you're verifying is connected to") }</li>
+                        <li>{ _t("Yours, or the other users' internet connection") }</li>
+                        <li>{ _t("Yours, or the other users' session") }</li>
                     </ul>
                 </div>,
                 onFinished: onClose,
@@ -114,11 +116,13 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
         setRequest(verificationRequest_);
         setPhase(verificationRequest_.phase);
         // Notify the RightPanelStore about this
-        dis.dispatch({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.EncryptionPanel,
-            refireParams: { member, verificationRequest: verificationRequest_ },
-        });
+        if (RightPanelStore.instance.currentCard.phase != RightPanelPhases.EncryptionPanel) {
+            RightPanelStore.instance.pushCard({
+                phase: RightPanelPhases.EncryptionPanel,
+                state: { member, verificationRequest: verificationRequest_ },
+            });
+        }
+        if (!RightPanelStore.instance.isOpenForRoom) RightPanelStore.instance.togglePanel();
     }, [member]);
 
     const requested =

@@ -16,8 +16,9 @@ limitations under the License.
 */
 
 import React, { createRef, RefObject } from 'react';
-import AccessibleButton from "../elements/AccessibleButton";
 import classNames from "classnames";
+
+import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from '../../../languageHandler';
 import { Key } from "../../../Keyboard";
 import DesktopBuildsNotice, { WarningKind } from "../elements/DesktopBuildsNotice";
@@ -100,7 +101,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             aria-checked={this.state.scope === SearchScope.Room}
                             role="radio"
                         >
-                            {_t("This Room")}
+                            { _t("This Room") }
                         </AccessibleButton>
                         <AccessibleButton
                             className={allRoomsClasses}
@@ -108,7 +109,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             aria-checked={this.state.scope === SearchScope.All}
                             role="radio"
                         >
-                            {_t("All Rooms")}
+                            { _t("All Rooms") }
                         </AccessibleButton>
                     </div>
                     <div className="mx_SearchBar_input mx_textinput">
@@ -119,7 +120,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                             placeholder={_t("Search…")}
                             onKeyDown={this.onSearchChange}
                         />
-                        <AccessibleButton className={ searchButtonClasses } onClick={this.onSearch} />
+                        <AccessibleButton className={searchButtonClasses} onClick={this.onSearch} />
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />
                 </div>

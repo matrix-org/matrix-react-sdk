@@ -16,20 +16,21 @@ limitations under the License.
 */
 
 import React from 'react';
-import TabbedView, {Tab} from "../../structures/TabbedView";
-import {_t, _td} from "../../../languageHandler";
+
+import TabbedView, { Tab } from "../../structures/TabbedView";
+import { _t, _td } from "../../../languageHandler";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
 import GeneralRoomSettingsTab from "../settings/tabs/room/GeneralRoomSettingsTab";
 import SecurityRoomSettingsTab from "../settings/tabs/room/SecurityRoomSettingsTab";
 import NotificationSettingsTab from "../settings/tabs/room/NotificationSettingsTab";
 import BridgeSettingsTab from "../settings/tabs/room/BridgeSettingsTab";
-import * as sdk from "../../../index";
-import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
-import {UIFeature} from "../../../settings/UIFeature";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { UIFeature } from "../../../settings/UIFeature";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
 
 export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
 export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
@@ -44,18 +45,31 @@ interface IProps {
     initialTabId?: string;
 }
 
+interface IState {
+    roomName: string;
+}
+
 @replaceableComponent("views.dialogs.RoomSettingsDialog")
-export default class RoomSettingsDialog extends React.Component<IProps> {
+export default class RoomSettingsDialog extends React.Component<IProps, IState> {
     private dispatcherRef: string;
+
+    constructor(props: IProps) {
+        super(props);
+        this.state = { roomName: '' };
+    }
 
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
+        MatrixClientPeg.get().on("Room.name", this.onRoomName);
+        this.onRoomName();
     }
 
     public componentWillUnmount() {
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
         }
+
+        MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
     }
 
     private onAction = (payload): void => {
@@ -64,6 +78,12 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
         if (payload.action === 'view_home_page') {
             this.props.onFinished(true);
         }
+    };
+
+    private onRoomName = (): void => {
+        this.setState({
+            roomName: MatrixClientPeg.get().getRoom(this.props.roomId).name,
+        });
     };
 
     private getTabs(): Tab[] {
@@ -79,7 +99,10 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
             ROOM_SECURITY_TAB,
             _td("Security & Privacy"),
             "mx_RoomSettingsDialog_securityIcon",
-            <SecurityRoomSettingsTab roomId={this.props.roomId} />,
+            <SecurityRoomSettingsTab
+                roomId={this.props.roomId}
+                closeSettingsFn={() => this.props.onFinished(true)}
+            />,
         ));
         tabs.push(new Tab(
             ROOM_ROLES_TAB,
@@ -91,7 +114,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
             ROOM_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_RoomSettingsDialog_notificationsIcon",
-            <NotificationSettingsTab roomId={this.props.roomId} />,
+            <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
         ));
 
         if (SettingsStore.getValue("feature_bridge_state")) {
@@ -119,15 +142,13 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
     }
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
-        const roomName = MatrixClientPeg.get().getRoom(this.props.roomId).name;
+        const roomName = this.state.roomName;
         return (
             <BaseDialog
                 className='mx_RoomSettingsDialog'
                 hasCancel={true}
                 onFinished={this.props.onFinished}
-                title={_t("Room Settings - %(roomName)s", {roomName})}
+                title={_t("Room Settings - %(roomName)s", { roomName })}
             >
                 <div className='mx_SettingsDialog_content'>
                     <TabbedView

@@ -14,19 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, KeyboardEventHandler } from "react";
 
 import { _t } from '../../../languageHandler';
 import withValidation from './Validation';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Field, { IValidateOpts } from "./Field";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
-    domain: string;
+    domain?: string;
     value: string;
     label?: string;
     placeholder?: string;
+    disabled?: boolean;
+    onKeyDown?: KeyboardEventHandler;
     onChange?(value: string): void;
 }
 
@@ -37,6 +39,9 @@ interface IState {
 // Controlled form component wrapping Field for inputting a room alias scoped to a given domain
 @replaceableComponent("views.elements.RoomAliasField")
 export default class RoomAliasField extends React.PureComponent<IProps, IState> {
+    static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private fieldRef = createRef<Field>();
 
     constructor(props, context) {
@@ -48,26 +53,42 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
     }
 
     private asFullAlias(localpart: string): string {
-        return `#${localpart}:${this.props.domain}`;
+        const hashAlias = `#${ localpart }`;
+        if (this.props.domain) {
+            return `${hashAlias}:${this.props.domain}`;
+        }
+        return hashAlias;
+    }
+
+    private get domainProps() {
+        const { domain } = this.props;
+        const prefix = <span>#</span>;
+        const postfix = domain ? (<span title={`:${domain}`}>{ `:${domain}` }</span>) : <span />;
+        const maxlength = domain ? 255 - domain.length - 2 : 255 - 1;   // 2 for # and :
+        const value = domain ?
+            this.props.value.substring(1, this.props.value.length - this.props.domain.length - 1) :
+            this.props.value.substring(1);
+
+        return { prefix, postfix, value, maxlength };
     }
 
     render() {
-        const poundSign = (<span>#</span>);
-        const aliasPostfix = ":" + this.props.domain;
-        const domain = (<span title={aliasPostfix}>{aliasPostfix}</span>);
-        const maxlength = 255 - this.props.domain.length - 2;   // 2 for # and :
+        const { prefix, postfix, value, maxlength } = this.domainProps;
         return (
             <Field
                 label={this.props.label || _t("Room address")}
                 className="mx_RoomAliasField"
-                prefixComponent={poundSign}
-                postfixComponent={domain}
+                prefixComponent={prefix}
+                postfixComponent={postfix}
                 ref={this.fieldRef}
                 onValidate={this.onValidate}
                 placeholder={this.props.placeholder || _t("e.g. my-room")}
                 onChange={this.onChange}
-                value={this.props.value.substring(1, this.props.value.length - this.props.domain.length - 1)}
+                value={value}
                 maxLength={maxlength}
+                disabled={this.props.disabled}
+                autoComplete="off"
+                onKeyDown={this.props.onKeyDown}
             />
         );
     }
@@ -80,22 +101,64 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
 
     private onValidate = async (fieldState) => {
         const result = await this.validationRules(fieldState);
-        this.setState({isValid: result.valid});
+        this.setState({ isValid: result.valid });
         return result;
     };
 
     private validationRules = withValidation({
         rules: [
+            { key: "hasDomain",
+                test: async ({ value }) => {
+                    // Ignore if we have passed domain
+                    if (!value || this.props.domain) {
+                        return true;
+                    }
+
+                    if (value.split(':').length < 2) {
+                        return false;
+                    }
+                    return true;
+                },
+                invalid: () => _t("Missing domain separator e.g. (:domain.org)"),
+            },
+            {
+                key: "hasLocalpart",
+                test: async ({ value }) => {
+                    if (!value || this.props.domain) {
+                        return true;
+                    }
+
+                    const split = value.split(':');
+                    if (split.length < 2) {
+                        return true; // hasDomain check will fail here instead
+                    }
+
+                    // Define the value invalid if there's no first part (roomname)
+                    if (split[0].length < 1) {
+                        return false;
+                    }
+                    return true;
+                },
+                invalid: () => _t("Missing room name or separator e.g. (my-room:domain.org)"),
+            },
             {
                 key: "safeLocalpart",
                 test: async ({ value }) => {
                     if (!value) {
                         return true;
                     }
-                    const fullAlias = this.asFullAlias(value);
-                    // XXX: FIXME https://github.com/matrix-org/matrix-doc/issues/668
-                    return !value.includes("#") && !value.includes(":") && !value.includes(",") &&
-                        encodeURI(fullAlias) === fullAlias;
+                    if (!this.props.domain) {
+                        return true;
+                    } else {
+                        const fullAlias = this.asFullAlias(value);
+                        const hasColon = this.props.domain ? !value.includes(":") : true;
+                        // XXX: FIXME https://github.com/matrix-org/matrix-doc/issues/668
+                        // NOTE: We could probably use linkifyjs to parse those aliases here?
+                        return !value.includes("#") &&
+                            hasColon &&
+                            !value.includes(",") &&
+                            encodeURI(fullAlias) === fullAlias;
+                    }
                 },
                 invalid: () => _t("Some characters not allowed"),
             }, {
@@ -105,16 +168,17 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
             }, {
                 key: "taken",
                 final: true,
-                test: async ({value}) => {
+                test: async ({ value }) => {
                     if (!value) {
                         return true;
                     }
-                    const client = MatrixClientPeg.get();
+                    const client = this.context;
                     try {
                         await client.getRoomIdForAlias(this.asFullAlias(value));
                         // we got a room id, so the alias is taken
                         return false;
                     } catch (err) {
+                        console.log(err);
                         // any server error code will do,
                         // either it M_NOT_FOUND or the alias is invalid somehow,
                         // in which case we don't want to show the invalid message
@@ -122,7 +186,9 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                     }
                 },
                 valid: () => _t("This address is available to use"),
-                invalid: () => _t("This address is already in use"),
+                invalid: () => this.props.domain ?
+                    _t("This address is already in use") :
+                    _t("This address had invalid server or is already in use"),
             },
         ],
     });

@@ -14,22 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext} from "react";
-import {MatrixCapabilities} from "matrix-widget-api";
+import React, { useContext } from "react";
+import { MatrixCapabilities } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import IconizedContextMenu, {IconizedContextMenuOption, IconizedContextMenuOptionList} from "./IconizedContextMenu";
-import {ChevronFace} from "../../structures/ContextMenu";
-import {_t} from "../../../languageHandler";
-import {IApp} from "../../../stores/WidgetStore";
+import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
+import { ChevronFace } from "../../structures/ContextMenu";
+import { _t } from "../../../languageHandler";
+import { IApp } from "../../../stores/WidgetStore";
 import WidgetUtils from "../../../utils/WidgetUtils";
-import {WidgetMessagingStore} from "../../../stores/widgets/WidgetMessagingStore";
+import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import RoomContext from "../../../contexts/RoomContext";
 import dis from "../../../dispatcher/dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import ErrorDialog from "../dialogs/ErrorDialog";
-import {WidgetType} from "../../../widgets/WidgetType";
+import { WidgetType } from "../../../widgets/WidgetType";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { getConfigLivestreamUrl, startJitsiAudioLivestream } from "../../../Livestream";
@@ -54,7 +55,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
     ...props
 }) => {
     const cli = useContext(MatrixClientContext);
-    const {room, roomId} = useContext(RoomContext);
+    const { room, roomId } = useContext(RoomContext);
 
     const widgetMessaging = WidgetMessagingStore.instance.getMessagingForId(app.id);
     const canModify = userWidget || WidgetUtils.canUserModifyWidgets(roomId);
@@ -65,7 +66,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
             try {
                 await startJitsiAudioLivestream(widgetMessaging, roomId);
             } catch (err) {
-                console.error("Failed to start livestream", err);
+                logger.error("Failed to start livestream", err);
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
                 const message = err.message || _t("Unable to start audio streaming.");
                 Modal.createTrackedDialog('WidgetContext Menu', 'Livestream failed', ErrorDialog, {
@@ -76,7 +77,8 @@ const WidgetContextMenu: React.FC<IProps> = ({
             onFinished();
         };
         streamAudioStreamButton = <IconizedContextMenuOption
-            onClick={onStreamAudioClick} label={_t("Start audio stream")}
+            onClick={onStreamAudioClick}
+            label={_t("Start audio stream")}
         />;
     }
 
@@ -113,7 +115,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
                     file: data.screenshot,
                 });
             }).catch(err => {
-                console.error("Failed to take screenshot: ", err);
+                logger.error("Failed to take screenshot: ", err);
             });
             onFinished();
         };
@@ -159,12 +161,12 @@ const WidgetContextMenu: React.FC<IProps> = ({
     let revokeButton;
     if (!userWidget && !isLocalWidget && isAllowedWidget) {
         const onRevokeClick = () => {
-            console.info("Revoking permission for widget to load: " + app.eventId);
+            logger.info("Revoking permission for widget to load: " + app.eventId);
             const current = SettingsStore.getValue("allowedWidgets", roomId);
             current[app.eventId] = false;
             const level = SettingsStore.firstSupportedLevel("allowedWidgets");
             SettingsStore.setValue("allowedWidgets", roomId, level, current).catch(err => {
-                console.error(err);
+                logger.error(err);
                 // We don't really need to do anything about this - the user will just hit the button again.
             });
             onFinished();

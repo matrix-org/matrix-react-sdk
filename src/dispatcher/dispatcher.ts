@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { Dispatcher } from "flux";
+
 import { Action } from "./actions";
 import { ActionPayload, AsyncActionPayload } from "./payloads";
 
@@ -60,7 +61,7 @@ export class MatrixDispatcher extends Dispatcher<ActionPayload> {
      * @see dispatch(action: ActionPayload, sync: boolean)
      */
     fire(action: Action, sync = false) {
-        this.dispatch({action}, sync);
+        this.dispatch({ action }, sync);
     }
 }
 

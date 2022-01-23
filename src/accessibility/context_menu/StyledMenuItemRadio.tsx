@@ -18,7 +18,8 @@ limitations under the License.
 
 import React from "react";
 
-import {Key} from "../../Keyboard";
+import { Key } from "../../Keyboard";
+import { useRovingTabIndex } from "../RovingTabIndex";
 import StyledRadioButton from "../../components/views/elements/StyledRadioButton";
 
 interface IProps extends React.ComponentProps<typeof StyledRadioButton> {
@@ -28,7 +29,9 @@ interface IProps extends React.ComponentProps<typeof StyledRadioButton> {
 }
 
 // Semantic component for representing a styled role=menuitemradio
-export const StyledMenuItemRadio: React.FC<IProps> = ({children, label, onChange, onClose, ...props}) => {
+export const StyledMenuItemRadio: React.FC<IProps> = ({ children, label, onChange, onClose, ...props }) => {
+    const [onFocus, isActive, ref] = useRovingTabIndex<HTMLInputElement>();
+
     const onKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === Key.ENTER || e.key === Key.SPACE) {
             e.stopPropagation();
@@ -52,11 +55,13 @@ export const StyledMenuItemRadio: React.FC<IProps> = ({children, label, onChange
         <StyledRadioButton
             {...props}
             role="menuitemradio"
-            tabIndex={-1}
             aria-label={label}
             onChange={onChange}
             onKeyDown={onKeyDown}
             onKeyUp={onKeyUp}
+            onFocus={onFocus}
+            inputRef={ref}
+            tabIndex={isActive ? 0 : -1}
         >
             { children }
         </StyledRadioButton>
