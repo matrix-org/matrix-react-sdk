@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643038311146,
+  "lastUpdate": 1643040331785,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58124,6 +58124,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 770.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d75c1bc0d669490dc2da438d4814319df5c39bd6",
+          "message": "Fall back to legacy analytics for guest users (#7616)",
+          "timestamp": "2022-01-24T15:58:31Z",
+          "tree_id": "95a3749a8690eb8aabfcf8c2006adc159b87a885",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d75c1bc0d669490dc2da438d4814319df5c39bd6"
+        },
+        "date": 1643040326811,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4698.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 653.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
