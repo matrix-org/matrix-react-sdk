@@ -22,6 +22,7 @@ import sanitizeHtml from 'sanitize-html';
 import cheerio from 'cheerio';
 import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
+import { split } from 'lodash';
 import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
@@ -175,9 +176,10 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         if (attribs.href) {
             attribs.target = '_blank'; // by default
 
-            const transformed = tryTransformPermalinkToLocalHref(attribs.href);
-            if (transformed !== attribs.href || attribs.href.match(ELEMENT_URL_PATTERN)) {
-                attribs.href = transformed;
+            const transformed = tryTransformPermalinkToLocalHref(attribs.href); // only used to check if it is a link that can be handled locally
+            if (transformed !== attribs.href || // it could be converted so handle locally symbols e.g. @user:server.tdl, matrix: and matrix.to
+                attribs.href.match(ELEMENT_URL_PATTERN) // for https:vector|riot...
+            ) {
                 delete attribs.target;
             }
         }
@@ -401,6 +403,44 @@ export interface IOptsReturnString extends IOpts {
     returnString: true;
 }
 
+const emojiToHtmlSpan = (emoji: string) =>
+    `<span class='mx_EventTile_Emoji' title='${unicodeToShortcode(emoji)}'>${emoji}</span>`;
+const emojiToJsxSpan = (emoji: string, key: number) =>
+    <span key={key} className='mx_EventTile_Emoji' title={unicodeToShortcode(emoji)}>{ emoji }</span>;
+
+/**
+ * Wraps emojis in <span> to style them separately from the rest of message. Consecutive emojis (and modifiers) are wrapped
+ * in the same <span>.
+ * @param {string} message the text to format
+ * @param {boolean} isHtmlMessage whether the message contains HTML
+ * @returns if isHtmlMessage is true, returns an array of strings, otherwise return an array of React Elements for emojis
+ * and plain text for everything else
+ */
+function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | string)[] {
+    const emojiToSpan = isHtmlMessage ? emojiToHtmlSpan : emojiToJsxSpan;
+    const result: (JSX.Element | string)[] = [];
+    let text = '';
+    let key = 0;
+
+    // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+    for (const char of split(message, '')) {
+        if (mightContainEmoji(char)) {
+            if (text) {
+                result.push(text);
+                text = '';
+            }
+            result.push(emojiToSpan(char, key));
+            key++;
+        } else {
+            text += char;
+        }
+    }
+    if (text) {
+        result.push(text);
+    }
+    return result;
+}
+
 /* turn a matrix event body into html
  *
  * content: 'content' of the MatrixEvent
@@ -487,6 +527,9 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
                 });
                 safeBody = phtml.html();
             }
+            if (bodyHasEmoji) {
+                safeBody = formatEmojis(safeBody, true).join('');
+            }
         }
     } finally {
         delete sanitizeParams.textFilter;
@@ -529,6 +572,11 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         'markdown-body': isHtmlMessage && !emojiBody,
     });
 
+    let emojiBodyElements: JSX.Element[];
+    if (!isDisplayedWithHtml && bodyHasEmoji) {
+        emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
+    }
+
     return isDisplayedWithHtml ?
         <span
             key="body"
@@ -536,7 +584,9 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
             className={className}
             dangerouslySetInnerHTML={{ __html: safeBody }}
             dir="auto"
-        /> : <span key="body" ref={opts.ref} className={className} dir="auto">{ strippedBody }</span>;
+        /> : <span key="body" ref={opts.ref} className={className} dir="auto">
+            { emojiBodyElements || strippedBody }
+        </span>;
 }
 
 /**

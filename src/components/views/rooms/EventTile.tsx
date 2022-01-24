@@ -75,6 +75,7 @@ import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { CardContext } from '../right_panel/BaseCard';
 import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
+import RedactedBody from '../messages/RedactedBody';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -177,13 +178,6 @@ export function getHandlerTile(ev: MatrixEvent): string {
         if (WidgetType.JITSI.matches(type)) {
             return "messages.MJitsiWidgetEvent";
         }
-    }
-
-    if (
-        M_POLL_START.matches(type) &&
-        !SettingsStore.getValue("feature_polls")
-    ) {
-        return undefined;
     }
 
     if (ev.isState()) {
@@ -562,8 +556,8 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread.lastReply,
-            threadReplyCount: thread.length,
+            threadLastReply: thread?.lastReply,
+            threadReplyCount: thread?.length,
             thread,
         });
     };
@@ -1482,7 +1476,10 @@ export default class EventTile extends React.Component<IProps, IState> {
                         >
                             { this.renderE2EPadlock() }
                             <div className="mx_EventTile_body">
-                                { MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent) }
+                                { this.props.mxEvent.isRedacted()
+                                    ? <RedactedBody mxEvent={this.props.mxEvent} />
+                                    : MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent)
+                                }
                             </div>
                             { this.renderThreadPanelSummary() }
                         </div>
