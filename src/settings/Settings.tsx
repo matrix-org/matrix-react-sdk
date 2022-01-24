@@ -306,13 +306,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show extensible event representation of events"),
         default: false,
     },
-    "feature_polls": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Polls (under active development)"),
-        default: false,
-    },
     "feature_location_share": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -418,7 +411,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable location sharing'),
         default: true,
-        controller: new UIFeatureController(UIFeature.Widgets, false),
+        controller: new IncompatibleController("feature_location_share", false, false),
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
