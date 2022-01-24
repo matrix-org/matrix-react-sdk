@@ -119,8 +119,7 @@ export default class SenderProfile extends React.Component<IProps, IState> {
                 <span className="mx_SenderProfile_mxid">
                     { UserIdentifier.getDisplayUserIdentifier(
                         mxid, { withDisplayName: true, roomId: mxEvent.getRoomId() },
-                    )
-                    }
+                    ) }
                 </span>
             );
         }

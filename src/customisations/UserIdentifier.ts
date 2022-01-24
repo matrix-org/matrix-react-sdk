@@ -35,7 +35,7 @@ export interface IUserIdentifierCustomisations {
 }
 
 // A real customisation module will define and export one or more of the
-// customisation points that make up `IAliasCustomisations`.
+// customisation points that make up `IUserIdentifierCustomisations`.
 export default {
     getDisplayUserIdentifier,
 } as IUserIdentifierCustomisations;
