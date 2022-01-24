@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643025323237,
+  "lastUpdate": 1643025376355,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57560,6 +57560,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4733,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cb152a575d92b675d309e4cf6301eb7087307ef4",
+          "message": "Unhide display names when switching back to modern layout (#7601)",
+          "timestamp": "2022-01-24T11:49:26Z",
+          "tree_id": "85c3a36b258a5e04ddbfe516d0f599ea967d8c18",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cb152a575d92b675d309e4cf6301eb7087307ef4"
+        },
+        "date": 1643025371490,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4966.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 986.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1627.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4429,
             "unit": "ms",
             "extra": "type: measure"
           }
