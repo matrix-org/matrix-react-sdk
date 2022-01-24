@@ -258,7 +258,6 @@ export class StopGapWidget extends EventEmitter {
     /**
      * This starts the messaging for the widget if it is not in the state `started` yet.
      * @param iframe the iframe the widget should use
-     * @returns
      */
     public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
@@ -415,7 +414,6 @@ export class StopGapWidget extends EventEmitter {
      * Stops the widget messaging for if it is started. Skips stopping if it is an active
      * widget.
      * @param opts
-     * @returns
      */
     public stopMessaging(opts = { forceDestroy: false }) {
         if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {

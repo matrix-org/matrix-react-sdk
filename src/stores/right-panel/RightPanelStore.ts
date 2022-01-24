@@ -33,6 +33,7 @@ import {
 } from './RightPanelStoreIPanelState';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import RoomViewStore from '../RoomViewStore';
+
 const GROUP_PHASES = [
     RightPanelPhases.GroupMemberList,
     RightPanelPhases.GroupRoomList,
@@ -70,7 +71,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     protected async onReady(): Promise<any> {
         this.isReady = true;
-        // TODO RightPanelStore (will be addressed when dropping groups): This should be used instead of the onDispatch callback when groups are removed.
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         MatrixClientPeg.get().on("crypto.verification.request", this.onVerificationRequestUpdate);
         this.viewedRoomId = RoomViewStore.getRoomId();
@@ -402,11 +402,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
                     // all the logic in this case is not necessary anymore as soon as groups are dropped and we use: onRoomViewStoreUpdate
                     this.loadCacheFromSettings();
 
-                    /*
-                    DO NOT EMIT. Emitting breaks iframe refs by triggering a render
-                    for the room view and calling the iframe ref changed
-                    function
-                    */
+                    // DO NOT EMIT. Emitting breaks iframe refs by triggering a render
+                    // for the room view and calling the iframe ref changed function
                     // this.emitAndUpdateSettings();
                 }
                 break;
