@@ -238,7 +238,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             [EventType.RoomEncryption]: _td("Enable room encryption"),
             [EventType.RoomServerAcl]: _td("Change server ACLs"),
             [EventType.Reaction]: _td("Send reactions"),
-            [EventType.RoomRedaction]: _td("Redact messages"),
+            [EventType.RoomRedaction]: _td("Remove messages"),
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),

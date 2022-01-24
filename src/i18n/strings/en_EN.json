@@ -1590,7 +1590,7 @@
     "Enable room encryption": "Enable room encryption",
     "Change server ACLs": "Change server ACLs",
     "Send reactions": "Send reactions",
-    "Redact messages": "Redact messages",
+    "Remove messages": "Remove messages",
     "Modify widgets": "Modify widgets",
     "Manage pinned events": "Manage pinned events",
     "Default role": "Default role",
