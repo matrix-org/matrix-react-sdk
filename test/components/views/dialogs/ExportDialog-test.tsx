@@ -87,7 +87,7 @@ describe('<ExportDialog />', () => {
 
     it('renders export dialog', () => {
         const component = getComponent();
-        expect(component).toMatchSnapshot();
+        expect(component.find('.mx_ExportDialog')).toMatchSnapshot();
     });
 
     it('calls onFinished when cancel button is clicked', () => {
