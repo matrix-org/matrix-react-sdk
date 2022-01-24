@@ -116,8 +116,6 @@ describe('<ExportDialog />', () => {
             },
         ]);
         expect(mockHtmlExporter.export).toHaveBeenCalled();
-
-        expect(component).toMatchSnapshot();
     });
 
     it('renders export progress while export is in progress', async () => {
