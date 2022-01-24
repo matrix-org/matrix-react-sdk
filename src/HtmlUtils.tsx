@@ -89,9 +89,8 @@ const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)
  * Uses a much, much simpler regex than emojibase's so will give false
  * positives, but useful for fast-path testing strings to see if they
  * need emojification.
- * unicodeToImage uses this function.
  */
-function mightContainEmoji(str: string): boolean {
+export function mightContainEmoji(str: string): boolean {
     return SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str);
 }
 
@@ -209,11 +208,19 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             return { tagName, attribs: {} };
         }
 
-        const width = Math.min(Number(attribs.width) || 800, 800);
-        const height = Math.min(Number(attribs.height) || 600, 600);
+        const requestedWidth = Number(attribs.width);
+        const requestedHeight = Number(attribs.height);
+        const width = Math.min(requestedWidth || 800, 800);
+        const height = Math.min(requestedHeight || 600, 600);
         // specify width/height as max values instead of absolute ones to allow object-fit to do its thing
         // we only allow our own styles for this tag so overwrite the attribute
         attribs.style = `max-width: ${width}px; max-height: ${height}px;`;
+        if (requestedWidth) {
+            attribs.style += "width: 100%;";
+        }
+        if (requestedHeight) {
+            attribs.style += "height: 100%;";
+        }
 
         attribs.src = mediaFromMxc(src).getThumbnailOfSourceHttp(width, height);
         return { tagName, attribs };
@@ -404,9 +411,9 @@ export interface IOptsReturnString extends IOpts {
 }
 
 const emojiToHtmlSpan = (emoji: string) =>
-    `<span class='mx_EventTile_Emoji' title='${unicodeToShortcode(emoji)}'>${emoji}</span>`;
+    `<span class='mx_Emoji' title='${unicodeToShortcode(emoji)}'>${emoji}</span>`;
 const emojiToJsxSpan = (emoji: string, key: number) =>
-    <span key={key} className='mx_EventTile_Emoji' title={unicodeToShortcode(emoji)}>{ emoji }</span>;
+    <span key={key} className='mx_Emoji' title={unicodeToShortcode(emoji)}>{ emoji }</span>;
 
 /**
  * Wraps emojis in <span> to style them separately from the rest of message. Consecutive emojis (and modifiers) are wrapped
