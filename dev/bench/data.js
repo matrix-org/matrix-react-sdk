@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643029198531,
+  "lastUpdate": 1643032757812,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57944,6 +57944,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 609.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d60b234b7587eaf327478a85f6f54eefdfd1f062",
+          "message": "Don't render a bubble around emotes in bubble layout (#7573)",
+          "timestamp": "2022-01-24T13:51:57Z",
+          "tree_id": "d4cc584b437fd4f6c81acc7cc66fdd884985a39d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d60b234b7587eaf327478a85f6f54eefdfd1f062"
+        },
+        "date": 1643032752420,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4713,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1015.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1702.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4701.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
