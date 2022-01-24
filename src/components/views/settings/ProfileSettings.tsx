@@ -175,6 +175,10 @@ export default class ProfileSettings extends React.Component<{}, IState> {
             </span>;
         }
 
+        const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(
+            this.state.userId, { withDisplayName: true },
+        );
+
         return (
             <form
                 onSubmit={this.saveProfile}
@@ -200,12 +204,9 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                             onChange={this.onDisplayNameChanged}
                         />
                         <p>
-                            <span className="mx_ProfileSettings_userId">
-                                { UserIdentifierCustomisations.getDisplayUserIdentifier(
-                                    this.state.userId, { withDisplayName: true },
-                                )
-                                }
-                            </span>
+                            { userIdentifier && <span className="mx_ProfileSettings_userId">
+                                { userIdentifier }
+                            </span> }
                             { hostingSignup }
                         </p>
                     </div>
