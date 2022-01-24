@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2022 Šimon Brandner <simon.bra.ag@gmail.com>
+Copyright 2021 Robin Townsend <robin@robin.town>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,16 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_HelpUserSettingsTab_debugButton {
-    margin-bottom: 5px;
-    margin-top: 5px;
-}
-
-.mx_HelpUserSettingsTab span.mx_AccessibleButton {
-    word-break: break-word;
-}
-
-.mx_HelpUserSettingsTab code {
-    word-break: break-all;
-    user-select: all;
+.mx_HistoryTile::before {
+    background-color: $header-panel-text-primary-color;
+    mask-image: url('$(res)/img/element-icons/hide.svg');
 }
