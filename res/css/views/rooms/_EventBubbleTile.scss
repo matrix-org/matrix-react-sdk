@@ -529,12 +529,17 @@ limitations under the License.
     padding: 0 49px;
 }
 
+.mx_EventListSummary[data-expanded=true][data-layout=bubble] {
+    display: flex;
+    flex-direction: column;
+}
+
 // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
 // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
 .mx_EventListSummary[data-expanded=true][data-layout=bubble] {
     margin: 0;
 
-    .mx_EventTile {
+    .mx_EventTile_info {
         padding: 2px 0;
         margin-right: 0;
 
