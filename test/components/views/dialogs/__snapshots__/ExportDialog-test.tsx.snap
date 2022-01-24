@@ -985,6 +985,11 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
 </ExportDialog>
 `;
 
-exports[`<ExportDialog /> renders export progress while export is in progress 1`] = `null`;
-
-exports[`<ExportDialog /> renders success screen when export is finished 1`] = `null`;
+exports[`<ExportDialog /> renders success screen when export is finished 1`] = `
+<div
+  className="mx_Dialog_content"
+  id="mx_Dialog_content"
+>
+  Your export was successful. Find it in your Downloads folder.
+</div>
+`;

@@ -52,7 +52,6 @@ describe('<ExportDialog />', () => {
     const getExportFormatInput = (component, format) => component.find(`input[id="exportFormat-${format}"]`);
     const getPrimaryButton = (component) => component.find('[data-test-id="dialog-primary-button"]');
     const getSecondaryButton = (component) => component.find('[data-test-id="dialog-cancel-button"]');
-    const getExportProgress = (component) => component.find('[data-test-id="export-progress"]');
 
     const submitForm = async (component) => act(async () => {
         getPrimaryButton(component).simulate('click');
@@ -118,16 +117,10 @@ describe('<ExportDialog />', () => {
         expect(mockHtmlExporter.export).toHaveBeenCalled();
     });
 
-    it('renders export progress while export is in progress', async () => {
-        const component = getComponent();
-        await submitForm(component);
-
-        expect(getExportProgress(component)).toMatchSnapshot();
-    });
-
     it('renders success screen when export is finished', async () => {
         const component = getComponent();
         await submitForm(component);
+        component.setProps({});
 
         jest.runAllTimers();
 
