@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643043291695,
+  "lastUpdate": 1643043999163,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58208,6 +58208,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4660.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4540cf5b77067e2aa0aa8735e53ea179719e22b5",
+          "message": "Tweak copy for the Sidebar tab in User Settings (#7578)",
+          "timestamp": "2022-01-24T16:58:36Z",
+          "tree_id": "3721085e7e11d92d6aa6fd51c090e9544e61e235",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4540cf5b77067e2aa0aa8735e53ea179719e22b5"
+        },
+        "date": 1643043993191,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4805.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1157.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1740.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4885,
             "unit": "ms",
             "extra": "type: measure"
           }
