@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643051341095,
+  "lastUpdate": 1643056094933,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58340,6 +58340,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 695.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "57274151+c-cal@users.noreply.github.com",
+            "name": "Charlie Calendre",
+            "username": "c-cal"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6ac3a925130ed6dfdc8a87312b9540635bddd020",
+          "message": "Avoid double dialog after clicking to remove a public room (#7604)\n\nFixes https://github.com/vector-im/element-web/issues/20681",
+          "timestamp": "2022-01-24T13:20:53-07:00",
+          "tree_id": "7250a6d09f304adb040ea8a03e205c0fdc9f9cff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6ac3a925130ed6dfdc8a87312b9540635bddd020"
+        },
+        "date": 1643056089032,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5447.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1014.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1738.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4588,
             "unit": "ms",
             "extra": "type: measure"
           }
