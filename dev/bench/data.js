@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643043999163,
+  "lastUpdate": 1643047230207,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58256,6 +58256,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4885,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "20e6d36df728f1563cc4dfe1dbba0d2e0cab83ae",
+          "message": "Add labs flag for default open right panel (#7618)",
+          "timestamp": "2022-01-24T17:53:42Z",
+          "tree_id": "f29ac9f1b4a24f699c793a1957a31e3f6916e9d6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/20e6d36df728f1563cc4dfe1dbba0d2e0cab83ae"
+        },
+        "date": 1643047224677,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5027,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 932.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4469.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
