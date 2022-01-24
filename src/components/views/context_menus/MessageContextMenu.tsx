@@ -322,7 +322,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private getPermalink(): string {
         if (!this.props.permalinkCreator) return;
-        if (!canShare(this.props.mxEvent)) return;
         return this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
     }
 
@@ -683,10 +682,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 }
 
 function canForward(event: MatrixEvent): boolean {
-    return !isLocationEvent(event);
-}
-
-function canShare(event: MatrixEvent): boolean {
     return !isLocationEvent(event);
 }
 
