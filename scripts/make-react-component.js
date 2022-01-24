@@ -16,6 +16,21 @@ const %%ComponentName%%: React.FC<Props> = ({}) => {
 export default %%ComponentName%%;
 `,
     TEST: `
+import React from 'react';
+import { mount } from 'enzyme';
+
+import %%ComponentName%% from '%%RelativeComponentPath%%';
+
+describe('<%%ComponentName%% />', () => {
+    const defaultProps = {};
+    const getComponent = (props = {}) =>
+        mount(<%%ComponentName%% { ...defaultProps } { ...props } />);
+
+    it('renders', () => {
+        const component = getComponent();
+        expect(component).toBeTruthy();
+    })
+})
 `,
     STYLE: `
 .mx_%%ComponentName%% {
@@ -45,21 +60,32 @@ const ensureDirectoryExists = async (filePath) => {
 }
 
 const makeFile = async ({
-    filePath, componentName, extension, base, template, prefix
+    filePath, componentName, extension, base, template, prefix, componentFilePath
 }) => {
     const newFilePath = path.join(base, path.dirname(filePath), `${prefix || ''}${path.basename(filePath)}${extension}`)
     await ensureDirectoryExists(newFilePath);
+
+    const relativePathToComponent = path.relative(path.dirname(newFilePath), componentFilePath || '');
+
+    console.log({ relativePathToComponent, filePath, newFilePath, componentFilePath })
     try {
-        await fs.writeFile(newFilePath, template.replace(/%%ComponentName%%/g, componentName), { flag: 'wx' });
+
+        await fs.writeFile(newFilePath, fillTemplate(template, componentName, relativePathToComponent), { flag: 'wx' });
         console.log(`Created ${path.relative(process.cwd(), newFilePath)}`);
+        return newFilePath;
     } catch (error) {
         if (error.code === 'EEXIST') {
             console.log(`File already exists ${path.relative(process.cwd(), newFilePath)}`);
+            return newFilePath;
         } else {
             throw error;
         }
     }
 }
+
+const fillTemplate = (template, componentName, relativeComponentFilePath) =>
+    template.replace(/%%ComponentName%%/g, componentName)
+        .replace(/%%RelativeComponentPath%%/g, relativeComponentFilePath)
 
 
 const makeReactComponent = async () => {
@@ -71,8 +97,9 @@ const makeReactComponent = async () => {
 
     const componentName = filePath.split('/').slice(-1).pop();
 
-    await makeFile({ filePath, componentName, base: 'src', extension: '.tsx', template: TEMPLATES.COMPONENT });
-    await makeFile({ filePath, componentName, base: 'test', extension: '-test.tsx', template: TEMPLATES.TEST });
+    const componentFilePath = await makeFile({ filePath, componentName, base: 'src', extension: '.tsx', template: TEMPLATES.COMPONENT });
+
+    await makeFile({ filePath, componentFilePath, componentName, base: 'test', extension: '-test.tsx', template: TEMPLATES.TEST, componentName });
     await makeFile({ filePath, componentName, base: 'res/css', prefix: '_', extension: '.scss', template: TEMPLATES.STYLE });
 }
 
