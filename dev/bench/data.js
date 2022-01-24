@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643027294494,
+  "lastUpdate": 1643027491129,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57740,6 +57740,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4258.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "83b0d123c15869c28592618d0d2f698d77758c95",
+          "message": "Make pills more natural to navigate around (#7607)",
+          "timestamp": "2022-01-24T12:24:11Z",
+          "tree_id": "dae32eb459a4f586c5e1131a2708338f4bee2d58",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/83b0d123c15869c28592618d0d2f698d77758c95"
+        },
+        "date": 1643027484808,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5280.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1020.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1714.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4724.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
