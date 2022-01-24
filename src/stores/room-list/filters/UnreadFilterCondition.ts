@@ -1,5 +1,5 @@
 /*
-Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,10 +25,6 @@ import { RoomNotificationStateStore } from "../../notifications/RoomNotification
  * name, or associated name (like a room alias).
  */
 export class UnreadFilterCondition extends EventEmitter implements IFilterCondition {
-    constructor() {
-        super();
-    }
-
     public get kind(): FilterKind {
         return FilterKind.Runtime;
     }
