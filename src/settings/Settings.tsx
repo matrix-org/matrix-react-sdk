@@ -341,17 +341,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new NewLayoutSwitcherController(),
     },
-    "feature_spaces_metaspaces": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Meta Spaces"),
-        default: false,
-        controller: new OrderedMultiController([
-            new IncompatibleController("showCommunitiesInsteadOfSpaces"),
-            new ReloadOnChangeController(),
-        ]),
-    },
     "feature_breadcrumbs_v2": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
@@ -865,9 +854,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: {
             [MetaSpace.Home]: true,
         },
-        controller: new IncompatibleController("feature_spaces_metaspaces", {
-            [MetaSpace.Home]: true,
-        }, false),
     },
     "Spaces.showPeopleInSpace": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
