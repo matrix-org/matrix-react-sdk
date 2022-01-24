@@ -27,7 +27,6 @@ describe('<UiFeatureSettingWrapper>', () => {
     const defaultProps = {
         uiFeature: UIFeature.Flair,
         children: <div>test</div>,
-        roomId: 'testabc',
     };
     const getComponent = (props = {}) => mount(<UiFeatureSettingWrapper {...defaultProps} {...props} />);
 
@@ -39,7 +38,7 @@ describe('<UiFeatureSettingWrapper>', () => {
         const component = getComponent();
 
         expect(component).toMatchSnapshot();
-        expect(SettingsStore.getValue).toHaveBeenCalledWith(defaultProps.uiFeature, defaultProps.roomId);
+        expect(SettingsStore.getValue).toHaveBeenCalledWith(defaultProps.uiFeature);
     });
 
     it('returns null when setting is truthy but children are undefined', () => {

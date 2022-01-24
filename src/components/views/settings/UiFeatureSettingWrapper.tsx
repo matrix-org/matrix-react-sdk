@@ -21,10 +21,9 @@ import { UIFeature } from '../../../settings/UIFeature';
 
 interface IProps {
     uiFeature: UIFeature;
-    roomId?: string;
 }
-const UiFeatureSettingWrapper: React.FC<IProps> = ({ children, uiFeature, roomId }) => {
-    const settingValue = SettingsStore.getValue(uiFeature, roomId);
+const UiFeatureSettingWrapper: React.FC<IProps> = ({ children, uiFeature }) => {
+    const settingValue = SettingsStore.getValue(uiFeature);
     return settingValue && children ? <>{ children }</> : null;
 };
 
