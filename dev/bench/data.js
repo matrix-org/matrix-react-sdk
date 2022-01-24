@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643027491129,
+  "lastUpdate": 1643027700169,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57788,6 +57788,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4724.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b02c6c7953de63709da4db3dc13e501c6a49d81a",
+          "message": "Re-renable Share option for location messages (#7596)",
+          "timestamp": "2022-01-24T12:28:17Z",
+          "tree_id": "c0b235fcf8e91b0e31d2eda0bdd87cd1f92a66f8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b02c6c7953de63709da4db3dc13e501c6a49d81a"
+        },
+        "date": 1643027694924,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4644,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 901.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1646.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4295.5,
             "unit": "ms",
             "extra": "type: measure"
           }
