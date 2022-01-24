@@ -217,8 +217,9 @@ limitations under the License.
             z-index: 3; // above media and location share maps
         }
 
-        // we put the timestamps for media (other than stickers) atop the media along with a gradient to aid visibility
-        &.mx_EventTile_mediaLine:not(.mx_EventTile_sticker) {
+        // we put the timestamps for media (other than stickers) atop the media
+        // for images we also apply a linear gradient and change the timestamp colour to aid readability
+        &.mx_EventTile_mediaLine.mx_EventTile_image {
             .mx_MessageTimestamp {
                 color: #ffffff; // regardless of theme, always visible on the below gradient
             }
