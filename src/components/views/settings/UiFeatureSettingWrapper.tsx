@@ -19,11 +19,11 @@ import React from 'react';
 import SettingsStore from '../../../settings/SettingsStore';
 import { UIFeature } from '../../../settings/UIFeature';
 
-interface Props {
+interface IProps {
     uiFeature: UIFeature;
     roomId?: string;
 }
-const UiFeatureSettingWrapper: React.FC<Props> = ({ children, uiFeature, roomId }) => {
+const UiFeatureSettingWrapper: React.FC<IProps> = ({ children, uiFeature, roomId }) => {
     const settingValue = SettingsStore.getValue(uiFeature, roomId);
     return settingValue && children ? <>{ children }</> : null;
 };
