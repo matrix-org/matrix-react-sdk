@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643040331785,
+  "lastUpdate": 1643043291695,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58160,6 +58160,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 653.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "31835275b96669b7f1d985fb9a28082c55bde31e",
+          "message": "Fix space member list right panel state (#7617)",
+          "timestamp": "2022-01-24T16:47:51Z",
+          "tree_id": "4fa12eae46d2f7490eec97326d6c692932043098",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/31835275b96669b7f1d985fb9a28082c55bde31e"
+        },
+        "date": 1643043286014,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4992,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 950.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4660.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
