@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643032757812,
+  "lastUpdate": 1643033694658,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57992,6 +57992,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4701.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26e1570dd6b038b81e7fa9d62ff8d8d942fcf611",
+          "message": "a11y - fix iframes without title (#7614)\n\n* iframe title in AppTile\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* iframe title in hostSignupDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* iframe title in MFileBody\r\n\r\n* iframe titles in modal widget and int man\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* enable jsx-a11y/iframe-has-title rule\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-24T14:07:54Z",
+          "tree_id": "1d49c89e54e80266c92b9708514c9ce670893675",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26e1570dd6b038b81e7fa9d62ff8d8d942fcf611"
+        },
+        "date": 1643033690049,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4571,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 899.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1765.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4487.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
