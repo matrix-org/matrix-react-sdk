@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643027700169,
+  "lastUpdate": 1643028085751,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57836,6 +57836,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4295.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "756b924966e090ff284f965051e8141370ea9ddc",
+          "message": "Update colours of message bubbles to match new designs (#7610)",
+          "timestamp": "2022-01-24T12:33:55Z",
+          "tree_id": "8fb86b1fa7ccb258864c91696399c63830035107",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/756b924966e090ff284f965051e8141370ea9ddc"
+        },
+        "date": 1643028079697,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5072.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 689.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
