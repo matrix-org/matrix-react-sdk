@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643036003473,
+  "lastUpdate": 1643038311146,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58088,6 +58088,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4575.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "16718859+toger5@users.noreply.github.com",
+            "name": "Timo",
+            "username": "toger5"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9d9b77d5e1c5cb4dfb0e05c93001431c3fda03df",
+          "message": "Make widgets not reload (persistent) between center and top container (#7575)",
+          "timestamp": "2022-01-24T15:24:30Z",
+          "tree_id": "1b54d2f363dc6cf81459388b9da0911dc58fd6b1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9d9b77d5e1c5cb4dfb0e05c93001431c3fda03df"
+        },
+        "date": 1643038306479,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5204.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 770.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
