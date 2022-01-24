@@ -19,7 +19,7 @@ import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
-import { POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { M_POLL_START } from "matrix-events-sdk";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -197,7 +197,7 @@ interface IPollButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
 class PollButton extends React.PureComponent<IPollButtonProps> {
     private onCreateClick = () => {
         const canSend = this.props.room.currentState.maySendEvent(
-            POLL_START_EVENT_TYPE.name,
+            M_POLL_START.name,
             MatrixClientPeg.get().getUserId(),
         );
         if (!canSend) {
@@ -253,7 +253,6 @@ interface IState {
     isMenuOpen: boolean;
     showStickers: boolean;
     showStickersButton: boolean;
-    showPollsButton: boolean;
     showLocationButton: boolean;
 }
 
@@ -285,9 +284,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: false,
             showStickers: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
-            showPollsButton: SettingsStore.getValue("feature_polls"),
             showLocationButton: (
-                SettingsStore.getValue("feature_location_share") &&
+                !window.electron &&
                 SettingsStore.getValue("MessageComposerInput.showLocationButton")
             ),
         };
@@ -296,7 +294,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showLocationButton", null);
-        SettingsStore.monitorSetting("feature_polls", null);
         SettingsStore.monitorSetting("feature_location_share", null);
     }
 
@@ -344,22 +341,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         break;
                     }
 
-                    case "feature_polls": {
-                        const showPollsButton = SettingsStore.getValue("feature_polls");
-                        if (this.state.showPollsButton !== showPollsButton) {
-                            this.setState({ showPollsButton });
-                        }
-                        break;
-                    }
-
                     case "MessageComposerInput.showLocationButton":
                     case "feature_location_share": {
                         const showLocationButton = (
-                            SettingsStore.getValue("feature_location_share") &&
-                            SettingsStore.getValue(
-                                "MessageComposerInput.showLocationButton",
-                            )
+                            !window.electron &&
+                            SettingsStore.getValue("MessageComposerInput.showLocationButton")
                         );
+
                         if (this.state.showLocationButton !== showLocationButton) {
                             this.setState({ showLocationButton });
                         }
@@ -525,11 +513,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         let uploadButtonIndex = 0;
         const buttons: JSX.Element[] = [];
         if (!this.state.haveRecording) {
-            if (this.state.showPollsButton) {
-                buttons.push(
-                    <PollButton key="polls" room={this.props.room} narrowMode={this.state.narrowMode} />,
-                );
-            }
+            buttons.push(
+                <PollButton
+                    key="polls"
+                    room={this.props.room}
+                    narrowMode={this.state.narrowMode}
+                />,
+            );
             uploadButtonIndex = buttons.length;
             buttons.push(
                 <UploadButton key="controls_upload" roomId={this.props.room.roomId} relation={this.props.relation} />,

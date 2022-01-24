@@ -54,6 +54,7 @@ import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
+import Resend from './Resend';
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -737,6 +738,18 @@ export default class CallHandler extends EventEmitter {
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
 
+        // If we're using a virtual room nd there are any events pending, try to resend them,
+        // otherwise the call will fail and because its a virtual room, the user won't be able
+        // to see it to either retry or clear the pending events. There will only be call events
+        // in this queue, and since we're about to place a new call, they can only be events from
+        // previous calls that are probably stale by now, so just cancel them.
+        if (mappedRoomId !== roomId) {
+            const mappedRoom = MatrixClientPeg.get().getRoom(mappedRoomId);
+            if (mappedRoom.getPendingEvents().length > 0) {
+                Resend.cancelUnsentEvents(mappedRoom);
+            }
+        }
+
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
         logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
         const call = MatrixClientPeg.get().createCall(mappedRoomId);
@@ -809,12 +822,13 @@ export default class CallHandler extends EventEmitter {
         // We leave the check for whether there's already a call in this room until later,
         // otherwise it can race.
 
-        const members = room.getJoinedMembers();
-        if (members.length <= 1) {
+        const joinedMemberCount = room.getJoinedMemberCount();
+        const invitedAndJoinedMemberCount = room.getInvitedAndJoinedMemberCount();
+        if (joinedMemberCount <= 1) {
             Modal.createTrackedDialog('Call Handler', 'Cannot place call with self', ErrorDialog, {
                 description: _t('You cannot place a call with yourself.'),
             });
-        } else if (members.length === 2) {
+        } else if (invitedAndJoinedMemberCount === 2) {
             logger.info(`Place ${type} call in ${roomId}`);
 
             this.placeMatrixCall(roomId, type, transferee);
