@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643028085751,
+  "lastUpdate": 1643028933723,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -57872,6 +57872,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 689.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5d11336f72701c41521af8a59ae18a70f170bf6",
+          "message": "Add ability to switch between voice & video in calls (#7155)",
+          "timestamp": "2022-01-24T12:48:35Z",
+          "tree_id": "e7155986670c9a4df37bc65d5db9915fd2ee4b90",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5d11336f72701c41521af8a59ae18a70f170bf6"
+        },
+        "date": 1643028928101,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 659.5,
             "unit": "ms",
             "extra": "type: measure"
           }
