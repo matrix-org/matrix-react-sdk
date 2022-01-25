@@ -16,6 +16,8 @@ limitations under the License.
 
 import { useRef, useEffect } from 'react';
 
+// Takes in multiple React refs and combines them to reference the same target/element
+//
 // via https://itnext.io/reusing-the-ref-from-forwardref-with-react-hooks-4ce9df693dd
 export const useCombinedRefs = (...refs) => {
     const targetRef = useRef();

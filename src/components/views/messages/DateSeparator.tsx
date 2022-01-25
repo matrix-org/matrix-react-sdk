@@ -188,7 +188,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         this.closeMenu();
     };
 
-    private renderNotificationsMenu(): React.ReactElement {
+    private renderJumpToDateMenu(): React.ReactElement {
         let contextMenu: JSX.Element;
         if (this.state.contextMenuPosition) {
             contextMenu = <IconizedContextMenu
@@ -236,7 +236,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
         let dateHeaderContent;
         if (this.state.jumpToDateEnabled) {
-            dateHeaderContent = this.renderNotificationsMenu();
+            dateHeaderContent = this.renderJumpToDateMenu();
         } else {
             dateHeaderContent = <div aria-hidden="true">{ label }</div>;
         }

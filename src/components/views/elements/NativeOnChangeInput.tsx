@@ -49,7 +49,7 @@ interface IProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCh
 * events behave in such a way that moving the slider around triggers an onInput
 * event and releasing it triggers onChange.
 */
-const CustomInput: React.FC<IProps> = React.forwardRef((props: IProps, ref) => {
+const NativeOnChangeInput: React.FC<IProps> = React.forwardRef((props: IProps, ref) => {
     const registerCallbacks = (input: HTMLInputElement | null) => {
         if (input) {
             input.onchange = props.onChange;
@@ -66,4 +66,4 @@ const CustomInput: React.FC<IProps> = React.forwardRef((props: IProps, ref) => {
     />;
 });
 
-export default CustomInput;
+export default NativeOnChangeInput;

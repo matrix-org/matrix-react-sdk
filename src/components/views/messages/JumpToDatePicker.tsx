@@ -39,13 +39,13 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
     // starts manually typing in the input instead of picking.
     const [navigateOnDatePickerSelection, setNavigateOnDatePickerSelection] = useState(true);
 
-    // Since we're using CustomInput with native JavaScript behavior, this
+    // Since we're using NativeOnChangeInput with native JavaScript behavior, this
     // tracks the date value changes as they come in.
     const onDateValueInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setDateValue(e.target.value);
     };
 
-    // Since we're using CustomInput with native JavaScript behavior, the change
+    // Since we're using NativeOnChangeInput with native JavaScript behavior, the change
     // event listener will trigger when a date is picked from the date picker
     // or when the text is fully filled out. In order to not trigger early
     // as someone is typing out a date, we need to disable when we see keydowns.

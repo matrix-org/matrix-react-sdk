@@ -107,7 +107,7 @@ interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElem
     value: string;
 }
 
-export interface ICustomInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
+export interface INativeOnChangeInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
     // The ref pass through to the input
     inputRef?: RefObject<HTMLInputElement>;
     element: "input";
@@ -117,7 +117,7 @@ export interface ICustomInputProps extends IProps, InputHTMLAttributes<HTMLInput
     value: string;
 }
 
-type PropShapes = IInputProps | ISelectProps | ITextareaProps | ICustomInputProps;
+type PropShapes = IInputProps | ISelectProps | ITextareaProps | INativeOnChangeInputProps;
 
 interface IState {
     valid: boolean;
