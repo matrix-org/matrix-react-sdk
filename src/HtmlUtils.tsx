@@ -22,6 +22,7 @@ import sanitizeHtml from 'sanitize-html';
 import cheerio from 'cheerio';
 import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
+import { split } from 'lodash';
 import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
@@ -88,9 +89,8 @@ const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)
  * Uses a much, much simpler regex than emojibase's so will give false
  * positives, but useful for fast-path testing strings to see if they
  * need emojification.
- * unicodeToImage uses this function.
  */
-function mightContainEmoji(str: string): boolean {
+export function mightContainEmoji(str: string): boolean {
     return SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str);
 }
 
@@ -175,9 +175,11 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         if (attribs.href) {
             attribs.target = '_blank'; // by default
 
-            const transformed = tryTransformPermalinkToLocalHref(attribs.href);
-            if (transformed !== attribs.href || attribs.href.match(ELEMENT_URL_PATTERN)) {
-                attribs.href = transformed;
+            const transformed = tryTransformPermalinkToLocalHref(attribs.href); // only used to check if it is a link that can be handled locally
+            if (
+                transformed !== attribs.href || // it could be converted so handle locally symbols e.g. @user:server.tdl, matrix: and matrix.to
+                attribs.href.match(ELEMENT_URL_PATTERN) // for https links to Element domains
+            ) {
                 delete attribs.target;
             }
         }
@@ -207,11 +209,19 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             return { tagName, attribs: {} };
         }
 
-        const width = Math.min(Number(attribs.width) || 800, 800);
-        const height = Math.min(Number(attribs.height) || 600, 600);
+        const requestedWidth = Number(attribs.width);
+        const requestedHeight = Number(attribs.height);
+        const width = Math.min(requestedWidth || 800, 800);
+        const height = Math.min(requestedHeight || 600, 600);
         // specify width/height as max values instead of absolute ones to allow object-fit to do its thing
         // we only allow our own styles for this tag so overwrite the attribute
         attribs.style = `max-width: ${width}px; max-height: ${height}px;`;
+        if (requestedWidth) {
+            attribs.style += "width: 100%;";
+        }
+        if (requestedHeight) {
+            attribs.style += "height: 100%;";
+        }
 
         attribs.src = mediaFromMxc(src).getThumbnailOfSourceHttp(width, height);
         return { tagName, attribs };
@@ -401,6 +411,44 @@ export interface IOptsReturnString extends IOpts {
     returnString: true;
 }
 
+const emojiToHtmlSpan = (emoji: string) =>
+    `<span class='mx_Emoji' title='${unicodeToShortcode(emoji)}'>${emoji}</span>`;
+const emojiToJsxSpan = (emoji: string, key: number) =>
+    <span key={key} className='mx_Emoji' title={unicodeToShortcode(emoji)}>{ emoji }</span>;
+
+/**
+ * Wraps emojis in <span> to style them separately from the rest of message. Consecutive emojis (and modifiers) are wrapped
+ * in the same <span>.
+ * @param {string} message the text to format
+ * @param {boolean} isHtmlMessage whether the message contains HTML
+ * @returns if isHtmlMessage is true, returns an array of strings, otherwise return an array of React Elements for emojis
+ * and plain text for everything else
+ */
+function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | string)[] {
+    const emojiToSpan = isHtmlMessage ? emojiToHtmlSpan : emojiToJsxSpan;
+    const result: (JSX.Element | string)[] = [];
+    let text = '';
+    let key = 0;
+
+    // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+    for (const char of split(message, '')) {
+        if (mightContainEmoji(char)) {
+            if (text) {
+                result.push(text);
+                text = '';
+            }
+            result.push(emojiToSpan(char, key));
+            key++;
+        } else {
+            text += char;
+        }
+    }
+    if (text) {
+        result.push(text);
+    }
+    return result;
+}
+
 /* turn a matrix event body into html
  *
  * content: 'content' of the MatrixEvent
@@ -487,6 +535,9 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
                 });
                 safeBody = phtml.html();
             }
+            if (bodyHasEmoji) {
+                safeBody = formatEmojis(safeBody, true).join('');
+            }
         }
     } finally {
         delete sanitizeParams.textFilter;
@@ -529,6 +580,11 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         'markdown-body': isHtmlMessage && !emojiBody,
     });
 
+    let emojiBodyElements: JSX.Element[];
+    if (!isDisplayedWithHtml && bodyHasEmoji) {
+        emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
+    }
+
     return isDisplayedWithHtml ?
         <span
             key="body"
@@ -536,7 +592,9 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
             className={className}
             dangerouslySetInnerHTML={{ __html: safeBody }}
             dir="auto"
-        /> : <span key="body" ref={opts.ref} className={className} dir="auto">{ strippedBody }</span>;
+        /> : <span key="body" ref={opts.ref} className={className} dir="auto">
+            { emojiBodyElements || strippedBody }
+        </span>;
 }
 
 /**

@@ -63,7 +63,8 @@ $left-gutter: 64px;
         height: 8px;
         border-radius: 50%;
         right: -16px;
-        top: 7px;
+        top: 6px;
+        left: auto;
     }
 
     &[data-shape=thread_list][data-notification=total]::before {
@@ -385,10 +386,9 @@ $left-gutter: 64px;
     position: absolute;
 }
 
-/* HACK to override line-height which is already marked important elsewhere */
-.mx_EventTile_bigEmoji.mx_EventTile_bigEmoji {
+.mx_EventTile_bigEmoji .mx_Emoji {
     font-size: 48px !important;
-    line-height: 57px !important;
+    line-height: 57px;
 }
 
 .mx_EventTile_content .mx_EventTile_edited {
@@ -466,9 +466,6 @@ $left-gutter: 64px;
 
     // selector wrongly applies to pill avatars but those have explicit width/height passed at a higher specificity
     &.markdown-body img {
-        // the image will have max-width and max-height applied during sanitization
-        width: 100%;
-        height: 100%;
         object-fit: contain;
         object-position: left top;
     }

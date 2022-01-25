@@ -74,6 +74,8 @@ import { NotificationColor } from '../../../stores/notifications/NotificationCol
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { CardContext } from '../right_panel/BaseCard';
 import { copyPlaintext } from '../../../utils/strings';
+import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
+import RedactedBody from '../messages/RedactedBody';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -176,13 +178,6 @@ export function getHandlerTile(ev: MatrixEvent): string {
         if (WidgetType.JITSI.matches(type)) {
             return "messages.MJitsiWidgetEvent";
         }
-    }
-
-    if (
-        M_POLL_START.matches(type) &&
-        !SettingsStore.getValue("feature_polls")
-    ) {
-        return undefined;
     }
 
     if (ev.isState()) {
@@ -407,7 +402,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             thread,
             threadReplyCount: thread?.length,
-            threadLastReply: thread?.lastReply,
+            threadLastReply: thread?.lastReply(),
         };
 
         // don't do RR animations until we are mounted
@@ -501,6 +496,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
             client.on("userTrustStatusChanged", this.onUserVerificationChanged);
             this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
+            DecryptionFailureTracker.instance.addVisibleEvent(this.props.mxEvent);
             if (this.props.showReactions) {
                 this.props.mxEvent.on("Event.relationsCreated", this.onReactionsCreated);
             }
@@ -560,8 +556,8 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread.lastReply,
-            threadReplyCount: thread.length,
+            threadLastReply: thread?.lastReply(),
+            threadReplyCount: thread?.length,
             thread,
         });
     };
@@ -1125,7 +1121,15 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const lineClasses = classNames("mx_EventTile_line", {
             mx_EventTile_mediaLine: isProbablyMedia,
+            mx_EventTile_image: (
+                this.props.mxEvent.getType() === EventType.RoomMessage &&
+                this.props.mxEvent.getContent().msgtype === MsgType.Image
+            ),
             mx_EventTile_sticker: this.props.mxEvent.getType() === EventType.Sticker,
+            mx_EventTile_emote: (
+                this.props.mxEvent.getType() === EventType.RoomMessage &&
+                this.props.mxEvent.getContent().msgtype === MsgType.Emote
+            ),
         });
 
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
@@ -1267,14 +1271,15 @@ export default class EventTile extends React.Component<IProps, IState> {
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.props.tileShape !== TileShape.ThreadPanel
             ? this.props.mxEvent.getTs()
-            : thread?.lastReply.getTs();
+            : thread?.lastReply().getTs();
 
-        const timestamp = showTimestamp && ts ?
-            <MessageTimestamp
-                showRelative={this.props.tileShape === TileShape.ThreadPanel}
-                showTwelveHour={this.props.isTwelveHour}
-                ts={ts}
-            /> : null;
+        const messageTimestamp = <MessageTimestamp
+            showRelative={this.props.tileShape === TileShape.ThreadPanel}
+            showTwelveHour={this.props.isTwelveHour}
+            ts={ts}
+        />;
+
+        const timestamp = showTimestamp && ts ? messageTimestamp : null;
 
         const keyRequestHelpText =
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
@@ -1335,9 +1340,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             { timestamp }
         </a>;
 
-        const useIRCLayout = this.props.layout == Layout.IRC;
+        const useIRCLayout = this.props.layout === Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
         const ircTimestamp = useIRCLayout ? linkedTimestamp : null;
+        const bubbleTimestamp = this.props.layout === Layout.Bubble ? messageTimestamp : null;
         const groupPadlock = !useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
         const ircPadlock = useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
 
@@ -1480,7 +1486,10 @@ export default class EventTile extends React.Component<IProps, IState> {
                         >
                             { this.renderE2EPadlock() }
                             <div className="mx_EventTile_body">
-                                { MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent) }
+                                { this.props.mxEvent.isRedacted()
+                                    ? <RedactedBody mxEvent={this.props.mxEvent} />
+                                    : MessagePreviewStore.instance.generatePreviewForEvent(this.props.mxEvent)
+                                }
                             </div>
                             { this.renderThreadPanelSummary() }
                         </div>
@@ -1560,7 +1569,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { groupTimestamp }
                             { groupPadlock }
                             { replyChain }
-                            <EventTileType ref={this.tile}
+                            <EventTileType
+                                ref={this.tile}
                                 mxEvent={this.props.mxEvent}
                                 forExport={this.props.forExport}
                                 replacingEventId={this.props.replacingEventId}
@@ -1573,6 +1583,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 callEventGrouper={this.props.callEventGrouper}
                                 getRelationsForEvent={this.props.getRelationsForEvent}
                                 isSeeingThroughMessageHiddenForModeration={isSeeingThroughMessageHiddenForModeration}
+                                timestamp={bubbleTimestamp}
                             />
                             { keyRequestInfo }
                             { actionBar }
