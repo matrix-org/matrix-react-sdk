@@ -248,7 +248,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
     public render() {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { element, inputRef, prefixComponent, postfixComponent, className, onValidate, children,
+        const { element, componentClass, inputRef, prefixComponent, postfixComponent, className, onValidate, children,
             tooltipContent, forceValidity, tooltipClassName, list, validateOnBlur, validateOnChange, validateOnFocus,
             usePlaceholderAsHint, forceTooltipVisible,
             ...inputProps } = this.props;
