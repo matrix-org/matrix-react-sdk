@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643107990073,
+  "lastUpdate": 1643108293038,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58556,6 +58556,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4537,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ecd5be8a8f842f757430ccdc4cc1e2d5b3bb66e7",
+          "message": "Update lastReply to filter out local event ID from thread fallback (#7620)",
+          "timestamp": "2022-01-25T10:51:17Z",
+          "tree_id": "7e737c7961dff299079907d29cf24a2f0cd65159",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ecd5be8a8f842f757430ccdc4cc1e2d5b3bb66e7"
+        },
+        "date": 1643108287888,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5101.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 980,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1954.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4375.600000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
