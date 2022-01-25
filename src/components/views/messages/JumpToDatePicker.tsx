@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 
 import { _t } from '../../../languageHandler';
 import Field from "../elements/Field";
@@ -61,18 +61,14 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
     const [onFocus, isActive, ref] = useRovingTabIndex<HTMLInputElement>();
 
     const onDateInputKeyDown = (e: React.KeyboardEvent): void => {
-        // Go and navigate if they submitted
-        if (e.key === "Enter") {
-            onDatePicked(dateValue);
-            return;
-        }
-
         // When we see someone manually typing out a date, disable the auto
         // submit on change.
         setNavigateOnDatePickerSelection(false);
     };
 
-    const onJumpToDateSubmit = (): void => {
+    const onJumpToDateSubmit = (ev: FormEvent): void => {
+        ev.preventDefault();
+
         onDatePicked(dateValue);
     };
 
@@ -96,6 +92,8 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
                 tabIndex={isActive ? 0 : -1}
             />
             <RovingAccessibleButton
+                element="button"
+                type="submit"
                 kind="primary"
                 className="mx_JumpToDatePicker_submitButton"
                 onClick={onJumpToDateSubmit}
