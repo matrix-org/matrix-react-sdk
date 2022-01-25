@@ -99,7 +99,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 userText: "Auto-reporting decryption error (recipient)",
                 sendLogs: true,
                 labels: ["Z-UISI", "web", "uisi-recipient"],
-                customApp: SdkConfig.get().uisi_autorageshake_app || "element-web",
+                customApp: SdkConfig.get().uisi_autorageshake_app,
                 customFields: { "auto_uisi": JSON.stringify(eventInfo) },
             });
 
@@ -125,7 +125,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 userText: `Auto-reporting decryption error (sender)\nRecipient rageshake: ${recipientRageshake}`,
                 sendLogs: true,
                 labels: ["Z-UISI", "web", "uisi-sender"],
-                customApp: SdkConfig.get().uisi_autorageshake_app || "element-web",
+                customApp: SdkConfig.get().uisi_autorageshake_app,
                 customFields: {
                     "recipient_rageshake": recipientRageshake,
                     "auto_uisi": JSON.stringify(messageContent),
