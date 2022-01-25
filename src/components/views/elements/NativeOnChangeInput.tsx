@@ -25,7 +25,12 @@ interface IProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCh
 
 /**
 * This component restores the native 'onChange' and 'onInput' behavior of
-* JavaScript. via https://stackoverflow.com/a/62383569/796832 and
+* JavaScript which have important differences for certain <input> types. This is
+* necessary because in React, the `onChange` handler behaves like the native
+* `oninput` handler and there is no way to tell the difference between an
+* `input` vs `change` event.
+*
+* via https://stackoverflow.com/a/62383569/796832 and
 * https://github.com/facebook/react/issues/9657#issuecomment-643970199
 *
 * See:
@@ -34,9 +39,15 @@ interface IProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCh
 * - https://github.com/facebook/react/issues/9657
 * - https://github.com/facebook/react/issues/14857
 *
-* We use this for the <input type="date"> date picker so we can distinguish
-* from a final date picker selection vs navigating the months in the date
-* picker which trigger an `input`(and `onChange` in React).
+* Examples:
+*
+* We use this for the <input type="date"> date picker so we can distinguish from
+* a final date picker selection (onChange) vs navigating the months in the date
+* picker (onInput).
+*
+* This is also potentially useful for <input type="range" /> because the native
+* events behave in such a way that moving the slider around triggers an onInput
+* event and releasing it triggers onChange.
 */
 const CustomInput: React.FC<IProps> = React.forwardRef((props: IProps, ref) => {
     const registerCallbacks = (input: HTMLInputElement | null) => {

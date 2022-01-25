@@ -18,7 +18,7 @@ import React, { useState, FormEvent } from 'react';
 
 import { _t } from '../../../languageHandler';
 import Field from "../elements/Field";
-import CustomInput from "../elements/CustomInput";
+import NativeOnChangeInput from "../elements/NativeOnChangeInput";
 import { RovingAccessibleButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 
 interface IProps {
@@ -79,7 +79,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
         >
             <span className="mx_JumpToDatePicker_label">Jump to date</span>
             <Field
-                componentClass={CustomInput}
+                componentClass={NativeOnChangeInput}
                 type="date"
                 onChange={onDateValueChange}
                 onInput={onDateValueInput}
