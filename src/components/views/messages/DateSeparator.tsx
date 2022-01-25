@@ -164,8 +164,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
     private onLastWeekClicked = (): void => {
         const date = new Date();
-        // This just goes back 7 days.
-        // FIXME: Do we want this to go back to the last Sunday? https://upokary.com/how-to-get-last-monday-or-last-friday-or-any-last-day-in-javascript/
         date.setDate(date.getDate() - 7);
         this.pickDate(date);
         this.closeMenu();
