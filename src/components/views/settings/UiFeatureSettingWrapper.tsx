@@ -24,7 +24,7 @@ interface IProps {
 }
 const UiFeatureSettingWrapper: React.FC<IProps> = ({ children, uiFeature }) => {
     const settingValue = SettingsStore.getValue(uiFeature);
-    return settingValue && children ? <>{children}</> : null;
+    return settingValue && children ? <>{ children }</> : null;
 };
 
 export default UiFeatureSettingWrapper;
