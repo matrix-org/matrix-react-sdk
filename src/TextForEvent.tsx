@@ -20,7 +20,16 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { M_EMOTE, M_NOTICE, M_MESSAGE, MessageEvent } from "matrix-events-sdk";
+import {
+    M_EMOTE,
+    M_NOTICE,
+    M_MESSAGE,
+    MessageEvent,
+    M_POLL_START,
+    M_POLL_END,
+    PollStartEvent,
+} from "matrix-events-sdk";
+import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -35,13 +44,18 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
 import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
+import UserIdentifierCustomisations from './customisations/UserIdentifier';
+
+export function getSenderName(event: MatrixEvent): string {
+    return event.sender?.name ?? event.getSender() ?? _t("Someone");
+}
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
 
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
-    const getSenderName = () => event.sender ? event.sender.name : _t('Someone');
+    const senderName = getSenderName(event);
     // FIXME: Find a better way to determine this from the event?
     let isVoice = true;
     if (event.getContent().offer && event.getContent().offer.sdp &&
@@ -55,19 +69,19 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     // and more accurate, we break out the string-based variables to a couple booleans.
     if (isVoice && isSupported) {
         return () => _t("%(senderName)s placed a voice call.", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     } else if (isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     } else if (!isVoice && isSupported) {
         return () => _t("%(senderName)s placed a video call.", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     } else if (!isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
-            senderName: getSenderName(),
+            senderName: senderName,
         });
     }
 }
@@ -325,6 +339,17 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
+    const type = ev.getType();
+    const content = ev.getContent();
+    const msgtype = content.msgtype;
+
+    if (
+        (LOCATION_EVENT_TYPE.matches(type) || LOCATION_EVENT_TYPE.matches(msgtype)) &&
+        SettingsStore.getValue("feature_location_share")
+    ) {
+        return textForLocationEvent(ev);
+    }
+
     return () => {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
@@ -418,7 +443,7 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForThreePidInviteEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
 
     if (!isValid3pidInvite(event)) {
         return () => _t('%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.', {
@@ -434,7 +459,7 @@ function textForThreePidInviteEvent(event: MatrixEvent): () => string | null {
 }
 
 function textForHistoryVisibilityEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     switch (event.getContent().history_visibility) {
         case HistoryVisibility.Invited:
             return () => _t('%(senderName)s made future room history visible to all room members, '
@@ -456,7 +481,7 @@ function textForHistoryVisibilityEvent(event: MatrixEvent): () => string | null 
 
 // Currently will only display a change if a user's power level is changed
 function textForPowerEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     if (!event.getPrevContent() || !event.getPrevContent().users ||
         !event.getContent() || !event.getContent().users) {
         return null;
@@ -475,6 +500,7 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
             if (users.indexOf(userId) === -1) users.push(userId);
         },
     );
+
     const diffs = [];
     users.forEach((userId) => {
         // Previous power level
@@ -489,18 +515,20 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
         }
         if (from === previousUserDefault && to === currentUserDefault) { return; }
         if (to !== from) {
-            diffs.push({ userId, from, to });
+            const name = UserIdentifierCustomisations.getDisplayUserIdentifier(userId, { roomId: event.getRoomId() });
+            diffs.push({ userId, name, from, to });
         }
     });
     if (!diffs.length) {
         return null;
     }
+
     // XXX: This is also surely broken for i18n
     return () => _t('%(senderName)s changed the power level of %(powerLevelDiffText)s.', {
         senderName,
         powerLevelDiffText: diffs.map(diff =>
             _t('%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s', {
-                userId: diff.userId,
+                userId: diff.name,
                 fromPowerLevel: Roles.textualPowerLevel(diff.from, previousUserDefault),
                 toPowerLevel: Roles.textualPowerLevel(diff.to, currentUserDefault),
             }),
@@ -523,7 +551,7 @@ const onPinnedMessagesClick = (): void => {
 
 function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
     if (!SettingsStore.getValue("feature_pinning")) return null;
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     const roomId = event.getRoomId();
 
     const pinned = event.getContent().pinned ?? [];
@@ -729,6 +757,25 @@ function textForMjolnirEvent(event: MatrixEvent): () => string | null {
         "for %(reason)s", { senderName, oldGlob: prevEntity, newGlob: entity, reason });
 }
 
+export function textForLocationEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has shared their location", {
+        senderName: getSenderName(event),
+    });
+}
+
+function textForPollStartEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
+        senderName: getSenderName(event),
+        pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
+    });
+}
+
+function textForPollEndEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has ended a poll", {
+        senderName: getSenderName(event),
+    });
+}
+
 interface IHandlers {
     [type: string]:
         (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
@@ -739,6 +786,10 @@ const handlers: IHandlers = {
     [EventType.RoomMessage]: textForMessageEvent,
     [EventType.Sticker]: textForMessageEvent,
     [EventType.CallInvite]: textForCallInviteEvent,
+    [M_POLL_START.name]: textForPollStartEvent,
+    [M_POLL_END.name]: textForPollEndEvent,
+    [M_POLL_START.altName]: textForPollStartEvent,
+    [M_POLL_END.altName]: textForPollEndEvent,
 };
 
 const stateHandlers: IHandlers = {

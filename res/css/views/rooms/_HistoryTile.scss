@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 Robin Townsend <robin@robin.town>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,4 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-localStorage.setItem("mx_labs_feature_feature_spaces_metaspaces", "true");
+.mx_HistoryTile::before {
+    background-color: $header-panel-text-primary-color;
+    mask-image: url('$(res)/img/element-icons/hide.svg');
+}
