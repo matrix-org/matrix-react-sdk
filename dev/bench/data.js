@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643103204621,
+  "lastUpdate": 1643104010403,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58436,6 +58436,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4905.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "502b8051642ecefa5cf789e9a91c46e31726d2aa",
+          "message": "Add customisation point for mxid display (#7595)\n\n* add wrapping component for hiding UI\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add Setting\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* apply setting to profile settings, user menu, invite dialog, userinfo\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* hide mxids in user autocomplete\r\n\r\n* remove mxids from title in memeber list and timeline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* hide mxid in ConfirmUserActionDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use name in power level event message when displayMxids is falsy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add customisation point for mxid display\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use userid customisation\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use customisation in sender profile\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* hide profile settings mxid if falsy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename and move to components\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove change to UIFeature.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* improvements from pr\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint fix\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-25T10:40:02+01:00",
+          "tree_id": "93aa10f172d30a699974a0a9cd03804d877777a5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/502b8051642ecefa5cf789e9a91c46e31726d2aa"
+        },
+        "date": 1643104005591,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5020.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 604.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
