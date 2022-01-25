@@ -47,6 +47,7 @@ import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
 import { IBodyProps } from "./IBodyProps";
 import RoomContext from "../../../contexts/RoomContext";
 import AccessibleButton from '../elements/AccessibleButton';
+import { options as linkifyOpts } from "../../../linkify-matrix";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -425,7 +426,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
      */
     private onBodyLinkClick = (e: MouseEvent): void => {
         const target = e.target as Element;
-        if (target.nodeName !== "A" || target.classList.contains("linkified")) return;
+        if (target.nodeName !== "A" || target.classList.contains(linkifyOpts.className)) return;
         const { href } = target as HTMLLinkElement;
         const localHref = tryTransformPermalinkToLocalHref(href);
         if (localHref !== href) {
