@@ -214,7 +214,7 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
  */
 export function findMapStyleUrl(): string {
     return (
-        getTileServerWellKnown().map_style_url ??
+        getTileServerWellKnown()?.map_style_url ??
         SdkConfig.get().map_style_url ??
         "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx"
     );
