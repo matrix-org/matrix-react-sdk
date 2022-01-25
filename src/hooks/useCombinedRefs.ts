@@ -33,4 +33,4 @@ export const useCombinedRefs = (...refs) => {
     }, [refs]);
 
     return targetRef;
-}
+};
