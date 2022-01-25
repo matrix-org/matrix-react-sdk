@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643104010403,
+  "lastUpdate": 1643105956192,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58472,6 +58472,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 604.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "68024c156a2ae690cd38c019ede724072299d9c6",
+          "message": "De-labs Message Bubbles layout (#7612)",
+          "timestamp": "2022-01-25T10:12:05Z",
+          "tree_id": "96159c742e564cb97f88bb8807426eef32a564aa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/68024c156a2ae690cd38c019ede724072299d9c6"
+        },
+        "date": 1643105950653,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5321.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 682.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
