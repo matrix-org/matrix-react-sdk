@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643132701669,
+  "lastUpdate": 1643142553524,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58868,6 +58868,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 721.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "04f8228741fadaf7c46d7737f7cf4460dd675649",
+          "message": "Tweak room list header menu for when space is active (#7577)\n\n* Remove start chat entry from space-variant room list header + menu\n\n* Add options to the RoomListHeader plus menu\n\n* Tweak behaviour of room list header + menu space variant explore action",
+          "timestamp": "2022-01-25T20:21:38Z",
+          "tree_id": "6a85b6d82a905c66dd4d744d4be38303d4bbbff2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/04f8228741fadaf7c46d7737f7cf4460dd675649"
+        },
+        "date": 1643142547459,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5662.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1111.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1759.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4961.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
