@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643119421196,
+  "lastUpdate": 1643120871661,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58736,6 +58736,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5026.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "51fd4d82fdafb2e8adfb5d440f4b7e5d2ee00f6f",
+          "message": "Tweak light hover & active color for bubble layout (#7626)\n\n* Tweak light hover & active color for bubble layout\n\n* delint",
+          "timestamp": "2022-01-25T14:21:13Z",
+          "tree_id": "0d52415699d909942da02da392e0b51c861c6a2a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/51fd4d82fdafb2e8adfb5d440f4b7e5d2ee00f6f"
+        },
+        "date": 1643120866649,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5006.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 977.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1625.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4363.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
