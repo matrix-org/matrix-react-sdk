@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643142553524,
+  "lastUpdate": 1643142593868,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58916,6 +58916,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4961.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2143845a3a73eba3007b8e5e7a0bdcbce302df97",
+          "message": "Fix issue with the new composer EmojiPart which caused infinite loops (#7629)",
+          "timestamp": "2022-01-25T20:22:41Z",
+          "tree_id": "e1e4b87234d3b89a34c3c25c1c3b798d318c667e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2143845a3a73eba3007b8e5e7a0bdcbce302df97"
+        },
+        "date": 1643142587658,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4799.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 679.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
