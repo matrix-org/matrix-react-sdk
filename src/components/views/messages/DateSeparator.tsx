@@ -143,7 +143,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
             dis.dispatch({
                 action: Action.ViewRoom,
-                eventId,
+                event_id: eventId,
                 highlighted: true,
                 room_id: roomId,
             });
