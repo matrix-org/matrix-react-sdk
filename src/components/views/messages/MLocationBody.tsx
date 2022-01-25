@@ -35,6 +35,7 @@ import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
+import { getTileServerWellKnown } from '../../../utils/WellKnownUtils';
 
 interface IState {
     error: Error;
@@ -206,6 +207,19 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
     </div>;
 }
 
+/**
+ * Look up what map tile server style URL was provided in the homeserver's
+ * .well-known location, or, failing that, in our local config, or, failing
+ * that, defaults to the same tile server listed by matrix.org.
+ */
+export function findMapStyleUrl(): string {
+    return (
+        getTileServerWellKnown().map_style_url ??
+        SdkConfig.get().map_style_url ??
+        "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx"
+    );
+}
+
 export function createMap(
     coords: GeolocationCoordinates,
     interactive: boolean,
@@ -213,7 +227,7 @@ export function createMap(
     markerId: string,
     onError: (error: Error) => void,
 ): maplibregl.Map {
-    const styleUrl = SdkConfig.get().map_style_url;
+    const styleUrl = findMapStyleUrl();
     const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
 
     const map = new maplibregl.Map({

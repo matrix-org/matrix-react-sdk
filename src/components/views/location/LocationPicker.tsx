@@ -19,7 +19,6 @@ import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
-import SdkConfig from '../../../SdkConfig';
 import DialogButtons from "../elements/DialogButtons";
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -27,6 +26,7 @@ import MemberAvatar from '../avatars/MemberAvatar';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import Modal from '../../../Modal';
 import ErrorDialog from '../dialogs/ErrorDialog';
+import { findMapStyleUrl } from '../messages/MLocationBody';
 
 interface IProps {
     sender: RoomMember;
@@ -69,10 +69,9 @@ class LocationPicker extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
-        const config = SdkConfig.get();
         this.map = new maplibregl.Map({
             container: 'mx_LocationPicker_map',
-            style: config.map_style_url,
+            style: findMapStyleUrl(),
             center: [0, 0],
             zoom: 1,
         });
