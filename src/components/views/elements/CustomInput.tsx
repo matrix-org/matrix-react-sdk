@@ -14,31 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 
-// via https://itnext.io/reusing-the-ref-from-forwardref-with-react-hooks-4ce9df693dd
-function useCombinedRefs(...refs) {
-    const targetRef = useRef();
+import { useCombinedRefs } from "../../../hooks/useCombinedRefs";
 
-    useEffect(() => {
-        refs.forEach(ref => {
-            if (!ref) return;
-
-            if (typeof ref === 'function') {
-                ref(targetRef.current);
-            } else {
-                ref.current = targetRef.current;
-            }
-        });
-    }, [refs]);
-
-    return targetRef;
-}
-
-interface CustomInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'onInput'> {
+interface IProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'onInput'> {
     onChange?: (event: Event) => void;
     onInput?: (event: Event) => void;
 }
+
 /**
 * This component restores the native 'onChange' and 'onInput' behavior of
 * JavaScript. via https://stackoverflow.com/a/62383569/796832 and
@@ -54,7 +38,7 @@ interface CustomInputProps extends Omit<React.InputHTMLAttributes<HTMLInputEleme
 * from a final date picker selection vs navigating the months in the date
 * picker which trigger an `input`(and `onChange` in React).
 */
-const CustomInput: React.FC<CustomInputProps> = React.forwardRef((props: CustomInputProps, ref) => {
+const CustomInput: React.FC<IProps> = React.forwardRef((props: IProps, ref) => {
     const registerCallbacks = (input: HTMLInputElement | null) => {
         if (input) {
             input.onchange = props.onChange;
