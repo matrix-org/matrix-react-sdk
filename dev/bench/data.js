@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643116664335,
+  "lastUpdate": 1643119421196,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58688,6 +58688,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4847.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ede94e750673b4cb6626c1aab1e34caa84a0f569",
+          "message": "Fix weirdnesses with the spotlight dialog (#7624)",
+          "timestamp": "2022-01-25T13:55:38Z",
+          "tree_id": "8ea49391a7570535bedb595d3dbb2560c18aacbf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ede94e750673b4cb6626c1aab1e34caa84a0f569"
+        },
+        "date": 1643119415313,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5117.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1090.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1748.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5026.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
