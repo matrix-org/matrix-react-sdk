@@ -83,7 +83,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
         >
             <span className="mx_JumpToDatePicker_label">Jump to date</span>
             <Field
-                element={CustomInput}
+                componentClass={CustomInput}
                 type="date"
                 onChange={onDateValueChange}
                 onInput={onDateValueInput}

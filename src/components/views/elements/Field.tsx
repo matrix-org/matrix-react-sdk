@@ -83,6 +83,7 @@ export interface IInputProps extends IProps, InputHTMLAttributes<HTMLInputElemen
     inputRef?: RefObject<HTMLInputElement>;
     // The element to create. Defaults to "input".
     element?: "input";
+    componentClass?: undefined;
     // The input's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -92,6 +93,7 @@ interface ISelectProps extends IProps, SelectHTMLAttributes<HTMLSelectElement> {
     inputRef?: RefObject<HTMLSelectElement>;
     // To define options for a select, use <Field><option ... /></Field>
     element: "select";
+    componentClass?: undefined;
     // The select's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -100,6 +102,7 @@ interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElem
     // The ref pass through to the textarea
     inputRef?: RefObject<HTMLTextAreaElement>;
     element: "textarea";
+    componentClass?: undefined;
     // The textarea's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -107,8 +110,9 @@ interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElem
 export interface ICustomInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
     // The ref pass through to the input
     inputRef?: RefObject<HTMLInputElement>;
-    // The element to create.
-    element: ComponentClass;
+    element: "input";
+    // The custom component to render
+    componentClass: ComponentClass;
     // The input's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -261,7 +265,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         // Appease typescript's inference
         const inputProps_ = { ...inputProps, ref: this.inputRef, list };
 
-        const fieldInput = React.createElement(this.props.element, inputProps_, children);
+        const fieldInput = React.createElement(this.props.componentClass || this.props.element, inputProps_, children);
 
         let prefixContainer = null;
         if (prefixComponent) {
@@ -275,7 +279,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         const hasValidationFlag = forceValidity !== null && forceValidity !== undefined;
         const fieldClasses = classNames(
             "mx_Field",
-            `mx_Field_${typeof this.props.element === "string" ? this.props.element : "input"}`,
+            `mx_Field_${this.props.element}`,
             className,
             {
                 // If we have a prefix element, leave the label always at the top left and
