@@ -213,11 +213,19 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
  * that, defaults to the same tile server listed by matrix.org.
  */
 export function findMapStyleUrl(): string {
-    return (
+    const mapStyleUrl = (
         getTileServerWellKnown()?.map_style_url ??
-        SdkConfig.get().map_style_url ??
-        "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx"
+        SdkConfig.get().map_style_url
     );
+
+    if (!mapStyleUrl) {
+        throw new Error(
+            "'map_style_url' missing from homeserver .well-known area, and " +
+            "missing from from config.json.",
+        );
+    }
+
+    return mapStyleUrl;
 }
 
 export function createMap(
@@ -227,35 +235,40 @@ export function createMap(
     markerId: string,
     onError: (error: Error) => void,
 ): maplibregl.Map {
-    const styleUrl = findMapStyleUrl();
-    const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
+    try {
+        const styleUrl = findMapStyleUrl();
+        const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
 
-    const map = new maplibregl.Map({
-        container: bodyId,
-        style: styleUrl,
-        center: coordinates,
-        zoom: 15,
-        interactive,
-    });
+        const map = new maplibregl.Map({
+            container: bodyId,
+            style: styleUrl,
+            center: coordinates,
+            zoom: 15,
+            interactive,
+        });
 
-    new maplibregl.Marker({
-        element: document.getElementById(markerId),
-        anchor: 'bottom',
-        offset: [0, -1],
-    })
-        .setLngLat(coordinates)
-        .addTo(map);
+        new maplibregl.Marker({
+            element: document.getElementById(markerId),
+            anchor: 'bottom',
+            offset: [0, -1],
+        })
+            .setLngLat(coordinates)
+            .addTo(map);
 
-    map.on('error', (e) => {
-        logger.error(
-            "Failed to load map: check map_style_url in config.json has a "
-            + "valid URL and API key",
-            e.error,
-        );
-        onError(e.error);
-    });
+        map.on('error', (e) => {
+            logger.error(
+                "Failed to load map: check map_style_url in config.json has a "
+                + "valid URL and API key",
+                e.error,
+            );
+            onError(e.error);
+        });
 
-    return map;
+        return map;
+    } catch (e) {
+        logger.error("Failed to render map", e);
+        onError(e);
+    }
 }
 
 /**

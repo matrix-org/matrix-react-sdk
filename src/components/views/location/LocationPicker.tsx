@@ -69,14 +69,14 @@ class LocationPicker extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
-        this.map = new maplibregl.Map({
-            container: 'mx_LocationPicker_map',
-            style: findMapStyleUrl(),
-            center: [0, 0],
-            zoom: 1,
-        });
-
         try {
+            this.map = new maplibregl.Map({
+                container: 'mx_LocationPicker_map',
+                style: findMapStyleUrl(),
+                center: [0, 0],
+                zoom: 1,
+            });
+
             // Add geolocate control to the map.
             this.geolocate = new maplibregl.GeolocateControl({
                 positionOptions: {
@@ -123,8 +123,8 @@ class LocationPicker extends React.Component<IProps, IState> {
 
             this.geolocate.on('geolocate', this.onGeolocate);
         } catch (e) {
-            logger.error("Failed to render map", e.error);
-            this.setState({ error: e.error });
+            logger.error("Failed to render map", e);
+            this.setState({ error: e });
         }
     }
 
