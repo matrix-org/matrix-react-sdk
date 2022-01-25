@@ -62,7 +62,7 @@ interface IState {
 
 @replaceableComponent("views.messages.DateSeparator")
 export default class DateSeparator extends React.Component<IProps, IState> {
-    settingWatcherRef = null;
+    private settingWatcherRef = null;
 
     constructor(props, context) {
         super(props, context);
