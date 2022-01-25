@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643108293038,
+  "lastUpdate": 1643114416295,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58604,6 +58604,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4375.600000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8ddd677c35ed2a8b6d0332b6bed293c2174040e4",
+          "message": "De-labs Metaspaces (#7613)",
+          "timestamp": "2022-01-25T12:33:17Z",
+          "tree_id": "fc8e767dfec4dfb95e397a95b009be7a58d7f172",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8ddd677c35ed2a8b6d0332b6bed293c2174040e4"
+        },
+        "date": 1643114410302,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5037.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 653.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
