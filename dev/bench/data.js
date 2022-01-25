@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643121479380,
+  "lastUpdate": 1643132701669,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58832,6 +58832,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4493.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "51a44f491e17eceabb1a5e30e01992073fffd074",
+          "message": "Upgrade linkifyjs to fix schemes as domain prefixes (#7628)",
+          "timestamp": "2022-01-25T17:37:54Z",
+          "tree_id": "9a5cc494e3a46a88f048961fcbe9b1e632232271",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/51a44f491e17eceabb1a5e30e01992073fffd074"
+        },
+        "date": 1643132696308,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5072.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 721.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
