@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643105956192,
+  "lastUpdate": 1643107990073,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58508,6 +58508,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 682.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1d02e616550f3bbac7e8ebbe85c0b6733ca23ad1",
+          "message": "Improve taken username warning in registration for when request fails (#7621)",
+          "timestamp": "2022-01-25T10:45:41Z",
+          "tree_id": "03f83e8076b80636bd7d12ac41ebbe6e33598bd0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1d02e616550f3bbac7e8ebbe85c0b6733ca23ad1"
+        },
+        "date": 1643107984029,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5199.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1047.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4537,
             "unit": "ms",
             "extra": "type: measure"
           }
