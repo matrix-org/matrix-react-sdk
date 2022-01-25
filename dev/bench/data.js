@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643056094933,
+  "lastUpdate": 1643103204621,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58388,6 +58388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4588,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b481fc069ec5c0ad1517d569fe95a35a4ad9c80d",
+          "message": "Wrapping component to show/hide UI based on UIFeature setting (#7585)\n\n* add wrapping component for hiding UI\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename and move to components\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* prefix interface and add missing copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove roomId prop\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-25T10:25:41+01:00",
+          "tree_id": "4d2035070cf9d42842149c8cfae09b4b900f6a8a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b481fc069ec5c0ad1517d569fe95a35a4ad9c80d"
+        },
+        "date": 1643103198245,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5284.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1120.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1836.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4905.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
