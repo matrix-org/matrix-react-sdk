@@ -18,6 +18,7 @@ limitations under the License.
 import { _td } from "../languageHandler";
 import { isMac, Key } from "../Keyboard";
 import { ISetting } from "../settings/Settings";
+import SettingsStore from "../settings/SettingsStore";
 
 interface IKeyboardShortcuts {
     [setting: string]: ISetting;
@@ -69,6 +70,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     [CategoryName.COMPOSER]: {
         categoryLabel: _td("Composer"),
         settingNames: [
+            "KeyBinding.sendMessageInComposer",
             "KeyBinding.toggleBoldInComposer",
             "KeyBinding.toggleItalicsInComposer",
             "KeyBinding.toggleQuoteInComposer",
@@ -80,6 +82,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             "KeyBinding.jumpToEndInComposer",
             "KeyBinding.nextMessageInComposerHistory",
             "KeyBinding.previousMessageInComposerHistory",
+            "KeyBinding.editUndoInComposer",
+            "KeyBinding.editRedoInComposer",
         ],
     }, [CategoryName.CALLS]: {
         categoryLabel: _td("Calls"),
@@ -131,6 +135,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             "KeyBinding.cancelAutoComplete",
             "KeyBinding.nextOptionInAutoComplete",
             "KeyBinding.previousOptionInAutoComplete",
+            "KeyBinding.completeAutocomplete",
+            "KeyBinding.forceCompleteAutocomplete",
         ],
     }, [CategoryName.LABS]: {
         categoryLabel: _td("Labs"),
@@ -164,13 +170,6 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.GREATER_THAN,
         },
         displayName: _td("Toggle Quote"),
-    },
-    "KeyBinding.newLineInComposer": {
-        default: {
-            shiftKey: true,
-            key: Key.ENTER,
-        },
-        displayName: _td("New line"),
     },
     "KeyBinding.cancelReplyInComposer": {
         default: {
@@ -437,10 +436,56 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Jump to last message"),
     },
+    "KeyBinding.editUndoInComposer": {
+        default: {
+            key: Key.Z,
+            ctrlOrCmdKey: true,
+        },
+        displayName: _td("Undo edit"),
+    },
+    "KeyBinding.completeAutocomplete": {
+        default: {
+            key: Key.ENTER,
+        },
+        displayName: _td("Complete"),
+    },
+    "KeyBinding.forceCompleteAutocomplete": {
+        default: {
+            key: Key.TAB,
+        },
+        displayName: _td("Force complete"),
+    },
 };
 
 export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
-    return KEYBOARD_SHORTCUTS;
+    const keyboardShortcuts = KEYBOARD_SHORTCUTS;
+    const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
+
+    keyboardShortcuts["KeyBinding.sendMessageInComposer"] = {
+        default: {
+            key: Key.ENTER,
+            ctrlOrCmdKey: ctrlEnterToSend,
+        },
+        displayName: _td("Send message"),
+
+    };
+    keyboardShortcuts["KeyBinding.newLineInComposer"] = {
+        default: {
+            key: Key.ENTER,
+            shiftKey: !ctrlEnterToSend,
+        },
+        displayName: _td("New line"),
+    };
+    keyboardShortcuts["KeyBinding.editRedoInComposer"] = {
+        default: {
+            key: isMac ? Key.Z : Key.Y,
+            ctrlOrCmdKey: true,
+            shiftKey: isMac,
+        },
+        displayName: _td("Redo edit"),
+    };
+
+    return keyboardShortcuts;
 };
 
 export const registerShortcut = (shortcutName: string, categoryName: CategoryName, shortcut: ISetting): void => {
