@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643206713550,
+  "lastUpdate": 1643211320031,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59420,6 +59420,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 710,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "79d9a0c0f703fecf63933aabb2036bab2c3d9a7e",
+          "message": "Fix soft-crash when hanging up Jitsi via PIP (#7645)",
+          "timestamp": "2022-01-26T15:28:04Z",
+          "tree_id": "323939a64cacf633c3734f2e836b176a25670180",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/79d9a0c0f703fecf63933aabb2036bab2c3d9a7e"
+        },
+        "date": 1643211314002,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5225.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1134.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1769.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4732.5,
             "unit": "ms",
             "extra": "type: measure"
           }
