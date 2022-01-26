@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643203899682,
+  "lastUpdate": 1643204272056,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59300,6 +59300,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4818.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "225f8940c93b22f502b0174d6b183db6e81326c4",
+          "message": "Revert \"Start a conference in a room with 2 people + invitee rather than a 1:1 call (#7557)\" (#7641)\n\nThis reverts commit 8ced6e6117b734a154db7f64b1a63c4f07bf56b1.",
+          "timestamp": "2022-01-26T13:31:00Z",
+          "tree_id": "92481ca44ff04c74731a72b0d9d234d15aa684d9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/225f8940c93b22f502b0174d6b183db6e81326c4"
+        },
+        "date": 1643204266779,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4961.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 620,
             "unit": "ms",
             "extra": "type: measure"
           }
