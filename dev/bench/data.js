@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643213488290,
+  "lastUpdate": 1643216271320,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59516,6 +59516,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4316.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "UwUnyaa@outlook.com",
+            "name": "UwUnyaa",
+            "username": "UwUnyaa"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "debf4caade01dc4cabc0b12a56330e8558232d9e",
+          "message": "Add a keyboard shortcut to toggle hidden event visibility when labs are enabled. (#7584)\n\nNotes: The keyboard shortcut is control (or cmd) shift h.\r\nSigned-off-by: Katarzyna Stachura <uwunyaa@outlook.com>",
+          "timestamp": "2022-01-26T16:50:47Z",
+          "tree_id": "a1e88f14364688ea2e38de379ded714dc9dfef57",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/debf4caade01dc4cabc0b12a56330e8558232d9e"
+        },
+        "date": 1643216265206,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5006.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 642.7999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
