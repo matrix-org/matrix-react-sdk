@@ -92,6 +92,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             "KeyBinding.searchInRoom",
             "KeyBinding.scrollUpInTimeline",
             "KeyBinding.scrollDownInTimeline",
+            "KeyBinding.jumpToFirstMessageInTimeline",
+            "KeyBinding.jumpToLastMessageInTimeline",
         ],
     }, [CategoryName.ROOM_LIST]: {
         categoryLabel: _td("Room List"),
@@ -416,6 +418,20 @@ export const KEYBOARD_SHORTCUTS: { [setting: string]: ISetting } = {
             key: Key.H,
         },
         displayName: _td("Toggle hidden event visibility"),
+    },
+    "KeyBinding.jumpToFirstMessageInTimeline": {
+        default: {
+            key: Key.HOME,
+            ctrlKey: true,
+        },
+        displayName: _td("Jump to first message"),
+    },
+    "KeyBinding.jumpToLastMessageInTimeline": {
+        default: {
+            key: Key.END,
+            ctrlKey: true,
+        },
+        displayName: _td("Jump to last message"),
     },
 };
 
