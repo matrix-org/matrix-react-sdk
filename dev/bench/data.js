@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643202503455,
+  "lastUpdate": 1643203899682,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59252,6 +59252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4406.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8e4ced645433542e2d96440a85c91265ccd322ae",
+          "message": "Correctly handle Room.timeline events which have a nullable `Room` (#7635)",
+          "timestamp": "2022-01-26T13:24:14Z",
+          "tree_id": "321ac815e2007dad66bff9dd0b820b50ec00eafd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8e4ced645433542e2d96440a85c91265ccd322ae"
+        },
+        "date": 1643203893247,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5694.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1108,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1790,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4818.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
