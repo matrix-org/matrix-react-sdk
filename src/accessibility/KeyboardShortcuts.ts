@@ -19,14 +19,25 @@ import { _td } from "../languageHandler";
 import { isMac, Key } from "../Keyboard";
 import { ISetting } from "../settings/Settings";
 import SettingsStore from "../settings/SettingsStore";
+import {
+    AutocompleteAction,
+    KeyBindingAction,
+    LabsAction,
+    MessageComposerAction,
+    NavigationAction,
+    RoomAction,
+    RoomListAction,
+} from "../KeyBindingsManager";
 
-interface IKeyboardShortcuts {
-    [setting: string]: ISetting;
-}
+type IKeyboardShortcuts = {
+    // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
+    [k in (KeyBindingAction | string)]: ISetting;
+};
 
 export interface ICategory {
     categoryLabel: string;
-    settingNames: string[];
+    // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
+    settingNames: (KeyBindingAction | string)[];
 }
 
 export enum CategoryName {
@@ -70,20 +81,20 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     [CategoryName.COMPOSER]: {
         categoryLabel: _td("Composer"),
         settingNames: [
-            "KeyBinding.sendMessageInComposer",
-            "KeyBinding.toggleBoldInComposer",
-            "KeyBinding.toggleItalicsInComposer",
-            "KeyBinding.toggleQuoteInComposer",
-            "KeyBinding.newLineInComposer",
-            "KeyBinding.cancelReplyInComposer",
-            "KeyBinding.editNextMessage",
-            "KeyBinding.editPreviousMessage",
-            "KeyBinding.jumpToStartInComposer",
-            "KeyBinding.jumpToEndInComposer",
-            "KeyBinding.nextMessageInComposerHistory",
-            "KeyBinding.previousMessageInComposerHistory",
-            "KeyBinding.editUndoInComposer",
-            "KeyBinding.editRedoInComposer",
+            MessageComposerAction.Send,
+            MessageComposerAction.FormatBold,
+            MessageComposerAction.FormatItalics,
+            MessageComposerAction.FormatQuote,
+            MessageComposerAction.NewLine,
+            MessageComposerAction.CancelEditing,
+            MessageComposerAction.EditNextMessage,
+            MessageComposerAction.EditPrevMessage,
+            MessageComposerAction.MoveCursorToStart,
+            MessageComposerAction.MoveCursorToEnd,
+            MessageComposerAction.SelectNextSendHistory,
+            MessageComposerAction.EditPrevMessage,
+            MessageComposerAction.EditUndo,
+            MessageComposerAction.EditRedo,
         ],
     }, [CategoryName.CALLS]: {
         categoryLabel: _td("Calls"),
@@ -94,54 +105,54 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     }, [CategoryName.ROOM]: {
         categoryLabel: _td("Room"),
         settingNames: [
-            "KeyBinding.dismissReadMarkerAndJumpToBottom",
-            "KeyBinding.jumpToOldestUnreadMessage",
-            "KeyBinding.uploadFileToRoom",
-            "KeyBinding.searchInRoom",
-            "KeyBinding.scrollUpInTimeline",
-            "KeyBinding.scrollDownInTimeline",
-            "KeyBinding.jumpToFirstMessageInTimeline",
-            "KeyBinding.jumpToLastMessageInTimeline",
+            RoomAction.DismissReadMarker,
+            RoomAction.JumpToOldestUnread,
+            RoomAction.UploadFile,
+            RoomAction.FocusSearch,
+            RoomAction.ScrollUp,
+            RoomAction.RoomScrollDown,
+            RoomAction.JumpToFirstMessage,
+            RoomAction.JumpToLatestMessage,
         ],
     }, [CategoryName.ROOM_LIST]: {
         categoryLabel: _td("Room List"),
         settingNames: [
-            "KeyBinding.selectRoomInRoomList",
-            "KeyBinding.collapseSectionInRoomList",
-            "KeyBinding.expandSectionInRoomList",
-            "KeyBinding.clearRoomFilter",
-            "KeyBinding.upperRoom",
-            "KeyBinding.downerRoom",
+            RoomListAction.SelectRoom,
+            RoomListAction.CollapseSection,
+            RoomListAction.ExpandSection,
+            RoomListAction.ClearSearch,
+            RoomListAction.NextRoom,
+            RoomListAction.PrevRoom,
         ],
     }, [CategoryName.NAVIGATION]: {
         categoryLabel: _td("Navigation"),
         settingNames: [
-            "KeyBinding.toggleTopLeftMenu",
+            NavigationAction.ToggleUserMenu,
             "KeyBinding.closeDialogOrContextMenu",
             "KeyBinding.activateSelectedButton",
-            "KeyBinding.toggleRightPanel",
-            "KeyBinding.showKeyBindingsSettings",
-            "KeyBinding.goToHomeView",
-            "KeyBinding.nextUnreadRoom",
-            "KeyBinding.previousUnreadRoom",
-            "KeyBinding.nextRoom",
-            "KeyBinding.previousRoom",
-            "KeyBinding.toggleSpacePanel",
-            "KeyBinding.filterRooms",
+            NavigationAction.ToggleRoomSidePanel,
+            NavigationAction.OpenShortCutDialog,
+            NavigationAction.GoToHome,
+            NavigationAction.SelectNextUnreadRoom,
+            NavigationAction.SelectPrevUnreadRoom,
+            NavigationAction.SelectNextRoom,
+            NavigationAction.SelectPrevRoom,
+            NavigationAction.ToggleSpacePanel,
+            NavigationAction.FocusRoomSearch,
         ],
     }, [CategoryName.AUTOCOMPLETE]: {
         categoryLabel: _td("Autocomplete"),
         settingNames: [
-            "KeyBinding.cancelAutoComplete",
-            "KeyBinding.nextOptionInAutoComplete",
-            "KeyBinding.previousOptionInAutoComplete",
-            "KeyBinding.completeAutocomplete",
-            "KeyBinding.forceCompleteAutocomplete",
+            AutocompleteAction.Cancel,
+            AutocompleteAction.NextSelection,
+            AutocompleteAction.PrevSelection,
+            AutocompleteAction.Complete,
+            AutocompleteAction.ForceComplete,
         ],
     }, [CategoryName.LABS]: {
         categoryLabel: _td("Labs"),
         settingNames: [
-            "KeyBinding.toggleHiddenEventVisibility",
+            LabsAction.ToggleHiddenEventVisibility,
         ],
     },
 };
@@ -150,60 +161,60 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
 // to implement customizable keyboard shortcuts
 // TODO: TravisR will fix this nightmare when the new version of the SettingsStore becomes a thing
 const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
-    "KeyBinding.toggleBoldInComposer": {
+    [MessageComposerAction.FormatBold]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.B,
         },
         displayName: _td("Toggle Bold"),
     },
-    "KeyBinding.toggleItalicsInComposer": {
+    [MessageComposerAction.FormatItalics]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.I,
         },
         displayName: _td("Toggle Italics"),
     },
-    "KeyBinding.toggleQuoteInComposer": {
+    [MessageComposerAction.FormatQuote]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.GREATER_THAN,
         },
         displayName: _td("Toggle Quote"),
     },
-    "KeyBinding.cancelReplyInComposer": {
+    [MessageComposerAction.CancelEditing]: {
         default: {
             key: Key.ESCAPE,
         },
         displayName: _td("Cancel replying to a message"),
     },
-    "KeyBinding.editNextMessage": {
+    [MessageComposerAction.EditNextMessage]: {
         default: {
             key: Key.ARROW_UP,
         },
         displayName: _td("Navigate to next message to edit"),
     },
-    "KeyBinding.editPreviousMessage": {
+    [MessageComposerAction.EditPrevMessage]: {
         default: {
             key: Key.ARROW_DOWN,
         },
         displayName: _td("Navigate to previous message to edit"),
     },
-    "KeyBinding.jumpToStartInComposer": {
+    [MessageComposerAction.MoveCursorToStart]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.HOME,
         },
         displayName: _td("Jump to start of the composer"),
     },
-    "KeyBinding.jumpToEndInComposer": {
+    [MessageComposerAction.MoveCursorToEnd]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.END,
         },
         displayName: _td("Jump to end of the composer"),
     },
-    "KeyBinding.nextMessageInComposerHistory": {
+    [MessageComposerAction.SelectNextSendHistory]: {
         default: {
             altKey: true,
             ctrlKey: true,
@@ -211,7 +222,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Navigate to next message in composer history"),
     },
-    "KeyBinding.previousMessageInComposerHistory": {
+    [MessageComposerAction.SelectPrevSendHistory]: {
         default: {
             altKey: true,
             ctrlKey: true,
@@ -233,20 +244,20 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Toggle webcam on/off"),
     },
-    "KeyBinding.dismissReadMarkerAndJumpToBottom": {
+    [RoomAction.DismissReadMarker]: {
         default: {
             key: Key.ESCAPE,
         },
         displayName: _td("Dismiss read marker and jump to bottom"),
     },
-    "KeyBinding.jumpToOldestUnreadMessage": {
+    [RoomAction.JumpToOldestUnread]: {
         default: {
             shiftKey: true,
             key: Key.PAGE_UP,
         },
         displayName: _td("Jump to oldest unread message"),
     },
-    "KeyBinding.uploadFileToRoom": {
+    [RoomAction.UploadFile]: {
         default: {
             ctrlOrCmdKey: true,
             shiftKey: true,
@@ -254,69 +265,69 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Upload a file"),
     },
-    "KeyBinding.searchInRoom": {
+    [RoomAction.FocusSearch]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.F,
         },
         displayName: _td("Search (must be enabled)"),
     },
-    "KeyBinding.scrollUpInTimeline": {
+    [RoomAction.ScrollUp]: {
         default: {
             key: Key.PAGE_UP,
         },
         displayName: _td("Scroll up in the timeline"),
     },
-    "KeyBinding.scrollDownInTimeline": {
+    [RoomAction.RoomScrollDown]: {
         default: {
             key: Key.PAGE_DOWN,
         },
         displayName: _td("Scroll down in the timeline"),
     },
-    "KeyBinding.filterRooms": {
+    [NavigationAction.FocusRoomSearch]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.K,
         },
         displayName: _td("Jump to room search"),
     },
-    "KeyBinding.selectRoomInRoomList": {
+    [RoomListAction.SelectRoom]: {
         default: {
             key: Key.ENTER,
         },
         displayName: _td("Select room from the room list"),
     },
-    "KeyBinding.collapseSectionInRoomList": {
+    [RoomListAction.CollapseSection]: {
         default: {
             key: Key.ARROW_LEFT,
         },
         displayName: _td("Collapse room list section"),
     },
-    "KeyBinding.expandSectionInRoomList": {
+    [RoomListAction.ExpandSection]: {
         default: {
             key: Key.ARROW_RIGHT,
         },
         displayName: _td("Expand room list section"),
     },
-    "KeyBinding.clearRoomFilter": {
+    [RoomListAction.ClearSearch]: {
         default: {
             key: Key.ESCAPE,
         },
         displayName: _td("Clear room list filter field"),
     },
-    "KeyBinding.upperRoom": {
+    [RoomListAction.NextRoom]: {
         default: {
             key: Key.ARROW_UP,
         },
         displayName: _td("Navigate up in the room list"),
     },
-    "KeyBinding.downerRoom": {
+    [RoomListAction.PrevRoom]: {
         default: {
             key: Key.ARROW_DOWN,
         },
         displayName: _td("Navigate down in the room list"),
     },
-    "KeyBinding.toggleTopLeftMenu": {
+    [NavigationAction.ToggleUserMenu]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.BACKTICK,
@@ -335,21 +346,21 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Activate selected button"),
     },
-    "KeyBinding.toggleRightPanel": {
+    [NavigationAction.ToggleRoomSidePanel]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.PERIOD,
         },
         displayName: _td("Toggle right panel"),
     },
-    "KeyBinding.showKeyBindingsSettings": {
+    [NavigationAction.OpenShortCutDialog]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.SLASH,
         },
         displayName: _td("Open this settings tab"),
     },
-    "KeyBinding.goToHomeView": {
+    [NavigationAction.GoToHome]: {
         default: {
             ctrlOrCmdKey: true,
             altKey: !isMac,
@@ -358,7 +369,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Go to Home View"),
     },
-    "KeyBinding.nextUnreadRoom": {
+    [NavigationAction.SelectNextUnreadRoom]: {
         default: {
             shiftKey: true,
             altKey: true,
@@ -366,7 +377,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Next unread room or DM"),
     },
-    "KeyBinding.previousUnreadRoom": {
+    [NavigationAction.SelectPrevUnreadRoom]: {
         default: {
             shiftKey: true,
             altKey: true,
@@ -374,39 +385,39 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Previous unread room or DM"),
     },
-    "KeyBinding.nextRoom": {
+    [NavigationAction.SelectNextRoom]: {
         default: {
             altKey: true,
             key: Key.ARROW_UP,
         },
         displayName: _td("Next room or DM"),
     },
-    "KeyBinding.previousRoom": {
+    [NavigationAction.SelectPrevRoom]: {
         default: {
             altKey: true,
             key: Key.ARROW_DOWN,
         },
         displayName: _td("Previous room or DM"),
     },
-    "KeyBinding.cancelAutoComplete": {
+    [AutocompleteAction.Cancel]: {
         default: {
             key: Key.ESCAPE,
         },
         displayName: _td("Cancel autocomplete"),
     },
-    "KeyBinding.nextOptionInAutoComplete": {
+    [AutocompleteAction.NextSelection]: {
         default: {
             key: Key.ARROW_UP,
         },
         displayName: _td("Next autocomplete suggestion"),
     },
-    "KeyBinding.previousOptionInAutoComplete": {
+    [AutocompleteAction.PrevSelection]: {
         default: {
             key: Key.ARROW_DOWN,
         },
         displayName: _td("Previous autocomplete suggestion"),
     },
-    "KeyBinding.toggleSpacePanel": {
+    [NavigationAction.ToggleSpacePanel]: {
         default: {
             ctrlOrCmdKey: true,
             shiftKey: true,
@@ -414,7 +425,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Toggle space panel"),
     },
-    "KeyBinding.toggleHiddenEventVisibility": {
+    [LabsAction.ToggleHiddenEventVisibility]: {
         default: {
             ctrlOrCmdKey: true,
             shiftKey: true,
@@ -422,34 +433,34 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Toggle hidden event visibility"),
     },
-    "KeyBinding.jumpToFirstMessageInTimeline": {
+    [RoomAction.JumpToFirstMessage]: {
         default: {
             key: Key.HOME,
             ctrlKey: true,
         },
         displayName: _td("Jump to first message"),
     },
-    "KeyBinding.jumpToLastMessageInTimeline": {
+    [RoomAction.JumpToOldestUnread]: {
         default: {
             key: Key.END,
             ctrlKey: true,
         },
         displayName: _td("Jump to last message"),
     },
-    "KeyBinding.editUndoInComposer": {
+    [MessageComposerAction.EditUndo]: {
         default: {
             key: Key.Z,
             ctrlOrCmdKey: true,
         },
         displayName: _td("Undo edit"),
     },
-    "KeyBinding.completeAutocomplete": {
+    [AutocompleteAction.Complete]: {
         default: {
             key: Key.ENTER,
         },
         displayName: _td("Complete"),
     },
-    "KeyBinding.forceCompleteAutocomplete": {
+    [AutocompleteAction.ForceComplete]: {
         default: {
             key: Key.TAB,
         },
@@ -461,7 +472,7 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
     const keyboardShortcuts = KEYBOARD_SHORTCUTS;
     const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
 
-    keyboardShortcuts["KeyBinding.sendMessageInComposer"] = {
+    keyboardShortcuts[MessageComposerAction.Send] = {
         default: {
             key: Key.ENTER,
             ctrlOrCmdKey: ctrlEnterToSend,
@@ -469,14 +480,14 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
         displayName: _td("Send message"),
 
     };
-    keyboardShortcuts["KeyBinding.newLineInComposer"] = {
+    keyboardShortcuts[MessageComposerAction.NewLine] = {
         default: {
             key: Key.ENTER,
             shiftKey: !ctrlEnterToSend,
         },
         displayName: _td("New line"),
     };
-    keyboardShortcuts["KeyBinding.editRedoInComposer"] = {
+    keyboardShortcuts[MessageComposerAction.EditRedo] = {
         default: {
             key: isMac ? Key.Z : Key.Y,
             ctrlOrCmdKey: true,
