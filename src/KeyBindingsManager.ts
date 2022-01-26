@@ -131,6 +131,10 @@ export enum LabsAction {
     ToggleHiddenEventVisibility = 'KeyBinding.toggleHiddenEventVisibility',
 }
 
+export type KeyBindingAction = (
+    MessageComposerAction | AutocompleteAction | RoomListAction | RoomAction | NavigationAction | LabsAction
+);
+
 /**
  * Represent a key combination.
  *
