@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643204272056,
+  "lastUpdate": 1643205076110,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59336,6 +59336,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 620,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e18bbb030d2c2ac50862f89c2dae3ff1deda5431",
+          "message": "Fix RightPanelStore assuming isViewingRoom is false on load (#7642)",
+          "timestamp": "2022-01-26T13:44:30Z",
+          "tree_id": "8e02527dd08a673f2e4ac3d14c0a0dad48aa8ad9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e18bbb030d2c2ac50862f89c2dae3ff1deda5431"
+        },
+        "date": 1643205070797,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4740,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 980.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1671,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4494.5,
             "unit": "ms",
             "extra": "type: measure"
           }
