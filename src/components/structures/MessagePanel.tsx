@@ -583,6 +583,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const ghostReadMarkers = this.state.ghostReadMarkers;
         const index = ghostReadMarkers.indexOf(finishedEventId);
 
+        if (index < 0) {
+            return;
+        }
         if (index === ghostReadMarkers.length - 1) {
             requestAnimationFrame(() => {
                 node.style.width = '30%';
