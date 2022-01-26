@@ -18,7 +18,7 @@ limitations under the License.
 import React from "react";
 
 import {
-    KEYBOARD_SHORTCUTS,
+    getKeyboardShortcuts,
     ALTERNATE_KEY_NAME,
     KEY_ICON,
     ICategory,
@@ -31,11 +31,11 @@ import { _t } from "../../../../../languageHandler";
 
 // TODO: This should return KeyCombo but it has ctrlOrCmd instead of ctrlOrCmdKey
 const getKeyboardShortcutValue = (name: string) => {
-    return KEYBOARD_SHORTCUTS[name]?.default;
+    return getKeyboardShortcuts()[name]?.default;
 };
 
 const getKeyboardShortcutDisplayName = (name: string): string => {
-    return KEYBOARD_SHORTCUTS[name]?.displayName as string;
+    return getKeyboardShortcuts()[name]?.displayName as string;
 };
 
 interface IKeyboardKeyProps {

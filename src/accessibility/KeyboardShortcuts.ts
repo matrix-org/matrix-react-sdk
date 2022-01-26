@@ -19,6 +19,10 @@ import { _td } from "../languageHandler";
 import { isMac, Key } from "../Keyboard";
 import { ISetting } from "../settings/Settings";
 
+interface IKeyboardShortcuts {
+    [setting: string]: ISetting;
+}
+
 export interface ICategory {
     categoryLabel: string;
     settingNames: string[];
@@ -139,7 +143,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
 // This is very intentionally modelled after SETTINGS as it will make it easier
 // to implement customizable keyboard shortcuts
 // TODO: TravisR will fix this nightmare when the new version of the SettingsStore becomes a thing
-export const KEYBOARD_SHORTCUTS: { [setting: string]: ISetting } = {
+const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     "KeyBinding.toggleBoldInComposer": {
         default: {
             ctrlOrCmdKey: true,
@@ -433,6 +437,10 @@ export const KEYBOARD_SHORTCUTS: { [setting: string]: ISetting } = {
         },
         displayName: _td("Jump to last message"),
     },
+};
+
+export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
+    return KEYBOARD_SHORTCUTS;
 };
 
 export const registerShortcut = (shortcutName: string, categoryName: CategoryName, shortcut: ISetting): void => {
