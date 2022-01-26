@@ -812,7 +812,7 @@ describe("SpaceStore", () => {
                 [MetaSpace.People]: false,
                 [MetaSpace.Orphans]: true,
             });
-            jest.runOnlyPendingTimers();
+            jest.runAllTimers();
             expect(store.activeSpace).toBe(MetaSpace.Orphans);
         });
 
