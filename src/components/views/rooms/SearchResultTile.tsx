@@ -25,7 +25,6 @@ import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DateSeparator from "../messages/DateSeparator";
 import EventTile, { haveTileForEvent } from "./EventTile";
-import { getEventDisplayInfo } from "../../../utils/EventUtils";
 import { shouldFormContinuation } from "../../structures/MessagePanel";
 import { wantsDateSeparator } from "../../../DateUtils";
 
