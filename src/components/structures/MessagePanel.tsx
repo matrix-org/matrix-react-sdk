@@ -73,7 +73,7 @@ export function shouldFormContinuation(
 ): boolean {
     if (timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
     // sanity check inputs
-    if (!prevEvent || !prevEvent.sender || !mxEvent.sender) return false;
+    if (!prevEvent?.sender || !mxEvent.sender) return false;
     // check if within the max continuation period
     if (mxEvent.getTs() - prevEvent.getTs() > CONTINUATION_MAX_INTERVAL) return false;
 

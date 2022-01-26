@@ -115,6 +115,8 @@ export default class SearchResultTile extends React.Component<IProps> {
             }
         }
 
-        return <li data-scroll-tokens={eventId}>{ ret }</li>;
+        return <li data-scroll-tokens={eventId}>
+            <ol>{ ret }</ol>
+        </li>;
     }
 }
