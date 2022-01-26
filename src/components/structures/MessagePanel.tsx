@@ -575,10 +575,24 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     };
 
     private onGhostTransitionEnd = (ev: TransitionEvent): void => {
-        // we can now clean up the ghost element
-        const finishedEventId = (ev.target as HTMLElement).dataset.eventid;
+        // we can now clean up the ghost element,
+        // but will leave it for visibility if it is the last ghost
+        const node = ev.target as HTMLElement;
+        const finishedEventId = node.dataset.eventid;
+        const ghostReadMarkers = this.state.ghostReadMarkers;
+        const index = ghostReadMarkers.indexOf(finishedEventId);
+
+        if (index === ghostReadMarkers.length - 1) {
+          requestAnimationFrame(() => {
+              node.style.width = '30%';
+              node.style.opacity = '0.5';
+          });
+          return;
+        }
+
+        ghostReadMarkers.splice(index, 1);
         this.setState({
-            ghostReadMarkers: this.state.ghostReadMarkers.filter(eid => eid !== finishedEventId),
+            ghostReadMarkers,
         });
     };
 
