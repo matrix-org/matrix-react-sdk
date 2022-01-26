@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IClientWellKnown } from 'matrix-js-sdk/src/client';
 import { UnstableValue } from 'matrix-js-sdk/src/NamespacedValue';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -56,8 +57,13 @@ export function getE2EEWellKnown(): IE2EEWellKnown {
     return null;
 }
 
-export function getTileServerWellKnown(): ITileServerWellKnown {
-    const clientWellKnown = MatrixClientPeg.get().getClientWellKnown();
+export function getTileServerWellKnown(): ITileServerWellKnown | undefined {
+    return tileServerFromWellKnown(MatrixClientPeg.get().getClientWellKnown());
+}
+
+export function tileServerFromWellKnown(
+    clientWellKnown?: IClientWellKnown | undefined,
+): ITileServerWellKnown {
     return (
         clientWellKnown?.[TILE_SERVER_WK_KEY.name] ??
         clientWellKnown?.[TILE_SERVER_WK_KEY.altName]

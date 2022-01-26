@@ -18,6 +18,7 @@ import React, { SyntheticEvent } from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { IClientWellKnown } from 'matrix-js-sdk/src/client';
 
 import DialogButtons from "../elements/DialogButtons";
 import { _t } from '../../../languageHandler';
@@ -27,6 +28,7 @@ import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import Modal from '../../../Modal';
 import ErrorDialog from '../dialogs/ErrorDialog';
 import { findMapStyleUrl } from '../messages/MLocationBody';
+import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 
 interface IProps {
     sender: RoomMember;
@@ -51,9 +53,9 @@ interface IState {
 class LocationPicker extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
-    private map: maplibregl.Map;
-    private geolocate: maplibregl.GeolocateControl;
-    private marker: maplibregl.Marker;
+    private map?: maplibregl.Map;
+    private geolocate?: maplibregl.GeolocateControl;
+    private marker?: maplibregl.Marker;
 
     constructor(props: IProps) {
         super(props);
@@ -62,6 +64,9 @@ class LocationPicker extends React.Component<IProps, IState> {
             position: undefined,
             error: undefined,
         };
+        this.map = null;
+        this.geolocate = null;
+        this.marker = null;
     }
 
     private getMarkerId = () => {
@@ -69,6 +74,8 @@ class LocationPicker extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
+        this.context.on("WellKnown.client", this.updateStyleUrl);
+
         try {
             this.map = new maplibregl.Map({
                 container: 'mx_LocationPicker_map',
@@ -130,11 +137,19 @@ class LocationPicker extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         this.geolocate?.off('geolocate', this.onGeolocate);
+        this.context.off("WellKnown.client", this.updateStyleUrl);
     }
+
+    private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
+        const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
+        if (style) {
+            this.map?.setStyle(style);
+        }
+    };
 
     private onGeolocate = (position: GeolocationPosition) => {
         this.setState({ position });
-        this.marker.setLngLat(
+        this.marker?.setLngLat(
             new maplibregl.LngLat(
                 position.coords.longitude,
                 position.coords.latitude,

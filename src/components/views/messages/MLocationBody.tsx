@@ -24,6 +24,7 @@ import {
     ILocationContent,
     LOCATION_EVENT_TYPE,
 } from 'matrix-js-sdk/src/@types/location';
+import { IClientWellKnown } from 'matrix-js-sdk/src/client';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -35,7 +36,8 @@ import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
-import { getTileServerWellKnown } from '../../../utils/WellKnownUtils';
+import { getTileServerWellKnown, tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 interface IState {
     error: Error;
@@ -43,9 +45,12 @@ interface IState {
 
 @replaceableComponent("views.messages.MLocationBody")
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
     private coords: GeolocationCoordinates;
     private bodyId: string;
     private markerId: string;
+    private map?: maplibregl.Map;
 
     constructor(props: IBodyProps) {
         super(props);
@@ -55,6 +60,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         this.bodyId = `mx_MLocationBody_${idSuffix}`;
         this.markerId = `mx_MLocationBody_marker_${idSuffix}`;
         this.coords = parseGeoUri(locationEventGeoUri(this.props.mxEvent));
+        this.map = null;
 
         this.state = {
             error: undefined,
@@ -66,7 +72,9 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             return;
         }
 
-        createMap(
+        this.context.on("WellKnown.client", this.updateStyleUrl);
+
+        this.map = createMap(
             this.coords,
             false,
             this.bodyId,
@@ -74,6 +82,17 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             (e: Error) => this.setState({ error: e }),
         );
     }
+
+    componentWillUnmount() {
+        this.context.off("WellKnown.client", this.updateStyleUrl);
+    }
+
+    private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
+        const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
+        if (style) {
+            this.map?.setStyle(style);
+        }
+    };
 
     private onClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -88,7 +107,10 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             'Location View',
             '',
             LocationViewDialog,
-            { mxEvent: this.props.mxEvent },
+            {
+                matrixClient: this.context,
+                mxEvent: this.props.mxEvent,
+            },
             "mx_LocationViewDialog_wrapper",
             false, // isPriority
             true, // isStatic
