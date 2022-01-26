@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643142593868,
+  "lastUpdate": 1643187625176,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -58952,6 +58952,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 679.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "59968173+aj-ya@users.noreply.github.com",
+            "name": "Ajeya Bhat",
+            "username": "aj-ya"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e53427fce3dbe67ddd1618ba500961219b998b10",
+          "message": "Changed MacOS hotkey for GoToHome view. (#7631)",
+          "timestamp": "2022-01-26T08:52:55Z",
+          "tree_id": "cc3394d1699037552975e793541adec8c584b19b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e53427fce3dbe67ddd1618ba500961219b998b10"
+        },
+        "date": 1643187618937,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5624.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1043,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1785.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4785.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
