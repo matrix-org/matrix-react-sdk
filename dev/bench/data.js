@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643187625176,
+  "lastUpdate": 1643188324185,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59000,6 +59000,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4785.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "88cd2f8af7d2ef1003c16df89bad7d2312e482d8",
+          "message": "Fix unfocused paste handling and focus return for file uploads (#7625)",
+          "timestamp": "2022-01-26T09:04:19Z",
+          "tree_id": "0ddfce40929e6a4e3255e5995f2ae4f555764012",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/88cd2f8af7d2ef1003c16df89bad7d2312e482d8"
+        },
+        "date": 1643188317033,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5422.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 725.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
