@@ -34,6 +34,7 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
     private roomIds = new Set<string>();
     private userIds = new Set<string>();
     private showPeopleInSpace = true;
+    private showSubSpaceRoomsInSpace = true;
     private space: SpaceKey = MetaSpace.Home;
 
     public get kind(): FilterKind {
@@ -41,11 +42,16 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
     }
 
     public isVisible(room: Room): boolean {
-        return SpaceStore.instance.isRoomInSpace(this.space, room.roomId);
+        console.log('isVisible', this.showSubSpaceRoomsInSpace);
+        return SpaceStore.instance.isRoomInSpace(this.space, room.roomId, this.showSubSpaceRoomsInSpace);
     }
 
     private onStoreUpdate = async (forceUpdate = false): Promise<void> => {
+        const beforeShowSubSpaceRoomsInSpace = this.showSubSpaceRoomsInSpace;
+        this.showSubSpaceRoomsInSpace = SettingsStore.getValue("Spaces.includeSubSpaceRoomsInRoomList");
+
         const beforeRoomIds = this.roomIds;
+
         // clone the set as it may be mutated by the space store internally
         this.roomIds = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(this.space));
 
@@ -59,6 +65,7 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
 
         if (forceUpdate ||
             beforeShowPeopleInSpace !== this.showPeopleInSpace ||
+            beforeShowSubSpaceRoomsInSpace !== this.showSubSpaceRoomsInSpace ||
             setHasDiff(beforeRoomIds, this.roomIds) ||
             setHasDiff(beforeUserIds, this.userIds)
         ) {

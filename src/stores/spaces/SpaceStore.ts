@@ -101,6 +101,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
     // Map from space key to Set of room IDs that should be shown as part of that space's filter
     private spaceFilteredRooms = new Map<SpaceKey, Set<string>>(); // won't contain MetaSpace.People
+    // Map from space key to Set of room IDs that should be shown as part of that space's filter
+    private spaceFilteredDirectChildRooms = new Map<SpaceKey, Set<string>>(); // won't contain MetaSpace.People
     // Map from space ID to Set of user IDs that should be shown as part of that space's filter
     private spaceFilteredUsers = new Map<Room["roomId"], Set<string>>();
     // The space currently selected in the Space Panel
@@ -119,6 +121,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         SettingsStore.monitorSetting("Spaces.allRoomsInHome", null);
         SettingsStore.monitorSetting("Spaces.enabledMetaSpaces", null);
         SettingsStore.monitorSetting("Spaces.showPeopleInSpace", null);
+        SettingsStore.monitorSetting("Spaces.includeSubSpaceRoomsInRoomList", null);
     }
 
     public get invitedSpaces(): Room[] {
@@ -350,12 +353,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return this.parentMap.get(roomId) || new Set();
     }
 
-    public isRoomInSpace(space: SpaceKey, roomId: string): boolean {
+    public isRoomInSpace(space: SpaceKey, roomId: string, includeSubSpaceRooms = true): boolean {
         if (space === MetaSpace.Home && this.allRoomsInHome) {
             return true;
         }
 
-        if (this.spaceFilteredRooms.get(space)?.has(roomId)) {
+        if (includeSubSpaceRooms && this.spaceFilteredRooms.get(space)?.has(roomId)) {
+            return true;
+        }
+        if (!includeSubSpaceRooms && this.spaceFilteredDirectChildRooms.get(space)?.has(roomId)) {
             return true;
         }
 
@@ -380,7 +386,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return false;
     }
 
-    public getSpaceFilteredRoomIds = (space: SpaceKey): Set<string> => {
+    public getSpaceFilteredRoomIds = (space: SpaceKey, includeSubSpaceRooms?: boolean): Set<string> => {
         if (space === MetaSpace.Home && this.allRoomsInHome) {
             return new Set(this.matrixClient.getVisibleRooms().map(r => r.roomId));
         }
@@ -692,14 +698,17 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             // reusing results from like subtrees.
             const fn = (spaceId: string, parentPath: Set<string>): [Set<string>, Set<string>] => {
                 if (parentPath.has(spaceId)) return; // prevent cycles
-
                 // reuse existing results if multiple similar branches exist
                 if (this.spaceFilteredRooms.has(spaceId) && this.spaceFilteredUsers.has(spaceId)) {
                     return [this.spaceFilteredRooms.get(spaceId), this.spaceFilteredUsers.get(spaceId)];
                 }
 
+
+
                 const [childSpaces, childRooms] = partitionSpacesAndRooms(this.getChildren(spaceId));
-                const roomIds = new Set(childRooms.map(r => r.roomId));
+
+                const directChildRoomIds = childRooms.map(r => r.roomId);
+                const roomIds = new Set(directChildRoomIds);
                 const space = this.matrixClient?.getRoom(spaceId);
                 const userIds = new Set(space?.getMembers().filter(m => {
                     return m.membership === "join" || m.membership === "invite";
@@ -719,6 +728,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 const expandedRoomIds = new Set(Array.from(roomIds).flatMap(roomId => {
                     return this.matrixClient.getRoomUpgradeHistory(roomId, true).map(r => r.roomId);
                 }));
+                const expandedDirectChildRoomIds = new Set(directChildRoomIds.flatMap(roomId => {
+                    return this.matrixClient.getRoomUpgradeHistory(roomId, true).map(r => r.roomId);
+                }));
+
+                console.log('YOOO', s, expandedRoomIds, expandedDirectChildRoomIds);
+
+                this.spaceFilteredDirectChildRooms.set(spaceId, expandedDirectChildRoomIds);
                 this.spaceFilteredRooms.set(spaceId, expandedRoomIds);
                 this.spaceFilteredUsers.set(spaceId, userIds);
                 return [expandedRoomIds, userIds];

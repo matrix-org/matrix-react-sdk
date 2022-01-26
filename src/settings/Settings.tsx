@@ -858,6 +858,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true,
         controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
+    "Spaces.includeSubSpaceRoomsInRoomList": {
+        displayName: _td("Include all sub-space rooms in Space room list"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: false,
+    },
     "showCommunitiesInsteadOfSpaces": {
         displayName: _td("Display Communities instead of Spaces"),
         description: _td("Temporarily show communities instead of Spaces for this session. " +
