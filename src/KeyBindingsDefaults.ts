@@ -22,9 +22,11 @@ import {
     NavigationAction,
     RoomAction,
     RoomListAction,
+    LabsAction,
 } from "./KeyBindingsManager";
 import { isMac, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
+import SdkConfig from "./SdkConfig";
 
 const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
     const bindings: KeyBinding<MessageComposerAction>[] = [
@@ -373,7 +375,7 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             action: NavigationAction.GoToHome,
             keyCombo: {
                 key: Key.H,
-                ctrlKey: true,
+                ctrlOrCmd: true,
                 altKey: !isMac,
                 shiftKey: isMac,
             },
@@ -411,10 +413,28 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
     ];
 };
 
+const labsBindings = (): KeyBinding<LabsAction>[] => {
+    if (!SdkConfig.get()['showLabsSettings']) {
+        return [];
+    }
+
+    return [
+        {
+            action: LabsAction.ToggleHiddenEventVisibility,
+            keyCombo: {
+                key: Key.H,
+                ctrlOrCmd: true,
+                shiftKey: true,
+            },
+        },
+    ];
+};
+
 export const defaultBindingsProvider: IKeyBindingsProvider = {
     getMessageComposerBindings: messageComposerBindings,
     getAutocompleteBindings: autocompleteBindings,
     getRoomListBindings: roomListBindings,
     getRoomBindings: roomBindings,
     getNavigationBindings: navigationBindings,
+    getLabsBindings: labsBindings,
 };
