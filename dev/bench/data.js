@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643205076110,
+  "lastUpdate": 1643206713550,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59384,6 +59384,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4494.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "038f67e844669ece52293981f29b7defecc15e07",
+          "message": "Improved threads stability (#7639)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-01-26T14:11:09Z",
+          "tree_id": "54058f07d3353dbdcffd2561b6661ca548708158",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/038f67e844669ece52293981f29b7defecc15e07"
+        },
+        "date": 1643206707559,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5339,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 710,
             "unit": "ms",
             "extra": "type: measure"
           }
