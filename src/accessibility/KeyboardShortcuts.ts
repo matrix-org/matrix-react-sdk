@@ -96,7 +96,6 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     }, [CategoryName.ROOM_LIST]: {
         categoryLabel: _td("Room List"),
         settingNames: [
-            "KeyBinding.filterRooms",
             "KeyBinding.selectRoomInRoomList",
             "KeyBinding.collapseSectionInRoomList",
             "KeyBinding.expandSectionInRoomList",
@@ -118,6 +117,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             "KeyBinding.nextRoom",
             "KeyBinding.previousRoom",
             "KeyBinding.toggleSpacePanel",
+            "KeyBinding.filterRooms",
         ],
     }, [CategoryName.AUTOCOMPLETE]: {
         categoryLabel: _td("Autocomplete"),
