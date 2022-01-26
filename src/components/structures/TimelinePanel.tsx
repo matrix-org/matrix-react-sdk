@@ -1525,10 +1525,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
         eventType: EventType | string,
     ) => this.props.timelineSet.getRelationsForEvent(eventId, relationType, eventType);
 
-    private buildCallEventGroupers(events: MatrixEvent[] = []) {
+    private buildCallEventGroupers(events?: MatrixEvent[]): void {
         const oldCallEventGroupers = this.callEventGroupers;
         this.callEventGroupers = new Map();
-        events.forEach(ev => {
+        events?.forEach(ev => {
             if (!ev.getType().startsWith("m.call.") && !ev.getType().startsWith("org.matrix.call.")) {
                 return;
             }
@@ -1537,7 +1537,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (!this.callEventGroupers.has(callId)) {
                 if (oldCallEventGroupers.has(callId)) {
                     // reuse the CallEventGrouper object where possible
-                    this.callEventGroupers.set(callId, new CallEventGrouper());
+                    this.callEventGroupers.set(callId, oldCallEventGroupers.get(callId));
                 } else {
                     this.callEventGroupers.set(callId, new CallEventGrouper());
                 }
