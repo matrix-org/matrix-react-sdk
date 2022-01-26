@@ -194,7 +194,7 @@ describe('export', function() {
         ).toBeTruthy();
     });
 
-    const testCases: [string, IExportOptions][] = [
+    const invalidExportOptions: [string, IExportOptions][] = [
         ['numberOfMessages exceeds max', {
             numberOfMessages: 10 ** 9,
             maxSize: 1024 * 1024 * 1024,
@@ -211,7 +211,7 @@ describe('export', function() {
             attachmentsIncluded: false,
         }],
     ];
-    it.each(testCases)('%s', (_d, options) => {
+    it.each(invalidExportOptions)('%s', (_d, options) => {
         expect(
             () =>
                 new PlainTextExporter(mockRoom, ExportType.Beginning, options, null),

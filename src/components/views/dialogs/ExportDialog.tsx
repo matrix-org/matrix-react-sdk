@@ -57,10 +57,11 @@ const validateNumberInRange = (min: number, max: number) => (value?: string | nu
 };
 
 // Sanitize setting values, exclude invalid or missing values
-export const getSafeForceRoomExportSettings = (): {
+export type ForceRoomExportSettings = {
     format?: ExportFormat; range?: ExportType; numberOfMessages?: number; includeAttachments?: boolean; sizeMb?: number;
-} => {
-    const config = SettingsStore.getValue(UIFeature.ForceRoomExportSettings);
+};
+export const getSafeForceRoomExportSettings = (): ForceRoomExportSettings => {
+    const config = SettingsStore.getValue<ForceRoomExportSettings>(UIFeature.ForceRoomExportSettings);
     if (!config || typeof config !== "object") return {};
 
     const { format, range, numberOfMessages, includeAttachments, sizeMb } = config;
@@ -87,6 +88,7 @@ interface ExportConfig {
     setNumberOfMessages?: Dispatch<SetStateAction<number>>;
     setSizeLimit?: Dispatch<SetStateAction<number>>;
 }
+
 /**
  * Set up form state using UIFeature.ForceRoomExportSettings or defaults
  * Form fields configured in ForceRoomExportSettings are not allowed to be edited
