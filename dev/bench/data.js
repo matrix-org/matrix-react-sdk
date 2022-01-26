@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643192567841,
+  "lastUpdate": 1643193931346,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59120,6 +59120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4474.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f7a3027e501a08a45ab89389922d2ec879e42f74",
+          "message": "runAllTimers -> runOnlyPendingTimers in SpaceStore-test (#7634)\n\n* runAllTimers -> runOnlyPendingTimers in SpaceStore-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* runAllTimers for switch to first valid space when selected metaspace is disabled\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-26T11:38:07+01:00",
+          "tree_id": "81f1820efb9aa63c8a556280deea5c00f1d6e97d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f7a3027e501a08a45ab89389922d2ec879e42f74"
+        },
+        "date": 1643193925188,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5700.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1067.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1824.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4588.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
