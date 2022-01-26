@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* eslint-disable max-len, camelcase */
-
-import { defer } from "matrix-js-sdk/src/utils";
-
 import customCSS from "!!raw-loader!./exportCustomCSS.css";
 
 const cssSelectorTextClassesRegex = /\.[\w-]+/g;
@@ -40,28 +36,30 @@ function isLightTheme(sheet: CSSStyleSheet): boolean {
     return (<HTMLStyleElement>sheet.ownerNode).dataset.mxTheme?.toLowerCase() === "light";
 }
 
+async function getRulesFromCssFile(path: string): Promise<CSSStyleSheet> {
+    const doc = document.implementation.createHTMLDocument("");
+    const styleElement = document.createElement("style");
+
+    const res = await fetch(path);
+    styleElement.textContent = await res.text();
+    // the style will only be parsed once it is added to a document
+    doc.body.appendChild(styleElement);
+
+    return styleElement.sheet;
+}
+
 // naively culls unused css rules based on which classes are present in the html,
 // doesn't cull rules which won't apply due to the full selector not matching but gets rid of a LOT of cruft anyway.
 const getExportCSS = async (usedClasses: Set<string>): Promise<string> => {
-    const lightTheme = document.querySelector<HTMLStyleElement>('link[rel=stylesheet][data-mx-theme="light" i]');
-    const isLightDisabled = lightTheme?.disabled;
-    // if the light theme isn't currently enabled then we need to have the browser download it before we can proceed.
-    if (isLightDisabled) {
-        lightTheme.disabled = false;
-        if (!Array.from(document.styleSheets).some(isLightTheme)) {
-            const deferred = defer<void>();
-            lightTheme.onload = deferred.resolve.bind(deferred.promise);
-            await deferred.promise;
-        }
-    }
-
     // only include bundle.css and the data-mx-theme=light styling
     const stylesheets = Array.from(document.styleSheets).filter(s => {
         return s.href?.endsWith("bundle.css") || isLightTheme(s);
     });
 
-    if (isLightDisabled) {
-        lightTheme.disabled = true;
+    // If the light theme isn't loaded we will have to fetch & parse it manually
+    if (!stylesheets.some(isLightTheme)) {
+        const href = document.querySelector<HTMLLinkElement>('link[rel="stylesheet"][href$="theme-light.css"]').href;
+        stylesheets.push(await getRulesFromCssFile(href));
     }
 
     let css = "";
