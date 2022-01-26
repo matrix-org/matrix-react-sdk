@@ -563,7 +563,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 requestAnimationFrame(() => {
                     if (!animating) {
                         try {
-                          node.dispatchEvent(new TransitionEvent('transitionend'));
+                            node.dispatchEvent(new TransitionEvent('transitionend'));
                         } catch (err) {
                             logger.error(err);
                             return;
@@ -583,11 +583,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const index = ghostReadMarkers.indexOf(finishedEventId);
 
         if (index === ghostReadMarkers.length - 1) {
-          requestAnimationFrame(() => {
-              node.style.width = '30%';
-              node.style.opacity = '0.5';
-          });
-          return;
+            requestAnimationFrame(() => {
+                node.style.width = '30%';
+                node.style.opacity = '0.5';
+            });
+            return;
         }
 
         ghostReadMarkers.splice(index, 1);
