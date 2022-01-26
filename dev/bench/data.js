@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643211320031,
+  "lastUpdate": 1643213488290,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59468,6 +59468,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4732.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "00912c0b506a7e32805adc4cdfd349b745b84a70",
+          "message": "Load light theme prior to HTML export to ensure it is present (#7643)",
+          "timestamp": "2022-01-26T16:04:25Z",
+          "tree_id": "ccb0e373cab8ead1aa13df771f0eec10d5342496",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/00912c0b506a7e32805adc4cdfd349b745b84a70"
+        },
+        "date": 1643213482917,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5061.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 951.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1674.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4316.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
