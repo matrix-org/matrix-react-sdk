@@ -403,7 +403,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             thread,
             threadReplyCount: thread?.length,
-            threadLastReply: thread?.lastReply,
+            threadLastReply: thread?.lastReply(),
         };
 
         // don't do RR animations until we are mounted
@@ -557,7 +557,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread?.lastReply,
+            threadLastReply: thread?.lastReply(),
             threadReplyCount: thread?.length,
             thread,
         });
@@ -1272,14 +1272,15 @@ export default class EventTile extends React.Component<IProps, IState> {
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.props.tileShape !== TileShape.ThreadPanel
             ? this.props.mxEvent.getTs()
-            : thread?.lastReply.getTs();
+            : thread?.lastReply().getTs();
 
-        const timestamp = showTimestamp && ts ?
-            <MessageTimestamp
-                showRelative={this.props.tileShape === TileShape.ThreadPanel}
-                showTwelveHour={this.props.isTwelveHour}
-                ts={ts}
-            /> : null;
+        const messageTimestamp = <MessageTimestamp
+            showRelative={this.props.tileShape === TileShape.ThreadPanel}
+            showTwelveHour={this.props.isTwelveHour}
+            ts={ts}
+        />;
+
+        const timestamp = showTimestamp && ts ? messageTimestamp : null;
 
         const keyRequestHelpText =
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
@@ -1340,9 +1341,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             { timestamp }
         </a>;
 
-        const useIRCLayout = this.props.layout == Layout.IRC;
+        const useIRCLayout = this.props.layout === Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
         const ircTimestamp = useIRCLayout ? linkedTimestamp : null;
+        const bubbleTimestamp = this.props.layout === Layout.Bubble ? messageTimestamp : null;
         const groupPadlock = !useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
         const ircPadlock = useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
 
@@ -1568,7 +1570,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { groupTimestamp }
                             { groupPadlock }
                             { replyChain }
-                            <EventTileType ref={this.tile}
+                            <EventTileType
+                                ref={this.tile}
                                 mxEvent={this.props.mxEvent}
                                 forExport={this.props.forExport}
                                 replacingEventId={this.props.replacingEventId}
@@ -1581,6 +1584,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 callEventGrouper={this.props.callEventGrouper}
                                 getRelationsForEvent={this.props.getRelationsForEvent}
                                 isSeeingThroughMessageHiddenForModeration={isSeeingThroughMessageHiddenForModeration}
+                                timestamp={bubbleTimestamp}
                             />
                             { keyRequestInfo }
                             { actionBar }
