@@ -18,7 +18,10 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
-import { hydrateSessionInPlace } from "./Lifecycle";
+import { getRenewedStoredSessionVars, hydrateSessionInPlace } from "./Lifecycle";
+import { WebIPC } from "./ipc/WebIPC";
+import { Op, Operation } from "./ipc/types";
+import { TRANSPORT_EVENT } from "./ipc/transport/ITransport";
 
 export interface IRenewedMatrixClientCreds extends Pick<IMatrixClientCreds,
     "accessToken" | "accessTokenExpiryTs" | "accessTokenRefreshToken"> {}
@@ -31,6 +34,8 @@ export class TokenLifecycle {
     protected constructor() {
         // we only really want one of these floating around, so private-ish
         // constructor. Protected allows for unit tests.
+
+        this.registerIpcHandlers();
     }
 
     // noinspection JSMethodCanBeStatic
@@ -71,31 +76,86 @@ export class TokenLifecycle {
         }
     }
 
+    private registerIpcHandlers() {
+        WebIPC.instance.transport.on(TRANSPORT_EVENT, async (op: Operation) => {
+            if (op.operation !== Op.AccessTokenUpdated) return;
+
+            logger.info("TokenLifecyle#remoteUpdate: Leader triggered token refresh - updating client creds");
+            await hydrateSessionInPlace({
+                ...MatrixClientPeg.getCredentials(),
+                ...(await getRenewedStoredSessionVars()),
+            });
+        });
+
+        WebIPC.instance.transport.on(TRANSPORT_EVENT, async (op: Operation) => {
+            if (op.operation !== Op.RefreshToken) return;
+            if (!WebIPC.instance.isCurrentlyLeader) return; // not for us
+
+            logger.info("TokenLifecyle#remoteUpdate: Remote client wants a token refresh - honouring");
+            await this.forceTokenExchange();
+        });
+    }
+
     // noinspection JSMethodCanBeStatic
     private async doTokenRefresh(
         credentials: IMatrixClientCreds,
         client: MatrixClient,
     ): Promise<IRenewedMatrixClientCreds> {
-        // TODO: @@ TR - Lock so this+dependents only happens once per client
-        try {
-            const newCreds = await client.refreshToken(credentials.accessTokenRefreshToken);
-            return {
-                // We use the browser's local time to do two things:
-                // 1. Avoid having to write code that counts down and stores a "time left" variable
-                // 2. Work around any time drift weirdness by assuming the user's local machine will
-                //    drift consistently with itself.
-                // We additionally add our own safety buffer when renewing tokens to avoid cases where
-                // the time drift is accelerating.
-                accessTokenExpiryTs: Date.now() + newCreds.expires_in_ms,
-                accessToken: newCreds.access_token,
-                accessTokenRefreshToken: newCreds.refresh_token,
-            };
-        } catch (e) {
-            if (e.errcode === "M_UNKNOWN_TOKEN") {
-                // Emit the logout manually because the function inhibits it.
-                client.emit("Session.logged_out", e);
-            } else {
-                throw e; // we can't do anything with it, so re-throw
+        if (!WebIPC.instance.isCurrentlyLeader) {
+            logger.info("TokenLifecycle#doTokenRefresh: Asking for update from leader");
+            await new Promise<void>(resolve => {
+                // We set a timer in case the leader is suddenly non-responsive. In these cases we'll
+                // end up returning the currently stored credentials, which shouldn't be an issue.
+                const timerId = setTimeout(() => {
+                    logger.info("TokenLifecycle#doTokenRefresh: Leader failed to respond in time");
+                    fn({
+                        operation: Op.AccessTokenUpdated,
+                        clientId: "unknown", // not parsed, but needed for types
+                        version: 1,
+                        payload: {},
+                    });
+                }, 120000); // 2 minutes (120 seconds) to cover average timeout from server + buffer
+                const fn = (op: Operation) => {
+                    if (op.operation === Op.AccessTokenUpdated) {
+                        WebIPC.instance.transport.removeListener(TRANSPORT_EVENT, fn);
+                        clearTimeout(timerId);
+                        resolve();
+                    }
+                };
+                WebIPC.instance.transport.on(TRANSPORT_EVENT, fn);
+
+                // Ask the leader to refresh the token
+                WebIPC.instance.transport.send({
+                    operation: Op.RefreshToken,
+                    clientId: WebIPC.instance.clientId,
+                    version: 1,
+                    payload: {},
+                });
+            });
+            const { accessToken, accessTokenRefreshToken, accessTokenExpiryTs } = await getRenewedStoredSessionVars();
+            return { accessToken, accessTokenRefreshToken, accessTokenExpiryTs };
+        } else {
+            logger.info("TokenLifecycle#doTokenRefresh: Refreshing token as current leader");
+            try {
+                const newCreds = await client.refreshToken(credentials.accessTokenRefreshToken);
+                return {
+                    // We use the browser's local time to do two things:
+                    // 1. Avoid having to write code that counts down and stores a "time left" variable
+                    // 2. Work around any time drift weirdness by assuming the user's local machine will
+                    //    drift consistently with itself.
+                    // We additionally add our own safety buffer when renewing tokens to avoid cases where
+                    // the time drift is accelerating.
+                    accessTokenExpiryTs: Date.now() + newCreds.expires_in_ms,
+                    accessToken: newCreds.access_token,
+                    accessTokenRefreshToken: newCreds.refresh_token,
+                };
+            } catch (e) {
+                if (e.errcode === "M_UNKNOWN_TOKEN") {
+                    // Emit the logout manually because the function inhibits it.
+                    client.emit("Session.logged_out", e);
+                } else {
+                    throw e; // we can't do anything with it, so re-throw
+                }
             }
         }
     }
