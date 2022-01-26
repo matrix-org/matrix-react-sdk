@@ -23,7 +23,7 @@ import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timelin
 import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { SyncState } from 'matrix-js-sdk/src/sync';
-import { RoomMember } from 'matrix-js-sdk';
+import { IRoomTimelineData, RoomMember } from 'matrix-js-sdk';
 import { debounce } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -526,13 +526,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     private onRoomTimeline = (
         ev: MatrixEvent,
-        room: Room,
+        room: Room | null,
         toStartOfTimeline: boolean,
         removed: boolean,
-        data: {
-            timeline: EventTimeline;
-            liveEvent?: boolean;
-        },
+        data: IRoomTimelineData,
     ): void => {
         // ignore events for other timeline sets
         if (data.timeline.getTimelineSet() !== this.props.timelineSet) return;
