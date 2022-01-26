@@ -340,7 +340,7 @@ class RoomViewStore extends Store<ActionPayload> {
 
             // if joined through room ID and didn't provide any via servers, provide
             // a more detailed error than "No known servers"
-            if (roomId === this.state.roomId && this.state.viaServers.length === 0) {
+            if (roomId === this.state.roomId && !this.state.viaServers?.length) {
                 msg = <div>
                     { _t("You attempted to join using a Room ID without providing a list " +
                         "of servers to join through. Room IDs are internal identifiers and " +
