@@ -44,16 +44,15 @@ function isLightTheme(sheet: CSSStyleSheet): boolean {
 // doesn't cull rules which won't apply due to the full selector not matching but gets rid of a LOT of cruft anyway.
 const getExportCSS = async (usedClasses: Set<string>): Promise<string> => {
     const lightTheme = document.querySelector<HTMLStyleElement>('link[rel=stylesheet][data-mx-theme="light" i]');
-    let mustDisableLightTheme = false;
+    const isLightDisabled = lightTheme?.disabled;
     // if the light theme isn't currently enabled then we need to have the browser download it before we can proceed.
-    if (lightTheme?.disabled) {
+    if (isLightDisabled) {
         lightTheme.disabled = false;
         if (!Array.from(document.styleSheets).some(isLightTheme)) {
             const deferred = defer<void>();
             lightTheme.onload = deferred.resolve.bind(deferred.promise);
             await deferred.promise;
         }
-        mustDisableLightTheme = true;
     }
 
     // only include bundle.css and the data-mx-theme=light styling
@@ -61,7 +60,7 @@ const getExportCSS = async (usedClasses: Set<string>): Promise<string> => {
         return s.href?.endsWith("bundle.css") || isLightTheme(s);
     });
 
-    if (mustDisableLightTheme) {
+    if (isLightDisabled) {
         lightTheme.disabled = true;
     }
 
