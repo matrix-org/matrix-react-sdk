@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643192526036,
+  "lastUpdate": 1643192567841,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59072,6 +59072,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 666.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "056c7c8d655eaa18db87c0ebef6ee94cfdc28c1c",
+          "message": "Prevent infinite loops by dropping the input instead of crashing browser (#7632)",
+          "timestamp": "2022-01-26T10:16:01Z",
+          "tree_id": "02a41f7c88b83a0559d289faa0afd5773c2c9403",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/056c7c8d655eaa18db87c0ebef6ee94cfdc28c1c"
+        },
+        "date": 1643192562614,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4642.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 920,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1685.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4474.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
