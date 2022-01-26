@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643224655483,
+  "lastUpdate": 1643225869120,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59648,6 +59648,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4363.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "31e6b942f257e12813e6c52509e6a390efebb8c7",
+          "message": "Redirect UISI autorageshakes to separate repo and add more labels for filtering (#7598)\n\nThis adds a new key `uisi_autorageshake_app` to config.json, holding an optional custom app name for UISI autorageshakes so that the rageshake server can file them separately from user-submitted rageshakes.",
+          "timestamp": "2022-01-26T14:30:45-05:00",
+          "tree_id": "45c9afe07195af0ef48a1081c6ee456faa57ab40",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/31e6b942f257e12813e6c52509e6a390efebb8c7"
+        },
+        "date": 1643225863505,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4824.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 633.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
