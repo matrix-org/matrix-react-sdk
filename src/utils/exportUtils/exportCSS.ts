@@ -16,6 +16,8 @@ limitations under the License.
 
 /* eslint-disable max-len, camelcase */
 
+import { defer } from "matrix-js-sdk/src/utils";
+
 import customCSS from "!!raw-loader!./exportCustomCSS.css";
 
 const cssSelectorTextClassesRegex = /\.[\w-]+/g;
@@ -34,14 +36,34 @@ function mutateCssText(css: string): string {
         );
 }
 
+function isLightTheme(sheet: CSSStyleSheet): boolean {
+    return (<HTMLStyleElement>sheet.ownerNode).dataset.mxTheme?.toLowerCase() === "light";
+}
+
 // naively culls unused css rules based on which classes are present in the html,
 // doesn't cull rules which won't apply due to the full selector not matching but gets rid of a LOT of cruft anyway.
 const getExportCSS = async (usedClasses: Set<string>): Promise<string> => {
+    const lightTheme = document.querySelector<HTMLStyleElement>('link[rel=stylesheet][data-mx-theme="light" i]');
+    let mustDisableLightTheme = false;
+    // if the light theme isn't currently enabled then we need to have the browser download it before we can proceed.
+    if (lightTheme?.disabled) {
+        lightTheme.disabled = false;
+        if (!Array.from(document.styleSheets).some(isLightTheme)) {
+            const deferred = defer<void>();
+            lightTheme.onload = deferred.resolve.bind(deferred.promise);
+            await deferred.promise;
+        }
+        mustDisableLightTheme = true;
+    }
+
     // only include bundle.css and the data-mx-theme=light styling
     const stylesheets = Array.from(document.styleSheets).filter(s => {
-        return s.href?.endsWith("bundle.css") ||
-            (s.ownerNode as HTMLStyleElement).dataset.mxTheme?.toLowerCase() === "light";
+        return s.href?.endsWith("bundle.css") || isLightTheme(s);
     });
+
+    if (mustDisableLightTheme) {
+        lightTheme.disabled = true;
+    }
 
     let css = "";
     for (const stylesheet of stylesheets) {
