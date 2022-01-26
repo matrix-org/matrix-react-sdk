@@ -563,7 +563,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 requestAnimationFrame(() => {
                     if (!animating) {
                         try {
-                            node.dispatchEvent(new TransitionEvent('transitionend'));
+                            const ev = new TransitionEvent('transitionend', { bubbles: true });
+                            node.dispatchEvent(ev);
                         } catch (err) {
                             logger.error(err);
                             return;
