@@ -555,9 +555,21 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private collectGhostReadMarker = (node: HTMLElement): void => {
         if (node) {
             // now the element has appeared, change the style which will trigger the CSS transition
+            let animating = false;
+            node.addEventListener('transitionrun', () => { animating = true; }, { once: true });
             requestAnimationFrame(() => {
                 node.style.width = '10%';
                 node.style.opacity = '0';
+                requestAnimationFrame(() => {
+                    if (!animating) {
+                        try {
+                          node.dispatchEvent(new TransitionEvent('transitionend'));
+                        } catch (err) {
+                            logger.error(err);
+                            return;
+                        }
+                    }
+                });
             });
         }
     };
