@@ -22,7 +22,7 @@ import { act } from "react-dom/test-utils";
 import { Room } from 'matrix-js-sdk';
 
 import ExportDialog,
-{ getSafeForceRoomExportSettings, ForceRoomExportSettings }
+{ getSafeForceRoomExportParameters, ForceRoomExportParameters }
     from '../../../../src/components/views/dialogs/ExportDialog';
 import { ExportType, ExportFormat } from '../../../../src/utils/exportUtils/exportUtils';
 import { createTestClient, mkStubRoom } from '../../../test-utils';
@@ -140,7 +140,7 @@ describe('<ExportDialog />', () => {
         expect(htmlExporterInstance.export).toHaveBeenCalled();
     });
 
-    it('exports room using values set from ForceRoomExportSettings', async () => {
+    it('exports room using values set from ForceRoomExportParameters', async () => {
         SettingsStoreMock.getValue.mockReturnValue({
             format: ExportFormat.PlainText,
             range: ExportType.Beginning,
@@ -188,12 +188,12 @@ describe('<ExportDialog />', () => {
             expect(getExportFormatInput(component, ExportFormat.Html).props().checked).toBeFalsy();
         });
 
-        it('hides export format input when format is valid in ForceRoomExportSettings', () => {
+        it('hides export format input when format is valid in ForceRoomExportParameters', () => {
             const component = getComponent();
             expect(getExportFormatInput(component, ExportFormat.Html).props().checked).toBeTruthy();
         });
 
-        it('does not render export format when set in ForceRoomExportSettings', () => {
+        it('does not render export format when set in ForceRoomExportParameters', () => {
             SettingsStoreMock.getValue.mockReturnValue({
                 format: ExportFormat.PlainText,
             });
@@ -214,7 +214,7 @@ describe('<ExportDialog />', () => {
             expect(getExportTypeInput(component).props().value).toEqual(ExportType.Beginning);
         });
 
-        it('does not render export type when set in ForceRoomExportSettings', () => {
+        it('does not render export type when set in ForceRoomExportParameters', () => {
             SettingsStoreMock.getValue.mockReturnValue({
                 range: ExportType.Beginning,
             });
@@ -305,7 +305,7 @@ describe('<ExportDialog />', () => {
             expect(htmlExporterInstance.export).toHaveBeenCalled();
         });
 
-        it('does not render size limit input when set in ForceRoomExportSettings', () => {
+        it('does not render size limit input when set in ForceRoomExportParameters', () => {
             SettingsStoreMock.getValue.mockReturnValue({
                 sizeMb: 10000,
             });
@@ -316,7 +316,7 @@ describe('<ExportDialog />', () => {
         /**
          * 2000mb size limit does not apply when higher limit is configured in config
          */
-        it('exports when size limit set in ForceRoomExportSettings is larger than 2000', async () => {
+        it('exports when size limit set in ForceRoomExportParameters is larger than 2000', async () => {
             SettingsStoreMock.getValue.mockReturnValue({
                 sizeMb: 10000,
             });
@@ -339,7 +339,7 @@ describe('<ExportDialog />', () => {
             expect(getAttachmentsCheckbox(component).props().checked).toEqual(true);
         });
 
-        it('does not render input when set in ForceRoomExportSettings', () => {
+        it('does not render input when set in ForceRoomExportParameters', () => {
             SettingsStoreMock.getValue.mockReturnValue({
                 includeAttachments: false,
             });
@@ -348,8 +348,8 @@ describe('<ExportDialog />', () => {
         });
     });
 
-    describe('getSafeForceRoomExportSettings()', () => {
-        const testCases: [string, ForceRoomExportSettings, ForceRoomExportSettings][] = [
+    describe('getSafeForceRoomExportParameters()', () => {
+        const testCases: [string, ForceRoomExportParameters, ForceRoomExportParameters][] = [
             ['setting is falsy', undefined, {}],
             ['setting is configured to string', 'test' as unknown, {}],
             ['setting is empty', {}, {}],
@@ -373,7 +373,7 @@ describe('<ExportDialog />', () => {
         it.each(testCases)('sanitizes correctly when %s', (_d, setting, expected) => {
             SettingsStoreMock.getValue.mockReturnValue(setting);
 
-            expect(getSafeForceRoomExportSettings()).toEqual(expected);
+            expect(getSafeForceRoomExportParameters()).toEqual(expected);
         });
     });
 });

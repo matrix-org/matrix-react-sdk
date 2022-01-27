@@ -57,11 +57,11 @@ const validateNumberInRange = (min: number, max: number) => (value?: string | nu
 };
 
 // Sanitize setting values, exclude invalid or missing values
-export type ForceRoomExportSettings = {
+export type ForceRoomExportParameters = {
     format?: ExportFormat; range?: ExportType; numberOfMessages?: number; includeAttachments?: boolean; sizeMb?: number;
 };
-export const getSafeForceRoomExportSettings = (): ForceRoomExportSettings => {
-    const config = SettingsStore.getValue<ForceRoomExportSettings>(UIFeature.ForceRoomExportSettings);
+export const getSafeForceRoomExportParameters = (): ForceRoomExportParameters => {
+    const config = SettingsStore.getValue<ForceRoomExportParameters>(UIFeature.ForceRoomExportParameters);
     if (!config || typeof config !== "object") return {};
 
     const { format, range, numberOfMessages, includeAttachments, sizeMb } = config;
@@ -90,12 +90,12 @@ interface ExportConfig {
 }
 
 /**
- * Set up form state using UIFeature.ForceRoomExportSettings or defaults
- * Form fields configured in ForceRoomExportSettings are not allowed to be edited
+ * Set up form state using UIFeature.ForceRoomExportParameters or defaults
+ * Form fields configured in ForceRoomExportParameters are not allowed to be edited
  * Only return change handlers for editable values
  */
 const useExportFormState = (): ExportConfig => {
-    const config = getSafeForceRoomExportSettings();
+    const config = getSafeForceRoomExportParameters();
 
     const [exportFormat, setExportFormat] = useState(config.format || ExportFormat.Html);
     const [exportType, setExportType] = useState(config.range || ExportType.Timeline);
