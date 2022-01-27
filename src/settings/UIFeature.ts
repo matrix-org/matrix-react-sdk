@@ -33,7 +33,6 @@ export enum UIFeature {
     AdvancedSettings = "UIFeature.advancedSettings",
     RoomHistorySettings = "UIFeature.roomHistorySettings",
     TimelineEnableRelativeDates = "UIFeature.timelineEnableRelativeDates",
-    ForceRoomExportParameters = "UIFeature.ForceRoomExportParameters"
 }
 
 export enum UIComponent {

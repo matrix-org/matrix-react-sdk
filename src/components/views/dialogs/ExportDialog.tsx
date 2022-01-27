@@ -40,7 +40,6 @@ import Exporter from "../../../utils/exportUtils/Exporter";
 import Spinner from "../elements/Spinner";
 import InfoDialog from "./InfoDialog";
 import SettingsStore from "../../../settings/SettingsStore";
-import { UIFeature } from "../../../settings/UIFeature";
 
 interface IProps extends IDialogProps {
     room: Room;
@@ -61,7 +60,7 @@ export type ForceRoomExportParameters = {
     format?: ExportFormat; range?: ExportType; numberOfMessages?: number; includeAttachments?: boolean; sizeMb?: number;
 };
 export const getSafeForceRoomExportParameters = (): ForceRoomExportParameters => {
-    const config = SettingsStore.getValue<ForceRoomExportParameters>(UIFeature.ForceRoomExportParameters);
+    const config = SettingsStore.getValue<ForceRoomExportParameters>("forceRoomExportParameters");
     if (!config || typeof config !== "object") return {};
 
     const { format, range, numberOfMessages, includeAttachments, sizeMb } = config;
@@ -90,7 +89,7 @@ interface ExportConfig {
 }
 
 /**
- * Set up form state using UIFeature.ForceRoomExportParameters or defaults
+ * Set up form state using "forceRoomExportParameters" or defaults
  * Form fields configured in ForceRoomExportParameters are not allowed to be edited
  * Only return change handlers for editable values
  */
