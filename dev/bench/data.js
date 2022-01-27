@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643290907948,
+  "lastUpdate": 1643302036722,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60044,6 +60044,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4922.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b77d31bb4f6b9d379f74f37f8e3fe8f1bb1cbb42",
+          "message": "Fix new call event grouper implementation for encrypted rooms (#7654)",
+          "timestamp": "2022-01-27T16:40:06Z",
+          "tree_id": "e357c3a7b37ba735214853b51c03a267e10096ac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b77d31bb4f6b9d379f74f37f8e3fe8f1bb1cbb42"
+        },
+        "date": 1643302030400,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4944.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 656.5,
             "unit": "ms",
             "extra": "type: measure"
           }
