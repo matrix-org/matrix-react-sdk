@@ -17,6 +17,7 @@ limitations under the License.
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import { AddressType, getAddressType } from '../UserAddress';
@@ -49,6 +50,7 @@ const USER_ALREADY_INVITED = "IO.ELEMENT.ALREADY_INVITED";
 export default class MultiInviter {
     private readonly roomId?: string;
     private readonly groupId?: string;
+    private readonly matrixClient: MatrixClient;
 
     private canceled = false;
     private addresses: string[] = [];
@@ -71,6 +73,8 @@ export default class MultiInviter {
             this.roomId = targetId;
             this.groupId = null;
         }
+
+        this.matrixClient = MatrixClientPeg.get();
     }
 
     public get fatal() {
@@ -129,9 +133,9 @@ export default class MultiInviter {
         const addrType = getAddressType(addr);
 
         if (addrType === AddressType.Email) {
-            return MatrixClientPeg.get().inviteByEmail(roomId, addr);
+            return this.matrixClient.inviteByEmail(roomId, addr);
         } else if (addrType === AddressType.MatrixUserId) {
-            const room = MatrixClientPeg.get().getRoom(roomId);
+            const room = this.matrixClient.getRoom(roomId);
             if (!room) throw new Error("Room not found");
 
             const member = room.getMember(addr);
@@ -148,14 +152,14 @@ export default class MultiInviter {
             }
 
             if (!ignoreProfile && SettingsStore.getValue("promptBeforeInviteUnknownUsers", this.roomId)) {
-                const profile = await MatrixClientPeg.get().getProfileInfo(addr);
+                const profile = await this.matrixClient.getProfileInfo(addr);
                 if (!profile) {
                     // noinspection ExceptionCaughtLocallyJS
                     throw new Error("User has no profile");
                 }
             }
 
-            return MatrixClientPeg.get().invite(roomId, addr, undefined, this.reason);
+            return this.matrixClient.invite(roomId, addr, undefined, this.reason);
         } else {
             throw new Error('Unsupported address');
         }
