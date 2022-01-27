@@ -44,15 +44,18 @@ export interface IInviteResult {
  * @param {string} roomId The ID of the room to invite to
  * @param {string[]} addresses Array of strings of addresses to invite. May be matrix IDs or 3pids.
  * @param {function} progressCallback optional callback, fired after each invite.
+ * @param {boolean} sendSharedHistoryKeys whether to share e2ee keys with the invitees if applicable.
  * @returns {Promise} Promise
  */
 export function inviteMultipleToRoom(
     roomId: string,
     addresses: string[],
     progressCallback?: () => void,
+    sendSharedHistoryKeys = false,
 ): Promise<IInviteResult> {
     const inviter = new MultiInviter(roomId, progressCallback);
-    return inviter.invite(addresses).then(states => Promise.resolve({ states, inviter }));
+    return inviter.invite(addresses, undefined, sendSharedHistoryKeys)
+        .then(states => Promise.resolve({ states, inviter }));
 }
 
 export function showStartChatInviteDialog(initialText = ""): void {
