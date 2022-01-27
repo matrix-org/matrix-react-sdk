@@ -21,14 +21,12 @@ import '../../../skinned-sdk';
 import { act } from "react-dom/test-utils";
 import { Room } from 'matrix-js-sdk';
 
-import ExportDialog,
-{ getSafeForceRoomExportParameters, ForceRoomExportParameters }
-    from '../../../../src/components/views/dialogs/ExportDialog';
+import ExportDialog from '../../../../src/components/views/dialogs/ExportDialog';
 import { ExportType, ExportFormat } from '../../../../src/utils/exportUtils/exportUtils';
 import { createTestClient, mkStubRoom } from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import HTMLExporter from "../../../../src/utils/exportUtils/HtmlExport";
-import SettingsStore from '../../../../src/settings/SettingsStore';
+import ChatExport from '../../../../src/customisations/ChatExport';
 import PlainTextExporter from '../../../../src/utils/exportUtils/PlainTextExport';
 
 jest.useFakeTimers();
@@ -42,12 +40,11 @@ const plainTextExporterInstance = ({
 jest.mock("../../../../src/utils/exportUtils/HtmlExport", () => jest.fn());
 jest.mock("../../../../src/utils/exportUtils/PlainTextExport", () => jest.fn());
 
-jest.mock('../../../../src/settings/SettingsStore', () => ({
-    monitorSetting: jest.fn(),
-    getValue: jest.fn(),
+jest.mock('../../../../src/customisations/ChatExport', () => ({
+    getForceChatExportParameters: jest.fn().mockReturnValue({}),
 }));
 
-const SettingsStoreMock = mocked(SettingsStore);
+const ChatExportMock = mocked(ChatExport);
 const HTMLExporterMock = mocked(HTMLExporter);
 const PlainTextExporterMock = mocked(PlainTextExporter);
 
@@ -105,7 +102,7 @@ describe('<ExportDialog />', () => {
         plainTextExporterInstance.export.mockClear();
 
         // default setting value
-        SettingsStoreMock.getValue.mockClear().mockReturnValue({});
+        ChatExportMock.getForceChatExportParameters.mockClear().mockReturnValue({});
     });
 
     it('renders export dialog', () => {
@@ -141,12 +138,12 @@ describe('<ExportDialog />', () => {
     });
 
     it('exports room using values set from ForceRoomExportParameters', async () => {
-        SettingsStoreMock.getValue.mockReturnValue({
+        ChatExportMock.getForceChatExportParameters.mockReturnValue({
             format: ExportFormat.PlainText,
             range: ExportType.Beginning,
             sizeMb: 15000,
             numberOfMessages: 30,
-            attachmentsIncluded: true,
+            includeAttachments: true,
         });
         const component = getComponent();
         await submitForm(component);
@@ -157,7 +154,7 @@ describe('<ExportDialog />', () => {
             defaultProps.room,
             ExportType.Beginning,
             {
-                attachmentsIncluded: false,
+                attachmentsIncluded: true,
                 maxSize: 15000 * 1024 * 1024,
                 numberOfMessages: 30,
             },
@@ -194,7 +191,7 @@ describe('<ExportDialog />', () => {
         });
 
         it('does not render export format when set in ForceRoomExportParameters', () => {
-            SettingsStoreMock.getValue.mockReturnValue({
+            ChatExportMock.getForceChatExportParameters.mockReturnValue({
                 format: ExportFormat.PlainText,
             });
             const component = getComponent();
@@ -215,7 +212,7 @@ describe('<ExportDialog />', () => {
         });
 
         it('does not render export type when set in ForceRoomExportParameters', () => {
-            SettingsStoreMock.getValue.mockReturnValue({
+            ChatExportMock.getForceChatExportParameters.mockReturnValue({
                 range: ExportType.Beginning,
             });
             const component = getComponent();
@@ -306,7 +303,7 @@ describe('<ExportDialog />', () => {
         });
 
         it('does not render size limit input when set in ForceRoomExportParameters', () => {
-            SettingsStoreMock.getValue.mockReturnValue({
+            ChatExportMock.getForceChatExportParameters.mockReturnValue({
                 sizeMb: 10000,
             });
             const component = getComponent();
@@ -317,7 +314,7 @@ describe('<ExportDialog />', () => {
          * 2000mb size limit does not apply when higher limit is configured in config
          */
         it('exports when size limit set in ForceRoomExportParameters is larger than 2000', async () => {
-            SettingsStoreMock.getValue.mockReturnValue({
+            ChatExportMock.getForceChatExportParameters.mockReturnValue({
                 sizeMb: 10000,
             });
             const component = getComponent();
@@ -340,40 +337,11 @@ describe('<ExportDialog />', () => {
         });
 
         it('does not render input when set in ForceRoomExportParameters', () => {
-            SettingsStoreMock.getValue.mockReturnValue({
+            ChatExportMock.getForceChatExportParameters.mockReturnValue({
                 includeAttachments: false,
             });
             const component = getComponent();
             expect(getAttachmentsCheckbox(component).length).toBeFalsy();
-        });
-    });
-
-    describe('getSafeForceRoomExportParameters()', () => {
-        const testCases: [string, ForceRoomExportParameters, ForceRoomExportParameters][] = [
-            ['setting is falsy', undefined, {}],
-            ['setting is configured to string', 'test' as unknown, {}],
-            ['setting is empty', {}, {}],
-            ['format is not a valid ExportFormat', { format: 'mp3' }, {}],
-            ['format is a valid ExportFormat', { format: ExportFormat.Html }, { format: ExportFormat.Html }],
-            ['range is not a valid ExportType', { range: 'yesterday' }, {}],
-            ['range is a valid ExportType', { range: ExportType.LastNMessages }, { range: ExportType.LastNMessages }],
-            ['numberOfMessages is not a number', { numberOfMessages: 'test' }, {}],
-            ['numberOfMessages is less than 1', { numberOfMessages: -1 }, {}],
-            ['numberOfMessages is more than 100000000', { numberOfMessages: 9999999999 }, {}],
-            ['numberOfMessages is valid', { numberOfMessages: 2000 }, { numberOfMessages: 2000 }],
-            ['sizeMb is not a number', { sizeMb: 'test' }, {}],
-            ['sizeMb is less than 1', { sizeMb: -1 }, {}],
-            ['sizeMb is more than 100000', { sizeMb: Number.MAX_SAFE_INTEGER }, {}],
-            ['sizeMb is valid', { sizeMb: 50000 }, { sizeMb: 50000 }],
-            ['includeAttachments is not a boolean', { includeAttachments: 'yes' }, {}],
-            ['includeAttachments is true', { includeAttachments: true }, { includeAttachments: true }],
-            ['includeAttachments is false', { includeAttachments: false }, { includeAttachments: false }],
-        ];
-
-        it.each(testCases)('sanitizes correctly when %s', (_d, setting, expected) => {
-            SettingsStoreMock.getValue.mockReturnValue(setting);
-
-            expect(getSafeForceRoomExportParameters()).toEqual(expected);
         });
     });
 });

@@ -883,10 +883,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new ReloadOnChangeController(),
     },
-    "forceRoomExportParameters": {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: {},
-    },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,

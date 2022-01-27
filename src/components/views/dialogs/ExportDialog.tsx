@@ -39,40 +39,15 @@ import { useStateCallback } from "../../../hooks/useStateCallback";
 import Exporter from "../../../utils/exportUtils/Exporter";
 import Spinner from "../elements/Spinner";
 import InfoDialog from "./InfoDialog";
-import SettingsStore from "../../../settings/SettingsStore";
+import ChatExport from "../../../customisations/ChatExport";
 
 interface IProps extends IDialogProps {
     room: Room;
 }
-const isExportFormat = (config?: string): config is ExportFormat =>
-    config && Object.values(ExportFormat).includes(config as ExportFormat);
-
-const isExportType = (config?: string): config is ExportType =>
-    config && Object.values(ExportType).includes(config as ExportType);
 
 const validateNumberInRange = (min: number, max: number) => (value?: string | number) => {
     const parsedSize = parseInt(value as string, 10);
     return !(isNaN(parsedSize) || min > parsedSize || parsedSize > max);
-};
-
-// Sanitize setting values, exclude invalid or missing values
-export type ForceRoomExportParameters = {
-    format?: ExportFormat; range?: ExportType; numberOfMessages?: number; includeAttachments?: boolean; sizeMb?: number;
-};
-export const getSafeForceRoomExportParameters = (): ForceRoomExportParameters => {
-    const config = SettingsStore.getValue<ForceRoomExportParameters>("forceRoomExportParameters");
-    if (!config || typeof config !== "object") return {};
-
-    const { format, range, numberOfMessages, includeAttachments, sizeMb } = config;
-
-    return {
-        ...(isExportFormat(format) && { format }),
-        ...(isExportType(range) && { range }),
-        ...(validateNumberInRange(1, 10 ** 8)(numberOfMessages) && { numberOfMessages }),
-        // ~100GB limit
-        ...(validateNumberInRange(1, 100000)(sizeMb) && { sizeMb }),
-        ...(typeof includeAttachments === 'boolean' && { includeAttachments }),
-    };
 };
 
 interface ExportConfig {
@@ -94,7 +69,7 @@ interface ExportConfig {
  * Only return change handlers for editable values
  */
 const useExportFormState = (): ExportConfig => {
-    const config = getSafeForceRoomExportParameters();
+    const config = ChatExport.getForceChatExportParameters();
 
     const [exportFormat, setExportFormat] = useState(config.format || ExportFormat.Html);
     const [exportType, setExportType] = useState(config.range || ExportType.Timeline);
