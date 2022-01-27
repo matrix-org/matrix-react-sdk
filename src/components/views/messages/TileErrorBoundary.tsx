@@ -88,7 +88,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                 </AccessibleButton>;
             }
 
-            return (<div className={classNames(classes)}>
+            return (<li className={classNames(classes)}>
                 <div className="mx_EventTile_line">
                     <span>
                         { _t("Can't load this message") }
@@ -97,7 +97,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                         { viewSourceButton }
                     </span>
                 </div>
-            </div>);
+            </li>);
         }
 
         return this.props.children;
