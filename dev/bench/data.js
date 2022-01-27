@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643277476468,
+  "lastUpdate": 1643282190100,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59912,6 +59912,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4200.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f2249b3e375e4218e0ce2f0f786824d4a3302626",
+          "message": "Fix CallEventGrouper map building to not occur during a Render phase (#7638)",
+          "timestamp": "2022-01-27T11:08:28Z",
+          "tree_id": "9761756212f9d9d8bcd0e93d8ed8c0fb5f5a554f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f2249b3e375e4218e0ce2f0f786824d4a3302626"
+        },
+        "date": 1643282183343,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5111.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1160.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1730.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5014.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
