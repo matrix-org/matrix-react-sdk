@@ -53,9 +53,9 @@ interface IState {
 class LocationPicker extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
-    private map?: maplibregl.Map;
-    private geolocate?: maplibregl.GeolocateControl;
-    private marker?: maplibregl.Marker;
+    private map?: maplibregl.Map= null;
+    private geolocate?: maplibregl.GeolocateControl = null;
+    private marker?: maplibregl.Marker = null;
 
     constructor(props: IProps) {
         super(props);
@@ -64,9 +64,6 @@ class LocationPicker extends React.Component<IProps, IState> {
             position: undefined,
             error: undefined,
         };
-        this.map = null;
-        this.geolocate = null;
-        this.marker = null;
     }
 
     private getMarkerId = () => {

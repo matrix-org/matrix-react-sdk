@@ -50,7 +50,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     private coords: GeolocationCoordinates;
     private bodyId: string;
     private markerId: string;
-    private map?: maplibregl.Map;
+    private map?: maplibregl.Map = null;
 
     constructor(props: IBodyProps) {
         super(props);
@@ -60,7 +60,6 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         this.bodyId = `mx_MLocationBody_${idSuffix}`;
         this.markerId = `mx_MLocationBody_marker_${idSuffix}`;
         this.coords = parseGeoUri(locationEventGeoUri(this.props.mxEvent));
-        this.map = null;
 
         this.state = {
             error: undefined,
