@@ -52,6 +52,7 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
 import { getEventDisplayInfo } from "../../utils/EventUtils";
+import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -72,7 +73,7 @@ export function shouldFormContinuation(
 ): boolean {
     if (timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
     // sanity check inputs
-    if (!prevEvent || !prevEvent.sender || !mxEvent.sender) return false;
+    if (!prevEvent?.sender || !mxEvent.sender) return false;
     // check if within the max continuation period
     if (mxEvent.getTs() - prevEvent.getTs() > CONTINUATION_MAX_INTERVAL) return false;
 
@@ -208,7 +209,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // opaque readreceipt info for each userId; used by ReadReceiptMarker
     // to manage its animations
-    private readonly readReceiptMap: Record<string, object> = {};
+    private readonly readReceiptMap: { [userId: string]: IReadReceiptInfo } = {};
 
     // Track read receipts by event ID. For each _shown_ event ID, we store
     // the list of read receipts to display:
@@ -462,17 +463,17 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return !this.isMounted;
     };
 
-    private get showHiddenEvents(): boolean {
+    public get showHiddenEvents(): boolean {
         return this.context?.showHiddenEventsInTimeline ?? this.showHiddenEventsInTimeline;
     }
 
     // TODO: Implement granular (per-room) hide options
-    public shouldShowEvent(mxEv: MatrixEvent): boolean {
+    public shouldShowEvent(mxEv: MatrixEvent, forceHideEvents = false): boolean {
         if (MatrixClientPeg.get().isUserIgnored(mxEv.getSender())) {
             return false; // ignored = no show (only happens if the ignore happens after an event was received)
         }
 
-        if (this.showHiddenEvents) {
+        if (this.showHiddenEvents && !forceHideEvents) {
             return true;
         }
 
@@ -1403,5 +1404,91 @@ class MemberGrouper extends BaseGrouper {
     }
 }
 
+// Wrap consecutive hidden events in a ListSummary, ignore if redacted
+class HiddenEventGrouper extends BaseGrouper {
+    static canStartGroup = function(panel: MessagePanel, ev: MatrixEvent): boolean {
+        return !panel.shouldShowEvent(ev, true) && panel.showHiddenEvents;
+    };
+
+    constructor(
+        public readonly panel: MessagePanel,
+        public readonly event: MatrixEvent,
+        public readonly prevEvent: MatrixEvent,
+        public readonly lastShownEvent: MatrixEvent,
+        protected readonly layout: Layout,
+    ) {
+        super(panel, event, prevEvent, lastShownEvent, layout);
+        this.events = [event];
+    }
+
+    public shouldGroup(ev: MatrixEvent): boolean {
+        if (this.panel.wantsDateSeparator(this.events[0], ev.getDate())) {
+            return false;
+        }
+        return !this.panel.shouldShowEvent(ev, true);
+    }
+
+    public add(ev: MatrixEvent, showHiddenEvents?: boolean): void {
+        this.readMarker = this.readMarker || this.panel.readMarkerForEvent(ev.getId(), ev === this.lastShownEvent);
+        this.events.push(ev);
+    }
+
+    public getTiles(): ReactNode[] {
+        if (!this.events || !this.events.length) return [];
+
+        const isGrouped = true;
+        const panel = this.panel;
+        const ret = [];
+        const lastShownEvent = this.lastShownEvent;
+
+        if (panel.wantsDateSeparator(this.prevEvent, this.events[0].getDate())) {
+            const ts = this.events[0].getTs();
+            ret.push(
+                <li key={ts+'~'}><DateSeparator key={ts+'~'} ts={ts} /></li>,
+            );
+        }
+
+        const key = "hiddeneventlistsummary-" + (
+            this.prevEvent ? this.events[0].getId() : "initial"
+        );
+
+        const senders = new Set<RoomMember>();
+        let eventTiles = this.events.map((e, i) => {
+            senders.add(e.sender);
+            const prevEvent = i === 0 ? this.prevEvent : this.events[i - 1];
+            return panel.getTilesForEvent(
+                prevEvent, e, e === lastShownEvent, isGrouped, this.nextEvent, this.nextEventTile);
+        }).reduce((a, b) => a.concat(b), []);
+
+        if (eventTiles.length === 0) {
+            eventTiles = null;
+        }
+
+        ret.push(
+            <EventListSummary
+                key={key}
+                threshold={2}
+                events={this.events}
+                onToggle={panel.onHeightChanged} // Update scroll state
+                summaryMembers={Array.from(senders)}
+                summaryText={_t("%(count)s hidden messages.", { count: eventTiles.length })}
+                layout={this.layout}
+            >
+                { eventTiles }
+            </EventListSummary>,
+        );
+
+        if (this.readMarker) {
+            ret.push(this.readMarker);
+        }
+
+        return ret;
+    }
+
+    public getNewPrevEvent(): MatrixEvent {
+        return this.events[this.events.length - 1];
+    }
+}
+
 // all the grouper classes that we use
-const groupers = [CreationGrouper, MemberGrouper, RedactionGrouper];
+const groupers = [CreationGrouper, MemberGrouper, RedactionGrouper, HiddenEventGrouper];
