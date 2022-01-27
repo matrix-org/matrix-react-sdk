@@ -190,6 +190,9 @@ $irc-line-height: $font-18px;
 
         > .mx_SenderProfile_mxid {
             visibility: collapse;
+            // Override the inherited margin.
+            margin-left: 0;
+            padding: 0 5px;
         }
     }
 
@@ -207,6 +210,8 @@ $irc-line-height: $font-18px;
 
         > .mx_SenderProfile_mxid {
             visibility: visible;
+            opacity: 1;
+            background-color: $event-selected-color;
         }
     }
 
