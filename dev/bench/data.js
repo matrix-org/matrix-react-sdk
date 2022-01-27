@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643303726583,
+  "lastUpdate": 1643323161765,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60164,6 +60164,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 699.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7fa27f583490a4a9bf0b5469fef6143bc5f5bc06",
+          "message": "Add jump to date functionality to date headers in timeline v2 (#7339)\n\nFix https://github.com/vector-im/element-web/issues/7677\r\n\r\nUtilizes MSC3030: https://github.com/matrix-org/matrix-doc/pull/3030\r\n\r\nhttps://user-images.githubusercontent.com/558581/150060664-79627573-f4fd-497c-b726-dc3485854bd0.png",
+          "timestamp": "2022-01-27T16:32:12-06:00",
+          "tree_id": "76ba252488638ee041f26dafdb2229d9500a1733",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7fa27f583490a4a9bf0b5469fef6143bc5f5bc06"
+        },
+        "date": 1643323156587,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5396.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1071.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1658.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4476.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
