@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643274141134,
+  "lastUpdate": 1643276628072,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59780,6 +59780,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4499,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3ff4c6808fc6ddd0c28aeac63eccde1268230e09",
+          "message": "Fix space panel edge gradient not applying on load (#7644)",
+          "timestamp": "2022-01-27T09:36:58Z",
+          "tree_id": "8d4d915c0abc511ebdb0a66a4d63687f0ee4b35f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3ff4c6808fc6ddd0c28aeac63eccde1268230e09"
+        },
+        "date": 1643276622730,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4650.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 599.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
