@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643302039275,
+  "lastUpdate": 1643303726583,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60128,6 +60128,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4431.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "efa1667d7e9de9e429a72396a5105d0219006db2",
+          "message": "Remove Unpin option from maximised widget context menu (#7657)",
+          "timestamp": "2022-01-27T17:08:09Z",
+          "tree_id": "9288ec197e3d185fa54ae11401bd84bbc6a09c1e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/efa1667d7e9de9e429a72396a5105d0219006db2"
+        },
+        "date": 1643303720789,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5142.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 699.7999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
