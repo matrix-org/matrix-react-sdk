@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643302036722,
+  "lastUpdate": 1643302039275,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60080,6 +60080,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 656.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "51446378e3df2b797746e13e59b1a928d40225f9",
+          "message": "Tweak spotlight roving behaviour to reset when changing query (#7656)",
+          "timestamp": "2022-01-27T16:40:22Z",
+          "tree_id": "cf09e835403f8c76ed2e3129d0720bec1247d87d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/51446378e3df2b797746e13e59b1a928d40225f9"
+        },
+        "date": 1643302030453,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5096.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 912.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1787.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4431.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
