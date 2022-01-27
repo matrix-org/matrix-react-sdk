@@ -53,7 +53,7 @@ interface IState {
 class LocationPicker extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
-    private map?: maplibregl.Map= null;
+    private map?: maplibregl.Map = null;
     private geolocate?: maplibregl.GeolocateControl = null;
     private marker?: maplibregl.Marker = null;
 
