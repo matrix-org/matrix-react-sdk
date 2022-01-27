@@ -70,8 +70,8 @@ export const getSafeForceRoomExportParameters = (): ForceRoomExportParameters =>
         ...(isExportFormat(format) && { format }),
         ...(isExportType(range) && { range }),
         ...(validateNumberInRange(1, 10 ** 8)(numberOfMessages) && { numberOfMessages }),
-        // 100GB limit
-        ...(validateNumberInRange(1, 1024000)(sizeMb) && { sizeMb }),
+        // ~100GB limit
+        ...(validateNumberInRange(1, 100000)(sizeMb) && { sizeMb }),
         ...(typeof includeAttachments === 'boolean' && { includeAttachments }),
     };
 };

@@ -200,9 +200,9 @@ describe('export', function() {
             maxSize: 1024 * 1024 * 1024,
             attachmentsIncluded: false,
         }],
-        ['maxSize exceeds 1000GB', {
+        ['maxSize exceeds 100GB', {
             numberOfMessages: -1,
-            maxSize: 1024001 * 1024 * 1024,
+            maxSize: 100001 * 1024 * 1024,
             attachmentsIncluded: false,
         }],
         ['maxSize is less than 1mb', {

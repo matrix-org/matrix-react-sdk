@@ -48,7 +48,7 @@ export default abstract class Exporter {
         protected setProgressText: React.Dispatch<React.SetStateAction<string>>,
     ) {
         if (exportOptions.maxSize < 1 * 1024 * 1024|| // Less than 1 MB
-            exportOptions.maxSize > 1024000 * 1024 * 1024 || // More than 1000 GB
+            exportOptions.maxSize > 100000 * 1024 * 1024 || // More than 100 GB
             exportOptions.numberOfMessages > 10**8
         ) {
             throw new Error("Invalid export options");

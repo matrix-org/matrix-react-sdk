@@ -363,7 +363,7 @@ describe('<ExportDialog />', () => {
             ['numberOfMessages is valid', { numberOfMessages: 2000 }, { numberOfMessages: 2000 }],
             ['sizeMb is not a number', { sizeMb: 'test' }, {}],
             ['sizeMb is less than 1', { sizeMb: -1 }, {}],
-            ['sizeMb is more than 1024000', { sizeMb: Number.MAX_SAFE_INTEGER }, {}],
+            ['sizeMb is more than 100000', { sizeMb: Number.MAX_SAFE_INTEGER }, {}],
             ['sizeMb is valid', { sizeMb: 50000 }, { sizeMb: 50000 }],
             ['includeAttachments is not a boolean', { includeAttachments: 'yes' }, {}],
             ['includeAttachments is true', { includeAttachments: true }, { includeAttachments: true }],
