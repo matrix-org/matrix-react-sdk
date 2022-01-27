@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643283872869,
+  "lastUpdate": 1643290907948,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59996,6 +59996,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 625.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "074fec359b9f34947a70e710d3431d79135aad37",
+          "message": "Fix issue with tile error boundaries collapsing in bubbles layout (#7653)",
+          "timestamp": "2022-01-27T13:34:26Z",
+          "tree_id": "bf3a9b71a66660a9b0dc03fdedd6999d1c8c3180",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/074fec359b9f34947a70e710d3431d79135aad37"
+        },
+        "date": 1643290902002,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5873.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1108.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1698.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4922.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
