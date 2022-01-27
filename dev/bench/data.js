@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643277228511,
+  "lastUpdate": 1643277476468,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -59864,6 +59864,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5103.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ae490841c6720c5257408a36bfd4816d1d0cfad0",
+          "message": "Look up tile server info in homeserver's .well-known area (#7623)",
+          "timestamp": "2022-01-27T09:51:06Z",
+          "tree_id": "18510e2e39a2a88ed233b6c6e66df735c82a4db2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ae490841c6720c5257408a36bfd4816d1d0cfad0"
+        },
+        "date": 1643277470336,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4717,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 890.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1595.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4200.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
