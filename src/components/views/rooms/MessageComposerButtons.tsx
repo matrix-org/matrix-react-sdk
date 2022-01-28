@@ -71,7 +71,11 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     );
     uploadButtonIndex = buttons.length;
     buttons.push(
-        <UploadButton key="controls_upload" roomId={roomId} relation={props.relation} />,
+        <UploadButton
+            key="controls_upload"
+            roomId={roomId}
+            relation={props.relation}
+        />,
     );
     if (props.showLocationButton) {
         const sender = room.getMember(matrixClient.getUserId());
@@ -86,12 +90,21 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         );
     }
     buttons.push(
-        <EmojiButton key="emoji_button" addEmoji={props.addEmoji} menuPosition={props.menuPosition} narrowMode={props.narrowMode} />,
+        <EmojiButton
+            key="emoji_button"
+            addEmoji={props.addEmoji}
+            menuPosition={props.menuPosition}
+            narrowMode={props.narrowMode}
+        />,
     );
     if (props.showStickersButton) {
         let title: string;
         if (!props.narrowMode) {
-            title = props.isStickerPickerOpen ? _t("Hide Stickers") : _t("Show Stickers");
+            title = (
+                props.isStickerPickerOpen
+                    ? _t("Hide Stickers")
+                    : _t("Show Stickers")
+            );
         }
 
         buttons.push(
@@ -106,7 +119,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         );
     }
 
-    // XXX: the recording UI does not work well in narrow mode, so we hide this button for now
+    // XXX: recording UI does not work well in narrow mode, so hide this button for now
     if (!props.narrowMode) {
         buttons.push(
             <CollapsibleButton
@@ -129,7 +142,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
     });
 
-    // we render the uploadButton at top level as it is a very common interaction, splice it out of the rest
+    // Splice out upload button to make it always visible because it is most popular
     const [uploadButton] = buttons.splice(uploadButtonIndex, 1);
     return <>
         { uploadButton }
@@ -146,7 +159,11 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                 wrapperClassName="mx_MessageComposer_Menu"
             >
                 { buttons.map((button, index) => (
-                    <MenuItem className="mx_CallContextMenu_item" key={index} onClick={props.toggleButtonMenu}>
+                    <MenuItem
+                        className="mx_CallContextMenu_item"
+                        key={index}
+                        onClick={props.toggleButtonMenu}
+                    >
                         { button }
                     </MenuItem>
                 )) }
@@ -160,13 +177,22 @@ interface IEmojiButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> 
     menuPosition: AboveLeftOf;
 }
 
-const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narrowMode }) => {
+const EmojiButton: React.FC<IEmojiButtonProps> = (
+    { addEmoji, menuPosition, narrowMode },
+) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu: React.ReactElement | null = null;
     if (menuDisplayed) {
-        const position = menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect());
-        contextMenu = <ContextMenu {...position} onFinished={closeMenu} managed={false}>
+        const position = (
+            menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
+        );
+
+        contextMenu = <ContextMenu
+            {...position}
+            onFinished={closeMenu}
+            managed={false}
+        >
             <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
         </ContextMenu>;
     }
@@ -281,10 +307,17 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
             MatrixClientPeg.get().getUserId(),
         );
         if (!canSend) {
-            Modal.createTrackedDialog('Polls', 'permissions error: cannot start', ErrorDialog, {
-                title: _t("Permission Required"),
-                description: _t("You do not have permission to start polls in this room."),
-            });
+            Modal.createTrackedDialog(
+                'Polls',
+                'permissions error: cannot start',
+                ErrorDialog,
+                {
+                    title: _t("Permission Required"),
+                    description: _t(
+                        "You do not have permission to start polls in this room.",
+                    ),
+                },
+            );
         } else {
             Modal.createTrackedDialog(
                 'Polls',
