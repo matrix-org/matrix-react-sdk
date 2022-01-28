@@ -155,7 +155,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         }
     }
 
-    public componentDidUpdate(_prevProps: IProps, _prevState: IState): void {
+    public componentDidUpdate(): void {
         this.sendVisibilityToWidget(this.props.stickersVisible);
     }
 
