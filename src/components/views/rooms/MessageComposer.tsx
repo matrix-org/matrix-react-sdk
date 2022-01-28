@@ -453,7 +453,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             menuPosition={menuPosition}
                             narrowMode={this.state.narrowMode}
                             relation={this.props.relation}
-                            room={this.props.room}
                             onRecordStartEndClick={() => this.voiceRecordingButton.current?.onRecordStartEndClick()}
                             setStickerPickerOpen={this.setStickerPickerOpen}
                             showLocationButton={this.state.showLocationButton}

@@ -19,6 +19,7 @@ import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
 import React, { useContext } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -34,6 +35,7 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { ActionPayload } from '../../../dispatcher/payloads';
 import ContentMessages from '../../../ContentMessages';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import RoomContext from '../../../contexts/RoomContext';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -44,7 +46,6 @@ interface IProps {
     narrowMode?: boolean;
     onRecordStartEndClick: () => void;
     relation?: IEventRelation;
-    room: Room;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
     showLocationButton: boolean;
     showStickersButton: boolean;
@@ -52,7 +53,8 @@ interface IProps {
 }
 
 const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
-    const matrixClient = useContext(MatrixClientContext);
+    const matrixClient: MatrixClient = useContext(MatrixClientContext);
+    const { room, roomId } = useContext(RoomContext);
 
     if (props.haveRecording) {
         return null;
@@ -63,20 +65,20 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     buttons.push(
         <PollButton
             key="polls"
-            room={props.room}
+            room={room}
             narrowMode={props.narrowMode}
         />,
     );
     uploadButtonIndex = buttons.length;
     buttons.push(
-        <UploadButton key="controls_upload" roomId={props.room.roomId} relation={props.relation} />,
+        <UploadButton key="controls_upload" roomId={roomId} relation={props.relation} />,
     );
     if (props.showLocationButton) {
-        const sender = props.room.getMember(matrixClient.getUserId());
+        const sender = room.getMember(matrixClient.getUserId());
         buttons.push(
             <LocationButton
                 key="location"
-                roomId={props.room.roomId}
+                roomId={roomId}
                 sender={sender}
                 menuPosition={props.menuPosition}
                 narrowMode={props.narrowMode}
