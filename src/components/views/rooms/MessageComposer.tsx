@@ -499,7 +499,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
     };
 
-    private showStickers = (stickersVisible: boolean) => {
+    private setStickersVisible = (stickersVisible: boolean) => {
         this.setState({ stickersVisible });
     };
 
@@ -555,7 +555,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     id='stickersButton'
                     key="controls_stickers"
                     className="mx_MessageComposer_button mx_MessageComposer_stickers"
-                    onClick={() => this.showStickers(!this.state.stickersVisible)}
+                    onClick={() => this.setStickersVisible(!this.state.stickersVisible)}
                     title={title}
                     label={this.state.narrowMode ? _t("Send a sticker") : null}
                 />,
@@ -693,7 +693,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 room={this.props.room}
                 threadId={threadId}
                 stickersVisible={this.state.stickersVisible}
-                setShowStickers={this.showStickers}
+                setStickersVisible={this.setStickersVisible}
                 menuPosition={menuPosition}
                 key="stickers"
             />,

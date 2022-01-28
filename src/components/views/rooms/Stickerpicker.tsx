@@ -50,7 +50,7 @@ interface IProps {
     threadId?: string | null;
     stickersVisible: boolean;
     menuPosition?: any;
-    setShowStickers: (stickersVisible: boolean) => void;
+    setStickersVisible: (stickersVisible: boolean) => void;
 }
 
 interface IState {
@@ -113,7 +113,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
             if (scalarClient) {
                 scalarClient.disableWidgetAssets(WidgetType.STICKERPICKER, this.state.widgetId).then(() => {
                     logger.log('Assets disabled');
-                }).catch((err) => {
+                }).catch((_err) => {
                     logger.error('Failed to disable assets');
                 });
             } else {
@@ -123,7 +123,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
             logger.warn('No widget ID specified, not disabling assets');
         }
 
-        this.props.setShowStickers(false);
+        this.props.setStickersVisible(false);
         WidgetUtils.removeStickerpickerWidgets().then(() => {
             this.forceUpdate();
         }).catch((e) => {
@@ -155,7 +155,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         }
     }
 
-    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
+    public componentDidUpdate(_prevProps: IProps, _prevState: IState): void {
         this.sendVisibilityToWidget(this.props.stickersVisible);
     }
 
@@ -164,7 +164,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         this.setState({
             imError: _t(errorMsg),
         });
-        this.props.setShowStickers(false);
+        this.props.setStickersVisible(false);
     }
 
     private updateWidget = (): void => {
@@ -204,17 +204,17 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                 this.forceUpdate();
                 break;
             case "stickerpicker_close":
-                this.props.setShowStickers(false);
+                this.props.setStickersVisible(false);
                 break;
             case "show_left_panel":
             case "hide_left_panel":
-                this.props.setShowStickers(false);
+                this.props.setStickersVisible(false);
                 break;
         }
     };
 
     private onRightPanelStoreUpdate = () => {
-        this.props.setShowStickers(false);
+        this.props.setStickersVisible(false);
     };
 
     private defaultStickerpickerContent(): JSX.Element {
@@ -355,7 +355,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
         const y = (buttonRect.top + (buttonRect.height / 2) + window.pageYOffset) - 19;
 
-        this.props.setShowStickers(true);
+        this.props.setStickersVisible(true);
         this.setState({
             stickerpickerX: x,
             stickerpickerY: y,
@@ -368,7 +368,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
      */
     private onResize = (): void => {
         if (this.props.stickersVisible) {
-            this.props.setShowStickers(false);
+            this.props.setStickersVisible(false);
         }
     };
 
@@ -377,7 +377,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
      */
     private onFinished = (): void => {
         if (this.props.stickersVisible) {
-            this.props.setShowStickers(false);
+            this.props.setStickersVisible(false);
         }
     };
 
