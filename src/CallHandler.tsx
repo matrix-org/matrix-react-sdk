@@ -55,6 +55,7 @@ import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
 import Resend from './Resend';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -879,9 +880,10 @@ export default class CallHandler extends EventEmitter {
         call.answer();
         this.setActiveCallRoomId(roomId);
         CountlyAnalytics.instance.trackJoinCall(roomId, call.type === CallType.Video, false);
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
+            _trigger: "WebAcceptCall",
         });
     }
 
@@ -916,9 +918,10 @@ export default class CallHandler extends EventEmitter {
 
         const roomId = await ensureDMExists(MatrixClientPeg.get(), nativeUserId);
 
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
+            _trigger: "WebDialPad",
         });
 
         await this.placeMatrixCall(roomId, CallType.Voice, null);
@@ -946,11 +949,12 @@ export default class CallHandler extends EventEmitter {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
 
             this.placeCall(dmRoomId, call.type, call);
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: dmRoomId,
                 should_peek: false,
                 joining: false,
+                _trigger: undefined, // other
             });
         } else {
             try {

@@ -73,6 +73,7 @@ import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import CallHandler from "../../../CallHandler";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -679,11 +680,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
         }
         if (existingRoom) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: existingRoom.roomId,
                 should_peek: false,
                 joining: false,
+                _trigger: "MessageUser",
             });
             this.props.onFinished();
             return;

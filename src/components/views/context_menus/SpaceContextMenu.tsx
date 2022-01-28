@@ -36,6 +36,7 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { BetaPill } from "../beta/BetaCard";
 import SettingsStore from "../../../settings/SettingsStore";
 import { Action } from "../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps extends IContextMenuProps {
     space: Room;
@@ -109,10 +110,11 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             ev.preventDefault();
             ev.stopPropagation();
 
-            defaultDispatcher.dispatch({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: space.roomId,
                 forceTimeline: true,
+                _trigger: undefined, // room doesn't change
             });
             onFinished();
         };
@@ -177,9 +179,10 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
         ev.preventDefault();
         ev.stopPropagation();
 
-        defaultDispatcher.dispatch({
+        defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: space.roomId,
+            _trigger: undefined, // other
         });
         onFinished();
     };

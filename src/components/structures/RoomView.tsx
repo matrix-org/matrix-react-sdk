@@ -100,6 +100,7 @@ import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
 import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
 import { ActionPayload } from "../../dispatcher/payloads";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -766,12 +767,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onUserScroll = () => {
         if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
                 event_id: this.state.initialEventId,
                 highlighted: false,
                 replyingToEvent: this.state.replyToEvent,
+                _trigger: undefined, // room doesn't change
             });
         }
     };
@@ -870,10 +872,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     }
 
                     setImmediate(() => {
-                        dis.dispatch({
+                        dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: roomId,
                             deferred_action: payload,
+                            _trigger: "MessageSearch",
                         });
                     });
                 }
@@ -1170,9 +1173,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         if (ev.getType() === EventType.RoomCanonicalAlias) {
             // re-view the room so MatrixChat can manage the alias in the URL properly
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
+                _trigger: undefined, // room doesn't change
             });
             return; // this event cannot affect permissions so bail
         }
@@ -1642,9 +1646,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // If we were viewing a highlighted event, firing view_room without
             // an event will take care of both clearing the URL fragment and
             // jumping to the bottom
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
+                _trigger: undefined, // room doesn't change
             });
         } else {
             // Otherwise we have to jump manually
@@ -1777,9 +1782,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     onHiddenHighlightsClick = () => {
         const oldRoom = this.getOldRoom();
         if (!oldRoom) return;
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: oldRoom.roomId,
+            _trigger: "Predecessor",
         });
     };
 

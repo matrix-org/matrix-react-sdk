@@ -78,6 +78,7 @@ import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 export interface IDevice {
     deviceId: string;
@@ -122,13 +123,15 @@ export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice
     return anyDeviceUnverified ? E2EStatus.Warning : E2EStatus.Verified;
 };
 
-async function openDMForUser(matrixClient: MatrixClient, userId: string): Promise<void> {
+async function openDMForUser(matrixClient: MatrixClient, userId: string, viaKeyboard = false): Promise<void> {
     const lastActiveRoom = findDMForUser(matrixClient, userId);
 
     if (lastActiveRoom) {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: lastActiveRoom.roomId,
+            _trigger: "MessageUser",
+            _viaKeyboard: viaKeyboard,
         });
         return;
     }
@@ -326,10 +329,10 @@ const MessageButton = ({ userId }: { userId: string }) => {
 
     return (
         <AccessibleButton
-            onClick={async () => {
+            onClick={async (ev) => {
                 if (busy) return;
                 setBusy(true);
-                await openDMForUser(cli, userId);
+                await openDMForUser(cli, userId, ev.type !== "click");
                 setBusy(false);
             }}
             className="mx_UserInfo_field"
@@ -388,11 +391,12 @@ const UserOptionsSection: React.FC<{
         if (member.roomId && !isSpace) {
             const onReadReceiptButton = function() {
                 const room = cli.getRoom(member.roomId);
-                dis.dispatch({
+                dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     highlighted: true,
                     event_id: room.getEventReadUpTo(member.userId),
                     room_id: member.roomId,
+                    _trigger: undefined, // room doesn't change
                 });
             };
 

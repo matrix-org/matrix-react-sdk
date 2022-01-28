@@ -59,6 +59,7 @@ import PollCreateDialog from "../elements/PollCreateDialog";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import { CollapsibleButton, ICollapsibleButtonProps } from './CollapsibleButton';
 import LocationButton from '../location/LocationButton';
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -415,21 +416,17 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
             event_id: createEventId,
             room_id: replacementRoomId,
             auto_join: true,
-            _type: "tombstone", // instrumentation
-
             // Try to join via the server that sent the event. This converts @something:example.org
             // into a server domain by splitting on colons and ignoring the first entry ("@something").
             via_servers: viaServers,
-            opts: {
-                // These are passed down to the js-sdk's /join call
-                viaServers: viaServers,
-            },
+            _trigger: "Tombstone",
+            _viaKeyboard: ev.type !== "click",
         });
     };
 

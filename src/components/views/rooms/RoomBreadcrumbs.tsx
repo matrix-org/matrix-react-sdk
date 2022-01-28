@@ -28,6 +28,7 @@ import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabI
 import Toolbar from "../../../accessibility/Toolbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Action } from "../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
 }
@@ -77,11 +78,13 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
         setTimeout(() => this.setState({ doAnimation: true, skipFirst: false }), 0);
     };
 
-    private viewRoom = (room: Room, index: number) => {
+    private viewRoom = (room: Room, index: number, viaKeyboard = false) => {
         Analytics.trackEvent("Breadcrumbs", "click_node", String(index));
-        defaultDispatcher.dispatch({
+        defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
+            _trigger: "WebHorizontalBreadcrumbs",
+            _viaKeyboard: viaKeyboard,
         });
     };
 
@@ -91,7 +94,7 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
                 <RovingAccessibleTooltipButton
                     className="mx_RoomBreadcrumbs_crumb"
                     key={r.roomId}
-                    onClick={() => this.viewRoom(r, i)}
+                    onClick={(ev) => this.viewRoom(r, i, ev.type !== "click")}
                     aria-label={_t("Room %(name)s", { name: r.name })}
                     title={r.name}
                     tooltipClassName="mx_RoomBreadcrumbs_Tooltip"

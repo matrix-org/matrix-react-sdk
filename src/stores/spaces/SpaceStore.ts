@@ -53,6 +53,7 @@ import {
 } from ".";
 import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IState {}
 
@@ -156,10 +157,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         if (space) {
             const roomId = this.getNotificationState(space).getFirstRoomWithNotifications();
-            defaultDispatcher.dispatch({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: roomId,
                 context_switch: true,
+                _trigger: "WebSpaceContextSwitch",
             });
         } else {
             const lists = RoomListStore.instance.unfilteredLists;
@@ -173,10 +175,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     }
                 });
                 if (unreadRoom) {
-                    defaultDispatcher.dispatch({
+                    defaultDispatcher.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: unreadRoom.roomId,
                         context_switch: true,
+                        _trigger: "WebSpaceContextSwitch",
                     });
                     break;
                 }
@@ -221,16 +224,18 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this.matrixClient.getRoom(roomId)?.getMyMembership() === "join" &&
                 this.isRoomInSpace(space, roomId)
             ) {
-                defaultDispatcher.dispatch({
+                defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: roomId,
                     context_switch: true,
+                    _trigger: "WebSpaceContextSwitch",
                 });
             } else if (cliSpace) {
-                defaultDispatcher.dispatch({
+                defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: space,
                     context_switch: true,
+                    _trigger: "WebSpaceContextSwitch",
                 });
             } else {
                 defaultDispatcher.dispatch({

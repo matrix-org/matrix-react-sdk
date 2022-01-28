@@ -64,6 +64,7 @@ import RoomViewStore from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -217,7 +218,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         }
     };
 
-    const viewRoom = (roomId: string, persist = false) => {
+    const viewRoom = (roomId: string, persist = false, viaKeyboard = false) => {
         if (persist) {
             const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
             // remove & add the room to put it at the end
@@ -232,9 +233,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             );
         }
 
-        defaultDispatcher.dispatch({
+        defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
+            _trigger: "WebUnifiedSearch",
+            _viaKeyboard: viaKeyboard,
         });
         onFinished();
     };
@@ -252,8 +255,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             <Option
                 id={`mx_SpotlightDialog_button_result_${room.roomId}`}
                 key={room.roomId}
-                onClick={() => {
-                    viewRoom(room.roomId, true);
+                onClick={(ev) => {
+                    viewRoom(room.roomId, true, ev.type !== "click");
                 }}
             >
                 <RoomAvatar room={room} width={20} height={20} />
@@ -302,8 +305,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         <Option
                             id={`mx_SpotlightDialog_button_result_${room.room_id}`}
                             key={room.room_id}
-                            onClick={() => {
-                                viewRoom(room.room_id, true);
+                            onClick={(ev) => {
+                                viewRoom(room.room_id, true, ev.type !== "click");
                             }}
                         >
                             <BaseAvatar
@@ -391,8 +394,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                             <Option
                                 id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}`}
                                 key={room.roomId}
-                                onClick={() => {
-                                    viewRoom(room.roomId, true);
+                                onClick={(ev) => {
+                                    viewRoom(room.roomId, true, ev.type !== "click");
                                 }}
                             >
                                 <RoomAvatar room={room} width={20} height={20} />
@@ -417,8 +420,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                 id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
                                 title={room.name}
                                 key={room.roomId}
-                                onClick={() => {
-                                    viewRoom(room.roomId);
+                                onClick={(ev) => {
+                                    viewRoom(room.roomId, false, ev.type !== "click");
                                 }}
                             >
                                 <DecoratedRoomAvatar room={room} avatarSize={32} tooltipProps={{ tabIndex: -1 }} />
