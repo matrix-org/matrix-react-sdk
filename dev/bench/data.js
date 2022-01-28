@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643367999217,
+  "lastUpdate": 1643373199536,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60356,6 +60356,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4865.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0c10385dd2e972cec04eaeacfcc60e185095dd74",
+          "message": "Remove unused code from Stickerpicker (#7663)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-01-28T12:22:45Z",
+          "tree_id": "3473fdf3ffe941d408a49dfd02730091d63d6f4c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0c10385dd2e972cec04eaeacfcc60e185095dd74"
+        },
+        "date": 1643373193921,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4956.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 645.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
