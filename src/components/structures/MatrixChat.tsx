@@ -20,7 +20,7 @@ import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/Screen";
+import { $Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/$screen";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -495,7 +495,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             notLoggedInMap[this.state.view];
 
         return PosthogAnalytics.instance.trackEvent<ScreenEvent>({
-            eventName: "Screen",
+            eventName: "$screen",
             screenName,
             durationMs,
         });
