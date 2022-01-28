@@ -40,15 +40,11 @@ import Exporter from "../../../utils/exportUtils/Exporter";
 import Spinner from "../elements/Spinner";
 import InfoDialog from "./InfoDialog";
 import ChatExport from "../../../customisations/ChatExport";
+import { validateNumberInRange } from "../../../utils/validate";
 
 interface IProps extends IDialogProps {
     room: Room;
 }
-
-const validateNumberInRange = (min: number, max: number) => (value?: string | number) => {
-    const parsedSize = parseInt(value as string, 10);
-    return !(isNaN(parsedSize) || min > parsedSize || parsedSize > max);
-};
 
 interface ExportConfig {
     exportFormat: ExportFormat;
@@ -203,7 +199,10 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
                 },
             }, {
                 key: "number",
-                test: ({ value }) => validateNumberInRange(1, 2000)(value),
+                test: ({ value }) => {
+                    const parsedSize = parseInt(value as string, 10);
+                    return validateNumberInRange(1, 2000)(parsedSize);
+                },
                 invalid: () => {
                     const min = 1;
                     const max = 2000;
@@ -238,7 +237,10 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
                 },
             }, {
                 key: "number",
-                test: ({ value }) => validateNumberInRange(1, 10 ** 8)(value),
+                test: ({ value }) => {
+                    const parsedSize = parseInt(value as string, 10);
+                    return validateNumberInRange(1, 10 ** 8)(parsedSize);
+                },
                 invalid: () => {
                     const min = 1;
                     const max = 10 ** 8;
