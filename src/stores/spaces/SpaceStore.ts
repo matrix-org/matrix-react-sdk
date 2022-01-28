@@ -386,7 +386,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return false;
     }
 
-    public getSpaceFilteredRoomIds = (space: SpaceKey, includeSubSpaceRooms?: boolean): Set<string> => {
+    public getSpaceFilteredRoomIds = (space: SpaceKey): Set<string> => {
         if (space === MetaSpace.Home && this.allRoomsInHome) {
             return new Set(this.matrixClient.getVisibleRooms().map(r => r.roomId));
         }
@@ -703,8 +703,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     return [this.spaceFilteredRooms.get(spaceId), this.spaceFilteredUsers.get(spaceId)];
                 }
 
-
-
                 const [childSpaces, childRooms] = partitionSpacesAndRooms(this.getChildren(spaceId));
 
                 const directChildRoomIds = childRooms.map(r => r.roomId);
@@ -731,8 +729,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 const expandedDirectChildRoomIds = new Set(directChildRoomIds.flatMap(roomId => {
                     return this.matrixClient.getRoomUpgradeHistory(roomId, true).map(r => r.roomId);
                 }));
-
-                console.log('YOOO', s, expandedRoomIds, expandedDirectChildRoomIds);
 
                 this.spaceFilteredDirectChildRooms.set(spaceId, expandedDirectChildRoomIds);
                 this.spaceFilteredRooms.set(spaceId, expandedRoomIds);

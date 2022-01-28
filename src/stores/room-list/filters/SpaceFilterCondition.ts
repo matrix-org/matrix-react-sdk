@@ -42,13 +42,12 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
     }
 
     public isVisible(room: Room): boolean {
-        console.log('isVisible', this.showSubSpaceRoomsInSpace);
         return SpaceStore.instance.isRoomInSpace(this.space, room.roomId, this.showSubSpaceRoomsInSpace);
     }
 
     private onStoreUpdate = async (forceUpdate = false): Promise<void> => {
         const beforeShowSubSpaceRoomsInSpace = this.showSubSpaceRoomsInSpace;
-        this.showSubSpaceRoomsInSpace = SettingsStore.getValue("Spaces.includeSubSpaceRoomsInRoomList");
+        this.showSubSpaceRoomsInSpace = SettingsStore.getValue("Spaces.includeSubSpaceRoomsInRoomList", this.space);
 
         const beforeRoomIds = this.roomIds;
 
