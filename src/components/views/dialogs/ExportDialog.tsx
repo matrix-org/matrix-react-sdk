@@ -67,12 +67,12 @@ interface ExportConfig {
 const useExportFormState = (): ExportConfig => {
     const config = ChatExport.getForceChatExportParameters();
 
-    const [exportFormat, setExportFormat] = useState(config.format || ExportFormat.Html);
-    const [exportType, setExportType] = useState(config.range || ExportType.Timeline);
+    const [exportFormat, setExportFormat] = useState(config.format ?? ExportFormat.Html);
+    const [exportType, setExportType] = useState(config.range ?? ExportType.Timeline);
     const [includeAttachments, setAttachments] =
-        useState(config.includeAttachments !== undefined && config.includeAttachments);
-    const [numberOfMessages, setNumberOfMessages] = useState<number>(config.numberOfMessages || 100);
-    const [sizeLimit, setSizeLimit] = useState<number | null>(config.sizeMb || 8);
+        useState(config.includeAttachments ?? false);
+    const [numberOfMessages, setNumberOfMessages] = useState<number>(config.numberOfMessages ?? 100);
+    const [sizeLimit, setSizeLimit] = useState<number | null>(config.sizeMb ?? 8);
 
     return {
         exportFormat,
