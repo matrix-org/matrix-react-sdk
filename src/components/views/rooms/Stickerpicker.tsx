@@ -48,9 +48,9 @@ const PERSISTED_ELEMENT_KEY = "stickerPicker";
 interface IProps {
     room: Room;
     threadId?: string | null;
-    showStickers: boolean;
+    stickersVisible: boolean;
     menuPosition?: any;
-    setShowStickers: (showStickers: boolean) => void;
+    setShowStickers: (stickersVisible: boolean) => void;
 }
 
 interface IState {
@@ -156,7 +156,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     }
 
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
-        this.sendVisibilityToWidget(this.props.showStickers);
+        this.sendVisibilityToWidget(this.props.stickersVisible);
     }
 
     private imError(errorMsg: string, e: Error): void {
@@ -367,7 +367,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
      * Called when the window is resized
      */
     private onResize = (): void => {
-        if (this.props.showStickers) {
+        if (this.props.stickersVisible) {
             this.props.setShowStickers(false);
         }
     };
@@ -376,7 +376,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
      * The stickers picker was hidden
      */
     private onFinished = (): void => {
-        if (this.props.showStickers) {
+        if (this.props.stickersVisible) {
             this.props.setShowStickers(false);
         }
     };
@@ -402,7 +402,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        if (!this.props.showStickers) return null;
+        if (!this.props.stickersVisible) return null;
 
         return <ContextMenu
             chevronOffset={this.state.stickerpickerChevronOffset}

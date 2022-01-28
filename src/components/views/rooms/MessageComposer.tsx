@@ -255,7 +255,7 @@ interface IState {
     me?: RoomMember;
     narrowMode?: boolean;
     isMenuOpen: boolean;
-    showStickers: boolean;
+    stickersVisible: boolean;
     showStickersButton: boolean;
     showLocationButton: boolean;
 }
@@ -286,7 +286,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             haveRecording: false,
             recordingTimeLeftSeconds: null, // when set to a number, shows a toast
             isMenuOpen: false,
-            showStickers: false,
+            stickersVisible: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showLocationButton: (
                 !window.electron &&
@@ -315,7 +315,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             this.setState({
                 narrowMode,
                 isMenuOpen: !narrowMode ? false : this.state.isMenuOpen,
-                showStickers: false,
+                stickersVisible: false,
             });
         }
     };
@@ -499,8 +499,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
     };
 
-    private showStickers = (showStickers: boolean) => {
-        this.setState({ showStickers });
+    private showStickers = (stickersVisible: boolean) => {
+        this.setState({ stickersVisible });
     };
 
     private toggleButtonMenu = (): void => {
@@ -547,7 +547,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         if (this.state.showStickersButton) {
             let title: string;
             if (!this.state.narrowMode) {
-                title = this.state.showStickers ? _t("Hide Stickers") : _t("Show Stickers");
+                title = this.state.stickersVisible ? _t("Hide Stickers") : _t("Show Stickers");
             }
 
             buttons.push(
@@ -555,7 +555,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     id='stickersButton'
                     key="controls_stickers"
                     className="mx_MessageComposer_button mx_MessageComposer_stickers"
-                    onClick={() => this.showStickers(!this.state.showStickers)}
+                    onClick={() => this.showStickers(!this.state.stickersVisible)}
                     title={title}
                     label={this.state.narrowMode ? _t("Send a sticker") : null}
                 />,
@@ -692,7 +692,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             <Stickerpicker
                 room={this.props.room}
                 threadId={threadId}
-                showStickers={this.state.showStickers}
+                stickersVisible={this.state.stickersVisible}
                 setShowStickers={this.showStickers}
                 menuPosition={menuPosition}
                 key="stickers"
