@@ -17,7 +17,7 @@ limitations under the License.
 import classNames from 'classnames';
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 
@@ -56,126 +56,87 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     const matrixClient: MatrixClient = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    if (props.haveRecording) {
-        return null;
-    }
-
-    const pollButton = <PollButton
-        key="polls"
-        room={room}
-        narrowMode={props.narrowMode}
-    />;
-
-    const uploadButton = <UploadButton
-        key="controls_upload"
-        roomId={roomId}
-        relation={props.relation}
-    />;
-
-    const showLocationButton = (
-        props.showLocationButton
-            ? <LocationButton
-                key="location"
-                roomId={roomId}
-                sender={room.getMember(matrixClient.getUserId())}
-                menuPosition={props.menuPosition}
-                narrowMode={props.narrowMode}
-            />
-            : null
+    return (
+        props.haveRecording
+            ? null
+            : props.narrowMode
+                ? narrowMode(props, room, roomId, matrixClient)
+                : wideMode(props, room, roomId, matrixClient)
     );
+};
 
-    const emojiButton = <EmojiButton
+function wideMode(
+    props: IProps,
+    room: Room,
+    roomId: string,
+    matrixClient: MatrixClient,
+): ReactElement {
+    return <>
+        { pollButton(props, room) }
+        { uploadButton(props, roomId) }
+        { showLocationButton(props, room, roomId, matrixClient) }
+        { emojiButton(props) }
+        { showStickersButton(props) }
+        { voiceRecordingButton(props) }
+    </>;
+}
+
+function narrowMode(
+    props: IProps,
+    room: Room,
+    roomId: string,
+    matrixClient: MatrixClient,
+): ReactElement {
+    const moreOptionsClasses = classNames({
+        mx_MessageComposer_button: true,
+        mx_MessageComposer_buttonMenu: true,
+        mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
+    });
+
+    const moreButtons = [
+        pollButton(props, room),
+        showLocationButton(props, room, roomId, matrixClient),
+        emojiButton(props),
+        showStickersButton(props),
+        voiceRecordingButton(props),
+    ].filter(x => x);
+
+    return <>
+        { uploadButton(props, roomId) }
+        <AccessibleTooltipButton
+            className={moreOptionsClasses}
+            onClick={props.toggleButtonMenu}
+            title={_t("More options")}
+            tooltip={false}
+        />
+        { props.isMenuOpen && (
+            <ContextMenu
+                onFinished={props.toggleButtonMenu}
+                {...props.menuPosition}
+                wrapperClassName="mx_MessageComposer_Menu"
+            >
+                { moreButtons.map((button, index) => (
+                    <MenuItem
+                        className="mx_CallContextMenu_item"
+                        key={index}
+                        onClick={props.toggleButtonMenu}
+                    >
+                        { button }
+                    </MenuItem>
+                )) }
+            </ContextMenu>
+        ) }
+    </>;
+}
+
+function emojiButton(props: IProps): ReactElement {
+    return <EmojiButton
         key="emoji_button"
         addEmoji={props.addEmoji}
         menuPosition={props.menuPosition}
         narrowMode={props.narrowMode}
     />;
-
-    const showStickersButton = (
-        props.showStickersButton
-            ? <AccessibleTooltipButton
-                id='stickersButton'
-                key="controls_stickers"
-                className="mx_MessageComposer_button mx_MessageComposer_stickers"
-                onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
-                title={
-                    props.narrowMode
-                        ? null
-                        : props.isStickerPickerOpen
-                            ? _t("Hide Stickers")
-                            : _t("Show Stickers")
-                }
-                label={props.narrowMode ? _t("Send a sticker") : null}
-            />
-            : null
-    );
-
-    // XXX: recording UI does not work well in narrow mode, so hide for now
-
-    const voiceRecordingButton = (
-        props.narrowMode
-            ? null
-            : <CollapsibleButton
-                key="voice_message_send"
-                className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
-                onClick={props.onRecordStartEndClick}
-                title={_t("Send voice message")}
-                narrowMode={props.narrowMode}
-            />
-    );
-
-    if (props.narrowMode) {
-        const moreOptionsClasses = classNames({
-            mx_MessageComposer_button: true,
-            mx_MessageComposer_buttonMenu: true,
-            mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
-        });
-
-        const moreButtons = [
-            pollButton,
-            showLocationButton,
-            emojiButton,
-            showStickersButton,
-            voiceRecordingButton,
-        ].filter(x => x);
-
-        return <>
-            { uploadButton }
-            <AccessibleTooltipButton
-                className={moreOptionsClasses}
-                onClick={props.toggleButtonMenu}
-                title={_t("More options")}
-                tooltip={false}
-            />
-            { props.isMenuOpen && (
-                <ContextMenu
-                    onFinished={props.toggleButtonMenu}
-                    {...props.menuPosition}
-                    wrapperClassName="mx_MessageComposer_Menu"
-                >
-                    { moreButtons.map((button, index) => (
-                        <MenuItem
-                            className="mx_CallContextMenu_item"
-                            key={index}
-                            onClick={props.toggleButtonMenu}
-                        >
-                            { button }
-                        </MenuItem>
-                    )) }
-                </ContextMenu>
-            ) }
-        </>;
-    } else {
-        return <>
-            { pollButton }
-            { uploadButton }
-            { showLocationButton }
-            { emojiButton }
-            { showStickersButton }
-            { voiceRecordingButton }
-        </>;
-    }
-};
+}
 
 interface IEmojiButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
     addEmoji: (unicode: string) => boolean;
@@ -223,6 +184,14 @@ const EmojiButton: React.FC<IEmojiButtonProps> = (
         { contextMenu }
     </React.Fragment>;
 };
+
+function uploadButton(props: IProps, roomId: string): ReactElement {
+    return <UploadButton
+        key="controls_upload"
+        roomId={roomId}
+        relation={props.relation}
+    />;
+}
 
 interface IUploadButtonProps {
     roomId: string;
@@ -301,6 +270,51 @@ class UploadButton extends React.Component<IUploadButtonProps> {
         );
     }
 }
+
+function showStickersButton(props: IProps): ReactElement {
+    return (
+        props.showStickersButton
+            ? <AccessibleTooltipButton
+                id='stickersButton'
+                key="controls_stickers"
+                className="mx_MessageComposer_button mx_MessageComposer_stickers"
+                onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
+                title={
+                    props.narrowMode
+                        ? null
+                        : props.isStickerPickerOpen
+                            ? _t("Hide Stickers")
+                            : _t("Show Stickers")
+                }
+                label={props.narrowMode ? _t("Send a sticker") : null}
+            />
+            : null
+    );
+}
+
+function voiceRecordingButton(props: IProps): ReactElement {
+    // XXX: recording UI does not work well in narrow mode, so hide for now
+    return (
+        props.narrowMode
+            ? null
+            : <CollapsibleButton
+                key="voice_message_send"
+                className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
+                onClick={props.onRecordStartEndClick}
+                title={_t("Send voice message")}
+                narrowMode={props.narrowMode}
+            />
+    );
+}
+
+function pollButton(props: IProps, room: Room): ReactElement {
+    return <PollButton
+        key="polls"
+        room={room}
+        narrowMode={props.narrowMode}
+    />;
+}
+
 interface IPollButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
     room: Room;
 }
@@ -348,6 +362,25 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
             />
         );
     }
+}
+
+function showLocationButton(
+    props: IProps,
+    room: Room,
+    roomId: string,
+    matrixClient: MatrixClient,
+): ReactElement {
+    return (
+        props.showLocationButton
+            ? <LocationButton
+                key="location"
+                roomId={roomId}
+                sender={room.getMember(matrixClient.getUserId())}
+                menuPosition={props.menuPosition}
+                narrowMode={props.narrowMode}
+            />
+            : null
+    );
 }
 
 export default MessageComposerButtons;
