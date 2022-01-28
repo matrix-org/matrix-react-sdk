@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643363159291,
+  "lastUpdate": 1643364618617,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60260,6 +60260,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4425.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cbc671b19f6cc6e3054f9daa10ffd86f106b87af",
+          "message": "Share e2ee keys when using /invite SlashCommand (#7655)",
+          "timestamp": "2022-01-28T10:02:37Z",
+          "tree_id": "c8bb83fbc5c6e161f4569b71829f7bd72de14f36",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cbc671b19f6cc6e3054f9daa10ffd86f106b87af"
+        },
+        "date": 1643364612500,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4987.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1076.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1799,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4598.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
