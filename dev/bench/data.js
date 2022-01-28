@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643385055247,
+  "lastUpdate": 1643385577690,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60488,6 +60488,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4510.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b04d2de31344dc9c643c6ff7edd3d9298d1483af",
+          "message": "Fix left panel widgets causing app-wide crash (#7659)",
+          "timestamp": "2022-01-28T08:52:46-07:00",
+          "tree_id": "9bff118d4293e76a0b4296ec0e747632b344605d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b04d2de31344dc9c643c6ff7edd3d9298d1483af"
+        },
+        "date": 1643385571797,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4680.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 904.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1759.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4323.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
