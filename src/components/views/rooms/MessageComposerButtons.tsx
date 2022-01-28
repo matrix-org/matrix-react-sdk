@@ -17,8 +17,7 @@ limitations under the License.
 import classNames from 'classnames';
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import React from 'react';
+import React, { useContext } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
 import { _t } from '../../../languageHandler';
@@ -34,6 +33,7 @@ import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { ActionPayload } from '../../../dispatcher/payloads';
 import ContentMessages from '../../../ContentMessages';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -51,12 +51,11 @@ interface IProps {
     toggleButtonMenu: () => void;
 }
 
-export function renderMessageComposerButtons(
-    client: MatrixClient,
-    props: IProps,
-): JSX.Element | JSX.Element[] {
+const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
+    const matrixClient = useContext(MatrixClientContext);
+
     if (props.haveRecording) {
-        return [];
+        return null;
     }
 
     let uploadButtonIndex = 0;
@@ -73,7 +72,7 @@ export function renderMessageComposerButtons(
         <UploadButton key="controls_upload" roomId={props.room.roomId} relation={props.relation} />,
     );
     if (props.showLocationButton) {
-        const sender = props.room.getMember(client.getUserId());
+        const sender = props.room.getMember(matrixClient.getUserId());
         buttons.push(
             <LocationButton
                 key="location"
@@ -119,7 +118,7 @@ export function renderMessageComposerButtons(
     }
 
     if (!props.narrowMode) {
-        return buttons;
+        return <>{ buttons }</>;
     }
 
     const classnames = classNames({
@@ -152,7 +151,7 @@ export function renderMessageComposerButtons(
             </ContextMenu>
         ) }
     </>;
-}
+};
 
 interface IEmojiButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
     addEmoji: (unicode: string) => boolean;
@@ -310,3 +309,5 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         );
     }
 }
+
+export default MessageComposerButtons;

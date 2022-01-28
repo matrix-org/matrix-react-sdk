@@ -46,7 +46,7 @@ import EditorModel from "../../../editor/model";
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import RoomContext from '../../../contexts/RoomContext';
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
-import { renderMessageComposerButtons } from './MessageComposerButtons';
+import MessageComposerButtons from './MessageComposerButtons';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
@@ -445,24 +445,21 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        { renderMessageComposerButtons(
-                            MatrixClientPeg.get(),
-                            {
-                                addEmoji: this.addEmoji,
-                                haveRecording: this.state.haveRecording,
-                                isMenuOpen: this.state.isMenuOpen,
-                                isStickerPickerOpen: this.state.isStickerPickerOpen,
-                                menuPosition,
-                                narrowMode: this.state.narrowMode,
-                                relation: this.props.relation,
-                                room: this.props.room,
-                                onRecordStartEndClick: () => this.voiceRecordingButton.current?.onRecordStartEndClick(),
-                                setStickerPickerOpen: this.setStickerPickerOpen,
-                                showLocationButton: this.state.showLocationButton,
-                                showStickersButton: this.state.showStickersButton,
-                                toggleButtonMenu: this.toggleButtonMenu,
-                            },
-                        ) }
+                        <MessageComposerButtons
+                            addEmoji={this.addEmoji}
+                            haveRecording={this.state.haveRecording}
+                            isMenuOpen={this.state.isMenuOpen}
+                            isStickerPickerOpen={this.state.isStickerPickerOpen}
+                            menuPosition={menuPosition}
+                            narrowMode={this.state.narrowMode}
+                            relation={this.props.relation}
+                            room={this.props.room}
+                            onRecordStartEndClick={() => this.voiceRecordingButton.current?.onRecordStartEndClick()}
+                            setStickerPickerOpen={this.setStickerPickerOpen}
+                            showLocationButton={this.state.showLocationButton}
+                            showStickersButton={this.state.showStickersButton}
+                            toggleButtonMenu={this.toggleButtonMenu}
+                        />
                         { showSendButton && (
                             <SendButton
                                 key="controls_send"
