@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643385577690,
+  "lastUpdate": 1643390066929,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60536,6 +60536,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4323.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7c20eb9b7461079ebc4604e90f4cafa50fb5943e",
+          "message": "Put call on hold when transfer dialog is opened (#7669)\n\nAnd take it off hold if the dialog is cancelled.\r\n\r\nAlso changes the onFinished signature of invitedialog which claimed\r\nto return an array of strings but never did, so now it just returns\r\na boolean.",
+          "timestamp": "2022-01-28T17:05:57Z",
+          "tree_id": "c8e831c5e73114050389281321b86b97b9e7e748",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7c20eb9b7461079ebc4604e90f4cafa50fb5943e"
+        },
+        "date": 1643390057186,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5400.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1197.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1827,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5291.5,
             "unit": "ms",
             "extra": "type: measure"
           }
