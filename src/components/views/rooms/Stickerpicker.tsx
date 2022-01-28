@@ -108,7 +108,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
             if (scalarClient) {
                 scalarClient.disableWidgetAssets(WidgetType.STICKERPICKER, this.state.widgetId).then(() => {
                     logger.log('Assets disabled');
-                }).catch((_err) => {
+                }).catch(() => {
                     logger.error('Failed to disable assets');
                 });
             } else {
