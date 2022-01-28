@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643323161765,
+  "lastUpdate": 1643363159291,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60212,6 +60212,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4476.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "15276ea3b40d17b8768014b855e180c0ea786b6a",
+          "message": "Render no buttons if we have a voice recording (#7658)",
+          "timestamp": "2022-01-28T09:39:10Z",
+          "tree_id": "3ebb93b8f27bffaec593eb38612a3fe33b66ab49",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/15276ea3b40d17b8768014b855e180c0ea786b6a"
+        },
+        "date": 1643363153308,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5476.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 936.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1630,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4425.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
