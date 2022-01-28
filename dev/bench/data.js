@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643384371997,
+  "lastUpdate": 1643385055247,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60440,6 +60440,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4624.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "222943742482ba1cc879c7e9c4b722769d4b68c2",
+          "message": "Refactor renderButtons() into MessageComposerButtons component (#7664)",
+          "timestamp": "2022-01-28T15:44:03Z",
+          "tree_id": "e2de864a8f3c6e01379090c72529e1409d688f12",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/222943742482ba1cc879c7e9c4b722769d4b68c2"
+        },
+        "date": 1643385049112,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5040.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 941.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1775.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4510.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
