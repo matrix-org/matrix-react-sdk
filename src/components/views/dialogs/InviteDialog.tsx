@@ -761,7 +761,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
 
         try {
-            const result = await inviteMultipleToRoom(this.props.roomId, targetIds, undefined, true);
+            const result = await inviteMultipleToRoom(this.props.roomId, targetIds, true);
             CountlyAnalytics.instance.trackSendInvite(startTime, this.props.roomId, targetIds.length);
             if (!this.shouldAbortAfterInviteError(result, room)) { // handles setting error message too
                 this.props.onFinished();
