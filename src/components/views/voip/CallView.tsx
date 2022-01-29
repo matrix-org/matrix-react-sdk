@@ -255,6 +255,13 @@ export default class CallView extends React.Component<IProps, IState> {
         return { primary, secondary };
     }
 
+    private onMaximizeClick = (): void => {
+        dis.dispatch({
+            action: 'video_fullscreen',
+            fullscreen: true,
+        });
+    };
+
     private onMicMuteClick = async (): Promise<void> => {
         const newVal = !this.state.micMuted;
         this.setState({ micMuted: await this.props.call.setMicrophoneMuted(newVal) });
@@ -617,6 +624,7 @@ export default class CallView extends React.Component<IProps, IState> {
                 onPipMouseDown={this.props.onMouseDownOnHeader}
                 pipMode={this.props.pipMode}
                 callRooms={[callRoom, secCallRoom]}
+                onMaximize={this.onMaximizeClick}
             />
             { contentView }
         </div>;
