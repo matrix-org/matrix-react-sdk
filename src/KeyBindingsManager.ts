@@ -144,7 +144,7 @@ export type KeyCombo = {
     key?: string;
 
     /** On PC: ctrl is pressed; on Mac: meta is pressed */
-    ctrlOrCmd?: boolean;
+    ctrlOrCmdKey?: boolean;
 
     altKey?: boolean;
     ctrlKey?: boolean;
@@ -186,7 +186,7 @@ export function isKeyComboMatch(ev: KeyboardEvent | React.KeyboardEvent, combo: 
     const evShift = ev.shiftKey ?? false;
     const evMeta = ev.metaKey ?? false;
     // When ctrlOrCmd is set, the keys need do evaluated differently on PC and Mac
-    if (combo.ctrlOrCmd) {
+    if (combo.ctrlOrCmdKey) {
         if (onMac) {
             if (!evMeta
                 || evCtrl !== comboCtrl

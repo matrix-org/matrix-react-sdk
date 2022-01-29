@@ -68,21 +68,21 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             action: MessageComposerAction.FormatBold,
             keyCombo: {
                 key: Key.B,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
             action: MessageComposerAction.FormatItalics,
             keyCombo: {
                 key: Key.I,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
             action: MessageComposerAction.FormatQuote,
             keyCombo: {
                 key: Key.GREATER_THAN,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
                 shiftKey: true,
             },
         },
@@ -90,21 +90,21 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             action: MessageComposerAction.EditUndo,
             keyCombo: {
                 key: Key.Z,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
             action: MessageComposerAction.MoveCursorToStart,
             keyCombo: {
                 key: Key.HOME,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
             action: MessageComposerAction.MoveCursorToEnd,
             keyCombo: {
                 key: Key.END,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
     ];
@@ -113,7 +113,7 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             action: MessageComposerAction.EditRedo,
             keyCombo: {
                 key: Key.Z,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
                 shiftKey: true,
             },
         });
@@ -122,7 +122,7 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             action: MessageComposerAction.EditRedo,
             keyCombo: {
                 key: Key.Y,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         });
     }
@@ -131,7 +131,7 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             action: MessageComposerAction.Send,
             keyCombo: {
                 key: Key.ENTER,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         });
         bindings.push({
@@ -295,7 +295,7 @@ const roomBindings = (): KeyBinding<RoomAction>[] => {
             action: RoomAction.UploadFile,
             keyCombo: {
                 key: Key.U,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
                 shiftKey: true,
             },
         },
@@ -320,7 +320,7 @@ const roomBindings = (): KeyBinding<RoomAction>[] => {
             action: RoomAction.FocusSearch,
             keyCombo: {
                 key: Key.F,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         });
     }
@@ -334,14 +334,14 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             action: NavigationAction.FocusRoomSearch,
             keyCombo: {
                 key: Key.K,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
             action: NavigationAction.ToggleSpacePanel,
             keyCombo: {
                 key: Key.D,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
                 shiftKey: true,
             },
         },
@@ -349,7 +349,7 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             action: NavigationAction.ToggleRoomSidePanel,
             keyCombo: {
                 key: Key.PERIOD,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
@@ -360,21 +360,21 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             // composer, so CTRL+` it is
             keyCombo: {
                 key: Key.BACKTICK,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
             action: NavigationAction.OpenShortCutDialog,
             keyCombo: {
                 key: Key.SLASH,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
             },
         },
         {
             action: NavigationAction.OpenShortCutDialog,
             keyCombo: {
                 key: Key.SLASH,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
                 shiftKey: true,
             },
         },
@@ -382,7 +382,7 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             action: NavigationAction.GoToHome,
             keyCombo: {
                 key: Key.H,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
                 altKey: !isMac,
                 shiftKey: isMac,
             },
@@ -430,7 +430,7 @@ const labsBindings = (): KeyBinding<LabsAction>[] => {
             action: LabsAction.ToggleHiddenEventVisibility,
             keyCombo: {
                 key: Key.H,
-                ctrlOrCmd: true,
+                ctrlOrCmdKey: true,
                 shiftKey: true,
             },
         },
