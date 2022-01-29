@@ -447,6 +447,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
+    public componentDidMount(): void {
+        window.addEventListener("resize", this.onWindowResized);
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (this.shouldTrackPageChange(prevState, this.state)) {
             const durationMs = this.stopPageChangeTimer();
@@ -467,6 +471,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.fontWatcher.stop();
         UIStore.destroy();
         this.state.resizeNotifier.removeListener("middlePanelResized", this.dispatchTimelineResize);
+        window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
     }
@@ -499,6 +504,34 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             screenName,
             durationMs,
         });
+    }
+
+    private onWindowResized = (): void => {
+        // XXX: This is a very unreliable way to detect whether or not the the devtools are open
+        this.warnInConsole();
+    };
+
+    private warnInConsole(): void {
+        const largeFontSize = "50px";
+        const normalFontSize = "15px";
+
+        const waitText = _t("Wait!");
+        const scamText = _t(
+            "If someone told you to copy/paste something here, " +
+            "there is a high likelihood you're being scammed!",
+        );
+        const devText = _t(
+            "If you know what you're doing, Element is open-source, " +
+            "be sure to check out our GitHub (https://github.com/vector-im/element-web/) " +
+            "and contribute!",
+        );
+
+        console.log(
+            `%c${waitText}\n%c${scamText}\n%c${devText}`,
+            `font-size:${largeFontSize}; color:blue;`,
+            `font-size:${normalFontSize}; color:red;`,
+            `font-size:${normalFontSize};`,
+        );
     }
 
     private getFallbackHsUrl(): string {
