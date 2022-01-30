@@ -483,29 +483,29 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (model.autoComplete?.hasCompletions()) {
             const autoComplete = model.autoComplete;
             switch (autocompleteAction) {
-                case AutocompleteAction.ForceComplete:
-                case AutocompleteAction.Complete:
+                case AutocompleteAction.ForceCompleteAutocomplete:
+                case AutocompleteAction.CompleteAutocomplete:
                     this.historyManager.ensureLastChangesPushed(this.props.model);
                     this.modifiedFlag = true;
                     autoComplete.confirmCompletion();
                     handled = true;
                     break;
-                case AutocompleteAction.PrevSelection:
+                case AutocompleteAction.PrevSelectionInAutocomplete:
                     autoComplete.selectPreviousSelection();
                     handled = true;
                     break;
-                case AutocompleteAction.NextSelection:
+                case AutocompleteAction.NextSelectionInAutocomplete:
                     autoComplete.selectNextSelection();
                     handled = true;
                     break;
-                case AutocompleteAction.Cancel:
+                case AutocompleteAction.CancelAutocomplete:
                     autoComplete.onEscape(event);
                     handled = true;
                     break;
                 default:
                     return; // don't preventDefault on anything else
             }
-        } else if (autocompleteAction === AutocompleteAction.ForceComplete && !this.state.showVisualBell) {
+        } else if (autocompleteAction === AutocompleteAction.ForceCompleteAutocomplete && !this.state.showVisualBell) {
             // there is no current autocomplete window, try to open it
             this.tabCompleteName();
             handled = true;

@@ -474,14 +474,14 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private onHeaderKeyDown = (ev: React.KeyboardEvent) => {
         const action = getKeyBindingsManager().getRoomListAction(ev);
         switch (action) {
-            case RoomListAction.CollapseSection:
+            case RoomListAction.CollapseRoomListSection:
                 ev.stopPropagation();
                 if (this.state.isExpanded) {
                     // Collapse the room sublist if it isn't already
                     this.toggleCollapsed();
                 }
                 break;
-            case RoomListAction.ExpandSection: {
+            case RoomListAction.ExpandRoomListSection: {
                 ev.stopPropagation();
                 if (!this.state.isExpanded) {
                     // Expand the room sublist if it isn't already

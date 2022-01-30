@@ -448,14 +448,14 @@ class LoggedInView extends React.Component<IProps, IState> {
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
             case RoomAction.ScrollUp:
-            case RoomAction.RoomScrollDown:
+            case RoomAction.ScrollDown:
             case RoomAction.JumpToFirstMessage:
             case RoomAction.JumpToLatestMessage:
                 // pass the event down to the scroll panel
                 this.onScrollKeyPressed(ev);
                 handled = true;
                 break;
-            case RoomAction.FocusSearch:
+            case RoomAction.SearchInRoom:
                 dis.dispatch({
                     action: 'focus_search',
                 });
@@ -470,7 +470,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
-            case NavigationAction.FocusRoomSearch:
+            case NavigationAction.FilterRooms:
                 dis.dispatch({
                     action: 'focus_room_filter',
                 });
@@ -480,7 +480,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 dis.fire(Action.ToggleUserMenu);
                 handled = true;
                 break;
-            case NavigationAction.OpenShortCutDialog:
+            case NavigationAction.ShowKeyboardSettings:
                 dis.dispatch<OpenToTabPayload>({
                     action: Action.ViewUserSettings,
                     initialTabId: UserTab.Keyboard,

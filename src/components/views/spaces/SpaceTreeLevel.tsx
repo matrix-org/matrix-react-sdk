@@ -234,7 +234,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         const action = getKeyBindingsManager().getRoomListAction(ev);
         const hasChildren = this.state.childSpaces?.length;
         switch (action) {
-            case RoomListAction.CollapseSection:
+            case RoomListAction.CollapseRoomListSection:
                 if (hasChildren && !this.isCollapsed) {
                     this.toggleCollapse(ev);
                 } else {
@@ -244,7 +244,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                 }
                 break;
 
-            case RoomListAction.ExpandSection:
+            case RoomListAction.ExpandRoomListSection:
                 if (hasChildren) {
                     if (this.isCollapsed) {
                         this.toggleCollapse(ev);

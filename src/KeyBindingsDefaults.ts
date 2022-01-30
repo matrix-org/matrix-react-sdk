@@ -59,7 +59,7 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
             },
         },
         {
-            action: MessageComposerAction.CancelEditing,
+            action: MessageComposerAction.CancelReplyOrEdit,
             keyCombo: {
                 key: Key.ESCAPE,
             },
@@ -128,7 +128,7 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
     }
     if (SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend')) {
         bindings.push({
-            action: MessageComposerAction.Send,
+            action: MessageComposerAction.SendMessage,
             keyCombo: {
                 key: Key.ENTER,
                 ctrlOrCmdKey: true,
@@ -149,7 +149,7 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
         });
     } else {
         bindings.push({
-            action: MessageComposerAction.Send,
+            action: MessageComposerAction.SendMessage,
             keyCombo: {
                 key: Key.ENTER,
             },
@@ -177,45 +177,45 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
 const autocompleteBindings = (): KeyBinding<AutocompleteAction>[] => {
     return [
         {
-            action: AutocompleteAction.ForceComplete,
+            action: AutocompleteAction.ForceCompleteAutocomplete,
             keyCombo: {
                 key: Key.TAB,
             },
         },
         {
-            action: AutocompleteAction.ForceComplete,
+            action: AutocompleteAction.ForceCompleteAutocomplete,
             keyCombo: {
                 key: Key.TAB,
                 ctrlKey: true,
             },
         },
         {
-            action: AutocompleteAction.Complete,
+            action: AutocompleteAction.CompleteAutocomplete,
             keyCombo: {
                 key: Key.ENTER,
             },
         },
         {
-            action: AutocompleteAction.Complete,
+            action: AutocompleteAction.CompleteAutocomplete,
             keyCombo: {
                 key: Key.ENTER,
                 ctrlKey: true,
             },
         },
         {
-            action: AutocompleteAction.Cancel,
+            action: AutocompleteAction.CancelAutocomplete,
             keyCombo: {
                 key: Key.ESCAPE,
             },
         },
         {
-            action: AutocompleteAction.PrevSelection,
+            action: AutocompleteAction.PrevSelectionInAutocomplete,
             keyCombo: {
                 key: Key.ARROW_UP,
             },
         },
         {
-            action: AutocompleteAction.NextSelection,
+            action: AutocompleteAction.NextSelectionInAutocomplete,
             keyCombo: {
                 key: Key.ARROW_DOWN,
             },
@@ -226,7 +226,7 @@ const autocompleteBindings = (): KeyBinding<AutocompleteAction>[] => {
 const roomListBindings = (): KeyBinding<RoomListAction>[] => {
     return [
         {
-            action: RoomListAction.ClearSearch,
+            action: RoomListAction.ClearRoomFilter,
             keyCombo: {
                 key: Key.ESCAPE,
             },
@@ -244,19 +244,19 @@ const roomListBindings = (): KeyBinding<RoomListAction>[] => {
             },
         },
         {
-            action: RoomListAction.SelectRoom,
+            action: RoomListAction.SelectRoomInRoomList,
             keyCombo: {
                 key: Key.ENTER,
             },
         },
         {
-            action: RoomListAction.CollapseSection,
+            action: RoomListAction.CollapseRoomListSection,
             keyCombo: {
                 key: Key.ARROW_LEFT,
             },
         },
         {
-            action: RoomListAction.ExpandSection,
+            action: RoomListAction.ExpandRoomListSection,
             keyCombo: {
                 key: Key.ARROW_RIGHT,
             },
@@ -273,7 +273,7 @@ const roomBindings = (): KeyBinding<RoomAction>[] => {
             },
         },
         {
-            action: RoomAction.RoomScrollDown,
+            action: RoomAction.ScrollDown,
             keyCombo: {
                 key: Key.PAGE_DOWN,
             },
@@ -317,7 +317,7 @@ const roomBindings = (): KeyBinding<RoomAction>[] => {
 
     if (SettingsStore.getValue('ctrlFForSearch')) {
         bindings.push({
-            action: RoomAction.FocusSearch,
+            action: RoomAction.SearchInRoom,
             keyCombo: {
                 key: Key.F,
                 ctrlOrCmdKey: true,
@@ -331,7 +331,7 @@ const roomBindings = (): KeyBinding<RoomAction>[] => {
 const navigationBindings = (): KeyBinding<NavigationAction>[] => {
     return [
         {
-            action: NavigationAction.FocusRoomSearch,
+            action: NavigationAction.FilterRooms,
             keyCombo: {
                 key: Key.K,
                 ctrlOrCmdKey: true,
@@ -364,14 +364,14 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
             },
         },
         {
-            action: NavigationAction.OpenShortCutDialog,
+            action: NavigationAction.ShowKeyboardSettings,
             keyCombo: {
                 key: Key.SLASH,
                 ctrlOrCmdKey: true,
             },
         },
         {
-            action: NavigationAction.OpenShortCutDialog,
+            action: NavigationAction.ShowKeyboardSettings,
             keyCombo: {
                 key: Key.SLASH,
                 ctrlOrCmdKey: true,

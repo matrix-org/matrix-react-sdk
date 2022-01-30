@@ -81,7 +81,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     [CategoryName.COMPOSER]: {
         categoryLabel: _td("Composer"),
         settingNames: [
-            MessageComposerAction.Send,
+            MessageComposerAction.SendMessage,
             MessageComposerAction.NewLine,
             MessageComposerAction.FormatBold,
             MessageComposerAction.FormatItalics,
@@ -90,7 +90,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             MessageComposerAction.EditRedo,
             MessageComposerAction.MoveCursorToStart,
             MessageComposerAction.MoveCursorToEnd,
-            MessageComposerAction.CancelEditing,
+            MessageComposerAction.CancelReplyOrEdit,
             MessageComposerAction.EditNextMessage,
             MessageComposerAction.EditPrevMessage,
             MessageComposerAction.SelectNextSendHistory,
@@ -105,22 +105,22 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     }, [CategoryName.ROOM]: {
         categoryLabel: _td("Room"),
         settingNames: [
-            RoomAction.FocusSearch,
+            RoomAction.SearchInRoom,
             RoomAction.UploadFile,
             RoomAction.DismissReadMarker,
             RoomAction.JumpToOldestUnread,
             RoomAction.ScrollUp,
-            RoomAction.RoomScrollDown,
+            RoomAction.ScrollDown,
             RoomAction.JumpToFirstMessage,
             RoomAction.JumpToLatestMessage,
         ],
     }, [CategoryName.ROOM_LIST]: {
         categoryLabel: _td("Room List"),
         settingNames: [
-            RoomListAction.SelectRoom,
-            RoomListAction.ClearSearch,
-            RoomListAction.CollapseSection,
-            RoomListAction.ExpandSection,
+            RoomListAction.SelectRoomInRoomList,
+            RoomListAction.ClearRoomFilter,
+            RoomListAction.CollapseRoomListSection,
+            RoomListAction.ExpandRoomListSection,
             RoomListAction.NextRoom,
             RoomListAction.PrevRoom,
         ],
@@ -132,9 +132,9 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             "KeyBinding.activateSelectedButton",
             NavigationAction.ToggleRoomSidePanel,
             NavigationAction.ToggleSpacePanel,
-            NavigationAction.OpenShortCutDialog,
+            NavigationAction.ShowKeyboardSettings,
             NavigationAction.GoToHome,
-            NavigationAction.FocusRoomSearch,
+            NavigationAction.FilterRooms,
             NavigationAction.SelectNextUnreadRoom,
             NavigationAction.SelectPrevUnreadRoom,
             NavigationAction.SelectNextRoom,
@@ -143,11 +143,11 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     }, [CategoryName.AUTOCOMPLETE]: {
         categoryLabel: _td("Autocomplete"),
         settingNames: [
-            AutocompleteAction.Cancel,
-            AutocompleteAction.NextSelection,
-            AutocompleteAction.PrevSelection,
-            AutocompleteAction.Complete,
-            AutocompleteAction.ForceComplete,
+            AutocompleteAction.CancelAutocomplete,
+            AutocompleteAction.NextSelectionInAutocomplete,
+            AutocompleteAction.PrevSelectionInAutocomplete,
+            AutocompleteAction.CompleteAutocomplete,
+            AutocompleteAction.ForceCompleteAutocomplete,
         ],
     }, [CategoryName.LABS]: {
         categoryLabel: _td("Labs"),
@@ -182,7 +182,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Toggle Quote"),
     },
-    [MessageComposerAction.CancelEditing]: {
+    [MessageComposerAction.CancelReplyOrEdit]: {
         default: {
             key: Key.ESCAPE,
         },
@@ -265,7 +265,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Upload a file"),
     },
-    [RoomAction.FocusSearch]: {
+    [RoomAction.SearchInRoom]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.F,
@@ -278,38 +278,38 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Scroll up in the timeline"),
     },
-    [RoomAction.RoomScrollDown]: {
+    [RoomAction.ScrollDown]: {
         default: {
             key: Key.PAGE_DOWN,
         },
         displayName: _td("Scroll down in the timeline"),
     },
-    [NavigationAction.FocusRoomSearch]: {
+    [NavigationAction.FilterRooms]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.K,
         },
         displayName: _td("Jump to room search"),
     },
-    [RoomListAction.SelectRoom]: {
+    [RoomListAction.SelectRoomInRoomList]: {
         default: {
             key: Key.ENTER,
         },
         displayName: _td("Select room from the room list"),
     },
-    [RoomListAction.CollapseSection]: {
+    [RoomListAction.CollapseRoomListSection]: {
         default: {
             key: Key.ARROW_LEFT,
         },
         displayName: _td("Collapse room list section"),
     },
-    [RoomListAction.ExpandSection]: {
+    [RoomListAction.ExpandRoomListSection]: {
         default: {
             key: Key.ARROW_RIGHT,
         },
         displayName: _td("Expand room list section"),
     },
-    [RoomListAction.ClearSearch]: {
+    [RoomListAction.ClearRoomFilter]: {
         default: {
             key: Key.ESCAPE,
         },
@@ -353,7 +353,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Toggle right panel"),
     },
-    [NavigationAction.OpenShortCutDialog]: {
+    [NavigationAction.ShowKeyboardSettings]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.SLASH,
@@ -399,19 +399,19 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Previous room or DM"),
     },
-    [AutocompleteAction.Cancel]: {
+    [AutocompleteAction.CancelAutocomplete]: {
         default: {
             key: Key.ESCAPE,
         },
         displayName: _td("Cancel autocomplete"),
     },
-    [AutocompleteAction.NextSelection]: {
+    [AutocompleteAction.NextSelectionInAutocomplete]: {
         default: {
             key: Key.ARROW_UP,
         },
         displayName: _td("Next autocomplete suggestion"),
     },
-    [AutocompleteAction.PrevSelection]: {
+    [AutocompleteAction.PrevSelectionInAutocomplete]: {
         default: {
             key: Key.ARROW_DOWN,
         },
@@ -454,13 +454,13 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Undo edit"),
     },
-    [AutocompleteAction.Complete]: {
+    [AutocompleteAction.CompleteAutocomplete]: {
         default: {
             key: Key.ENTER,
         },
         displayName: _td("Complete"),
     },
-    [AutocompleteAction.ForceComplete]: {
+    [AutocompleteAction.ForceCompleteAutocomplete]: {
         default: {
             key: Key.TAB,
         },
@@ -472,7 +472,7 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
     const keyboardShortcuts = KEYBOARD_SHORTCUTS;
     const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
 
-    keyboardShortcuts[MessageComposerAction.Send] = {
+    keyboardShortcuts[MessageComposerAction.SendMessage] = {
         default: {
             key: Key.ENTER,
             ctrlOrCmdKey: ctrlEnterToSend,

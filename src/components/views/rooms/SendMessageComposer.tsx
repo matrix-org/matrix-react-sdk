@@ -221,7 +221,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const replyingToThread = this.props.relation?.key === RelationType.Thread;
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.Send:
+            case MessageComposerAction.SendMessage:
                 this.sendMessage();
                 event.preventDefault();
                 break;
@@ -256,7 +256,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     }
                 }
                 break;
-            case MessageComposerAction.CancelEditing:
+            case MessageComposerAction.CancelReplyOrEdit:
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,

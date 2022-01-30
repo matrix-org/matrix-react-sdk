@@ -596,7 +596,7 @@ export default class ScrollPanel extends React.Component<IProps> {
                 this.scrollRelative(-1);
                 isScrolling = true;
                 break;
-            case RoomAction.RoomScrollDown:
+            case RoomAction.ScrollDown:
                 this.scrollRelative(1);
                 isScrolling = true;
                 break;
