@@ -265,13 +265,6 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Upload a file"),
     },
-    [RoomAction.SearchInRoom]: {
-        default: {
-            ctrlOrCmdKey: true,
-            key: Key.F,
-        },
-        displayName: _td("Search (must be enabled)"),
-    },
     [RoomAction.ScrollUp]: {
         default: {
             key: Key.PAGE_UP,
@@ -333,18 +326,6 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.BACKTICK,
         },
         displayName: _td("Toggle the top left menu"),
-    },
-    "KeyBinding.closeDialogOrContextMenu": {
-        default: {
-            key: Key.ESCAPE,
-        },
-        displayName: _td("Close dialog or context menu"),
-    },
-    "KeyBinding.activateSelectedButton": {
-        default: {
-            key: Key.ENTER,
-        },
-        displayName: _td("Activate selected button"),
     },
     [NavigationAction.ToggleRoomSidePanel]: {
         default: {
@@ -454,39 +435,64 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Undo edit"),
     },
-    [AutocompleteAction.CompleteAutocomplete]: {
-        default: {
-            key: Key.ENTER,
-        },
-        displayName: _td("Complete"),
-    },
-    [AutocompleteAction.ForceCompleteAutocomplete]: {
-        default: {
-            key: Key.TAB,
-        },
-        displayName: _td("Force complete"),
-    },
 };
 
-export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
-    const keyboardShortcuts = KEYBOARD_SHORTCUTS;
+// XXX: These have to be manually mirrored in KeyBindingDefaults
+const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
     const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
 
-    keyboardShortcuts[MessageComposerAction.SendMessage] = {
-        default: {
-            key: Key.ENTER,
-            ctrlOrCmdKey: ctrlEnterToSend,
+    return {
+        [MessageComposerAction.SendMessage]: {
+            default: {
+                key: Key.ENTER,
+                ctrlOrCmdKey: ctrlEnterToSend,
+            },
+            displayName: _td("Send message"),
         },
-        displayName: _td("Send message"),
+        [MessageComposerAction.NewLine]: {
+            default: {
+                key: Key.ENTER,
+                shiftKey: !ctrlEnterToSend,
+            },
+            displayName: _td("New line"),
+        },
+        [AutocompleteAction.CompleteAutocomplete]: {
+            default: {
+                key: Key.ENTER,
+            },
+            displayName: _td("Complete"),
+        },
+        [AutocompleteAction.ForceCompleteAutocomplete]: {
+            default: {
+                key: Key.TAB,
+            },
+            displayName: _td("Force complete"),
+        },
+        [RoomAction.SearchInRoom]: {
+            default: {
+                ctrlOrCmdKey: true,
+                key: Key.F,
+            },
+            displayName: _td("Search (must be enabled)"),
+        },
+        "KeyBinding.closeDialogOrContextMenu": {
+            default: {
+                key: Key.ESCAPE,
+            },
+            displayName: _td("Close dialog or context menu"),
+        },
+        "KeyBinding.activateSelectedButton": {
+            default: {
+                key: Key.ENTER,
+            },
+            displayName: _td("Activate selected button"),
+        },
+    };
+};
 
-    };
-    keyboardShortcuts[MessageComposerAction.NewLine] = {
-        default: {
-            key: Key.ENTER,
-            shiftKey: !ctrlEnterToSend,
-        },
-        displayName: _td("New line"),
-    };
+export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
+    const keyboardShortcuts = KEYBOARD_SHORTCUTS;
+
     keyboardShortcuts[MessageComposerAction.EditRedo] = {
         default: {
             key: isMac ? Key.Z : Key.Y,
@@ -496,6 +502,19 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
         displayName: _td("Redo edit"),
     };
 
+    return keyboardShortcuts;
+};
+
+export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
+    const entries = [
+        ...Object.entries(getNonCustomizableShortcuts()),
+        ...Object.entries(getCustomizableShortcuts()),
+    ];
+
+    const keyboardShortcuts: IKeyboardShortcuts = {};
+    for (const [key, value] of entries) {
+        keyboardShortcuts[key] = value;
+    }
     return keyboardShortcuts;
 };
 
