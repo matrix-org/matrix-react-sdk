@@ -279,13 +279,13 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
     [KeyBindingAction.EditNextMessage]: {
         default: {
-            key: Key.ARROW_UP,
+            key: Key.ARROW_DOWN,
         },
         displayName: _td("Navigate to next message to edit"),
     },
     [KeyBindingAction.EditPrevMessage]: {
         default: {
-            key: Key.ARROW_DOWN,
+            key: Key.ARROW_UP,
         },
         displayName: _td("Navigate to previous message to edit"),
     },
@@ -307,7 +307,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         default: {
             altKey: true,
             ctrlKey: true,
-            key: Key.ARROW_UP,
+            key: Key.ARROW_DOWN,
         },
         displayName: _td("Navigate to next message in composer history"),
     },
@@ -315,7 +315,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         default: {
             altKey: true,
             ctrlKey: true,
-            key: Key.ARROW_DOWN,
+            key: Key.ARROW_UP,
         },
         displayName: _td("Navigate to previous message in composer history"),
     },
@@ -399,13 +399,13 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
     [KeyBindingAction.NextRoom]: {
         default: {
-            key: Key.ARROW_UP,
+            key: Key.ARROW_DOWN,
         },
         displayName: _td("Navigate up in the room list"),
     },
     [KeyBindingAction.PrevRoom]: {
         default: {
-            key: Key.ARROW_DOWN,
+            key: Key.ARROW_UP,
         },
         displayName: _td("Navigate down in the room list"),
     },
@@ -443,7 +443,7 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         default: {
             shiftKey: true,
             altKey: true,
-            key: Key.ARROW_UP,
+            key: Key.ARROW_DOWN,
         },
         displayName: _td("Next unread room or DM"),
     },
@@ -451,21 +451,21 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         default: {
             shiftKey: true,
             altKey: true,
-            key: Key.ARROW_DOWN,
+            key: Key.ARROW_UP,
         },
         displayName: _td("Previous unread room or DM"),
     },
     [KeyBindingAction.SelectNextRoom]: {
         default: {
             altKey: true,
-            key: Key.ARROW_UP,
+            key: Key.ARROW_DOWN,
         },
         displayName: _td("Next room or DM"),
     },
     [KeyBindingAction.SelectPrevRoom]: {
         default: {
             altKey: true,
-            key: Key.ARROW_DOWN,
+            key: Key.ARROW_UP,
         },
         displayName: _td("Previous room or DM"),
     },
@@ -477,13 +477,13 @@ const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
     [KeyBindingAction.NextSelectionInAutocomplete]: {
         default: {
-            key: Key.ARROW_UP,
+            key: Key.ARROW_DOWN,
         },
         displayName: _td("Next autocomplete suggestion"),
     },
     [KeyBindingAction.PrevSelectionInAutocomplete]: {
         default: {
-            key: Key.ARROW_DOWN,
+            key: Key.ARROW_UP,
         },
         displayName: _td("Previous autocomplete suggestion"),
     },
