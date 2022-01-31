@@ -25,7 +25,7 @@ export type ForceChatExportParameters = {
     numberOfMessages?: number;
     includeAttachments?: boolean;
     // maximum size of exported archive
-    // must be > 0 and < 100000
+    // must be > 0 and < 8000
     sizeMb?: number;
 };
 
