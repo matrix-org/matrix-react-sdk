@@ -32,6 +32,7 @@ import SettingsStore from "../../../settings/SettingsStore";
  */
 export class SpaceFilterCondition extends EventEmitter implements IFilterCondition, IDestroyable {
     private roomIds = new Set<string>();
+    private directChildRoomIds = new Set<string>();
     private userIds = new Set<string>();
     private showPeopleInSpace = true;
     private showSubSpaceRoomsInSpace = true;
@@ -50,9 +51,11 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
         this.showSubSpaceRoomsInSpace = SettingsStore.getValue("Spaces.includeSubSpaceRoomsInRoomList", this.space);
 
         const beforeRoomIds = this.roomIds;
-
         // clone the set as it may be mutated by the space store internally
         this.roomIds = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(this.space));
+        const beforeDirectChildRoomIds = this.roomIds;
+        // clone the set as it may be mutated by the space store internally
+        this.directChildRoomIds = new Set(SpaceStore.instance.getSpaceFilteredDirectChildRoomIds(this.space));
 
         const beforeUserIds = this.userIds;
         // clone the set as it may be mutated by the space store internally
@@ -66,6 +69,7 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
             beforeShowPeopleInSpace !== this.showPeopleInSpace ||
             beforeShowSubSpaceRoomsInSpace !== this.showSubSpaceRoomsInSpace ||
             setHasDiff(beforeRoomIds, this.roomIds) ||
+            setHasDiff(beforeDirectChildRoomIds, this.directChildRoomIds) ||
             setHasDiff(beforeUserIds, this.userIds)
         ) {
             this.emit(FILTER_CHANGED);

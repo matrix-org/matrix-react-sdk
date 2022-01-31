@@ -393,6 +393,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return this.spaceFilteredRooms.get(space) || new Set();
     };
 
+    public getSpaceFilteredDirectChildRoomIds = (space: SpaceKey): Set<string> => {
+        if (space === MetaSpace.Home && this.allRoomsInHome) {
+            return this.getSpaceFilteredRoomIds(space);
+        }
+        return this.spaceFilteredDirectChildRooms.get(space) || new Set();
+    };
+
     public getSpaceFilteredUserIds = (space: SpaceKey): Set<string> => {
         if (space === MetaSpace.Home && this.allRoomsInHome) {
             return undefined;
