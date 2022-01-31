@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643643886576,
+  "lastUpdate": 1643644579033,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60944,6 +60944,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4501.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e5de9294c4d401109f6ec35d72dd3b97ad29c15",
+          "message": "Refine UISI autorageshake conditions to cut down on false alarms (#7650)\n\nThe AutoRageshakeStore now only starts submitting rageshakes after the initial sync has completed, and provides a short grace period for decryption failures to resolve.",
+          "timestamp": "2022-01-31T10:49:27-05:00",
+          "tree_id": "ab9578474f4939fea2b2879f8288090b0cee2909",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e5de9294c4d401109f6ec35d72dd3b97ad29c15"
+        },
+        "date": 1643644572712,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4708.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 641.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
