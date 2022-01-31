@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643628502287,
+  "lastUpdate": 1643630466712,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60716,6 +60716,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4726.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "085ecc7f5ffd2d67abd4bbeac9bf1f5d55e1f9c4",
+          "message": "Chat export parameter customisation (#7647)\n\n* use export settings and hide fields\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix exporter tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test ExportDialog with settings\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy debugs, rename setting to Parameters\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use reasonable 100gb limit\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use normal setting instead of UIFeature\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use a customisation\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move validateNumberInRange to utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use nullish coalesce\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use 8gb size limit for customisation\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-01-31T12:54:14+01:00",
+          "tree_id": "87dc1f0dd11fbf64b36ffa4d2455915ca4841003",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/085ecc7f5ffd2d67abd4bbeac9bf1f5d55e1f9c4"
+        },
+        "date": 1643630461138,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4696.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 693.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
