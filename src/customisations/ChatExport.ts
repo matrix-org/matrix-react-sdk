@@ -20,8 +20,11 @@ export type ForceChatExportParameters = {
     format?: ExportFormat;
     range?: ExportType;
     // must be < 10**8
+    // only used when range is 'LastNMessages'
+    // default is 100
     numberOfMessages?: number;
     includeAttachments?: boolean;
+    // maximum size of exported archive
     // must be > 0 and < 100000
     sizeMb?: number;
 };

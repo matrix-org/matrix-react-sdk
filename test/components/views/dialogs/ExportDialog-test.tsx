@@ -141,7 +141,7 @@ describe('<ExportDialog />', () => {
         ChatExportMock.getForceChatExportParameters.mockReturnValue({
             format: ExportFormat.PlainText,
             range: ExportType.Beginning,
-            sizeMb: 15000,
+            sizeMb: 7000,
             numberOfMessages: 30,
             includeAttachments: true,
         });
@@ -155,7 +155,7 @@ describe('<ExportDialog />', () => {
             ExportType.Beginning,
             {
                 attachmentsIncluded: true,
-                maxSize: 15000 * 1024 * 1024,
+                maxSize: 7000 * 1024 * 1024,
                 numberOfMessages: 30,
             },
         ]);
