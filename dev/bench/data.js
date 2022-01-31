@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643641571550,
+  "lastUpdate": 1643642624341,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60848,6 +60848,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5284.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "655f473612841bdadb324e0bff70611ca43713f6",
+          "message": "Fix 'undefined' labels on rageshakes (#7680)",
+          "timestamp": "2022-01-31T10:15:46-05:00",
+          "tree_id": "ba257d8fa7c954a0cb78c5f2454ca4cbe273e2e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/655f473612841bdadb324e0bff70611ca43713f6"
+        },
+        "date": 1643642617819,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4984.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1112.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1829,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4882,
             "unit": "ms",
             "extra": "type: measure"
           }
