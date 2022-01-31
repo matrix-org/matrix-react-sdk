@@ -29,8 +29,8 @@ import { submitFeedback } from "../../../rageshake/submit-rageshake";
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import StyledCheckbox from "../elements/StyledCheckbox";
 
-const existingIssuesUrl =
-    "https://github.com/vector-im/element-web/issues" + "?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc";
+const existingIssuesUrl = "https://github.com/vector-im/element-web/issues/new?assignees=&labels=T-Defect," +
+    "Z-FOSDEM&template=bug-web.yml&webapp-url=chat.fosdem.org";
 const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
 
 interface IProps extends IDialogProps {
