@@ -388,8 +388,6 @@ describe("SpaceStore", () => {
             });
 
             describe('isRoomInSpace()', () => {
-
-
                 it("home space contains orphaned rooms", () => {
                     expect(store.isRoomInSpace(MetaSpace.Home, orphan1)).toBeTruthy();
                     expect(store.isRoomInSpace(MetaSpace.Home, orphan2)).toBeTruthy();
@@ -415,10 +413,12 @@ describe("SpaceStore", () => {
                     expect(store.isRoomInSpace(MetaSpace.Home, invite2)).toBeTruthy();
                 });
 
-                it("all rooms space does contain rooms/low priority even if they are also shown in a space", async () => {
-                    await setShowAllRooms(true);
-                    expect(store.isRoomInSpace(MetaSpace.Home, room1)).toBeTruthy();
-                });
+                it(
+                    "all rooms space does contain rooms/low priority even if they are also shown in a space",
+                    async () => {
+                        await setShowAllRooms(true);
+                        expect(store.isRoomInSpace(MetaSpace.Home, room1)).toBeTruthy();
+                    });
 
                 it("favourites space does contain favourites even if they are also shown in a space", async () => {
                     expect(store.isRoomInSpace(MetaSpace.Favourites, fav1)).toBeTruthy();
