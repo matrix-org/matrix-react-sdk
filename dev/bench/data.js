@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643644982751,
+  "lastUpdate": 1643645563370,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61016,6 +61016,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1063.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "991257cbc363dd1f674cadc0bddd1aaf2deeb12c",
+          "message": "Fix accessibility and consistency of MessageComposerButtons (#7679)",
+          "timestamp": "2022-01-31T16:05:05Z",
+          "tree_id": "af9a6e97374030c8c7702ef52028da97b25240fd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/991257cbc363dd1f674cadc0bddd1aaf2deeb12c"
+        },
+        "date": 1643645556821,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5785.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1120.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1832.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4614.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
