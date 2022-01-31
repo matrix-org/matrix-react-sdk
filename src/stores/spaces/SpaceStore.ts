@@ -732,6 +732,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                 this.spaceFilteredDirectChildRooms.set(spaceId, expandedDirectChildRoomIds);
                 this.spaceFilteredRooms.set(spaceId, expandedRoomIds);
+
                 this.spaceFilteredUsers.set(spaceId, userIds);
                 return [expandedRoomIds, userIds];
             };

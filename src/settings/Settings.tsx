@@ -861,7 +861,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "Spaces.includeSubSpaceRoomsInRoomList": {
         displayName: _td("Include all sub-space rooms in Space room list"),
         supportedLevels: LEVELS_ROOM_SETTINGS,
-        default: false, // @KERRY debugging
+        default: true,
     },
     "showCommunitiesInsteadOfSpaces": {
         displayName: _td("Display Communities instead of Spaces"),
