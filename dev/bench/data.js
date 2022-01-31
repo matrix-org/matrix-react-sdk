@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643642624341,
+  "lastUpdate": 1643643886576,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60896,6 +60896,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4882,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f99ae6d46a23908560b6448b3ac74eda6f4b76f9",
+          "message": "Tweak `/addwidget` widget names (#7681)",
+          "timestamp": "2022-01-31T15:37:49Z",
+          "tree_id": "eaee7487ea1c8d273ab45b9f8d0e7446ec78e049",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f99ae6d46a23908560b6448b3ac74eda6f4b76f9"
+        },
+        "date": 1643643880859,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5330.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 991.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1638.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4501.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
