@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643644579033,
+  "lastUpdate": 1643644982751,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60980,6 +60980,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 641.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a17d585a1292ada13365ba1ecb70138dbe3ce245",
+          "message": "Work towards unifying `KeyboardShortcuts` and `KeyBindingsDefaults` #2 (#7674)",
+          "timestamp": "2022-01-31T15:55:45Z",
+          "tree_id": "42a11a64244b0f7ad27892cfc5981fc625c569ff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a17d585a1292ada13365ba1ecb70138dbe3ce245"
+        },
+        "date": 1643644976096,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4899.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1063.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
