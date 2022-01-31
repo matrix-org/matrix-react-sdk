@@ -271,11 +271,6 @@ limitations under the License.
     mask-image: url('$(res)/img/image-view/more.svg');
 }
 
-.mx_MessageComposer_closeButtonMenu::before {
-    transform: rotate(90deg);
-    transform-origin: center;
-}
-
 .mx_MessageComposer_sendMessage {
     cursor: pointer;
     position: relative;
