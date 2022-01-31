@@ -68,10 +68,10 @@ describe("MessageComposerButtons", () => {
             "Upload file",
             "More options",
             [
-                "Create poll",
-                "Share location",
                 "Send a sticker",
                 "Send voice message",
+                "Create poll",
+                "Share location",
             ],
         ]);
     });
@@ -109,9 +109,9 @@ describe("MessageComposerButtons", () => {
             "More options",
             [
                 "Upload file",
+                "Send a sticker",
                 "Create poll",
                 "Share location",
-                "Send a sticker",
             ],
         ]);
     });

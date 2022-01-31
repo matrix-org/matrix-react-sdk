@@ -71,10 +71,10 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
         moreButtons = [
             uploadButton(props, roomId),
-            pollButton(room),
-            showLocationButton(props, room, roomId, matrixClient),
             showStickersButton(props),
             voiceRecordingButton(props),
+            pollButton(room),
+            showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
         mainButtons = [
@@ -82,10 +82,10 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(props, roomId),
         ];
         moreButtons = [
-            pollButton(room),
-            showLocationButton(props, room, roomId, matrixClient),
             showStickersButton(props),
             voiceRecordingButton(props),
+            pollButton(room),
+            showLocationButton(props, room, roomId, matrixClient),
         ];
     }
 
