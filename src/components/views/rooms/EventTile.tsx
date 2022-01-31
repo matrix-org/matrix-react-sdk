@@ -24,6 +24,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
+import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { M_POLL_START } from "matrix-events-sdk";
 
 import ReplyChain from "../elements/ReplyChain";
@@ -58,7 +59,7 @@ import MemberAvatar from '../avatars/MemberAvatar';
 import SenderProfile from '../messages/SenderProfile';
 import MessageTimestamp from '../messages/MessageTimestamp';
 import TooltipButton from '../elements/TooltipButton';
-import ReadReceiptMarker from "./ReadReceiptMarker";
+import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
 import { getEventDisplayInfo } from '../../../utils/EventUtils';
@@ -188,6 +189,10 @@ export function getHandlerTile(ev: MatrixEvent): string {
         return stateEventTileTypes[type];
     }
 
+    if (ev.isRedacted()) {
+        return "messages.MessageEvent";
+    }
+
     return eventTileTypes[type];
 }
 
@@ -269,8 +274,7 @@ interface IProps {
     // opaque readreceipt info for each userId; used by ReadReceiptMarker
     // to manage its animations. Should be an empty object when the room
     // first loads
-    // TODO: Proper typing for RR info
-    readReceiptMap?: any;
+    readReceiptMap?: { [userId: string]: IReadReceiptInfo };
 
     // A function which is used to check if the parent panel is being
     // unmounted, to avoid unnecessary work. Should return true if we
@@ -396,7 +400,8 @@ export default class EventTile extends React.Component<IProps, IState> {
     constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
-        const thread = this.props.mxEvent?.getThread();
+        this.context = context;
+        const thread = this.thread;
 
         this.state = {
             // Whether the action bar is focused.
@@ -417,7 +422,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             thread,
             threadReplyCount: thread?.length,
-            threadLastReply: thread?.lastReply,
+            threadLastReply: thread?.lastReply(),
         };
 
         // don't do RR animations until we are mounted
@@ -571,7 +576,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread?.lastReply,
+            threadLastReply: thread?.lastReply(),
             threadReplyCount: thread?.length,
             thread,
         });
@@ -644,7 +649,7 @@ export default class EventTile extends React.Component<IProps, IState> {
          * We currently have no reliable way to discover than an event is a thread
          * when we are at the sync stage
          */
-        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const thread = room?.threads.get(this.props.mxEvent.getId());
 
         if (!thread || thread.length === 0) {
@@ -777,7 +782,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     private async verifyEvent(mxEvent: MatrixEvent): Promise<void> {
-        if (!mxEvent.isEncrypted()) {
+        if (!mxEvent.isEncrypted() || mxEvent.isRedacted()) {
             return;
         }
 
@@ -943,7 +948,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             left = (hidden ? MAX_READ_AVATARS - 1 : i) * -receiptOffset;
 
             const userId = receipt.userId;
-            let readReceiptInfo;
+            let readReceiptInfo: IReadReceiptInfo;
 
             if (this.props.readReceiptMap) {
                 readReceiptInfo = this.props.readReceiptMap[userId];
@@ -1035,8 +1040,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             return <E2ePadlockUndecryptable />;
         }
 
-        // event is encrypted, display padlock corresponding to whether or not it is verified
-        if (ev.isEncrypted()) {
+        // event is encrypted and not redacted, display padlock corresponding to whether or not it is verified
+        if (ev.isEncrypted() && !ev.isRedacted()) {
             if (this.state.verified === E2EState.Normal) {
                 return; // no icon if we've not even cross-signed the user
             } else if (this.state.verified === E2EState.Verified) {
@@ -1060,6 +1065,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                 return;
             }
             if (ev.isState()) {
+                return; // we expect this to be unencrypted
+            }
+            if (ev.isRedacted()) {
                 return; // we expect this to be unencrypted
             }
             // if the event is not encrypted, but it's an e2e room, show the open padlock
@@ -1172,10 +1180,21 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
+    /**
+     * In some cases we can't use shouldHideEvent() since whether or not we hide
+     * an event depends on other things that the event itself
+     * @returns {boolean} true if event should be hidden
+     */
+    private shouldHideEvent(): boolean {
+        // If the call was replaced we don't render anything since we render the other call
+        if (this.props.callEventGrouper?.hangupReason === CallErrorCode.Replaced) return true;
+
+        return false;
+    }
+
     render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
-        const eventDisplayInfo = getEventDisplayInfo(this.props.mxEvent);
         const {
             tileHandler,
             isBubbleMessage,
@@ -1183,7 +1202,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             isLeftAlignedBubbleMessage,
             noBubbleEvent,
             isSeeingThroughMessageHiddenForModeration,
-        } = eventDisplayInfo;
+        } = getEventDisplayInfo(this.props.mxEvent, this.shouldHideEvent());
         const { isQuoteExpanded } = this.state;
 
         // This shouldn't happen: the caller should check we support this type
@@ -1203,6 +1222,10 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const lineClasses = classNames("mx_EventTile_line", {
             mx_EventTile_mediaLine: isProbablyMedia,
+            mx_EventTile_image: (
+                this.props.mxEvent.getType() === EventType.RoomMessage &&
+                this.props.mxEvent.getContent().msgtype === MsgType.Image
+            ),
             mx_EventTile_sticker: this.props.mxEvent.getType() === EventType.Sticker,
             mx_EventTile_emote: (
                 this.props.mxEvent.getType() === EventType.RoomMessage &&
@@ -1350,14 +1373,15 @@ export default class EventTile extends React.Component<IProps, IState> {
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.props.tileShape !== TileShape.ThreadPanel
             ? this.props.mxEvent.getTs()
-            : thread?.lastReply.getTs();
+            : thread?.lastReply().getTs();
 
-        const timestamp = showTimestamp && ts ?
-            <MessageTimestamp
-                showRelative={this.props.tileShape === TileShape.ThreadPanel}
-                showTwelveHour={this.props.isTwelveHour}
-                ts={ts}
-            /> : null;
+        const messageTimestamp = <MessageTimestamp
+            showRelative={this.props.tileShape === TileShape.ThreadPanel}
+            showTwelveHour={this.props.isTwelveHour}
+            ts={ts}
+        />;
+
+        const timestamp = showTimestamp && ts ? messageTimestamp : null;
 
         const keyRequestHelpText =
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
@@ -1419,9 +1443,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             { timestamp }
         </a>;
 
-        const useIRCLayout = this.props.layout == Layout.IRC;
+        const useIRCLayout = this.props.layout === Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
         const ircTimestamp = useIRCLayout ? linkedTimestamp : null;
+        const bubbleTimestamp = this.props.layout === Layout.Bubble ? messageTimestamp : null;
         const groupPadlock = !useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
         const ircPadlock = useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
 
@@ -1657,7 +1682,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { groupTimestamp }
                             { groupPadlock }
                             { replyChain }
-                            <EventTileType ref={this.tile}
+                            <EventTileType
+                                ref={this.tile}
                                 mxEvent={this.props.mxEvent}
                                 forExport={this.props.forExport}
                                 replacingEventId={this.props.replacingEventId}
@@ -1670,6 +1696,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                 callEventGrouper={this.props.callEventGrouper}
                                 getRelationsForEvent={this.props.getRelationsForEvent}
                                 isSeeingThroughMessageHiddenForModeration={isSeeingThroughMessageHiddenForModeration}
+                                timestamp={bubbleTimestamp}
                             />
                             { keyRequestInfo }
                             { actionBar }
@@ -1697,8 +1724,8 @@ function isMessageEvent(ev: MatrixEvent): boolean {
 }
 
 export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean): boolean {
-    // Only messages have a tile (black-rectangle) if redacted
-    if (e.isRedacted() && !isMessageEvent(e)) return false;
+    // Only show "Message deleted" tile for message or encrypted events
+    if (e.isRedacted() && !e.isEncrypted() && !isMessageEvent(e)) return false;
 
     // No tile for replacement events since they update the original tile
     if (e.isRelation("m.replace")) return false;

@@ -23,7 +23,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomState } from "matrix-js-sdk/src/models/room-state";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import { IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import QueryMatcher from './QueryMatcher';
@@ -34,17 +34,13 @@ import { makeUserPermalink } from "../utils/permalinks/Permalinks";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import MemberAvatar from '../components/views/avatars/MemberAvatar';
 import { TimelineRenderingType } from '../contexts/RoomContext';
+import UserIdentifierCustomisations from '../customisations/UserIdentifier';
 
 const USER_REGEX = /\B@\S*/g;
 
 // used when you hit 'tab' - we allow some separator chars at the beginning
 // to allow you to tab-complete /mat into /(matthew)
 const FORCED_USER_REGEX = /[^/,:; \t\n]\S*/g;
-
-interface IRoomTimelineData {
-    timeline: EventTimeline;
-    liveEvent?: boolean;
-}
 
 export default class UserProvider extends AutocompleteProvider {
     matcher: QueryMatcher<RoomMember>;
@@ -77,12 +73,12 @@ export default class UserProvider extends AutocompleteProvider {
 
     private onRoomTimeline = (
         ev: MatrixEvent,
-        room: Room,
+        room: Room | null,
         toStartOfTimeline: boolean,
         removed: boolean,
         data: IRoomTimelineData,
     ) => {
-        if (!room) return;
+        if (!room) return; // notification timeline, we'll get this event again with a room specific timeline
         if (removed) return;
         if (room.roomId !== this.room.roomId) return;
 
@@ -127,6 +123,9 @@ export default class UserProvider extends AutocompleteProvider {
             // Don't include the '@' in our search query - it's only used as a way to trigger completion
             const query = fullMatch.startsWith('@') ? fullMatch.substring(1) : fullMatch;
             completions = this.matcher.match(query, limit).map((user) => {
+                const description = UserIdentifierCustomisations.getDisplayUserIdentifier(
+                    user.userId, { roomId: this.room.roomId, withDisplayName: true },
+                );
                 const displayName = (user.name || user.userId || '');
                 return {
                     // Length of completion should equal length of text in decorator. draft-js
@@ -137,7 +136,7 @@ export default class UserProvider extends AutocompleteProvider {
                     suffix: (selection.beginning && range.start === 0) ? ': ' : ' ',
                     href: makeUserPermalink(user.userId),
                     component: (
-                        <PillCompletion title={displayName} description={user.userId}>
+                        <PillCompletion title={displayName} description={description}>
                             <MemberAvatar member={user} width={24} height={24} />
                         </PillCompletion>
                     ),

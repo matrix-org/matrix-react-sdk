@@ -39,6 +39,7 @@ import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import InviteDialog, { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialog";
 import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
@@ -822,13 +823,12 @@ export default class CallHandler extends EventEmitter {
         // We leave the check for whether there's already a call in this room until later,
         // otherwise it can race.
 
-        const joinedMemberCount = room.getJoinedMemberCount();
-        const invitedAndJoinedMemberCount = room.getInvitedAndJoinedMemberCount();
-        if (joinedMemberCount <= 1) {
+        const members = room.getJoinedMembers();
+        if (members.length <= 1) {
             Modal.createTrackedDialog('Call Handler', 'Cannot place call with self', ErrorDialog, {
                 description: _t('You cannot place a call with yourself.'),
             });
-        } else if (invitedAndJoinedMemberCount === 2) {
+        } else if (members.length === 2) {
             logger.info(`Place ${type} call in ${roomId}`);
 
             this.placeMatrixCall(roomId, type, transferee);
@@ -1098,6 +1098,23 @@ export default class CallHandler extends EventEmitter {
             if (!messaging) return; // more "should never happen" words
 
             messaging.transport.send(ElementWidgetActions.HangupCall, {});
+        });
+    }
+
+    /*
+     * Shows the transfer dialog for a call, signalling to the other end that
+     * a transfer is about to happen
+     */
+    public showTransferDialog(call: MatrixCall): void {
+        call.setRemoteOnHold(true);
+        const { finished } = Modal.createTrackedDialog(
+            'Transfer Call', '', InviteDialog, { kind: KIND_CALL_TRANSFER, call },
+            /*className=*/"mx_InviteDialog_transferWrapper", /*isPriority=*/false, /*isStatic=*/true,
+        );
+        finished.then((results: boolean[]) => {
+            if (results.length === 0 || results[0] === false) {
+                call.setRemoteOnHold(false);
+            }
         });
     }
 

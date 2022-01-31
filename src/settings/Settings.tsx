@@ -39,7 +39,6 @@ import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
-import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 
@@ -333,25 +332,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show info about bridges in room settings"),
         default: false,
     },
-    "feature_new_layout_switcher": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New layout switcher (with message bubbles)"),
-        default: false,
-        controller: new NewLayoutSwitcherController(),
-    },
-    "feature_spaces_metaspaces": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Meta Spaces"),
-        default: false,
-        controller: new OrderedMultiController([
-            new IncompatibleController("showCommunitiesInsteadOfSpaces"),
-            new ReloadOnChangeController(),
-        ]),
-    },
     "feature_breadcrumbs_v2": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
@@ -366,12 +346,19 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("New spotlight search experience"),
         default: false,
     },
+    "feature_right_panel_default_open": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Right panel stays open (defaults to room member list)"),
+        default: false,
+    },
     "feature_jump_to_date": {
         // We purposely leave out `isFeature: true` so it doesn't show in Labs
         // by default. We will conditionally show it depending on whether we can
         // detect MSC3030 support (see LabUserSettingsTab.tsx).
         // labsGroup: LabGroup.Messaging,
-        displayName: _td("Jump to date (adds /jumptodate)"),
+        displayName: _td("Jump to date (adds /jumptodate and jump to date headers)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -865,9 +852,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: {
             [MetaSpace.Home]: true,
         },
-        controller: new IncompatibleController("feature_spaces_metaspaces", {
-            [MetaSpace.Home]: true,
-        }, false),
     },
     "Spaces.showPeopleInSpace": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],

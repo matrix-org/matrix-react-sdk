@@ -29,6 +29,7 @@ import { fixupColorFonts } from '../../utils/FontManager';
 import dis from '../../dispatcher/dispatcher';
 import { IMatrixClientCreds } from '../../MatrixClientPeg';
 import SettingsStore from "../../settings/SettingsStore";
+import { SettingLevel } from "../../settings/SettingLevel";
 import ResizeHandle from '../views/elements/ResizeHandle';
 import { CollapseDistributor, Resizer } from '../../resizer';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -47,7 +48,7 @@ import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import Modal from "../../Modal";
 import { ICollapseConfig } from "../../resizer/distributors/collapse";
 import HostSignupContainer from '../views/host_signup/HostSignupContainer';
-import { getKeyBindingsManager, NavigationAction, RoomAction } from '../../KeyBindingsManager';
+import { getKeyBindingsManager } from '../../KeyBindingsManager';
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
 import { replaceableComponent } from "../../utils/replaceableComponent";
@@ -69,6 +70,8 @@ import LegacyCommunityPreview from "./LegacyCommunityPreview";
 import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
+import { TimelineRenderingType } from "../../contexts/RoomContext";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -386,15 +389,20 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     private onPaste = (ev: ClipboardEvent) => {
         const element = ev.target as HTMLElement;
-        const inputableElement = getInputableElement(element) || document.activeElement as HTMLElement;
+        const inputableElement = getInputableElement(element);
+        if (inputableElement === document.activeElement) return; // nothing to do
 
         if (inputableElement?.focus) {
             inputableElement.focus();
         } else {
+            const inThread = !!document.activeElement.closest(".mx_ThreadView");
             // refocusing during a paste event will make the
             // paste end up in the newly focused element,
             // so dispatch synchronously before paste happens
-            dis.fire(Action.FocusSendMessageComposer, true);
+            dis.dispatch({
+                action: Action.FocusSendMessageComposer,
+                context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
+            }, true);
         }
     };
 
@@ -440,15 +448,15 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
-            case RoomAction.ScrollUp:
-            case RoomAction.RoomScrollDown:
-            case RoomAction.JumpToFirstMessage:
-            case RoomAction.JumpToLatestMessage:
+            case KeyBindingAction.ScrollUp:
+            case KeyBindingAction.ScrollDown:
+            case KeyBindingAction.JumpToFirstMessage:
+            case KeyBindingAction.JumpToLatestMessage:
                 // pass the event down to the scroll panel
                 this.onScrollKeyPressed(ev);
                 handled = true;
                 break;
-            case RoomAction.FocusSearch:
+            case KeyBindingAction.SearchInRoom:
                 dis.dispatch({
                     action: 'focus_search',
                 });
@@ -463,41 +471,41 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
-            case NavigationAction.FocusRoomSearch:
+            case KeyBindingAction.FilterRooms:
                 dis.dispatch({
                     action: 'focus_room_filter',
                 });
                 handled = true;
                 break;
-            case NavigationAction.ToggleUserMenu:
+            case KeyBindingAction.ToggleUserMenu:
                 dis.fire(Action.ToggleUserMenu);
                 handled = true;
                 break;
-            case NavigationAction.OpenShortCutDialog:
+            case KeyBindingAction.ShowKeyboardSettings:
                 dis.dispatch<OpenToTabPayload>({
                     action: Action.ViewUserSettings,
                     initialTabId: UserTab.Keyboard,
                 });
                 handled = true;
                 break;
-            case NavigationAction.GoToHome:
+            case KeyBindingAction.GoToHome:
                 dis.dispatch({
                     action: 'view_home_page',
                 });
                 Modal.closeCurrentModal("homeKeyboardShortcut");
                 handled = true;
                 break;
-            case NavigationAction.ToggleSpacePanel:
+            case KeyBindingAction.ToggleSpacePanel:
                 dis.fire(Action.ToggleSpacePanel);
                 handled = true;
                 break;
-            case NavigationAction.ToggleRoomSidePanel:
+            case KeyBindingAction.ToggleRoomSidePanel:
                 if (this.props.page_type === "room_view" || this.props.page_type === "group_view") {
                     RightPanelStore.instance.togglePanel();
                     handled = true;
                 }
                 break;
-            case NavigationAction.SelectPrevRoom:
+            case KeyBindingAction.SelectPrevRoom:
                 dis.dispatch<ViewRoomDeltaPayload>({
                     action: Action.ViewRoomDelta,
                     delta: -1,
@@ -505,7 +513,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 });
                 handled = true;
                 break;
-            case NavigationAction.SelectNextRoom:
+            case KeyBindingAction.SelectNextRoom:
                 dis.dispatch<ViewRoomDeltaPayload>({
                     action: Action.ViewRoomDelta,
                     delta: 1,
@@ -513,14 +521,14 @@ class LoggedInView extends React.Component<IProps, IState> {
                 });
                 handled = true;
                 break;
-            case NavigationAction.SelectPrevUnreadRoom:
+            case KeyBindingAction.SelectPrevUnreadRoom:
                 dis.dispatch<ViewRoomDeltaPayload>({
                     action: Action.ViewRoomDelta,
                     delta: -1,
                     unread: true,
                 });
                 break;
-            case NavigationAction.SelectNextUnreadRoom:
+            case KeyBindingAction.SelectNextUnreadRoom:
                 dis.dispatch<ViewRoomDeltaPayload>({
                     action: Action.ViewRoomDelta,
                     delta: 1,
@@ -531,6 +539,33 @@ class LoggedInView extends React.Component<IProps, IState> {
                 // if we do not have a handler for it, pass it to the platform which might
                 handled = PlatformPeg.get().onKeyDown(ev);
         }
+
+        // Handle labs actions here, as they apply within the same scope
+        if (!handled) {
+            const labsAction = getKeyBindingsManager().getLabsAction(ev);
+            switch (labsAction) {
+                case KeyBindingAction.ToggleHiddenEventVisibility: {
+                    const hiddenEventVisibility = SettingsStore.getValueAt(
+                        SettingLevel.DEVICE,
+                        'showHiddenEventsInTimeline',
+                        undefined,
+                        false,
+                    );
+                    SettingsStore.setValue(
+                        'showHiddenEventsInTimeline',
+                        undefined,
+                        SettingLevel.DEVICE,
+                        !hiddenEventVisibility,
+                    );
+                    handled = true;
+                    break;
+                }
+                default:
+                    // if we do not have a handler for it, pass it to the platform which might
+                    handled = PlatformPeg.get().onKeyDown(ev);
+            }
+        }
+
         if (handled) {
             ev.stopPropagation();
             ev.preventDefault();
@@ -552,8 +587,12 @@ class LoggedInView extends React.Component<IProps, IState> {
             // If the user is entering a printable character outside of an input field
             // redirect it to the composer for them.
             if (!isClickShortcut && isPrintable && !getInputableElement(ev.target as HTMLElement)) {
+                const inThread = !!document.activeElement.closest(".mx_ThreadView");
                 // synchronous dispatch so we focus before key generates input
-                dis.fire(Action.FocusSendMessageComposer, true);
+                dis.dispatch({
+                    action: Action.FocusSendMessageComposer,
+                    context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
+                }, true);
                 ev.stopPropagation();
                 // we should *not* preventDefault() here as that would prevent typing in the now-focused composer
             }

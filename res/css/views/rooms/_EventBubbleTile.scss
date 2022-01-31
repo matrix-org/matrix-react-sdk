@@ -36,6 +36,7 @@ limitations under the License.
     margin-top: var(--gutterSize);
     margin-left: 49px;
     font-size: $font-14px;
+    flex-shrink: 0;
 
     .mx_ThreadInfo {
         clear: both;
@@ -128,8 +129,9 @@ limitations under the License.
 
             .mx_MImageBody .mx_MImageBody_thumbnail,
             .mx_MImageBody::before,
+            .mx_MediaBody,
             .mx_MLocationBody_map {
-                border-bottom-right-radius: var(--cornerRadius);
+                border-bottom-right-radius: var(--cornerRadius) !important;
             }
         }
 
@@ -151,8 +153,9 @@ limitations under the License.
 
             .mx_MImageBody .mx_MImageBody_thumbnail,
             .mx_MImageBody::before,
+            .mx_MediaBody,
             .mx_MLocationBody_map {
-                border-bottom-left-radius: var(--cornerRadius);
+                border-bottom-left-radius: var(--cornerRadius) !important;
             }
         }
 
@@ -215,8 +218,14 @@ limitations under the License.
             z-index: 3; // above media and location share maps
         }
 
-        // we put the timestamps for media (other than stickers) atop the media along with a gradient to aid visibility
-        &.mx_EventTile_mediaLine:not(.mx_EventTile_sticker) {
+        &.mx_EventTile_mediaLine .mx_MVoiceMessageBody {
+            // allow the event to be collapsed, this causes the waveform to get cropped
+            min-width: 0;
+        }
+
+        // we put the timestamps for media (other than stickers) atop the media
+        // for images we also apply a linear gradient and change the timestamp colour to aid readability
+        &.mx_EventTile_mediaLine.mx_EventTile_image {
             .mx_MessageTimestamp {
                 color: #ffffff; // regardless of theme, always visible on the below gradient
             }
@@ -248,24 +257,21 @@ limitations under the License.
             }
         }
 
-        //noinspection CssReplaceWithShorthandSafely
         .mx_MImageBody {
             width: 100%;
             height: 100%;
 
-            //noinspection CssReplaceWithShorthandSafely
-            .mx_MImageBody_thumbnail {
-                // Note: This is intentionally not compressed because the browser gets confused
-                // when it is all combined. We're effectively unsetting the border radius then
-                // setting the two corners we care about manually.
-                border-radius: unset;
-                border-top-left-radius: var(--cornerRadius);
-                border-top-right-radius: var(--cornerRadius);
-
-                &.mx_MImageBody_thumbnail--blurhash {
-                    position: unset;
-                }
+            .mx_MImageBody_thumbnail.mx_MImageBody_thumbnail--blurhash {
+                position: unset;
             }
+        }
+
+        //noinspection CssReplaceWithShorthandSafely
+        .mx_MImageBody .mx_MImageBody_thumbnail,
+        .mx_MediaBody {
+            border-radius: unset;
+            border-top-left-radius: var(--cornerRadius);
+            border-top-right-radius: var(--cornerRadius);
         }
 
         .mx_EventTile_e2eIcon {
@@ -274,9 +280,15 @@ limitations under the License.
     }
 
     &:not(.mx_EventTile_noBubble) .mx_EventTile_line:not(.mx_EventTile_mediaLine) {
-        padding: var(--gutterSize);
+        // make the top and bottom padding 1px smaller so that we can pad .mx_EventTile_content by 1px
+        // to avoid anti-zalgo cutting off our larger than text emojis.
+        padding: calc(var(--gutterSize) - 1px);
         padding-right: 60px; // space for the timestamp
         background: var(--backgroundColor);
+
+        .mx_EventTile_content {
+            padding: 1px;
+        }
     }
 
     &.mx_EventTile_continuation[data-self=false] .mx_EventTile_line {
@@ -284,6 +296,7 @@ limitations under the License.
 
         .mx_MImageBody .mx_MImageBody_thumbnail,
         .mx_MImageBody::before,
+        .mx_MediaBody,
         .mx_MLocationBody_map {
             border-top-left-radius: 0;
         }
@@ -293,6 +306,7 @@ limitations under the License.
 
         .mx_MImageBody .mx_MImageBody_thumbnail,
         .mx_MImageBody::before,
+        .mx_MediaBody,
         .mx_MLocationBody_map {
             border-bottom-left-radius: var(--cornerRadius);
         }
@@ -303,6 +317,7 @@ limitations under the License.
 
         .mx_MImageBody .mx_MImageBody_thumbnail,
         .mx_MImageBody::before,
+        .mx_MediaBody,
         .mx_MLocationBody_map {
             border-top-right-radius: 0;
         }
@@ -312,6 +327,7 @@ limitations under the License.
 
         .mx_MImageBody .mx_MImageBody_thumbnail,
         .mx_MImageBody::before,
+        .mx_MediaBody,
         .mx_MLocationBody_map {
             border-bottom-right-radius: var(--cornerRadius);
         }
@@ -442,6 +458,14 @@ limitations under the License.
 }
 
 .mx_EventTile.mx_EventTile_bubbleContainer[data-layout=bubble],
+.mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout=bubble] {
+    .mx_EventTile_line > a {
+        // hide this timestamp as the tile will render its own
+        display: none;
+    }
+}
+
+.mx_EventTile.mx_EventTile_bubbleContainer[data-layout=bubble],
 .mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout=bubble],
 .mx_EventTile.mx_EventTile_info[data-layout=bubble],
 .mx_EventListSummary[data-layout=bubble][data-expanded=false] {
@@ -523,9 +547,11 @@ limitations under the License.
 // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
 // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
 .mx_EventListSummary[data-expanded=true][data-layout=bubble] {
+    display: flex;
+    flex-direction: column;
     margin: 0;
 
-    .mx_EventTile {
+    .mx_EventTile_info {
         padding: 2px 0;
         margin-right: 0;
 
@@ -560,4 +586,8 @@ limitations under the License.
             background: transparent;
         }
     }
+}
+
+.mx_EventTile_tileError[data-layout=bubble] .mx_EventTile_line {
+    flex-direction: column; // restore the centering
 }

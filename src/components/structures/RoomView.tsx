@@ -79,7 +79,7 @@ import Notifier from "../../Notifier";
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";
 import { RoomNotificationStateStore } from "../../stores/notifications/RoomNotificationStateStore";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
-import { getKeyBindingsManager, RoomAction } from '../../KeyBindingsManager';
+import { getKeyBindingsManager } from '../../KeyBindingsManager';
 import { objectHasDiff } from "../../utils/objects";
 import SpaceRoomView from "./SpaceRoomView";
 import { IOpts } from "../../createRoom";
@@ -100,6 +100,7 @@ import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
 import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
 import { ActionPayload } from "../../dispatcher/payloads";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -797,16 +798,16 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const action = getKeyBindingsManager().getRoomAction(ev);
         switch (action) {
-            case RoomAction.DismissReadMarker:
+            case KeyBindingAction.DismissReadMarker:
                 this.messagePanel.forgetReadMarker();
                 this.jumpToLiveTimeline();
                 handled = true;
                 break;
-            case RoomAction.JumpToOldestUnread:
+            case KeyBindingAction.JumpToOldestUnread:
                 this.jumpToReadMarker();
                 handled = true;
                 break;
-            case RoomAction.UploadFile:
+            case KeyBindingAction.UploadFile:
                 dis.dispatch({ action: "upload_file" }, true);
                 handled = true;
                 break;
@@ -934,10 +935,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
-    private onRoomTimeline = (ev: MatrixEvent, room: Room, toStartOfTimeline: boolean, removed, data) => {
+    private onRoomTimeline = (ev: MatrixEvent, room: Room | null, toStartOfTimeline: boolean, removed, data) => {
         if (this.unmounted) return;
 
-        // ignore events for other rooms
+        // ignore events for other rooms or the notification timeline set
         if (!room || room.roomId !== this.state.room?.roomId) return;
 
         // ignore events from filtered timelines
@@ -1783,6 +1784,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
+    private get messagePanelClassNames(): string {
+        return classNames("mx_RoomView_messagePanel", {
+            mx_IRCLayout: this.state.layout === Layout.IRC,
+            mx_GroupLayout: this.state.layout === Layout.Group,
+        });
+    }
+
     render() {
         if (!this.state.room) {
             const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
@@ -2068,7 +2076,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 searchResultsPanel = (
                     <ScrollPanel
                         ref={this.searchResultsPanel}
-                        className="mx_RoomView_messagePanel mx_RoomView_searchResultsPanel mx_GroupLayout"
+                        className={"mx_RoomView_searchResultsPanel " + this.messagePanelClassNames}
                         onFillRequest={this.onSearchResultsFillRequest}
                         resizeNotifier={this.props.resizeNotifier}
                     >
@@ -2084,13 +2092,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (this.state.isInitialEventHighlighted) {
             highlightedEventId = this.state.initialEventId;
         }
-
-        const messagePanelClassNames = classNames(
-            "mx_RoomView_messagePanel",
-            {
-                "mx_IRCLayout": this.state.layout == Layout.IRC,
-                "mx_GroupLayout": this.state.layout == Layout.Group,
-            });
 
         // console.info("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
         const messagePanel = (
@@ -2109,7 +2110,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 onUserScroll={this.onUserScroll}
                 onReadMarkerUpdated={this.updateTopUnreadMessagesBar}
                 showUrlPreview={this.state.showUrlPreview}
-                className={messagePanelClassNames}
+                className={this.messagePanelClassNames}
                 membersLoaded={this.state.membersLoaded}
                 permalinkCreator={this.getPermalinkCreatorForRoom(this.state.room)}
                 resizeNotifier={this.props.resizeNotifier}

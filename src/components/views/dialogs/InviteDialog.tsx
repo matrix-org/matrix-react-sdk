@@ -72,6 +72,7 @@ import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import CallHandler from "../../../CallHandler";
+import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -329,9 +330,13 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             </span>
         );
 
+        const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(
+            this.props.member.userId, { withDisplayName: true },
+        );
+
         const caption = (this.props.member as ThreepidMember).isEmail
             ? _t("Invite by email")
-            : this.highlightName(this.props.member.userId);
+            : this.highlightName(userIdentifier);
 
         return (
             <div className='mx_InviteDialog_roomTile' onClick={this.onClick}>
@@ -347,8 +352,10 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 }
 
 interface IInviteDialogProps {
-    // Takes an array of user IDs/emails to invite.
-    onFinished: (toInvite?: string[]) => void;
+    // Takes a boolean which is true if a user / users were invited /
+    // a call transfer was initiated or false if the dialog was cancelled
+    // with no action taken.
+    onFinished: (success: boolean) => void;
 
     // The kind of invite being performed. Assumed to be KIND_DM if
     // not provided.
@@ -680,7 +687,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 should_peek: false,
                 joining: false,
             });
-            this.props.onFinished();
+            this.props.onFinished(true);
             return;
         }
 
@@ -727,7 +734,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             }
 
             await createRoom(createRoomOptions);
-            this.props.onFinished();
+            this.props.onFinished(true);
         } catch (err) {
             logger.error(err);
             this.setState({
@@ -756,30 +763,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
 
         try {
-            const result = await inviteMultipleToRoom(this.props.roomId, targetIds);
+            const result = await inviteMultipleToRoom(this.props.roomId, targetIds, true);
             CountlyAnalytics.instance.trackSendInvite(startTime, this.props.roomId, targetIds.length);
             if (!this.shouldAbortAfterInviteError(result, room)) { // handles setting error message too
-                this.props.onFinished();
-            }
-
-            if (cli.isRoomEncrypted(this.props.roomId)) {
-                const visibilityEvent = room.currentState.getStateEvents(
-                    "m.room.history_visibility", "",
-                );
-                const visibility = visibilityEvent && visibilityEvent.getContent() &&
-                    visibilityEvent.getContent().history_visibility;
-                if (visibility == "world_readable" || visibility == "shared") {
-                    const invitedUsers = [];
-                    for (const [addr, state] of Object.entries(result.states)) {
-                        if (state === "invited" && getAddressType(addr) === "mx-user-id") {
-                            invitedUsers.push(addr);
-                        }
-                    }
-                    logger.log("Sharing history with", invitedUsers);
-                    cli.sendSharedHistoryKeys(
-                        this.props.roomId, invitedUsers,
-                    );
-                }
+                this.props.onFinished(true);
             }
         } catch (err) {
             logger.error(err);
@@ -816,7 +803,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 this.state.consultFirst,
             );
         }
-        this.props.onFinished();
+        this.props.onFinished(true);
     };
 
     private onKeyDown = (e) => {
@@ -839,7 +826,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     };
 
     private onCancel = () => {
-        this.props.onFinished([]);
+        this.props.onFinished(false);
     };
 
     private updateSuggestions = async (term) => {
@@ -1101,11 +1088,11 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private onManageSettingsClick = (e) => {
         e.preventDefault();
         dis.fire(Action.ViewUserSettings);
-        this.props.onFinished();
+        this.props.onFinished(false);
     };
 
     private onCommunityInviteClick = (e) => {
-        this.props.onFinished();
+        this.props.onFinished(false);
         showCommunityInviteDialog(CommunityPrototypeStore.instance.getSelectedCommunityId());
     };
 
