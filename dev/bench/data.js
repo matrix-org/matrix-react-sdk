@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643645800785,
+  "lastUpdate": 1643648446030,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61100,6 +61100,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9ffc141350b1596109e6c2ec18e003517d9868fd",
+          "message": "Yarn upgrade (#7683)",
+          "timestamp": "2022-01-31T16:54:01Z",
+          "tree_id": "5af4df6339dfc49d2a6a2c0abce970e516938b2b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9ffc141350b1596109e6c2ec18e003517d9868fd"
+        },
+        "date": 1643648440613,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5063,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 607.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
