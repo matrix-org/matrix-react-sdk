@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643621211837,
+  "lastUpdate": 1643623192125,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -60632,6 +60632,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4980.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "53aca69594b67c8b229239eead86859aecf08e55",
+          "message": "Fix font size of spaces between big emoji (#7675)",
+          "timestamp": "2022-01-31T09:53:04Z",
+          "tree_id": "ae587f84f6c5768f3295778434ad88c83fa8e61c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/53aca69594b67c8b229239eead86859aecf08e55"
+        },
+        "date": 1643623185827,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4713.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 643.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
