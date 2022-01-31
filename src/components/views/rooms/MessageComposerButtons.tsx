@@ -168,7 +168,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
         <CollapsibleButton
             className={className}
             onClick={openMenu}
-            title={_t("Add emoji")}
+            title={_t("Emoji")}
         />
 
         { contextMenu }
@@ -247,7 +247,7 @@ class UploadButton extends React.Component<IUploadButtonProps> {
             <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_upload"
                 onClick={this.onUploadClick}
-                title={_t('Upload file')}
+                title={_t('Attachment')}
             >
                 <input
                     ref={this.uploadInput}
@@ -269,7 +269,7 @@ function showStickersButton(props: IProps): ReactElement {
                 key="controls_stickers"
                 className="mx_MessageComposer_button mx_MessageComposer_stickers"
                 onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
-                title={_t("Send a sticker")}
+                title={props.isStickerPickerOpen ? _t("Hide stickers") : _t("Sticker")}
             />
             : null
     );
@@ -284,7 +284,7 @@ function voiceRecordingButton(props: IProps): ReactElement {
                 key="voice_message_send"
                 className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
                 onClick={props.onRecordStartEndClick}
-                title={_t("Send voice message")}
+                title={_t("Voice Message")}
             />
     );
 }
@@ -339,7 +339,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
             <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_poll"
                 onClick={this.onCreateClick}
-                title={_t("Create poll")}
+                title={_t("Poll")}
             />
         );
     }
