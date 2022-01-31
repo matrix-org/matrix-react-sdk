@@ -30,7 +30,6 @@ import GroupStore from '../../../stores/GroupStore';
 import GroupFilterOrderStore from '../../../stores/GroupFilterOrderStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
-import SettingsStore from "../../../settings/SettingsStore";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -111,7 +110,6 @@ export default class TagTile extends React.Component {
     };
 
     onMouseOver = () => {
-        if (SettingsStore.getValue("feature_communities_v2_prototypes")) return;
         this.setState({ hover: true });
     };
 
@@ -123,7 +121,6 @@ export default class TagTile extends React.Component {
         // Prevent the TagTile onClick event firing as well
         e.stopPropagation();
         e.preventDefault();
-        if (SettingsStore.getValue("feature_communities_v2_prototypes")) return;
         this.setState({ hover: false });
         this.props.openMenu();
     };
@@ -138,12 +135,9 @@ export default class TagTile extends React.Component {
             ? mediaFromMxc(profile.avatarUrl).getSquareThumbnailHttp(avatarSize)
             : null;
 
-        const isPrototype = SettingsStore.getValue("feature_communities_v2_prototypes");
         const className = classNames({
             mx_TagTile: true,
-            mx_TagTile_prototype: isPrototype,
-            mx_TagTile_selected: this.props.selected && !isPrototype,
-            mx_TagTile_selected_prototype: this.props.selected && isPrototype,
+            mx_TagTile_selected: this.props.selected,
         });
 
         const badge = GroupFilterOrderStore.getGroupBadge(this.props.tag);

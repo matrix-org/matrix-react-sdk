@@ -31,7 +31,6 @@ import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher/dispatcher';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import BaseCard from "../right_panel/BaseCard";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
@@ -523,10 +522,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
         if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
-            const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
-            if (chat && chat.roomId === this.props.roomId) {
-                inviteButtonText = _t("Invite to this community");
-            } else if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
+            if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
                 inviteButtonText = _t("Invite to this space");
             }
 

@@ -75,28 +75,13 @@ $groupFilterPanelWidth: 56px; // only applies in this file, used for calculation
     position: relative;
 }
 
-.mx_GroupFilterPanel .mx_TagTile.mx_TagTile_prototype {
-    padding: 3px;
-}
-
 .mx_GroupFilterPanel .mx_TagTile:focus,
 .mx_GroupFilterPanel .mx_TagTile:hover,
 .mx_GroupFilterPanel .mx_TagTile.mx_TagTile_selected {
     // opacity: 1;
 }
 
-.mx_GroupFilterPanel .mx_TagTile.mx_TagTile_selected_prototype {
-    background-color: $background;
-    border-radius: 6px;
-}
-
-.mx_TagTile_selected_prototype {
-    .mx_TagTile_homeIcon::before {
-        background-color: $primary-content; // dark-on-light
-    }
-}
-
-.mx_TagTile:not(.mx_TagTile_selected_prototype) .mx_TagTile_homeIcon {
+.mx_TagTile .mx_TagTile_homeIcon {
     background-color: $roomheader-addroom-bg-color;
     border-radius: 48px;
 

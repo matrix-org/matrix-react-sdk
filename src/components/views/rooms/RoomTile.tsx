@@ -50,7 +50,6 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
-import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
@@ -139,14 +138,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(prevProps.room?.roomId),
-                this.onCommunityUpdate,
-            );
-            CommunityPrototypeStore.instance.on(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room?.roomId),
-                this.onCommunityUpdate,
-            );
             prevProps.room?.off("Room.name", this.onRoomNameUpdate);
             this.props.room?.on("Room.name", this.onRoomNameUpdate);
         }
@@ -167,10 +158,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         this.props.room?.on("Room.name", this.onRoomNameUpdate);
-        CommunityPrototypeStore.instance.on(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
     }
 
     public componentWillUnmount() {
@@ -180,20 +167,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-                this.onCommunityUpdate,
-            );
             this.props.room.off("Room.name", this.onRoomNameUpdate);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
         this.notificationState.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        CommunityPrototypeStore.instance.off(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
     }
 
     private onAction = (payload: ActionPayload) => {
@@ -560,12 +539,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             'mx_RoomTile_minimized': this.props.isMinimized,
         });
 
-        let roomProfile: IRoomProfile = { displayName: null, avatarMxc: null };
-        if (this.props.tag === DefaultTagID.Invite) {
-            roomProfile = CommunityPrototypeStore.instance.getInviteProfile(this.props.room.roomId);
-        }
-
-        let name = roomProfile.displayName || this.props.room.name;
+        let name = this.props.room.name;
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
@@ -663,7 +637,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                                 room={this.props.room}
                                 avatarSize={32}
                                 displayBadge={this.props.isMinimized}
-                                oobData={({ avatarUrl: roomProfile.avatarMxc })}
                                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
                             />
                             { nameContainer }

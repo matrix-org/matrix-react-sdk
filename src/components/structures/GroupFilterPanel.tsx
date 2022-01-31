@@ -25,8 +25,6 @@ import dis from '../../dispatcher/dispatcher';
 import { _t } from '../../languageHandler';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
-import SettingsStore from "../../settings/SettingsStore";
-import UserTagTile from "../views/elements/UserTagTile";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import UIStore from "../../stores/UIStore";
 import DNDTagTile from "../views/elements/DNDTagTile";
@@ -116,17 +114,6 @@ class GroupFilterPanel extends React.Component<IGroupFilterPanelProps, IGroupFil
         dis.dispatch({ action: 'deselect_tags' });
     };
 
-    private renderGlobalIcon() {
-        if (!SettingsStore.getValue("feature_communities_v2_prototypes")) return null;
-
-        return (
-            <div>
-                <UserTagTile />
-                <hr className="mx_GroupFilterPanel_divider" />
-            </div>
-        );
-    }
-
     public render() {
         const tags = this.state.orderedTags.map((tag, index) => {
             return <DNDTagTile
@@ -142,35 +129,20 @@ class GroupFilterPanel extends React.Component<IGroupFilterPanelProps, IGroupFil
             mx_GroupFilterPanel_items_selected: itemsSelected,
         });
 
-        let createButton = (
-            <ActionButton
-                tooltip
-                label={_t("Communities")}
-                action="toggle_my_groups"
-                className="mx_TagTile mx_TagTile_plus"
-            />
-        );
-
-        if (SettingsStore.getValue("feature_communities_v2_prototypes")) {
-            createButton = (
-                <ActionButton
-                    tooltip
-                    label={_t("Create community")}
-                    action="view_create_group"
-                    className="mx_TagTile mx_TagTile_plus" />
-            );
-        }
-
         return <div className={classes} onClick={this.onClearFilterClick} ref={this.ref}>
             <AutoHideScrollbar
                 className="mx_GroupFilterPanel_scroller"
                 onClick={this.onClick}
             >
                 <div className="mx_GroupFilterPanel_tagTileContainer">
-                    { this.renderGlobalIcon() }
                     { tags }
                     <div>
-                        { createButton }
+                        <ActionButton
+                            tooltip
+                            label={_t("Communities")}
+                            action="toggle_my_groups"
+                            className="mx_TagTile mx_TagTile_plus"
+                        />
                     </div>
                 </div>
             </AutoHideScrollbar>

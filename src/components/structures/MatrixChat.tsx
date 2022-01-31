@@ -76,10 +76,8 @@ import {
 } from "../../stores/notifications/RoomNotificationStateStore";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { leaveRoomBehaviour } from "../../utils/membership";
-import CreateCommunityPrototypeDialog from "../views/dialogs/CreateCommunityPrototypeDialog";
 import ThreepidInviteStore, { IThreepidInvite, IThreepidInviteWireFormat } from "../../stores/ThreepidInviteStore";
 import { UIFeature } from "../../settings/UIFeature";
-import { CommunityPrototypeStore } from "../../stores/CommunityPrototypeStore";
 import DialPadModal from "../views/voip/DialPadModal";
 import { showToast as showMobileGuideToast } from '../../toasts/MobileGuideToast';
 import { shouldUseLoginForWelcome } from "../../utils/pages";
@@ -723,11 +721,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.createRoom(payload.public, payload.defaultName);
                 break;
             case 'view_create_group': {
-                const prototype = SettingsStore.getValue("feature_communities_v2_prototypes");
                 Modal.createTrackedDialog(
                     'Create Community',
                     '',
-                    prototype ? CreateCommunityPrototypeDialog : CreateGroupDialog,
+                    CreateGroupDialog,
                 );
                 break;
             }
@@ -1087,18 +1084,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private async createRoom(defaultPublic = false, defaultName?: string) {
-        const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
-        if (communityId) {
-            // double check the user will have permission to associate this room with the community
-            if (!CommunityPrototypeStore.instance.isAdminOf(communityId)) {
-                Modal.createTrackedDialog('Pre-failure to create room', '', ErrorDialog, {
-                    title: _t("Cannot create rooms in this community"),
-                    description: _t("You do not have permission to create rooms in this community."),
-                });
-                return;
-            }
-        }
-
         const modal = Modal.createTrackedDialog('Create Room', '', CreateRoomDialog, {
             defaultPublic,
             defaultName,
