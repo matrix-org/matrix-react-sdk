@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643728443690,
+  "lastUpdate": 1643730142117,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61544,6 +61544,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4589.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5b999300b26118f90da7c68d6230d2a97dfe1dd2",
+          "message": "Fix the sticker picker (#7692)\n\n* Fix the sticker picker\r\n\r\nDon't stop user widgets on room change: they're not room-specific.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/20797\r\n\r\n* Use 'userWidget' prop rather than roomId being defined",
+          "timestamp": "2022-02-01T15:34:22Z",
+          "tree_id": "07df1fa7f718f4d82561e4cfd742ebcc3ba34d89",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5b999300b26118f90da7c68d6230d2a97dfe1dd2"
+        },
+        "date": 1643730136132,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4718.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 679.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
