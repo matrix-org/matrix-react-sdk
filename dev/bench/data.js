@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643711109328,
+  "lastUpdate": 1643728090865,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61400,6 +61400,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4727,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5973d725e05a930c630be29d66693c2be40ae9ef",
+          "message": "Add new threads to the panel as they are discovered (#7688)",
+          "timestamp": "2022-02-01T15:01:00Z",
+          "tree_id": "947204717df42c2ba1f7b69c663cd9494739405d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5973d725e05a930c630be29d66693c2be40ae9ef"
+        },
+        "date": 1643728084512,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4925.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 976.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1760.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4521.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
