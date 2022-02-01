@@ -59,53 +59,47 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     const matrixClient: MatrixClient = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    return (
-        props.haveRecording
-            ? null
-            : props.narrowMode
-                ? narrowMode(props, room, roomId, matrixClient)
-                : wideMode(props, room, roomId, matrixClient)
-    );
-};
+    if (props.haveRecording) {
+        return null;
+    }
 
-function wideMode(
-    props: IProps,
-    room: Room,
-    roomId: string,
-    matrixClient: MatrixClient,
-): ReactElement {
-    return <>
-        { pollButton(props, room) }
-        { uploadButton(props, roomId) }
-        { showLocationButton(props, room, roomId, matrixClient) }
-        { emojiButton(props) }
-        { showStickersButton(props) }
-        { voiceRecordingButton(props) }
-    </>;
-}
+    let mainButtons: ReactElement[];
+    let moreButtons: ReactElement[];
+    if (props.narrowMode) {
+        mainButtons = [
+            emojiButton(props),
+        ];
+        moreButtons = [
+            uploadButton(props, roomId),
+            pollButton(room),
+            showLocationButton(props, room, roomId, matrixClient),
+            showStickersButton(props),
+            voiceRecordingButton(props),
+        ];
+    } else {
+        mainButtons = [
+            emojiButton(props),
+            uploadButton(props, roomId),
+        ];
+        moreButtons = [
+            pollButton(room),
+            showLocationButton(props, room, roomId, matrixClient),
+            showStickersButton(props),
+            voiceRecordingButton(props),
+        ];
+    }
 
-function narrowMode(
-    props: IProps,
-    room: Room,
-    roomId: string,
-    matrixClient: MatrixClient,
-): ReactElement {
+    mainButtons = mainButtons.filter((x: ReactElement) => x);
+    moreButtons = moreButtons.filter((x: ReactElement) => x);
+
     const moreOptionsClasses = classNames({
         mx_MessageComposer_button: true,
         mx_MessageComposer_buttonMenu: true,
         mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
     });
 
-    const moreButtons = [
-        pollButton(props, room),
-        showLocationButton(props, room, roomId, matrixClient),
-        emojiButton(props),
-        showStickersButton(props),
-        voiceRecordingButton(props),
-    ].filter(x => x);
-
     return <>
-        { uploadButton(props, roomId) }
+        { mainButtons }
         <AccessibleTooltipButton
             className={moreOptionsClasses}
             onClick={props.toggleButtonMenu}
@@ -123,7 +117,7 @@ function narrowMode(
             </ContextMenu>
         ) }
     </>;
-}
+};
 
 function emojiButton(props: IProps): ReactElement {
     return <EmojiButton
@@ -275,13 +269,7 @@ function showStickersButton(props: IProps): ReactElement {
                 key="controls_stickers"
                 className="mx_MessageComposer_button mx_MessageComposer_stickers"
                 onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
-                title={
-                    props.narrowMode
-                        ? _t("Send a sticker")
-                        : props.isStickerPickerOpen
-                            ? _t("Hide Stickers")
-                            : _t("Show Stickers")
-                }
+                title={_t("Send a sticker")}
             />
             : null
     );
@@ -301,7 +289,7 @@ function voiceRecordingButton(props: IProps): ReactElement {
     );
 }
 
-function pollButton(props: IProps, room: Room): ReactElement {
+function pollButton(room: Room): ReactElement {
     return <PollButton key="polls" room={room} />;
 }
 
@@ -311,6 +299,7 @@ interface IPollButtonProps {
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
     static contextType = OverflowMenuContext;
+    public context!: React.ContextType<typeof OverflowMenuContext>;
 
     private onCreateClick = () => {
         this.context?.(); // close overflow menu
