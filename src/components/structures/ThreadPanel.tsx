@@ -139,9 +139,10 @@ export const ThreadPanelHeaderFilterOptionItem = ({
     </MenuItemRadio>;
 };
 
-export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
+export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
     filterOption: ThreadFilterType;
     setFilterOption: (filterOption: ThreadFilterType) => void;
+    empty: boolean;
 }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
@@ -179,10 +180,12 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     </ContextMenu> : null;
     return <div className="mx_ThreadPanel__header">
         <span>{ _t("Threads") }</span>
-        <ContextMenuButton className="mx_ThreadPanel_dropdown" inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
-            { `${_t('Show:')} ${value.label}` }
-        </ContextMenuButton>
-        { contextMenu }
+        { !empty && <>
+            <ContextMenuButton className="mx_ThreadPanel_dropdown" inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
+                { `${_t('Show:')} ${value.label}` }
+            </ContextMenuButton>
+            { contextMenu }
+        </> }
     </div>;
 };
 
@@ -216,6 +219,8 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
     const ref = useRef<TimelinePanel>();
 
+    const [threadCount, setThreadCount] = useState(room.threads.size);
+
     const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
     useEffect(() => {
         getThreadTimelineSet(mxClient, room, filterOption)
@@ -231,6 +236,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     });
 
     useEventEmitter(room, ThreadEvent.New, async (thread: Thread) => {
+        setThreadCount(room.threads.size);
         if (timelineSet) {
             const capabilities = await mxClient.getCapabilities();
             const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
@@ -266,7 +272,11 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
             showHiddenEventsInTimeline: true,
         }}>
             <BaseCard
-                header={<ThreadPanelHeader filterOption={filterOption} setFilterOption={setFilterOption} />}
+                header={<ThreadPanelHeader
+                    filterOption={filterOption}
+                    setFilterOption={setFilterOption}
+                    empty={threadCount === 0}
+                />}
                 className="mx_ThreadPanel"
                 onClose={onClose}
                 withoutScrollContainer={true}
