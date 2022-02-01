@@ -219,7 +219,7 @@ class UploadButton extends React.Component<IUploadButtonProps> {
             dis.dispatch({ action: 'require_registration' });
             return;
         }
-        this.uploadInput.current.click();
+        this.uploadInput.current?.click();
     };
 
     private onUploadFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -250,7 +250,7 @@ class UploadButton extends React.Component<IUploadButtonProps> {
     render() {
         const uploadInputStyle = { display: 'none' };
         return (
-            <AccessibleTooltipButton
+            <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_upload"
                 onClick={this.onUploadClick}
                 title={_t('Upload file')}
@@ -262,7 +262,7 @@ class UploadButton extends React.Component<IUploadButtonProps> {
                     multiple
                     onChange={this.onUploadFileInputChange}
                 />
-            </AccessibleTooltipButton>
+            </CollapsibleButton>
         );
     }
 }
