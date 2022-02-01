@@ -382,7 +382,6 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                     : _t("This room has no local addresses")}
                 placeholder={_t('Local address')}
                 domain={localDomain}
-                roomId={this.props.roomId}
             />);
         }
 
@@ -433,6 +432,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         itemsLabel={_t('Other published addresses:')}
                         noItemsLabel={_t('No other published addresses yet, add one below')}
                         placeholder={_t('New published address (e.g. #alias:server)')}
+                        roomId={this.props.roomId}
                     />
                 </SettingsFieldset>
                 <SettingsFieldset
