@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643730142117,
+  "lastUpdate": 1643731052486,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61580,6 +61580,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 679.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8dd0722e04bfb20074fc8083227ba7671cda3078",
+          "message": "Update eventName=Screen to $screen to match PostHog's special behaviour (#7667)",
+          "timestamp": "2022-02-01T15:49:49Z",
+          "tree_id": "24d538e19b15c94ba84326f7be71c16f1142e66f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8dd0722e04bfb20074fc8083227ba7671cda3078"
+        },
+        "date": 1643731046911,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5386.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 969.3999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
