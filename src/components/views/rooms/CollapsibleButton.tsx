@@ -35,15 +35,15 @@ export const CollapsibleButton = ({ title, children, className, ...props }: ICol
             { title }
             { children }
         </MenuItem>;
-    } else {
-        return <AccessibleTooltipButton
-            {...props}
-            title={title}
-            className={className}
-        >
-            { children }
-        </AccessibleTooltipButton>;
     }
+
+    return <AccessibleTooltipButton
+        {...props}
+        title={title}
+        className={className}
+    >
+        { children }
+    </AccessibleTooltipButton>;
 };
 
 export default CollapsibleButton;
