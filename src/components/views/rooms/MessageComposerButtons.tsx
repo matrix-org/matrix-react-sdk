@@ -17,14 +17,14 @@ limitations under the License.
 import classNames from 'classnames';
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
-import React, { useContext } from 'react';
+import React, { createContext, ReactElement, useContext } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { CollapsibleButton, ICollapsibleButtonProps } from './CollapsibleButton';
-import ContextMenu, { aboveLeftOf, AboveLeftOf, MenuItem, useContextMenu } from '../../structures/ContextMenu';
+import { CollapsibleButton } from './CollapsibleButton';
+import ContextMenu, { aboveLeftOf, AboveLeftOf, useContextMenu } from '../../structures/ContextMenu';
 import dis from '../../../dispatcher/dispatcher';
 import EmojiPicker from '../emojipicker/EmojiPicker';
 import ErrorDialog from "../dialogs/ErrorDialog";
@@ -52,92 +52,64 @@ interface IProps {
     toggleButtonMenu: () => void;
 }
 
+type OverflowMenuCloser = () => void;
+export const OverflowMenuContext = createContext<OverflowMenuCloser | null>(null);
+
 const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     const matrixClient: MatrixClient = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    if (props.haveRecording) {
-        return null;
-    }
-
-    let uploadButtonIndex = 0;
-    const buttons: JSX.Element[] = [];
-    buttons.push(
-        <PollButton
-            key="polls"
-            room={room}
-            narrowMode={props.narrowMode}
-        />,
+    return (
+        props.haveRecording
+            ? null
+            : props.narrowMode
+                ? narrowMode(props, room, roomId, matrixClient)
+                : wideMode(props, room, roomId, matrixClient)
     );
-    uploadButtonIndex = buttons.length;
-    buttons.push(
-        <UploadButton key="controls_upload" roomId={roomId} relation={props.relation} />,
-    );
-    if (props.showLocationButton) {
-        const sender = room.getMember(matrixClient.getUserId());
-        buttons.push(
-            <LocationButton
-                key="location"
-                roomId={roomId}
-                sender={sender}
-                menuPosition={props.menuPosition}
-                narrowMode={props.narrowMode}
-            />,
-        );
-    }
-    buttons.push(
-        <EmojiButton key="emoji_button" addEmoji={props.addEmoji} menuPosition={props.menuPosition} narrowMode={props.narrowMode} />,
-    );
-    if (props.showStickersButton) {
-        let title: string;
-        if (!props.narrowMode) {
-            title = props.isStickerPickerOpen ? _t("Hide Stickers") : _t("Show Stickers");
-        }
+};
 
-        buttons.push(
-            <AccessibleTooltipButton
-                id='stickersButton'
-                key="controls_stickers"
-                className="mx_MessageComposer_button mx_MessageComposer_stickers"
-                onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
-                title={title}
-                label={props.narrowMode ? _t("Send a sticker") : null}
-            />,
-        );
-    }
+function wideMode(
+    props: IProps,
+    room: Room,
+    roomId: string,
+    matrixClient: MatrixClient,
+): ReactElement {
+    return <>
+        { pollButton(props, room) }
+        { uploadButton(props, roomId) }
+        { showLocationButton(props, room, roomId, matrixClient) }
+        { emojiButton(props) }
+        { showStickersButton(props) }
+        { voiceRecordingButton(props) }
+    </>;
+}
 
-    // XXX: the recording UI does not work well in narrow mode, so we hide this button for now
-    if (!props.narrowMode) {
-        buttons.push(
-            <CollapsibleButton
-                key="voice_message_send"
-                className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
-                onClick={props.onRecordStartEndClick}
-                title={_t("Send voice message")}
-                narrowMode={props.narrowMode}
-            />,
-        );
-    }
-
-    if (!props.narrowMode) {
-        return <>{ buttons }</>;
-    }
-
-    const classnames = classNames({
+function narrowMode(
+    props: IProps,
+    room: Room,
+    roomId: string,
+    matrixClient: MatrixClient,
+): ReactElement {
+    const moreOptionsClasses = classNames({
         mx_MessageComposer_button: true,
         mx_MessageComposer_buttonMenu: true,
         mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
     });
 
-    // we render the uploadButton at top level as it is a very common interaction, splice it out of the rest
-    const [uploadButton] = buttons.splice(uploadButtonIndex, 1);
+    const moreButtons = [
+        pollButton(props, room),
+        showLocationButton(props, room, roomId, matrixClient),
+        emojiButton(props),
+        showStickersButton(props),
+        voiceRecordingButton(props),
+    ].filter(x => x);
+
     return <>
-        { uploadButton }
+        { uploadButton(props, roomId) }
         <AccessibleTooltipButton
-            className={classnames}
+            className={moreOptionsClasses}
             onClick={props.toggleButtonMenu}
             title={_t("More options")}
-            tooltip={false}
         />
         { props.isMenuOpen && (
             <ContextMenu
@@ -145,28 +117,45 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                 {...props.menuPosition}
                 wrapperClassName="mx_MessageComposer_Menu"
             >
-                { buttons.map((button, index) => (
-                    <MenuItem className="mx_CallContextMenu_item" key={index} onClick={props.toggleButtonMenu}>
-                        { button }
-                    </MenuItem>
-                )) }
+                <OverflowMenuContext.Provider value={props.toggleButtonMenu}>
+                    { moreButtons }
+                </OverflowMenuContext.Provider>
             </ContextMenu>
         ) }
     </>;
-};
+}
 
-interface IEmojiButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
+function emojiButton(props: IProps): ReactElement {
+    return <EmojiButton
+        key="emoji_button"
+        addEmoji={props.addEmoji}
+        menuPosition={props.menuPosition}
+    />;
+}
+
+interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
     menuPosition: AboveLeftOf;
 }
 
-const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narrowMode }) => {
+const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) => {
+    const overflowMenuCloser = useContext(OverflowMenuContext);
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu: React.ReactElement | null = null;
     if (menuDisplayed) {
-        const position = menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect());
-        contextMenu = <ContextMenu {...position} onFinished={closeMenu} managed={false}>
+        const position = (
+            menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
+        );
+
+        contextMenu = <ContextMenu
+            {...position}
+            onFinished={() => {
+                closeMenu();
+                overflowMenuCloser?.();
+            }}
+            managed={false}
+        >
             <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
         </ContextMenu>;
     }
@@ -185,13 +174,20 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition, narr
         <CollapsibleButton
             className={className}
             onClick={openMenu}
-            narrowMode={narrowMode}
             title={_t("Add emoji")}
         />
 
         { contextMenu }
     </React.Fragment>;
 };
+
+function uploadButton(props: IProps, roomId: string): ReactElement {
+    return <UploadButton
+        key="controls_upload"
+        roomId={roomId}
+        relation={props.relation}
+    />;
+}
 
 interface IUploadButtonProps {
     roomId: string;
@@ -270,21 +266,70 @@ class UploadButton extends React.Component<IUploadButtonProps> {
         );
     }
 }
-interface IPollButtonProps extends Pick<ICollapsibleButtonProps, "narrowMode"> {
+
+function showStickersButton(props: IProps): ReactElement {
+    return (
+        props.showStickersButton
+            ? <CollapsibleButton
+                id='stickersButton'
+                key="controls_stickers"
+                className="mx_MessageComposer_button mx_MessageComposer_stickers"
+                onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
+                title={
+                    props.narrowMode
+                        ? _t("Send a sticker")
+                        : props.isStickerPickerOpen
+                            ? _t("Hide Stickers")
+                            : _t("Show Stickers")
+                }
+            />
+            : null
+    );
+}
+
+function voiceRecordingButton(props: IProps): ReactElement {
+    // XXX: recording UI does not work well in narrow mode, so hide for now
+    return (
+        props.narrowMode
+            ? null
+            : <CollapsibleButton
+                key="voice_message_send"
+                className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
+                onClick={props.onRecordStartEndClick}
+                title={_t("Send voice message")}
+            />
+    );
+}
+
+function pollButton(props: IProps, room: Room): ReactElement {
+    return <PollButton key="polls" room={room} />;
+}
+
+interface IPollButtonProps {
     room: Room;
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
+    static contextType = OverflowMenuContext;
+
     private onCreateClick = () => {
+        this.context?.(); // close overflow menu
         const canSend = this.props.room.currentState.maySendEvent(
             M_POLL_START.name,
             MatrixClientPeg.get().getUserId(),
         );
         if (!canSend) {
-            Modal.createTrackedDialog('Polls', 'permissions error: cannot start', ErrorDialog, {
-                title: _t("Permission Required"),
-                description: _t("You do not have permission to start polls in this room."),
-            });
+            Modal.createTrackedDialog(
+                'Polls',
+                'permissions error: cannot start',
+                ErrorDialog,
+                {
+                    title: _t("Permission Required"),
+                    description: _t(
+                        "You do not have permission to start polls in this room.",
+                    ),
+                },
+            );
         } else {
             Modal.createTrackedDialog(
                 'Polls',
@@ -305,11 +350,28 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
             <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_poll"
                 onClick={this.onCreateClick}
-                narrowMode={this.props.narrowMode}
                 title={_t("Create poll")}
             />
         );
     }
+}
+
+function showLocationButton(
+    props: IProps,
+    room: Room,
+    roomId: string,
+    matrixClient: MatrixClient,
+): ReactElement {
+    return (
+        props.showLocationButton
+            ? <LocationButton
+                key="location"
+                roomId={roomId}
+                sender={room.getMember(matrixClient.getUserId())}
+                menuPosition={props.menuPosition}
+            />
+            : null
+    );
 }
 
 export default MessageComposerButtons;
