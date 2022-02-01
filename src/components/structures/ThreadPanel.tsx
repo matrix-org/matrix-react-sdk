@@ -146,14 +146,14 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
         {
-            label: _t("My threads"),
-            description: _t("Shows all threads you've participated in"),
-            key: ThreadFilterType.My,
-        },
-        {
             label: _t("All threads"),
             description: _t('Shows all threads from current room'),
             key: ThreadFilterType.All,
+        },
+        {
+            label: _t("My threads"),
+            description: _t("Shows all threads you've participated in"),
+            key: ThreadFilterType.My,
         },
     ];
 
