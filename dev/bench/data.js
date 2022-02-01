@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643709149330,
+  "lastUpdate": 1643711109328,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61352,6 +61352,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4306.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "afe6021c9a06112874a60139e00bd8d16e5dbc79",
+          "message": "Ensure UserInfo can be rendered without a room (#7687)\n\nCo-authored-by: David Baker <dave@matrix.org>",
+          "timestamp": "2022-02-01T10:17:55Z",
+          "tree_id": "23b758c499a151294652e341e4010cab5a9a167f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/afe6021c9a06112874a60139e00bd8d16e5dbc79"
+        },
+        "date": 1643711103082,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5430.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1032.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1707.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4727,
             "unit": "ms",
             "extra": "type: measure"
           }
