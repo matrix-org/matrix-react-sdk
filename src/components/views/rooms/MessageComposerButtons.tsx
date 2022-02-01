@@ -243,21 +243,20 @@ class UploadButton extends React.Component<IUploadButtonProps> {
 
     render() {
         const uploadInputStyle = { display: 'none' };
-        return (
+        return <>
             <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_upload"
                 onClick={this.onUploadClick}
                 title={_t('Attachment')}
-            >
-                <input
-                    ref={this.uploadInput}
-                    type="file"
-                    style={uploadInputStyle}
-                    multiple
-                    onChange={this.onUploadFileInputChange}
-                />
-            </CollapsibleButton>
-        );
+            />
+            <input
+                ref={this.uploadInput}
+                type="file"
+                style={uploadInputStyle}
+                multiple
+                onChange={this.onUploadFileInputChange}
+            />
+        </>;
     }
 }
 
