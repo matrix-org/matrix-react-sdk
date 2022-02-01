@@ -197,7 +197,7 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ filterOption, showAllThreads
         <h2>{ _t("Keep discussions organised with threads") }</h2>
         <p>{ _t("Threads help you keep conversations on-topic and easily "
               + "track them over time. Create the first one by using the "
-              + "\"Reply in thread\" button on a message.") }
+              + "“Reply in thread” button on a message.") }
         </p>
         <p>
             { /* Always display that paragraph to prevent layout shift
