@@ -231,6 +231,35 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
         if (timelineSet) ref.current.refreshTimeline();
     });
 
+    useEventEmitter(room, ThreadEvent.New, async thread => {
+        if (timelineSet) {
+            const capabilities = await mxClient.getCapabilities();
+            const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
+
+            const discoveredScrollingBack = room.lastThread.rootEvent.localTimestamp < thread.rootEvent.localTimestamp;
+
+            // When the server support threads we're only interested in adding
+            // the newly created threads to the list.
+            // The ones discovered when scrolling back should be discarded as
+            // they will be discovered by the `/messages` filter
+            if (serverSupportsThreads) {
+                if (!discoveredScrollingBack) {
+                    timelineSet.addEventToTimeline(
+                        thread.rootEvent,
+                        timelineSet.getLiveTimeline(),
+                        false,
+                    );
+                }
+            } else {
+                timelineSet.addEventToTimeline(
+                    thread.rootEvent,
+                    timelineSet.getLiveTimeline(),
+                    !discoveredScrollingBack,
+                );
+            }
+        }
+    });
+
     return (
         <RoomContext.Provider value={{
             ...roomContext,
