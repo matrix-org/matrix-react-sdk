@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643731180406,
+  "lastUpdate": 1643736625678,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61712,6 +61712,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4699.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9b0da552e7b60b1689e81dca24c494d3d6abd50e",
+          "message": "Fix vertical spacing in `compact` `<ContextMenu>` (#7684)\n\nFix https://github.com/vector-im/element-web/issues/20801\r\n\r\nRegressed in https://github.com/matrix-org/matrix-react-sdk/pull/7339\r\n\r\nRelevant styles were first added in https://github.com/matrix-org/matrix-react-sdk/pull/4858\r\n(context behind why the original styles were added)\r\n\r\n---\r\n\r\n## Cause\r\n\r\nBattling CSS specificity between the default and compact styles, https://specificity.keegan.st/\r\n\r\nKnown good (On `app.element.io` (expected)):\r\n```css\r\n// 0 3 0\r\n.mx_IconizedContextMenu .mx_IconizedContextMenu_optionList .mx_AccessibleButton {\r\n    padding-top: 12px;\r\n    padding-bottom: 12px;\r\n}\r\n\r\n// Compact styles override our default rules because they come\r\n// after the other styles (source order) and have the same specificity\r\n// 0 3 0\r\n.mx_IconizedContextMenu.mx_IconizedContextMenu_compact .mx_IconizedContextMenu_optionList > * {\r\n    padding: 8px 16px 8px 11px;\r\n}\r\n```\r\n\r\nBad (On `develop` (broken)):\r\n```css\r\n// Default rules always override because they have higher specificity.\r\n// The `:not()` selector doesn't add any extra specificity but the selectors inside the `:not(...)` do.\r\n// 0 4 0\r\n.mx_IconizedContextMenu .mx_IconizedContextMenu_optionList .mx_AccessibleButton:not(.mx_AccessibleButton_hasKind) {\r\n    padding-top: 12px;\r\n    padding-bottom: 12px;\r\n}\r\n\r\n// 0 3 0\r\n.mx_IconizedContextMenu.mx_IconizedContextMenu_compact .mx_IconizedContextMenu_optionList > * {\r\n    padding: 8px 16px 8px 11px;\r\n}\r\n```",
+          "timestamp": "2022-02-01T11:23:21-06:00",
+          "tree_id": "a90a22dc30f4ba0195d1450788f0e65b331e0ecb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9b0da552e7b60b1689e81dca24c494d3d6abd50e"
+        },
+        "date": 1643736620483,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4941,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 688.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
