@@ -8,7 +8,7 @@ yarn link
 yarn install --pure-lockfile $@
 popd
 
-scripts/fetchdep.sh matrix-org matrix-analytics-events
+scripts/fetchdep.sh matrix-org matrix-analytics-events main
 pushd matrix-analytics-events
 yarn link
 yarn install --pure-lockfile $@
