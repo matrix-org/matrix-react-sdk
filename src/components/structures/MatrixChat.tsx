@@ -482,7 +482,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         notLoggedInMap[Views.E2E_SETUP] = "WebE2ESetup";
         notLoggedInMap[Views.SOFT_LOGOUT] = "WebSoftLogout";
 
-        const loggedInPageTypeMap: Partial<Record<Views, ScreenEvent["screenName"]>> = {};
+        const loggedInPageTypeMap: Partial<Record<PageType, ScreenEvent["screenName"]>> = {};
         loggedInPageTypeMap[PageType.HomePage] = "Home";
         loggedInPageTypeMap[PageType.RoomView] = "Room";
         loggedInPageTypeMap[PageType.RoomDirectory] = "RoomDirectory";
