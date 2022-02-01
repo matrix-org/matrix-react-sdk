@@ -38,7 +38,8 @@ interface IEditableAliasesListProps {
 class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
     private aliasField = createRef<RoomAliasField>();
 
-    private onAliasAdded = async () => {
+    private onAliasAdded = async (ev: SyntheticEvent) => {
+        ev.preventDefault();
         await this.aliasField.current.validate({ allowEmpty: false });
 
         if (this.aliasField.current.isValid) {
