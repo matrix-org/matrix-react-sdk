@@ -25,7 +25,7 @@ import {
     UNSTABLE_FILTER_RELATION_SENDERS,
     UNSTABLE_FILTER_RELATION_TYPES,
 } from 'matrix-js-sdk/src/filter';
-import { ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -231,7 +231,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
         if (timelineSet) ref.current.refreshTimeline();
     });
 
-    useEventEmitter(room, ThreadEvent.New, async thread => {
+    useEventEmitter(room, ThreadEvent.New, async (thread: Thread) => {
         if (timelineSet) {
             const capabilities = await mxClient.getCapabilities();
             const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
