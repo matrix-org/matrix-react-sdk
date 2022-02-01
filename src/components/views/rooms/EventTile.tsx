@@ -24,6 +24,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
+import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { M_POLL_START } from "matrix-events-sdk";
 
 import ReplyChain from "../elements/ReplyChain";
@@ -406,7 +407,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             thread,
             threadReplyCount: thread?.length,
-            threadLastReply: thread?.lastReply(),
+            threadLastReply: thread?.replyToEvent,
         };
 
         // don't do RR animations until we are mounted
@@ -560,7 +561,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread?.lastReply(),
+            threadLastReply: thread?.replyToEvent,
             threadReplyCount: thread?.length,
             thread,
         });
@@ -633,7 +634,7 @@ export default class EventTile extends React.Component<IProps, IState> {
          * We currently have no reliable way to discover than an event is a thread
          * when we are at the sync stage
          */
-        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const thread = room?.threads.get(this.props.mxEvent.getId());
 
         if (!thread || thread.length === 0) {
@@ -1097,10 +1098,21 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
+    /**
+     * In some cases we can't use shouldHideEvent() since whether or not we hide
+     * an event depends on other things that the event itself
+     * @returns {boolean} true if event should be hidden
+     */
+    private shouldHideEvent(): boolean {
+        // If the call was replaced we don't render anything since we render the other call
+        if (this.props.callEventGrouper?.hangupReason === CallErrorCode.Replaced) return true;
+
+        return false;
+    }
+
     render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
-        const eventDisplayInfo = getEventDisplayInfo(this.props.mxEvent);
         const {
             tileHandler,
             isBubbleMessage,
@@ -1108,7 +1120,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             isLeftAlignedBubbleMessage,
             noBubbleEvent,
             isSeeingThroughMessageHiddenForModeration,
-        } = eventDisplayInfo;
+        } = getEventDisplayInfo(this.props.mxEvent, this.shouldHideEvent());
         const { isQuoteExpanded } = this.state;
 
         // This shouldn't happen: the caller should check we support this type
@@ -1278,7 +1290,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.props.tileShape !== TileShape.ThreadPanel
             ? this.props.mxEvent.getTs()
-            : thread?.lastReply().getTs();
+            : thread?.replyToEvent.getTs();
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.props.tileShape === TileShape.ThreadPanel}
