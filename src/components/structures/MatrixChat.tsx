@@ -23,6 +23,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/Screen";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { throttle } from "lodash";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -119,8 +120,6 @@ import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
-
-import { throttle } from "lodash";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
