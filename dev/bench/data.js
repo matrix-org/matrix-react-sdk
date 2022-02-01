@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643707949666,
+  "lastUpdate": 1643708074834,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61256,6 +61256,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5337.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "18995363d02f98a32585c2d7a7013ae649ab7cda",
+          "message": "Make polls fill column width in bubbles layout (#7661)",
+          "timestamp": "2022-02-01T09:27:14Z",
+          "tree_id": "257423c550cbc6de7d6735f9d24635e4b6e096d1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/18995363d02f98a32585c2d7a7013ae649ab7cda"
+        },
+        "date": 1643708068390,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4901.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1041.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1715.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4515.5,
             "unit": "ms",
             "extra": "type: measure"
           }
