@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { FC, useEffect } from "react";
+import { PureComponent } from "react";
 import { Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/Screen";
 
 import PageType from "./PageTypes";
@@ -90,14 +90,21 @@ export default class PosthogTrackers {
     }
 }
 
-export const PosthogScreenTracker: FC<{ screenName: ScreenName }> = ({ screenName }) => {
-    useEffect(() => {
-        if (!screenName) return;
-        const name = screenName;
-        PosthogTrackers.instance.trackOverride(name);
-        return () => {
-            PosthogTrackers.instance.clearOverride(name);
-        };
-    }, [screenName]);
-    return null;
-};
+export class PosthogScreenTracker extends PureComponent<{ screenName: ScreenName }> {
+    componentDidMount() {
+        PosthogTrackers.instance.trackOverride(this.props.screenName);
+    }
+
+    componentDidUpdate() {
+        // We do not clear the old override here so that we do not send the non-override screen as a transition
+        PosthogTrackers.instance.trackOverride(this.props.screenName);
+    }
+
+    componentWillUnmount() {
+        PosthogTrackers.instance.clearOverride(this.props.screenName);
+    }
+
+    render() {
+        return null; // no need to render anything, we just need to hook into the React lifecycle
+    }
+}
