@@ -120,6 +120,8 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
 
+import { throttle } from "lodash";
+
 /** constants for MatrixChat.state.view */
 export enum Views {
     // a special initial state which is only used at startup, while we are
@@ -511,7 +513,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.warnInConsole();
     };
 
-    private warnInConsole(): void {
+    private warnInConsole = throttle((): void => {
         const largeFontSize = "50px";
         const normalFontSize = "15px";
 
@@ -532,7 +534,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             `font-size:${normalFontSize}; color:red;`,
             `font-size:${normalFontSize};`,
         );
-    }
+    }, 1000);
 
     private getFallbackHsUrl(): string {
         if (this.props.serverConfig?.isDefault) {
