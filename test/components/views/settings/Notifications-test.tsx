@@ -15,11 +15,10 @@ limitations under the License.
 import React from 'react';
 import { mount } from 'enzyme';
 import '../../../skinned-sdk';
-import { IPushRule, IPushRules, MatrixClient, RuleId } from 'matrix-js-sdk';
+import { IPushRule, IPushRules, RuleId } from 'matrix-js-sdk';
 import { ThreepidMedium } from 'matrix-js-sdk/src/@types/threepids';
 import { act } from 'react-dom/test-utils';
 
-import { createTestClient } from '../../../test-utils';
 import Notifications from '../../../../src/components/views/settings/Notifications';
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
@@ -73,7 +72,7 @@ describe('<Notifications />', () => {
         setPushRuleEnabled: jest.fn(),
         setPushRuleActions: jest.fn(),
         getRooms: jest.fn().mockReturnValue([]),
-    }; // as unknown as MatrixClient;
+    };
     mockClient.getPushRules.mockResolvedValue(pushRules);
 
     const findByTestId = (component, id) => component.find(`[data-test-id="${id}"]`);
