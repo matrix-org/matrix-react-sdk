@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643648446030,
+  "lastUpdate": 1643691533747,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61136,6 +61136,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 607.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "32841439+ajbura@users.noreply.github.com",
+            "name": "Ajay Bura",
+            "username": "ajbura"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3e1a5f7021878138b1b53009450b64f72d0e1876",
+          "message": "Fix warning image overflow in space hierarchy (#7686)",
+          "timestamp": "2022-02-01T10:21:58+05:30",
+          "tree_id": "d7da17f77fbaa8ca0aa9f2fcbabe5248ef42f806",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3e1a5f7021878138b1b53009450b64f72d0e1876"
+        },
+        "date": 1643691527628,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4966.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 661,
             "unit": "ms",
             "extra": "type: measure"
           }
