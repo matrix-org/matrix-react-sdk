@@ -52,6 +52,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { InteractionEvent, PosthogAnalytics } from "../../../PosthogAnalytics";
 
 interface IProps {
     room: Room;
@@ -255,6 +256,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
         this.setState({ notificationsMenuPosition: target.getBoundingClientRect() });
+
+        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+            eventName: "Interaction",
+            name: "WebRoomListRoomTileNotificationsMenu",
+            interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+        });
     };
 
     private onCloseNotificationsMenu = () => {
@@ -322,6 +329,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+            eventName: "Interaction",
+            name: "WebRoomListRoomTileContextMenuLeaveAction",
+            interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+        });
     };
 
     private onForgetRoomClick = (ev: ButtonEvent) => {
@@ -344,6 +357,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+            eventName: "Interaction",
+            name: "WebRoomListRoomTileContextMenuSettingsAction",
+            interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+        });
     };
 
     private onCopyRoomClick = (ev: ButtonEvent) => {
@@ -366,6 +385,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             roomId: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+            eventName: "Interaction",
+            name: "WebRoomListRoomTileContextMenuInviteAction",
+            interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+        });
     };
 
     private async saveNotifState(ev: ButtonEvent, newState: RoomNotifState) {
@@ -500,7 +525,14 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             >
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuCheckbox
-                        onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
+                        onClick={(e) => {
+                            this.onTagRoom(e, DefaultTagID.Favourite);
+                            PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                                eventName: "Interaction",
+                                name: "WebRoomListRoomTileContextMenuFavouriteAction",
+                                interactionType: e.type === "click" ? "Pointer" : "Keyboard",
+                            });
+                        }}
                         active={isFavorite}
                         label={favouriteLabel}
                         iconClassName="mx_RoomTile_iconStar"
