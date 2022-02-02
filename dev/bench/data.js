@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643794216839,
+  "lastUpdate": 1643794748949,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61844,6 +61844,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4934.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fce19d763a4dba73f71f8d5a344922f975ee292f",
+          "message": "Make Spotlight Dialog roving reset more stable (#7698)",
+          "timestamp": "2022-02-02T09:31:05Z",
+          "tree_id": "14d4c99217e70ac2e6263bf7190901a9401b254f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fce19d763a4dba73f71f8d5a344922f975ee292f"
+        },
+        "date": 1643794742950,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5050,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1091.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1753.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4567.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
