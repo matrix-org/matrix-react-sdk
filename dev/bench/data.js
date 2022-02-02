@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643802665154,
+  "lastUpdate": 1643803758318,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62072,6 +62072,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4580.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "292971dd0ebe6f4f46da274ca54bc2fbe8f3cb2a",
+          "message": "Upgrade to jest 27 (#7699)\n\n* use jest@27.4.0, replace jest-environment-jsdom-sixteen with jest-environment-jsdom\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* polyfill setImmediate\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove done from async test cases\r\n\r\n* useRealTimers in test relying on promise flushing\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove jest environment file\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* replace ts-jest mocked with jest utils mocked\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-02T13:02:17+01:00",
+          "tree_id": "6e48781c7419cbb31ce1384dab9d235f720fa2a2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/292971dd0ebe6f4f46da274ca54bc2fbe8f3cb2a"
+        },
+        "date": 1643803752575,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4903.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 939.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1652.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4403.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
