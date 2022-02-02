@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643736683657,
+  "lastUpdate": 1643794216839,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61796,6 +61796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4612.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c011fb7475285a4c8c11c14cff94371a27f34f47",
+          "message": "Fix incorrect sizing of DecoratedRoomAvatar in RoomHeader (#7697)",
+          "timestamp": "2022-02-02T09:22:27Z",
+          "tree_id": "b097f4b97861885a281662230cd3b28cbfe1673b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c011fb7475285a4c8c11c14cff94371a27f34f47"
+        },
+        "date": 1643794210115,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5817,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1082.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1813.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4934.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
