@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import DeviceSettingsHandler from "./handlers/DeviceSettingsHandler";
 import RoomDeviceSettingsHandler from "./handlers/RoomDeviceSettingsHandler";
 import DefaultSettingsHandler from "./handlers/DefaultSettingsHandler";
@@ -24,15 +26,13 @@ import RoomSettingsHandler from "./handlers/RoomSettingsHandler";
 import ConfigSettingsHandler from "./handlers/ConfigSettingsHandler";
 import { _t } from '../languageHandler';
 import dis from '../dispatcher/dispatcher';
-import { ISetting, SETTINGS } from "./Settings";
+import { IFeature, ISetting, LabGroup, SETTINGS } from "./Settings";
 import LocalEchoWrapper from "./handlers/LocalEchoWrapper";
-import { WatchManager, CallbackFn as WatchCallbackFn } from "./WatchManager";
+import { CallbackFn as WatchCallbackFn, WatchManager } from "./WatchManager";
 import { SettingLevel } from "./SettingLevel";
 import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 import { Action } from "../dispatcher/actions";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const defaultWatchManager = new WatchManager();
 
@@ -50,20 +50,19 @@ for (const key of Object.keys(SETTINGS)) {
     }
 }
 
+// Only wrap the handlers with async setters in a local echo wrapper
 const LEVEL_HANDLERS = {
     [SettingLevel.DEVICE]: new DeviceSettingsHandler(featureNames, defaultWatchManager),
     [SettingLevel.ROOM_DEVICE]: new RoomDeviceSettingsHandler(defaultWatchManager),
-    [SettingLevel.ROOM_ACCOUNT]: new RoomAccountSettingsHandler(defaultWatchManager),
-    [SettingLevel.ACCOUNT]: new AccountSettingsHandler(defaultWatchManager),
-    [SettingLevel.ROOM]: new RoomSettingsHandler(defaultWatchManager),
+    [SettingLevel.ROOM_ACCOUNT]: new LocalEchoWrapper(
+        new RoomAccountSettingsHandler(defaultWatchManager),
+        SettingLevel.ROOM_ACCOUNT,
+    ),
+    [SettingLevel.ACCOUNT]: new LocalEchoWrapper(new AccountSettingsHandler(defaultWatchManager), SettingLevel.ACCOUNT),
+    [SettingLevel.ROOM]: new LocalEchoWrapper(new RoomSettingsHandler(defaultWatchManager), SettingLevel.ROOM),
     [SettingLevel.CONFIG]: new ConfigSettingsHandler(featureNames),
     [SettingLevel.DEFAULT]: new DefaultSettingsHandler(defaultSettings, invertedDefaultSettings),
 };
-
-// Wrap all the handlers with local echo
-for (const key of Object.keys(LEVEL_HANDLERS)) {
-    LEVEL_HANDLERS[key] = new LocalEchoWrapper(LEVEL_HANDLERS[key]);
-}
 
 export const LEVEL_ORDER = [
     SettingLevel.DEVICE,
@@ -273,12 +272,18 @@ export default class SettingsStore {
         return SETTINGS[settingName].isFeature;
     }
 
-    public static getBetaInfo(settingName: string) {
+    public static getBetaInfo(settingName: string): ISetting["betaInfo"] {
         // consider a beta disabled if the config is explicitly set to false, in which case treat as normal Labs flag
         if (SettingsStore.isFeature(settingName)
             && SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, null, true, true) !== false
         ) {
             return SETTINGS[settingName]?.betaInfo;
+        }
+    }
+
+    public static getLabGroup(settingName: string): LabGroup {
+        if (SettingsStore.isFeature(settingName)) {
+            return (<IFeature>SETTINGS[settingName]).labsGroup;
         }
     }
 

@@ -15,13 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { AllHtmlEntities } from 'html-entities';
+import cheerio from 'cheerio';
+
 import Markdown from '../Markdown';
 import { makeGenericPermalink } from "../utils/permalinks/Permalinks";
 import EditorModel from "./model";
-import { AllHtmlEntities } from 'html-entities';
 import SettingsStore from '../settings/SettingsStore';
 import SdkConfig from '../SdkConfig';
-import cheerio from 'cheerio';
 import { Type } from './parts';
 
 export function mdSerialize(model: EditorModel): string {
@@ -30,6 +31,7 @@ export function mdSerialize(model: EditorModel): string {
             case Type.Newline:
                 return html + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:
@@ -163,6 +165,7 @@ export function textSerialize(model: EditorModel): string {
             case Type.Newline:
                 return text + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:
@@ -178,7 +181,7 @@ export function textSerialize(model: EditorModel): string {
 }
 
 export function containsEmote(model: EditorModel): boolean {
-    return startsWith(model, "/me ", false);
+    return startsWith(model, "/me ", false) && model.parts[0]?.text?.length > 4;
 }
 
 export function startsWith(model: EditorModel, prefix: string, caseSensitive = true): boolean {

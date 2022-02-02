@@ -19,6 +19,7 @@ limitations under the License.
 import React from 'react';
 import FocusLock from 'react-focus-lock';
 import classNames from 'classnames';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { Key } from '../../../Keyboard';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
@@ -26,7 +27,7 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import Heading from '../typography/Heading';
 import { IDialogProps } from "./IDialogProps";
 
 interface IProps extends IDialogProps {
@@ -141,10 +142,10 @@ export default class BaseDialog extends React.Component<IProps> {
                         'mx_Dialog_headerWithButton': !!this.props.headerButton,
                         'mx_Dialog_headerWithCancel': !!cancelButton,
                     })}>
-                        <div className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
+                        <Heading size='h2' className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
                             { headerImage }
                             { this.props.title }
-                        </div>
+                        </Heading>
                         { this.props.headerButton }
                         { cancelButton }
                     </div>

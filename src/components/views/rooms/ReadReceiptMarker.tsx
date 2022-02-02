@@ -17,16 +17,20 @@ limitations under the License.
 
 import React, { createRef, RefObject } from 'react';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { formatDate } from '../../../DateUtils';
 import NodeAnimator from "../../../NodeAnimator";
 import { toPx } from "../../../utils/units";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
 import MemberAvatar from '../avatars/MemberAvatar';
 
-import { logger } from "matrix-js-sdk/src/logger";
+export interface IReadReceiptInfo {
+    top?: number;
+    left?: number;
+    parent?: Element;
+}
 
 interface IProps {
     // the RoomMember to show the RR for
@@ -45,10 +49,8 @@ interface IProps {
     // don't animate this RR into position
     suppressAnimation?: boolean;
 
-    // an opaque object for storing information about this user's RR in
-    // this room
-    // TODO: proper typing for RR info
-    readReceiptInfo: any;
+    // an opaque object for storing information about this user's RR in this room
+    readReceiptInfo: IReadReceiptInfo;
 
     // A function which is used to check if the parent panel is being
     // unmounted, to avoid unnecessary work. Should return true if we

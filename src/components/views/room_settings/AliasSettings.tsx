@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef } from "react";
+import React, { ChangeEvent, ContextType, createRef, SyntheticEvent } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import EditableItemList from "../elements/EditableItemList";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
@@ -28,17 +28,19 @@ import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAliasField from "../elements/RoomAliasField";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import SettingsFieldset from "../settings/SettingsFieldset";
 
 interface IEditableAliasesListProps {
+    roomId?: string;
     domain?: string;
 }
 
 class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
     private aliasField = createRef<RoomAliasField>();
 
-    private onAliasAdded = async () => {
+    private onAliasAdded = async (ev: SyntheticEvent) => {
+        ev.preventDefault();
         await this.aliasField.current.validate({ allowEmpty: false });
 
         if (this.aliasField.current.isValid) {
@@ -51,12 +53,7 @@ class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
     };
 
     protected renderNewItemField() {
-        // if we don't need the RoomAliasField,
-        // we don't need to overriden version of renderNewItemField
-        if (!this.props.domain) {
-            return super.renderNewItemField();
-        }
-        const onChange = (alias) => this.onNewItemChanged({ target: { value: alias } });
+        const onChange = (alias: string) => this.onNewItemChanged({ target: { value: alias } });
         return (
             <form
                 onSubmit={this.onAliasAdded}
@@ -68,7 +65,9 @@ class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
                     ref={this.aliasField}
                     onChange={onChange}
                     value={this.props.newItem || ""}
-                    domain={this.props.domain} />
+                    domain={this.props.domain}
+                    roomId={this.props.roomId}
+                />
                 <AccessibleButton onClick={this.onAliasAdded} kind="primary">
                     { _t("Add") }
                 </AccessibleButton>
@@ -98,13 +97,16 @@ interface IState {
 
 @replaceableComponent("views.room_settings.AliasSettings")
 export default class AliasSettings extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    context: ContextType<typeof MatrixClientContext>;
+
     static defaultProps = {
         canSetAliases: false,
         canSetCanonicalAlias: false,
     };
 
-    constructor(props) {
-        super(props);
+    constructor(props, context: ContextType<typeof MatrixClientContext>) {
+        super(props, context);
 
         const state = {
             altAliases: [], // [ #alias:domain.tld, ... ]
@@ -138,10 +140,10 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     private async loadLocalAliases() {
         this.setState({ localAliasesLoading: true });
         try {
-            const cli = MatrixClientPeg.get();
+            const mxClient = this.context;
             let localAliases = [];
-            if (await cli.doesServerSupportUnstableFeature("org.matrix.msc2432")) {
-                const response = await cli.unstableGetLocalAliases(this.props.roomId);
+            if (await mxClient.doesServerSupportUnstableFeature("org.matrix.msc2432")) {
+                const response = await mxClient.unstableGetLocalAliases(this.props.roomId);
                 if (Array.isArray(response.aliases)) {
                     localAliases = response.aliases;
                 }
@@ -171,7 +173,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         if (alias) eventContent["alias"] = alias;
 
-        MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
+        this.context.sendStateEvent(this.props.roomId, "m.room.canonical_alias",
             eventContent, "").catch((err) => {
             logger.error(err);
             Modal.createTrackedDialog('Error updating main address', '', ErrorDialog, {
@@ -192,7 +194,6 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         this.setState({
             updatingCanonicalAlias: true,
-            altAliases,
         });
 
         const eventContent = {};
@@ -204,19 +205,25 @@ export default class AliasSettings extends React.Component<IProps, IState> {
             eventContent["alt_aliases"] = altAliases;
         }
 
-        MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
-            eventContent, "").catch((err) => {
-            logger.error(err);
-            Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
-                title: _t("Error updating main address"),
-                description: _t(
-                    "There was an error updating the room's alternative addresses. " +
+        this.context.sendStateEvent(this.props.roomId, "m.room.canonical_alias", eventContent, "")
+            .then(() => {
+                this.setState({
+                    altAliases,
+                });
+            })
+            .catch((err) => {
+                // TODO: Add error handling based upon server validation
+                logger.error(err);
+                Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
+                    title: _t("Error updating main address"),
+                    description: _t(
+                        "There was an error updating the room's alternative addresses. " +
                     "It may not be allowed by the server or a temporary failure occurred.",
-                ),
+                    ),
+                });
+            }).finally(() => {
+                this.setState({ updatingCanonicalAlias: false });
             });
-        }).finally(() => {
-            this.setState({ updatingCanonicalAlias: false });
-        });
     }
 
     private onNewAliasChanged = (value: string) => {
@@ -226,10 +233,10 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     private onLocalAliasAdded = (alias: string) => {
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
-        const localDomain = MatrixClientPeg.get().getDomain();
+        const localDomain = this.context.getDomain();
         if (!alias.includes(':')) alias += ':' + localDomain;
 
-        MatrixClientPeg.get().createAlias(alias, this.props.roomId).then(() => {
+        this.context.createAlias(alias, this.props.roomId).then(() => {
             this.setState({
                 localAliases: this.state.localAliases.concat(alias),
                 newAlias: null,
@@ -253,7 +260,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         const alias = this.state.localAliases[index];
         // TODO: In future, we should probably be making sure that the alias actually belongs
         // to this room. See https://github.com/vector-im/element-web/issues/7353
-        MatrixClientPeg.get().deleteAlias(alias).then(() => {
+        this.context.deleteAlias(alias).then(() => {
             const localAliases = this.state.localAliases.filter(a => a !== alias);
             this.setState({ localAliases });
 
@@ -322,9 +329,9 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     }
 
     render() {
-        const cli = MatrixClientPeg.get();
-        const localDomain = cli.getDomain();
-        const isSpaceRoom = cli.getRoom(this.props.roomId)?.isSpaceRoom();
+        const mxClient = this.context;
+        const localDomain = mxClient.getDomain();
+        const isSpaceRoom = mxClient.getRoom(this.props.roomId)?.isSpaceRoom();
 
         let found = false;
         const canonicalValue = this.state.canonicalAlias || "";
@@ -357,7 +364,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
             </Field>
         );
 
-        let localAliasesList;
+        let localAliasesList: JSX.Element;
         if (this.state.localAliasesLoading) {
             localAliasesList = <Spinner />;
         } else {
@@ -380,6 +387,18 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         return (
             <div className='mx_AliasSettings'>
+                <SettingsFieldset
+                    data-test-id='published-address-fieldset'
+                    legend={_t("Published Addresses")}
+                    description={<>
+                        { isSpaceRoom
+                            ? _t("Published addresses can be used by anyone on any server to join your space.")
+                            : _t("Published addresses can be used by anyone on any server to join your room.") }
+                        &nbsp;
+                        { _t("To publish an address, it needs to be set as a local address first.") }
+                    </>}
+                >
+                    { /*
                 <span className='mx_SettingsTab_subheading'>{ _t("Published Addresses") }</span>
                 <p>
                     { isSpaceRoom
@@ -387,47 +406,49 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         : _t("Published addresses can be used by anyone on any server to join your room.") }
                     &nbsp;
                     { _t("To publish an address, it needs to be set as a local address first.") }
-                </p>
-                { canonicalAliasSection }
-                { this.props.hidePublishSetting
-                    ? null
-                    : <RoomPublishSetting
+                </p> */ }
+                    { canonicalAliasSection }
+                    { this.props.hidePublishSetting
+                        ? null
+                        : <RoomPublishSetting
+                            roomId={this.props.roomId}
+                            canSetCanonicalAlias={this.props.canSetCanonicalAlias}
+                        /> }
+                    <datalist id="mx_AliasSettings_altRecommendations">
+                        { this.getLocalNonAltAliases().map(alias => {
+                            return <option value={alias} key={alias} />;
+                        }) };
+                    </datalist>
+                    <EditableAliasesList
+                        id="roomAltAliases"
+                        items={this.state.altAliases}
+                        newItem={this.state.newAltAlias}
+                        onNewItemChanged={this.onNewAltAliasChanged}
+                        canRemove={this.props.canSetCanonicalAlias}
+                        canEdit={this.props.canSetCanonicalAlias}
+                        onItemAdded={this.onAltAliasAdded}
+                        onItemRemoved={this.onAltAliasDeleted}
+                        suggestionsListId="mx_AliasSettings_altRecommendations"
+                        itemsLabel={_t('Other published addresses:')}
+                        noItemsLabel={_t('No other published addresses yet, add one below')}
+                        placeholder={_t('New published address (e.g. #alias:server)')}
                         roomId={this.props.roomId}
-                        canSetCanonicalAlias={this.props.canSetCanonicalAlias}
-                    /> }
-                <datalist id="mx_AliasSettings_altRecommendations">
-                    { this.getLocalNonAltAliases().map(alias => {
-                        return <option value={alias} key={alias} />;
-                    }) };
-                </datalist>
-                <EditableAliasesList
-                    id="roomAltAliases"
-                    items={this.state.altAliases}
-                    newItem={this.state.newAltAlias}
-                    onNewItemChanged={this.onNewAltAliasChanged}
-                    canRemove={this.props.canSetCanonicalAlias}
-                    canEdit={this.props.canSetCanonicalAlias}
-                    onItemAdded={this.onAltAliasAdded}
-                    onItemRemoved={this.onAltAliasDeleted}
-                    suggestionsListId="mx_AliasSettings_altRecommendations"
-                    itemsLabel={_t('Other published addresses:')}
-                    noItemsLabel={_t('No other published addresses yet, add one below')}
-                    placeholder={_t('New published address (e.g. #alias:server)')}
-                />
-                <span className='mx_SettingsTab_subheading mx_AliasSettings_localAliasHeader'>
-                    { _t("Local Addresses") }
-                </span>
-                <p>
-                    { isSpaceRoom
+                    />
+                </SettingsFieldset>
+                <SettingsFieldset
+                    data-test-id='local-address-fieldset'
+                    legend={_t("Local Addresses")}
+                    description={isSpaceRoom
                         ? _t("Set addresses for this space so users can find this space " +
                             "through your homeserver (%(localDomain)s)", { localDomain })
                         : _t("Set addresses for this room so users can find this room " +
-                        "through your homeserver (%(localDomain)s)", { localDomain }) }
-                </p>
-                <details onToggle={this.onLocalAliasesToggled} open={this.state.detailsOpen}>
-                    <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more") }</summary>
-                    { localAliasesList }
-                </details>
+                        "through your homeserver (%(localDomain)s)", { localDomain })}>
+                    <details onToggle={this.onLocalAliasesToggled} open={this.state.detailsOpen}>
+                        <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more") }</summary>
+                        { localAliasesList }
+                    </details>
+                </SettingsFieldset>
+
             </div>
         );
     }

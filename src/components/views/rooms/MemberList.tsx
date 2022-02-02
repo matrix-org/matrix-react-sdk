@@ -18,6 +18,14 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { RoomState } from 'matrix-js-sdk/src/models/room-state';
+import { User } from "matrix-js-sdk/src/models/user";
+import { throttle } from 'lodash';
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher/dispatcher';
@@ -25,16 +33,10 @@ import { isValid3pidInvite } from "../../../RoomInvite";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import BaseCard from "../right_panel/BaseCard";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from "../../../settings/SettingsStore";
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { RoomState } from 'matrix-js-sdk/src/models/room-state';
-import { User } from "matrix-js-sdk/src/models/user";
 import TruncatedList from '../elements/TruncatedList';
 import Spinner from "../elements/Spinner";
 import SearchBox from "../../structures/SearchBox";
@@ -42,11 +44,9 @@ import AccessibleButton from '../elements/AccessibleButton';
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
-import { throttle } from 'lodash';
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -309,7 +309,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         return this.createOverflowTile(overflowCount, totalCount, this.showMoreInvitedMemberList);
     };
 
-    private createOverflowTile = (overflowCount: number, totalCount: number, onClick: () => void): JSX.Element=> {
+    private createOverflowTile = (overflowCount: number, totalCount: number, onClick: () => void): JSX.Element => {
         // For now we'll pretend this is any entity. It should probably be a separate tile.
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (
@@ -512,7 +512,6 @@ export default class MemberList extends React.Component<IProps, IState> {
             return <BaseCard
                 className="mx_MemberList"
                 onClose={this.props.onClose}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <Spinner />
             </BaseCard>;
@@ -566,11 +565,8 @@ export default class MemberList extends React.Component<IProps, IState> {
             />
         );
 
-        let previousPhase = RightPanelPhases.RoomSummary;
-        // We have no previousPhase for when viewing a MemberList from a Space
         let scopeHeader;
         if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
-            previousPhase = undefined;
             scopeHeader = <div className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={room} height={32} width={32} />
                 <RoomName room={room} />
@@ -585,7 +581,6 @@ export default class MemberList extends React.Component<IProps, IState> {
             </React.Fragment>}
             footer={footer}
             onClose={this.props.onClose}
-            previousPhase={previousPhase}
         >
             <div className="mx_MemberList_wrapper">
                 <TruncatedList

@@ -15,10 +15,13 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useState } from "react";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import {
+    VerificationRequest,
+    PHASE_REQUESTED,
+    PHASE_UNSENT,
+} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
-import { PHASE_REQUESTED, PHASE_UNSENT } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
 import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
@@ -28,9 +31,8 @@ import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import * as sdk from "../../../index";
 import { _t } from "../../../languageHandler";
-import dis from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
@@ -114,11 +116,13 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
         setRequest(verificationRequest_);
         setPhase(verificationRequest_.phase);
         // Notify the RightPanelStore about this
-        dis.dispatch({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.EncryptionPanel,
-            refireParams: { member, verificationRequest: verificationRequest_ },
-        });
+        if (RightPanelStore.instance.currentCard.phase != RightPanelPhases.EncryptionPanel) {
+            RightPanelStore.instance.pushCard({
+                phase: RightPanelPhases.EncryptionPanel,
+                state: { member, verificationRequest: verificationRequest_ },
+            });
+        }
+        if (!RightPanelStore.instance.isOpenForRoom) RightPanelStore.instance.togglePanel();
     }, [member]);
 
     const requested =

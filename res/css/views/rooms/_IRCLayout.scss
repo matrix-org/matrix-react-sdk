@@ -25,7 +25,6 @@ $irc-line-height: $font-18px;
     line-height: $irc-line-height !important;
 
     .mx_EventTile {
-
         // timestamps are links which shouldn't be underlined
         > a {
             text-decoration: none;
@@ -111,6 +110,8 @@ $irc-line-height: $font-18px;
             .mx_TextualEvent,
             .mx_MTextBody {
                 display: inline-block;
+                // add a 1px padding top and bottom because our larger emoji font otherwise gets cropped by anti-zalgo
+                padding: 1px 0;
             }
         }
 
@@ -189,6 +190,9 @@ $irc-line-height: $font-18px;
 
         > .mx_SenderProfile_mxid {
             visibility: collapse;
+            // Override the inherited margin.
+            margin-left: 0;
+            padding: 0 5px;
         }
     }
 
@@ -198,10 +202,16 @@ $irc-line-height: $font-18px;
 
         > .mx_SenderProfile_displayName {
             overflow: visible;
+            display: inline;
+            background-color: $event-selected-color;
+            border-radius: 8px 0 0 8px;
+            padding-right: 8px;
         }
 
         > .mx_SenderProfile_mxid {
             visibility: visible;
+            opacity: 1;
+            background-color: $event-selected-color;
         }
     }
 

@@ -15,13 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useEffect, ChangeEvent, MouseEvent } from 'react';
-import SyntaxHighlight from '../elements/SyntaxHighlight';
-import { _t } from '../../../languageHandler';
-import Field from "../elements/Field";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
-
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
     PHASE_UNSENT,
     PHASE_REQUESTED,
@@ -31,6 +25,15 @@ import {
     PHASE_CANCELLED,
     VerificationRequest,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import SyntaxHighlight from '../elements/SyntaxHighlight';
+import { _t } from '../../../languageHandler';
+import Field from "../elements/Field";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { SETTINGS } from "../../../settings/Settings";
@@ -38,13 +41,10 @@ import SettingsStore, { LEVEL_ORDER } from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SettingLevel } from '../../../settings/SettingLevel';
 import BaseDialog from "./BaseDialog";
 import TruncatedList from "../elements/TruncatedList";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 
 interface IGenericEditorProps {
     onBack: () => void;
@@ -966,12 +966,12 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
         }
     };
 
-    private onViewClick = (ev: MouseEvent, settingId: string) => {
+    private onViewClick = (ev: ButtonEvent, settingId: string) => {
         ev.preventDefault();
         this.setState({ viewSetting: settingId });
     };
 
-    private onEditClick = (ev: MouseEvent, settingId: string) => {
+    private onEditClick = (ev: ButtonEvent, settingId: string) => {
         ev.preventDefault();
         this.setState({
             editSetting: settingId,
@@ -1079,16 +1079,16 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                                 { allSettings.map(i => (
                                     <tr key={i}>
                                         <td>
-                                            <a href="" onClick={(e) => this.onViewClick(e, i)}>
+                                            <AccessibleButton kind='link_inline' className='mx_DevTools_SettingsExplorer_setting' onClick={(e) => this.onViewClick(e, i)}>
                                                 <code>{ i }</code>
-                                            </a>
-                                            <a
-                                                href=""
+                                            </AccessibleButton>
+                                            <AccessibleButton
+                                                alt={_t('Edit setting')}
                                                 onClick={(e) => this.onEditClick(e, i)}
                                                 className='mx_DevTools_SettingsExplorer_edit'
                                             >
                                             ✏
-                                            </a>
+                                            </AccessibleButton>
                                         </td>
                                         <td>
                                             <code>{ this.renderSettingValue(SettingsStore.getValue(i)) }</code>

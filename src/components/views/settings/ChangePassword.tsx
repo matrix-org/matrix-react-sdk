@@ -15,19 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Field from "../elements/Field";
 import React, { ComponentType } from 'react';
+import { MatrixClient } from "matrix-js-sdk/src/client";
+
+import Field from "../elements/Field";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AccessibleButton from '../elements/AccessibleButton';
 import Spinner from '../elements/Spinner';
 import withValidation, { IFieldState, IValidationResult } from '../elements/Validation';
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../auth/RegistrationForm';
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import SetEmailDialog from "../dialogs/SetEmailDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 
@@ -376,7 +377,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             <PassphraseField
                                 fieldRef={field => this[FIELD_NEW_PASSWORD] = field}
                                 type="password"
-                                label='New Password'
+                                label={_td("New Password")}
                                 minScore={PASSWORD_MIN_SCORE}
                                 value={this.state.newPassword}
                                 autoFocus={this.props.autoFocusNewPasswordInput}

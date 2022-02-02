@@ -18,14 +18,14 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import classNames from "classnames";
+import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+
 import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 import CallContextMenu from "../../context_menus/CallContextMenu";
 import DialpadContextMenu from "../../context_menus/DialpadContextMenu";
-import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { Alignment } from "../../elements/Tooltip";
 import {
     alwaysAboveLeftOf,
-    alwaysAboveRightOf,
     ChevronFace,
     ContextMenuTooltipButton,
 } from '../../../structures/ContextMenu';
@@ -174,7 +174,7 @@ export default class CallViewButtons extends React.Component<IProps, IState> {
         let dialPad;
         if (this.state.showDialpad) {
             dialPad = <DialpadContextMenu
-                {...alwaysAboveRightOf(
+                {...alwaysAboveLeftOf(
                     this.dialpadButton.current.getBoundingClientRect(),
                     ChevronFace.None,
                     CONTEXT_MENU_VPADDING,

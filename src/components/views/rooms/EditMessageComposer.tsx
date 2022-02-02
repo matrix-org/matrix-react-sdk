@@ -17,37 +17,35 @@ limitations under the License.
 import React, { createRef, KeyboardEvent } from 'react';
 import classNames from 'classnames';
 import { EventStatus, IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { MsgType } from 'matrix-js-sdk/src/@types/event';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
 import { getCaretOffsetAndText } from '../../../editor/dom';
 import { htmlSerializeIfNeeded, textSerialize, containsEmote, stripEmoteCommand } from '../../../editor/serialize';
 import { findEditableEvent } from '../../../utils/EventUtils';
 import { parseEvent } from '../../../editor/deserialize';
-import { CommandPartCreator, Part, PartCreator, Type } from '../../../editor/parts';
+import { CommandPartCreator, Part, PartCreator } from '../../../editor/parts';
 import EditorStateTransfer from '../../../utils/EditorStateTransfer';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
+import { CommandCategories } from '../../../SlashCommands';
 import { Action } from "../../../dispatcher/actions";
 import CountlyAnalytics from "../../../CountlyAnalytics";
-import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
+import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SendHistoryManager from '../../../SendHistoryManager';
-import Modal from '../../../Modal';
-import { MsgType } from 'matrix-js-sdk/src/@types/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import ErrorDialog from "../dialogs/ErrorDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import AccessibleButton from '../elements/AccessibleButton';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import SettingsStore from "../../../settings/SettingsStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
 import RoomContext from '../../../contexts/RoomContext';
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
+import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -159,14 +157,16 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         }
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.Send:
+            case KeyBindingAction.SendMessage:
                 this.sendEdit();
+                event.stopPropagation();
                 event.preventDefault();
                 break;
-            case MessageComposerAction.CancelEditing:
+            case KeyBindingAction.CancelReplyOrEdit:
+                event.stopPropagation();
                 this.cancelEdit();
                 break;
-            case MessageComposerAction.EditPrevMessage: {
+            case KeyBindingAction.EditPrevMessage: {
                 if (this.editorRef.current?.isModified() || !this.editorRef.current?.isCaretAtStart()) {
                     return;
                 }
@@ -185,7 +185,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 }
                 break;
             }
-            case MessageComposerAction.EditNextMessage: {
+            case KeyBindingAction.EditNextMessage: {
                 if (this.editorRef.current?.isModified() || !this.editorRef.current?.isCaretAtEnd()) {
                     return;
                 }
@@ -281,22 +281,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         localStorage.setItem(this.editorStateKey, JSON.stringify(item));
     };
 
-    private isSlashCommand(): boolean {
-        const parts = this.model.parts;
-        const firstPart = parts[0];
-        if (firstPart) {
-            if (firstPart.type === Type.Command && firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")) {
-                return true;
-            }
-
-            if (firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")
-                && (firstPart.type === Type.Plain || firstPart.type === Type.PillCandidate)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private isContentModified(newContent: IContent): boolean {
         // if nothing has changed then bail
         const oldContent = this.props.editState.getEvent().getContent();
@@ -308,59 +292,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         return true;
     }
 
-    private getSlashCommand(): [Command, string, string] {
-        const commandText = this.model.parts.reduce((text, part) => {
-            // use mxid to textify user pills in a command
-            if (part.type === Type.UserPill) {
-                return text + part.resourceId;
-            }
-            return text + part.text;
-        }, "");
-        const { cmd, args } = getCommand(commandText);
-        return [cmd, args, commandText];
-    }
-
-    private async runSlashCommand(cmd: Command, args: string, roomId: string): Promise<void> {
-        const result = cmd.run(roomId, args);
-        let messageContent;
-        let error = result.error;
-        if (result.promise) {
-            try {
-                if (cmd.category === CommandCategories.messages) {
-                    messageContent = await result.promise;
-                } else {
-                    await result.promise;
-                }
-            } catch (err) {
-                error = err;
-            }
-        }
-        if (error) {
-            logger.error("Command failure: %s", error);
-            // assume the error is a server error when the command is async
-            const isServerError = !!result.promise;
-            const title = isServerError ? _td("Server error") : _td("Command error");
-
-            let errText;
-            if (typeof error === 'string') {
-                errText = error;
-            } else if (error.message) {
-                errText = error.message;
-            } else {
-                errText = _t("Server unavailable, overloaded, or something else went wrong.");
-            }
-
-            Modal.createTrackedDialog(title, '', ErrorDialog, {
-                title: _t(title),
-                description: errText,
-            });
-        } else {
-            logger.log("Command success.");
-            if (messageContent) return messageContent;
-        }
-    }
-
     private sendEdit = async (): Promise<void> => {
+        if (this.state.saveDisabled) return;
+
         const startTime = CountlyAnalytics.getTimestamp();
         const editedEvent = this.props.editState.getEvent();
 
@@ -386,45 +320,31 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         // If content is modified then send an updated event into the room
         if (this.isContentModified(newContent)) {
             const roomId = editedEvent.getRoomId();
-            if (!containsEmote(this.model) && this.isSlashCommand()) {
-                const [cmd, args, commandText] = this.getSlashCommand();
+            if (!containsEmote(this.model) && isSlashCommand(this.model)) {
+                const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
+                    const threadId = this.props.editState?.getEvent()?.getThread()?.id || null;
                     if (cmd.category === CommandCategories.messages) {
-                        editContent["m.new_content"] = await this.runSlashCommand(cmd, args, roomId);
+                        editContent["m.new_content"] = await runSlashCommand(cmd, args, roomId, threadId);
+                        if (!editContent["m.new_content"]) {
+                            return; // errored
+                        }
                     } else {
-                        this.runSlashCommand(cmd, args, roomId);
+                        runSlashCommand(cmd, args, roomId, threadId);
                         shouldSend = false;
                     }
-                } else {
-                    // ask the user if their unknown command should be sent as a message
-                    const { finished } = Modal.createTrackedDialog("Unknown command", "", QuestionDialog, {
-                        title: _t("Unknown Command"),
-                        description: <div>
-                            <p>
-                                { _t("Unrecognised command: %(commandText)s", { commandText }) }
-                            </p>
-                            <p>
-                                { _t("You can use <code>/help</code> to list available commands. " +
-                                    "Did you mean to send this as a message?", {}, {
-                                    code: t => <code>{ t }</code>,
-                                }) }
-                            </p>
-                            <p>
-                                { _t("Hint: Begin your message with <code>//</code> to start it with a slash.", {}, {
-                                    code: t => <code>{ t }</code>,
-                                }) }
-                            </p>
-                        </div>,
-                        button: _t('Send as message'),
-                    });
-                    const [sendAnyway] = await finished;
+                } else if (!await shouldSendAnyway(commandText)) {
                     // if !sendAnyway bail to let the user edit the composer and try again
-                    if (!sendAnyway) return;
+                    return;
                 }
             }
             if (shouldSend) {
                 this.cancelPreviousPendingEdit();
-                const prom = this.props.mxClient.sendMessage(roomId, editContent);
+
+                const event = this.props.editState.getEvent();
+                const threadId = event.threadRootId || null;
+
+                const prom = this.props.mxClient.sendMessage(roomId, threadId, editContent);
                 this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
                 CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, true, false, editContent);
@@ -480,7 +400,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         const room = this.getRoom();
         const partCreator = new CommandPartCreator(room, this.props.mxClient);
 
-        let parts;
+        let parts: Part[];
         let isRestored = false;
         if (editState.hasEditorState()) {
             // if restoring state from a previous editor,
@@ -533,6 +453,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 ref={this.editorRef}
                 model={this.model}
                 room={this.getRoom()}
+                threadId={this.props.editState?.getEvent()?.getThread()?.id}
                 initialCaret={this.props.editState.getCaret()}
                 label={_t("Edit message")}
                 onChange={this.onChange}

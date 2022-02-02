@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
@@ -95,7 +96,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             userText,
             sendLogs: true,
             progressCallback: this.sendProgressCallback,
-            label: this.props.label,
+            labels: this.props.label ? [this.props.label] : [],
         }).then(() => {
             if (!this.unmounted) {
                 this.props.onFinished(false);
@@ -127,7 +128,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             await downloadBugReport({
                 sendLogs: true,
                 progressCallback: this.downloadProgressCallback,
-                label: this.props.label,
+                labels: this.props.label ? [this.props.label] : [],
             });
 
             this.setState({

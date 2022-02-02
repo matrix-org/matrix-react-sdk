@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import React, { createRef, CSSProperties, ReactNode, SyntheticEvent, KeyboardEvent } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Timer from '../../utils/Timer';
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import { getKeyBindingsManager, RoomAction } from "../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import ResizeNotifier from "../../utils/ResizeNotifier";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 const DEBUG_SCROLL = false;
 
@@ -89,7 +90,7 @@ interface IProps {
      * The promise should resolve to true if there is more data to be
      * retrieved in this direction (in which case onFillRequest may be
      * called again immediately), or false if there is no more data in this
-     * directon (at this time) - which will stop the pagination cycle until
+     * direction (at this time) - which will stop the pagination cycle until
      * the user scrolls again.
      */
     onFillRequest?(backwards: boolean): Promise<boolean>;
@@ -592,19 +593,19 @@ export default class ScrollPanel extends React.Component<IProps> {
         let isScrolling = false;
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
-            case RoomAction.ScrollUp:
+            case KeyBindingAction.ScrollUp:
                 this.scrollRelative(-1);
                 isScrolling = true;
                 break;
-            case RoomAction.RoomScrollDown:
+            case KeyBindingAction.ScrollDown:
                 this.scrollRelative(1);
                 isScrolling = true;
                 break;
-            case RoomAction.JumpToFirstMessage:
+            case KeyBindingAction.JumpToFirstMessage:
                 this.scrollToTop();
                 isScrolling = true;
                 break;
-            case RoomAction.JumpToLatestMessage:
+            case KeyBindingAction.JumpToLatestMessage:
                 this.scrollToBottom();
                 isScrolling = true;
                 break;
@@ -683,7 +684,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             return;
         }
         const scrollToken = node.dataset.scrollTokens.split(',')[0];
-        debuglog("saving anchored scroll state to message", node && node.innerText, scrollToken);
+        debuglog("saving anchored scroll state to message", node.innerText, scrollToken);
         const bottomOffset = this.topFromBottom(node);
         this.scrollState = {
             stuckAtBottom: false,
@@ -750,6 +751,8 @@ export default class ScrollPanel extends React.Component<IProps> {
         const minHeight = sn.clientHeight;
         const height = Math.max(minHeight, contentHeight);
         this.pages = Math.ceil(height / PAGE_SIZE);
+        const displayScrollbar = contentHeight > minHeight;
+        sn.dataset.scrollbar = displayScrollbar.toString();
         this.bottomGrowth = 0;
         const newHeight = `${this.getListHeight()}px`;
 
@@ -789,17 +792,16 @@ export default class ScrollPanel extends React.Component<IProps> {
         const scrollState = this.scrollState;
         const trackedNode = scrollState.trackedNode;
 
-        if (!trackedNode || !trackedNode.parentElement) {
-            let node;
+        if (!trackedNode?.parentElement) {
+            let node: HTMLElement;
             const messages = this.itemlist.current.children;
             const scrollToken = scrollState.trackedScrollToken;
 
-            for (let i = messages.length-1; i >= 0; --i) {
+            for (let i = messages.length - 1; i >= 0; --i) {
                 const m = messages[i] as HTMLElement;
                 // 'data-scroll-tokens' is a DOMString of comma-separated scroll tokens
                 // There might only be one scroll token
-                if (m.dataset.scrollTokens &&
-                    m.dataset.scrollTokens.split(',').indexOf(scrollToken) !== -1) {
+                if (m.dataset.scrollTokens?.split(',').includes(scrollToken)) {
                     node = m;
                     break;
                 }
@@ -956,7 +958,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             >
                 { this.props.fixedChildren }
                 <div className="mx_RoomView_messageListWrapper">
-                    <ol ref={this.itemlist} className="mx_RoomView_MessageList" aria-live="polite" role="list">
+                    <ol ref={this.itemlist} className="mx_RoomView_MessageList" aria-live="polite">
                         { this.props.children }
                     </ol>
                 </div>

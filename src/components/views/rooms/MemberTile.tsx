@@ -15,19 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsStore from "../../../settings/SettingsStore";
 import React from 'react';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+
+import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
+import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 
 interface IProps {
     member: RoomMember;
@@ -65,7 +67,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_custom_status")) {
             const { user } = this.props.member;
             if (user) {
-                user.on("User._unstable_statusMessage", this.onStatusMessageCommitted);
+                user.on("User.unstable_statusMessage", this.onStatusMessageCommitted);
             }
         }
 
@@ -92,7 +94,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         const { user } = this.props.member;
         if (user) {
             user.removeListener(
-                "User._unstable_statusMessage",
+                "User.unstable_statusMessage",
                 this.onStatusMessageCommitted,
             );
         }
@@ -198,6 +200,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         dis.dispatch({
             action: Action.ViewUser,
             member: this.props.member,
+            push: true,
         });
     };
 
@@ -207,9 +210,11 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
     private getPowerLabel(): string {
         return _t("%(userName)s (power %(powerLevelNumber)s)", {
-            userName: this.props.member.userId,
+            userName: UserIdentifierCustomisations.getDisplayUserIdentifier(
+                this.props.member.userId, { roomId: this.props.member.roomId },
+            ),
             powerLevelNumber: this.props.member.powerLevel,
-        });
+        }).trim();
     }
 
     render() {

@@ -18,6 +18,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Group } from "matrix-js-sdk/src/models/group";
+import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
@@ -29,23 +34,18 @@ import GroupHeaderButtons from '../views/right_panel/GroupHeaderButtons';
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
 import Modal from '../../Modal';
-import classnames from 'classnames';
-
 import GroupStore from '../../stores/GroupStore';
 import FlairStore from '../../stores/FlairStore';
 import { showGroupAddRoomDialog } from '../../GroupAddressPicker';
 import { makeGroupPermalink, makeUserPermalink } from "../../utils/permalinks/Permalinks";
-import { Group } from "matrix-js-sdk/src/models/group";
-import { sleep } from "matrix-js-sdk/src/utils";
-import RightPanelStore from "../../stores/RightPanelStore";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { mediaFromMxc } from "../../customisations/Media";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { createSpaceFromCommunity } from "../../utils/space";
 import { Action } from "../../dispatcher/actions";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 
 const LONG_DESC_PLACEHOLDER = _td(
     `<h1>HTML for your community's page</h1>
@@ -175,7 +175,7 @@ class FeaturedRoom extends React.Component {
         e.stopPropagation();
 
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_alias: this.props.summaryInfo.profile.canonical_alias,
             room_id: this.props.summaryInfo.room_id,
         });
@@ -428,7 +428,7 @@ export default class GroupView extends React.Component {
         membershipBusy: false,
         publicityBusy: false,
         inviterProfile: null,
-        showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+        showRightPanel: RightPanelStore.instance.isOpenForGroup,
         showUpgradeNotice: !localStorage.getItem(UPGRADE_NOTICE_LS_KEY),
     };
 
@@ -440,7 +440,7 @@ export default class GroupView extends React.Component {
         this._initGroupStore(this.props.groupId, true);
 
         this._dispatcherRef = dis.register(this._onAction);
-        this._rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this._onRightPanelStoreUpdate);
+        RightPanelStore.instance.on(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     componentWillUnmount() {
@@ -448,10 +448,7 @@ export default class GroupView extends React.Component {
         this._matrixClient.removeListener("Group.myMembership", this._onGroupMyMembership);
         dis.unregister(this._dispatcherRef);
 
-        // Remove RightPanelStore listener
-        if (this._rightPanelStoreToken) {
-            this._rightPanelStoreToken.remove();
-        }
+        RightPanelStore.instance.off(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -469,7 +466,7 @@ export default class GroupView extends React.Component {
 
     _onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+            showRightPanel: RightPanelStore.instance.isOpenForGroup,
         });
     };
 
@@ -825,10 +822,7 @@ export default class GroupView extends React.Component {
     };
 
     _onAdminsLinkClick = () => {
-        dis.dispatch({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.GroupMemberList,
-        });
+        RightPanelStore.instance.setCard({ phase: RightPanelPhases.GroupMemberList });
     };
 
     _getGroupSection() {

@@ -17,7 +17,6 @@ limitations under the License.
 import * as React from "react";
 import { createRef } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
@@ -26,10 +25,15 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import { Action } from "../../dispatcher/actions";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCondition";
-import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import { UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES } from "../../stores/spaces";
+import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
+import { isMac, Key } from "../../Keyboard";
+import SettingsStore from "../../settings/SettingsStore";
+import Modal from "../../Modal";
+import SpotlightDialog from "../views/dialogs/SpotlightDialog";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     isMinimized: boolean;
@@ -42,12 +46,11 @@ interface IProps {
 interface IState {
     query: string;
     focused: boolean;
-    inSpaces: boolean;
 }
 
 @replaceableComponent("structures.RoomSearch")
 export default class RoomSearch extends React.PureComponent<IProps, IState> {
-    private dispatcherRef: string;
+    private readonly dispatcherRef: string;
     private inputRef: React.RefObject<HTMLInputElement> = createRef();
     private searchFilter: NameFilterCondition = new NameFilterCondition();
 
@@ -57,13 +60,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         this.state = {
             query: "",
             focused: false,
-            inSpaces: false,
         };
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         // clear filter when changing spaces, in future we may wish to maintain a filter per-space
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.clearInput);
-        SpaceStore.instance.on(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
     }
 
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
@@ -84,20 +85,21 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.clearInput);
-        SpaceStore.instance.off(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
     }
 
-    private onSpaces = (spaces: Room[]) => {
-        this.setState({
-            inSpaces: spaces.length > 0,
-        });
-    };
+    private openSpotlight() {
+        Modal.createTrackedDialog("Spotlight", "", SpotlightDialog, {}, "mx_SpotlightDialog_wrapper", false, true);
+    }
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === 'view_room' && payload.clear_search) {
+        if (payload.action === Action.ViewRoom && payload.clear_search) {
             this.clearInput();
-        } else if (payload.action === 'focus_room_filter' && this.inputRef.current) {
-            this.inputRef.current.focus();
+        } else if (payload.action === 'focus_room_filter') {
+            if (SettingsStore.getValue("feature_spotlight")) {
+                this.openSpotlight();
+            } else {
+                this.inputRef.current?.focus();
+            }
         }
     };
 
@@ -108,8 +110,12 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     };
 
     private openSearch = () => {
-        defaultDispatcher.dispatch({ action: "show_left_panel" });
-        defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        if (SettingsStore.getValue("feature_spotlight")) {
+            this.openSpotlight();
+        } else {
+            defaultDispatcher.dispatch({ action: "show_left_panel" });
+            defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        }
     };
 
     private onChange = () => {
@@ -118,8 +124,14 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     };
 
     private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {
-        this.setState({ focused: true });
-        ev.target.select();
+        if (SettingsStore.getValue("feature_spotlight")) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            this.openSpotlight();
+        } else {
+            this.setState({ focused: true });
+            ev.target.select();
+        }
     };
 
     private onBlur = (ev: React.FocusEvent<HTMLInputElement>) => {
@@ -129,11 +141,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private onKeyDown = (ev: React.KeyboardEvent) => {
         const action = getKeyBindingsManager().getRoomListAction(ev);
         switch (action) {
-            case RoomListAction.ClearSearch:
+            case KeyBindingAction.ClearRoomFilter:
                 this.clearInput();
                 defaultDispatcher.fire(Action.FocusSendMessageComposer);
                 break;
-            case RoomListAction.SelectRoom: {
+            case KeyBindingAction.SelectRoomInRoomList: {
                 const shouldClear = this.props.onSelectRoom();
                 if (shouldClear) {
                     // wrap in set immediate to delay it so that we don't clear the filter & then change room
@@ -146,9 +158,13 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         }
     };
 
-    public focus(): void {
-        this.inputRef.current?.focus();
-    }
+    public focus = (): void => {
+        if (SettingsStore.getValue("feature_spotlight")) {
+            this.openSpotlight();
+        } else {
+            this.inputRef.current?.focus();
+        }
+    };
 
     public render(): React.ReactNode {
         const classes = classNames({
@@ -163,13 +179,8 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             'mx_RoomSearch_inputExpanded': this.state.query || this.state.focused,
         });
 
-        let placeholder = _t("Filter");
-        if (this.state.inSpaces) {
-            placeholder = _t("Filter all spaces");
-        }
-
         let icon = (
-            <div className='mx_RoomSearch_icon' />
+            <div className="mx_RoomSearch_icon" onClick={this.focus} />
         );
         let input = (
             <input
@@ -181,7 +192,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
                 onBlur={this.onBlur}
                 onChange={this.onChange}
                 onKeyDown={this.onKeyDown}
-                placeholder={placeholder}
+                placeholder={SettingsStore.getValue("feature_spotlight") ? _t("Search") : _t("Filter")}
                 autoComplete="off"
             />
         );
@@ -193,6 +204,9 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
                 onClick={this.clearInput}
             />
         );
+        let shortcutPrompt = <div className="mx_RoomSearch_shortcutPrompt" onClick={this.focus}>
+            { isMac ? "⌘ K" : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " K" }
+        </div>;
 
         if (this.props.isMinimized) {
             icon = (
@@ -204,14 +218,28 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             );
             input = null;
             clearButton = null;
+            shortcutPrompt = null;
         }
 
         return (
             <div className={classes}>
                 { icon }
                 { input }
+                { shortcutPrompt }
                 { clearButton }
             </div>
         );
+    }
+
+    public appendChar(char: string): void {
+        this.setState({
+            query: this.state.query + char,
+        });
+    }
+
+    public backspace(): void {
+        this.setState({
+            query: this.state.query.substring(0, this.state.query.length - 1),
+        });
     }
 }

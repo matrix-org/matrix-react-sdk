@@ -15,15 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import { Key } from '../../Keyboard';
-import dis from '../../dispatcher/dispatcher';
+import React, { createRef, HTMLProps } from 'react';
 import { throttle } from 'lodash';
-import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import classNames from 'classnames';
+
+import { Key } from '../../Keyboard';
+import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import { replaceableComponent } from "../../utils/replaceableComponent";
 
-interface IProps {
+interface IProps extends HTMLProps<HTMLInputElement> {
     onSearch?: (query: string) => void;
     onCleared?: (source?: string) => void;
     onKeyDown?: (ev: React.KeyboardEvent) => void;
@@ -35,11 +35,6 @@ interface IProps {
     autoFocus?: boolean;
     initialValue?: string;
     collapsed?: boolean;
-
-    // If true, the search box will focus and clear itself
-    // on room search focus action (it would be nicer to take
-    // this functionality out, but not obvious how that would work)
-    enableRoomSearchFocus?: boolean;
 }
 
 interface IState {
@@ -49,12 +44,7 @@ interface IState {
 
 @replaceableComponent("structures.SearchBox")
 export default class SearchBox extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
     private search = createRef<HTMLInputElement>();
-
-    static defaultProps: Partial<IProps> = {
-        enableRoomSearchFocus: false,
-    };
 
     constructor(props: IProps) {
         super(props);
@@ -64,31 +54,6 @@ export default class SearchBox extends React.Component<IProps, IState> {
             blurred: true,
         };
     }
-
-    public componentDidMount(): void {
-        this.dispatcherRef = dis.register(this.onAction);
-    }
-
-    public componentWillUnmount(): void {
-        dis.unregister(this.dispatcherRef);
-    }
-
-    private onAction = (payload): void => {
-        if (!this.props.enableRoomSearchFocus) return;
-
-        switch (payload.action) {
-            case 'view_room':
-                if (this.search.current && payload.clear_search) {
-                    this.clearSearch();
-                }
-                break;
-            case 'focus_room_filter':
-                if (this.search.current) {
-                    this.search.current.focus();
-                }
-                break;
-        }
-    };
 
     private onChange = (): void => {
         if (!this.search.current) return;
@@ -133,11 +98,15 @@ export default class SearchBox extends React.Component<IProps, IState> {
     }
 
     public render(): JSX.Element {
+        /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
+        const { onSearch, onCleared, onKeyDown, onFocus, onBlur, className = "", placeholder, blurredPlaceholder,
+            autoFocus, initialValue, collapsed, ...props } = this.props;
+
         // check for collapsed here and
         // not at parent so we keep
         // searchTerm in our state
         // when collapsing and expanding
-        if (this.props.collapsed) {
+        if (collapsed) {
             return null;
         }
         const clearButton = (!this.state.blurred || this.state.searchTerm) ?
@@ -151,13 +120,10 @@ export default class SearchBox extends React.Component<IProps, IState> {
         // show a shorter placeholder when blurred, if requested
         // this is used for the room filter field that has
         // the explore button next to it when blurred
-        const placeholder = this.state.blurred ?
-            (this.props.blurredPlaceholder || this.props.placeholder) :
-            this.props.placeholder;
-        const className = this.props.className || "";
         return (
             <div className={classNames("mx_SearchBox", "mx_textinput", { "mx_SearchBox_blurred": this.state.blurred })}>
                 <input
+                    {...props}
                     key="searchfield"
                     type="text"
                     ref={this.search}
@@ -167,7 +133,7 @@ export default class SearchBox extends React.Component<IProps, IState> {
                     onChange={this.onChange}
                     onKeyDown={this.onKeyDown}
                     onBlur={this.onBlur}
-                    placeholder={placeholder}
+                    placeholder={this.state.blurred ? (blurredPlaceholder || placeholder) : placeholder}
                     autoComplete="off"
                     autoFocus={this.props.autoFocus}
                 />

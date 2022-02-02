@@ -16,32 +16,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import type { Relations } from 'matrix-js-sdk/src/models/relations';
+import classNames from 'classnames';
+import { MsgType } from 'matrix-js-sdk/src/@types/event';
 
+import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
-import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
+import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { canCancel } from "../context_menus/MessageContextMenu";
+import MessageContextMenu, { canCancel } from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import DownloadActionButton from "./DownloadActionButton";
-import MessageContextMenu from "../context_menus/MessageContextMenu";
-import classNames from 'classnames';
-
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
-import { dispatchShowThreadEvent } from '../../../dispatcher/dispatch-actions/threads';
+import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import ReactionPicker from "../emojipicker/ReactionPicker";
+import { CardContext } from '../right_panel/BaseCard';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -50,46 +50,64 @@ interface IOptionsButtonProps {
     getReplyChain: () => ReplyChain;
     permalinkCreator: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
+    getRelationsForEvent?: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
-const OptionsButton: React.FC<IOptionsButtonProps> =
-    ({ mxEvent, getTile, getReplyChain, permalinkCreator, onFocusChange }) => {
-        const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-        const [onFocus, isActive, ref] = useRovingTabIndex(button);
-        useEffect(() => {
-            onFocusChange(menuDisplayed);
-        }, [onFocusChange, menuDisplayed]);
+const OptionsButton: React.FC<IOptionsButtonProps> = ({
+    mxEvent,
+    getTile,
+    getReplyChain,
+    permalinkCreator,
+    onFocusChange,
+    getRelationsForEvent,
+}) => {
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const [onFocus, isActive, ref] = useRovingTabIndex(button);
+    useEffect(() => {
+        onFocusChange(menuDisplayed);
+    }, [onFocusChange, menuDisplayed]);
 
-        let contextMenu;
-        if (menuDisplayed) {
-            const tile = getTile && getTile();
-            const replyChain = getReplyChain && getReplyChain();
+    let contextMenu: ReactElement | null;
+    if (menuDisplayed) {
+        const tile = getTile && getTile();
+        const replyChain = getReplyChain && getReplyChain();
 
-            const buttonRect = button.current.getBoundingClientRect();
-            contextMenu = <MessageContextMenu
-                {...aboveLeftOf(buttonRect)}
-                mxEvent={mxEvent}
-                permalinkCreator={permalinkCreator}
-                eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
-                collapseReplyChain={replyChain && replyChain.canCollapse() ? replyChain.collapse : undefined}
-                onFinished={closeMenu}
-            />;
-        }
+        const buttonRect = button.current.getBoundingClientRect();
+        contextMenu = <MessageContextMenu
+            {...aboveLeftOf(buttonRect)}
+            mxEvent={mxEvent}
+            permalinkCreator={permalinkCreator}
+            eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
+            collapseReplyChain={replyChain && replyChain.canCollapse() ? replyChain.collapse : undefined}
+            onFinished={closeMenu}
+            getRelationsForEvent={getRelationsForEvent}
+        />;
+    }
 
-        return <React.Fragment>
-            <ContextMenuTooltipButton
-                className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
-                title={_t("Options")}
-                onClick={openMenu}
-                isExpanded={menuDisplayed}
-                inputRef={ref}
-                onFocus={onFocus}
-                tabIndex={isActive ? 0 : -1}
-            />
+    return <React.Fragment>
+        <ContextMenuTooltipButton
+            className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
+            title={_t("Options")}
+            onClick={() => {
+                openMenu();
+                // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
+                // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
+                // position in the page even when someone is clicking around.
+                onFocus();
+            }}
+            isExpanded={menuDisplayed}
+            inputRef={ref}
+            onFocus={onFocus}
+            tabIndex={isActive ? 0 : -1}
+        />
 
-            { contextMenu }
-        </React.Fragment>;
-    };
+        { contextMenu }
+    </React.Fragment>;
+};
 
 interface IReactButtonProps {
     mxEvent: MatrixEvent;
@@ -116,7 +134,13 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
         <ContextMenuTooltipButton
             className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton"
             title={_t("React")}
-            onClick={openMenu}
+            onClick={() => {
+                openMenu();
+                // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
+                // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
+                // position in the page even when someone is clicking around.
+                onFocus();
+            }}
             isExpanded={menuDisplayed}
             inputRef={ref}
             onFocus={onFocus}
@@ -137,6 +161,11 @@ interface IMessageActionBarProps {
     onFocusChange?: (menuDisplayed: boolean) => void;
     toggleThreadExpanded: () => void;
     isQuoteExpanded?: boolean;
+    getRelationsForEvent?: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 @replaceableComponent("views.messages.MessageActionBar")
@@ -180,10 +209,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     };
 
     private onFocusChange = (focused: boolean): void => {
-        if (!this.props.onFocusChange) {
-            return;
-        }
-        this.props.onFocusChange(focused);
+        this.props.onFocusChange?.(focused);
     };
 
     private onReplyClick = (ev: React.MouseEvent): void => {
@@ -194,8 +220,12 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         });
     };
 
-    private onThreadClick = (): void => {
-        dispatchShowThreadEvent(this.props.mxEvent);
+    private onThreadClick = (isCard: boolean): void => {
+        showThread({ rootEvent: this.props.mxEvent, push: isCard });
+        dis.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: TimelineRenderingType.Thread,
+        });
     };
 
     private onEditClick = (ev: React.MouseEvent): void => {
@@ -205,6 +235,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             timelineRenderingType: this.context.timelineRenderingType,
         });
     };
+
+    private readonly forbiddenThreadHeadMsgType = [
+        MsgType.KeyVerificationRequest,
+    ];
+
+    private get showReplyInThreadAction(): boolean {
+        const isThreadEnabled = SettingsStore.getValue("feature_thread");
+        const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
+
+        const isAllowedMessageType = !this.forbiddenThreadHeadMsgType.includes(
+            this.props.mxEvent.getContent().msgtype as MsgType,
+        );
+
+        return isThreadEnabled && inNotThreadTimeline && isAllowedMessageType;
+    }
 
     /**
      * Runs a given fn on the set of possible events to test. The first event
@@ -259,6 +304,16 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
+        const threadTooltipButton = <CardContext.Consumer key="thread">
+            { context =>
+                <RovingAccessibleTooltipButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+                    title={_t("Reply in thread")}
+                    onClick={this.onThreadClick.bind(null, context.isCard)}
+                />
+            }
+        </CardContext.Consumer>;
+
         // We show a different toolbar for failed events, so detect that first.
         const mxEvent = this.props.mxEvent;
         const editStatus = mxEvent.replacingEvent() && mxEvent.replacingEvent().status;
@@ -283,23 +338,17 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // The only catch is we do the reply button first so that we can make sure the react
                 // button is the very first button without having to do length checks for `splice()`.
                 if (this.context.canReply) {
-                    toolbarOpts.splice(0, 0, <>
+                    if (this.showReplyInThreadAction) {
+                        toolbarOpts.splice(0, 0, threadTooltipButton);
+                    }
+                    toolbarOpts.splice(0, 0, (
                         <RovingAccessibleTooltipButton
                             className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
                             title={_t("Reply")}
                             onClick={this.onReplyClick}
                             key="reply"
                         />
-                        { (SettingsStore.getValue("feature_thread")
-                            && this.context.timelineRenderingType !== TimelineRenderingType.Thread) && (
-                            <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                                title={_t("Reply in thread")}
-                                onClick={this.onThreadClick}
-                                key="thread"
-                            />
-                        ) }
-                    </>);
+                    ));
                 }
                 if (this.context.canReact) {
                     toolbarOpts.splice(0, 0, <ReactButton
@@ -318,26 +367,19 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         key="download"
                     />);
                 }
-            }
-            // Show thread icon even for deleted messages, but only within main timeline
-            if (this.context.timelineRenderingType === TimelineRenderingType.Room &&
-                SettingsStore.getValue("feature_thread") &&
-                this.props.mxEvent.getThread() &&
-                !isContentActionable(this.props.mxEvent)
+            } else if (SettingsStore.getValue("feature_thread") &&
+                // Show thread icon even for deleted messages, but only within main timeline
+                this.context.timelineRenderingType === TimelineRenderingType.Room &&
+                this.props.mxEvent.getThread()
             ) {
-                toolbarOpts.unshift(<RovingAccessibleTooltipButton
-                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                    title={_t("Reply in thread")}
-                    onClick={this.onThreadClick}
-                    key="thread"
-                />);
+                toolbarOpts.unshift(threadTooltipButton);
             }
 
             if (allowCancel) {
                 toolbarOpts.push(cancelSendingButton);
             }
 
-            if (this.props.isQuoteExpanded !== undefined && ReplyChain.hasReply(this.props.mxEvent)) {
+            if (this.props.isQuoteExpanded !== undefined && ReplyChain.shouldDisplayReply(this.props.mxEvent)) {
                 const expandClassName = classNames({
                     'mx_MessageActionBar_maskButton': true,
                     'mx_MessageActionBar_expandMessageButton': !this.props.isQuoteExpanded,
@@ -359,6 +401,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 permalinkCreator={this.props.permalinkCreator}
                 onFocusChange={this.onFocusChange}
                 key="menu"
+                getRelationsForEvent={this.props.getRelationsForEvent}
             />);
         }
 

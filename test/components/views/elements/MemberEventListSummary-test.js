@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ShallowRenderer from "react-test-renderer/shallow";
+
 import sdk from '../../../skinned-sdk';
 import * as testUtils from '../../../test-utils';
 
@@ -515,7 +516,7 @@ describe('MemberEventListSummary', function() {
 
         expect(summaryText).toBe(
             "user_1 was invited, was banned, joined, rejected their invitation, left, " +
-            "had their invitation withdrawn, was unbanned, was kicked, left and was kicked",
+            "had their invitation withdrawn, was unbanned, was removed, left and was removed",
         );
     });
 

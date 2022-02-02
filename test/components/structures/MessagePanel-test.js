@@ -15,37 +15,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsStore from "../../../src/settings/SettingsStore";
-
 import React from 'react';
 import ReactDOM from "react-dom";
-const TestUtils = require('react-dom/test-utils');
-const expect = require('expect');
 import { EventEmitter } from "events";
-
-import sdk from '../../skinned-sdk';
-
-const MessagePanel = sdk.getComponent('structures.MessagePanel');
-import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import Matrix from 'matrix-js-sdk';
-
-const TestUtilsMatrix = require('../../test-utils');
 import FakeTimers from '@sinonjs/fake-timers';
-
 import { mount } from "enzyme";
 
+import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
+import sdk from '../../skinned-sdk';
+import SettingsStore from "../../../src/settings/SettingsStore";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
+
+const TestUtils = require('react-dom/test-utils');
+const expect = require('expect');
+
+const MessagePanel = sdk.getComponent('structures.MessagePanel');
+
+const TestUtilsMatrix = require('../../test-utils');
 
 let client;
 const room = new Matrix.Room("!roomId:server_name");
 
 // wrap MessagePanel with a component which provides the MatrixClient in the context.
 class WrappedMessagePanel extends React.Component {
-    state = {
-        resizeNotifier: new EventEmitter(),
-    };
+    resizeNotifier = new EventEmitter();
+    callEventGroupers = new Map();
 
     render() {
         const roomContext = {
@@ -62,7 +59,12 @@ class WrappedMessagePanel extends React.Component {
 
         return <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={roomContext}>
-                <MessagePanel room={room} {...this.props} resizeNotifier={this.state.resizeNotifier} />
+                <MessagePanel
+                    room={room}
+                    {...this.props}
+                    resizeNotifier={this.resizeNotifier}
+                    callEventGroupers={this.callEventGroupers}
+                />
             </RoomContext.Provider>
         </MatrixClientContext.Provider>;
     }

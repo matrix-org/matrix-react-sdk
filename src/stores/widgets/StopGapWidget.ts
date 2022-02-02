@@ -32,8 +32,11 @@ import {
     IWidgetApiErrorResponseData,
     WidgetKind,
 } from "matrix-widget-api";
-import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { EventEmitter } from "events";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
 import RoomViewStore from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -45,19 +48,17 @@ import { WidgetType } from "../../widgets/WidgetType";
 import ActiveWidgetStore from "../ActiveWidgetStore";
 import { objectShallowClone } from "../../utils/objects";
 import defaultDispatcher from "../../dispatcher/dispatcher";
+import { Action } from "../../dispatcher/actions";
 import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
 import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // TODO: Destroy all of this code
 
@@ -108,8 +109,8 @@ export class ElementWidget extends Widget {
         }
         let domain = super.rawData['domain'];
         if (domain === undefined) {
-            // v1 widgets default to jitsi.riot.im regardless of user settings
-            domain = "jitsi.riot.im";
+            // v1 widgets default to meet.element.io regardless of user settings
+            domain = "meet.element.io";
         }
 
         let theme = new ThemeWatcher().getEffectiveTheme();
@@ -254,8 +255,11 @@ export class StopGapWidget extends EventEmitter {
             });
         }
     };
-
-    public start(iframe: HTMLIFrameElement) {
+    /**
+     * This starts the messaging for the widget if it is not in the state `started` yet.
+     * @param iframe the iframe the widget should use
+     */
+    public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
         const allowedCapabilities = this.appTileProps.whitelistCapabilities || [];
         const driver = new StopGapWidgetDriver(allowedCapabilities, this.mockWidget, this.kind, this.roomId);
@@ -291,7 +295,7 @@ export class StopGapWidget extends EventEmitter {
 
             // at this point we can change rooms, so do that
             defaultDispatcher.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: targetRoomId,
             });
 
@@ -406,7 +410,12 @@ export class StopGapWidget extends EventEmitter {
         }
     }
 
-    public stop(opts = { forceDestroy: false }) {
+    /**
+     * Stops the widget messaging for if it is started. Skips stopping if it is an active
+     * widget.
+     * @param opts
+     */
+    public stopMessaging(opts = { forceDestroy: false }) {
         if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {
             logger.log("Skipping destroy - persistent widget");
             return;

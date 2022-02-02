@@ -16,6 +16,8 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import filesize from 'filesize';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import AccessibleButton from "../elements/AccessibleButton";
@@ -28,8 +30,6 @@ import { IMediaEventContent } from "../../../customisations/models/IMediaEventCo
 import { IBodyProps } from "./IBodyProps";
 import { FileDownloader } from "../../../utils/FileDownloader";
 import TextWithTooltip from "../elements/TextWithTooltip";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 export let DOWNLOAD_ICON_URL; // cached copy of the download.svg asset for the sandboxed iframe later on
 
@@ -223,7 +223,8 @@ export default class MFileBody extends React.Component<IProps, IState> {
             </span>;
         }
 
-        const showDownloadLink = this.props.tileShape || !this.props.showGenericPlaceholder;
+        const showDownloadLink = (this.props.tileShape || !this.props.showGenericPlaceholder) &&
+            this.props.tileShape !== TileShape.Thread;
 
         if (isEncrypted) {
             if (!this.state.decryptedBlob) {
@@ -252,12 +253,15 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 <span className="mx_MFileBody">
                     { placeholder }
                     { showDownloadLink && <div className="mx_MFileBody_download">
-                        <div style={{ display: "none" }}>
+                        <div aria-hidden style={{ display: "none" }}>
                             { /*
                               * Add dummy copy of the "a" tag
                               * We'll use it to learn how the download link
                               * would have been styled if it was rendered inline.
                               */ }
+                            { /* this violates multiple eslint rules
+                            so ignore it completely */ }
+                            { /* eslint-disable-next-line */ }
                             <a ref={this.dummyLink} />
                         </div>
                         { /*
@@ -268,6 +272,8 @@ export default class MFileBody extends React.Component<IProps, IState> {
                             be suitable to just remove this bit of code.
                          */ }
                         <iframe
+                            aria-hidden
+                            title={presentableTextForFile(this.content, _t("Attachment"), true, true)}
                             src={url}
                             onLoad={() => this.downloadFile(this.fileName, this.linkText)}
                             ref={this.iframe}
