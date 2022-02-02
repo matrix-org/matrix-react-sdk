@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React, { createRef } from 'react';
 import classNames from 'classnames';
 import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
@@ -294,7 +295,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private sendMessage = async (ev: ButtonEvent) => {
+    private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
             // just send out the voice recording.
@@ -302,7 +303,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             return;
         }
 
-        this.messageComposerInput.current?.sendMessage(ev);
+        this.messageComposerInput.current?.sendMessage();
     };
 
     private onChange = (model: EditorModel) => {

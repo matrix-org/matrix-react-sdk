@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ClipboardEvent, createRef, KeyboardEvent, SyntheticEvent } from 'react';
+import React, { ClipboardEvent, createRef, KeyboardEvent } from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
 import { IContent, MatrixEvent, IEventRelation } from 'matrix-js-sdk/src/models/event';
 import { DebouncedFunc, throttle } from 'lodash';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
@@ -224,7 +225,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
             case KeyBindingAction.SendMessage:
-                this.sendMessage(event);
+                this.sendMessage();
                 event.preventDefault();
                 break;
             case KeyBindingAction.SelectPrevSendHistory:
@@ -338,14 +339,19 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     }
 
-    public async sendMessage(ev: SyntheticEvent): Promise<void> {
+    public async sendMessage(): Promise<void> {
         const model = this.model;
 
         if (model.isEmpty) {
             return;
         }
 
-        PosthogAnalytics.trackInteraction("ComposerSendMessage", ev);
+        PosthogAnalytics.instance.trackEvent<ComposerEvent>({
+            eventName: "Composer",
+            isEditing: false,
+            inThread: this.props.relation?.rel_type === RelationType.Thread,
+            isReply: !!this.props.replyToEvent,
+        });
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
