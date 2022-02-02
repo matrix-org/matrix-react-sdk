@@ -46,6 +46,7 @@ export default class VoipUserMapper {
      * the third-party lookup API.
      *
      * @params userId The MXID of the virtual user.
+     * @returns Resolves to the native user ID.
      */
     public async virtualUserToNativeUser(userId: string): Promise<string> {
         const results = await CallHandler.instance.sipNativeLookup(userId);
