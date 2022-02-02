@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643804609911,
+  "lastUpdate": 1643824960150,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62168,6 +62168,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4609.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f0446a23d5dcd1c48d23e68986bc3d030cdb14e1",
+          "message": "Fix poll creation from a thread (#7706)",
+          "timestamp": "2022-02-02T17:55:41Z",
+          "tree_id": "897b33c7c7ee69b33d5e05c05b87db59264ba5a7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f0446a23d5dcd1c48d23e68986bc3d030cdb14e1"
+        },
+        "date": 1643824954418,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5093.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 915.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1665.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4562,
             "unit": "ms",
             "extra": "type: measure"
           }
