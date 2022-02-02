@@ -36,7 +36,6 @@ import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { RoomNotifState } from "../../../RoomNotifs";
 import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
-import { onRoomFilesClick, onRoomMembersClick } from "../right_panel/RoomSummaryCard";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
@@ -216,7 +215,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 ev.stopPropagation();
 
                 ensureViewingRoom();
-                onRoomMembersClick(false);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, false);
                 onFinished();
                 PosthogAnalytics.instance.trackEvent<InteractionEvent>({
                     eventName: "Interaction",
@@ -289,7 +288,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     ev.stopPropagation();
 
                     ensureViewingRoom();
-                    onRoomFilesClick(false);
+                    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, false);
                     onFinished();
                 }}
                 label={_t("Files")}

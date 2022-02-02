@@ -34,7 +34,7 @@ import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import createRoom, { findDMForUser, privateShouldBeEncrypted } from '../../../createRoom';
 import DMRoomMap from '../../../utils/DMRoomMap';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import SdkConfig from '../../../SdkConfig';
 import RoomViewStore from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
@@ -78,6 +78,7 @@ import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import { InteractionEvent, PosthogAnalytics } from "../../../PosthogAnalytics";
 
 export interface IDevice {
     deviceId: string;
@@ -422,7 +423,7 @@ const UserOptionsSection: React.FC<{
 
         if (canInvite && (member?.membership ?? 'leave') === 'leave' && shouldShowComponent(UIComponent.InviteUsers)) {
             const roomId = member && member.roomId ? member.roomId : RoomViewStore.getRoomId();
-            const onInviteUserButton = async () => {
+            const onInviteUserButton = async (ev: ButtonEvent) => {
                 try {
                     // We use a MultiInviter to re-use the invite logic, even though
                     // we're only inviting one user.
@@ -438,6 +439,12 @@ const UserOptionsSection: React.FC<{
                         description: ((err && err.message) ? err.message : _t("Operation failed")),
                     });
                 }
+
+                PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                    eventName: "Interaction",
+                    name: "WebRightPanelRoomUserInfoInviteAction",
+                    interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+                });
             };
 
             inviteUserButton = (
@@ -1718,6 +1725,15 @@ const UserInfo: React.FC<IProps> = ({
         onClose={onClose}
         closeLabel={closeLabel}
         cardState={cardState}
+        onBack={(ev: ButtonEvent) => {
+            if (RightPanelStore.instance.previousCard.phase === RightPanelPhases.RoomMemberList) {
+                PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                    eventName: "Interaction",
+                    name: "WebRightPanelRoomUserInfoBackAction",
+                    interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+                });
+            }
+        }}
     >
         { content }
     </BaseCard>;

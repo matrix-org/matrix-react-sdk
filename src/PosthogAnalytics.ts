@@ -262,9 +262,7 @@ export class PosthogAnalytics {
         this.setAnonymity(Anonymity.Disabled);
     }
 
-    public trackEvent<E extends IEvent>(
-        event: E,
-    ): void {
+    public trackEvent<E extends IEvent>(event: E): void {
         if (this.anonymity == Anonymity.Disabled || this.anonymity == Anonymity.Anonymous) return;
         const eventWithoutName = { ...event };
         delete eventWithoutName.eventName;
