@@ -48,7 +48,7 @@ import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 import UserIdentifierCustomisations from './customisations/UserIdentifier';
 
-/*
+/**
  * Attempt to retrieve the displayname of a user from an event. If the user is a virtual user,
  * return the displayname of the native user instead. In either case, if a displayname cannot
  * be found, simply return the MXID of the user instead.
