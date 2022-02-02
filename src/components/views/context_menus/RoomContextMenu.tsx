@@ -44,6 +44,7 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { Action } from "../../../dispatcher/actions";
+import { InteractionEvent, PosthogAnalytics } from "../../../PosthogAnalytics";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -86,6 +87,12 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 room_id: room.roomId,
             });
             onFinished();
+
+            PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                eventName: "Interaction",
+                name: "WebRoomHeaderContextMenuLeaveAction",
+                interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+            });
         };
 
         leaveOption = <IconizedContextMenuOption
@@ -109,6 +116,12 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 roomId: room.roomId,
             });
             onFinished();
+
+            PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                eventName: "Interaction",
+                name: "WebRoomHeaderContextMenuInviteAction",
+                interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+            });
         };
 
         inviteOption = <IconizedContextMenuOption
@@ -124,7 +137,14 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     if (room.getMyMembership() === "join") {
         const isFavorite = roomTags.includes(DefaultTagID.Favourite);
         favouriteOption = <IconizedContextMenuCheckbox
-            onClick={(e) => onTagRoom(e, DefaultTagID.Favourite)}
+            onClick={(e) => {
+                onTagRoom(e, DefaultTagID.Favourite);
+                PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                    eventName: "Interaction",
+                    name: "WebRoomHeaderContextMenuFavouriteAction",
+                    interactionType: e.type === "click" ? "Pointer" : "Keyboard",
+                });
+            }}
             active={isFavorite}
             label={isFavorite ? _t("Favourited") : _t("Favourite")}
             iconClassName="mx_RoomTile_iconStar"
@@ -171,6 +191,12 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     initial_tab_id: ROOM_NOTIFICATIONS_TAB,
                 });
                 onFinished();
+
+                PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                    eventName: "Interaction",
+                    name: "WebRoomHeaderContextMenuNotificationsAction",
+                    interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+                });
             }}
             label={_t("Notifications")}
             iconClassName={iconClassName}
@@ -192,6 +218,11 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 ensureViewingRoom();
                 onRoomMembersClick(false);
                 onFinished();
+                PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                    eventName: "Interaction",
+                    name: "WebRoomHeaderContextMenuPeopleAction",
+                    interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+                });
             }}
             label={_t("People")}
             iconClassName="mx_RoomTile_iconPeople"
@@ -291,6 +322,12 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                         room_id: room.roomId,
                     });
                     onFinished();
+
+                    PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                        eventName: "Interaction",
+                        name: "WebRoomHeaderContextMenuSettingsAction",
+                        interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
+                    });
                 }}
                 label={_t("Settings")}
                 iconClassName="mx_RoomTile_iconSettings"
