@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer';
 
 import { getSenderName, textForEvent } from "../src/TextForEvent";
 import SettingsStore from "../src/settings/SettingsStore";
-import { createTestClient } from './test-utils';
+import { createTestClient, stubClient } from './test-utils';
 import { MatrixClientPeg } from '../src/MatrixClientPeg';
 import UserIdentifierCustomisations from '../src/customisations/UserIdentifier';
 
@@ -61,15 +61,25 @@ function renderComponent(component): string {
 }
 
 describe('TextForEvent', () => {
+    beforeEach(() => {
+        stubClient();
+    });
+
     describe("getSenderName()", () => {
+        function makeFakeEvent(baseEvent: object): MatrixEvent {
+            return Object.assign({
+                getRoomId: () => 'a_room_id',
+            }, baseEvent) as MatrixEvent;
+        }
+
         it("Prefers sender.name", () => {
-            expect(getSenderName({ sender: { name: "Alice" } } as MatrixEvent)).toBe("Alice");
+            expect(getSenderName(makeFakeEvent({ sender: { name: "Alice" } }))).toBe("Alice");
         });
         it("Handles missing sender", () => {
-            expect(getSenderName({ getSender: () => "Alice" } as MatrixEvent)).toBe("Alice");
+            expect(getSenderName(makeFakeEvent({ getSender: () => "Alice" }))).toBe("Alice");
         });
         it("Handles missing sender and get sender", () => {
-            expect(getSenderName({ getSender: () => undefined } as MatrixEvent)).toBe("Someone");
+            expect(getSenderName(makeFakeEvent({ getSender: () => undefined }))).toBe("Someone");
         });
     });
 
