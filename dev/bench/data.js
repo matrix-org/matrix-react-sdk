@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643803758318,
+  "lastUpdate": 1643804609911,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62120,6 +62120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4403.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "75b03ca101a34593c2329d11e9cc9e788428ace7",
+          "message": "Reuse CopyableText component in all places it can be (#7701)",
+          "timestamp": "2022-02-02T12:16:00Z",
+          "tree_id": "22ea9dc0b0394666eabaefb3310b29c66fd081d1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/75b03ca101a34593c2329d11e9cc9e788428ace7"
+        },
+        "date": 1643804603509,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5378.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1002.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1776.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4609.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
