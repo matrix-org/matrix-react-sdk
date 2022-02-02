@@ -302,7 +302,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             return;
         }
 
-        this.messageComposerInput.current?.sendMessage(ev.type === "click" ? "Pointer" : "Keyboard");
+        this.messageComposerInput.current?.sendMessage(ev);
     };
 
     private onChange = (model: EditorModel) => {

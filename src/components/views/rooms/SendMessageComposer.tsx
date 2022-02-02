@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ClipboardEvent, createRef, KeyboardEvent } from 'react';
+import React, { ClipboardEvent, createRef, KeyboardEvent, SyntheticEvent } from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
 import { IContent, MatrixEvent, IEventRelation } from 'matrix-js-sdk/src/models/event';
 import { DebouncedFunc, throttle } from 'lodash';
@@ -57,7 +57,7 @@ import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { InteractionEvent, PosthogAnalytics } from "../../../PosthogAnalytics";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 interface IAddReplyOpts {
     permalinkCreator?: RoomPermalinkCreator;
@@ -224,7 +224,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
             case KeyBindingAction.SendMessage:
-                this.sendMessage("Keyboard");
+                this.sendMessage(event);
                 event.preventDefault();
                 break;
             case KeyBindingAction.SelectPrevSendHistory:
@@ -338,18 +338,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     }
 
-    public async sendMessage(interactionType: InteractionEvent["interactionType"]): Promise<void> {
+    public async sendMessage(ev: SyntheticEvent): Promise<void> {
         const model = this.model;
 
         if (model.isEmpty) {
             return;
         }
 
-        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
-            eventName: "Interaction",
-            name: "ComposerSendMessage",
-            interactionType,
-        });
+        PosthogAnalytics.trackInteraction("ComposerSendMessage", ev);
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {

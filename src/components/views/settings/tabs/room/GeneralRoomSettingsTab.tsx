@@ -27,7 +27,7 @@ import { replaceableComponent } from "../../../../../utils/replaceableComponent"
 import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
 import RelatedGroupSettings from "../../../room_settings/RelatedGroupSettings";
 import AliasSettings from "../../../room_settings/AliasSettings";
-import { InteractionEvent, PosthogAnalytics } from "../../../../../PosthogAnalytics";
+import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 
 interface IProps {
     roomId: string;
@@ -56,11 +56,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
             room_id: this.props.roomId,
         });
 
-        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
-            eventName: "Interaction",
-            name: "WebRoomSettingsLeaveAction",
-            interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
-        });
+        PosthogAnalytics.trackInteraction("WebRoomSettingsLeaveAction", ev);
     };
 
     public render(): JSX.Element {

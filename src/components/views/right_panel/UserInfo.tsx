@@ -78,7 +78,7 @@ import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import { InteractionEvent, PosthogAnalytics } from "../../../PosthogAnalytics";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 export interface IDevice {
     deviceId: string;
@@ -440,11 +440,7 @@ const UserOptionsSection: React.FC<{
                     });
                 }
 
-                PosthogAnalytics.instance.trackEvent<InteractionEvent>({
-                    eventName: "Interaction",
-                    name: "WebRightPanelRoomUserInfoInviteAction",
-                    interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
-                });
+                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoInviteAction", ev);
             };
 
             inviteUserButton = (
@@ -1727,11 +1723,7 @@ const UserInfo: React.FC<IProps> = ({
         cardState={cardState}
         onBack={(ev: ButtonEvent) => {
             if (RightPanelStore.instance.previousCard.phase === RightPanelPhases.RoomMemberList) {
-                PosthogAnalytics.instance.trackEvent<InteractionEvent>({
-                    eventName: "Interaction",
-                    name: "WebRightPanelRoomUserInfoBackAction",
-                    interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
-                });
+                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoBackAction", ev);
             }
         }}
     >

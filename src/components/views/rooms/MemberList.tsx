@@ -47,7 +47,7 @@ import BaseAvatar from '../avatars/BaseAvatar';
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
-import { InteractionEvent, PosthogAnalytics } from "../../../PosthogAnalytics";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -597,11 +597,7 @@ export default class MemberList extends React.Component<IProps, IState> {
     }
 
     private onInviteButtonClick = (ev: ButtonEvent): void => {
-        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
-            eventName: "Interaction",
-            name: "WebRightPanelMemberListInviteAction",
-            interactionType: ev.type === "click" ? "Pointer" : "Keyboard",
-        });
+        PosthogAnalytics.trackInteraction("WebRightPanelMemberListInviteAction", ev);
 
         if (MatrixClientPeg.get().isGuest()) {
             dis.dispatch({ action: 'require_registration' });
