@@ -23,6 +23,8 @@ import SdkConfig from './SdkConfig';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
 
+export { Interaction as InteractionEvent } from "matrix-analytics-events/types/typescript/Interaction";
+
 /* Posthog analytics tracking.
  *
  * Anonymity behaviour is as follows:

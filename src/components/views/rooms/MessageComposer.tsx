@@ -47,12 +47,13 @@ import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import RoomContext from '../../../contexts/RoomContext';
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import MessageComposerButtons from './MessageComposerButtons';
+import { ButtonEvent } from '../elements/AccessibleButton';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
 
 interface ISendButtonProps {
-    onClick: () => void;
+    onClick: (ev: ButtonEvent) => void;
     title?: string; // defaults to something generic
 }
 
@@ -293,7 +294,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
-    private sendMessage = async () => {
+    private sendMessage = async (ev: ButtonEvent) => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
             // just send out the voice recording.
@@ -301,7 +302,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             return;
         }
 
-        this.messageComposerInput.current?.sendMessage();
+        this.messageComposerInput.current?.sendMessage(ev.type === "click" ? "Pointer" : "Keyboard");
     };
 
     private onChange = (model: EditorModel) => {

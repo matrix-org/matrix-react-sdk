@@ -57,6 +57,7 @@ import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { InteractionEvent, PosthogAnalytics } from "../../../PosthogAnalytics";
 
 interface IAddReplyOpts {
     permalinkCreator?: RoomPermalinkCreator;
@@ -223,7 +224,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
             case KeyBindingAction.SendMessage:
-                this.sendMessage();
+                this.sendMessage("Keyboard");
                 event.preventDefault();
                 break;
             case KeyBindingAction.SelectPrevSendHistory:
@@ -337,12 +338,18 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     }
 
-    public async sendMessage(): Promise<void> {
+    public async sendMessage(interactionType: InteractionEvent["interactionType"]): Promise<void> {
         const model = this.model;
 
         if (model.isEmpty) {
             return;
         }
+
+        PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+            eventName: "Interaction",
+            name: "ComposerSendMessage",
+            interactionType,
+        });
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
