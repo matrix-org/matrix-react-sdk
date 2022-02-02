@@ -56,7 +56,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
             room_id: this.props.roomId,
         });
 
-        PosthogAnalytics.trackInteraction("WebRoomSettingsLeaveAction", ev);
+        PosthogAnalytics.trackInteraction("WebRoomSettingsLeaveButton", ev);
     };
 
     public render(): JSX.Element {

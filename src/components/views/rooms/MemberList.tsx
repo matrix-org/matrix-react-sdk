@@ -597,7 +597,7 @@ export default class MemberList extends React.Component<IProps, IState> {
     }
 
     private onInviteButtonClick = (ev: ButtonEvent): void => {
-        PosthogAnalytics.trackInteraction("WebRightPanelMemberListInviteAction", ev);
+        PosthogAnalytics.trackInteraction("WebRightPanelMemberListInviteButton", ev);
 
         if (MatrixClientPeg.get().isGuest()) {
             dis.dispatch({ action: 'require_registration' });

@@ -87,7 +87,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             });
             onFinished();
 
-            PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuLeaveAction", ev);
+            PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuLeaveItem", ev);
         };
 
         leaveOption = <IconizedContextMenuOption
@@ -112,7 +112,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             });
             onFinished();
 
-            PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuInviteAction", ev);
+            PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuInviteItem", ev);
         };
 
         inviteOption = <IconizedContextMenuOption
@@ -130,7 +130,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
         favouriteOption = <IconizedContextMenuCheckbox
             onClick={(e) => {
                 onTagRoom(e, DefaultTagID.Favourite);
-                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuFavouriteAction", e);
+                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuFavouriteToggle", e);
             }}
             active={isFavorite}
             label={isFavorite ? _t("Favourited") : _t("Favourite")}
@@ -179,7 +179,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 });
                 onFinished();
 
-                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuNotificationsAction", ev);
+                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuNotificationsItem", ev);
             }}
             label={_t("Notifications")}
             iconClassName={iconClassName}
@@ -201,7 +201,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 ensureViewingRoom();
                 RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, false);
                 onFinished();
-                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuPeopleAction", ev);
+                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
             }}
             label={_t("People")}
             iconClassName="mx_RoomTile_iconPeople"
@@ -301,7 +301,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                         room_id: room.roomId,
                     });
                     onFinished();
-                    PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuSettingsAction", ev);
+                    PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuSettingsItem", ev);
                 }}
                 label={_t("Settings")}
                 iconClassName="mx_RoomTile_iconSettings"

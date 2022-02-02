@@ -440,7 +440,7 @@ const UserOptionsSection: React.FC<{
                     });
                 }
 
-                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoInviteAction", ev);
+                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoInviteButton", ev);
             };
 
             inviteUserButton = (
@@ -1723,7 +1723,7 @@ const UserInfo: React.FC<IProps> = ({
         cardState={cardState}
         onBack={(ev: ButtonEvent) => {
             if (RightPanelStore.instance.previousCard.phase === RightPanelPhases.RoomMemberList) {
-                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoBackAction", ev);
+                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoBackButton", ev);
             }
         }}
     >
