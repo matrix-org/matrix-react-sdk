@@ -55,7 +55,7 @@ import UserIdentifierCustomisations from './customisations/UserIdentifier';
  *
  * @param event The event to extract the user from.
  */
-export function getSenderName(event: MatrixEvent) {
+export function getSenderName(event: MatrixEvent): Promise<string> {
     // Retrieve the room ID from the event
     const potentiallyVirtualRoom = MatrixClientPeg.get().getRoom(event.getRoomId());
 
@@ -65,7 +65,7 @@ export function getSenderName(event: MatrixEvent) {
         !window.mxVoipUserMapper.isVirtualRoom(potentiallyVirtualRoom)
     ) {
         // If not, simply extract the sender information from the incoming event
-        return event.sender?.name ?? event.getSender() ?? _t("Someone");
+        return Promise.resolve(event.sender?.name ?? event.getSender() ?? _t("Someone"));
     }
 
     // Otherwise, assume the caller is a virtual user and attempt to look up the corresponding
@@ -77,7 +77,7 @@ export function getSenderName(event: MatrixEvent) {
     const nativeRoom = MatrixClientPeg.get().getRoom(nativeRoomId);
     const nativeRoomjoinedMembers = nativeRoom.getJoinedMembers();
 
-    const getSenderNameForUserId = (userId) => {
+    const getSenderNameForUserId = (userId: string): Promise<string> => {
         return MatrixClientPeg.get().getProfileInfo(userId).then((resp) => {
             if (resp.displayname) {
                 return resp.displayname;
