@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643794748949,
+  "lastUpdate": 1643794750983,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61892,6 +61892,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4567.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f5226f9d5b51066be04a7f44a5fa5c542ff04a64",
+          "message": "Simplify Composer buttons (#7678)\n\n* Render a CollapsibleButton's children (needed by UploadButton)\r\n\r\n* Make UploadButton ready to live inside an overflow menu\r\n\r\n* Always show overflow menu in composer: main buttons are emoji and attach\r\n\r\n* Re-order composer buttons as per design\r\n\r\n* Re-word composer button captions to be simple nouns\r\n\r\n* Don't rotate More options button when clicked\r\n\r\n* Move the composer menu and dialogs 16px in from right\r\n\r\n* Reduce shadow on composer More menu\r\n\r\n* From review: remove else clause\r\n\r\n* From review: take input out of button\r\n\r\n* Update test snapshots\r\n\r\n* Update snapshots",
+          "timestamp": "2022-02-02T09:30:53Z",
+          "tree_id": "ca1b80a2830219af13c8006521b4ad19595a0438",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f5226f9d5b51066be04a7f44a5fa5c542ff04a64"
+        },
+        "date": 1643794741742,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4950.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1241.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1742.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5147.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
