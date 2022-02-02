@@ -395,7 +395,7 @@ export const Notifier = {
                 roomId = nativeRoomId;
             }
         }
-        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const room = MatrixClientPeg.get().getRoom(roomId);
 
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions?.notify) {
