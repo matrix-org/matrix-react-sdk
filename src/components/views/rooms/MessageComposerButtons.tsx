@@ -20,8 +20,8 @@ import { M_POLL_START } from "matrix-events-sdk";
 import React, { createContext, ReactElement, useContext } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
-import { RelationType } from 'matrix-js-sdk';
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { CollapsibleButton } from './CollapsibleButton';
