@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643794750983,
+  "lastUpdate": 1643801147356,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -61940,6 +61940,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5147.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cb1c94dd2bda929693ce2b1648333a022eb448d0",
+          "message": "Fix leaks in Login unit tests (#7704)\n\n* make Login-test tsx, fix leaks\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-02T11:18:55Z",
+          "tree_id": "c95c1ad1447feef7a4e769ce4ded76eeb7777cdd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cb1c94dd2bda929693ce2b1648333a022eb448d0"
+        },
+        "date": 1643801140705,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4732.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 602.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
