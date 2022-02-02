@@ -62,6 +62,7 @@ import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from './contexts/RoomContext';
 import RoomViewStore from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
+import { InteractionEvent, PosthogAnalytics } from "./PosthogAnalytics";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -105,6 +106,7 @@ interface ICommandOpts {
     aliases?: string[];
     args?: string;
     description: string;
+    interactionName?: InteractionEvent["name"];
     runFn?: RunFn;
     category: string;
     hideCompletionAfterSpace?: boolean;
@@ -121,6 +123,7 @@ export class Command {
     public readonly category: string;
     public readonly hideCompletionAfterSpace: boolean;
     public readonly renderingTypes?: TimelineRenderingType[];
+    public readonly interactionName?: InteractionEvent["name"];
     private readonly _isEnabled?: () => boolean;
 
     constructor(opts: ICommandOpts) {
@@ -133,6 +136,7 @@ export class Command {
         this.hideCompletionAfterSpace = opts.hideCompletionAfterSpace || false;
         this._isEnabled = opts.isEnabled;
         this.renderingTypes = opts.renderingTypes;
+        this.interactionName = opts.interactionName;
     }
 
     public getCommand() {
@@ -165,6 +169,14 @@ export class Command {
                     { renderingType },
                 ),
             );
+        }
+
+        if (this.interactionName) {
+            PosthogAnalytics.instance.trackEvent<InteractionEvent>({
+                eventName: "Interaction",
+                name: this.interactionName,
+                interactionType: "Keyboard",
+            });
         }
 
         return this.runFn.bind(this)(roomId, args);
@@ -488,6 +500,7 @@ export const Commands = [
         command: 'invite',
         args: '<user-id> [<reason>]',
         description: _td('Invites user with given id to current room'),
+        interactionName: "WebSlashCommandInviteCommand",
         isEnabled: () => shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
             if (args) {
@@ -674,6 +687,7 @@ export const Commands = [
         command: 'part',
         args: '[<room-address>]',
         description: _td('Leave room'),
+        interactionName: "WebSlashCommandPartCommand",
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
