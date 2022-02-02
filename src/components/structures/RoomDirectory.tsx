@@ -720,15 +720,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 }
             }
 
-            let dropdown = (
-                <NetworkDropdown
-                    protocols={this.protocols}
-                    onOptionChange={this.onOptionChange}
-                    selectedServerName={this.state.roomServer}
-                    selectedInstanceId={this.state.instanceId}
-                />
-            );
-
             listHeader = <div className="mx_RoomDirectory_listheader">
                 <DirectorySearchBox
                     className="mx_RoomDirectory_searchbox"
@@ -739,7 +730,12 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     showJoinButton={showJoinButton}
                     initialText={this.props.initialText}
                 />
-                { dropdown }
+                <NetworkDropdown
+                    protocols={this.protocols}
+                    onOptionChange={this.onOptionChange}
+                    selectedServerName={this.state.roomServer}
+                    selectedInstanceId={this.state.instanceId}
+                />
             </div>;
         }
         const explanation =
