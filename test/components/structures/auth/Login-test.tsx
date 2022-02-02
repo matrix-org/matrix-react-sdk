@@ -33,14 +33,14 @@ const Login = sdk.getComponent(
     'structures.auth.Login',
 );
 
-describe('Login', function () {
+describe('Login', function() {
     let parentDiv;
     const mockClient = {
         login: jest.fn().mockResolvedValue({}),
         loginFlows: jest.fn(),
     };
 
-    beforeEach(function () {
+    beforeEach(function() {
         mockClient.login.mockClear().mockResolvedValue({});
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
         createClient.mockReturnValue(mockClient);
@@ -49,7 +49,7 @@ describe('Login', function () {
         document.body.appendChild(parentDiv);
     });
 
-    afterEach(function () {
+    afterEach(function() {
         ReactDOM.unmountComponentAtNode(parentDiv);
         parentDiv.remove();
     });
