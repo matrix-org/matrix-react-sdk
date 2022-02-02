@@ -47,7 +47,7 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
     private onStoreUpdate = async (forceUpdate = false): Promise<void> => {
         const beforeRoomIds = this.roomIds;
         // clone the set as it may be mutated by the space store internally
-        this.roomIds = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(this.space));
+        this.roomIds = new Set(SpaceStore.instance.getSpaceFilteredDirectChildRoomIds(this.space));
 
         const beforeUserIds = this.userIds;
         // clone the set as it may be mutated by the space store internally
