@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { SyntheticEvent } from "react";
 import posthog, { PostHog } from 'posthog-js';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -23,7 +24,6 @@ import PlatformPeg from './PlatformPeg';
 import SdkConfig from './SdkConfig';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
-import { SyntheticEvent } from "react";
 
 export { Interaction as InteractionEvent } from "matrix-analytics-events/types/typescript/Interaction";
 
