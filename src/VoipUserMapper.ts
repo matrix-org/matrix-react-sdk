@@ -48,7 +48,7 @@ export default class VoipUserMapper {
      * @params userId The MXID of the virtual user.
      */
     public async virtualUserToNativeUser(userId: string): Promise<string> {
-        const results = await CallHandler.sharedInstance().sipNativeLookup(userId);
+        const results = await CallHandler.instance.sipNativeLookup(userId);
         if (results.length === 0 || !results[0].fields.lookup_success) return null;
         return results[0].userid;
     }
