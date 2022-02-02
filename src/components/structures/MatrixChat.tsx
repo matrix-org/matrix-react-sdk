@@ -23,6 +23,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/Screen";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { throttle } from "lodash";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -445,6 +446,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
+    public componentDidMount(): void {
+        window.addEventListener("resize", this.onWindowResized);
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (this.shouldTrackPageChange(prevState, this.state)) {
             const durationMs = this.stopPageChangeTimer();
@@ -465,22 +470,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.fontWatcher.stop();
         UIStore.destroy();
         this.state.resizeNotifier.removeListener("middlePanelResized", this.dispatchTimelineResize);
+        window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
     }
 
     public trackScreenChange(durationMs: number): void {
-        const notLoggedInMap = {};
+        const notLoggedInMap: Partial<Record<Views, ScreenEvent["screenName"]>> = {};
         notLoggedInMap[Views.LOADING] = "WebLoading";
-        notLoggedInMap[Views.WELCOME] = "WebWelcome";
-        notLoggedInMap[Views.LOGIN] = "WebLogin";
-        notLoggedInMap[Views.REGISTER] = "WebRegister";
-        notLoggedInMap[Views.FORGOT_PASSWORD] = "WebForgotPassword";
+        notLoggedInMap[Views.WELCOME] = "Welcome";
+        notLoggedInMap[Views.LOGIN] = "Login";
+        notLoggedInMap[Views.REGISTER] = "Register";
+        notLoggedInMap[Views.FORGOT_PASSWORD] = "ForgotPassword";
         notLoggedInMap[Views.COMPLETE_SECURITY] = "WebCompleteSecurity";
         notLoggedInMap[Views.E2E_SETUP] = "WebE2ESetup";
         notLoggedInMap[Views.SOFT_LOGOUT] = "WebSoftLogout";
 
-        const loggedInPageTypeMap = {};
+        const loggedInPageTypeMap: Partial<Record<PageType, ScreenEvent["screenName"]>> = {};
         loggedInPageTypeMap[PageType.HomePage] = "Home";
         loggedInPageTypeMap[PageType.RoomView] = "Room";
         loggedInPageTypeMap[PageType.RoomDirectory] = "RoomDirectory";
@@ -493,11 +499,39 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             notLoggedInMap[this.state.view];
 
         return PosthogAnalytics.instance.trackEvent<ScreenEvent>({
-            eventName: "Screen",
+            eventName: "$screen",
             screenName,
             durationMs,
         });
     }
+
+    private onWindowResized = (): void => {
+        // XXX: This is a very unreliable way to detect whether or not the the devtools are open
+        this.warnInConsole();
+    };
+
+    private warnInConsole = throttle((): void => {
+        const largeFontSize = "50px";
+        const normalFontSize = "15px";
+
+        const waitText = _t("Wait!");
+        const scamText = _t(
+            "If someone told you to copy/paste something here, " +
+            "there is a high likelihood you're being scammed!",
+        );
+        const devText = _t(
+            "If you know what you're doing, Element is open-source, " +
+            "be sure to check out our GitHub (https://github.com/vector-im/element-web/) " +
+            "and contribute!",
+        );
+
+        console.log(
+            `%c${waitText}\n%c${scamText}\n%c${devText}`,
+            `font-size:${largeFontSize}; color:blue;`,
+            `font-size:${normalFontSize}; color:red;`,
+            `font-size:${normalFontSize};`,
+        );
+    }, 1000);
 
     private getFallbackHsUrl(): string {
         if (this.props.serverConfig?.isDefault) {
