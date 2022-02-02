@@ -125,19 +125,17 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 BodyType = UnknownBody;
             }
 
-            // TODO: this can be done in eventTypes when Polls stabilise
+            // TODO: this can be done in eventTypes when Polls stabilises
             if (M_POLL_START.matches(type)) {
                 BodyType = sdk.getComponent('messages.MPollBody');
             }
 
+            // TODO: this can be done in eventTypes when location sharing stabilises
             if (
                 LOCATION_EVENT_TYPE.matches(type) ||
                 (type === EventType.RoomMessage && msgtype === MsgType.Location)
             ) {
-                // TODO: tidy this up once location sharing is out of labs
-                if (SettingsStore.getValue("feature_location_share")) {
-                    BodyType = sdk.getComponent('messages.MLocationBody');
-                }
+                BodyType = sdk.getComponent('messages.MLocationBody');
             }
         }
 
