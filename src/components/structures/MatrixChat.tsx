@@ -1531,9 +1531,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             const cli = MatrixClientPeg.get();
             for (const [spaceId, spaceAlias] of Object.entries(fosdemSpaces)) {
                 if (!cli.getRoom(spaceId)) {
+                    // See first did we already do this
+                    const sessionKey = `fosdem_autojoin_${spaceAlias}`;
+                    const joinStatus = localStorage.getItem(sessionKey);
+                    if (joinStatus) {
+                        logger.debug(`Already auto-joined once, not rejoining FOSDEM space ${spaceId} / ${spaceAlias}`);
+                        continue;
+                    }
                     logger.info(`Joining to FOSDEM space ${spaceId} / ${spaceAlias}`);
                     try {
                         await cli.joinRoom(spaceAlias);
+                        localStorage.setItem(sessionKey, 'joined');
                     } catch (error) {
                         logger.warn(`Failed auto-joining to FOSDEM space ${spaceId} / ${spaceAlias}: ${error}`);
                     }
