@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643824960150,
+  "lastUpdate": 1643878976408,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62216,6 +62216,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4562,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "760d26967149d9ac833d9e5ba108836ff8434696",
+          "message": "Fix relative link handling in Element Desktop (#7708)",
+          "timestamp": "2022-02-03T08:55:49Z",
+          "tree_id": "4266b20ec1e6a00bedee5953b706b641b7c7977e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/760d26967149d9ac833d9e5ba108836ff8434696"
+        },
+        "date": 1643878969980,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4929.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 644.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
