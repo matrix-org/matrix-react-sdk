@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643888347673,
+  "lastUpdate": 1643889428057,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62300,6 +62300,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4545,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "226ccfc45c8fb68b4b4baa2e5f66d6650b57b0f3",
+          "message": "Fix creating polls outside of threads (#7711)",
+          "timestamp": "2022-02-03T11:50:07Z",
+          "tree_id": "69dae851861f359b23d8c731d8c853c18666791e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/226ccfc45c8fb68b4b4baa2e5f66d6650b57b0f3"
+        },
+        "date": 1643889422224,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4658.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 661.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
