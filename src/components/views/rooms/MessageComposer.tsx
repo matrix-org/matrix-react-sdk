@@ -89,7 +89,6 @@ interface IState {
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
-    showLocationButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -120,17 +119,11 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
-            showLocationButton: (
-                !window.electron &&
-                SettingsStore.getValue("MessageComposerInput.showLocationButton")
-            ),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
-        SettingsStore.monitorSetting("MessageComposerInput.showLocationButton", null);
-        SettingsStore.monitorSetting("feature_location_share", null);
     }
 
     componentDidMount() {
@@ -173,19 +166,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
                         if (this.state.showStickersButton !== showStickersButton) {
                             this.setState({ showStickersButton });
-                        }
-                        break;
-                    }
-
-                    case "MessageComposerInput.showLocationButton":
-                    case "feature_location_share": {
-                        const showLocationButton = (
-                            !window.electron &&
-                            SettingsStore.getValue("MessageComposerInput.showLocationButton")
-                        );
-
-                        if (this.state.showLocationButton !== showLocationButton) {
-                            this.setState({ showLocationButton });
                         }
                         break;
                     }
@@ -465,7 +445,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                                 }
                             }}
                             setStickerPickerOpen={this.setStickerPickerOpen}
-                            showLocationButton={this.state.showLocationButton}
+                            showLocationButton={!window.electron}
                             showStickersButton={this.state.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
                         />
