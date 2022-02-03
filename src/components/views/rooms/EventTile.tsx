@@ -1209,7 +1209,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         let avatarSize;
         let needsSenderProfile;
 
-        if (this.props.tileShape === TileShape.Notif) {
+        if (this.props.tileShape === TileShape.Notif || this.props.tileShape === TileShape.ThreadPanel) {
             avatarSize = 24;
             needsSenderProfile = true;
         } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
@@ -1262,9 +1262,14 @@ export default class EventTile extends React.Component<IProps, IState> {
                 sender = <SenderProfile onClick={this.onSenderProfileClick}
                     mxEvent={this.props.mxEvent}
                     enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
                 />;
             } else {
-                sender = <SenderProfile mxEvent={this.props.mxEvent} enableFlair={this.props.enableFlair} />;
+                sender = <SenderProfile
+                    mxEvent={this.props.mxEvent}
+                    enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
+                />;
             }
         }
 
