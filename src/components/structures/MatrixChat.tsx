@@ -1517,6 +1517,30 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.setState({
                 ready: true,
             });
+
+            // Auto-join to some FOSDEM spaces
+            const fosdemSpaces = {
+                '!BlToLWACcXqAvpatvj:fosdem.org': '#fosdem2022:fosdem.org',
+                '!afEFtdsEUAFQNIAqiV:fosdem.org': '#space-infodesk:fosdem.org',
+                '!naMQjKkVXFboyCgZJk:fosdem.org': '#space-main-tracks:fosdem.org',
+                '!sgvHsecpjxfyPEWmiK:fosdem.org': '#space-devrooms:fosdem.org',
+                '!KSTwGnsgCMvuSbSaJi:fosdem.org': '#space-stands:fosdem.org',
+                '!kQgoXrJBHOsvAOIKaW:fosdem.org': '#space-bofs:fosdem.org',
+                '!FrKXOQOxVcNCUAhJnu:fosdem.org': '#space-social:fosdem.org',
+            };
+            const cli = MatrixClientPeg.get();
+            for (const [spaceId, spaceAlias] of Object.entries(fosdemSpaces)) {
+                if (!cli.getRoom(spaceId)) {
+                    logger.info(`Joining to FOSDEM space ${spaceId} / ${spaceAlias}`);
+                    try {
+                        await cli.joinRoom(spaceAlias);
+                    } catch (error) {
+                        logger.warn(`Failed auto-joining to FOSDEM space ${spaceId} / ${spaceAlias}: ${error}`);
+                    }
+                } else {
+                    logger.debug(`Already member of FOSDEM space ${spaceId} / ${spaceAlias}`);
+                }
+            }
         });
 
         cli.on(HttpApiEvent.SessionLoggedOut, function (errObj) {
