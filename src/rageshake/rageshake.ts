@@ -48,6 +48,7 @@ const MAX_LOG_SIZE = 1024 * 1024 * 5; // 5 MB
 // A class which monkey-patches the global console and stores log lines.
 export class ConsoleLogger {
     private logs = "";
+    private originalFunctions = {};
 
     public monkeyPatch(consoleObj: Console): void {
         // Monkey-patch console logging
@@ -60,11 +61,20 @@ export class ConsoleLogger {
         Object.keys(consoleFunctionsToLevels).forEach((fnName) => {
             const level = consoleFunctionsToLevels[fnName];
             const originalFn = consoleObj[fnName].bind(consoleObj);
+            this.originalFunctions[fnName] = originalFn;
             consoleObj[fnName] = (...args) => {
                 this.log(level, ...args);
                 originalFn(...args);
             };
         });
+    }
+
+    public bypassRageshake(
+        fnName: "log" | "info" | "warn" | "error",
+        level: string,
+        ...args: (Error | DOMException | object | string)[]
+    ): void {
+        this.originalFunctions[fnName](level, ...args);
     }
 
     private log(level: string, ...args: (Error | DOMException | object | string)[]): void {
