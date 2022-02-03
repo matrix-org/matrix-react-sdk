@@ -56,6 +56,14 @@ limitations under the License.
                 line-height: $font-15px;
                 color: $secondary-content;
                 margin-top: 20px;
+
+                > h4 {
+                    margin: 0;
+                }
+
+                > p {
+                    margin-top: 0;
+                }
             }
         }
 

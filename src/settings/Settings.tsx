@@ -16,9 +16,9 @@ limitations under the License.
 */
 
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
-import { _td } from '../languageHandler';
+import { _t, _td } from '../languageHandler';
 import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
@@ -155,7 +155,7 @@ interface IBaseSetting {
     // XXX: Keep this around for re-use in future Betas
     betaInfo?: {
         title: string; // _td
-        caption: string; // _td
+        caption: () => ReactNode;
         disclaimer?: (enabled: boolean) => ReactNode;
         image: string; // require(...)
         feedbackSubheading?: string;
@@ -336,8 +336,28 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New spotlight search experience"),
+        displayName: _td("New search experience"),
         default: false,
+        betaInfo: {
+            title: _td("New search experience"),
+            caption: () => <>
+                <p>{ _t("A new quick way to search spaces and rooms you're in.") }</p>
+                <p>{ _t("This feature is a work in progress, so all feedback is very welcome.") }</p>
+            </>,
+            disclaimer: enabled => enabled
+                ? <>
+                    <h4>{ _t("Leave beta") }</h4>
+                    <p>{ _t("Just return to this page or tap on the beta badge when you search.") }</p>
+                    <h4>{ _t("Feedback") }</h4>
+                    <p>{ _t("Search and click on feedback") }</p>
+                </>
+                : <>
+                    <h4>{ _t("Feedback") }</h4>
+                    <p>{ _t("Search and click on feedback") }</p>
+                </>,
+            feedbackLabel: "spotlight-feedback",
+            image: require("../../res/img/betas/new_search_experience.png"),
+        },
     },
     "feature_right_panel_default_open": {
         isFeature: true,

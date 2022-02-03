@@ -26,6 +26,7 @@ import Modal from "../../../Modal";
 import BetaFeedbackDialog from "../dialogs/BetaFeedbackDialog";
 import SdkConfig from "../../../SdkConfig";
 import SettingsFlag from "../elements/SettingsFlag";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 
 // XXX: Keep this around for re-use in future Betas
 
@@ -67,10 +68,10 @@ export const BetaPill = ({ onClick }: { onClick?: () => void }) => {
 
 const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     const info = SettingsStore.getBetaInfo(featureId);
+    const value = useFeatureEnabled(featureId);
     if (!info) return null; // Beta is invalid/disabled
 
     const { title, caption, disclaimer, image, feedbackLabel, feedbackSubheading, extraSettings } = info;
-    const value = SettingsStore.getValue(featureId);
 
     let feedbackButton;
     if (value && feedbackLabel && feedbackSubheading && SdkConfig.get().bug_report_endpoint_url) {
@@ -91,7 +92,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                     { titleOverride || _t(title) }
                     <BetaPill />
                 </h3>
-                <span className="mx_BetaCard_caption">{ _t(caption) }</span>
+                <span className="mx_BetaCard_caption">{ caption() }</span>
                 <div className="mx_BetaCard_buttons">
                     { feedbackButton }
                     <AccessibleButton
