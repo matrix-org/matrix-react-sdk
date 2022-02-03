@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { useDrag } from "react-use-gesture";
+import { useDrag, useGesture } from "react-use-gesture";
 import { useSprings } from "@react-spring/web";
 import useMeasure from "react-use-measure";
 import { ResizeObserver } from "@juggle/resize-observer";
@@ -296,6 +296,11 @@ function getSubGridBoundingBox(positions: ITilePosition[]) {
     };
 }
 
+function isMobileBreakpoint(gridWidth: number, gridHeight: number): boolean {
+    const gridAspectRatio = gridWidth / gridHeight;
+    return gridAspectRatio < 1;
+}
+
 function getGridLayout(tileCount: number, presenterTileCount: number, gridWidth: number, gridHeight: number) {
     let layoutDirection = "horizontal";
     let itemGridRatio = 1;
@@ -304,9 +309,7 @@ function getGridLayout(tileCount: number, presenterTileCount: number, gridWidth:
         return { itemGridRatio, layoutDirection };
     }
 
-    const gridAspectRatio = gridWidth / gridHeight;
-
-    if (gridAspectRatio < 1) {
+    if (isMobileBreakpoint(gridWidth, gridHeight)) {
         layoutDirection = "vertical";
         itemGridRatio = 1 / 3;
     } else {
@@ -553,6 +556,7 @@ interface IVideoGridTile<I> {
 interface IVideoGridState<I> {
     tiles: IVideoGridTile<I>[];
     tilePositions: ITilePosition[];
+    scrollPosition: number;
 }
 
 interface IVideoGridItemProps<I> {
@@ -580,9 +584,10 @@ interface IDraggingTile {
 }
 
 export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimations, children }: IVideoGridProps<I>) {
-    const [{ tiles, tilePositions }, setTileState] = useState<IVideoGridState<I>>({
+    const [{ tiles, tilePositions, scrollPosition }, setTileState] = useState<IVideoGridState<I>>({
         tiles: [],
         tilePositions: [],
+        scrollPosition: 0,
     });
     const draggingTileRef = useRef<IDraggingTile | null>(null);
     const lastTappedRef = useRef<{ [userId: string]: number }>({});
@@ -592,7 +597,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
     const [gridRef, gridBounds] = useMeasure({ polyfill: ResizeObserver });
 
     useEffect(() => {
-        setTileState(({ tiles }) => {
+        setTileState(({ tiles, ...rest }) => {
             const newTiles = [];
             const removedTileKeys = [];
 
@@ -670,7 +675,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                         return;
                     }
 
-                    setTileState(({ tiles }) => {
+                    setTileState(({ tiles, ...rest }) => {
                         const newTiles = tiles.filter(
                             (tile) => !removedTileKeys.includes(tile.key),
                         );
@@ -681,6 +686,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                         );
 
                         return {
+                            ...rest,
                             tiles: newTiles,
                             tilePositions: getTilePositions(
                                 newTiles.length,
@@ -702,6 +708,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
             lastLayoutRef.current = layout;
 
             return {
+                ...rest,
                 tiles: newTiles,
                 tilePositions: getTilePositions(
                     newTiles.length,
@@ -743,8 +750,13 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                     reset: false,
                 };
             } else {
+                const isMobile = isMobileBreakpoint(gridBounds.width, gridBounds.height);
+
                 return {
-                    ...tilePosition,
+                    x: tilePosition.x + (layout === "spotlight" && tileIndex !== 0 && isMobile ? scrollPosition : 0),
+                    y: tilePosition.y + (layout === "spotlight" && tileIndex !== 0 && !isMobile ? scrollPosition : 0),
+                    width: tilePosition.width,
+                    height: tilePosition.height,
                     scale: remove ? 0 : 1,
                     opacity: remove ? 0 : 1,
                     zIndex: 0,
@@ -759,12 +771,13 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                 };
             }
         },
-        [tilePositions, disableAnimations],
+        [tilePositions, disableAnimations, scrollPosition, layout, gridBounds],
     );
 
     const [springs, api] = useSprings(tiles.length, animate(tiles), [
         tilePositions,
         tiles,
+        scrollPosition,
     ]);
 
     const onTap = useCallback(
@@ -841,7 +854,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
         [tiles, gridBounds, onFocusTile, layout],
     );
 
-    const bind = useDrag(
+    const bindTile = useDrag(
         ({ args: [key], active, xy, movement, tap, event }) => {
             event.preventDefault();
 
@@ -924,14 +937,42 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
         { filterTaps: true },
     );
 
+    const onGridGesture = useCallback((e, mobileDefinesDelta) => {
+        if (layout !== "spotlight") {
+            return;
+        }
+
+        const isMobile = isMobileBreakpoint(gridBounds.width, gridBounds.height);
+        const movement = e.delta[mobileDefinesDelta ? isMobile ? 0 : 1 : 1];
+
+        let min = 0;
+
+        if (tilePositions.length > 1) {
+            const lastTile = tilePositions[tilePositions.length - 1];
+            min = isMobile ?
+                gridBounds.width - lastTile.x - lastTile.width - 8 :
+                gridBounds.height - lastTile.y - lastTile.height - 8;
+        }
+
+        setTileState((state) => ({
+            ...state,
+            scrollPosition: Math.min(Math.max(movement + state.scrollPosition, min), 0),
+        }));
+    }, [layout, gridBounds, tilePositions]);
+
+    const bindGrid = useGesture({
+        onWheel: (e) => onGridGesture(e, false),
+        onDrag: (e) => onGridGesture(e, true),
+    });
+
     return (
-        <div className="mx_VideoGrid" ref={gridRef}>
+        <div className="mx_VideoGrid" ref={gridRef} {...bindGrid()}>
             { springs.map(({ shadow, ...style }, i) => {
                 const tile = tiles[i];
                 const tilePosition = tilePositions[i];
 
                 return children({
-                    ...bind(tile.key),
+                    ...bindTile(tile.key),
                     key: tile.key,
                     style: {
                         boxShadow: shadow.to(
