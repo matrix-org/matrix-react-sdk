@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643878976408,
+  "lastUpdate": 1643888347673,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62252,6 +62252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 644.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9adfdb8feda720645920846dd4546a07ef181747",
+          "message": "Open native room when clicking notification from a virtual room (#7709)\n\n* Handle virtual rooms when showing a notification\r\n\r\n* This should be using sharedInstance()\r\n\r\nCo-authored-by: Andrew Morgan <andrew@amorgan.xyz>",
+          "timestamp": "2022-02-03T11:31:32Z",
+          "tree_id": "281f0cdc9fbc10fbda9132b9b73497a77551b671",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9adfdb8feda720645920846dd4546a07ef181747"
+        },
+        "date": 1643888340976,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5475.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1045.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1781.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4545,
             "unit": "ms",
             "extra": "type: measure"
           }
