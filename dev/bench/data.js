@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643889428057,
+  "lastUpdate": 1643889691939,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62336,6 +62336,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 661.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78e78292cb620d6939624fd7ad459d455f1a0fa3",
+          "message": "Update PollCreateDialog-test to snapshot the html and not react tree (#7712)",
+          "timestamp": "2022-02-03T11:54:03Z",
+          "tree_id": "090dcf8d19b87325cb0ee1185f2b8bb3fd70b40f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78e78292cb620d6939624fd7ad459d455f1a0fa3"
+        },
+        "date": 1643889685102,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5509,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1118.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1991.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4751,
             "unit": "ms",
             "extra": "type: measure"
           }
