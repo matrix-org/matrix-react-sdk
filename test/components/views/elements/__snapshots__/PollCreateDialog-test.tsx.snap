@@ -71,7 +71,6 @@ exports[`PollCreateDialog renders a blank poll 1`] = `
       "reEmitter": ReEmitter {
         "target": [Circular],
       },
-      "realReceipts": Object {},
       "receiptCacheByEventId": Object {},
       "receipts": Object {},
       "roomId": "roomid",
@@ -292,7 +291,6 @@ exports[`PollCreateDialog renders a blank poll 1`] = `
         "reEmitter": ReEmitter {
           "target": [Circular],
         },
-        "realReceipts": Object {},
         "receiptCacheByEventId": Object {},
         "receipts": Object {},
         "roomId": "roomid",
@@ -1194,7 +1192,6 @@ exports[`PollCreateDialog renders a question and some options 1`] = `
       "reEmitter": ReEmitter {
         "target": [Circular],
       },
-      "realReceipts": Object {},
       "receiptCacheByEventId": Object {},
       "receipts": Object {},
       "roomId": "roomid",
@@ -1415,7 +1412,6 @@ exports[`PollCreateDialog renders a question and some options 1`] = `
         "reEmitter": ReEmitter {
           "target": [Circular],
         },
-        "realReceipts": Object {},
         "receiptCacheByEventId": Object {},
         "receipts": Object {},
         "roomId": "roomid",
