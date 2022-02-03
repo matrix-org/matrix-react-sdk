@@ -87,7 +87,9 @@ export default class Tooltip extends React.Component<ITooltipProps> {
     }
 
     public componentDidUpdate() {
-        this.renderTooltip();
+        if (this.props.visible) {
+            this.renderTooltip();
+        }
     }
 
     // Remove the wrapper element, as the tooltip has finished using it
