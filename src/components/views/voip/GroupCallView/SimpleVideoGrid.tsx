@@ -1,25 +1,20 @@
 import React from "react";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
-import VideoTile from "./VideoTile";
-
-interface ISimpleVideoGridItem {
-    id: string;
-    callFeed: CallFeed;
-    isActiveSpeaker: boolean;
-}
+import { VideoTileContainer } from "./VideoTileContainer";
+import { IVideoGridItem } from "./VideoGrid";
 
 interface ISimpleVideoGridProps {
-    items: ISimpleVideoGridItem[];
+    items: IVideoGridItem<{ callFeed: CallFeed }>[];
 }
 
 export default function SimpleVideoGrid({ items }: ISimpleVideoGridProps) {
     return (
         <div className="mx_VideoGrid mx_simpleVideoGrid">
-            { items.map(({ id, callFeed }, i) => {
+            { items.map((item, i) => {
                 return (
-                    <VideoTile
-                        key={id}
-                        callFeed={callFeed}
+                    <VideoTileContainer
+                        key={item.id}
+                        item={item}
                         width={426}
                         height={240}
                     />
