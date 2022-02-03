@@ -870,6 +870,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private shouldHighlight(): boolean {
         if (this.props.forExport) return false;
+        if (this.props.tileShape === TileShape.Notif) return false;
+        if (this.props.tileShape === TileShape.ThreadPanel) return false;
+
         const actions = this.context.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
@@ -1170,7 +1173,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
-            mx_EventTile_highlight: this.props.tileShape === TileShape.Notif ? false : this.shouldHighlight(),
+            mx_EventTile_highlight: this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent,
             mx_EventTile_continuation: isContinuation || eventType === EventType.CallInvite,
             mx_EventTile_last: this.props.last,
