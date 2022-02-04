@@ -35,7 +35,6 @@ import { IDialogProps } from "./IDialogProps";
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
-import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {
     findSiblingElement,
@@ -258,7 +257,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     viewRoom(room.roomId, true);
                 }}
             >
-                <RoomAvatar room={room} width={20} height={20} />
+                <DecoratedRoomAvatar room={room} avatarSize={20} />
                 { room.name }
                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                 <ResultDetails room={room} />
@@ -398,7 +397,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                     viewRoom(room.roomId, true);
                                 }}
                             >
-                                <RoomAvatar room={room} width={20} height={20} />
+                                <DecoratedRoomAvatar room={room} avatarSize={20} />
                                 { room.name }
                                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                                 <div className="mx_SpotlightDialog_enterPrompt">↵</div>
