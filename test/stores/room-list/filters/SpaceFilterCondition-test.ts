@@ -13,7 +13,7 @@ jest.mock("../../../../src/stores/spaces/SpaceStore", () => {
     class MockSpaceStore extends EventEmitter {
         isRoomInSpace = jest.fn();
         getSpaceFilteredUserIds = jest.fn().mockReturnValue(new Set<string>([]));
-        getSpaceFilteredDirectChildRoomIds = jest.fn().mockReturnValue(new Set<string>([]));
+        getSpaceFilteredRoomIds = jest.fn().mockReturnValue(new Set<string>([]));
     }
     return { instance: new MockSpaceStore() };
 });
@@ -38,7 +38,6 @@ describe('SpaceFilterCondition', () => {
         jest.resetAllMocks();
         SettingsStoreMock.getValue.mockClear().mockImplementation(makeMockGetValue());
         SpaceStoreInstanceMock.getSpaceFilteredUserIds.mockReturnValue(new Set([]));
-        SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set([]));
         SpaceStoreInstanceMock.isRoomInSpace.mockReturnValue(true);
     });
 
@@ -51,7 +50,7 @@ describe('SpaceFilterCondition', () => {
 
     describe('isVisible', () => {
         const room1 = { roomId: room1Id } as unknown as Room;
-        it('calls isRoomInSpace correctly when showSubSpaceRoomsInSpace is truthy', () => {
+        it('calls isRoomInSpace correctly', () => {
             const filter = initFilter(space1);
 
             expect(filter.isVisible(room1)).toEqual(true);
@@ -115,7 +114,7 @@ describe('SpaceFilterCondition', () => {
             const emitSpy = jest.spyOn(filter, 'emit');
 
             // update mock so filter would emit change if it was listening to space1
-            SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set([room1Id]));
+            SpaceStoreInstanceMock.getSpaceFilteredRoomIds.mockReturnValue(new Set([room1Id]));
             SpaceStoreInstanceMock.emit(space1);
             jest.runOnlyPendingTimers();
             // no filter changed event
@@ -129,7 +128,7 @@ describe('SpaceFilterCondition', () => {
             const emitSpy = jest.spyOn(filter, 'emit');
 
             // update mock so filter would emit change if it was listening to space1
-            SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set([room1Id]));
+            SpaceStoreInstanceMock.getSpaceFilteredRoomIds.mockReturnValue(new Set([room1Id]));
             SpaceStoreInstanceMock.emit(space1);
             jest.runOnlyPendingTimers();
             // no filter changed event
@@ -138,7 +137,7 @@ describe('SpaceFilterCondition', () => {
 
         describe('when directChildRoomIds change', () => {
             beforeEach(() => {
-                SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set([room1Id, room2Id]));
+                SpaceStoreInstanceMock.getSpaceFilteredRoomIds.mockReturnValue(new Set([room1Id, room2Id]));
             });
             const filterChangedCases = [
                 ['room added', [room1Id, room2Id, room3Id]],
@@ -150,14 +149,14 @@ describe('SpaceFilterCondition', () => {
                 const filter = initFilter(space1);
                 const emitSpy = jest.spyOn(filter, 'emit');
 
-                SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set(rooms));
+                SpaceStoreInstanceMock.getSpaceFilteredRoomIds.mockReturnValue(new Set(rooms));
                 SpaceStoreInstanceMock.emit(space1);
                 jest.runOnlyPendingTimers();
                 expect(emitSpy).toHaveBeenCalledWith(FILTER_CHANGED);
             });
         });
 
-        describe('when directChildRoomIds change', () => {
+        describe('when user ids change', () => {
             beforeEach(() => {
                 SpaceStoreInstanceMock.getSpaceFilteredUserIds.mockReturnValue(new Set([user1Id, user2Id]));
             });
