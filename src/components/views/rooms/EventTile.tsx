@@ -1554,7 +1554,8 @@ export default class EventTile extends React.Component<IProps, IState> {
                             { sender }
                         </a>
                     </div>,
-                    <div className={lineClasses} key="mx_EventTile_line">
+                    <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
+                        { this.renderContextMenu() }
                         { replyChain }
                         <EventTileType ref={this.tile}
                             mxEvent={this.props.mxEvent}
