@@ -161,6 +161,7 @@ interface IBaseSetting {
         feedbackSubheading?: string;
         feedbackLabel?: string;
         extraSettings?: string[];
+        requiresRefresh?: boolean;
     };
 }
 

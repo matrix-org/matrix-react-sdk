@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode, useState } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
@@ -27,6 +27,8 @@ import BetaFeedbackDialog from "../dialogs/BetaFeedbackDialog";
 import SdkConfig from "../../../SdkConfig";
 import SettingsFlag from "../elements/SettingsFlag";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
+import InlineSpinner from "../elements/InlineSpinner";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 // XXX: Keep this around for re-use in future Betas
 
@@ -69,9 +71,19 @@ export const BetaPill = ({ onClick }: { onClick?: () => void }) => {
 const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     const info = SettingsStore.getBetaInfo(featureId);
     const value = useFeatureEnabled(featureId);
+    const [busy, setBusy] = useState(false);
     if (!info) return null; // Beta is invalid/disabled
 
-    const { title, caption, disclaimer, image, feedbackLabel, feedbackSubheading, extraSettings } = info;
+    const {
+        title,
+        caption,
+        disclaimer,
+        image,
+        feedbackLabel,
+        feedbackSubheading,
+        extraSettings,
+        requiresRefresh,
+    } = info;
 
     let feedbackButton;
     if (value && feedbackLabel && feedbackSubheading && SdkConfig.get().bug_report_endpoint_url) {
@@ -85,6 +97,15 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
         </AccessibleButton>;
     }
 
+    let content: ReactNode;
+    if (busy) {
+        content = <InlineSpinner />;
+    } else if (value) {
+        content = _t("Leave the beta");
+    } else {
+        content = _t("Join the beta");
+    }
+
     return <div className="mx_BetaCard">
         <div className="mx_BetaCard_columns">
             <div>
@@ -96,10 +117,22 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                 <div className="mx_BetaCard_buttons">
                     { feedbackButton }
                     <AccessibleButton
-                        onClick={() => SettingsStore.setValue(featureId, null, SettingLevel.DEVICE, !value)}
+                        onClick={async () => {
+                            setBusy(true);
+                            // make it look like we're doing something for two seconds,
+                            // otherwise users think clicking did nothing
+                            if (!requiresRefresh) {
+                                await sleep(2000);
+                            }
+                            await SettingsStore.setValue(featureId, null, SettingLevel.DEVICE, !value);
+                            if (!requiresRefresh) {
+                                setBusy(false);
+                            }
+                        }}
                         kind={feedbackButton ? "primary_outline" : "primary"}
+                        disabled={busy}
                     >
-                        { value ? _t("Leave the beta") : _t("Join the beta") }
+                        { content }
                     </AccessibleButton>
                 </div>
                 { disclaimer && <div className="mx_BetaCard_disclaimer">

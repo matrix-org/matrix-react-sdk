@@ -516,9 +516,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
     const openFeedback = () => {
         Modal.createTrackedDialog("Spotlight Feedback", "", GenericFeatureFeedbackDialog, {
-            title: _t("Spotlight search feedback"),
-            subheading: _t("Thank you for trying Spotlight search. " +
-                "Your feedback will help inform the next versions."),
+            title: _t("Search beta feedback"),
+            subheading: _t("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it. " +
+                "Your platform and username will be noted to help us use your feedback as much as we can."),
             rageshakeLabel: "spotlight-feedback",
         });
     };
@@ -527,7 +528,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
     return <>
         <div className="mx_SpotlightDialog_keyboardPrompt">
-            { _t("Use <arrows/> to scroll results", {}, {
+            { _t("Use <arrows/> to scroll", {}, {
                 arrows: () => <>
                     <div>↓</div>
                     <div>↑</div>
