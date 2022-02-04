@@ -34,23 +34,45 @@ const MessageComposerButtons = TestUtils.wrapInMatrixClientContext(
 );
 
 describe("MessageComposerButtons", () => {
-    it("Renders all buttons in wide mode", () => {
+    it("Renders emoji and upload buttons in wide mode", () => {
         const buttons = wrapAndRender(
             <MessageComposerButtons
                 isMenuOpen={false}
                 narrowMode={false}
                 showLocationButton={true}
                 showStickersButton={true}
+                toggleButtonMenu={() => {}}
             />,
         );
 
         expect(buttonLabels(buttons)).toEqual([
-            "Create poll",
-            "Upload file",
-            "Share location",
-            "Add emoji",
-            "Show Stickers",
-            "Send voice message",
+            "Emoji",
+            "Attachment",
+            "More options",
+        ]);
+    });
+
+    it("Renders other buttons in menu in wide mode", () => {
+        const buttons = wrapAndRender(
+            <MessageComposerButtons
+                isMenuOpen={true}
+                narrowMode={false}
+                showLocationButton={true}
+                showStickersButton={true}
+                toggleButtonMenu={() => {}}
+            />,
+        );
+
+        expect(buttonLabels(buttons)).toEqual([
+            "Emoji",
+            "Attachment",
+            "More options",
+            [
+                "Sticker",
+                "Voice Message",
+                "Poll",
+                "Location",
+            ],
         ]);
     });
 
@@ -61,11 +83,12 @@ describe("MessageComposerButtons", () => {
                 narrowMode={true}
                 showLocationButton={true}
                 showStickersButton={true}
+                toggleButtonMenu={() => {}}
             />,
         );
 
         expect(buttonLabels(buttons)).toEqual([
-            "Upload file",
+            "Emoji",
             "More options",
         ]);
     });
@@ -77,17 +100,18 @@ describe("MessageComposerButtons", () => {
                 narrowMode={true}
                 showLocationButton={true}
                 showStickersButton={true}
+                toggleButtonMenu={() => {}}
             />,
         );
 
         expect(buttonLabels(buttons)).toEqual([
-            "Upload file",
+            "Emoji",
             "More options",
             [
-                "Create poll",
-                "Share location",
-                "Add emoji",
-                "Send a sticker",
+                "Attachment",
+                "Sticker",
+                "Poll",
+                "Location",
             ],
         ]);
     });
@@ -159,28 +183,28 @@ function createRoomState(room: Room): IRoomState {
 
 function buttonLabels(buttons: ReactWrapper): any[] {
     // Note: Depends on the fact that the mini buttons use aria-label
-    // and the labels under More options use label
+    // and the labels under More options use textContent
     const mainButtons = (
         buttons
-            .find('div')
-            .map((button: ReactWrapper) => button.prop("aria-label"))
+            .find('div.mx_MessageComposer_button[aria-label]')
+            .map((button: ReactWrapper) => button.prop("aria-label") as string)
             .filter(x => x)
     );
 
-    let extraButtons = (
+    const extraButtons = (
         buttons
-            .find('div')
-            .map((button: ReactWrapper) => button.prop("label"))
+            .find('.mx_MessageComposer_Menu div.mx_AccessibleButton[role="menuitem"]')
+            .map((button: ReactWrapper) => button.text())
             .filter(x => x)
     );
-    if (extraButtons.length === 0) {
-        extraButtons = [];
-    } else {
-        extraButtons = [extraButtons];
+
+    const list: any[] = [
+        ...mainButtons,
+    ];
+
+    if (extraButtons.length > 0) {
+        list.push(extraButtons);
     }
 
-    return [
-        ...mainButtons,
-        ...extraButtons,
-    ];
+    return list;
 }
