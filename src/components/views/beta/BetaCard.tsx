@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { ReactNode, useState } from "react";
 import classNames from "classnames";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -28,7 +29,6 @@ import SdkConfig from "../../../SdkConfig";
 import SettingsFlag from "../elements/SettingsFlag";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import InlineSpinner from "../elements/InlineSpinner";
-import { sleep } from "matrix-js-sdk/src/utils";
 
 // XXX: Keep this around for re-use in future Betas
 
