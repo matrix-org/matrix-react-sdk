@@ -64,6 +64,8 @@ import RoomViewStore from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
+import { BetaPill } from "../beta/BetaCard";
+import { UserTab } from "./UserSettingsDialog";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -512,6 +514,15 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         }
     };
 
+    const openFeedback = () => {
+        Modal.createTrackedDialog("Spotlight Feedback", "", GenericFeatureFeedbackDialog, {
+            title: _t("Spotlight search feedback"),
+            subheading: _t("Thank you for trying Spotlight search. " +
+                "Your feedback will help inform the next versions."),
+            rageshakeLabel: "spotlight-feedback",
+        });
+    };
+
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
 
     return <>
@@ -551,21 +562,23 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             </div>
 
             <div className="mx_SpotlightDialog_footer">
-                <span>
-                    { activeSpace
-                        ? _t("Searching rooms and chats you're in and %(spaceName)s", { spaceName: activeSpace.name })
-                        : _t("Searching rooms and chats you're in") }
-                </span>
+                <BetaPill onClick={() => {
+                    defaultDispatcher.dispatch({
+                        action: Action.ViewUserSettings,
+                        initialTabId: UserTab.Labs,
+                    });
+                    onFinished();
+                }} />
+                { _t("Results not as expected? Please <a>feedback</a>.", {}, {
+                    a: sub => <AccessibleButton kind="link_inline" onClick={() => {
+                        openFeedback();
+                    }}>
+                        { sub }
+                    </AccessibleButton>,
+                }) }
                 <AccessibleButton
                     kind="primary_outline"
-                    onClick={() => {
-                        Modal.createTrackedDialog("Spotlight Feedback", "", GenericFeatureFeedbackDialog, {
-                            title: _t("Spotlight search feedback"),
-                            subheading: _t("Thank you for trying Spotlight search. " +
-                                "Your feedback will help inform the next versions."),
-                            rageshakeLabel: "spotlight-feedback",
-                        });
-                    }}
+                    onClick={openFeedback}
                 >
                     { _t("Feedback") }
                 </AccessibleButton>
