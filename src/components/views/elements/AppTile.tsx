@@ -18,14 +18,13 @@ limitations under the License.
 */
 
 import url from 'url';
-import React, { createRef } from 'react';
+import React, { ContextType, createRef } from 'react';
 import classNames from 'classnames';
 import { MatrixCapabilities } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventSubscription } from 'fbemitter';
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import AccessibleButton from './AccessibleButton';
 import { _t } from '../../../languageHandler';
 import AppPermission from './AppPermission';
@@ -49,12 +48,13 @@ import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     app: IApp;
     // If room is not specified then it is an account level widget
     // which bypasses permission prompts as it was added explicitly by that user
-    room: Room;
+    room?: Room;
     threadId?: string | null;
     // Specifying 'fullWidth' as true will render the app tile to fill the width of the app drawer continer.
     // This should be set to true when there is only one widget in the app drawer, otherwise it should be false.
@@ -102,6 +102,9 @@ interface IState {
 
 @replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    context: ContextType<typeof MatrixClientContext>;
+
     public static defaultProps: Partial<IProps> = {
         waitForIframeLoad: true,
         showMenubar: true,
@@ -161,10 +164,9 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onWidgetLayoutChange = () => {
-        const room = MatrixClientPeg.get().getRoom(this.props.room.roomId);
-        const app = this.props.app;
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(app.id);
-        const isVisibleOnScreen = WidgetLayoutStore.instance.isVisibleOnScreen(room, app.id);
+        const room = this.context.getRoom(this.props.room.roomId);
+        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
+        const isVisibleOnScreen = WidgetLayoutStore.instance.isVisibleOnScreen(room, this.props.app.id);
         if (!isVisibleOnScreen && !isActiveWidget) {
             ActiveWidgetStore.instance.destroyPersistentWidget(app.id);
             PersistedElement.destroyElement(this.persistKey);
@@ -517,7 +519,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         } else if (!this.state.hasPermissionToLoad) {
             // only possible for room widgets, can assert this.props.room here
-            const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(this.props.room.roomId);
+            const isEncrypted = this.context.isRoomEncrypted(this.props.room.roomId);
             appTileBody = (
                 <div className={appTileBodyClass} style={appTileBodyStyles}>
                     <AppPermission
