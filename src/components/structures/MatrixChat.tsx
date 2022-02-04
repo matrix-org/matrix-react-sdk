@@ -91,7 +91,7 @@ import { RoomUpdateCause } from "../../stores/room-list/models";
 import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
-import UserSettingsDialog from '../views/dialogs/UserSettingsDialog';
+import UserSettingsDialog, { UserTab } from '../views/dialogs/UserSettingsDialog';
 import CreateGroupDialog from '../views/dialogs/CreateGroupDialog';
 import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
 import RoomDirectory from './RoomDirectory';
@@ -1551,6 +1551,38 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
+            }
+
+            if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {
+                setTimeout(() => {
+                    if (SettingsStore.getValue("feature_spotlight")) return;
+
+                    const key = "BETA_SPOTLIGHT_TOAST";
+                    ToastStore.sharedInstance().addOrReplaceToast({
+                        key,
+                        title: _t("New search beta available"),
+                        props: {
+                            description: _t("We're testing a new search to make finding what you want quicker.\n"),
+                            acceptLabel: _t("Learn more"),
+                            onAccept: () => {
+                                dis.dispatch({
+                                    action: Action.ViewUserSettings,
+                                    initialTabId: UserTab.Labs,
+                                });
+                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
+                                ToastStore.sharedInstance().dismissToast(key);
+                            },
+                            rejectLabel: _t("Dismiss"),
+                            onReject: () => {
+                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
+                                ToastStore.sharedInstance().dismissToast(key);
+                            },
+                        },
+                        icon: "labs",
+                        component: GenericToast,
+                        priority: 9,
+                    });
+                }, 5 * 60 * 1000); // show after 5 minutes to not overload user with toasts on launch
             }
 
             if (!localStorage.getItem("mx_seen_ia_1.1_changes_toast") && SettingsStore.getValue(UIFeature.Feedback)) {

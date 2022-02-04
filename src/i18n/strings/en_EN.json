@@ -3041,6 +3041,8 @@
     "Failed to forget room %(errCode)s": "Failed to forget room %(errCode)s",
     "Unable to copy room link": "Unable to copy room link",
     "Unable to copy a link to the room to the clipboard.": "Unable to copy a link to the room to the clipboard.",
+    "New search beta available": "New search beta available",
+    "We're testing a new search to make finding what you want quicker.\n": "We're testing a new search to make finding what you want quicker.\n",
     "Testing small changes": "Testing small changes",
     "Your feedback is wanted as we try out some design changes.": "Your feedback is wanted as we try out some design changes.",
     "More info": "More info",
