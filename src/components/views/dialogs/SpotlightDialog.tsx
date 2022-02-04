@@ -570,9 +570,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     onFinished();
                 }} />
                 { _t("Results not as expected? Please <a>feedback</a>.", {}, {
-                    a: sub => <AccessibleButton kind="link_inline" onClick={() => {
-                        openFeedback();
-                    }}>
+                    a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
                         { sub }
                     </AccessibleButton>,
                 }) }
