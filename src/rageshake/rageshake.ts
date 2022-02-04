@@ -71,10 +71,9 @@ export class ConsoleLogger {
 
     public bypassRageshake(
         fnName: "log" | "info" | "warn" | "error",
-        level: string,
         ...args: (Error | DOMException | object | string)[]
     ): void {
-        this.originalFunctions[fnName](level, ...args);
+        this.originalFunctions[fnName](...args);
     }
 
     private log(level: string, ...args: (Error | DOMException | object | string)[]): void {
