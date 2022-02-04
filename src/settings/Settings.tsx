@@ -356,7 +356,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                     <p>{ _t("Search and click on feedback") }</p>
                 </>,
             feedbackLabel: "spotlight-feedback",
-            image: require("../../res/img/betas/new_search_experience.png"),
+            image: require("../../res/img/betas/new_search_experience.gif"),
         },
     },
     "feature_right_panel_default_open": {
