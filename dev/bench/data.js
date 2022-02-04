@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643967781218,
+  "lastUpdate": 1643970447303,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62528,6 +62528,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4190.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78373e86ea6deba0ad251b9bf1708d2ee8ac5f29",
+          "message": "Truncate long server names on login/register screen (#7702)\n\nCo-authored-by: Aaron Raimist <aaron@raim.ist>",
+          "timestamp": "2022-02-04T10:20:20Z",
+          "tree_id": "51ee76f0a3b07ff763d6cf9c15706ac1c3e0fc0e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78373e86ea6deba0ad251b9bf1708d2ee8ac5f29"
+        },
+        "date": 1643970440791,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4647.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 627.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
