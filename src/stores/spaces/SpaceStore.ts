@@ -616,10 +616,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return member.membership === "join" || member.membership === "invite";
     }
 
-    private static getSpaceMembers(space: Room): string[] {
-        return space.getMembers().filter(SpaceStoreClass.isInSpace).map(m => m.userId);
-    }
-
     // Method for resolving the impact of a single user's membership change in the given Space and its hierarchy
     private onMemberUpdate = (space: Room, userId: string) => {
         const inSpace = SpaceStoreClass.isInSpace(space.getMember(userId));
@@ -630,70 +626,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.spaceFilteredUsers.get(space.roomId)?.delete(userId);
         }
 
-        // this.spaceFilteredUsers
-
-        // const flattenedSpaceMembers = this.getSpaceFilteredUserIds(space.roomId, true);
-        // if (this.spaceFilteredUsers.get(space.roomId).has(userId)) {
-        //     if (inSpace) return; // nothing to do, user was already joined to subspace
-        //     if (this.getChildSpaces(space.roomId).some(s => this.spaceFilteredUsers.get(s.roomId).has(userId))) {
-        //         return; // nothing to do, this user leaving will have no effect as they are in a subspace
-        //     }
-        // } else if (!inSpace) {
-        //     return; // nothing to do, user already not in the list
-        // }
-
-        // const seen = new Set<string>();
-        // const stack = [space.roomId];
-        // while (stack.length) {
-        //     const spaceId = stack.pop();
-        //     seen.add(spaceId);
-
-        //     if (inSpace) {
-        //         // add to our list and to that of all of our parents
-        //         this.spaceFilteredUsers.get(spaceId).add(userId);
-        //     } else {
-        //         // remove from our list and that of all of our parents until we hit a parent with this user
-        //         this.spaceFilteredUsers.get(spaceId).delete(userId);
-        //     }
-
-        //     this.getKnownParents(spaceId).forEach(parentId => {
-        //         if (seen.has(parentId)) return;
-        //         const parent = this.matrixClient.getRoom(parentId);
-        //         // because spaceFilteredUsers is cumulative, if we are removing from lower in the hierarchy,
-        //         // but the member is present higher in the hierarchy we must take care not to wrongly over-remove them.
-        //         if (inSpace || !SpaceStoreClass.isInSpace(parent.getMember(userId))) {
-        //             stack.push(parentId);
-        //         }
-        //     });
-        // }
-
         this.switchSpaceIfNeeded();
     };
-
-    // private onMembersUpdate = (space: Room, seen = new Set<string>()) => {
-    //     // Update this space's membership list
-    //     const userIds = new Set(SpaceStoreClass.getSpaceMembers(space));
-    //     // We only need to look one level with children
-    //     // as any further descendants will already be in their parent's superset
-    //     this.getChildSpaces(space.roomId).forEach(subspace => {
-    //         SpaceStoreClass.getSpaceMembers(subspace).forEach(userId => {
-    //             userIds.add(userId);
-    //         });
-    //     });
-    //     this.spaceFilteredUsers.set(space.roomId, userIds);
-    //     this.emit(space.roomId);
-
-    //     // // Traverse all parents and update them too
-    //     // this.getKnownParents(space.roomId).forEach(parentId => {
-    //     //     if (seen.has(parentId)) return;
-    //     //     const parent = this.matrixClient.getRoom(parentId);
-    //     //     if (parent) {
-    //     //         const newSeen = new Set(seen);
-    //     //         newSeen.add(parentId);
-    //     //         this.onMembersUpdate(parent, newSeen);
-    //     //     }
-    //     // });
-    // };
 
     private onRoomsUpdate = () => {
         const visibleRooms = this.matrixClient.getVisibleRooms();
