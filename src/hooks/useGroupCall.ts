@@ -19,6 +19,7 @@ interface IGroupCallState {
     localDesktopCapturerSourceId?: string;
     screenshareFeeds: CallFeed[];
     isScreensharing: boolean;
+    requestingScreenshare: boolean;
     participants: RoomMember[];
     hasLocalParticipant: boolean;
 }
@@ -49,6 +50,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
             localDesktopCapturerSourceId,
             participants,
             hasLocalParticipant,
+            requestingScreenshare,
         },
         setState,
     ] = useState<IGroupCallState>({
@@ -59,6 +61,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         localVideoMuted: false,
         screenshareFeeds: [],
         isScreensharing: false,
+        requestingScreenshare: false,
         participants: [],
         hasLocalParticipant: false,
     });
@@ -208,9 +211,13 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
     }, [groupCall]);
 
     const toggleScreensharing = useCallback(() => {
+        updateState({ requestingScreenshare: true });
+
         groupCall.setScreensharingEnabled(
             !groupCall.isScreensharing(),
-        );
+        ).then(() => {
+            updateState({ requestingScreenshare: false });
+        });
     }, [groupCall]);
 
     return {
@@ -228,6 +235,7 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         toggleLocalVideoMuted,
         toggleMicrophoneMuted,
         toggleScreensharing,
+        requestingScreenshare,
         isScreensharing,
         screenshareFeeds,
         localScreenshareFeed,
