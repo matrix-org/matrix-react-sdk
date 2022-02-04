@@ -185,13 +185,15 @@ export default class AppTile extends React.Component<IProps, IState> {
     private onUserLeftRoom() {
         const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
         if (isActiveWidget) {
-            // We just left the room that the active widget was from. If this was a Jitsi then reload to end call.
-            // Otherwise if we are not actively looking at the room then destroy this widget entirely.
-            if (WidgetType.JITSI.matches(this.props.app.type)) {
-                this.reload();
-            } else if (RoomViewStore.getRoomId() !== this.props.room.roomId) {
+            // We just left the room that the active widget was from.
+            if (RoomViewStore.getRoomId() !== this.props.room.roomId) {
+                // If we are not actively looking at the room then destroy this widget entirely.
                 this.endWidgetActions();
+            } else if (WidgetType.JITSI.matches(this.props.app.type)) {
+                // If this was a Jitsi then reload to end call.
+                this.reload();
             } else {
+                // Otherwise just cancel its persistence.
                 ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
             }
         }
