@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643983841662,
+  "lastUpdate": 1643995668670,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62660,6 +62660,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4738.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7f3f18604417d9567c109201673e60a5f24a30ce",
+          "message": "Switch back to upstream Linkify (#7677)",
+          "timestamp": "2022-02-04T17:21:03Z",
+          "tree_id": "da81e7d141b41434d01bdebe10bc481c4b4789fe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7f3f18604417d9567c109201673e60a5f24a30ce"
+        },
+        "date": 1643995662897,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4701.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 611.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
