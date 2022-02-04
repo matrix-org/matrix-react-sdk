@@ -422,7 +422,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             thread,
             threadReplyCount: thread?.length,
-            threadLastReply: thread?.lastReply(),
+            threadLastReply: thread?.replyToEvent,
         };
 
         // don't do RR animations until we are mounted
@@ -576,7 +576,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread?.lastReply(),
+            threadLastReply: thread?.replyToEvent,
             threadReplyCount: thread?.length,
             thread,
         });
@@ -885,6 +885,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private shouldHighlight(): boolean {
         if (this.props.forExport) return false;
+        if (this.props.tileShape === TileShape.Notif) return false;
+        if (this.props.tileShape === TileShape.ThreadPanel) return false;
+
         const actions = this.context.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
@@ -1288,7 +1291,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         let avatarSize;
         let needsSenderProfile;
 
-        if (this.props.tileShape === TileShape.Notif) {
+        if (this.props.tileShape === TileShape.Notif || this.props.tileShape === TileShape.ThreadPanel) {
             avatarSize = 24;
             needsSenderProfile = true;
         } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
@@ -1341,9 +1344,14 @@ export default class EventTile extends React.Component<IProps, IState> {
                 sender = <SenderProfile onClick={this.onSenderProfileClick}
                     mxEvent={this.props.mxEvent}
                     enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
                 />;
             } else {
-                sender = <SenderProfile mxEvent={this.props.mxEvent} enableFlair={this.props.enableFlair} />;
+                sender = <SenderProfile
+                    mxEvent={this.props.mxEvent}
+                    enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
+                />;
             }
         }
 
@@ -1373,7 +1381,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.props.tileShape !== TileShape.ThreadPanel
             ? this.props.mxEvent.getTs()
-            : thread?.lastReply().getTs();
+            : thread?.replyToEvent.getTs();
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.props.tileShape === TileShape.ThreadPanel}
