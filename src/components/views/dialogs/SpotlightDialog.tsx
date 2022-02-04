@@ -18,6 +18,7 @@ import React, {
     ChangeEvent,
     ComponentProps,
     KeyboardEvent,
+    RefObject,
     useCallback,
     useContext,
     useEffect,
@@ -164,6 +165,10 @@ const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boole
 
     return [results, hierarchy?.loading ?? false];
 };
+
+function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
+    return ref.current?.id.startsWith("mx_SpotlightDialog_button_recentlyViewed_");
+}
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();
@@ -447,6 +452,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     };
 
     const onKeyDown = (ev: KeyboardEvent) => {
+        let ref: RefObject<HTMLElement>;
+
         switch (ev.key) {
             case Key.ARROW_UP:
             case Key.ARROW_DOWN:
@@ -454,18 +461,36 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 ev.preventDefault();
 
                 if (rovingContext.state.refs.length > 0) {
-                    const idx = rovingContext.state.refs.indexOf(rovingContext.state.activeRef);
-                    const ref = findSiblingElement(rovingContext.state.refs, idx + (ev.key === Key.ARROW_UP ? -1 : 1));
-
-                    if (ref) {
-                        rovingContext.dispatch({
-                            type: Type.SetFocus,
-                            payload: { ref },
-                        });
-                        ref.current?.scrollIntoView({
-                            block: "nearest",
-                        });
+                    let refs = rovingContext.state.refs;
+                    if (!query) {
+                        // If the current selection is not in the recently viewed row then only include the
+                        // first recently viewed so that is the target when the user is switching into recently viewed.
+                        const keptRecentlyViewedRef = refIsForRecentlyViewed(rovingContext.state.activeRef)
+                            ? rovingContext.state.activeRef
+                            : refs.find(refIsForRecentlyViewed);
+                        // exclude all other recently viewed items from the list so up/down arrows skip them
+                        refs = refs.filter(ref => ref === keptRecentlyViewedRef || !refIsForRecentlyViewed(ref));
                     }
+
+                    const idx = refs.indexOf(rovingContext.state.activeRef);
+                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_UP ? -1 : 1));
+                }
+                break;
+
+            case Key.ARROW_LEFT:
+            case Key.ARROW_RIGHT:
+                // only handle these keys when we are in the recently viewed row of options
+                if (!query &&
+                    rovingContext.state.refs.length > 0 &&
+                    refIsForRecentlyViewed(rovingContext.state.activeRef)
+                ) {
+                    // we only intercept left/right arrows when the field is empty, and they'd do nothing anyway
+                    ev.stopPropagation();
+                    ev.preventDefault();
+
+                    const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
+                    const idx = refs.indexOf(rovingContext.state.activeRef);
+                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_LEFT ? -1 : 1));
                 }
                 break;
 
@@ -474,6 +499,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 ev.preventDefault();
                 rovingContext.state.activeRef?.current?.click();
                 break;
+        }
+
+        if (ref) {
+            rovingContext.dispatch({
+                type: Type.SetFocus,
+                payload: { ref },
+            });
+            ref.current?.scrollIntoView({
+                block: "nearest",
+            });
         }
     };
 
@@ -485,6 +520,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 arrows: () => <>
                     <div>↓</div>
                     <div>↑</div>
+                    { !query && <div>←</div> }
+                    { !query && <div>→</div> }
                 </>,
             }) }
         </div>
