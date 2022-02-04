@@ -582,14 +582,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         spaces.forEach((s) => {
             if (this.allRoomsInHome && s === MetaSpace.Home) return; // we'll be using the global notification state, skip
 
+            const flattenedRoomsForSpace = this.getSpaceFilteredRoomIds(s, true);
+
             // Update NotificationStates
             this.getNotificationState(s).setRooms(visibleRooms.filter(room => {
                 if (s === MetaSpace.People) {
                     return this.isRoomInSpace(MetaSpace.People, room.roomId);
                 }
 
-                // @KERRY not nice to build this set here every time? what to do
-                if (room.isSpaceRoom() || !this.getSpaceFilteredRoomIds(s, true)?.has(room.roomId)) return false;
+                if (room.isSpaceRoom() || !flattenedRoomsForSpace.has(room.roomId)) return false;
 
                 if (dmBadgeSpace && DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
                     return s === dmBadgeSpace;
