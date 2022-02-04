@@ -24,6 +24,7 @@ import defaultDispatcher from '../dispatcher/dispatcher';
 import { AsyncStoreWithClient } from './AsyncStoreWithClient';
 import { ActionPayload } from '../dispatcher/payloads';
 import SettingsStore from "../settings/SettingsStore";
+import { Action } from "../dispatcher/actions";
 
 // Minimum interval of 1 minute between reports
 const RAGESHAKE_INTERVAL = 60000;
@@ -63,6 +64,12 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
 
     protected async onAction(payload: ActionPayload) {
         // we don't actually do anything here
+        console.log('HHH', 'payload.action', payload.action);
+
+        switch (payload.action) {
+            case Action.ReportKeyBackupNotEnabled:
+                this.onReportKeyBackupNotEnabled()
+        }
     }
 
     protected async onReady() {
@@ -151,6 +158,20 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 },
             });
         }
+    }
+
+    private async onReportKeyBackupNotEnabled(): Promise<void> {
+        if (!SettingsStore.getValue("automaticReportKeyBackupNotEnabled")) return;
+        await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
+            userText: `Auto-reporting key backup not enabled`,
+            sendLogs: false,
+            labels: ["Z-UISI", "web", "uisi-sender"],
+            customApp: SdkConfig.get().uisi_autorageshake_app,
+            customFields: {
+                "recipient_rageshake": recipientRageshake,
+                "auto_uisi": JSON.stringify(messageContent),
+            },
+        });
     }
 }
 

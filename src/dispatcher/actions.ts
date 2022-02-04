@@ -218,4 +218,9 @@ export enum Action {
      * Payload: none
      */
     AnonymousAnalyticsReject = "anonymous_analytics_reject",
+
+    /**
+     * Fires when
+     */
+    ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
 }
