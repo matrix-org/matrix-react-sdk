@@ -1389,7 +1389,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        navigator.registerProtocolHandler("matrix", "/#/%s");
+        window.navigator.registerProtocolHandler("matrix", "/#/%s");
 
         if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
             this.initPosthogAnalyticsToast();
