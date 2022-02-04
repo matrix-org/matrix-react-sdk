@@ -128,10 +128,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.persistKey = getPersistKey(this.props.app.id);
         try {
             this.sgWidget = new StopGapWidget(this.props);
-            this.sgWidget.on("preparing", this.onWidgetPreparing);
-            this.sgWidget.on("ready", this.onWidgetReady);
-            // emits when the capabilites have been setup or changed
-            this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
+            this.setupSgListeners();
         } catch (e) {
             logger.log("Failed to construct widget", e);
             this.sgWidget = null;
@@ -269,12 +266,25 @@ export default class AppTile extends React.Component<IProps, IState> {
         OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
     }
 
+    private setupSgListeners() {
+        this.sgWidget.on("preparing", this.onWidgetPreparing);
+        this.sgWidget.on("ready", this.onWidgetReady);
+        // emits when the capabilites have been setup or changed
+        this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
+    }
+
+    private stopSgListeners() {
+        if (!this.sgWidget) return;
+        this.sgWidget.off("preparing", this.onWidgetPreparing);
+        this.sgWidget.off("ready", this.onWidgetReady);
+        this.sgWidget.off("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
+    }
+
     private resetWidget(newProps: IProps): void {
         this.sgWidget?.stopMessaging();
         try {
             this.sgWidget = new StopGapWidget(newProps);
-            this.sgWidget.on("preparing", this.onWidgetPreparing);
-            this.sgWidget.on("ready", this.onWidgetReady);
+            this.setupSgListeners();
             this.startWidget();
         } catch (e) {
             logger.error("Failed to construct widget", e);
