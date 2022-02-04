@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643981914628,
+  "lastUpdate": 1643983841662,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62612,6 +62612,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5107.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3f789d32c1f94c24f78176f0b89e7c0e6b7c04d2",
+          "message": "Add logging to diagnose no-video bug (#7721)\n\nLog in/outbound RTP stats so we can see ifn we're sending & receiving\r\nvideo, and log when we successfully play the video element.",
+          "timestamp": "2022-02-04T14:02:56Z",
+          "tree_id": "7990a0e125d14c4cedc1d0983451333850765b49",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3f789d32c1f94c24f78176f0b89e7c0e6b7c04d2"
+        },
+        "date": 1643983834369,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5561.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1167.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1758.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4738.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
