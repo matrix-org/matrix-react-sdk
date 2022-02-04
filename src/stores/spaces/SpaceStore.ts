@@ -100,11 +100,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private parentMap = new EnhancedMap<string, Set<string>>();
     // Map from SpaceKey to SpaceNotificationState instance representing that space
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
-    // Map from space key to Set of room IDs that are direct descendants of that space
+    // Map from SpaceKey to Set of room IDs that are direct descendants of that space
     private spaceFilteredRooms = new Map<SpaceKey, Set<string>>(); // won't contain MetaSpace.People
-    // Map from space key to Set of space keys that should be shown as part of that space
+    // Map from SpaceKey to Set of space keys that are direct descendants of that space
     private childSpacesBySpace = new Map<SpaceKey, Set<SpaceKey>>(); // won't contain MetaSpace.People
-    // Map from space ID to Set of user IDs that are direcr descendants of that space
+    // Map from SpaceKey to Set of user IDs that are direct descendants of that space
     private spaceFilteredUsers = new Map<Room["roomId"], Set<string>>();
     // The space currently selected in the Space Panel
     private _activeSpace?: SpaceKey = MetaSpace.Home; // set properly by onReady
@@ -641,7 +641,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.childSpacesBySpace = new Map();
 
         this.rebuildParentMap();
-        // mutates this.spaceFiltersRooms
+        // mutates this.spaceFilteredRooms
         this.rebuildMetaSpaces();
 
         const hiddenChildren = new EnhancedMap<string, Set<string>>();
