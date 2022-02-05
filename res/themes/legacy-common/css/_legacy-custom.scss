@@ -17,28 +17,21 @@ limitations under the License.
 $font-family: var(--font-family, $font-family);
 $monospace-font-family: var(--font-family-monospace, $monospace-font-family);
 
-// Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A741
 $accent: var(--accent, $accent);
 $alert: var(--alert, $alert);
 $links: var(--links, $links);
-$primary-content: var(--primary-content, $primary-content);
-$secondary-content: var(--secondary-content, $secondary-content);
-$tertiary-content: var(--tertiary-content, $tertiary-content);
 $quaternary-content: var(--quaternary-content, $quaternary-content);
-$quinary-content: var(--quinary-content, $quinary-content);
 $system: var(--system, $system);
-$background: var(--background, $background);
 $panels: rgba($system, 0.9);
-$panel-base: var(--panel-base, $tertiary-content); // This color is not intended for use in the app
+$panel-base: var(--panel-base, $panel-base); // This color is not intended for use in the app
 $panel-selected: rgba($panel-base, 0.3);
 $panel-hover: rgba($panel-base, 0.1);
 $panel-actions: rgba($panel-base, 0.2);
 $space-nav: rgba($panel-base, 0.1);
 
-//
 // --accent-color
 $username-variant3-color: var(--accent-color);
-//
+
 // --timeline-background-color
 $button-secondary-bg-color: var(--timeline-background-color);
 $lightbox-border-color: var(--timeline-background-color);
@@ -50,15 +43,15 @@ $togglesw-off-color: var(--togglesw-off-color);
 $droptarget-bg-color: var(--timeline-background-color-50pct); //still needs alpha at .5
 $authpage-modal-bg-color: var(--timeline-background-color-50pct); //still needs alpha at .59
 $roomheader-bg-color: var(--timeline-background-color);
-//
+
 // --roomlist-highlights-color
 $panel-actions: var(--roomlist-highlights-color);
-//
+
 // --sidebar-color
 $groupFilterPanel-bg-color: var(--sidebar-color);
 $tooltip-timeline-bg-color: var(--sidebar-color);
 $dialog-backdrop-color: var(--sidebar-color-50pct);
-//
+
 // --roomlist-background-color
 $header-panel-bg-color: var(--roomlist-background-color);
 $panel-gradient: var(--roomlist-background-color-0pct), var(--roomlist-background-color);
@@ -69,7 +62,7 @@ $secondary-accent-color: var(--roomlist-background-color);
 $selected-color: var(--roomlist-background-color);
 $widget-menu-bar-bg-color: var(--roomlist-background-color);
 $roomlist-bg-color: var(--roomlist-background-color);
-//
+
 // --timeline-text-color
 $message-action-bar-fg-color: var(--timeline-text-color);
 $primary-content: var(--timeline-text-color);
@@ -88,11 +81,10 @@ $authpage-primary-color: var(--timeline-text-color);
 // --roomlist-text-secondary-color
 $roomtile-default-badge-bg-color: var(--roomlist-text-secondary-color);
 
-//
 // --roomlist-separator-color
 $input-darker-bg-color: var(--roomlist-separator-color);
 $primary-hairline-color: var(--roomlist-separator-color);// originally #e5e5e5, but close enough
-//
+
 // --timeline-text-secondary-color
 $authpage-secondary-color: var(--timeline-text-secondary-color);
 $pinned-color: var(--timeline-text-secondary-color);
@@ -107,13 +99,13 @@ $rte-room-pill-color: $room-highlight-color;
 
 // was #888888
 $info-plinth-fg-color: var(--timeline-text-secondary-color);
-//
+
 // --primary-color
 $accent-alt: var(--primary-color);
-//
+
 // --warning-color
 $button-danger-disabled-bg-color: var(--warning-color-50pct); // still needs alpha at 0.5
-//
+
 // --username colors (which use a 0-based index)
 $username-variant1-color: var(--username-colors_0, $username-variant1-color);
 $username-variant2-color: var(--username-colors_1, $username-variant2-color);
@@ -123,11 +115,11 @@ $username-variant5-color: var(--username-colors_4, $username-variant5-color);
 $username-variant6-color: var(--username-colors_5, $username-variant6-color);
 $username-variant7-color: var(--username-colors_6, $username-variant7-color);
 $username-variant8-color: var(--username-colors_7, $username-variant8-color);
-//
+
 // --timeline-highlights-color
 $event-selected-color: var(--timeline-highlights-color);
 $event-highlight-bg-color: var(--timeline-highlights-color);
-//
+
 // redirect some variables away from their hardcoded values in the light theme
 $settings-grey-fg-color: $primary-content;
 

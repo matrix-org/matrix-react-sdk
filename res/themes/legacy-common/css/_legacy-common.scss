@@ -1,0 +1,93 @@
+// typical text (dark-on-white in light skin)
+$secondary-fg-color: $primary-fg-color;
+$tertiary-fg-color: $primary-fg-color;
+
+// used for dialog box text
+$light-fg-color: $header-panel-text-secondary-color;
+
+$selection-fg-color: $primary-bg-color;
+
+$groupFilterPanel-bg-color: $base-color;
+$inverted-bg-color: $groupFilterPanel-bg-color;
+
+// used by AddressSelector
+$selected-color: $secondary-accent-color;
+
+$resend-button-divider-color: $input-darker-bg-color;
+
+$roomheader-bg-color: $primary-bg-color;
+
+// Legacy theme backports
+$primary-content: $primary-fg-color;
+$secondary-content: $secondary-fg-color;
+$tertiary-content: $tertiary-fg-color;
+$quinary-content: $quaternary-content;
+$background: $primary-bg-color;
+$panels: rgba($system, 0.9);
+$panel-selected: rgba($panel-base, 0.3);
+$panel-hover: rgba($panel-base, 0.1);
+$panel-actions: $roomtile-selected-bg-color;
+$space-nav: rgba($panel-base, 0.15);
+
+$roomlist-filter-active-bg-color: $panel-actions;
+$roomlist-header-color: $primary-fg-color;
+
+$voipcall-plinth-color: $system;
+
+$call-view-button-on-foreground: $secondary-content;
+$call-view-button-on-background: $background;
+$call-view-button-off-foreground: $background;
+$call-view-button-off-background: $secondary-content;
+
+$tooltip-timeline-bg-color: $groupFilterPanel-bg-color;
+
+// pinned events indicator
+$pinned-color: $tertiary-content;
+
+$groupFilterPanel-divider-color: $tertiary-content;
+
+// ***** Mixins! *****
+
+@define-mixin mx_DialogButton {
+    /* align images in buttons (eg spinners) */
+    vertical-align: middle;
+    border: 0px;
+    border-radius: 8px;
+    font-family: $font-family;
+    font-size: $font-14px;
+    color: $button-fg-color;
+    background-color: $accent;
+    width: auto;
+    padding: 7px;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+}
+
+@define-mixin mx_DialogButton_hover {
+}
+
+@define-mixin mx_DialogButton_danger {
+    background-color: $accent;
+}
+
+@define-mixin mx_DialogButton_small {
+    @mixin mx_DialogButton;
+    font-size: $font-15px;
+    padding: 0px 1.5em 0px 1.5em;
+}
+
+@define-mixin mx_DialogButton_secondary {
+    // flip colours for the secondary ones
+    font-weight: 600;
+    border: 1px solid $accent !important;
+    color: $accent;
+    background-color: $button-secondary-bg-color;
+}
+
+@define-mixin mx_Dialog_link {
+    color: $accent;
+    text-decoration: none;
+}
