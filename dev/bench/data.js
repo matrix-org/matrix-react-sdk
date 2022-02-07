@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644242135787,
+  "lastUpdate": 1644242270065,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62828,6 +62828,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 649.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d72469663dab84e0dd666c540277205220a932cf",
+          "message": "Add unread badges and avatar decorations to spotlight search (#7696)",
+          "timestamp": "2022-02-07T13:50:04Z",
+          "tree_id": "e4618f0666c10667a2cc1b7dd7246d7ac1224f31",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d72469663dab84e0dd666c540277205220a932cf"
+        },
+        "date": 1644242263826,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5293.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1123.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1755.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5386.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
