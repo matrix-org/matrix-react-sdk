@@ -117,6 +117,7 @@ import { showSpaceInvite } from "../../utils/space";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
+import GenericToast from '../views/toasts/GenericToast';
 
 /** constants for MatrixChat.state.view */
 export enum Views {
