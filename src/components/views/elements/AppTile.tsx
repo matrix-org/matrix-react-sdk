@@ -83,7 +83,7 @@ interface IProps {
     // sets the pointer-events property on the iframe
     pointerEvents?: string;
     widgetPageTitle?: string;
-    hideMaximiseButton?: boolean;
+    showLayoutButtons?: boolean;
 }
 
 interface IState {
@@ -115,6 +115,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         userWidget: false,
         miniMode: false,
         threadId: null,
+        showLayoutButtons: true,
     };
 
     private contextMenuButton = createRef<any>();
@@ -648,7 +649,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         }
 
         let maxMinButton;
-        if (!this.props.hideMaximiseButton) {
+        if (this.props.showLayoutButtons) {
             const widgetIsMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);
             const className = classNames({
