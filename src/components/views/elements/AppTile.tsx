@@ -508,11 +508,19 @@ export default class AppTile extends React.Component<IProps, IState> {
             { target: '_blank', href: this.sgWidget.popoutUrl, rel: 'noreferrer noopener' }).click();
     };
 
-    private onMaxMinWidgetClick = (): void => {
+    private onToggleMaximisedClick = (): void => {
         const targetContainer =
             WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
                 ? Container.Right
                 : Container.Center;
+        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
+    };
+
+    private onTogglePinnedClick = (): void => {
+        const targetContainer =
+            WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Top)
+                ? Container.Right
+                : Container.Top;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 
@@ -648,22 +656,37 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         }
 
-        let maxMinButton;
+        const layoutButtons: React.ReactNodeArray = [];
         if (this.props.showLayoutButtons) {
-            const widgetIsMaximised = WidgetLayoutStore.instance.
+            const isMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);
-            const className = classNames({
+            const maximisedClasses = classNames({
                 "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_minWidget": widgetIsMaximised,
-                "mx_AppTileMenuBar_iconButton_maxWidget": !widgetIsMaximised,
+                "mx_AppTileMenuBar_iconButton_close": isMaximised,
+                "mx_AppTileMenuBar_iconButton_maximise": !isMaximised,
             });
-            maxMinButton = <AccessibleButton
-                className={className}
+            layoutButtons.push(<AccessibleButton
+                className={maximisedClasses}
                 title={
-                    widgetIsMaximised ? _t('Close') : _t('Maximise widget')
+                    isMaximised ? _t("Close") : _t("Maximise")
                 }
-                onClick={this.onMaxMinWidgetClick}
-            />;
+                onClick={this.onToggleMaximisedClick}
+            />);
+
+            const isPinned = WidgetLayoutStore.instance.
+                isInContainer(this.props.room, this.props.app, Container.Top);
+            const pinnedClasses = classNames({
+                "mx_AppTileMenuBar_iconButton": true,
+                "mx_AppTileMenuBar_iconButton_unpin": isPinned,
+                "mx_AppTileMenuBar_iconButton_pin": !isPinned,
+            });
+            layoutButtons.push(<AccessibleButton
+                className={pinnedClasses}
+                title={
+                    isPinned ? _t("Unpin") : _t("Pin")
+                }
+                onClick={this.onTogglePinnedClick}
+            />);
         }
 
         return <React.Fragment>
@@ -674,7 +697,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                             { this.props.showTitle && this.getTileTitle() }
                         </span>
                         <span className="mx_AppTileMenuBarWidgets">
-                            { maxMinButton }
+                            { layoutButtons }
                             { (this.props.showPopout && !this.state.requiresClient) && <AccessibleButton
                                 className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                                 title={_t('Popout widget')}
