@@ -23,33 +23,47 @@ export async function login(
     username: string, password: string,
     homeserver: string,
 ): Promise<void> {
-    session.log.step("logs in");
+    session.log.startGroup("logs in");
+    session.log.step("Navigates to login page");
     await session.goto(session.url('/#/login'));
+    session.log.done();
+
     // change the homeserver by clicking the advanced section
     if (homeserver) {
+        session.log.step("Clicks button to change homeserver");
         const changeButton = await session.query('.mx_ServerPicker_change');
         await changeButton.click();
+        session.log.done();
 
+        session.log.step("Enters homeserver");
         const hsInputField = await session.query('.mx_ServerPickerDialog_otherHomeserver');
         await session.replaceInputText(hsInputField, homeserver);
+        session.log.done();
+
+        session.log.step("Clicks next");
         const nextButton = await session.query('.mx_ServerPickerDialog_continue');
         // accept homeserver
         await nextButton.click();
+        session.log.done();
     }
     // Delay required because of local race condition on macOs
     // Where the form is not query-able despite being present in the DOM
     await session.delay(100);
+
+    session.log.step("Fills in login form");
     //fill out form
     const usernameField = await session.query("#mx_LoginForm_username");
     const passwordField = await session.query("#mx_LoginForm_password");
     await session.replaceInputText(usernameField, username);
     await session.replaceInputText(passwordField, password);
+    session.log.done();
     //wait 300ms because Registration/ServerConfig have a 250ms
     //delay to internally set the homeserver url
     //see Registration::render and ServerConfig::props::delayTimeMs
     //await session.delay(300);
     /// focus on the button to make sure error validation
     /// has happened before checking the form is good to go
+    session.log.step("Clicks login");
     const loginButton = await session.query('.mx_Login_submit');
     await loginButton.focus();
     //check no errors
@@ -58,11 +72,12 @@ export async function login(
     //submit form
     //await page.screenshot({path: "beforesubmit.png", fullPage: true});
     await loginButton.click();
+    session.log.done();
 
     const foundHomeUrl = await session.poll(async () => {
         const url = session.page.url();
         return url === session.url('/#/home');
     });
     assert(foundHomeUrl);
-    session.log.done();
+    session.log.endGroup();
 }
