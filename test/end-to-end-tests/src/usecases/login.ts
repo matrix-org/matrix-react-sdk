@@ -29,7 +29,7 @@ export async function login(
     session.log.done();
 
     // wait until no spinners visible
-    await session.page.waitForSelector(".mx_Spinner", { hidden: true });
+    await session.waitNoSpinner();
 
     // change the homeserver by clicking the advanced section
     if (homeserver) {
