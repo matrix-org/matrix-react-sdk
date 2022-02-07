@@ -357,8 +357,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             </>,
             feedbackLabel: "spotlight-feedback",
             feedbackSubheading: _td("Thank you for trying the beta, " +
-                "please go into as much detail as you can so we can improve it. " +
-                "Your platform and username will be noted to help us use your feedback as much as we can."),
+                "please go into as much detail as you can so we can improve it."),
             image: require("../../res/img/betas/new_search_experience.gif"),
         },
     },

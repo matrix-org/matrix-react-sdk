@@ -1554,7 +1554,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {
                 setTimeout(() => {
-                    if (SettingsStore.getValue("feature_spotlight")) return;
+                    if (SettingsStore.getValue("feature_spotlight", null, true) !== null) return;
 
                     const key = "BETA_SPOTLIGHT_TOAST";
                     ToastStore.sharedInstance().addOrReplaceToast({

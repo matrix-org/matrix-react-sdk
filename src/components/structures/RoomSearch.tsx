@@ -34,6 +34,7 @@ import SettingsStore from "../../settings/SettingsStore";
 import Modal from "../../Modal";
 import SpotlightDialog from "../views/dialogs/SpotlightDialog";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import ToastStore from "../../stores/ToastStore";
 
 interface IProps {
     isMinimized: boolean;
@@ -97,6 +98,8 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         if (this.state.spotlightBetaEnabled !== spotlightBetaEnabled) {
             this.setState({ spotlightBetaEnabled });
         }
+        // in case the user was in settings at the 5-minute mark, dismiss the toast
+        ToastStore.sharedInstance().dismissToast("BETA_SPOTLIGHT_TOAST");
     };
 
     private openSpotlight() {
@@ -111,8 +114,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private clearInput = (ev?: ButtonEvent) => {
-        ev.stopPropagation();
+    private clearInput = () => {
         if (!this.inputRef.current) return;
         this.inputRef.current.value = "";
         this.onChange();
