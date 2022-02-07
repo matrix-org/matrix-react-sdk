@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644242270065,
+  "lastUpdate": 1644245238999,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62876,6 +62876,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5386.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ec92102fe35e3ecfe3d1a8647241fbf4b5664fa3",
+          "message": "Properly handle persistent widgets when room is left (#7724)",
+          "timestamp": "2022-02-07T14:40:22Z",
+          "tree_id": "785177e5fabe9a1626ef5cbf6f4c88a02dd9a38d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ec92102fe35e3ecfe3d1a8647241fbf4b5664fa3"
+        },
+        "date": 1644245233055,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5074.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 982.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1691,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4584.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
