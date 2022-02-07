@@ -165,9 +165,8 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onWidgetLayoutChange = () => {
-        const room = this.context.getRoom(this.props.room.roomId);
         const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
-        const isVisibleOnScreen = WidgetLayoutStore.instance.isVisibleOnScreen(room, this.props.app.id);
+        const isVisibleOnScreen = WidgetLayoutStore.instance.isVisibleOnScreen(this.props.room, this.props.app.id);
         if (!isVisibleOnScreen && !isActiveWidget) {
             this.endWidgetActions();
         }
