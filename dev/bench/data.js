@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643995668670,
+  "lastUpdate": 1644229579348,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62696,6 +62696,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 611.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "472115cd9c43fe48d2529260bf3716b3dddd4370",
+          "message": "Fix add existing rooms button (#7728)",
+          "timestamp": "2022-02-07T10:19:14Z",
+          "tree_id": "6a1db5e476c1a6ddef58f29e0206250173d1635e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/472115cd9c43fe48d2529260bf3716b3dddd4370"
+        },
+        "date": 1644229572988,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5060,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 950.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1806.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4441.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
