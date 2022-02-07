@@ -28,6 +28,9 @@ export async function login(
     await session.goto(session.url('/#/login'));
     session.log.done();
 
+    // wait until no spinners visible
+    await session.page.waitForSelector(".mx_Spinner", { hidden: true });
+
     // change the homeserver by clicking the advanced section
     if (homeserver) {
         session.log.step("Clicks button to change homeserver");
