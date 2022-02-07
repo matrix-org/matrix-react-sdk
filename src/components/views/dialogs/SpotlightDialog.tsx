@@ -253,7 +253,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     viewRoom(room.roomId, true);
                 }}
             >
-                <DecoratedRoomAvatar room={room} avatarSize={20} />
+                <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
                 { room.name }
                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                 <ResultDetails room={room} />
@@ -393,7 +393,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                     viewRoom(room.roomId, true);
                                 }}
                             >
-                                <DecoratedRoomAvatar room={room} avatarSize={20} />
+                                <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
                                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                                 <div className="mx_SpotlightDialog_enterPrompt">↵</div>
