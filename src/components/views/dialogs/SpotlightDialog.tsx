@@ -53,7 +53,7 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from "../avatars/BaseAvatar";
 import Spinner from "../elements/Spinner";
-import { roomContextDetailsText } from "../../../Rooms";
+import { roomContextDetailsText, spaceContextDetailsText } from "../../../Rooms";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../dispatcher/actions";
 import Modal from "../../../Modal";
@@ -110,10 +110,10 @@ const useRecentSearches = (): [Room[], () => void] => {
 };
 
 const ResultDetails = ({ room }: { room: Room }) => {
-    const roomContextDetails = roomContextDetailsText(room);
-    if (roomContextDetails) {
+    const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
+    if (contextDetails) {
         return <div className="mx_SpotlightDialog_result_details">
-            { roomContextDetails }
+            { contextDetails }
         </div>;
     }
 
@@ -396,6 +396,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                 <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
                                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
+                                <ResultDetails room={room} />
                                 <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                             </Option>
                         )) }
@@ -570,7 +571,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     });
                     onFinished();
                 }} />
-                { openFeedback && _t("Results not as expected? Please <a>feedback</a>.", {}, {
+                { openFeedback && _t("Results not as expected? Please <a>give feedback</a>.", {}, {
                     a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
                         { sub }
                     </AccessibleButton>,

@@ -45,10 +45,10 @@ export const BetaPill = ({ onClick }: { onClick?: () => void }) => {
             })}
             tooltip={<div>
                 <div className="mx_Tooltip_title">
-                    { _t("Spaces is a beta feature") }
+                    { _t("This is a beta feature") }
                 </div>
                 <div className="mx_Tooltip_sub">
-                    { _t("Tap for more info") }
+                    { _t("Click for more info") }
                 </div>
             </div>}
             onClick={onClick}
