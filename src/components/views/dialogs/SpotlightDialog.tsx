@@ -58,7 +58,6 @@ import { roomContextDetailsText } from "../../../Rooms";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../dispatcher/actions";
 import Modal from "../../../Modal";
-import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
@@ -66,6 +65,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { BetaPill } from "../beta/BetaCard";
 import { UserTab } from "./UserSettingsDialog";
+import BetaFeedbackDialog from "./BetaFeedbackDialog";
+import SdkConfig from "../../../SdkConfig";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -514,15 +515,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         }
     };
 
-    const openFeedback = () => {
-        Modal.createTrackedDialog("Spotlight Feedback", "", GenericFeatureFeedbackDialog, {
-            title: _t("Search beta feedback"),
-            subheading: _t("Thank you for trying the beta, " +
-                "please go into as much detail as you can so we can improve it. " +
-                "Your platform and username will be noted to help us use your feedback as much as we can."),
-            rageshakeLabel: "spotlight-feedback",
+    const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
+        Modal.createTrackedDialog("Spotlight Feedback", "feature_spotlight", BetaFeedbackDialog, {
+            featureId: "feature_spotlight",
         });
-    };
+    } : null;
 
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
 
@@ -570,17 +567,17 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     });
                     onFinished();
                 }} />
-                { _t("Results not as expected? Please <a>feedback</a>.", {}, {
+                { openFeedback && _t("Results not as expected? Please <a>feedback</a>.", {}, {
                     a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
                         { sub }
                     </AccessibleButton>,
                 }) }
-                <AccessibleButton
+                { openFeedback && <AccessibleButton
                     kind="primary_outline"
                     onClick={openFeedback}
                 >
                     { _t("Feedback") }
-                </AccessibleButton>
+                </AccessibleButton> }
             </div>
         </BaseDialog>
     </>;

@@ -41,6 +41,7 @@ import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
+import SdkConfig from "../SdkConfig";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -340,18 +341,23 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("New search experience"),
         default: false,
         betaInfo: {
-            title: _td("The new search beta"),
+            title: _td("The new search"),
             caption: () => <>
                 <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
                 <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
             </>,
             disclaimer: () => <>
-                <h4>{ _t("How can I give feedback?") }</h4>
-                <p>{ _t("To feedback, join the beta, start a search and click on feedback. Or alternatively, click here.") }</p>
+                { SdkConfig.get().bug_report_endpoint_url && <>
+                    <h4>{ _t("How can I give feedback?") }</h4>
+                    <p>{ _t("To feedback, join the beta, start a search and click on feedback. Or alternatively, click the feedback button above.") }</p>
+                </> }
                 <h4>{ _t("How can I leave the beta?") }</h4>
                 <p>{ _t("To leave, just return to this page or tap on the beta badge when you search.") }</p>
             </>,
             feedbackLabel: "spotlight-feedback",
+            feedbackSubheading: _td("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it. " +
+                "Your platform and username will be noted to help us use your feedback as much as we can."),
             image: require("../../res/img/betas/new_search_experience.gif"),
         },
     },
