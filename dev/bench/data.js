@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644229579348,
+  "lastUpdate": 1644238530387,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -62744,6 +62744,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4441.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5d89230271359e1f22ef0df42b3e565dca230653",
+          "message": "Remove IA 1.1 feedback toast (#7720)",
+          "timestamp": "2022-02-07T12:46:48Z",
+          "tree_id": "cbc104e824473ade1a5527b164d0686ae9b02fd5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5d89230271359e1f22ef0df42b3e565dca230653"
+        },
+        "date": 1644238523644,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5293.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1081.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1796.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4973.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
