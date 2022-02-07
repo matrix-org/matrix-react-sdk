@@ -1554,7 +1554,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {
                 setTimeout(() => {
-                    if (SettingsStore.getValue("feature_spotlight", null, true) !== null) return;
+                    // Skip the toast if the beta is already enabled or the user has changed the setting from default
+                    if (SettingsStore.getValue("feature_spotlight") ||
+                        SettingsStore.getValue("feature_spotlight", null, true) !== null) {
+                        return;
+                    }
 
                     const key = "BETA_SPOTLIGHT_TOAST";
                     ToastStore.sharedInstance().addOrReplaceToast({
