@@ -360,6 +360,7 @@ interface IState {
     thread: Thread;
     threadReplyCount: number;
     threadLastReply: MatrixEvent;
+    threadLastSender: RoomMember | null;
     threadNotification?: NotificationCountType;
 }
 
@@ -408,6 +409,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             thread,
             threadReplyCount: thread?.length,
             threadLastReply: thread?.replyToEvent,
+            threadLastSender: thread?.replyToEvent.sender,
         };
 
         // don't do RR animations until we are mounted
@@ -562,6 +564,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         this.setState({
             threadLastReply: thread?.replyToEvent,
+            threadLastSender: thread?.replyToEvent?.sender,
             threadReplyCount: thread?.length,
             thread,
         });
@@ -663,9 +666,13 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const sender = this.thread.roomState.getSentinelMember(threadLastReply.getSender());
         return <>
-            { sender && (
-                <MemberAvatar member={sender} width={24} height={24} className="mx_ThreadInfo_avatar" />
-            ) }
+            <MemberAvatar
+                member={null}
+                fallbackUserId={threadLastReply.getSender()}
+                width={24}
+                height={24}
+                className="mx_ThreadInfo_avatar"
+            />
             { threadMessagePreview && (
                 <div className="mx_ThreadInfo_content">
                     <span className="mx_ThreadInfo_message-preview">
