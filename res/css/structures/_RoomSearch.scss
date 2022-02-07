@@ -44,12 +44,16 @@ limitations under the License.
         padding: 0;
         height: 100%;
         width: 100%;
-        font-size: $font-12px;
-        line-height: $font-16px;
 
         &:not(.mx_RoomSearch_inputExpanded)::placeholder {
             color: $tertiary-content !important; // !important to override default app-wide styles
         }
+    }
+
+    .mx_RoomSearch_input,
+    .mx_RoomSearch_spotlightTriggerText {
+        font-size: $font-12px;
+        line-height: $font-16px;
     }
 
     &.mx_RoomSearch_hasQuery {
@@ -102,6 +106,38 @@ limitations under the License.
 
         &:hover {
             background-color: $tertiary-content;
+
+            .mx_RoomSearch_icon {
+                background-color: $background;
+            }
+        }
+    }
+
+    &.mx_RoomSearch_spotlightTrigger {
+        cursor: pointer;
+        min-width: 0;
+
+        .mx_RoomSearch_spotlightTriggerText {
+            color: $tertiary-content;
+            flex: 1;
+            min-width: 0;
+            // the following rules are to match that of a real input field
+            overflow: hidden;
+            margin: 9px;
+            font-weight: $font-semi-bold;
+        }
+
+        &:hover {
+            background-color: $tertiary-content;
+
+            .mx_RoomSearch_spotlightTriggerText {
+                color: $background;
+            }
+
+            .mx_RoomSearch_shortcutPrompt {
+                background-color: $background;
+                color: $secondary-content;
+            }
 
             .mx_RoomSearch_icon {
                 background-color: $background;
