@@ -25,7 +25,10 @@ export async function login(
 ): Promise<void> {
     session.log.startGroup("logs in");
     session.log.step("Navigates to login page");
+
+    const navPromise = session.page.waitForNavigation();
     await session.goto(session.url('/#/login'));
+    await navPromise;
     session.log.done();
 
     // wait until no spinners visible
