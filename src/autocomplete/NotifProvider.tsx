@@ -43,7 +43,8 @@ export default class NotifProvider extends AutocompleteProvider {
         if (!this.room.currentState.mayTriggerNotifOfType('room', client.credentials.userId)) return [];
 
         const { command, range } = this.getCurrentCommand(query, selection, force);
-        if (command && command[0] && '@room'.startsWith(command[0]) && command[0].length > 1) {
+        if (command && command[0] && ('@room'.startsWith(command[0]) || '@channel'.startsWith(command[0])) &&
+            command[0].length > 1) {
             return [{
                 completion: '@room',
                 completionId: '@room',
