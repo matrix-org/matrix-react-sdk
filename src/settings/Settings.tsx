@@ -349,7 +349,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             disclaimer: () => <>
                 { SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I give feedback?") }</h4>
-                    <p>{ _t("To feedback, join the beta, start a search and click on feedback. Or alternatively, click the feedback button above.") }</p>
+                    <p>{ _t("To feedback, join the beta, start a search and click on feedback. " +
+                        "Or, once you've joined the beta, click the feedback button above.") }</p>
                 </> }
                 <h4>{ _t("How can I leave the beta?") }</h4>
                 <p>{ _t("To leave, just return to this page or tap on the beta badge when you search.") }</p>
