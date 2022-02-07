@@ -340,22 +340,17 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("New search experience"),
         default: false,
         betaInfo: {
-            title: _td("New search experience"),
+            title: _td("The new search beta"),
             caption: () => <>
-                <p>{ _t("A new quick way to search spaces and rooms you're in.") }</p>
-                <p>{ _t("This feature is a work in progress, so all feedback is very welcome.") }</p>
+                <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
+                <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
             </>,
-            disclaimer: enabled => enabled
-                ? <>
-                    <h4>{ _t("Leave beta") }</h4>
-                    <p>{ _t("Just return to this page or tap on the beta badge when you search.") }</p>
-                    <h4>{ _t("Feedback") }</h4>
-                    <p>{ _t("Search and click on feedback") }</p>
-                </>
-                : <>
-                    <h4>{ _t("Feedback") }</h4>
-                    <p>{ _t("Search and click on feedback") }</p>
-                </>,
+            disclaimer: () => <>
+                <h4>{ _t("How can I give feedback?") }</h4>
+                <p>{ _t("To feedback, join the beta, start a search and click on feedback. Or alternatively, click here.") }</p>
+                <h4>{ _t("How can I leave the beta?") }</h4>
+                <p>{ _t("To leave, just return to this page or tap on the beta badge when you search.") }</p>
+            </>,
             feedbackLabel: "spotlight-feedback",
             image: require("../../res/img/betas/new_search_experience.gif"),
         },
