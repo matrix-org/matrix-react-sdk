@@ -34,6 +34,9 @@ export async function login(
     // wait until no spinners visible
     await session.waitNoSpinner();
 
+    // ...and it's stil flakey, so add a sleep :(
+    await session.page.waitForTimeout(200);
+
     // change the homeserver by clicking the advanced section
     if (homeserver) {
         session.log.step("Clicks button to change homeserver");
