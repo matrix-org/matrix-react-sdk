@@ -667,7 +667,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         const sender = this.thread.roomState.getSentinelMember(threadLastReply.getSender());
         return <>
             <MemberAvatar
-                member={null}
+                member={sender}
                 fallbackUserId={threadLastReply.getSender()}
                 width={24}
                 height={24}
