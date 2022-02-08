@@ -52,7 +52,7 @@ async function runTests() {
         options['executablePath'] = path;
     }
 
-    window.mxLogDir = program.logDirectory;
+    (global as any).mxLogDir = program.logDirectory;
 
     const restCreator = new RestSessionCreator(
         '../synapse/installations/consent/env/bin',
