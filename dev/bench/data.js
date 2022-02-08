@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644322539393,
+  "lastUpdate": 1644322956893,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63260,6 +63260,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4457.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "30d1ac1eeabdbe062d6f89798ff0dcd9c424cfc3",
+          "message": "unit test basic paths in UserInfo (#7740)\n\n* unit test main paths in UserInfo component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* one more test case\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove BasicUserInfo export\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-08T12:14:52Z",
+          "tree_id": "4323f07e01d01e14545174d547f470d85ed5df98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/30d1ac1eeabdbe062d6f89798ff0dcd9c424cfc3"
+        },
+        "date": 1644322950804,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4581.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 744.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
