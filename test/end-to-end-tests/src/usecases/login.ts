@@ -31,7 +31,7 @@ export async function login(
     await navPromise;
     session.log.done();
 
-    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-01navigated.png" });
+    //await session.page.screenshot({ path: (global as any).mxLogDir + "/login-01navigated.png" });
 
     // wait until no spinners visible
     //await session.waitNoSpinner();
