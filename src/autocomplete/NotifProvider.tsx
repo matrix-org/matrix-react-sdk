@@ -44,7 +44,7 @@ export default class NotifProvider extends AutocompleteProvider {
 
         const { command, range } = this.getCurrentCommand(query, selection, force);
         if (command && command[0] && command[0].length > 1 &&
-            ['@room', '@channel', '@everyone', `@here`].includes(command[0])) {
+            ['@room', '@channel', '@everyone', '@here'].includes(command[0])) {
             return [{
                 completion: '@room',
                 completionId: '@room',
