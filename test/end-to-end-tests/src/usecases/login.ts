@@ -31,11 +31,17 @@ export async function login(
     await navPromise;
     session.log.done();
 
+    await session.page.screenshot({ path: window.mxLogDir + "/login-01navigated" });
+
     // wait until no spinners visible
     await session.waitNoSpinner();
 
+    await session.page.screenshot({ path: window.mxLogDir + "/login-02waitfornospinner" });
+
     // ...and it's stil flakey, so add a sleep :(
     await session.page.waitForTimeout(200);
+
+    await session.page.screenshot({ path: window.mxLogDir + "/login-03waitfortimeout" });
 
     // change the homeserver by clicking the advanced section
     if (homeserver) {
@@ -44,10 +50,14 @@ export async function login(
         await changeButton.click();
         session.log.done();
 
+        await session.page.screenshot({ path: window.mxLogDir + "/login-04clickchangehs" });
+
         session.log.step("Enters homeserver");
         const hsInputField = await session.query('.mx_ServerPickerDialog_otherHomeserver');
         await session.replaceInputText(hsInputField, homeserver);
         session.log.done();
+
+        await session.page.screenshot({ path: window.mxLogDir + "/login-05enterhs" });
 
         session.log.step("Clicks next");
         const nextButton = await session.query('.mx_ServerPickerDialog_continue');

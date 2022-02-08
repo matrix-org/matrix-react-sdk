@@ -1,3 +1,4 @@
+/// <reference types="./src/@types/global" />
 /*
 Copyright 2018 New Vector Ltd
 
@@ -50,6 +51,8 @@ async function runTests() {
         console.log(`(using external chrome/chromium at ${path}, make sure it's compatible with puppeteer)`);
         options['executablePath'] = path;
     }
+
+    window.mxLogDir = program.logDirectory;
 
     const restCreator = new RestSessionCreator(
         '../synapse/installations/consent/env/bin',

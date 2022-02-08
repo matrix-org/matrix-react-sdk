@@ -20,5 +20,6 @@ declare global {
     interface Window {
         mxPerformanceMonitor: any;
         mxPerformanceEntryNames: any;
+        mxLogDir: string;
     }
 }
