@@ -105,10 +105,10 @@ limitations under the License.
     }
 
     .mx_WhoIsTypingTile {
-        margin-left: -12px;
+        margin-left: -12px; // undo padding on the message list
     }
 
     .mx_WhoIsTypingTile_avatars {
-        flex-basis: 48px; // 12 + 36
+        flex-basis: 48px; // 12 (padding on message list) + 36 (padding on event lines)
     }
 }
