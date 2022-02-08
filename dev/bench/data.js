@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644322956893,
+  "lastUpdate": 1644325612232,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63296,6 +63296,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 744.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "76cafb7aa97184e409ff4bf659647f4e4b3d12c0",
+          "message": "Ensure location bodies have a width in bubbles (#7742)",
+          "timestamp": "2022-02-08T12:59:08Z",
+          "tree_id": "7738ba58c6757e568efe7a7d035ffffa2b67be28",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/76cafb7aa97184e409ff4bf659647f4e4b3d12c0"
+        },
+        "date": 1644325605309,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5277.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1065.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1906.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4902.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
