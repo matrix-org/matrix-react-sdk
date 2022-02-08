@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644348255707,
+  "lastUpdate": 1644348731550,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63872,6 +63872,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 638.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "09b88d1fbe6d5d249773827e09f0d6e7b380ddc3",
+          "message": "Fix add existing space not showing any spaces (#7751)",
+          "timestamp": "2022-02-08T19:25:08Z",
+          "tree_id": "a164436bac3d041b5b8002ef52df6b474f86fcbe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/09b88d1fbe6d5d249773827e09f0d6e7b380ddc3"
+        },
+        "date": 1644348724653,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5149.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1023.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1611.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4268,
             "unit": "ms",
             "extra": "type: measure"
           }
