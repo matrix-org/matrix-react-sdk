@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644347497945,
+  "lastUpdate": 1644347735430,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63800,6 +63800,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 786,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "919aab053e5b3bdb5a150fd90855ad406c19e4ab",
+          "message": "Improve new search dialog context text for exactly 2 parent spaces (#7761)",
+          "timestamp": "2022-02-08T19:08:05Z",
+          "tree_id": "d95fd1680e2aae42fc0260ba98c4301e80388a25",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/919aab053e5b3bdb5a150fd90855ad406c19e4ab"
+        },
+        "date": 1644347727999,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5318.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 740.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
