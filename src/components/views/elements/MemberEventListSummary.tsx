@@ -24,7 +24,7 @@ import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import { isValid3pidInvite } from "../../../RoomInvite";
-import EventListSummary from "./EventListSummary";
+import GenericEventListSummary from "./GenericEventListSummary";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { jsxJoin } from '../../../utils/ReactUtils';
@@ -38,7 +38,7 @@ const onPinnedMessagesClick = (): void => {
 
 const TARGET_AS_DISPLAY_NAME_EVENTS = [EventType.RoomMember];
 
-interface IProps extends Omit<ComponentProps<typeof EventListSummary>, "summaryText" | "summaryMembers"> {
+interface IProps extends Omit<ComponentProps<typeof GenericEventListSummary>, "summaryText" | "summaryMembers"> {
     // The maximum number of names to show in either each summary e.g. 2 would result "A, B and 234 others left"
     summaryLength?: number;
     // The maximum number of avatars to display in the summary
@@ -515,7 +515,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
             (seq1, seq2) => aggregate.indices[seq1] - aggregate.indices[seq2],
         );
 
-        return <EventListSummary
+        return <GenericEventListSummary
             events={this.props.events}
             threshold={this.props.threshold}
             onToggle={this.props.onToggle}

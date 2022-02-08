@@ -44,7 +44,7 @@ interface IProps {
     layout?: Layout;
 }
 
-const EventListSummary: React.FC<IProps> = ({
+const GenericEventListSummary: React.FC<IProps> = ({
     events,
     children,
     threshold = 3,
@@ -68,7 +68,7 @@ const EventListSummary: React.FC<IProps> = ({
     // If we are only given few events then just pass them through
     if (events.length < threshold) {
         return (
-            <li className="mx_EventListSummary" data-scroll-tokens={eventIds} data-expanded={true} data-layout={layout}>
+            <li className="mx_GenericEventListSummary" data-scroll-tokens={eventIds} data-expanded={true} data-layout={layout}>
                 { children }
             </li>
         );
@@ -77,7 +77,7 @@ const EventListSummary: React.FC<IProps> = ({
     let body;
     if (expanded) {
         body = <React.Fragment>
-            <div className="mx_EventListSummary_line">&nbsp;</div>
+            <div className="mx_GenericEventListSummary_line">&nbsp;</div>
             { children }
         </React.Fragment>;
     } else {
@@ -86,10 +86,10 @@ const EventListSummary: React.FC<IProps> = ({
         body = (
             <div className="mx_EventTile_line">
                 <div className="mx_EventTile_info">
-                    <span className="mx_EventListSummary_avatars" onClick={toggleExpanded}>
+                    <span className="mx_GenericEventListSummary_avatars" onClick={toggleExpanded}>
                         { avatars }
                     </span>
-                    <span className="mx_TextualEvent mx_EventListSummary_summary">
+                    <span className="mx_TextualEvent mx_GenericEventListSummary_summary">
                         { summaryText }
                     </span>
                 </div>
@@ -98,8 +98,8 @@ const EventListSummary: React.FC<IProps> = ({
     }
 
     return (
-        <li className="mx_EventListSummary" data-scroll-tokens={eventIds} data-expanded={expanded + ""} data-layout={layout}>
-            <AccessibleButton className="mx_EventListSummary_toggle" onClick={toggleExpanded} aria-expanded={expanded}>
+        <li className="mx_GenericEventListSummary" data-scroll-tokens={eventIds} data-expanded={expanded + ""} data-layout={layout}>
+            <AccessibleButton className="mx_GenericEventListSummary_toggle" onClick={toggleExpanded} aria-expanded={expanded}>
                 { expanded ? _t('collapse') : _t('expand') }
             </AccessibleButton>
             { body }
@@ -107,9 +107,9 @@ const EventListSummary: React.FC<IProps> = ({
     );
 };
 
-EventListSummary.defaultProps = {
+GenericEventListSummary.defaultProps = {
     startExpanded: false,
     layout: Layout.Group,
 };
 
-export default EventListSummary;
+export default GenericEventListSummary;

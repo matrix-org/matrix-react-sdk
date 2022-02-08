@@ -40,7 +40,7 @@ import defaultDispatcher from '../../dispatcher/dispatcher';
 import CallEventGrouper from "./CallEventGrouper";
 import WhoIsTypingTile from '../views/rooms/WhoIsTypingTile';
 import ScrollPanel, { IScrollState } from "./ScrollPanel";
-import EventListSummary from '../views/elements/EventListSummary';
+import GenericEventListSummary from '../views/elements/GenericEventListSummary';
 import MemberEventListSummary from '../views/elements/MemberEventListSummary';
 import DateSeparator from '../views/messages/DateSeparator';
 import ErrorBoundary from '../views/elements/ErrorBoundary';
@@ -1063,7 +1063,7 @@ abstract class BaseGrouper {
  *   when determining things such as whether a date separator is necessary
  */
 
-// Wrap initial room creation events into an EventListSummary
+// Wrap initial room creation events into a GenericEventListSummary
 // Grouping only events sent by the same user that sent the `m.room.create` and only until
 // the first non-state event or membership event which is not regarding the sender of the `m.room.create` event
 class CreationGrouper extends BaseGrouper {
@@ -1139,7 +1139,7 @@ class CreationGrouper extends BaseGrouper {
 
         const eventTiles = this.events.map((e) => {
             // In order to prevent DateSeparators from appearing in the expanded form
-            // of EventListSummary, render each member event as if the previous
+            // of GenericEventListSummary, render each member event as if the previous
             // one was itself. This way, the timestamp of the previous event === the
             // timestamp of the current event, and no DateSeparator is inserted.
             return panel.getTilesForEvent(e, e, e === lastShownEvent, isGrouped);
@@ -1159,7 +1159,7 @@ class CreationGrouper extends BaseGrouper {
         ret.push(<NewRoomIntro key="newroomintro" />);
 
         ret.push(
-            <EventListSummary
+            <GenericEventListSummary
                 key="roomcreationsummary"
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
@@ -1168,7 +1168,7 @@ class CreationGrouper extends BaseGrouper {
                 layout={this.layout}
             >
                 { eventTiles }
-            </EventListSummary>,
+            </GenericEventListSummary>,
         );
 
         if (this.readMarker) {
