@@ -422,10 +422,13 @@ legend {
  * in the app look the same by being AccessibleButtons, or possibly by having explict button classes.
  * We should go through and have one consistent set of styles for buttons throughout the app.
  * For now, I am duplicating the selectors here for mx_Dialog and mx_DialogButtons.
+ *
+ * Elements that should not be styled like a dialog button are mentioned in a :not() pseudo-class.
+ * For the widest browser support, we use multiple :not pseudo-classes instead of :not(.a, .b).
  */
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton),
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton),
 .mx_Dialog input[type="submit"],
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton),
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
 .mx_Dialog_buttons input[type="submit"] {
     @mixin mx_DialogButton;
     margin-left: 0px;
@@ -440,51 +443,51 @@ legend {
     font-family: inherit;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):last-child {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):last-child {
     margin-right: 0px;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):hover,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):hover,
 .mx_Dialog input[type="submit"]:hover,
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):hover,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):hover,
 .mx_Dialog_buttons input[type="submit"]:hover {
     @mixin mx_DialogButton_hover;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):focus,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):focus,
 .mx_Dialog input[type="submit"]:focus,
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):focus,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):focus,
 .mx_Dialog_buttons input[type="submit"]:focus {
     filter: brightness($focus-brightness);
 }
 
-.mx_Dialog button.mx_Dialog_primary,
+.mx_Dialog button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]),
 .mx_Dialog input[type="submit"].mx_Dialog_primary,
-.mx_Dialog_buttons button.mx_Dialog_primary,
+.mx_Dialog_buttons button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
 .mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
     color: $accent-fg-color;
     background-color: $accent;
     min-width: 156px;
 }
 
-.mx_Dialog button.danger,
+.mx_Dialog button.danger:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]),
 .mx_Dialog input[type="submit"].danger,
-.mx_Dialog_buttons button.danger,
+.mx_Dialog_buttons button.danger:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
 .mx_Dialog_buttons input[type="submit"].danger {
     background-color: $alert;
     border: solid 1px $alert;
     color: $accent-fg-color;
 }
 
-.mx_Dialog button.warning,
+.mx_Dialog button.warning:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]),
 .mx_Dialog input[type="submit"].warning {
     border: solid 1px $alert;
     color: $alert;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):disabled,
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):disabled,
 .mx_Dialog input[type="submit"]:disabled,
-.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):disabled,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):disabled,
 .mx_Dialog_buttons input[type="submit"]:disabled {
     background-color: $light-fg-color;
     border: solid 1px $light-fg-color;
@@ -654,4 +657,16 @@ legend {
         outline-color: -webkit-focus-ring-color;
         outline-style: auto;
     }
+}
+
+@define-mixin ButtonResetDefault {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    cursor: pointer;
 }

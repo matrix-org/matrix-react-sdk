@@ -32,7 +32,6 @@ import SystemFontController from './controllers/SystemFontController';
 import UseSystemFontController from './controllers/UseSystemFontController';
 import { SettingLevel } from "./SettingLevel";
 import SettingController from "./controllers/SettingController";
-import { RightPanelPhases } from "../stores/RightPanelStorePhases";
 import { isMac } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
@@ -40,7 +39,6 @@ import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
-import NewLayoutSwitcherController from './controllers/NewLayoutSwitcherController';
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 
@@ -176,6 +174,13 @@ export interface IFeature extends Omit<IBaseSetting, "isFeature"> {
 export type ISetting = IBaseSetting | IFeature;
 
 export const SETTINGS: {[setting: string]: ISetting} = {
+    "feature_msc3531_hide_messages_pending_moderation": {
+        isFeature: true,
+        labsGroup: LabGroup.Moderation,
+        displayName: _td("Let moderators hide messages pending moderation."),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_report_to_moderators": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -213,13 +218,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         displayName: _td("Message Pinning"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
-    "feature_maximised_widgets": {
-        isFeature: true,
-        labsGroup: LabGroup.Widgets,
-        displayName: _td("Maximised widgets"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -300,18 +298,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_polls": {
+    "feature_extensible_events": {
         isFeature: true,
-        labsGroup: LabGroup.Messaging,
+        labsGroup: LabGroup.Developer, // developer for now, eventually Messaging and default on
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Polls (under active development)"),
-        default: false,
-    },
-    "feature_location_share": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Location sharing (under active development)"),
+        displayName: _td("Show extensible event representation of events"),
         default: false,
     },
     "doNotDisturb": {
@@ -334,25 +325,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show info about bridges in room settings"),
         default: false,
     },
-    "feature_new_layout_switcher": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("New layout switcher (with message bubbles)"),
-        default: false,
-        controller: new NewLayoutSwitcherController(),
-    },
-    "feature_spaces_metaspaces": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Meta Spaces"),
-        default: false,
-        controller: new OrderedMultiController([
-            new IncompatibleController("showCommunitiesInsteadOfSpaces"),
-            new ReloadOnChangeController(),
-        ]),
-    },
     "feature_breadcrumbs_v2": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
@@ -367,12 +339,19 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("New spotlight search experience"),
         default: false,
     },
+    "feature_right_panel_default_open": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Right panel stays open (defaults to room member list)"),
+        default: false,
+    },
     "feature_jump_to_date": {
         // We purposely leave out `isFeature: true` so it doesn't show in Labs
         // by default. We will conditionally show it depending on whether we can
         // detect MSC3030 support (see LabUserSettingsTab.tsx).
         // labsGroup: LabGroup.Messaging,
-        displayName: _td("Jump to date (adds /jumptodate)"),
+        displayName: _td("Jump to date (adds /jumptodate and jump to date headers)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -427,7 +406,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "showJoinLeaves": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show join/leave messages (invites/kicks/bans unaffected)'),
+        displayName: _td('Show join/leave messages (invites/removes/bans unaffected)'),
         default: true,
         invertedSettingName: 'hideJoinLeaves',
     },
@@ -771,21 +750,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show previews/thumbnails for images"),
         default: true,
     },
-    "showRightPanelInRoom": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
+    "RightPanel.phasesGlobal": {
+        supportedLevels: [SettingLevel.DEVICE],
+        default: null,
     },
-    "showRightPanelInGroup": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
-    },
-    "lastRightPanelPhaseForRoom": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: RightPanelPhases.RoomSummary,
-    },
-    "lastRightPanelPhaseForGroup": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: RightPanelPhases.GroupMemberList,
+    "RightPanel.phases": {
+        supportedLevels: [SettingLevel.ROOM_DEVICE],
+        default: null,
     },
     "enableEventIndexing": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -868,9 +839,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: {
             [MetaSpace.Home]: true,
         },
-        controller: new IncompatibleController("feature_spaces_metaspaces", {
-            [MetaSpace.Home]: true,
-        }, false),
     },
     "Spaces.showPeopleInSpace": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
@@ -893,6 +861,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "automaticErrorReporting": {
         displayName: _td("Automatically send debug logs on any error"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: false,
+        controller: new ReloadOnChangeController(),
+    },
+    "automaticDecryptionErrorReporting": {
+        displayName: _td("Automatically send debug logs on decryption errors"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new ReloadOnChangeController(),
     },

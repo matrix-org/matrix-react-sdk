@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import React, { ComponentType, createRef } from 'react';
-import { createClient, MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { createClient, EventType, MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Error as ErrorEvent } from "matrix-analytics-events/types/typescript/Error";
 import { Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/Screen";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { throttle } from "lodash";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -44,6 +44,7 @@ import * as Rooms from '../../Rooms';
 import * as Lifecycle from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
 import '../../stores/LifecycleStore';
+import '../../stores/AutoRageshakeStore';
 import PageType from '../../PageTypes';
 import createRoom, { IOpts } from "../../createRoom";
 import { _t, _td, getCurrentLanguage } from '../../languageHandler';
@@ -113,9 +114,6 @@ import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
 import CallHandler from "../../CallHandler";
 import { showSpaceInvite } from "../../utils/space";
-import GenericToast from "../views/toasts/GenericToast";
-import InfoDialog from "../views/dialogs/InfoDialog";
-import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
@@ -447,6 +445,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
+    public componentDidMount(): void {
+        window.addEventListener("resize", this.onWindowResized);
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (this.shouldTrackPageChange(prevState, this.state)) {
             const durationMs = this.stopPageChangeTimer();
@@ -467,22 +469,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.fontWatcher.stop();
         UIStore.destroy();
         this.state.resizeNotifier.removeListener("middlePanelResized", this.dispatchTimelineResize);
+        window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
     }
 
     public trackScreenChange(durationMs: number): void {
-        const notLoggedInMap = {};
+        const notLoggedInMap: Partial<Record<Views, ScreenEvent["screenName"]>> = {};
         notLoggedInMap[Views.LOADING] = "WebLoading";
-        notLoggedInMap[Views.WELCOME] = "WebWelcome";
-        notLoggedInMap[Views.LOGIN] = "WebLogin";
-        notLoggedInMap[Views.REGISTER] = "WebRegister";
-        notLoggedInMap[Views.FORGOT_PASSWORD] = "WebForgotPassword";
+        notLoggedInMap[Views.WELCOME] = "Welcome";
+        notLoggedInMap[Views.LOGIN] = "Login";
+        notLoggedInMap[Views.REGISTER] = "Register";
+        notLoggedInMap[Views.FORGOT_PASSWORD] = "ForgotPassword";
         notLoggedInMap[Views.COMPLETE_SECURITY] = "WebCompleteSecurity";
         notLoggedInMap[Views.E2E_SETUP] = "WebE2ESetup";
         notLoggedInMap[Views.SOFT_LOGOUT] = "WebSoftLogout";
 
-        const loggedInPageTypeMap = {};
+        const loggedInPageTypeMap: Partial<Record<PageType, ScreenEvent["screenName"]>> = {};
         loggedInPageTypeMap[PageType.HomePage] = "Home";
         loggedInPageTypeMap[PageType.RoomView] = "Room";
         loggedInPageTypeMap[PageType.RoomDirectory] = "RoomDirectory";
@@ -495,11 +498,40 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             notLoggedInMap[this.state.view];
 
         return PosthogAnalytics.instance.trackEvent<ScreenEvent>({
-            eventName: "Screen",
+            eventName: "$screen",
             screenName,
             durationMs,
         });
     }
+
+    private onWindowResized = (): void => {
+        // XXX: This is a very unreliable way to detect whether or not the the devtools are open
+        this.warnInConsole();
+    };
+
+    private warnInConsole = throttle((): void => {
+        const largeFontSize = "50px";
+        const normalFontSize = "15px";
+
+        const waitText = _t("Wait!");
+        const scamText = _t(
+            "If someone told you to copy/paste something here, " +
+            "there is a high likelihood you're being scammed!",
+        );
+        const devText = _t(
+            "If you know what you're doing, Element is open-source, " +
+            "be sure to check out our GitHub (https://github.com/vector-im/element-web/) " +
+            "and contribute!",
+        );
+
+        global.mx_rage_logger.bypassRageshake(
+            "log",
+            `%c${waitText}\n%c${scamText}\n%c${devText}`,
+            `font-size:${largeFontSize}; color:blue;`,
+            `font-size:${normalFontSize}; color:red;`,
+            `font-size:${normalFontSize};`,
+        );
+    }, 1000);
 
     private getFallbackHsUrl(): string {
         if (this.props.serverConfig?.isDefault) {
@@ -794,6 +826,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 });
                 break;
             case 'focus_room_filter': // for CtrlOrCmd+K to work by expanding the left panel first
+                if (SettingsStore.getValue("feature_spotlight")) break; // don't expand if spotlight enabled
+                // fallthrough
             case 'show_left_panel':
                 this.setState({
                     collapseLhs: false,
@@ -1295,16 +1329,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // run without the update to m.direct, making another welcome
             // user room (it doesn't wait for new data from the server, just
             // the saved sync to be loaded).
-            const saveWelcomeUser = (ev) => {
-                if (
-                    ev.getType() === 'm.direct' &&
-                    ev.getContent() &&
-                    ev.getContent()[this.props.config.welcomeUserId]
-                ) {
+            const saveWelcomeUser = (ev: MatrixEvent) => {
+                if (ev.getType() === EventType.Direct && ev.getContent()[this.props.config.welcomeUserId]) {
                     MatrixClientPeg.get().store.save(true);
-                    MatrixClientPeg.get().removeListener(
-                        "accountData", saveWelcomeUser,
-                    );
+                    MatrixClientPeg.get().removeListener("accountData", saveWelcomeUser);
                 }
             };
             MatrixClientPeg.get().on("accountData", saveWelcomeUser);
@@ -1358,7 +1386,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         StorageManager.tryPersistStorage();
 
-        if (PosthogAnalytics.instance.isEnabled()) {
+        if (PosthogAnalytics.instance.isEnabled() && SettingsStore.isLevelSupported(SettingLevel.ACCOUNT)) {
             this.initPosthogAnalyticsToast();
         } else if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
             if (SettingsStore.getValue("showCookieBar") &&
@@ -1523,61 +1551,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 showNotificationsToast(false);
             }
 
-            if (!localStorage.getItem("mx_seen_ia_1.1_changes_toast") && SettingsStore.getValue(UIFeature.Feedback)) {
-                const key = "IA_1.1_TOAST";
-                ToastStore.sharedInstance().addOrReplaceToast({
-                    key,
-                    title: _t("Testing small changes"),
-                    props: {
-                        description: _t("Your feedback is wanted as we try out some design changes."),
-                        acceptLabel: _t("More info"),
-                        onAccept: () => {
-                            Modal.createDialog(InfoDialog, {
-                                title: _t("We're testing some design changes"),
-                                description: <>
-                                    <img
-                                        src={require("../../../res/img/ia-design-changes.png")}
-                                        width="636"
-                                        height="303"
-                                        alt=""
-                                    />
-                                    <p>{ _t(
-                                        "Your ongoing feedback would be very welcome, so if you see anything " +
-                                        "different you want to comment on, <a>please let us know about it</a>. " +
-                                        "Click your avatar to find a quick feedback link.",
-                                        {},
-                                        {
-                                            a: sub => <AccessibleButton
-                                                kind="link"
-                                                onClick={(ev) => {
-                                                    ev.preventDefault();
-                                                    ev.stopPropagation();
-                                                    Modal.createTrackedDialog('Feedback Dialog', '', FeedbackDialog);
-                                                }}
-                                            >
-                                                { sub }
-                                            </AccessibleButton>,
-                                        },
-                                    ) }</p>
-                                    <p>{ _t("If you'd like to preview or test some potential upcoming changes, " +
-                                        "there's an option in feedback to let us contact you.") }</p>
-                                </>,
-                            }, "mx_DialogDesignChanges_wrapper");
-                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
-                            ToastStore.sharedInstance().dismissToast(key);
-                        },
-                        rejectLabel: _t("Dismiss"),
-                        onReject: () => {
-                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
-                            ToastStore.sharedInstance().dismissToast(key);
-                        },
-                    },
-                    icon: "labs",
-                    component: GenericToast,
-                    priority: 9,
-                });
-            }
-
             dis.fire(Action.FocusSendMessageComposer);
             this.setState({
                 ready: true,
@@ -1627,27 +1600,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }, null, true);
         });
 
-        const dft = new DecryptionFailureTracker((total, errorCode) => {
-            Analytics.trackEvent('E2E', 'Decryption failure', errorCode, String(total));
-            CountlyAnalytics.instance.track("decryption_failure", { errorCode }, null, { sum: total });
-            PosthogAnalytics.instance.trackEvent<ErrorEvent>({
-                eventName: "Error",
-                domain: "E2EE",
-                name: errorCode,
-            });
-        }, (errorCode) => {
-            // Map JS-SDK error codes to tracker codes for aggregation
-            switch (errorCode) {
-                case 'MEGOLM_UNKNOWN_INBOUND_SESSION_ID':
-                    return 'OlmKeysNotSentError';
-                case 'OLM_UNKNOWN_MESSAGE_INDEX':
-                    return 'OlmIndexError';
-                case undefined:
-                    return 'OlmUnspecifiedError';
-                default:
-                    return 'UnknownError';
-            }
-        });
+        const dft = DecryptionFailureTracker.instance;
 
         // Shelved for later date when we have time to think about persisting history of
         // tracked events across sessions.
@@ -2160,9 +2113,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     <div className="mx_MatrixChat_splash">
                         { errorBox }
                         <Spinner />
-                        <a href="#" className="mx_MatrixChat_splashButtons" onClick={this.onLogoutClick}>
+                        <AccessibleButton kind='link_inline' className="mx_MatrixChat_splashButtons" onClick={this.onLogoutClick}>
                             { _t('Logout') }
-                        </a>
+                        </AccessibleButton>
                     </div>
                 );
             }

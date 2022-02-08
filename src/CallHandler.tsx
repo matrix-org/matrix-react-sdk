@@ -39,6 +39,7 @@ import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import InviteDialog, { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialog";
 import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
@@ -54,6 +55,7 @@ import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore
 import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import IncomingCallToast from "./toasts/IncomingCallToast";
+import Resend from './Resend';
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -641,6 +643,16 @@ export default class CallHandler extends EventEmitter {
                 `bytes received: ${pair.bytesReceived}, bytes sent: ${pair.bytesSent}, `,
             );
         }
+
+        logger.debug("Outbound RTP:");
+        for (const s of stats.filter(item => item.type === 'outbound-rtp')) {
+            logger.debug(s);
+        }
+
+        logger.debug("Inbound RTP:");
+        for (const s of stats.filter(item => item.type === 'inbound-rtp')) {
+            logger.debug(s);
+        }
     }
 
     private setCallState(call: MatrixCall, status: CallState): void {
@@ -736,6 +748,18 @@ export default class CallHandler extends EventEmitter {
 
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
+
+        // If we're using a virtual room nd there are any events pending, try to resend them,
+        // otherwise the call will fail and because its a virtual room, the user won't be able
+        // to see it to either retry or clear the pending events. There will only be call events
+        // in this queue, and since we're about to place a new call, they can only be events from
+        // previous calls that are probably stale by now, so just cancel them.
+        if (mappedRoomId !== roomId) {
+            const mappedRoom = MatrixClientPeg.get().getRoom(mappedRoomId);
+            if (mappedRoom.getPendingEvents().length > 0) {
+                Resend.cancelUnsentEvents(mappedRoom);
+            }
+        }
 
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
         logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
@@ -1084,6 +1108,23 @@ export default class CallHandler extends EventEmitter {
             if (!messaging) return; // more "should never happen" words
 
             messaging.transport.send(ElementWidgetActions.HangupCall, {});
+        });
+    }
+
+    /*
+     * Shows the transfer dialog for a call, signalling to the other end that
+     * a transfer is about to happen
+     */
+    public showTransferDialog(call: MatrixCall): void {
+        call.setRemoteOnHold(true);
+        const { finished } = Modal.createTrackedDialog(
+            'Transfer Call', '', InviteDialog, { kind: KIND_CALL_TRANSFER, call },
+            /*className=*/"mx_InviteDialog_transferWrapper", /*isPriority=*/false, /*isStatic=*/true,
+        );
+        finished.then((results: boolean[]) => {
+            if (results.length === 0 || results[0] === false) {
+                call.setRemoteOnHold(false);
+            }
         });
     }
 

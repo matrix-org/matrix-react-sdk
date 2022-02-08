@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,13 +30,19 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import dis from "../../../dispatcher/dispatcher";
-import { shouldShowSpaceInvite, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
+import {
+    shouldShowSpaceInvite,
+    showAddExistingRooms,
+    showCreateNewRoom,
+    showCreateNewSubspace,
+    showSpaceInvite,
+} from "../../../utils/space";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import EditCommunityPrototypeDialog from "../dialogs/EditCommunityPrototypeDialog";
 import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { showCommunityInviteDialog } from "../../../RoomInvite";
 import { useDispatcher } from "../../../hooks/useDispatcher";
@@ -50,7 +56,9 @@ import {
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_SELECTED_SPACE,
 } from "../../../stores/spaces";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import TooltipTarget from "../elements/TooltipTarget";
+import { BetaPill } from "../beta/BetaCard";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -96,10 +104,10 @@ const PrototypeCommunityContextMenu = (props: ComponentProps<typeof SpaceContext
         const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
         if (chat) {
             dis.dispatch({
-                action: 'view_room',
+                action: Action.ViewRoom,
                 room_id: chat.roomId,
             }, true);
-            dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList }, undefined, chat.roomId);
         } else {
             // "This should never happen" clauses go here for the prototype.
             Modal.createTrackedDialog('Failed to find general chat', '', ErrorDialog, {
@@ -191,6 +199,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     }
 
     const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
+    const canAddRooms = activeSpace?.currentState?.maySendStateEvent(EventType.SpaceChild, cli.getUserId());
 
     let contextMenu: JSX.Element;
     if (mainMenuDisplayed) {
@@ -256,16 +265,6 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         >
             <IconizedContextMenuOptionList first>
                 { inviteOption }
-                <IconizedContextMenuOption
-                    label={_t("Start new chat")}
-                    iconClassName="mx_RoomListHeader_iconStartChat"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: "view_create_chat" });
-                        closePlusMenu();
-                    }}
-                />
                 { createNewRoomOption }
                 <IconizedContextMenuOption
                     label={_t("Explore rooms")}
@@ -273,10 +272,39 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        defaultDispatcher.dispatch({
+                            action: Action.ViewRoom,
+                            room_id: activeSpace.roomId,
+                        });
                         closePlusMenu();
                     }}
                 />
+                <IconizedContextMenuOption
+                    label={_t("Add existing room")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showAddExistingRooms(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add rooms to this space")}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Add space")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewSubspace(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add spaces to this space")}
+                >
+                    <BetaPill />
+                </IconizedContextMenuOption>
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {

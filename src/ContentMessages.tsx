@@ -24,7 +24,7 @@ import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation } from "matrix-js-sdk/src";
+import { IEventRelation, ISendEventResponse } from "matrix-js-sdk/src";
 
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from './dispatcher/dispatcher';
@@ -46,6 +46,7 @@ import { IUpload } from "./models/IUpload";
 import { BlurhashEncoder } from "./BlurhashEncoder";
 import SettingsStore from "./settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
+import { TimelineRenderingType } from "./contexts/RoomContext";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -127,15 +128,18 @@ async function createThumbnail(
     }
 
     let canvas: HTMLCanvasElement | OffscreenCanvas;
-    if (window.OffscreenCanvas) {
+    let context: CanvasRenderingContext2D;
+    try {
         canvas = new window.OffscreenCanvas(targetWidth, targetHeight);
-    } else {
+        context = canvas.getContext("2d");
+    } catch (e) {
+        // Fallback support for other browsers (Safari and Firefox for now)
         canvas = document.createElement("canvas");
         (canvas as HTMLCanvasElement).width = targetWidth;
         (canvas as HTMLCanvasElement).height = targetHeight;
+        context = canvas.getContext("2d");
     }
 
-    const context = canvas.getContext("2d");
     context.drawImage(element, 0, 0, targetWidth, targetHeight);
 
     let thumbnailPromise: Promise<Blob>;
@@ -418,14 +422,14 @@ export default class ContentMessages {
     private inprogress: IUpload[] = [];
     private mediaConfig: IMediaConfig = null;
 
-    sendStickerContentToRoom(
+    public sendStickerContentToRoom(
         url: string,
         roomId: string,
         threadId: string | null,
         info: IImageInfo,
         text: string,
         matrixClient: MatrixClient,
-    ) {
+    ): Promise<ISendEventResponse> {
         const startTime = CountlyAnalytics.getTimestamp();
         const prom = matrixClient.sendStickerMessage(roomId, threadId, url, info, text).catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
@@ -435,7 +439,7 @@ export default class ContentMessages {
         return prom;
     }
 
-    getUploadLimit() {
+    public getUploadLimit(): number | null {
         if (this.mediaConfig !== null && this.mediaConfig["m.upload.size"] !== undefined) {
             return this.mediaConfig["m.upload.size"];
         } else {
@@ -443,12 +447,13 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(
+    public async sendContentListToRoom(
         files: File[],
         roomId: string,
         relation: IEventRelation | null,
         matrixClient: MatrixClient,
-    ) {
+        context = TimelineRenderingType.Room,
+    ): Promise<void> {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
             return;
@@ -527,9 +532,15 @@ export default class ContentMessages {
 
             promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, promBefore);
         }
+
+        // Focus the correct composer
+        dis.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context,
+        });
     }
 
-    getCurrentUploads(relation?: IEventRelation) {
+    public getCurrentUploads(relation?: IEventRelation): IUpload[] {
         return this.inprogress.filter(upload => {
             const noRelation = !relation && !upload.relation;
             const matchingRelation = relation && upload.relation
@@ -540,7 +551,7 @@ export default class ContentMessages {
         });
     }
 
-    cancelUpload(promise: Promise<any>, matrixClient: MatrixClient) {
+    public cancelUpload(promise: Promise<any>, matrixClient: MatrixClient): void {
         let upload: IUpload;
         for (let i = 0; i < this.inprogress.length; ++i) {
             if (this.inprogress[i].promise === promise) {
@@ -628,9 +639,6 @@ export default class ContentMessages {
         };
         this.inprogress.push(upload);
         dis.dispatch<UploadStartedPayload>({ action: Action.UploadStarted, upload });
-
-        // Focus the composer view
-        dis.fire(Action.FocusSendMessageComposer);
 
         function onProgress(ev) {
             upload.total = ev.total;

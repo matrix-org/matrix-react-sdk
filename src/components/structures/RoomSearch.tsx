@@ -25,14 +25,15 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import { Action } from "../../dispatcher/actions";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCondition";
-import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
-import { isMac } from "../../Keyboard";
+import { isMac, Key } from "../../Keyboard";
 import SettingsStore from "../../settings/SettingsStore";
 import Modal from "../../Modal";
 import SpotlightDialog from "../views/dialogs/SpotlightDialog";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     isMinimized: boolean;
@@ -93,11 +94,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private onAction = (payload: ActionPayload) => {
         if (payload.action === Action.ViewRoom && payload.clear_search) {
             this.clearInput();
-        } else if (payload.action === 'focus_room_filter' && this.inputRef.current) {
+        } else if (payload.action === 'focus_room_filter') {
             if (SettingsStore.getValue("feature_spotlight")) {
                 this.openSpotlight();
             } else {
-                this.inputRef.current.focus();
+                this.inputRef.current?.focus();
             }
         }
     };
@@ -109,8 +110,12 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     };
 
     private openSearch = () => {
-        defaultDispatcher.dispatch({ action: "show_left_panel" });
-        defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        if (SettingsStore.getValue("feature_spotlight")) {
+            this.openSpotlight();
+        } else {
+            defaultDispatcher.dispatch({ action: "show_left_panel" });
+            defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        }
     };
 
     private onChange = () => {
@@ -136,11 +141,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private onKeyDown = (ev: React.KeyboardEvent) => {
         const action = getKeyBindingsManager().getRoomListAction(ev);
         switch (action) {
-            case RoomListAction.ClearSearch:
+            case KeyBindingAction.ClearRoomFilter:
                 this.clearInput();
                 defaultDispatcher.fire(Action.FocusSendMessageComposer);
                 break;
-            case RoomListAction.SelectRoom: {
+            case KeyBindingAction.SelectRoomInRoomList: {
                 const shouldClear = this.props.onSelectRoom();
                 if (shouldClear) {
                     // wrap in set immediate to delay it so that we don't clear the filter & then change room
@@ -200,7 +205,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             />
         );
         let shortcutPrompt = <div className="mx_RoomSearch_shortcutPrompt" onClick={this.focus}>
-            { isMac ? "⌘ K" : "Ctrl K" }
+            { isMac ? "⌘ K" : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " K" }
         </div>;
 
         if (this.props.isMinimized) {

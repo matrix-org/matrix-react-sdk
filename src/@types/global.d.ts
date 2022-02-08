@@ -32,7 +32,7 @@ import SettingsStore from "../settings/SettingsStore";
 import { ActiveRoomObserver } from "../ActiveRoomObserver";
 import { Notifier } from "../Notifier";
 import type { Renderer } from "react-dom";
-import RightPanelStore from "../stores/RightPanelStore";
+import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
 import CallHandler from "../CallHandler";
 import { Analytics } from "../Analytics";
@@ -52,6 +52,7 @@ import { RoomScrollStateStore } from "../stores/RoomScrollStateStore";
 import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
 import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import { Skinner } from "../Skinner";
+import AutoRageshakeStore from "../stores/AutoRageshakeStore";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -111,6 +112,7 @@ declare global {
         electron?: Electron;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
+        mxAutoRageshakeStore?: AutoRageshakeStore;
     }
 
     interface DesktopCapturerSource {

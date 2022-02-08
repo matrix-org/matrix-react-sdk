@@ -58,11 +58,7 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import { getAddressType } from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { compare, copyPlaintext, selectText } from '../../../utils/strings';
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import * as ContextMenu from "../../structures/ContextMenu";
-import { toRightOf } from "../../structures/ContextMenu";
-import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
+import { compare, selectText } from '../../../utils/strings';
 import Field from '../elements/Field';
 import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
 import Dialpad from '../voip/DialPad';
@@ -72,6 +68,8 @@ import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import CallHandler from "../../../CallHandler";
+import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import CopyableText from "../elements/CopyableText";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -329,9 +327,13 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             </span>
         );
 
+        const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(
+            this.props.member.userId, { withDisplayName: true },
+        );
+
         const caption = (this.props.member as ThreepidMember).isEmail
             ? _t("Invite by email")
-            : this.highlightName(this.props.member.userId);
+            : this.highlightName(userIdentifier);
 
         return (
             <div className='mx_InviteDialog_roomTile' onClick={this.onClick}>
@@ -347,8 +349,10 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 }
 
 interface IInviteDialogProps {
-    // Takes an array of user IDs/emails to invite.
-    onFinished: (toInvite?: string[]) => void;
+    // Takes a boolean which is true if a user / users were invited /
+    // a call transfer was initiated or false if the dialog was cancelled
+    // with no action taken.
+    onFinished: (success: boolean) => void;
 
     // The kind of invite being performed. Assumed to be KIND_DM if
     // not provided.
@@ -680,7 +684,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 should_peek: false,
                 joining: false,
             });
-            this.props.onFinished();
+            this.props.onFinished(true);
             return;
         }
 
@@ -727,7 +731,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             }
 
             await createRoom(createRoomOptions);
-            this.props.onFinished();
+            this.props.onFinished(true);
         } catch (err) {
             logger.error(err);
             this.setState({
@@ -756,30 +760,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
 
         try {
-            const result = await inviteMultipleToRoom(this.props.roomId, targetIds);
+            const result = await inviteMultipleToRoom(this.props.roomId, targetIds, true);
             CountlyAnalytics.instance.trackSendInvite(startTime, this.props.roomId, targetIds.length);
             if (!this.shouldAbortAfterInviteError(result, room)) { // handles setting error message too
-                this.props.onFinished();
-            }
-
-            if (cli.isRoomEncrypted(this.props.roomId)) {
-                const visibilityEvent = room.currentState.getStateEvents(
-                    "m.room.history_visibility", "",
-                );
-                const visibility = visibilityEvent && visibilityEvent.getContent() &&
-                    visibilityEvent.getContent().history_visibility;
-                if (visibility == "world_readable" || visibility == "shared") {
-                    const invitedUsers = [];
-                    for (const [addr, state] of Object.entries(result.states)) {
-                        if (state === "invited" && getAddressType(addr) === "mx-user-id") {
-                            invitedUsers.push(addr);
-                        }
-                    }
-                    logger.log("Sharing history with", invitedUsers);
-                    cli.sendSharedHistoryKeys(
-                        this.props.roomId, invitedUsers,
-                    );
-                }
+                this.props.onFinished(true);
             }
         } catch (err) {
             logger.error(err);
@@ -816,7 +800,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 this.state.consultFirst,
             );
         }
-        this.props.onFinished();
+        this.props.onFinished(true);
     };
 
     private onKeyDown = (e) => {
@@ -839,7 +823,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     };
 
     private onCancel = () => {
-        this.props.onFinished([]);
+        this.props.onFinished(false);
     };
 
     private updateSuggestions = async (term) => {
@@ -1101,11 +1085,11 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private onManageSettingsClick = (e) => {
         e.preventDefault();
         dis.fire(Action.ViewUserSettings);
-        this.props.onFinished();
+        this.props.onFinished(false);
     };
 
     private onCommunityInviteClick = (e) => {
-        this.props.onFinished();
+        this.props.onFinished(false);
         showCommunityInviteDialog(CommunityPrototypeStore.instance.getSelectedCommunityId());
     };
 
@@ -1255,8 +1239,14 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
                     },
                     {
-                        default: sub => <a href="#" onClick={this.onUseDefaultIdentityServerClick}>{ sub }</a>,
-                        settings: sub => <a href="#" onClick={this.onManageSettingsClick}>{ sub }</a>,
+                        default: sub =>
+                            <AccessibleButton kind='link_inline' onClick={this.onUseDefaultIdentityServerClick}>
+                                { sub }
+                            </AccessibleButton>,
+                        settings: sub =>
+                            <AccessibleButton kind='link_inline' onClick={this.onManageSettingsClick}>
+                                { sub }
+                            </AccessibleButton>,
                     },
                 ) }</div>
             );
@@ -1266,7 +1256,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     "Use an identity server to invite by email. " +
                     "Manage in <settings>Settings</settings>.",
                     {}, {
-                        settings: sub => <a href="#" onClick={this.onManageSettingsClick}>{ sub }</a>,
+                        settings: sub =>
+                            <AccessibleButton kind='link_inline' onClick={this.onManageSettingsClick}>
+                                { sub }
+                            </AccessibleButton>,
                     },
                 ) }</div>
             );
@@ -1313,20 +1306,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         e.preventDefault();
         selectText(e.target);
     }
-
-    private onCopyClick = async e => {
-        e.preventDefault();
-        const target = e.target; // copy target before we go async and React throws it away
-
-        const successful = await copyPlaintext(makeUserPermalink(MatrixClientPeg.get().getUserId()));
-        const buttonRect = target.getBoundingClientRect();
-        const { close } = ContextMenu.createMenu(GenericTextContextMenu, {
-            ...toRightOf(buttonRect, 2),
-            message: successful ? _t("Copied!") : _t("Failed to copy"),
-        });
-        // Drop a reference to this close handler for componentWillUnmount
-        this.closeCopiedTooltip = target.onmouseleave = close;
-    };
 
     render() {
         let spinner = null;
@@ -1413,18 +1392,11 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             const link = makeUserPermalink(MatrixClientPeg.get().getUserId());
             footer = <div className="mx_InviteDialog_footer">
                 <h3>{ _t("Or send invite link") }</h3>
-                <div className="mx_InviteDialog_footer_link">
+                <CopyableText getTextToCopy={() => makeUserPermalink(MatrixClientPeg.get().getUserId())}>
                     <a href={link} onClick={this.onLinkClick}>
                         { link }
                     </a>
-                    <AccessibleTooltipButton
-                        title={_t("Copy")}
-                        onClick={this.onCopyClick}
-                        className="mx_InviteDialog_footer_link_copy"
-                    >
-                        <div />
-                    </AccessibleTooltipButton>
-                </div>
+                </CopyableText>
             </div>;
         } else if (this.props.kind === KIND_INVITE) {
             const room = MatrixClientPeg.get()?.getRoom(this.props.roomId);

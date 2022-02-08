@@ -34,9 +34,9 @@ import InviteReason from "../elements/InviteReason";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
-import { UIFeature } from "../../../settings/UIFeature";
-import SettingsStore from "../../../settings/SettingsStore";
 import RoomAvatar from "../avatars/RoomAvatar";
+import SettingsStore from "../../../settings/SettingsStore";
+import { UIFeature } from "../../../settings/UIFeature";
 
 const MemberEventHtmlReasonField = "io.element.html_reason";
 
@@ -359,7 +359,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             }
             case MessageCase.Kicked: {
                 const { memberName, reason } = this.getKickOrBanInfo();
-                title = _t("You were kicked from %(roomName)s by %(memberName)s",
+                title = _t("You were removed from %(roomName)s by %(memberName)s",
                     { memberName, roomName: this.roomName() });
                 subTitle = reason ? _t("Reason: %(reason)s", { reason }) : null;
 

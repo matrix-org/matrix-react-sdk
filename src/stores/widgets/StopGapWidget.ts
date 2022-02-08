@@ -64,9 +64,8 @@ import { arrayFastClone } from "../../utils/arrays";
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-
     app: IWidget;
-    room: Room;
+    room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
     waitForIframeLoad: boolean;
@@ -109,8 +108,8 @@ export class ElementWidget extends Widget {
         }
         let domain = super.rawData['domain'];
         if (domain === undefined) {
-            // v1 widgets default to jitsi.riot.im regardless of user settings
-            domain = "jitsi.riot.im";
+            // v1 widgets default to meet.element.io regardless of user settings
+            domain = "meet.element.io";
         }
 
         let theme = new ThemeWatcher().getEffectiveTheme();
@@ -255,8 +254,11 @@ export class StopGapWidget extends EventEmitter {
             });
         }
     };
-
-    public start(iframe: HTMLIFrameElement) {
+    /**
+     * This starts the messaging for the widget if it is not in the state `started` yet.
+     * @param iframe the iframe the widget should use
+     */
+    public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
         const allowedCapabilities = this.appTileProps.whitelistCapabilities || [];
         const driver = new StopGapWidgetDriver(allowedCapabilities, this.mockWidget, this.kind, this.roomId);
@@ -407,7 +409,12 @@ export class StopGapWidget extends EventEmitter {
         }
     }
 
-    public stop(opts = { forceDestroy: false }) {
+    /**
+     * Stops the widget messaging for if it is started. Skips stopping if it is an active
+     * widget.
+     * @param opts
+     */
+    public stopMessaging(opts = { forceDestroy: false }) {
         if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {
             logger.log("Skipping destroy - persistent widget");
             return;
@@ -415,6 +422,7 @@ export class StopGapWidget extends EventEmitter {
         if (!this.started) return;
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget);
         ActiveWidgetStore.instance.delRoomId(this.mockWidget.id);
+        this.messaging = null;
 
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().off('event', this.onEvent);

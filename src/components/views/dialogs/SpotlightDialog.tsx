@@ -34,7 +34,6 @@ import { IDialogProps } from "./IDialogProps";
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
-import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {
     findSiblingElement,
@@ -63,6 +62,8 @@ import RoomViewStore from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
+import NotificationBadge from "../rooms/NotificationBadge";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -124,12 +125,13 @@ const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boole
     const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
 
     const resetHierarchy = useCallback(() => {
-        const hierarchy = new RoomHierarchy(space, 50);
-        setHierarchy(hierarchy);
+        setHierarchy(space ? new RoomHierarchy(space, 50) : null);
     }, [space]);
     useEffect(resetHierarchy, [resetHierarchy]);
 
     useEffect(() => {
+        if (!space || !hierarchy) return; // nothing to load
+
         let unmounted = false;
 
         (async () => {
@@ -188,21 +190,20 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
         const newQuery = e.currentTarget.value;
         _setQuery(newQuery);
-        if (!query !== !newQuery) {
-            setImmediate(() => {
-                // reset the activeRef when we start/stop querying as the view changes
-                const ref = rovingContext.state.refs[0];
-                if (ref) {
-                    rovingContext.dispatch({
-                        type: Type.SetFocus,
-                        payload: { ref },
-                    });
-                    ref.current?.scrollIntoView({
-                        block: "nearest",
-                    });
-                }
-            });
-        }
+
+        setImmediate(() => {
+            // reset the activeRef when we change query for best usability
+            const ref = rovingContext.state.refs[0];
+            if (ref) {
+                rovingContext.dispatch({
+                    type: Type.SetFocus,
+                    payload: { ref },
+                });
+                ref.current?.scrollIntoView({
+                    block: "nearest",
+                });
+            }
+        });
     };
 
     const viewRoom = (roomId: string, persist = false) => {
@@ -221,7 +222,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         }
 
         defaultDispatcher.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_id: roomId,
         });
         onFinished();
@@ -244,8 +245,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     viewRoom(room.roomId, true);
                 }}
             >
-                <RoomAvatar room={room} width={20} height={20} />
+                <DecoratedRoomAvatar room={room} avatarSize={20} />
                 { room.name }
+                <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                 <ResultDetails room={room} />
                 <div className="mx_SpotlightDialog_enterPrompt">↵</div>
             </Option>
@@ -361,7 +363,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         let recentSearchesSection: JSX.Element;
         if (recentSearches.length) {
             recentSearchesSection = (
-                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_recentSearches" role="group">
+                <div
+                    className="mx_SpotlightDialog_section mx_SpotlightDialog_recentSearches"
+                    role="group"
+                    // Firefox sometimes makes this element focusable due to overflow,
+                    // so force it out of tab order by default.
+                    tabIndex={-1}
+                >
                     <h4>
                         { _t("Recent searches") }
                         <AccessibleButton kind="link" onClick={clearRecentSearches}>
@@ -377,8 +385,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                     viewRoom(room.roomId, true);
                                 }}
                             >
-                                <RoomAvatar room={room} width={20} height={20} />
+                                <DecoratedRoomAvatar room={room} avatarSize={20} />
                                 { room.name }
+                                <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                                 <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                             </Option>
                         )) }
@@ -403,7 +412,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                     viewRoom(room.roomId);
                                 }}
                             >
-                                <DecoratedRoomAvatar room={room} avatarSize={32} />
+                                <DecoratedRoomAvatar room={room} avatarSize={32} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
                             </TooltipOption>
                         ))

@@ -26,19 +26,14 @@ import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import EventListSummary from "./EventListSummary";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import defaultDispatcher from '../../../dispatcher/dispatcher';
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
-import { Action } from '../../../dispatcher/actions';
-import { SetRightPanelPhasePayload } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { jsxJoin } from '../../../utils/ReactUtils';
 import { Layout } from '../../../settings/enums/Layout';
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
+import AccessibleButton from './AccessibleButton';
 
 const onPinnedMessagesClick = (): void => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.PinnedMessages,
-        allowClose: false,
-    });
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
 const SENDER_AS_DISPLAY_NAME_EVENTS = [EventType.RoomServerAcl, EventType.RoomPinnedEvents];
@@ -300,8 +295,8 @@ export default class MemberEventListSummary extends React.Component<IProps> {
                 break;
             case "kicked":
                 res = (userCount > 1)
-                    ? _t("were kicked %(count)s times", { count: repeats })
-                    : _t("was kicked %(count)s times", { count: repeats });
+                    ? _t("were removed %(count)s times", { count: repeats })
+                    : _t("was removed %(count)s times", { count: repeats });
                 break;
             case "changed_name":
                 res = (userCount > 1)
@@ -328,10 +323,18 @@ export default class MemberEventListSummary extends React.Component<IProps> {
                 res = (userCount > 1)
                     ? _t("%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.",
                         { severalUsers: "", count: repeats },
-                        { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> })
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
+                                { sub }
+                            </AccessibleButton>,
+                        })
                     : _t("%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.",
                         { oneUser: "", count: repeats },
-                        { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> });
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
+                                { sub }
+                            </AccessibleButton>,
+                        });
                 break;
         }
 

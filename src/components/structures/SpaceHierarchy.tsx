@@ -327,7 +327,7 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
 
     const roomAlias = getDisplayAliasForRoom(room) || undefined;
     dis.dispatch({
-        action: "view_room",
+        action: Action.ViewRoom,
         should_peek: true,
         _type: "room_directory", // instrumentation
         room_alias: roomAlias,
@@ -475,7 +475,7 @@ const INITIAL_PAGE_SIZE = 20;
 
 export const useRoomHierarchy = (space: Room): {
     loading: boolean;
-    rooms: IHierarchyRoom[];
+    rooms?: IHierarchyRoom[];
     hierarchy: RoomHierarchy;
     error: Error;
     loadMore(pageSize?: number): Promise<void>;
@@ -716,7 +716,7 @@ const SpaceHierarchy = ({
     return <RovingTabIndexProvider onKeyDown={onKeyDown} handleHomeEnd handleUpDown>
         { ({ onKeyDownHandler }) => {
             let content: JSX.Element;
-            if (loading && !rooms.length) {
+            if (loading && !rooms?.length) {
                 content = <Spinner />;
             } else {
                 const hasPermissions = space?.getMyMembership() === "join" &&
