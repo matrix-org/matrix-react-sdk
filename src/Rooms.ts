@@ -195,7 +195,7 @@ export function roomContextDetailsText(room: Room): string {
         });
     } else if (parent) {
         return _t("%(spaceName)s and %(count)s others", {
-            spaceName: room.client.getRoom(parent).name,
+            spaceName: room.client.getRoom(parent)?.name,
             count: otherParents.length,
         });
     }
