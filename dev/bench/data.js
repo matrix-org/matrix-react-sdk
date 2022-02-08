@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644342139611,
+  "lastUpdate": 1644342291898,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63668,6 +63668,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 727,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "479e7e9a259127cb45241e647ac4e9b41ef2b8d2",
+          "message": "Add unread notification dot to timeline card button (#7749)",
+          "timestamp": "2022-02-08T17:37:03Z",
+          "tree_id": "0d5f442483ed517bb033db7ed61f8c1d72145098",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/479e7e9a259127cb45241e647ac4e9b41ef2b8d2"
+        },
+        "date": 1644342284209,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5818.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1090.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1855,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4829.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
