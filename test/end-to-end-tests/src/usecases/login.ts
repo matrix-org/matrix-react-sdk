@@ -31,17 +31,17 @@ export async function login(
     await navPromise;
     session.log.done();
 
-    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-01navigated" });
+    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-01navigated.png" });
 
     // wait until no spinners visible
     await session.waitNoSpinner();
 
-    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-02waitfornospinner" });
+    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-02waitfornospinner.png" });
 
     // ...and it's stil flakey, so add a sleep :(
     await session.page.waitForTimeout(200);
 
-    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-03waitfortimeout" });
+    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-03waitfortimeout.png" });
 
     // change the homeserver by clicking the advanced section
     if (homeserver) {
@@ -50,14 +50,14 @@ export async function login(
         await changeButton.click();
         session.log.done();
 
-        await session.page.screenshot({ path: (global as any).mxLogDir + "/login-04clickchangehs" });
+        await session.page.screenshot({ path: (global as any).mxLogDir + "/login-04clickchangehs.png" });
 
         session.log.step("Enters homeserver");
         const hsInputField = await session.query('.mx_ServerPickerDialog_otherHomeserver');
         await session.replaceInputText(hsInputField, homeserver);
         session.log.done();
 
-        await session.page.screenshot({ path: (global as any).mxLogDir + "/login-05enterhs" });
+        await session.page.screenshot({ path: (global as any).mxLogDir + "/login-05enterhs.png" });
 
         session.log.step("Clicks next");
         const nextButton = await session.query('.mx_ServerPickerDialog_continue');
