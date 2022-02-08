@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644309296850,
+  "lastUpdate": 1644309538963,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63092,6 +63092,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4515.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "aaron@raim.ist",
+            "name": "Aaron Raimist",
+            "username": "aaronraimist"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "52786790764810e20d63d37f52d1e04b5f429af3",
+          "message": "Capitalize \"Privacy\" in UserMenu (#7738)",
+          "timestamp": "2022-02-08T08:31:51Z",
+          "tree_id": "e347a53642de79b4cacc6dadd438c1ff629cfd86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/52786790764810e20d63d37f52d1e04b5f429af3"
+        },
+        "date": 1644309532196,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4661.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 619.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
