@@ -104,7 +104,7 @@ describe('<UserInfo />', () => {
             expect(findByTestId(component, 'space-header').length).toBeFalsy();
         });
 
-        it('renders user info correctly', () => {
+        it('renders user info', () => {
             const component = getComponent();
             expect(component.find(BasicUserInfo).length).toBeTruthy();
         });
@@ -145,6 +145,11 @@ describe('<UserInfo />', () => {
                 on: jest.fn(),
             },
         } as unknown as Room;
+
+        it('renders user info', () => {
+            const component = getComponent();
+            expect(component.find(BasicUserInfo).length).toBeTruthy();
+        });
 
         it('does not render space header when room is not a space room', () => {
             const component = getComponent({ room });
