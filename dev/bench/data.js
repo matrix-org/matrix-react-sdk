@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644338919284,
+  "lastUpdate": 1644342139611,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63632,6 +63632,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4499.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bf8438cbb2897d3e33beb0435f6e93dbe6c4b15a",
+          "message": "Add jump to bottom button for right panel timeline (#7746)",
+          "timestamp": "2022-02-08T17:35:03Z",
+          "tree_id": "c0f6ba93d99d25f1c6f47c3cf423c5f37aa830bf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bf8438cbb2897d3e33beb0435f6e93dbe6c4b15a"
+        },
+        "date": 1644342133987,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4920.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 727,
             "unit": "ms",
             "extra": "type: measure"
           }
