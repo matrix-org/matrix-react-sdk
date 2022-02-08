@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644256647434,
+  "lastUpdate": 1644309296850,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63044,6 +63044,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 650,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c52eaa53ce5e19e33039f362223c8aad9ae7ef13",
+          "message": "Remove weird padding on stickers (#6271)",
+          "timestamp": "2022-02-08T08:27:37Z",
+          "tree_id": "d317eadd2b39fec5acbc5687bb3d42cb281f3e01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c52eaa53ce5e19e33039f362223c8aad9ae7ef13"
+        },
+        "date": 1644309290263,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4947,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1009,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1764,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4515.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
