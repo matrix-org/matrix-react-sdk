@@ -243,6 +243,7 @@ export default class DeviceListener {
             ) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
                 showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
+                this.checkKeyBackupStatus();
             } else {
                 const backupInfo = await this.getKeyBackupInfo();
                 if (backupInfo) {
@@ -325,8 +326,9 @@ export default class DeviceListener {
         // returns null when key backup status hasn't finished being checked
         const isKeyBackupEnabled = MatrixClientPeg.get().getKeyBackupEnabled();
         this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
+
         if (isKeyBackupEnabled === false) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
         }
-    }
+    };
 }

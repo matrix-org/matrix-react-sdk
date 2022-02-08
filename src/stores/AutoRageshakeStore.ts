@@ -63,12 +63,9 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
     }
 
     protected async onAction(payload: ActionPayload) {
-        // we don't actually do anything here
-        console.log('HHH', 'payload.action', payload.action);
-
         switch (payload.action) {
             case Action.ReportKeyBackupNotEnabled:
-                this.onReportKeyBackupNotEnabled()
+                this.onReportKeyBackupNotEnabled();
         }
     }
 
@@ -161,16 +158,14 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
     }
 
     private async onReportKeyBackupNotEnabled(): Promise<void> {
-        if (!SettingsStore.getValue("automaticReportKeyBackupNotEnabled")) return;
+        console.log('HHH', 'onReportKeyBackupNotEnabled', SdkConfig.get().bug_report_endpoint_url);
+
+        if (!SettingsStore.getValue("automaticKeyBackNotEnabledReporting")) return;
+
         await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
             userText: `Auto-reporting key backup not enabled`,
             sendLogs: false,
-            labels: ["Z-UISI", "web", "uisi-sender"],
-            customApp: SdkConfig.get().uisi_autorageshake_app,
-            customFields: {
-                "recipient_rageshake": recipientRageshake,
-                "auto_uisi": JSON.stringify(messageContent),
-            },
+            labels: ["web", Action.ReportKeyBackupNotEnabled],
         });
     }
 }
