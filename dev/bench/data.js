@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644326303409,
+  "lastUpdate": 1644327255544,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63392,6 +63392,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4646.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5201c9b2850c62845273588b1d4542c799c50f7f",
+          "message": "Improve responsiveness of the layout switcher (#7736)",
+          "timestamp": "2022-02-08T13:27:09Z",
+          "tree_id": "0f8aba6059393fc69397cf37cff217f7efc777b1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5201c9b2850c62845273588b1d4542c799c50f7f"
+        },
+        "date": 1644327249684,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4890.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1673.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4672.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
