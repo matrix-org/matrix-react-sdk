@@ -1183,10 +1183,8 @@ class CreationGrouper extends BaseGrouper {
     }
 }
 
-// Wrap consecutive member events in a ListSummary, ignore if redacted.
-// Nowadays, we also include server ACLs, pinned message changes and hidden events in this one grouper,
-// eventually we should rename it. Using multiple groupers leads to a noisier timeline.
-class MemberGrouper extends BaseGrouper {
+// Wrap consecutive grouped events in a ListSummary
+class MainGrouper extends BaseGrouper {
     static canStartGroup = function(panel: MessagePanel, ev: MatrixEvent): boolean {
         if (!panel.shouldShowEvent(ev)) return false;
 
@@ -1245,7 +1243,7 @@ class MemberGrouper extends BaseGrouper {
         }
         this.readMarker = this.readMarker || this.panel.readMarkerForEvent(ev.getId(), ev === this.lastShownEvent);
         if (!this.panel.showHiddenEvents && !this.panel.shouldShowEvent(ev)) {
-            // absorb hidden events to not split the ELS
+            // absorb hidden events to not split the summary
             return;
         }
         this.events.push(ev);
@@ -1269,12 +1267,12 @@ class MemberGrouper extends BaseGrouper {
             );
         }
 
-        // Ensure that the key of the EventListSummary does not change with new
-        // member events. This will prevent it from being re-created unnecessarily, and
+        // Ensure that the key of the EventListSummary does not change with new events.
+        // This will prevent it from being re-created unnecessarily, and
         // instead will allow new props to be provided. In turn, the shouldComponentUpdate
         // method on ELS can be used to prevent unnecessary renderings.
         //
-        // Whilst back-paginating with a ELS at the top of the panel, prevEvent will be null,
+        // Whilst back-paginating with an ELS at the top of the panel, prevEvent will be null,
         // so use the key "eventlistsummary-initial". Otherwise, use the ID of the first
         // membership event, which will not change during forward pagination.
         const key = "eventlistsummary-" + (this.prevEvent ? this.events[0].getId() : "initial");
@@ -1326,4 +1324,4 @@ class MemberGrouper extends BaseGrouper {
 }
 
 // all the grouper classes that we use
-const groupers = [CreationGrouper, MemberGrouper];
+const groupers = [CreationGrouper, MainGrouper];
