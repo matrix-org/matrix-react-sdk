@@ -19,6 +19,7 @@ export default %%ComponentName%%;
 import React from 'react';
 import { mount } from 'enzyme';
 
+import '%%SkinnedSdkPath%%';
 import %%ComponentName%% from '%%RelativeComponentPath%%';
 
 describe('<%%ComponentName%% />', () => {
@@ -66,11 +67,11 @@ const makeFile = async ({
     await ensureDirectoryExists(newFilePath);
 
     const relativePathToComponent = path.relative(path.dirname(newFilePath), componentFilePath || '');
+    const skinnedSdkPath = path.relative(path.dirname(newFilePath), 'test/skinned-sdk')
 
-    console.log({ relativePathToComponent, filePath, newFilePath, componentFilePath })
     try {
 
-        await fs.writeFile(newFilePath, fillTemplate(template, componentName, relativePathToComponent), { flag: 'wx' });
+        await fs.writeFile(newFilePath, fillTemplate(template, componentName, relativePathToComponent, skinnedSdkPath), { flag: 'wx' });
         console.log(`Created ${path.relative(process.cwd(), newFilePath)}`);
         return newFilePath;
     } catch (error) {
@@ -83,16 +84,17 @@ const makeFile = async ({
     }
 }
 
-const fillTemplate = (template, componentName, relativeComponentFilePath) =>
+const fillTemplate = (template, componentName, relativeComponentFilePath, skinnedSdkPath) =>
     template.replace(/%%ComponentName%%/g, componentName)
         .replace(/%%RelativeComponentPath%%/g, relativeComponentFilePath)
+        .replace(/%%SkinnedSdkPath%%/g, skinnedSdkPath)
 
 
 const makeReactComponent = async () => {
     const { filePath } = args;
 
     if (!filePath) {
-        throw new Error('No file path')
+        throw new Error('No file path provided, did you forget -f?')
     }
 
     const componentName = filePath.split('/').slice(-1).pop();
