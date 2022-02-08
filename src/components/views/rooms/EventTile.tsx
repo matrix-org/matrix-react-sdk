@@ -648,23 +648,23 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadPanelSummary(): JSX.Element | null {
-        if (!this.thread) {
+        if (!this.state.thread) {
             return null;
         }
 
         return <div className="mx_ThreadPanel_replies">
             <span className="mx_ThreadPanel_repliesSummary">
-                { this.thread.length }
+                { this.state.thread.length }
             </span>
             { this.renderThreadLastMessagePreview() }
         </div>;
     }
 
     private renderThreadLastMessagePreview(): JSX.Element | null {
-        const { threadLastReply } = this.state;
+        const { thread, threadLastReply } = this.state;
         const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(threadLastReply);
 
-        const sender = this.thread.roomState.getSentinelMember(threadLastReply.getSender());
+        const sender = thread.roomState.getSentinelMember(threadLastReply.getSender());
         return <>
             <MemberAvatar
                 member={sender}
