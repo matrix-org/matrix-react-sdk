@@ -34,14 +34,14 @@ export async function login(
     await session.page.screenshot({ path: (global as any).mxLogDir + "/login-01navigated.png" });
 
     // wait until no spinners visible
-    await session.waitNoSpinner();
+    //await session.waitNoSpinner();
 
-    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-02waitfornospinner.png" });
+    //await session.page.screenshot({ path: (global as any).mxLogDir + "/login-02waitfornospinner.png" });
 
     // ...and it's stil flakey, so add a sleep :(
-    await session.page.waitForTimeout(200);
+    //await session.page.waitForTimeout(200);
 
-    await session.page.screenshot({ path: (global as any).mxLogDir + "/login-03waitfortimeout.png" });
+    //await session.page.screenshot({ path: (global as any).mxLogDir + "/login-03waitfortimeout.png" });
 
     // change the homeserver by clicking the advanced section
     if (homeserver) {
