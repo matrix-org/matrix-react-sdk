@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644312274754,
+  "lastUpdate": 1644319669522,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63176,6 +63176,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4449.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "773c7f46b7ad6661f339e6ddc05109fff3dab543",
+          "message": "Tune aria-live regions around clocks/timers (#7735)",
+          "timestamp": "2022-02-08T11:20:03Z",
+          "tree_id": "862de6aa7171cbecb52a84693dff8078e4b9ef57",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/773c7f46b7ad6661f339e6ddc05109fff3dab543"
+        },
+        "date": 1644319662532,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5450.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 798.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
