@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644332368522,
+  "lastUpdate": 1644338919284,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63584,6 +63584,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4594,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "57274151+c-cal@users.noreply.github.com",
+            "name": "Charlie Calendre",
+            "username": "c-cal"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0a45ae0781af5fc1afa6f68d63450ddfeb96350a",
+          "message": "Fix space member list not opening (#7747)",
+          "timestamp": "2022-02-08T16:41:26Z",
+          "tree_id": "d1de8c90a78d950125dba3ad385e13d8867aadd2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0a45ae0781af5fc1afa6f68d63450ddfeb96350a"
+        },
+        "date": 1644338912503,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5087.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 925.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1688.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4499.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
