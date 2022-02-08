@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644309538963,
+  "lastUpdate": 1644312274754,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63128,6 +63128,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 619.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4501308b47222b4c12eebfc6529eae756c63026f",
+          "message": "Fix instances of decorated room avatar wrongly having their own tabIndex (#7730)",
+          "timestamp": "2022-02-08T09:17:08Z",
+          "tree_id": "1010f11366b5ca452cb737b6314722612b724125",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4501308b47222b4c12eebfc6529eae756c63026f"
+        },
+        "date": 1644312267947,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4970.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1065.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1765.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4449.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
