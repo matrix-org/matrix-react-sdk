@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644319669522,
+  "lastUpdate": 1644322539393,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63212,6 +63212,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 798.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af0b21de9dcdd45a9b0e2237ab88a9f8e9bdbc7c",
+          "message": "Improved way to retrieve event sender for thread summary (#7732)",
+          "timestamp": "2022-02-08T12:08:47Z",
+          "tree_id": "146e9b01793f42670250a7509ee316db88f4d0cd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af0b21de9dcdd45a9b0e2237ab88a9f8e9bdbc7c"
+        },
+        "date": 1644322533760,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5047.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 905.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1641,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4457.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
