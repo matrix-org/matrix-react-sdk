@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644325612232,
+  "lastUpdate": 1644326303409,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63344,6 +63344,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4902.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "81f2b19d322b28309b3a4a2e86bc858c73ddc38c",
+          "message": "Tweak timeline card layout (#7743)",
+          "timestamp": "2022-02-08T13:11:18Z",
+          "tree_id": "90953c2a95fd016b78b3387205d23a4dc47a3c86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/81f2b19d322b28309b3a4a2e86bc858c73ddc38c"
+        },
+        "date": 1644326297959,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4804.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1649.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4646.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
