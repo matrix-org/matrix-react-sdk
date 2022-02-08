@@ -457,7 +457,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        if (rightClick || permalink) {
+        if (permalink) {
             if (this.props.showPermalink) {
                 permalinkButton = (
                     <IconizedContextMenuOption
