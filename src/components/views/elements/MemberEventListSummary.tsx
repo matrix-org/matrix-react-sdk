@@ -36,7 +36,7 @@ const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
-const SENDER_AS_DISPLAY_NAME_EVENTS = [EventType.RoomServerAcl, EventType.RoomPinnedEvents];
+const TARGET_AS_DISPLAY_NAME_EVENTS = [EventType.RoomMember];
 
 interface IProps extends Omit<ComponentProps<typeof EventListSummary>, "summaryText" | "summaryMembers"> {
     // The maximum number of names to show in either each summary e.g. 2 would result "A, B and 234 others left"
@@ -70,8 +70,13 @@ enum TransitionType {
     ChangedName = "changed_name",
     ChangedAvatar = "changed_avatar",
     NoChange = "no_change",
+    // We know this is the *Member*EventListSummary but splitting the groupers mean that a timeline can be split into
+    // many groups side by side and looks really noisy, after a good reconciliation we should consider renaming the
+    // component to something a bit more generic.
     ServerAcl = "server_acl",
-    ChangedPins = "pinned_messages"
+    ChangedPins = "pinned_messages",
+    MessageRemoved = "message_removed",
+    HiddenEvent = "hidden_event",
 }
 
 const SEP = ",";
@@ -235,106 +240,118 @@ export default class MemberEventListSummary extends React.Component<IProps> {
     private static getDescriptionForTransition(
         t: TransitionType,
         userCount: number,
-        repeats: number,
+        count: number,
     ): string | JSX.Element {
         // The empty interpolations 'severalUsers' and 'oneUser'
         // are there only to show translators to non-English languages
         // that the verb is conjugated to plural or singular Subject.
         let res = null;
         switch (t) {
-            case "joined":
+            case TransitionType.Joined:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)sjoined %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)sjoined %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)sjoined %(count)s times", { severalUsers: "", count })
+                    : _t("%(oneUser)sjoined %(count)s times", { oneUser: "", count });
                 break;
-            case "left":
+            case TransitionType.Left:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)sleft %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)sleft %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)sleft %(count)s times", { severalUsers: "", count })
+                    : _t("%(oneUser)sleft %(count)s times", { oneUser: "", count });
                 break;
-            case "joined_and_left":
+            case TransitionType.JoinedAndLeft:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)sjoined and left %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)sjoined and left %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)sjoined and left %(count)s times", { severalUsers: "", count })
+                    : _t("%(oneUser)sjoined and left %(count)s times", { oneUser: "", count });
                 break;
-            case "left_and_joined":
+            case TransitionType.LeftAndJoined:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)sleft and rejoined %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)sleft and rejoined %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)sleft and rejoined %(count)s times", { severalUsers: "", count })
+                    : _t("%(oneUser)sleft and rejoined %(count)s times", { oneUser: "", count });
                 break;
-            case "invite_reject":
+            case TransitionType.InviteReject:
                 res = (userCount > 1)
                     ? _t("%(severalUsers)srejected their invitations %(count)s times", {
                         severalUsers: "",
-                        count: repeats,
+                        count,
                     })
-                    : _t("%(oneUser)srejected their invitation %(count)s times", { oneUser: "", count: repeats });
+                    : _t("%(oneUser)srejected their invitation %(count)s times", { oneUser: "", count });
                 break;
-            case "invite_withdrawal":
+            case TransitionType.InviteWithdrawal:
                 res = (userCount > 1)
                     ? _t("%(severalUsers)shad their invitations withdrawn %(count)s times", {
                         severalUsers: "",
-                        count: repeats,
+                        count,
                     })
-                    : _t("%(oneUser)shad their invitation withdrawn %(count)s times", { oneUser: "", count: repeats });
+                    : _t("%(oneUser)shad their invitation withdrawn %(count)s times", { oneUser: "", count });
                 break;
-            case "invited":
+            case TransitionType.Invited:
                 res = (userCount > 1)
-                    ? _t("were invited %(count)s times", { count: repeats })
-                    : _t("was invited %(count)s times", { count: repeats });
+                    ? _t("were invited %(count)s times", { count })
+                    : _t("was invited %(count)s times", { count });
                 break;
-            case "banned":
+            case TransitionType.Banned:
                 res = (userCount > 1)
-                    ? _t("were banned %(count)s times", { count: repeats })
-                    : _t("was banned %(count)s times", { count: repeats });
+                    ? _t("were banned %(count)s times", { count })
+                    : _t("was banned %(count)s times", { count });
                 break;
-            case "unbanned":
+            case TransitionType.Unbanned:
                 res = (userCount > 1)
-                    ? _t("were unbanned %(count)s times", { count: repeats })
-                    : _t("was unbanned %(count)s times", { count: repeats });
+                    ? _t("were unbanned %(count)s times", { count })
+                    : _t("was unbanned %(count)s times", { count });
                 break;
-            case "kicked":
+            case TransitionType.Kicked:
                 res = (userCount > 1)
-                    ? _t("were removed %(count)s times", { count: repeats })
-                    : _t("was removed %(count)s times", { count: repeats });
+                    ? _t("were removed %(count)s times", { count })
+                    : _t("was removed %(count)s times", { count });
                 break;
-            case "changed_name":
+            case TransitionType.ChangedName:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged their name %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)schanged their name %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)schanged their name %(count)s times", { severalUsers: "", count })
+                    : _t("%(oneUser)schanged their name %(count)s times", { oneUser: "", count });
                 break;
-            case "changed_avatar":
+            case TransitionType.ChangedAvatar:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count })
+                    : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count });
                 break;
-            case "no_change":
+            case TransitionType.NoChange:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)smade no changes %(count)s times", { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)smade no changes %(count)s times", { oneUser: "", count: repeats });
+                    ? _t("%(severalUsers)smade no changes %(count)s times", { severalUsers: "", count })
+                    : _t("%(oneUser)smade no changes %(count)s times", { oneUser: "", count });
                 break;
-            case "server_acl":
+            case TransitionType.ServerAcl:
                 res = (userCount > 1)
                     ? _t("%(severalUsers)schanged the server ACLs %(count)s times",
-                        { severalUsers: "", count: repeats })
-                    : _t("%(oneUser)schanged the server ACLs %(count)s times", { oneUser: "", count: repeats });
+                        { severalUsers: "", count })
+                    : _t("%(oneUser)schanged the server ACLs %(count)s times", { oneUser: "", count });
                 break;
-            case "pinned_messages":
+            case TransitionType.ChangedPins:
                 res = (userCount > 1)
                     ? _t("%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.",
-                        { severalUsers: "", count: repeats },
+                        { severalUsers: "", count },
                         {
                             "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                 { sub }
                             </AccessibleButton>,
                         })
                     : _t("%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.",
-                        { oneUser: "", count: repeats },
+                        { oneUser: "", count },
                         {
                             "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                 { sub }
                             </AccessibleButton>,
                         });
+                break;
+            case TransitionType.MessageRemoved:
+                res = (userCount > 1)
+                    ? _t("%(severalUsers)sremoved a message %(count)s times",
+                        { severalUsers: "", count })
+                    : _t("%(oneUser)sremoved a message %(count)s times", { oneUser: "", count });
+                break;
+            case TransitionType.HiddenEvent:
+                res = (userCount > 1)
+                    ? _t("%(severalUsers)ssent %(count)s hidden messages",
+                        { severalUsers: "", count })
+                    : _t("%(oneUser)ssent %(count)s hidden messages", { oneUser: "", count });
                 break;
         }
 
@@ -354,51 +371,59 @@ export default class MemberEventListSummary extends React.Component<IProps> {
      * if a transition is not recognised.
      */
     private static getTransition(e: IUserEvents): TransitionType {
-        const type = e.mxEvent.getType();
-
-        if (type === EventType.RoomThirdPartyInvite) {
-            // Handle 3pid invites the same as invites so they get bundled together
-            if (!isValid3pidInvite(e.mxEvent)) {
-                return TransitionType.InviteWithdrawal;
-            }
-            return TransitionType.Invited;
-        } else if (type === EventType.RoomServerAcl) {
-            return TransitionType.ServerAcl;
-        } else if (type === EventType.RoomPinnedEvents) {
-            return TransitionType.ChangedPins;
+        if (e.mxEvent.isRedacted()) {
+            return TransitionType.MessageRemoved;
         }
 
-        switch (e.mxEvent.getContent().membership) {
-            case 'invite': return TransitionType.Invited;
-            case 'ban': return TransitionType.Banned;
-            case 'join':
-                if (e.mxEvent.getPrevContent().membership === 'join') {
-                    if (e.mxEvent.getContent().displayname !==
-                        e.mxEvent.getPrevContent().displayname) {
-                        return TransitionType.ChangedName;
-                    } else if (e.mxEvent.getContent().avatar_url !==
-                        e.mxEvent.getPrevContent().avatar_url) {
-                        return TransitionType.ChangedAvatar;
-                    }
-                    // console.log("MELS ignoring duplicate membership join event");
-                    return TransitionType.NoChange;
-                } else {
-                    return TransitionType.Joined;
+        switch (e.mxEvent.getType()) {
+            case EventType.RoomThirdPartyInvite:
+                // Handle 3pid invites the same as invites so they get bundled together
+                if (!isValid3pidInvite(e.mxEvent)) {
+                    return TransitionType.InviteWithdrawal;
                 }
-            case 'leave':
-                if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
-                    switch (e.mxEvent.getPrevContent().membership) {
-                        case 'invite': return TransitionType.InviteReject;
-                        default: return TransitionType.Left;
-                    }
+                return TransitionType.Invited;
+
+            case EventType.RoomServerAcl:
+                return TransitionType.ServerAcl;
+
+            case EventType.RoomPinnedEvents:
+                return TransitionType.ChangedPins;
+
+            case EventType.RoomMember:
+                switch (e.mxEvent.getContent().membership) {
+                    case 'invite': return TransitionType.Invited;
+                    case 'ban': return TransitionType.Banned;
+                    case 'join':
+                        if (e.mxEvent.getPrevContent().membership === 'join') {
+                            if (e.mxEvent.getContent().displayname !== e.mxEvent.getPrevContent().displayname) {
+                                return TransitionType.ChangedName;
+                            } else if (e.mxEvent.getContent().avatar_url !== e.mxEvent.getPrevContent().avatar_url) {
+                                return TransitionType.ChangedAvatar;
+                            }
+                            // console.log("MELS ignoring duplicate membership join event");
+                            return TransitionType.NoChange;
+                        } else {
+                            return TransitionType.Joined;
+                        }
+                    case 'leave':
+                        if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
+                            if (e.mxEvent.getPrevContent().membership === "invite") {
+                                return TransitionType.InviteReject;
+                            }
+                            return TransitionType.Left;
+                        }
+                        switch (e.mxEvent.getPrevContent().membership) {
+                            case 'invite': return TransitionType.InviteWithdrawal;
+                            case 'ban': return TransitionType.Unbanned;
+                            // sender is not target and made the target leave, if not from invite/ban then this is a kick
+                            default: return TransitionType.Kicked;
+                        }
+                    default: return null;
                 }
-                switch (e.mxEvent.getPrevContent().membership) {
-                    case 'invite': return TransitionType.InviteWithdrawal;
-                    case 'ban': return TransitionType.Unbanned;
-                    // sender is not target and made the target leave, if not from invite/ban then this is a kick
-                    default: return TransitionType.Kicked;
-                }
-            default: return null;
+
+            default:
+                // otherwise, assume this is a hidden event
+                return TransitionType.HiddenEvent;
         }
     }
 
@@ -461,19 +486,19 @@ export default class MemberEventListSummary extends React.Component<IProps> {
                 userEvents[userId] = [];
             }
 
-            if (SENDER_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
-                latestUserAvatarMember.set(userId, e.sender);
-            } else if (e.target) {
+            if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
                 latestUserAvatarMember.set(userId, e.target);
+            } else {
+                latestUserAvatarMember.set(userId, e.sender);
             }
 
             let displayName = userId;
             if (type === EventType.RoomThirdPartyInvite) {
                 displayName = e.getContent().display_name;
-            } else if (SENDER_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
-                displayName = e.sender.name;
-            } else if (e.target) {
+            } else if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
                 displayName = e.target.name;
+            } else {
+                displayName = e.sender.name;
             }
 
             userEvents[userId].push({
