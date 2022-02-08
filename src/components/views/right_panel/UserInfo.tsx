@@ -1283,7 +1283,7 @@ export const useDevices = (userId: string) => {
     return devices;
 };
 
-export const BasicUserInfo: React.FC<{
+const BasicUserInfo: React.FC<{
     room: Room;
     member: User | RoomMember;
     groupId: string;

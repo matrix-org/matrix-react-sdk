@@ -21,7 +21,7 @@ import { Room, User } from 'matrix-js-sdk';
 import { Phase, VerificationRequest } from 'matrix-js-sdk/src/crypto/verification/request/VerificationRequest';
 
 import "../../../skinned-sdk";
-import UserInfo, { BasicUserInfo } from '../../../../src/components/views/right_panel/UserInfo';
+import UserInfo from '../../../../src/components/views/right_panel/UserInfo';
 import { RightPanelPhases } from '../../../../src/stores/right-panel/RightPanelStorePhases';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
@@ -106,7 +106,7 @@ describe('<UserInfo />', () => {
 
         it('renders user info', () => {
             const component = getComponent();
-            expect(component.find(BasicUserInfo).length).toBeTruthy();
+            expect(component.find("BasicUserInfo").length).toBeTruthy();
         });
 
         it('renders encryption info panel without pending verification', () => {
@@ -148,7 +148,7 @@ describe('<UserInfo />', () => {
 
         it('renders user info', () => {
             const component = getComponent();
-            expect(component.find(BasicUserInfo).length).toBeTruthy();
+            expect(component.find("BasicUserInfo").length).toBeTruthy();
         });
 
         it('does not render space header when room is not a space room', () => {
