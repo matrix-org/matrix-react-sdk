@@ -57,11 +57,7 @@ export function getSenderName(event: MatrixEvent): string {
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     const senderName = getSenderName(event);
     // FIXME: Find a better way to determine this from the event?
-    let isVoice = true;
-    if (event.getContent().offer && event.getContent().offer.sdp &&
-        event.getContent().offer.sdp.indexOf('m=video') !== -1) {
-        isVoice = false;
-    }
+    const isVoice = !event.getContent().offer?.sdp?.includes('m=video');
     const isSupported = MatrixClientPeg.get().supportsVoip();
 
     // This ladder could be reduced down to a couple string variables, however other languages
