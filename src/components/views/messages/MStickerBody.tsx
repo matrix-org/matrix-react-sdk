@@ -38,7 +38,7 @@ export default class MStickerBody extends MImageBody {
         if (!this.state.showImage) {
             onClick = this.onClick;
         }
-        return <div onClick={onClick}> { children } </div>;
+        return <div className="mx_MStickerBody_wrapper" onClick={onClick}> { children } </div>;
     }
 
     // Placeholder to show in place of the sticker image if
