@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// const fs = require('fs');
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -70,7 +69,6 @@ const makeFile = async ({
     const skinnedSdkPath = path.relative(path.dirname(newFilePath), 'test/skinned-sdk')
 
     try {
-
         await fs.writeFile(newFilePath, fillTemplate(template, componentName, relativePathToComponent, skinnedSdkPath), { flag: 'wx' });
         console.log(`Created ${path.relative(process.cwd(), newFilePath)}`);
         return newFilePath;
@@ -100,7 +98,6 @@ const makeReactComponent = async () => {
     const componentName = filePath.split('/').slice(-1).pop();
 
     const componentFilePath = await makeFile({ filePath, componentName, base: 'src', extension: '.tsx', template: TEMPLATES.COMPONENT });
-
     await makeFile({ filePath, componentFilePath, componentName, base: 'test', extension: '-test.tsx', template: TEMPLATES.TEST, componentName });
     await makeFile({ filePath, componentName, base: 'res/css', prefix: '_', extension: '.scss', template: TEMPLATES.STYLE });
 }
