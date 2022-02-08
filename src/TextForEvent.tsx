@@ -88,7 +88,7 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
 
 function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): () => string | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
-    const senderName = ev.sender ? ev.sender.name : ev.getSender();
+    const senderName = getSenderName(ev);
     const targetName = ev.target ? ev.target.name : ev.getStateKey();
     const prevContent = ev.getPrevContent();
     const content = ev.getContent();
@@ -389,7 +389,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
-    const senderName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
+    const senderName = getSenderName(ev);
     const oldAlias = ev.getPrevContent().alias;
     const oldAltAliases = ev.getPrevContent().alt_aliases || [];
     const newAlias = ev.getContent().alias;
@@ -633,7 +633,7 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
 }
 
 function textForWidgetEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.getSender();
+    const senderName = getSenderName(event);
     const { name: prevName, type: prevType, url: prevUrl } = event.getPrevContent();
     const { name, type, url } = event.getContent() || {};
 
@@ -663,12 +663,12 @@ function textForWidgetEvent(event: MatrixEvent): () => string | null {
 }
 
 function textForWidgetLayoutEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender?.name || event.getSender();
+    const senderName = getSenderName(event);
     return () => _t("%(senderName)s has updated the room layout", { senderName });
 }
 
 function textForMjolnirEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.getSender();
+    const senderName = getSenderName(event);
     const { entity: prevEntity } = event.getPrevContent();
     const { entity, recommendation, reason } = event.getContent();
 
