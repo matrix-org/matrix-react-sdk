@@ -270,7 +270,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
     const numDms = dmsRenderer ? dms.length : 0;
 
     let noResults = true;
-    if ((roomsRenderer && rooms.length > 0) || (dmsRenderer && dms.length > 0) || (numSpaces > 0)) {
+    if (numSpaces > 0 || numRooms > 0 || numDms > 0) {
         noResults = false;
     }
 
