@@ -65,19 +65,19 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     // and more accurate, we break out the string-based variables to a couple booleans.
     if (isVoice && isSupported) {
         return () => _t("%(senderName)s placed a voice call.", {
-            senderName: senderName,
+            senderName,
         });
     } else if (isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
-            senderName: senderName,
+            senderName,
         });
     } else if (!isVoice && isSupported) {
         return () => _t("%(senderName)s placed a video call.", {
-            senderName: senderName,
+            senderName,
         });
     } else if (!isVoice && !isSupported) {
         return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
-            senderName: senderName,
+            senderName,
         });
     }
 }
@@ -396,42 +396,42 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
     if (!removedAltAliases.length && !addedAltAliases.length) {
         if (newAlias) {
             return () => _t('%(senderName)s set the main address for this room to %(address)s.', {
-                senderName: senderName,
+                senderName,
                 address: ev.getContent().alias,
             });
         } else if (oldAlias) {
             return () => _t('%(senderName)s removed the main address for this room.', {
-                senderName: senderName,
+                senderName,
             });
         }
     } else if (newAlias === oldAlias) {
         if (addedAltAliases.length && !removedAltAliases.length) {
             return () => _t('%(senderName)s added the alternative addresses %(addresses)s for this room.', {
-                senderName: senderName,
+                senderName,
                 addresses: addedAltAliases.join(", "),
                 count: addedAltAliases.length,
             });
         } if (removedAltAliases.length && !addedAltAliases.length) {
             return () => _t('%(senderName)s removed the alternative addresses %(addresses)s for this room.', {
-                senderName: senderName,
+                senderName,
                 addresses: removedAltAliases.join(", "),
                 count: removedAltAliases.length,
             });
         } if (removedAltAliases.length && addedAltAliases.length) {
             return () => _t('%(senderName)s changed the alternative addresses for this room.', {
-                senderName: senderName,
+                senderName,
             });
         }
     } else {
         // both alias and alt_aliases where modified
         return () => _t('%(senderName)s changed the main and alternative addresses for this room.', {
-            senderName: senderName,
+            senderName,
         });
     }
     // in case there is no difference between the two events,
     // say something as we can't simply hide the tile from here
     return () => _t('%(senderName)s changed the addresses for this room.', {
-        senderName: senderName,
+        senderName,
     });
 }
 
