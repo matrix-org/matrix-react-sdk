@@ -70,9 +70,6 @@ enum TransitionType {
     ChangedName = "changed_name",
     ChangedAvatar = "changed_avatar",
     NoChange = "no_change",
-    // We know this is the *Member*EventListSummary but splitting the groupers mean that a timeline can be split into
-    // many groups side by side and looks really noisy, after a good reconciliation we should consider renaming the
-    // component to something a bit more generic.
     ServerAcl = "server_acl",
     ChangedPins = "pinned_messages",
     MessageRemoved = "message_removed",
@@ -81,8 +78,8 @@ enum TransitionType {
 
 const SEP = ",";
 
-@replaceableComponent("views.elements.MemberEventListSummary")
-export default class MemberEventListSummary extends React.Component<IProps> {
+@replaceableComponent("views.elements.EventListSummary")
+export default class EventListSummary extends React.Component<IProps> {
     static defaultProps = {
         summaryLength: 1,
         threshold: 3,
@@ -123,13 +120,13 @@ export default class MemberEventListSummary extends React.Component<IProps> {
 
             // Some neighbouring transitions are common, so canonicalise some into "pair"
             // transitions
-            const canonicalTransitions = MemberEventListSummary.getCanonicalTransitions(splitTransitions);
+            const canonicalTransitions = EventListSummary.getCanonicalTransitions(splitTransitions);
             // Transform into consecutive repetitions of the same transition (like 5
             // consecutive 'joined_and_left's)
-            const coalescedTransitions = MemberEventListSummary.coalesceRepeatedTransitions(canonicalTransitions);
+            const coalescedTransitions = EventListSummary.coalesceRepeatedTransitions(canonicalTransitions);
 
             const descs = coalescedTransitions.map((t) => {
-                return MemberEventListSummary.getDescriptionForTransition(
+                return EventListSummary.getDescriptionForTransition(
                     t.transitionType, userNames.length, t.repeats,
                 );
             });
@@ -359,7 +356,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
     }
 
     private static getTransitionSequence(events: IUserEvents[]) {
-        return events.map(MemberEventListSummary.getTransition);
+        return events.map(EventListSummary.getTransition);
     }
 
     /**
@@ -447,7 +444,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
                 const firstEvent = userEvents[userId][0];
                 const displayName = firstEvent.displayName;
 
-                const seq = MemberEventListSummary.getTransitionSequence(userEvents[userId]).join(SEP);
+                const seq = EventListSummary.getTransitionSequence(userEvents[userId]).join(SEP);
                 if (!aggregate[seq]) {
                     aggregate[seq] = [];
                     aggregateIndices[seq] = -1;

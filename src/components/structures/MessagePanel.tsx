@@ -41,7 +41,7 @@ import CallEventGrouper from "./CallEventGrouper";
 import WhoIsTypingTile from '../views/rooms/WhoIsTypingTile';
 import ScrollPanel, { IScrollState } from "./ScrollPanel";
 import GenericEventListSummary from '../views/elements/GenericEventListSummary';
-import MemberEventListSummary from '../views/elements/MemberEventListSummary';
+import EventListSummary from '../views/elements/EventListSummary';
 import DateSeparator from '../views/messages/DateSeparator';
 import ErrorBoundary from '../views/elements/ErrorBoundary';
 import ResizeNotifier from "../../utils/ResizeNotifier";
@@ -1269,25 +1269,23 @@ class MemberGrouper extends BaseGrouper {
             );
         }
 
-        // Ensure that the key of the MemberEventListSummary does not change with new
+        // Ensure that the key of the EventListSummary does not change with new
         // member events. This will prevent it from being re-created unnecessarily, and
         // instead will allow new props to be provided. In turn, the shouldComponentUpdate
-        // method on MELS can be used to prevent unnecessary renderings.
+        // method on ELS can be used to prevent unnecessary renderings.
         //
-        // Whilst back-paginating with a MELS at the top of the panel, prevEvent will be null,
-        // so use the key "membereventlistsummary-initial". Otherwise, use the ID of the first
+        // Whilst back-paginating with a ELS at the top of the panel, prevEvent will be null,
+        // so use the key "eventlistsummary-initial". Otherwise, use the ID of the first
         // membership event, which will not change during forward pagination.
-        const key = "membereventlistsummary-" + (
-            this.prevEvent ? this.events[0].getId() : "initial"
-        );
+        const key = "eventlistsummary-" + (this.prevEvent ? this.events[0].getId() : "initial");
 
-        let highlightInMels;
+        let highlightInSummary = false;
         let eventTiles = this.events.map((e) => {
             if (e.getId() === panel.props.highlightedEventId) {
-                highlightInMels = true;
+                highlightInSummary = true;
             }
             // In order to prevent DateSeparators from appearing in the expanded form
-            // of MemberEventListSummary, render each member event as if the previous
+            // of EventListSummary, render each member event as if the previous
             // one was itself. This way, the timestamp of the previous event === the
             // timestamp of the current event, and no DateSeparator is inserted.
             return panel.getTilesForEvent(e, e, e === lastShownEvent, isGrouped, this.nextEvent, this.nextEventTile);
@@ -1304,15 +1302,15 @@ class MemberGrouper extends BaseGrouper {
         }
 
         ret.push(
-            <MemberEventListSummary
+            <EventListSummary
                 key={key}
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
-                startExpanded={highlightInMels}
+                startExpanded={highlightInSummary}
                 layout={this.layout}
             >
                 { eventTiles }
-            </MemberEventListSummary>,
+            </EventListSummary>,
         );
 
         if (this.readMarker) {

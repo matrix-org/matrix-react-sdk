@@ -122,8 +122,7 @@ describe('MessagePanel', function() {
         return events;
     }
 
-    // make a collection of events with some member events that should be collapsed
-    // with a MemberEventListSummary
+    // make a collection of events with some member events that should be collapsed with an EventListSummary
     function mkMelsEvents() {
         const events = [];
         const ts0 = Date.now();
@@ -304,7 +303,7 @@ describe('MessagePanel', function() {
         expect(tiles.length).toEqual(2);
 
         const summaryTiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('elements.MemberEventListSummary'),
+            res, sdk.getComponent('elements.EventListSummary'),
         );
         expect(summaryTiles.length).toEqual(1);
     });
