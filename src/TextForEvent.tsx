@@ -64,21 +64,13 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
     // can have a hard time translating those strings. In an effort to make translations easier
     // and more accurate, we break out the string-based variables to a couple booleans.
     if (isVoice && isSupported) {
-        return () => _t("%(senderName)s placed a voice call.", {
-            senderName,
-        });
+        return () => _t("%(senderName)s placed a voice call.", { senderName });
     } else if (isVoice && !isSupported) {
-        return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
-            senderName,
-        });
+        return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", { senderName });
     } else if (!isVoice && isSupported) {
-        return () => _t("%(senderName)s placed a video call.", {
-            senderName,
-        });
+        return () => _t("%(senderName)s placed a video call.", { senderName });
     } else if (!isVoice && !isSupported) {
-        return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
-            senderName,
-        });
+        return () => _t("%(senderName)s placed a video call. (not supported by this browser)", { senderName });
     }
 }
 
