@@ -158,8 +158,6 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
     }
 
     private async onReportKeyBackupNotEnabled(): Promise<void> {
-        console.log('HHH', 'onReportKeyBackupNotEnabled', SdkConfig.get().bug_report_endpoint_url);
-
         if (!SettingsStore.getValue("automaticKeyBackNotEnabledReporting")) return;
 
         await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
