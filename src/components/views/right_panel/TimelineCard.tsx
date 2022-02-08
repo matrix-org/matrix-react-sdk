@@ -169,8 +169,19 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     };
 
     private jumpToLiveTimeline = () => {
-        this.timelinePanelRef.current?.jumpToLiveTimeline();
-        dis.fire(Action.FocusSendMessageComposer);
+        if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
+            // If we were viewing a highlighted event, firing view_room without
+            // an event will take care of both clearing the URL fragment and
+            // jumping to the bottom
+            dis.dispatch({
+                action: Action.ViewRoom,
+                room_id: this.props.room.roomId,
+            });
+        } else {
+            // Otherwise we have to jump manually
+            this.timelinePanelRef.current?.jumpToLiveTimeline();
+            dis.fire(Action.FocusSendMessageComposer);
+        }
     };
 
     private renderTimelineCardHeader = (): JSX.Element => {
