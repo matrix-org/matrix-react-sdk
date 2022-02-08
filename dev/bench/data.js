@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644345525419,
+  "lastUpdate": 1644347497945,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63764,6 +63764,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4495.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f13329213df91cc3a56e10b56a7949ae7536f5e5",
+          "message": "Handle highlight notifications in timeline card button (#7762)",
+          "timestamp": "2022-02-08T19:03:15Z",
+          "tree_id": "e8eda9dd55807d47c9983a4222765fab9479abd1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f13329213df91cc3a56e10b56a7949ae7536f5e5"
+        },
+        "date": 1644347490670,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5489.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 786,
             "unit": "ms",
             "extra": "type: measure"
           }
