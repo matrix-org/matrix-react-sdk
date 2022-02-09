@@ -33,8 +33,10 @@ export async function login(
 
     //await session.page.screenshot({ path: (global as any).mxLogDir + "/login-01navigated.png" });
 
+    await session.query('.mx_ServerPicker');
+
     // wait until no spinners visible
-    //await session.waitNoSpinner();
+    await session.waitNoSpinner();
 
     //await session.page.screenshot({ path: (global as any).mxLogDir + "/login-02waitfornospinner.png" });
 
@@ -50,14 +52,18 @@ export async function login(
         await changeButton.click();
         session.log.done();
 
-        await session.page.screenshot({ path: (global as any).mxLogDir + "/login-04clickchangehs.png" });
+        if ((global as any).mxLogDir) {
+            await session.page.screenshot({ path: (global as any).mxLogDir + "/login-04clickchangehs.png" });
+        }
 
         session.log.step("Enters homeserver");
         const hsInputField = await session.query('.mx_ServerPickerDialog_otherHomeserver');
         await session.replaceInputText(hsInputField, homeserver);
         session.log.done();
 
-        await session.page.screenshot({ path: (global as any).mxLogDir + "/login-05enterhs.png" });
+        if ((global as any).mxLogDir) {
+            await session.page.screenshot({ path: (global as any).mxLogDir + "/login-05enterhs.png" });
+        }
 
         session.log.step("Clicks next");
         const nextButton = await session.query('.mx_ServerPickerDialog_continue');
