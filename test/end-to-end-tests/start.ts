@@ -30,6 +30,7 @@ program
     .option('--throttle-cpu [factor]', "factor to slow down the cpu with", parseFloat, 1.0)
     .option('--no-sandbox', "same as puppeteer arg", false)
     .option('--log-directory <dir>', 'a directory to dump html and network logs in when the tests fail')
+    .option('--registration-shared-secret <secret>', 'the secret to use for registering users')
     .parse(process.argv);
 
 const hsUrl = 'http://localhost:5005';
@@ -52,9 +53,8 @@ async function runTests() {
     }
 
     const restCreator = new RestSessionCreator(
-        '../synapse/installations/consent/env/bin',
         hsUrl,
-        __dirname,
+        options['registration-shared-secret'],
     );
 
     async function createSession(username) {
