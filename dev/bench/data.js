@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644399805991,
+  "lastUpdate": 1644404088939,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64172,6 +64172,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 703.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "59cdd3edc07ccbc74fead184d510b2cac907de84",
+          "message": "Unify widget header actions with those in right panel (#7734)",
+          "timestamp": "2022-02-09T10:47:41Z",
+          "tree_id": "7f80078fdfdbd02d0715d4baf80fbd8ed9daeea2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/59cdd3edc07ccbc74fead184d510b2cac907de84"
+        },
+        "date": 1644404082681,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4842.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 678.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
