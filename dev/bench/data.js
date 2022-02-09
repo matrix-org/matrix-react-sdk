@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644418151248,
+  "lastUpdate": 1644421184428,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64376,6 +64376,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1099,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6e8edbb418a893e38d29f68684b7336120532e62",
+          "message": "Fix preview builds for forked PRs (#7769)\n\nUse the magic from matrix-doc to get the PR number, as commented.",
+          "timestamp": "2022-02-09T15:31:14Z",
+          "tree_id": "ce1e900ee808b0b1194912dc1c366579b80c0638",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6e8edbb418a893e38d29f68684b7336120532e62"
+        },
+        "date": 1644421176472,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5072.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1130,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1803,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5016.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
