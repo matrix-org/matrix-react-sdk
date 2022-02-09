@@ -396,7 +396,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!includeDescendantSpaces) {
             return this.spaceFilteredRooms.get(space) || new Set();
         }
-        return flattenSpaceHierarchy(this.spaceFilteredRooms, this.childSpacesBySpace)(space);
+        return flattenSpaceHierarchy(this.spaceFilteredRooms, this.childSpacesBySpace, space);
     };
 
     public getSpaceFilteredUserIds = (space: SpaceKey, includeDescendantSpaces = true): Set<string> => {
@@ -410,7 +410,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return this.spaceFilteredUsers.get(space) || new Set();
         }
 
-        return flattenSpaceHierarchy(this.spaceFilteredUsers, this.childSpacesBySpace)(space);
+        return flattenSpaceHierarchy(this.spaceFilteredUsers, this.childSpacesBySpace, space);
     };
 
     private markTreeChildren = (rootSpace: Room, unseen: Set<Room>): void => {

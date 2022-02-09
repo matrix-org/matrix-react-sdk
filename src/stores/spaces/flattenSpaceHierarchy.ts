@@ -19,14 +19,17 @@ import { SpaceKey } from ".";
 type SpaceRoomMap = Map<SpaceKey, Set<string>>;
 type SpaceDescendantMap = Map<SpaceKey, Set<SpaceKey>>;
 
-const traverseSpaceDescendants = (spaceDescendantMap: SpaceDescendantMap) =>
-    (spaceId: SpaceKey, flatSpace = new Set<SpaceKey>()): Set<SpaceKey> => {
+const traverseSpaceDescendants = (
+    spaceDescendantMap: SpaceDescendantMap,
+    spaceId: SpaceKey,
+    flatSpace = new Set<SpaceKey>()
+): Set<SpaceKey> => {
         flatSpace.add(spaceId);
         const descendentSpaces = spaceDescendantMap.get(spaceId);
         descendentSpaces?.forEach(
             descendantSpaceId => {
                 if (!flatSpace.has(descendantSpaceId)) {
-                    traverseSpaceDescendants(spaceDescendantMap)(descendantSpaceId, flatSpace);
+                    traverseSpaceDescendants(spaceDescendantMap, descendantSpaceId, flatSpace);
                 }
             },
         );
@@ -40,9 +43,8 @@ const traverseSpaceDescendants = (spaceDescendantMap: SpaceDescendantMap) =>
  * @param spaceDescendantMap map of spaces and their children
  * @returns set of all rooms
  */
-export const flattenSpaceHierarchy = (spaceRoomMap: SpaceRoomMap, spaceDescendantMap: SpaceDescendantMap) =>
-    (spaceId: SpaceKey): Set<string> => {
-        const flattenedSpaceIds = traverseSpaceDescendants(spaceDescendantMap)(spaceId);
+export const flattenSpaceHierarchy = (spaceRoomMap: SpaceRoomMap, spaceDescendantMap: SpaceDescendantMap, spaceId: SpaceKey): Set<string> => {
+    const flattenedSpaceIds = traverseSpaceDescendants(spaceDescendantMap, spaceId);
         const flattenedRooms = new Set<string>();
 
         flattenedSpaceIds.forEach(id => {
