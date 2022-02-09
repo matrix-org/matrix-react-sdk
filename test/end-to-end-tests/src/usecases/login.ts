@@ -31,11 +31,15 @@ export async function login(
     await navPromise;
     session.log.done();
 
+    // for reasons I still don't fully understand, this seems to be flakey
+    // such that wen it's trying to click on 'mx_ServerPicker_change',
+    // it ends up clicking instead on the dropdown for username / email / phone.
+    // Waiting for the serverpicker to appear before proceeding seems to make
+    // it reliable...
+    await session.query('.mx_ServerPicker');
+
     // wait until no spinners visible
     await session.waitNoSpinner();
-
-    // ...and it's stil flakey, so add a sleep :(
-    await session.page.waitForTimeout(200);
 
     // change the homeserver by clicking the advanced section
     if (homeserver) {
