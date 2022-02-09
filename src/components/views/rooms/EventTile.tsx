@@ -360,6 +360,7 @@ interface IState {
     thread: Thread;
     threadReplyCount: number;
     threadLastReply: MatrixEvent;
+    threadLastSender: RoomMember | null;
     threadNotification?: NotificationCountType;
 }
 
@@ -408,6 +409,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             thread,
             threadReplyCount: thread?.length,
             threadLastReply: thread?.replyToEvent,
+            threadLastSender: thread?.replyToEvent.sender,
         };
 
         // don't do RR animations until we are mounted
@@ -562,6 +564,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         this.setState({
             threadLastReply: thread?.replyToEvent,
+            threadLastSender: thread?.replyToEvent?.sender,
             threadReplyCount: thread?.length,
             thread,
         });
@@ -659,23 +662,24 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private renderThreadLastMessagePreview(): JSX.Element | null {
         const { threadLastReply } = this.state;
-        if (!threadLastReply) {
-            return null;
-        }
-
         const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(threadLastReply);
 
-        if (!threadMessagePreview || !threadLastReply.sender) {
-            return null;
-        }
-
+        const sender = this.thread.roomState.getSentinelMember(threadLastReply.getSender());
         return <>
-            <MemberAvatar member={threadLastReply.sender} width={24} height={24} className="mx_ThreadInfo_avatar" />
-            <div className="mx_ThreadInfo_content">
-                <span className="mx_ThreadInfo_message-preview">
-                    { threadMessagePreview }
-                </span>
-            </div>
+            <MemberAvatar
+                member={sender}
+                fallbackUserId={threadLastReply.getSender()}
+                width={24}
+                height={24}
+                className="mx_ThreadInfo_avatar"
+            />
+            { threadMessagePreview && (
+                <div className="mx_ThreadInfo_content">
+                    <span className="mx_ThreadInfo_message-preview">
+                        { threadMessagePreview }
+                    </span>
+                </div>
+            ) }
         </>;
     }
 
@@ -870,6 +874,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private shouldHighlight(): boolean {
         if (this.props.forExport) return false;
+        if (this.props.tileShape === TileShape.Notif) return false;
+        if (this.props.tileShape === TileShape.ThreadPanel) return false;
+
         const actions = this.context.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
@@ -1170,7 +1177,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
-            mx_EventTile_highlight: this.props.tileShape === TileShape.Notif ? false : this.shouldHighlight(),
+            mx_EventTile_highlight: this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent,
             mx_EventTile_continuation: isContinuation || eventType === EventType.CallInvite,
             mx_EventTile_last: this.props.last,
@@ -1206,7 +1213,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         let avatarSize;
         let needsSenderProfile;
 
-        if (this.props.tileShape === TileShape.Notif) {
+        if (this.props.tileShape === TileShape.Notif || this.props.tileShape === TileShape.ThreadPanel) {
             avatarSize = 24;
             needsSenderProfile = true;
         } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
@@ -1259,9 +1266,14 @@ export default class EventTile extends React.Component<IProps, IState> {
                 sender = <SenderProfile onClick={this.onSenderProfileClick}
                     mxEvent={this.props.mxEvent}
                     enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
                 />;
             } else {
-                sender = <SenderProfile mxEvent={this.props.mxEvent} enableFlair={this.props.enableFlair} />;
+                sender = <SenderProfile
+                    mxEvent={this.props.mxEvent}
+                    enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
+                />;
             }
         }
 

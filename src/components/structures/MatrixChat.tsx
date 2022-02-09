@@ -91,7 +91,7 @@ import { RoomUpdateCause } from "../../stores/room-list/models";
 import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
-import UserSettingsDialog from '../views/dialogs/UserSettingsDialog';
+import UserSettingsDialog, { UserTab } from '../views/dialogs/UserSettingsDialog';
 import CreateGroupDialog from '../views/dialogs/CreateGroupDialog';
 import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
 import RoomDirectory from './RoomDirectory';
@@ -114,12 +114,10 @@ import { PosthogAnalytics } from '../../PosthogAnalytics';
 import { initSentry } from "../../sentry";
 import CallHandler from "../../CallHandler";
 import { showSpaceInvite } from "../../utils/space";
-import GenericToast from "../views/toasts/GenericToast";
-import InfoDialog from "../views/dialogs/InfoDialog";
-import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
+import GenericToast from '../views/toasts/GenericToast';
 import Views from '../../Views';
 
 // legacy export
@@ -468,7 +466,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             "and contribute!",
         );
 
-        console.log(
+        global.mx_rage_logger.bypassRageshake(
+            "log",
             `%c${waitText}\n%c${scamText}\n%c${devText}`,
             `font-size:${largeFontSize}; color:blue;`,
             `font-size:${normalFontSize}; color:red;`,
@@ -1465,13 +1464,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
 
         cli.on('sync', (state: SyncState, prevState?: SyncState, data?: ISyncStateData) => {
-            // LifecycleStore and others cannot directly subscribe to matrix client for
-            // events because flux only allows store state changes during flux dispatches.
-            // So dispatch directly from here. Ideally we'd use a SyncStateStore that
-            // would do this dispatch and expose the sync state itself (by listening to
-            // its own dispatch).
-            dis.dispatch({ action: 'sync_state', prevState, state });
-
             if (state === SyncState.Error || state === SyncState.Reconnecting) {
                 if (data.error instanceof InvalidStoreError) {
                     Lifecycle.handleInvalidStoreError(data.error);
@@ -1494,59 +1486,40 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 showNotificationsToast(false);
             }
 
-            if (!localStorage.getItem("mx_seen_ia_1.1_changes_toast") && SettingsStore.getValue(UIFeature.Feedback)) {
-                const key = "IA_1.1_TOAST";
-                ToastStore.sharedInstance().addOrReplaceToast({
-                    key,
-                    title: _t("Testing small changes"),
-                    props: {
-                        description: _t("Your feedback is wanted as we try out some design changes."),
-                        acceptLabel: _t("More info"),
-                        onAccept: () => {
-                            Modal.createDialog(InfoDialog, {
-                                title: _t("We're testing some design changes"),
-                                description: <>
-                                    <img
-                                        src={require("../../../res/img/ia-design-changes.png")}
-                                        width="636"
-                                        height="303"
-                                        alt=""
-                                    />
-                                    <p>{ _t(
-                                        "Your ongoing feedback would be very welcome, so if you see anything " +
-                                        "different you want to comment on, <a>please let us know about it</a>. " +
-                                        "Click your avatar to find a quick feedback link.",
-                                        {},
-                                        {
-                                            a: sub => <AccessibleButton
-                                                kind="link"
-                                                onClick={(ev) => {
-                                                    ev.preventDefault();
-                                                    ev.stopPropagation();
-                                                    Modal.createTrackedDialog('Feedback Dialog', '', FeedbackDialog);
-                                                }}
-                                            >
-                                                { sub }
-                                            </AccessibleButton>,
-                                        },
-                                    ) }</p>
-                                    <p>{ _t("If you'd like to preview or test some potential upcoming changes, " +
-                                        "there's an option in feedback to let us contact you.") }</p>
-                                </>,
-                            }, "mx_DialogDesignChanges_wrapper");
-                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
-                            ToastStore.sharedInstance().dismissToast(key);
+            if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {
+                setTimeout(() => {
+                    // Skip the toast if the beta is already enabled or the user has changed the setting from default
+                    if (SettingsStore.getValue("feature_spotlight") ||
+                        SettingsStore.getValue("feature_spotlight", null, true) !== null) {
+                        return;
+                    }
+
+                    const key = "BETA_SPOTLIGHT_TOAST";
+                    ToastStore.sharedInstance().addOrReplaceToast({
+                        key,
+                        title: _t("New search beta available"),
+                        props: {
+                            description: _t("We're testing a new search to make finding what you want quicker.\n"),
+                            acceptLabel: _t("Learn more"),
+                            onAccept: () => {
+                                dis.dispatch({
+                                    action: Action.ViewUserSettings,
+                                    initialTabId: UserTab.Labs,
+                                });
+                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
+                                ToastStore.sharedInstance().dismissToast(key);
+                            },
+                            rejectLabel: _t("Dismiss"),
+                            onReject: () => {
+                                localStorage.setItem("mx_seen_feature_spotlight_toast", "true");
+                                ToastStore.sharedInstance().dismissToast(key);
+                            },
                         },
-                        rejectLabel: _t("Dismiss"),
-                        onReject: () => {
-                            localStorage.setItem("mx_seen_ia_1.1_changes_toast", "true");
-                            ToastStore.sharedInstance().dismissToast(key);
-                        },
-                    },
-                    icon: "labs",
-                    component: GenericToast,
-                    priority: 9,
-                });
+                        icon: "labs",
+                        component: GenericToast,
+                        priority: 9,
+                    });
+                }, 5 * 60 * 1000); // show after 5 minutes to not overload user with toasts on launch
             }
 
             dis.fire(Action.FocusSendMessageComposer);
