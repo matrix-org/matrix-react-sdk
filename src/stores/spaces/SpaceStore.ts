@@ -54,8 +54,9 @@ import {
 import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { flattenSpaceHierarchy } from "./flattenSpaceHierarchy";
+import { PosthogAnalytics } from "../../PosthogAnalytics";
 
-interface IState {}
+interface IState { }
 
 const ACTIVE_SPACE_LS_KEY = "mx_active_space";
 
@@ -96,7 +97,7 @@ const getRoomFn: FetchRoomFn = (room: Room) => {
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
     private rootSpaces: Room[] = [];
-    // Map from room ID to set of spaces which list it as a child
+    // Map from room/space ID to set of spaces which list it as a child
     private parentMap = new EnhancedMap<string, Set<string>>();
     // Map from SpaceKey to SpaceNotificationState instance representing that space
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
@@ -507,6 +508,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this.parentMap.getOrCreate(child.roomId, new Set()).add(space.roomId);
             });
         });
+
+        PosthogAnalytics.instance.setProperty("numSpaces", joinedSpaces.length);
     };
 
     private rebuildHomeSpace = () => {

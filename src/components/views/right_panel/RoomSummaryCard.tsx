@@ -23,7 +23,7 @@ import { useIsEncrypted } from '../../../hooks/useIsEncrypted';
 import BaseCard, { Group } from "./BaseCard";
 import { _t } from '../../../languageHandler';
 import RoomAvatar from "../avatars/RoomAvatar";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import Modal from "../../../Modal";
@@ -47,6 +47,7 @@ import RoomName from "../elements/RoomName";
 import UIStore from "../../../stores/UIStore";
 import ExportDialog from "../dialogs/ExportDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 interface IProps {
     room: Room;
@@ -59,7 +60,7 @@ interface IAppsSectionProps {
 
 interface IButtonProps {
     className: string;
-    onClick(): void;
+    onClick(ev: ButtonEvent): void;
 }
 
 const Button: React.FC<IButtonProps> = ({ children, className, onClick }) => {
@@ -135,16 +136,12 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
         pinTitle = isPinned ? _t("Unpin") : _t("Pin");
     }
 
-    const classes = classNames("mx_BaseCard_Button mx_RoomSummaryCard_Button", {
-        mx_RoomSummaryCard_Button_pinned: isPinned,
-    });
-
     const isMaximised = WidgetLayoutStore.instance.isInContainer(room, app, Container.Center);
     const toggleMaximised = isMaximised
         ? () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right); }
         : () => { WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center); };
 
-    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise widget");
+    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise");
 
     let openTitle = "";
     if (isPinned) {
@@ -152,6 +149,11 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     } else if (isMaximised) {
         openTitle =_t("Close this widget to view it in this panel");
     }
+
+    const classes = classNames("mx_BaseCard_Button mx_RoomSummaryCard_Button", {
+        mx_RoomSummaryCard_Button_pinned: isPinned,
+        mx_RoomSummaryCard_Button_maximised: isMaximised,
+    });
 
     return <div className={classes} ref={handle}>
         <AccessibleTooltipButton
@@ -169,7 +171,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
         </AccessibleTooltipButton>
 
         { canModifyWidget && <ContextMenuTooltipButton
-            className="mx_RoomSummaryCard_app_options mx_RoomSummaryCard_maximised_widget"
+            className="mx_RoomSummaryCard_app_options"
             isExpanded={menuDisplayed}
             onClick={openMenu}
             title={_t("Options")}
@@ -184,7 +186,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
             yOffset={-24}
         />
         <AccessibleTooltipButton
-            className={isMaximised ? "mx_RoomSummaryCard_app_minimise" : "mx_RoomSummaryCard_app_maximise"}
+            className="mx_RoomSummaryCard_app_maximiseToggle"
             onClick={toggleMaximised}
             title={maximiseTitle}
             yOffset={-24}
@@ -228,16 +230,18 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
     </Group>;
 };
 
-export const onRoomMembersClick = (allowClose = true) => {
-    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, allowClose);
+const onRoomMembersClick = (ev: ButtonEvent) => {
+    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
+    PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
 };
 
-export const onRoomFilesClick = (allowClose = true) => {
-    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, allowClose);
+const onRoomFilesClick = () => {
+    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, true);
 };
 
-const onRoomSettingsClick = () => {
+const onRoomSettingsClick = (ev: ButtonEvent) => {
     defaultDispatcher.dispatch({ action: "open_room_settings" });
+    PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
 const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
