@@ -1642,11 +1642,12 @@ function isMessageEvent(ev: MatrixEvent): boolean {
 }
 
 export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean): boolean {
-    // Only show "Message deleted" tile for message or encrypted events
-    if (e.isRedacted() && !e.isEncrypted() && !isMessageEvent(e)) return false;
+    // Only show "Message deleted" tile for plain message events, encrypted events,
+    // and state events as they'll likely still contain enough keys to be relevant.
+    if (e.isRedacted() && !e.isEncrypted() && !isMessageEvent(e) && !e.isState()) return false;
 
     // No tile for replacement events since they update the original tile
-    if (e.isRelation("m.replace")) return false;
+    if (e.isRelation(RelationType.Replace)) return false;
 
     const handler = getHandlerTile(e);
     if (handler === undefined) return false;
