@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644398247955,
+  "lastUpdate": 1644398975483,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64052,6 +64052,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 803.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "91ccbe43955ba86bfe87970e96beb433fc64f74b",
+          "message": "Add way to track posthog user properties and send numSpaces (#7716)",
+          "timestamp": "2022-02-09T09:21:56Z",
+          "tree_id": "c5424717592c28df6cd15c2bec6d103c4c3af39d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/91ccbe43955ba86bfe87970e96beb433fc64f74b"
+        },
+        "date": 1644398968075,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5394.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1067.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4875.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
