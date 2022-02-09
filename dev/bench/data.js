@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644417172935,
+  "lastUpdate": 1644418151248,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64340,6 +64340,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "999e1b74211af52f7a01e8d8613ab8ac7dd08af1",
+          "message": "Wire up bunch of interaction events into Posthog (#7707)",
+          "timestamp": "2022-02-09T14:42:08Z",
+          "tree_id": "9e1dd08f53c7a503cfc339e084fec505b0263257",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/999e1b74211af52f7a01e8d8613ab8ac7dd08af1"
+        },
+        "date": 1644418144058,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5056.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1099,
             "unit": "ms",
             "extra": "type: measure"
           }
