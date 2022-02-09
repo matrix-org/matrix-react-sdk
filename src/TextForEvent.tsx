@@ -486,7 +486,7 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
         },
     );
 
-    const diffs = [];
+    const diffs: {displayName: string, from: number, to: number}[] = [];
     users.forEach((userId) => {
         // Previous power level
         let from = event.getPrevContent().users[userId];
@@ -498,10 +498,10 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
         if (!Number.isInteger(to)) {
             to = currentUserDefault;
         }
+        const displayName = MatrixClientPeg.get().getUser(userId).displayName;
         if (from === previousUserDefault && to === currentUserDefault) { return; }
         if (to !== from) {
-            const name = UserIdentifierCustomisations.getDisplayUserIdentifier(userId, { roomId: event.getRoomId() });
-            diffs.push({ userId, name, from, to });
+            diffs.push({ displayName, from, to });
         }
     });
     if (!diffs.length) {
@@ -512,8 +512,8 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
     return () => _t('%(senderName)s changed the power level of %(powerLevelDiffText)s.', {
         senderName,
         powerLevelDiffText: diffs.map(diff =>
-            _t('%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s', {
-                userId: diff.name,
+            _t('%(displayName)s from %(fromPowerLevel)s to %(toPowerLevel)s', {
+                displayName: diff.displayName,
                 fromPowerLevel: Roles.textualPowerLevel(diff.from, previousUserDefault),
                 toPowerLevel: Roles.textualPowerLevel(diff.to, currentUserDefault),
             }),
