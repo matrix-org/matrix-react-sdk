@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644409008576,
+  "lastUpdate": 1644417172935,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64304,6 +64304,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4459.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5620b83d340d9fa545fa6210a47e6d2bfcaea008",
+          "message": "Wire up more Posthog tracking (#7689)",
+          "timestamp": "2022-02-09T14:25:58Z",
+          "tree_id": "83e7bbcb066ef124b43713cae03cd30591162500",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5620b83d340d9fa545fa6210a47e6d2bfcaea008"
+        },
+        "date": 1644417165732,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4715.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 907,
             "unit": "ms",
             "extra": "type: measure"
           }
