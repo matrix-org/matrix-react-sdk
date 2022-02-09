@@ -27,7 +27,7 @@ import { replaceableComponent } from "../../../../../utils/replaceableComponent"
 import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
 import RelatedGroupSettings from "../../../room_settings/RelatedGroupSettings";
 import AliasSettings from "../../../room_settings/AliasSettings";
-import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
+import PosthogTrackers from "../../../../../PosthogTrackers";
 
 interface IProps {
     roomId: string;
@@ -56,7 +56,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
             room_id: this.props.roomId,
         });
 
-        PosthogAnalytics.trackInteraction("WebRoomSettingsLeaveButton", ev);
+        PosthogTrackers.trackInteraction("WebRoomSettingsLeaveButton", ev);
     };
 
     public render(): JSX.Element {

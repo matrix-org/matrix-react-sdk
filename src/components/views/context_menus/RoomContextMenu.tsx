@@ -43,7 +43,7 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { Action } from "../../../dispatcher/actions";
-import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -87,7 +87,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             });
             onFinished();
 
-            PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuLeaveItem", ev);
+            PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuLeaveItem", ev);
         };
 
         leaveOption = <IconizedContextMenuOption
@@ -112,7 +112,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             });
             onFinished();
 
-            PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuInviteItem", ev);
+            PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuInviteItem", ev);
         };
 
         inviteOption = <IconizedContextMenuOption
@@ -130,7 +130,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
         favouriteOption = <IconizedContextMenuCheckbox
             onClick={(e) => {
                 onTagRoom(e, DefaultTagID.Favourite);
-                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuFavouriteToggle", e);
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuFavouriteToggle", e);
             }}
             active={isFavorite}
             label={isFavorite ? _t("Favourited") : _t("Favourite")}
@@ -179,7 +179,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 });
                 onFinished();
 
-                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuNotificationsItem", ev);
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuNotificationsItem", ev);
             }}
             label={_t("Notifications")}
             iconClassName={iconClassName}
@@ -201,7 +201,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 ensureViewingRoom();
                 RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, false);
                 onFinished();
-                PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
             }}
             label={_t("People")}
             iconClassName="mx_RoomTile_iconPeople"
@@ -301,7 +301,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                         room_id: room.roomId,
                     });
                     onFinished();
-                    PosthogAnalytics.trackInteraction("WebRoomHeaderContextMenuSettingsItem", ev);
+                    PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuSettingsItem", ev);
                 }}
                 label={_t("Settings")}
                 iconClassName="mx_RoomTile_iconSettings"

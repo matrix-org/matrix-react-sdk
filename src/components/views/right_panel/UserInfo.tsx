@@ -78,7 +78,7 @@ import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 export interface IDevice {
     deviceId: string;
@@ -440,7 +440,7 @@ const UserOptionsSection: React.FC<{
                     });
                 }
 
-                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoInviteButton", ev);
+                PosthogTrackers.trackInteraction("WebRightPanelRoomUserInfoInviteButton", ev);
             };
 
             inviteUserButton = (
@@ -1724,7 +1724,7 @@ const UserInfo: React.FC<IProps> = ({
         cardState={cardState}
         onBack={(ev: ButtonEvent) => {
             if (RightPanelStore.instance.previousCard.phase === RightPanelPhases.RoomMemberList) {
-                PosthogAnalytics.trackInteraction("WebRightPanelRoomUserInfoBackButton", ev);
+                PosthogTrackers.trackInteraction("WebRightPanelRoomUserInfoBackButton", ev);
             }
         }}
     >

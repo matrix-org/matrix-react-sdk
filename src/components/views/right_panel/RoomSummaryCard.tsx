@@ -47,7 +47,7 @@ import RoomName from "../elements/RoomName";
 import UIStore from "../../../stores/UIStore";
 import ExportDialog from "../dialogs/ExportDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 interface IProps {
     room: Room;
@@ -232,7 +232,7 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
 
 const onRoomMembersClick = (ev: ButtonEvent) => {
     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
-    PosthogAnalytics.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
+    PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
 };
 
 const onRoomFilesClick = () => {
@@ -241,7 +241,7 @@ const onRoomFilesClick = () => {
 
 const onRoomSettingsClick = (ev: ButtonEvent) => {
     defaultDispatcher.dispatch({ action: "open_room_settings" });
-    PosthogAnalytics.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
+    PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
 const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
