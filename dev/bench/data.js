@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644398975483,
+  "lastUpdate": 1644399630171,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64100,6 +64100,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4875.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ebb1feee50da05f905ca9a36fa1783c7e835f1b0",
+          "message": "Basic script to create react component with test and style files (#7757)\n\n* basically working script\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add test template\r\n\r\n* add skinned-sdk import to test temp\r\n\r\n* remove extra import\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-09T10:33:21+01:00",
+          "tree_id": "3593ad5b64e907b734c4af8701f025aad14b32f6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ebb1feee50da05f905ca9a36fa1783c7e835f1b0"
+        },
+        "date": 1644399623614,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4666.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 680.2999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
