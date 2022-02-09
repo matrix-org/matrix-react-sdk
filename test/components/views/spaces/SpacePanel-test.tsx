@@ -2,19 +2,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { mocked } from 'jest-mock';
-import { MatrixClient, Room } from 'matrix-js-sdk';
+import { MatrixClient } from 'matrix-js-sdk';
 import { act } from "react-dom/test-utils";
 
 import '../../../skinned-sdk';
 import SpacePanel from '../../../../src/components/views/spaces/SpacePanel';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { SpaceKey } from '../../../../src/stores/spaces';
-import SpaceStore from '../../../../src/stores/spaces/SpaceStore';
 import { findByTestId } from '../../../utils/test-utils';
 import { shouldShowComponent } from '../../../../src/customisations/helpers/UIComponents';
 import { UIComponent } from '../../../../src/settings/UIFeature';
 
 jest.mock('../../../../src/stores/spaces/SpaceStore', () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const EventEmitter = require("events");
     class MockSpaceStore extends EventEmitter {
         invitedSpaces = [];
@@ -23,15 +23,13 @@ jest.mock('../../../../src/stores/spaces/SpaceStore', () => {
         activeSpace: SpaceKey = '!space1';
     }
     return {
-        instance: new MockSpaceStore()
-    }
+        instance: new MockSpaceStore(),
+    };
 });
 
 jest.mock('../../../../src/customisations/helpers/UIComponents', () => ({
     shouldShowComponent: jest.fn(),
 }));
-
-const MockedSpaceStore = mocked(SpaceStore.instance);
 
 describe('<SpacePanel />', () => {
     const defaultProps = {};
@@ -50,7 +48,7 @@ describe('<SpacePanel />', () => {
 
     beforeEach(() => {
         mocked(shouldShowComponent).mockClear().mockReturnValue(true);
-    })
+    });
 
     describe('create new space button', () => {
         it('renders create space button when UIComponent.CreateSpaces component should be shown', () => {
@@ -76,5 +74,4 @@ describe('<SpacePanel />', () => {
             expect(component.find('SpaceCreateMenu').length).toBeTruthy();
         });
     });
-
 });
