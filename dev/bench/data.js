@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644421184428,
+  "lastUpdate": 1644424118168,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64424,6 +64424,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5016.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "818fddd72c7ab7b59e40951fd49c1bf9213e029b",
+          "message": "Add customisation point to disable space creation (#7766)\n\n* mock matchMedia in jest setup\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use UIComponent.CreateSpaces in space panel\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* hide add space in spacecontextmenu\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use UIComponent customistations in space oom view add space button\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-09T17:21:40+01:00",
+          "tree_id": "1c042b47fa6266dc348787928687cfe677f794ae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/818fddd72c7ab7b59e40951fd49c1bf9213e029b"
+        },
+        "date": 1644424111998,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5012.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 590.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
