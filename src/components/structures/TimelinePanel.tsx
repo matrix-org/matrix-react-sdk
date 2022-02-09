@@ -1289,7 +1289,24 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
                 events.push(...pendingEvents.filter(e => e.threadRootId === this.context.threadId));
             } else {
-                events.push(...pendingEvents);
+                events.push(...pendingEvents.filter(e => {
+                    const hasNoRelation = !e.getRelation();
+                    if (hasNoRelation) {
+                        return true;
+                    }
+
+                    if (e.isThreadRelation) {
+                        return false;
+                    }
+
+                    const parentEvent = this.props.timelineSet
+                        .findEventById(e.getAssociatedId());
+                    if (!parentEvent) {
+                        return false;
+                    } else {
+                        return !parentEvent.isThreadRelation;
+                    }
+                }));
             }
         }
 

@@ -1095,7 +1095,6 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (relationType !== "m.annotation" || eventType !== "m.reaction") {
             return;
         }
-        this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
         this.setState({
             reactions: this.getReactions(),
         });
