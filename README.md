@@ -1,6 +1,8 @@
 matrix-react-sdk
 ================
 
+hi
+
 This is a react-based SDK for inserting a Matrix chat/voip client into a web page.
 
 This package provides the React components needed to build a Matrix web client
