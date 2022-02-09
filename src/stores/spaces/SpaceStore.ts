@@ -53,7 +53,7 @@ import {
 } from ".";
 import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
-import { flattenSpaceHierarchy } from "./flattenSpaceHierarchy";
+import { flattenSpaceHierarchy, SpaceEntityMap, SpaceDescendantMap } from "./flattenSpaceHierarchy";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 
 interface IState { }
@@ -102,11 +102,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // Map from SpaceKey to SpaceNotificationState instance representing that space
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
     // Map from SpaceKey to Set of room IDs that are direct descendants of that space
-    private spaceFilteredRooms = new Map<SpaceKey, Set<string>>(); // won't contain MetaSpace.People
+    private roomIdsBySpace: SpaceEntityMap = new Map<SpaceKey, Set<string>>(); // won't contain MetaSpace.People
     // Map from SpaceKey to Set of space keys that are direct descendants of that space
-    private childSpacesBySpace = new Map<SpaceKey, Set<SpaceKey>>(); // won't contain MetaSpace.People
+    private childSpacesBySpace: SpaceDescendantMap = new Map<SpaceKey, Set<SpaceKey>>();
     // Map from SpaceKey to Set of user IDs that are direct descendants of that space
-    private spaceFilteredUsers = new Map<Room["roomId"], Set<string>>();
+    private userIdsBySpace: SpaceEntityMap = new Map<Room["roomId"], Set<string>>();
     // The space currently selected in the Space Panel
     private _activeSpace?: SpaceKey = MetaSpace.Home; // set properly by onReady
     private _suggestedRooms: ISuggestedRoom[] = [];
@@ -359,8 +359,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return true;
         }
 
-        console.log(space, this.getSpaceFilteredRoomIds(space, includeDescendantSpaces));
-
         if (this.getSpaceFilteredRoomIds(space, includeDescendantSpaces)?.has(roomId)) {
             return true;
         }
@@ -394,9 +392,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         if (!includeDescendantSpaces) {
-            return this.spaceFilteredRooms.get(space) || new Set();
+            return this.roomIdsBySpace.get(space) || new Set();
         }
-        return flattenSpaceHierarchy(this.spaceFilteredRooms, this.childSpacesBySpace, space);
+        return flattenSpaceHierarchy(this.roomIdsBySpace, this.childSpacesBySpace, space);
     };
 
     public getSpaceFilteredUserIds = (space: SpaceKey, includeDescendantSpaces = true): Set<string> => {
@@ -407,10 +405,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return undefined;
         }
         if (!includeDescendantSpaces) {
-            return this.spaceFilteredUsers.get(space) || new Set();
+            return this.userIdsBySpace.get(space) || new Set();
         }
 
-        return flattenSpaceHierarchy(this.spaceFilteredUsers, this.childSpacesBySpace, space);
+        return flattenSpaceHierarchy(this.userIdsBySpace, this.childSpacesBySpace, space);
     };
 
     private markTreeChildren = (rootSpace: Room, unseen: Set<Room>): void => {
@@ -515,10 +513,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private rebuildHomeSpace = () => {
         if (this.allRoomsInHome) {
             // this is a special-case to not have to maintain a set of all rooms
-            this.spaceFilteredRooms.delete(MetaSpace.Home);
+            this.roomIdsBySpace.delete(MetaSpace.Home);
         } else {
             const rooms = new Set(this.matrixClient.getVisibleRooms().filter(this.showInHomeSpace).map(r => r.roomId));
-            this.spaceFilteredRooms.set(MetaSpace.Home, rooms);
+            this.roomIdsBySpace.set(MetaSpace.Home, rooms);
         }
 
         if (this.activeSpace === MetaSpace.Home) {
@@ -533,14 +531,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (enabledMetaSpaces.has(MetaSpace.Home)) {
             this.rebuildHomeSpace();
         } else {
-            this.spaceFilteredRooms.delete(MetaSpace.Home);
+            this.roomIdsBySpace.delete(MetaSpace.Home);
         }
 
         if (enabledMetaSpaces.has(MetaSpace.Favourites)) {
             const favourites = visibleRooms.filter(r => r.tags[DefaultTagID.Favourite]);
-            this.spaceFilteredRooms.set(MetaSpace.Favourites, new Set(favourites.map(r => r.roomId)));
+            this.roomIdsBySpace.set(MetaSpace.Favourites, new Set(favourites.map(r => r.roomId)));
         } else {
-            this.spaceFilteredRooms.delete(MetaSpace.Favourites);
+            this.roomIdsBySpace.delete(MetaSpace.Favourites);
         }
 
         // The People metaspace doesn't need maintaining
@@ -552,7 +550,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 // filter out DMs and rooms with >0 parents
                 return !this.parentMap.get(r.roomId)?.size && !DMRoomMap.shared().getUserIdForRoomId(r.roomId);
             });
-            this.spaceFilteredRooms.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
+            this.roomIdsBySpace.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
         }
 
         if (isMetaSpace(this.activeSpace)) {
@@ -573,7 +571,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         if (!spaces) {
-            spaces = [...this.spaceFilteredRooms.keys()];
+            spaces = [...this.roomIdsBySpace.keys()];
             if (dmBadgeSpace === MetaSpace.People) {
                 spaces.push(MetaSpace.People);
             }
@@ -625,9 +623,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const inSpace = SpaceStoreClass.isInSpace(space.getMember(userId));
 
         if (inSpace) {
-            this.spaceFilteredUsers.get(space.roomId)?.add(userId);
+            this.userIdsBySpace.get(space.roomId)?.add(userId);
         } else {
-            this.spaceFilteredUsers.get(space.roomId)?.delete(userId);
+            this.userIdsBySpace.get(space.roomId)?.delete(userId);
         }
 
         this.switchSpaceIfNeeded();
@@ -636,16 +634,16 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private onRoomsUpdate = () => {
         const visibleRooms = this.matrixClient.getVisibleRooms();
 
-        const prevRoomsBySpace = this.spaceFilteredRooms;
-        const prevUsersBySpace = this.spaceFilteredUsers;
+        const prevRoomsBySpace = this.roomIdsBySpace;
+        const prevUsersBySpace = this.userIdsBySpace;
         const prevChildSpacesBySpace = this.childSpacesBySpace;
 
-        this.spaceFilteredRooms = new Map();
-        this.spaceFilteredUsers = new Map();
+        this.roomIdsBySpace = new Map();
+        this.userIdsBySpace = new Map();
         this.childSpacesBySpace = new Map();
 
         this.rebuildParentMap();
-        // mutates this.spaceFilteredRooms
+        // mutates this.roomIdsBySpace
         this.rebuildMetaSpaces();
 
         const hiddenChildren = new EnhancedMap<string, Set<string>>();
@@ -662,8 +660,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             const traverseSpace = (spaceId: string, parentPath: Set<string>): [Set<string>, Set<string>] => {
                 if (parentPath.has(spaceId)) return; // prevent cycles
                 // reuse existing results if multiple similar branches exist
-                if (this.spaceFilteredRooms.has(spaceId) && this.spaceFilteredUsers.has(spaceId)) {
-                    return [this.spaceFilteredRooms.get(spaceId), this.spaceFilteredUsers.get(spaceId)];
+                if (this.roomIdsBySpace.has(spaceId) && this.userIdsBySpace.has(spaceId)) {
+                    return [this.roomIdsBySpace.get(spaceId), this.userIdsBySpace.get(spaceId)];
                 }
 
                 const [childSpaces, childRooms] = partitionSpacesAndRooms(this.getChildren(spaceId));
@@ -690,24 +688,24 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     return this.matrixClient.getRoomUpgradeHistory(roomId, true).map(r => r.roomId);
                 }));
 
-                this.spaceFilteredRooms.set(spaceId, expandedRoomIds);
+                this.roomIdsBySpace.set(spaceId, expandedRoomIds);
 
-                this.spaceFilteredUsers.set(spaceId, userIds);
+                this.userIdsBySpace.set(spaceId, userIds);
                 return [expandedRoomIds, userIds];
             };
 
             traverseSpace(s.roomId, new Set());
         });
 
-        const roomDiff = mapDiff(prevRoomsBySpace, this.spaceFilteredRooms);
-        const userDiff = mapDiff(prevUsersBySpace, this.spaceFilteredUsers);
+        const roomDiff = mapDiff(prevRoomsBySpace, this.roomIdsBySpace);
+        const userDiff = mapDiff(prevUsersBySpace, this.userIdsBySpace);
         const spaceDiff = mapDiff(prevChildSpacesBySpace, this.childSpacesBySpace);
         // filter out keys which changed by reference only by checking whether the sets differ
         const roomsChanged = roomDiff.changed.filter(k => {
-            return setHasDiff(prevRoomsBySpace.get(k), this.spaceFilteredRooms.get(k));
+            return setHasDiff(prevRoomsBySpace.get(k), this.roomIdsBySpace.get(k));
         });
         const usersChanged = userDiff.changed.filter(k => {
-            return setHasDiff(prevUsersBySpace.get(k), this.spaceFilteredUsers.get(k));
+            return setHasDiff(prevUsersBySpace.get(k), this.userIdsBySpace.get(k));
         });
         const spacesChanged = spaceDiff.changed.filter(k => {
             return setHasDiff(prevChildSpacesBySpace.get(k), this.childSpacesBySpace.get(k));
@@ -920,9 +918,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private onRoomFavouriteChange(room: Room) {
         if (this.enabledMetaSpaces.includes(MetaSpace.Favourites)) {
             if (room.tags[DefaultTagID.Favourite]) {
-                this.spaceFilteredRooms.get(MetaSpace.Favourites).add(room.roomId);
+                this.roomIdsBySpace.get(MetaSpace.Favourites).add(room.roomId);
             } else {
-                this.spaceFilteredRooms.get(MetaSpace.Favourites).delete(room.roomId);
+                this.roomIdsBySpace.get(MetaSpace.Favourites).delete(room.roomId);
             }
             this.emit(MetaSpace.Favourites);
         }
@@ -932,11 +930,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
 
         if (!this.allRoomsInHome && enabledMetaSpaces.has(MetaSpace.Home)) {
-            const homeRooms = this.spaceFilteredRooms.get(MetaSpace.Home);
+            const homeRooms = this.roomIdsBySpace.get(MetaSpace.Home);
             if (this.showInHomeSpace(room)) {
                 homeRooms?.add(room.roomId);
-            } else if (!this.spaceFilteredRooms.get(MetaSpace.Orphans).has(room.roomId)) {
-                this.spaceFilteredRooms.get(MetaSpace.Home)?.delete(room.roomId);
+            } else if (!this.roomIdsBySpace.get(MetaSpace.Orphans).has(room.roomId)) {
+                this.roomIdsBySpace.get(MetaSpace.Home)?.delete(room.roomId);
             }
 
             this.emit(MetaSpace.Home);
@@ -947,7 +945,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         if (enabledMetaSpaces.has(MetaSpace.Orphans) || enabledMetaSpaces.has(MetaSpace.Home)) {
-            if (isDm && this.spaceFilteredRooms.get(MetaSpace.Orphans).delete(room.roomId)) {
+            if (isDm && this.roomIdsBySpace.get(MetaSpace.Orphans).delete(room.roomId)) {
                 this.emit(MetaSpace.Orphans);
                 this.emit(MetaSpace.Home);
             }
@@ -977,8 +975,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.rootSpaces = [];
         this.parentMap = new EnhancedMap();
         this.notificationStateMap = new Map();
-        this.spaceFilteredRooms = new Map();
-        this.spaceFilteredUsers = new Map();
+        this.roomIdsBySpace = new Map();
+        this.userIdsBySpace = new Map();
         this._activeSpace = MetaSpace.Home; // set properly by onReady
         this._suggestedRooms = [];
         this._invitedSpaces = new Set();
