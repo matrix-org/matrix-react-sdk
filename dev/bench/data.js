@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644399630171,
+  "lastUpdate": 1644399805991,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64136,6 +64136,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 680.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "57274151+c-cal@users.noreply.github.com",
+            "name": "Charlie Calendre",
+            "username": "c-cal"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fdbdde83c29d2642b6e8524c567690b4378ad6c4",
+          "message": "Fix theme selector dropdown overflow (#7764)",
+          "timestamp": "2022-02-09T09:35:06Z",
+          "tree_id": "2fb53d77a64780e0beab38f33984029fd531f7a6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fdbdde83c29d2642b6e8524c567690b4378ad6c4"
+        },
+        "date": 1644399798804,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5358.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 703.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
