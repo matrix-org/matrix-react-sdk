@@ -22,6 +22,7 @@ import { EventEmitter } from "events";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import { mkEvent, mkStubRoom } from "../test-utils";
 import { EnhancedMap } from "../../src/utils/maps";
+import { ReactWrapper } from "enzyme";
 
 // These methods make some use of some private methods on the AsyncStoreWithClient to simplify getting into a consistent
 // ready state without needing to wire up a dispatcher and pretend to be a js-sdk client.
@@ -82,3 +83,5 @@ export const mkSpace = (
 };
 
 export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise(r => e.once(k, r));
+
+export const findByTestId = (component: ReactWrapper, id: string) => component.find(`[data-test-id="${id}"]`);
