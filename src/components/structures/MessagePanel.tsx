@@ -486,7 +486,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Checking if the message has a "parentEventId" as we do not
         // want to hide the root event of the thread
         if (mxEv.isThreadRelation &&
-            !mxEv.isThreadRoot &&
+            this.shouldLiveInThreadOnly(mxEv) &&
             this.props.hideThreadedMessages &&
             SettingsStore.getValue("feature_thread")
         ) {
@@ -494,6 +494,22 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
 
         return !shouldHideEvent(mxEv, this.context);
+    }
+
+    private shouldLiveInThreadOnly(event: MatrixEvent): boolean {
+        const parentEventId = event.getAssociatedId();
+
+        const targetsThreadRoot = event.threadRootId === parentEventId;
+        if (event.isThreadRoot || targetsThreadRoot) {
+            return false;
+        }
+
+        const parentEvent = this.props.room.findEventById(parentEventId);
+        if (parentEvent) {
+            return this.shouldLiveInThreadOnly(parentEvent);
+        } else {
+            return true;
+        }
     }
 
     public readMarkerForEvent(eventId: string, isLastEvent: boolean): ReactNode {
