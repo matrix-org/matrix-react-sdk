@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644404088939,
+  "lastUpdate": 1644404296202,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64208,6 +64208,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 678.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "714136d4f77cb2e7e2c7c2c81dd9e4aedc14f6ea",
+          "message": "Consolidate RedactionGrouper and HiddenEventGrouper into MELS (#7739)",
+          "timestamp": "2022-02-09T10:51:12Z",
+          "tree_id": "a900c1cfdd645aca8c332080df5d56caff4274f5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/714136d4f77cb2e7e2c7c2c81dd9e4aedc14f6ea"
+        },
+        "date": 1644404289463,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5062.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 926.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1672.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4346.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
