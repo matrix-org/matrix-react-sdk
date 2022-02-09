@@ -76,14 +76,14 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
             <StyledCheckbox
                 className="mx_QuickSettingsButton_favouritesCheckbox"
                 checked={!!favouritesEnabled}
-                onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites)}
+                onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites, "WebQuickSettingsPinToSidebarCheckbox")}
             >
                 { _t("Favourites") }
             </StyledCheckbox>
             <StyledCheckbox
                 className="mx_QuickSettingsButton_peopleCheckbox"
                 checked={!!peopleEnabled}
-                onChange={onMetaSpaceChangeFactory(MetaSpace.People)}
+                onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
             >
                 { _t("People") }
             </StyledCheckbox>
