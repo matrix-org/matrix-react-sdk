@@ -56,7 +56,7 @@ async function runTests() {
 
     const restCreator = new RestSessionCreator(
         hsUrl,
-        options['registration-shared-secret'],
+        program.opts().registrationSharedSecret,
     );
 
     async function createSession(username) {
