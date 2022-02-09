@@ -467,6 +467,17 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // TODO: Implement granular (per-room) hide options
     public shouldShowEvent(mxEv: MatrixEvent, forceHideEvents = false): boolean {
+        if (this.props.hideThreadedMessages
+            && SettingsStore.getValue("feature_thread")) {
+            if (mxEv.isThreadRelation) {
+                return false;
+            }
+
+            if (this.shouldLiveInThreadOnly(mxEv)) {
+                return false;
+            }
+        }
+
         if (MatrixClientPeg.get().isUserIgnored(mxEv.getSender())) {
             return false; // ignored = no show (only happens if the ignore happens after an event was received)
         }
@@ -482,16 +493,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Always show highlighted event
         if (this.props.highlightedEventId === mxEv.getId()) return true;
 
-        // Checking if the message has a "parentEventId" as we do not
-        // want to hide the root event of the thread
-        if (mxEv.isThreadRelation &&
-            this.shouldLiveInThreadOnly(mxEv) &&
-            this.props.hideThreadedMessages &&
-            SettingsStore.getValue("feature_thread")
-        ) {
-            return false;
-        }
-
         return !shouldHideEvent(mxEv, this.context);
     }
 
@@ -499,7 +500,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const parentEventId = event.getAssociatedId();
 
         const targetsThreadRoot = event.threadRootId === parentEventId;
-        if (event.isThreadRoot || targetsThreadRoot) {
+        if (event.isThreadRoot || targetsThreadRoot || !event.isThreadRelation) {
             return false;
         }
 
