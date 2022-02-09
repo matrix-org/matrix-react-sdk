@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -49,10 +49,10 @@ const GenericEventListSummary: React.FC<IProps> = ({
     children,
     threshold = 3,
     onToggle,
-    startExpanded,
+    startExpanded = false,
     summaryMembers = [],
     summaryText,
-    layout,
+    layout = Layout.Group,
 }) => {
     const [expanded, toggleExpanded] = useStateToggle(startExpanded);
 
@@ -105,11 +105,6 @@ const GenericEventListSummary: React.FC<IProps> = ({
             { body }
         </li>
     );
-};
-
-GenericEventListSummary.defaultProps = {
-    startExpanded: false,
-    layout: Layout.Group,
 };
 
 export default GenericEventListSummary;
