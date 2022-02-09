@@ -35,7 +35,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import dis from "../../../dispatcher/dispatcher";
 import { RecheckThemePayload } from "../../../dispatcher/payloads/RecheckThemePayload";
-import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
     const orderedThemes = useMemo(getOrderedThemes, []);
@@ -105,7 +105,7 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
                 <Dropdown
                     id="mx_QuickSettingsButton_themePickerDropdown"
                     onOptionChange={async (newTheme: string) => {
-                        PosthogAnalytics.trackInteraction("WebQuickSettingsThemeDropdown");
+                        PosthogTrackers.trackInteraction("WebQuickSettingsThemeDropdown");
 
                         // XXX: mostly copied from ThemeChoicePanel
                         // doing getValue in the .catch will still return the value we failed to set,

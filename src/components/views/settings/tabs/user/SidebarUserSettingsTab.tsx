@@ -22,7 +22,7 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { MetaSpace } from "../../../../../stores/spaces";
-import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
+import PosthogTrackers from "../../../../../PosthogTrackers";
 
 type InteractionName = "WebSettingsSidebarTabSpacesCheckbox" | "WebQuickSettingsPinToSidebarCheckbox";
 
@@ -36,7 +36,7 @@ export const onMetaSpaceChangeFactory = (
         [metaSpace]: e.target.checked,
     });
 
-    PosthogAnalytics.trackInteraction(
+    PosthogTrackers.trackInteraction(
         interactionName,
         e,
         [MetaSpace.Home, null, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans].indexOf(metaSpace),
@@ -85,7 +85,7 @@ const SidebarUserSettingsTab = () => {
                             SettingLevel.ACCOUNT,
                             e.target.checked,
                         );
-                        PosthogAnalytics.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", e, 1);
+                        PosthogTrackers.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", e, 1);
                     }}
                     className="mx_SidebarUserSettingsTab_homeAllRoomsCheckbox"
                 >
