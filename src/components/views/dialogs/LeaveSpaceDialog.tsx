@@ -42,15 +42,12 @@ const isOnlyAdmin = (room: Room): boolean => {
 
 const LeaveSpaceDialog: React.FC<IProps> = ({ space, onFinished }) => {
     const spaceChildren = useMemo(() => {
-        const roomSet = new Set<Room>();
-        SpaceStore.instance.traverseSpace(space.roomId, roomId => {
-            if (space.roomId === roomId) return; // skip the root node
-            const room = space.client.getRoom(roomId);
-            if (room) {
-                roomSet.add(room);
-            }
-        }, true);
-        return Array.from(roomSet);
+        const roomSet = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(space.roomId));
+        SpaceStore.instance.traverseSpace(space.roomId, spaceId => {
+            if (space.roomId === spaceId) return; // skip the root node
+            roomSet.add(spaceId);
+        }, false);
+        return Array.from(roomSet).map(roomId => space.client.getRoom(roomId)).filter(Boolean);
     }, [space]);
     const [roomsToLeave, setRoomsToLeave] = useState<Room[]>([]);
     const selectedRooms = useMemo(() => new Set(roomsToLeave), [roomsToLeave]);
