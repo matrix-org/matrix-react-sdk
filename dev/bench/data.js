@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644397930970,
+  "lastUpdate": 1644398174760,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -63968,6 +63968,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4989.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2b72a2cc2fc1d0c6930c3d62a1f15f2c249d13c3",
+          "message": "Fix view source and devtools showing hljs warnings (#7759)",
+          "timestamp": "2022-02-09T09:09:06Z",
+          "tree_id": "6c29686215400b2d225d7cd6d8a1c1654a1b97b5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2b72a2cc2fc1d0c6930c3d62a1f15f2c249d13c3"
+        },
+        "date": 1644398168702,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5145.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 971,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4451.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
