@@ -343,11 +343,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     public render(): JSX.Element {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
-        const mxEvent = this.props.mxEvent;
+        const { mxEvent, rightClick, showPermalink, eventTileOps, reactions } = this.props;
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
-        const contentActionable = isContentActionable(this.props.mxEvent);
-        const rightClick = this.props.rightClick;
+        const contentActionable = isContentActionable(mxEvent);
         const permalink = this.getPermalink();
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
@@ -356,7 +355,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             timelineRenderingType === TimelineRenderingType.Thread ||
             timelineRenderingType === TimelineRenderingType.ThreadsList
         );
-        const isThreadRootEvent = isThread && this.props.mxEvent?.getThread()?.rootEvent === this.props.mxEvent;
+        const isThreadRootEvent = isThread && mxEvent?.getThread()?.rootEvent === mxEvent;
         const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
             MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
         );
@@ -450,7 +449,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             />
         );
 
-        if (this.props.eventTileOps && this.props.eventTileOps.isWidgetHidden()) {
+        if (eventTileOps?.isWidgetHidden()) {
             unhidePreviewButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconUnhidePreview"
@@ -461,7 +460,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         if (permalink) {
-            const showPermalink = this.props.showPermalink;
             permalinkButton = (
                 <IconizedContextMenuOption
                     iconClassName={showPermalink
@@ -488,7 +486,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (this.props.eventTileOps) { // this event is rendered using TextualBody
+        if (eventTileOps) { // this event is rendered using TextualBody
             quoteButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconQuote"
@@ -521,7 +519,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (this.props.collapseReplyChain) {
+        if (collapseReplyChain) {
             collapseReplyChain = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCollapse"
@@ -648,7 +646,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     <ReactionPicker
                         mxEvent={mxEvent}
                         onFinished={this.onCloseReactionPicker}
-                        reactions={this.props.reactions}
+                        reactions={reactions}
                     />
                 </ContextMenu>
             );
