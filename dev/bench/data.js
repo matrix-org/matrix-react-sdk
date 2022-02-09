@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644404296202,
+  "lastUpdate": 1644409008576,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64256,6 +64256,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4346.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "57274151+c-cal@users.noreply.github.com",
+            "name": "Charlie Calendre",
+            "username": "c-cal"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "254dbeeccb2685e604e4f5c204a0a3c5b7d0ad11",
+          "message": "Fix all settings button opening sidebar settings tab (#7765)",
+          "timestamp": "2022-02-09T12:09:52Z",
+          "tree_id": "4972d8a5a3fc661eb2310391a9bd272183e4d2cb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/254dbeeccb2685e604e4f5c204a0a3c5b7d0ad11"
+        },
+        "date": 1644409002473,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4944.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 889.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1666,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4459.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
