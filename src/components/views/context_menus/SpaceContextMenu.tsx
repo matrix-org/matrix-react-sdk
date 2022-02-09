@@ -36,6 +36,7 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { BetaPill } from "../beta/BetaCard";
 import SettingsStore from "../../../settings/SettingsStore";
 import { Action } from "../../../dispatcher/actions";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 interface IProps extends IContextMenuProps {
     space: Room;
@@ -134,6 +135,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             ev.preventDefault();
             ev.stopPropagation();
 
+            PosthogTrackers.trackInteraction("WebSpaceContextMenuNewRoomOption", ev);
             showCreateNewRoom(space);
             onFinished();
         };
