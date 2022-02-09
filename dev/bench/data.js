@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644398174760,
+  "lastUpdate": 1644398247955,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64016,6 +64016,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4451.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c01d46d7ffaaecd4ceec742a5a3eed2953725ac2",
+          "message": "Fix widget and mjolnir state events showing with mxid not name (#7760)",
+          "timestamp": "2022-02-09T09:09:28Z",
+          "tree_id": "1767d731e7bc0b11d07f4cfdbb60c75b68bb3a18",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c01d46d7ffaaecd4ceec742a5a3eed2953725ac2"
+        },
+        "date": 1644398241119,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4734,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 803.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
