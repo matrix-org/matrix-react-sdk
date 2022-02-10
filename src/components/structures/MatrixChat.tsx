@@ -1707,6 +1707,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: 'view_create_room',
             });
+        } else if (screen === 'dm') {
+            dis.dispatch({
+                action: 'view_create_chat',
+            });
         } else if (screen === 'settings') {
             dis.fire(Action.ViewUserSettings);
         } else if (screen === 'welcome') {
