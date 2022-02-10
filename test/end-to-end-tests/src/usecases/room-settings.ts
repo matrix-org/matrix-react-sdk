@@ -129,11 +129,13 @@ export async function checkRoomSettings(session: ElementSession, expectedSetting
         const radios = await session.queryAll(".mx_RoomSettingsDialog input[type=radio]");
         // the "Who can read history?" "Anyone" radio option is only shown if visibility is set to public
         assert.equal(radios.length, expectedSettings.visibility === "public" ? 7 : 6);
-        const [inviteOnlyRoom, publicRoom] = radios;
+        const [inviteOnlyRoom, spaceMembers, publicRoom] = radios;
 
         let expectedRadio = null;
         if (expectedSettings.visibility === "invite_only") {
             expectedRadio = inviteOnlyRoom;
+        } else if (expectedSettings.visibility = "space_members") {
+            expectedRadio = spaceMembers;
         } else if (expectedSettings.visibility === "public") {
             expectedRadio = publicRoom;
         } else {
