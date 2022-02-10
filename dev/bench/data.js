@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644499088337,
+  "lastUpdate": 1644499118998,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64796,6 +64796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4858,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7668984ee454d11e78f17be6a843ff03748284fc",
+          "message": "Properly recurse subspaces for leave space dialog options (#7775)",
+          "timestamp": "2022-02-10T13:11:28Z",
+          "tree_id": "09405ca6eac7e0332ef510b1865448755d6d0d05",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7668984ee454d11e78f17be6a843ff03748284fc"
+        },
+        "date": 1644499112564,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5075.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 972.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1727.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4531,
             "unit": "ms",
             "extra": "type: measure"
           }
