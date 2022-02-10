@@ -192,6 +192,8 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
             title={_t("Start chat")}
         />;
     }
+
+    return null;
 };
 
 const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
