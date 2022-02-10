@@ -391,8 +391,6 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.context = context;
         const thread = this.thread;
 
-        this.onReactionsCreated = this.onReactionsCreated.bind(this);
-
         this.state = {
             // Whether the action bar is focused.
             actionBarFocused: false,
@@ -1091,14 +1089,14 @@ export default class EventTile extends React.Component<IProps, IState> {
         return this.props.getRelationsForEvent(eventId, "m.annotation", "m.reaction");
     };
 
-    private onReactionsCreated(relationType: string, eventType: string) {
+    private onReactionsCreated = (relationType: string, eventType: string): void => {
         if (relationType !== "m.annotation" || eventType !== "m.reaction") {
             return;
         }
         this.setState({
             reactions: this.getReactions(),
         });
-    }
+    };
 
     private setQuoteExpanded = (expanded: boolean) => {
         this.setState({

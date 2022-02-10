@@ -1299,8 +1299,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                         return false;
                     }
 
-                    const parentEvent = this.props.timelineSet
-                        .findEventById(e.getAssociatedId());
+                    const parentEvent = this.props.timelineSet.findEventById(e.getAssociatedId());
                     if (!parentEvent) {
                         return false;
                     } else {

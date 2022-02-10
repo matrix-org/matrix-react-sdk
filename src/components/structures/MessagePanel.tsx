@@ -467,8 +467,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // TODO: Implement granular (per-room) hide options
     public shouldShowEvent(mxEv: MatrixEvent, forceHideEvents = false): boolean {
-        if (this.props.hideThreadedMessages
-            && SettingsStore.getValue("feature_thread")) {
+        if (this.props.hideThreadedMessages && SettingsStore.getValue("feature_thread")) {
             if (mxEv.isThreadRelation) {
                 return false;
             }
@@ -497,14 +496,16 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     private shouldLiveInThreadOnly(event: MatrixEvent): boolean {
-        const parentEventId = event.getAssociatedId();
+        const associatedId = event.getAssociatedId();
 
-        const targetsThreadRoot = event.threadRootId === parentEventId;
+        const targetsThreadRoot = event.threadRootId === associatedId;
         if (event.isThreadRoot || targetsThreadRoot || !event.isThreadRelation) {
             return false;
         }
 
-        const parentEvent = this.props.room.findEventById(parentEventId);
+        // If this is a reply, then we use the associated event to decide whether
+        // this should be thread only or not
+        const parentEvent = this.props.room.findEventById(associatedId);
         if (parentEvent) {
             return this.shouldLiveInThreadOnly(parentEvent);
         } else {
