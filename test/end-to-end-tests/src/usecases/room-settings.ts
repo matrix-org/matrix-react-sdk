@@ -92,7 +92,7 @@ export async function checkRoomSettings(session: ElementSession, expectedSetting
 
     if (expectedSettings.publishedAlias) {
         session.log.step(`checks for published alias of ${expectedSettings.publishedAlias}`);
-        const publishedAliases = await session.queryAll('#roomAltAliases .mx_EditableItem_item');
+        const publishedAliases = await session.queryAll('#roomAltAliases .mx_EditableItem_item, #roomAltAliases li');
         const publishedAliasTexts = await Promise.all(publishedAliases.map(a => session.innerText(a)));
         if (publishedAliasTexts.find(a => a.includes(expectedSettings.publishedAlias))) {
             session.log.done("present");
@@ -105,7 +105,7 @@ export async function checkRoomSettings(session: ElementSession, expectedSetting
         session.log.step(`checks for local alias of ${expectedSettings.alias}`);
         const summary = await session.query(".mx_RoomSettingsDialog .mx_AliasSettings summary");
         await summary.click();
-        const localAliases = await session.queryAll('#roomAliases .mx_EditableItem_item');
+        const localAliases = await session.queryAll('#roomAliases .mx_EditableItem_item, #roomAliases li');
         const localAliasTexts = await Promise.all(localAliases.map(a => session.innerText(a)));
         if (localAliasTexts.find(a => a.includes(expectedSettings.alias))) {
             session.log.done("present");
