@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644484393656,
+  "lastUpdate": 1644484470389,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64556,6 +64556,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4341.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f7b26214d208bf4d700c5bd5ae68af5fd4962c9",
+          "message": "Fix sort order for facepiles which was exactly reverse (#7771)",
+          "timestamp": "2022-02-10T09:06:45Z",
+          "tree_id": "c9fcca0afeab70b4b609f7a56a7173af8cbcd75d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f7b26214d208bf4d700c5bd5ae68af5fd4962c9"
+        },
+        "date": 1644484462590,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5541.000000000058,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1083.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1789.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4520.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
