@@ -52,6 +52,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
@@ -258,6 +259,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
         this.setState({ notificationsMenuPosition: target.getBoundingClientRect() });
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileNotificationsMenu", ev);
     };
 
     private onCloseNotificationsMenu = () => {
@@ -325,6 +328,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuLeaveItem", ev);
     };
 
     private onForgetRoomClick = (ev: ButtonEvent) => {
@@ -347,6 +352,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuSettingsItem", ev);
     };
 
     private onCopyRoomClick = (ev: ButtonEvent) => {
@@ -369,6 +376,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             roomId: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuInviteItem", ev);
     };
 
     private async saveNotifState(ev: ButtonEvent, newState: RoomNotifState) {
@@ -503,7 +512,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             >
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuCheckbox
-                        onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
+                        onClick={(e) => {
+                            this.onTagRoom(e, DefaultTagID.Favourite);
+                            PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuFavouriteToggle", e);
+                        }}
                         active={isFavorite}
                         label={favouriteLabel}
                         iconClassName="mx_RoomTile_iconStar"

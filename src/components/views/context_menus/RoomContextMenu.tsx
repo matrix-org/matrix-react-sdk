@@ -36,7 +36,6 @@ import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { RoomNotifState } from "../../../RoomNotifs";
 import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
-import { onRoomFilesClick, onRoomMembersClick } from "../right_panel/RoomSummaryCard";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
@@ -44,6 +43,7 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { Action } from "../../../dispatcher/actions";
+import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps extends IContextMenuProps {
@@ -87,6 +87,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 room_id: room.roomId,
             });
             onFinished();
+
+            PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuLeaveItem", ev);
         };
 
         leaveOption = <IconizedContextMenuOption
@@ -110,6 +112,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 roomId: room.roomId,
             });
             onFinished();
+
+            PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuInviteItem", ev);
         };
 
         inviteOption = <IconizedContextMenuOption
@@ -125,7 +129,10 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     if (room.getMyMembership() === "join") {
         const isFavorite = roomTags.includes(DefaultTagID.Favourite);
         favouriteOption = <IconizedContextMenuCheckbox
-            onClick={(e) => onTagRoom(e, DefaultTagID.Favourite)}
+            onClick={(e) => {
+                onTagRoom(e, DefaultTagID.Favourite);
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuFavouriteToggle", e);
+            }}
             active={isFavorite}
             label={isFavorite ? _t("Favourited") : _t("Favourite")}
             iconClassName="mx_RoomTile_iconStar"
@@ -172,6 +179,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     initial_tab_id: ROOM_NOTIFICATIONS_TAB,
                 });
                 onFinished();
+
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuNotificationsItem", ev);
             }}
             label={_t("Notifications")}
             iconClassName={iconClassName}
@@ -191,8 +200,9 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 ev.stopPropagation();
 
                 ensureViewingRoom(ev);
-                onRoomMembersClick(false);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, false);
                 onFinished();
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
             }}
             label={_t("People")}
             iconClassName="mx_RoomTile_iconPeople"
@@ -261,7 +271,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     ev.stopPropagation();
 
                     ensureViewingRoom(ev);
-                    onRoomFilesClick(false);
+                    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, false);
                     onFinished();
                 }}
                 label={_t("Files")}
@@ -294,6 +304,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                         room_id: room.roomId,
                     });
                     onFinished();
+                    PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuSettingsItem", ev);
                 }}
                 label={_t("Settings")}
                 iconClassName="mx_RoomTile_iconSettings"

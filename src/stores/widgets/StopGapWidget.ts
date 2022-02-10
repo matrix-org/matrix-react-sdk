@@ -65,9 +65,8 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-
     app: IWidget;
-    room: Room;
+    room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
     waitForIframeLoad: boolean;
@@ -425,6 +424,7 @@ export class StopGapWidget extends EventEmitter {
         if (!this.started) return;
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget);
         ActiveWidgetStore.instance.delRoomId(this.mockWidget.id);
+        this.messaging = null;
 
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().off('event', this.onEvent);

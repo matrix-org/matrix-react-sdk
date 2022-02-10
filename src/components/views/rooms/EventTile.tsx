@@ -24,6 +24,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
+import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { M_POLL_START } from "matrix-events-sdk";
 
 import ReplyChain from "../elements/ReplyChain";
@@ -184,6 +185,10 @@ export function getHandlerTile(ev: MatrixEvent): string {
     if (ev.isState()) {
         if (stateEventSingular.has(type) && ev.getStateKey() !== "") return undefined;
         return stateEventTileTypes[type];
+    }
+
+    if (ev.isRedacted()) {
+        return "messages.MessageEvent";
     }
 
     return eventTileTypes[type];
@@ -356,6 +361,7 @@ interface IState {
     thread: Thread;
     threadReplyCount: number;
     threadLastReply: MatrixEvent;
+    threadLastSender: RoomMember | null;
     threadNotification?: NotificationCountType;
 }
 
@@ -403,7 +409,8 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             thread,
             threadReplyCount: thread?.length,
-            threadLastReply: thread?.lastReply(),
+            threadLastReply: thread?.replyToEvent,
+            threadLastSender: thread?.replyToEvent.sender,
         };
 
         // don't do RR animations until we are mounted
@@ -557,7 +564,8 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         this.setState({
-            threadLastReply: thread?.lastReply(),
+            threadLastReply: thread?.replyToEvent,
+            threadLastSender: thread?.replyToEvent?.sender,
             threadReplyCount: thread?.length,
             thread,
         });
@@ -630,7 +638,7 @@ export default class EventTile extends React.Component<IProps, IState> {
          * We currently have no reliable way to discover than an event is a thread
          * when we are at the sync stage
          */
-        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const thread = room?.threads.get(this.props.mxEvent.getId());
 
         if (!thread || thread.length === 0) {
@@ -655,23 +663,24 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private renderThreadLastMessagePreview(): JSX.Element | null {
         const { threadLastReply } = this.state;
-        if (!threadLastReply) {
-            return null;
-        }
-
         const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(threadLastReply);
 
-        if (!threadMessagePreview || !threadLastReply.sender) {
-            return null;
-        }
-
+        const sender = this.thread.roomState.getSentinelMember(threadLastReply.getSender());
         return <>
-            <MemberAvatar member={threadLastReply.sender} width={24} height={24} className="mx_ThreadInfo_avatar" />
-            <div className="mx_ThreadInfo_content">
-                <span className="mx_ThreadInfo_message-preview">
-                    { threadMessagePreview }
-                </span>
-            </div>
+            <MemberAvatar
+                member={sender}
+                fallbackUserId={threadLastReply.getSender()}
+                width={24}
+                height={24}
+                className="mx_ThreadInfo_avatar"
+            />
+            { threadMessagePreview && (
+                <div className="mx_ThreadInfo_content">
+                    <span className="mx_ThreadInfo_message-preview">
+                        { threadMessagePreview }
+                    </span>
+                </div>
+            ) }
         </>;
     }
 
@@ -764,7 +773,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     private async verifyEvent(mxEvent: MatrixEvent): Promise<void> {
-        if (!mxEvent.isEncrypted()) {
+        if (!mxEvent.isEncrypted() || mxEvent.isRedacted()) {
             return;
         }
 
@@ -867,6 +876,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private shouldHighlight(): boolean {
         if (this.props.forExport) return false;
+        if (this.props.tileShape === TileShape.Notif) return false;
+        if (this.props.tileShape === TileShape.ThreadPanel) return false;
+
         const actions = this.context.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
@@ -1023,8 +1035,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             return <E2ePadlockUndecryptable />;
         }
 
-        // event is encrypted, display padlock corresponding to whether or not it is verified
-        if (ev.isEncrypted()) {
+        // event is encrypted and not redacted, display padlock corresponding to whether or not it is verified
+        if (ev.isEncrypted() && !ev.isRedacted()) {
             if (this.state.verified === E2EState.Normal) {
                 return; // no icon if we've not even cross-signed the user
             } else if (this.state.verified === E2EState.Verified) {
@@ -1048,6 +1060,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                 return;
             }
             if (ev.isState()) {
+                return; // we expect this to be unencrypted
+            }
+            if (ev.isRedacted()) {
                 return; // we expect this to be unencrypted
             }
             // if the event is not encrypted, but it's an e2e room, show the open padlock
@@ -1093,10 +1108,21 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
+    /**
+     * In some cases we can't use shouldHideEvent() since whether or not we hide
+     * an event depends on other things that the event itself
+     * @returns {boolean} true if event should be hidden
+     */
+    private shouldHideEvent(): boolean {
+        // If the call was replaced we don't render anything since we render the other call
+        if (this.props.callEventGrouper?.hangupReason === CallErrorCode.Replaced) return true;
+
+        return false;
+    }
+
     render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
-        const eventDisplayInfo = getEventDisplayInfo(this.props.mxEvent);
         const {
             tileHandler,
             isBubbleMessage,
@@ -1104,7 +1130,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             isLeftAlignedBubbleMessage,
             noBubbleEvent,
             isSeeingThroughMessageHiddenForModeration,
-        } = eventDisplayInfo;
+        } = getEventDisplayInfo(this.props.mxEvent, this.shouldHideEvent());
         const { isQuoteExpanded } = this.state;
 
         // This shouldn't happen: the caller should check we support this type
@@ -1154,7 +1180,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
-            mx_EventTile_highlight: this.props.tileShape === TileShape.Notif ? false : this.shouldHighlight(),
+            mx_EventTile_highlight: this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent,
             mx_EventTile_continuation: isContinuation || eventType === EventType.CallInvite,
             mx_EventTile_last: this.props.last,
@@ -1190,7 +1216,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         let avatarSize;
         let needsSenderProfile;
 
-        if (this.props.tileShape === TileShape.Notif) {
+        if (this.props.tileShape === TileShape.Notif || this.props.tileShape === TileShape.ThreadPanel) {
             avatarSize = 24;
             needsSenderProfile = true;
         } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
@@ -1243,9 +1269,14 @@ export default class EventTile extends React.Component<IProps, IState> {
                 sender = <SenderProfile onClick={this.onSenderProfileClick}
                     mxEvent={this.props.mxEvent}
                     enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
                 />;
             } else {
-                sender = <SenderProfile mxEvent={this.props.mxEvent} enableFlair={this.props.enableFlair} />;
+                sender = <SenderProfile
+                    mxEvent={this.props.mxEvent}
+                    enableFlair={this.props.enableFlair}
+                    tileShape={this.props.tileShape}
+                />;
             }
         }
 
@@ -1274,7 +1305,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.props.tileShape !== TileShape.ThreadPanel
             ? this.props.mxEvent.getTs()
-            : thread?.lastReply().getTs();
+            : thread?.replyToEvent.getTs();
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.props.tileShape === TileShape.ThreadPanel}
@@ -1614,8 +1645,8 @@ function isMessageEvent(ev: MatrixEvent): boolean {
 }
 
 export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean): boolean {
-    // Only messages have a tile (black-rectangle) if redacted
-    if (e.isRedacted() && !isMessageEvent(e)) return false;
+    // Only show "Message deleted" tile for message or encrypted events
+    if (e.isRedacted() && !e.isEncrypted() && !isMessageEvent(e)) return false;
 
     // No tile for replacement events since they update the original tile
     if (e.isRelation("m.replace")) return false;

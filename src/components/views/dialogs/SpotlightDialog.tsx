@@ -18,10 +18,10 @@ import React, {
     ChangeEvent,
     ComponentProps,
     KeyboardEvent,
+    RefObject,
     useCallback,
     useContext,
     useEffect,
-    useLayoutEffect,
     useMemo,
     useState,
 } from "react";
@@ -35,7 +35,6 @@ import { IDialogProps } from "./IDialogProps";
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
-import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {
     findSiblingElement,
@@ -54,16 +53,21 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from "../avatars/BaseAvatar";
 import Spinner from "../elements/Spinner";
-import { roomContextDetailsText } from "../../../Rooms";
+import { roomContextDetailsText, spaceContextDetailsText } from "../../../Rooms";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../dispatcher/actions";
 import Modal from "../../../Modal";
-import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
+import NotificationBadge from "../rooms/NotificationBadge";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { BetaPill } from "../beta/BetaCard";
+import { UserTab } from "./UserSettingsDialog";
+import BetaFeedbackDialog from "./BetaFeedbackDialog";
+import SdkConfig from "../../../SdkConfig";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 const MAX_RECENT_SEARCHES = 10;
@@ -107,10 +111,10 @@ const useRecentSearches = (): [Room[], () => void] => {
 };
 
 const ResultDetails = ({ room }: { room: Room }) => {
-    const roomContextDetails = roomContextDetailsText(room);
-    if (roomContextDetails) {
+    const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
+    if (contextDetails) {
         return <div className="mx_SpotlightDialog_result_details">
-            { roomContextDetails }
+            { contextDetails }
         </div>;
     }
 
@@ -167,6 +171,10 @@ const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boole
     return [results, hierarchy?.loading ?? false];
 };
 
+function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
+    return ref.current?.id.startsWith("mx_SpotlightDialog_button_recentlyViewed_");
+}
+
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
@@ -185,37 +193,26 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         });
     }, [cli, query]);
 
-    // Reset the selection back to the first item whenever the query changes
-    useLayoutEffect(() => {
-        rovingContext.dispatch({
-            type: Type.SetFocus,
-            payload: {
-                ref: rovingContext.state.refs[0],
-            },
-        });
-    }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
-
     const activeSpace = SpaceStore.instance.activeSpaceRoom;
     const [spaceResults, spaceResultsLoading] = useSpaceResults(activeSpace, query);
 
     const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
         const newQuery = e.currentTarget.value;
         _setQuery(newQuery);
-        if (!query !== !newQuery) {
-            setImmediate(() => {
-                // reset the activeRef when we start/stop querying as the view changes
-                const ref = rovingContext.state.refs[0];
-                if (ref) {
-                    rovingContext.dispatch({
-                        type: Type.SetFocus,
-                        payload: { ref },
-                    });
-                    ref.current?.scrollIntoView({
-                        block: "nearest",
-                    });
-                }
-            });
-        }
+
+        setImmediate(() => {
+            // reset the activeRef when we change query for best usability
+            const ref = rovingContext.state.refs[0];
+            if (ref) {
+                rovingContext.dispatch({
+                    type: Type.SetFocus,
+                    payload: { ref },
+                });
+                ref.current?.scrollIntoView({
+                    block: "nearest",
+                });
+            }
+        });
     };
 
     const viewRoom = (roomId: string, persist = false, viaKeyboard = false) => {
@@ -259,8 +256,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     viewRoom(room.roomId, true, ev.type !== "click");
                 }}
             >
-                <RoomAvatar room={room} width={20} height={20} />
+                <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
                 { room.name }
+                <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                 <ResultDetails room={room} />
                 <div className="mx_SpotlightDialog_enterPrompt">↵</div>
             </Option>
@@ -398,8 +396,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                     viewRoom(room.roomId, true, ev.type !== "click");
                                 }}
                             >
-                                <RoomAvatar room={room} width={20} height={20} />
+                                <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
+                                <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
+                                <ResultDetails room={room} />
                                 <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                             </Option>
                         )) }
@@ -462,6 +462,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     };
 
     const onKeyDown = (ev: KeyboardEvent) => {
+        let ref: RefObject<HTMLElement>;
+
         switch (ev.key) {
             case Key.ARROW_UP:
             case Key.ARROW_DOWN:
@@ -469,18 +471,36 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 ev.preventDefault();
 
                 if (rovingContext.state.refs.length > 0) {
-                    const idx = rovingContext.state.refs.indexOf(rovingContext.state.activeRef);
-                    const ref = findSiblingElement(rovingContext.state.refs, idx + (ev.key === Key.ARROW_UP ? -1 : 1));
-
-                    if (ref) {
-                        rovingContext.dispatch({
-                            type: Type.SetFocus,
-                            payload: { ref },
-                        });
-                        ref.current?.scrollIntoView({
-                            block: "nearest",
-                        });
+                    let refs = rovingContext.state.refs;
+                    if (!query) {
+                        // If the current selection is not in the recently viewed row then only include the
+                        // first recently viewed so that is the target when the user is switching into recently viewed.
+                        const keptRecentlyViewedRef = refIsForRecentlyViewed(rovingContext.state.activeRef)
+                            ? rovingContext.state.activeRef
+                            : refs.find(refIsForRecentlyViewed);
+                        // exclude all other recently viewed items from the list so up/down arrows skip them
+                        refs = refs.filter(ref => ref === keptRecentlyViewedRef || !refIsForRecentlyViewed(ref));
                     }
+
+                    const idx = refs.indexOf(rovingContext.state.activeRef);
+                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_UP ? -1 : 1));
+                }
+                break;
+
+            case Key.ARROW_LEFT:
+            case Key.ARROW_RIGHT:
+                // only handle these keys when we are in the recently viewed row of options
+                if (!query &&
+                    rovingContext.state.refs.length > 0 &&
+                    refIsForRecentlyViewed(rovingContext.state.activeRef)
+                ) {
+                    // we only intercept left/right arrows when the field is empty, and they'd do nothing anyway
+                    ev.stopPropagation();
+                    ev.preventDefault();
+
+                    const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
+                    const idx = refs.indexOf(rovingContext.state.activeRef);
+                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_LEFT ? -1 : 1));
                 }
                 break;
 
@@ -490,16 +510,34 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 rovingContext.state.activeRef?.current?.click();
                 break;
         }
+
+        if (ref) {
+            rovingContext.dispatch({
+                type: Type.SetFocus,
+                payload: { ref },
+            });
+            ref.current?.scrollIntoView({
+                block: "nearest",
+            });
+        }
     };
+
+    const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
+        Modal.createTrackedDialog("Spotlight Feedback", "feature_spotlight", BetaFeedbackDialog, {
+            featureId: "feature_spotlight",
+        });
+    } : null;
 
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
 
     return <>
         <div className="mx_SpotlightDialog_keyboardPrompt">
-            { _t("Use <arrows/> to scroll results", {}, {
+            { _t("Use <arrows/> to scroll", {}, {
                 arrows: () => <>
                     <div>↓</div>
                     <div>↑</div>
+                    { !query && <div>←</div> }
+                    { !query && <div>→</div> }
                 </>,
             }) }
         </div>
@@ -529,24 +567,24 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             </div>
 
             <div className="mx_SpotlightDialog_footer">
-                <span>
-                    { activeSpace
-                        ? _t("Searching rooms and chats you're in and %(spaceName)s", { spaceName: activeSpace.name })
-                        : _t("Searching rooms and chats you're in") }
-                </span>
-                <AccessibleButton
+                <BetaPill onClick={() => {
+                    defaultDispatcher.dispatch({
+                        action: Action.ViewUserSettings,
+                        initialTabId: UserTab.Labs,
+                    });
+                    onFinished();
+                }} />
+                { openFeedback && _t("Results not as expected? Please <a>give feedback</a>.", {}, {
+                    a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
+                        { sub }
+                    </AccessibleButton>,
+                }) }
+                { openFeedback && <AccessibleButton
                     kind="primary_outline"
-                    onClick={() => {
-                        Modal.createTrackedDialog("Spotlight Feedback", "", GenericFeatureFeedbackDialog, {
-                            title: _t("Spotlight search feedback"),
-                            subheading: _t("Thank you for trying Spotlight search. " +
-                                "Your feedback will help inform the next versions."),
-                            rageshakeLabel: "spotlight-feedback",
-                        });
-                    }}
+                    onClick={openFeedback}
                 >
                     { _t("Feedback") }
-                </AccessibleButton>
+                </AccessibleButton> }
             </div>
         </BaseDialog>
     </>;

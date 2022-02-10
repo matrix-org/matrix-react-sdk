@@ -808,6 +808,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 hasCancel={true}
                 onFinished={this.onFinished}
                 title={title}
+                screenName="RoomDirectory"
             >
                 <div className="mx_RoomDirectory">
                     { explanation }
