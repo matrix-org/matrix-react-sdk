@@ -71,9 +71,10 @@ async function findTabs(session: ElementSession): Promise<Tabs> {
 }
 
 interface Settings {
-    encryption: boolean;
+    encryption?: boolean;
     directory?: boolean;
     alias?: string;
+    publishedAlias?: string;
     visibility?: string;
 }
 
@@ -89,11 +90,22 @@ export async function checkRoomSettings(session: ElementSession, expectedSetting
         await checkSettingsToggle(session, isDirectory, expectedSettings.directory);
     }
 
+    if (expectedSettings.publishedAlias) {
+        session.log.step(`checks for published alias of ${expectedSettings.publishedAlias}`);
+        const publishedAliases = await session.queryAll('#roomAltAliases .mx_EditableItem_item');
+        const publishedAliasTexts = await Promise.all(publishedAliases.map(a => session.innerText(a)));
+        if (publishedAliasTexts.find(a => a.includes(expectedSettings.publishedAlias))) {
+            session.log.done("present");
+        } else {
+            throw new Error(`could not find published alias ${expectedSettings.publishedAlias}`);
+        }
+    }
+
     if (expectedSettings.alias) {
         session.log.step(`checks for local alias of ${expectedSettings.alias}`);
         const summary = await session.query(".mx_RoomSettingsDialog .mx_AliasSettings summary");
         await summary.click();
-        const localAliases = await session.queryAll('.mx_RoomSettingsDialog .mx_AliasSettings .mx_EditableItem_item');
+        const localAliases = await session.queryAll('#roomAliases .mx_EditableItem_item');
         const localAliasTexts = await Promise.all(localAliases.map(a => session.innerText(a)));
         if (localAliasTexts.find(a => a.includes(expectedSettings.alias))) {
             session.log.done("present");
@@ -139,7 +151,17 @@ export async function checkRoomSettings(session: ElementSession, expectedSetting
     session.log.endGroup();
 }
 
-export async function changeRoomSettings(session, settings) {
+async function getValidationError(session: ElementSession): Promise<string | undefined> {
+    try {
+        const validationDetail = await session.query(".mx_Validation_detail");
+        return session.innerText(validationDetail);
+    } catch (e) {
+        // no validation tooltips
+        return undefined;
+    }
+}
+
+export async function changeRoomSettings(session: ElementSession, settings: Settings) {
     session.log.startGroup(`changes the room settings`);
 
     const { securityTabButton, generalTabButton } = await findTabs(session);
@@ -186,12 +208,24 @@ export async function changeRoomSettings(session, settings) {
     }
 
     if (settings.alias) {
-        session.log.step(`sets alias to ${settings.alias}`);
-        const aliasField = await session.query(".mx_RoomSettingsDialog .mx_AliasSettings details input[type=text]");
+        session.log.step(`adding local alias ${settings.alias}`);
+        const aliasField = await session.query("#roomAliases input[type=text]");
         await session.replaceInputText(aliasField, settings.alias.substring(1, settings.alias.lastIndexOf(":")));
-        const addButton = await session.query(".mx_RoomSettingsDialog .mx_AliasSettings details .mx_AccessibleButton");
+        const addButton = await session.query("#roomAliases .mx_AccessibleButton");
         await addButton.click();
         await session.delay(10); // delay to give time for the validator to run and check the alias
+        assert.equal(await getValidationError(session), "");
+        session.log.done();
+    }
+
+    if (settings.publishedAlias) {
+        session.log.step(`adding published alias ${settings.alias}`);
+        const aliasField = await session.query("#roomAltAliases input[type=text]");
+        await session.replaceInputText(aliasField, settings.alias.substring(1));
+        const addButton = await session.query("#roomAltAliases details .mx_AccessibleButton");
+        await addButton.click();
+        await session.delay(10); // delay to give time for the validator to run and check the alias
+        assert.equal(await getValidationError(session), "");
         session.log.done();
     }
 
