@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644504360164,
+  "lastUpdate": 1644506847055,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65024,6 +65024,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4608.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "15a9303d29ca78563cd55789bf19bd630cc48191",
+          "message": "Improve thread partitioning for 2nd degree relations (#7748)",
+          "timestamp": "2022-02-10T15:18:55Z",
+          "tree_id": "a562d2d775422dcde0013ea23384e93ac52f0d99",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/15a9303d29ca78563cd55789bf19bd630cc48191"
+        },
+        "date": 1644506839459,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5156.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1210.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1727.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4905.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
