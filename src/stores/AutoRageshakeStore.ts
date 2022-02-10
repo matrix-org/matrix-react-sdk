@@ -162,7 +162,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
 
         await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
             userText: `Auto-reporting key backup not enabled`,
-            sendLogs: false,
+            sendLogs: true,
             labels: ["web", Action.ReportKeyBackupNotEnabled],
         });
     }
