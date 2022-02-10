@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644484288593,
+  "lastUpdate": 1644484393656,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64508,6 +64508,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4846.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7c344a2157246c6ddbf02544e428a0f4473720dd",
+          "message": "Fix state events being wrongly hidden when redacted (#7768)",
+          "timestamp": "2022-02-10T09:05:58Z",
+          "tree_id": "6df7112fc28c78a31f6c1fd70ceb95eeb2a6f373",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7c344a2157246c6ddbf02544e428a0f4473720dd"
+        },
+        "date": 1644484386718,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5011.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1023.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1685.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4341.5,
             "unit": "ms",
             "extra": "type: measure"
           }
