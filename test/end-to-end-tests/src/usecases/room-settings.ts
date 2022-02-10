@@ -134,7 +134,7 @@ export async function checkRoomSettings(session: ElementSession, expectedSetting
         let expectedRadio = null;
         if (expectedSettings.visibility === "invite_only") {
             expectedRadio = inviteOnlyRoom;
-        } else if (expectedSettings.visibility = "space_members") {
+        } else if (expectedSettings.visibility == "space_members") {
             expectedRadio = spaceMembers;
         } else if (expectedSettings.visibility === "public") {
             expectedRadio = publicRoom;
