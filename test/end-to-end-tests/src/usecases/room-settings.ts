@@ -214,7 +214,7 @@ export async function changeRoomSettings(session: ElementSession, settings: Sett
         const addButton = await session.query("#roomAliases .mx_AccessibleButton");
         await addButton.click();
         await session.delay(10); // delay to give time for the validator to run and check the alias
-        assert.equal(await getValidationError(session), "");
+        assert.equal(await getValidationError(session), undefined);
         session.log.done();
     }
 
@@ -225,7 +225,7 @@ export async function changeRoomSettings(session: ElementSession, settings: Sett
         const addButton = await session.query("#roomAltAliases details .mx_AccessibleButton");
         await addButton.click();
         await session.delay(10); // delay to give time for the validator to run and check the alias
-        assert.equal(await getValidationError(session), "");
+        assert.equal(await getValidationError(session), undefined);
         session.log.done();
     }
 
