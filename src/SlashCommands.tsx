@@ -350,7 +350,7 @@ export const Commands = [
                         event_id: eventId,
                         highlighted: true,
                         room_id: roomId,
-                        _trigger: "WebSlashCommand",
+                        _trigger: "SlashCommand",
                         _viaKeyboard: true,
                     });
                 })());
@@ -615,7 +615,7 @@ export const Commands = [
                         action: Action.ViewRoom,
                         room_alias: roomAlias,
                         auto_join: true,
-                        _trigger: "WebSlashCommand",
+                        _trigger: "SlashCommand",
                         _viaKeyboard: true,
                     });
                     return success();
@@ -627,7 +627,7 @@ export const Commands = [
                         room_id: roomId,
                         via_servers: viaServers, // for the rejoin button
                         auto_join: true,
-                        _trigger: "WebSlashCommand",
+                        _trigger: "SlashCommand",
                         _viaKeyboard: true,
                     });
                     return success();
@@ -653,7 +653,7 @@ export const Commands = [
                     const dispatch: ViewRoomPayload = {
                         action: Action.ViewRoom,
                         auto_join: true,
-                        _trigger: "WebSlashCommand",
+                        _trigger: "SlashCommand",
                         _viaKeyboard: true,
                     };
 
@@ -1155,7 +1155,7 @@ export const Commands = [
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: roomId,
-                    _trigger: "WebSlashCommand",
+                    _trigger: "SlashCommand",
                     _viaKeyboard: true,
                 });
             })());
@@ -1179,7 +1179,7 @@ export const Commands = [
                             dis.dispatch<ViewRoomPayload>({
                                 action: Action.ViewRoom,
                                 room_id: roomId,
-                                _trigger: "WebSlashCommand",
+                                _trigger: "SlashCommand",
                                 _viaKeyboard: true,
                             });
                             if (msg) {

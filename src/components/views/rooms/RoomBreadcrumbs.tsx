@@ -30,6 +30,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Action } from "../../../dispatcher/actions";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
 }
@@ -45,7 +46,7 @@ interface IState {
     skipFirst: boolean;
 }
 
-const RoomBreadcrumbTile = ({ room, onClick }: { room: Room, onClick: () => void }) => {
+const RoomBreadcrumbTile = ({ room, onClick }: { room: Room, onClick: (ev: ButtonEvent) => void }) => {
     const [onFocus, isActive, ref] = useRovingTabIndex();
 
     return (
@@ -116,7 +117,11 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
 
     public render(): React.ReactElement {
         const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => (
-            <RoomBreadcrumbTile key={r.roomId} room={r} onClick={(ev) => this.viewRoom(r, i, ev.type !== "click")} />
+            <RoomBreadcrumbTile
+                key={r.roomId}
+                room={r}
+                onClick={(ev: ButtonEvent) => this.viewRoom(r, i, ev.type !== "click")}
+            />
         ));
 
         if (tiles.length > 0) {

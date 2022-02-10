@@ -302,7 +302,7 @@ class RoomViewStore extends Store<ActionPayload> {
 
             let type: IJoinRoomEvent["segmentation"]["type"] = undefined;
             switch ((payload as ViewRoomPayload)._trigger) {
-                case "WebSlashCommand":
+                case "SlashCommand":
                     type = "slash_command";
                     break;
                 case "Tombstone":
