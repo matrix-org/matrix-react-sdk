@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644485282753,
+  "lastUpdate": 1644487799294,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64700,6 +64700,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4492.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f6565bfbc806434dafd18a3469ecf82b074488c6",
+          "message": "Send how many favorited rooms a user has to Posthog (#7772)",
+          "timestamp": "2022-02-10T10:02:34Z",
+          "tree_id": "cd5af7aa348dbf0764a83f1654eab0ac7eb06502",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f6565bfbc806434dafd18a3469ecf82b074488c6"
+        },
+        "date": 1644487792374,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5435,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1025.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1766.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4681.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
