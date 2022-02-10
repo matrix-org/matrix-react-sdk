@@ -38,6 +38,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { Action } from "../../../dispatcher/actions";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps extends IContextMenuProps {
@@ -143,6 +144,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             ev.preventDefault();
             ev.stopPropagation();
 
+            PosthogTrackers.trackInteraction("WebSpaceContextMenuNewRoomItem", ev);
             showCreateNewRoom(space);
             onFinished();
         };

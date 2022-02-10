@@ -59,6 +59,7 @@ import {
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import TooltipTarget from "../elements/TooltipTarget";
 import { BetaPill } from "../beta/BetaCard";
+import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
@@ -255,6 +256,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     showCreateNewRoom(activeSpace);
+                    PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                     closePlusMenu();
                 }}
             />;
@@ -334,6 +336,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: "view_create_room" });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                         closePlusMenu();
                     }}
                 />
