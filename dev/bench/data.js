@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644501607552,
+  "lastUpdate": 1644503822501,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -64928,6 +64928,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 598.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0d6ef766053859841fc5a179df8ed96867401c81",
+          "message": "Add analytics for the ViewRoom action (#7666)",
+          "timestamp": "2022-02-10T14:29:55Z",
+          "tree_id": "b88b470e26f37e04c4e9351079cb143849a4ebf5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0d6ef766053859841fc5a179df8ed96867401c81"
+        },
+        "date": 1644503814973,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5215.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 975.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1823,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4505.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
