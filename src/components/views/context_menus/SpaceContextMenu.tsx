@@ -135,7 +135,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             ev.preventDefault();
             ev.stopPropagation();
 
-            PosthogTrackers.trackInteraction("WebSpaceContextMenuNewRoomOption", ev);
+            PosthogTrackers.trackInteraction("WebSpaceContextMenuNewRoomItem", ev);
             showCreateNewRoom(space);
             onFinished();
         };
