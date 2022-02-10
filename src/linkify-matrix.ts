@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as linkifyjs from '@matrix-org/linkifyjs';
-import linkifyElement from '@matrix-org/linkify-element';
-import linkifyString from '@matrix-org/linkify-string';
+import * as linkifyjs from 'linkifyjs';
+import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
+import linkifyElement from 'linkify-element';
+import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { registerCustomProtocol, registerPlugin } from '@matrix-org/linkifyjs';
 
 import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
@@ -132,9 +132,9 @@ const escapeRegExp = function(string): string {
 };
 
 // Recognise URLs from both our local and official Element deployments.
-// Anyone else really should be using matrix.to.
+// Anyone else really should be using matrix.to. vector:// allowed to support Element Desktop relative links.
 export const ELEMENT_URL_PATTERN =
-    "^(?:https?://)?(?:" +
+    "^(?:vector://|https?://)?(?:" +
         escapeRegExp(window.location.host + window.location.pathname) + "|" +
         "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
         "(?:app|beta|staging|develop)\\.element\\.io/" +

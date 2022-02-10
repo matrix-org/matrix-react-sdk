@@ -60,7 +60,9 @@ const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
 
     const classes = classNames({
         "mx_RightPanel_headerButton_unreadIndicator": true,
+        "mx_Indicator_bold": color === NotificationColor.Bold,
         "mx_Indicator_gray": color === NotificationColor.Grey,
+        "mx_Indicator_red": color === NotificationColor.Red,
     });
     return <>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
@@ -100,6 +102,7 @@ const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButto
     let unreadIndicator;
     const color = RoomNotificationStateStore.instance.getRoomState(room).color;
     switch (color) {
+        case NotificationColor.Bold:
         case NotificationColor.Grey:
         case NotificationColor.Red:
             unreadIndicator = <UnreadIndicator color={color} />;

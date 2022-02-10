@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React, { createRef } from 'react';
 import classNames from 'classnames';
 import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
@@ -47,12 +48,13 @@ import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import RoomContext from '../../../contexts/RoomContext';
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import MessageComposerButtons from './MessageComposerButtons';
+import { ButtonEvent } from '../elements/AccessibleButton';
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
 
 interface ISendButtonProps {
-    onClick: () => void;
+    onClick: (ev: ButtonEvent) => void;
     title?: string; // defaults to something generic
 }
 
@@ -428,7 +430,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        <MessageComposerButtons
+                        { this.state.canSendMessages && <MessageComposerButtons
                             addEmoji={this.addEmoji}
                             haveRecording={this.state.haveRecording}
                             isMenuOpen={this.state.isMenuOpen}
@@ -446,7 +448,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showLocationButton={!window.electron}
                             showStickersButton={this.state.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
-                        />
+                        /> }
                         { showSendButton && (
                             <SendButton
                                 key="controls_send"

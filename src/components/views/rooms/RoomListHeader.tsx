@@ -31,6 +31,7 @@ import IconizedContextMenu, {
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {
     shouldShowSpaceInvite,
+    showAddExistingRooms,
     showCreateNewRoom,
     showCreateNewSubspace,
     showSpaceInvite,
@@ -126,6 +127,8 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         return null;
     }
 
+    const canAddRooms = activeSpace?.currentState?.maySendStateEvent(EventType.SpaceChild, cli.getUserId());
+
     let contextMenu: JSX.Element;
     if (mainMenuDisplayed) {
         let ContextMenuComponent;
@@ -197,9 +200,11 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        showCreateNewRoom(activeSpace);
+                        showAddExistingRooms(activeSpace);
                         closePlusMenu();
                     }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add rooms to this space")}
                 />
                 <IconizedContextMenuOption
                     label={_t("Add space")}
@@ -210,6 +215,8 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         showCreateNewSubspace(activeSpace);
                         closePlusMenu();
                     }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add spaces to this space")}
                 >
                     <BetaPill />
                 </IconizedContextMenuOption>
