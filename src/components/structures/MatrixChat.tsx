@@ -20,7 +20,6 @@ import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Screen as ScreenEvent } from "matrix-analytics-events/types/typescript/Screen";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
@@ -30,6 +29,7 @@ import 'focus-visible';
 // what-input helps improve keyboard accessibility
 import 'what-input';
 
+import PosthogTrackers from '../../PosthogTrackers';
 import Analytics from "../../Analytics";
 import CountlyAnalytics from "../../CountlyAnalytics";
 import { DecryptionFailureTracker } from "../../DecryptionFailureTracker";
@@ -118,39 +118,11 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
 import GenericToast from '../views/toasts/GenericToast';
+import Views from '../../Views';
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
-/** constants for MatrixChat.state.view */
-export enum Views {
-    // a special initial state which is only used at startup, while we are
-    // trying to re-animate a matrix client or register as a guest.
-    LOADING,
-
-    // we are showing the welcome view
-    WELCOME,
-
-    // we are showing the login view
-    LOGIN,
-
-    // we are showing the registration view
-    REGISTER,
-
-    // showing the 'forgot password' view
-    FORGOT_PASSWORD,
-
-    // showing flow to trust this new device with cross-signing
-    COMPLETE_SECURITY,
-
-    // flow to setup SSSS / cross-signing on this account
-    E2E_SETUP,
-
-    // we are logged in with an active matrix client. The logged_in state also
-    // includes guests users as they too are logged in at the client level.
-    LOGGED_IN,
-
-    // We are logged out (invalid token) but have our local state again. The user
-    // should log back in to rehydrate the client.
-    SOFT_LOGOUT,
-}
+// legacy export
+export { default as Views } from "../../Views";
 
 const AUTH_SCREENS = ["register", "login", "forgot_password", "start_sso", "start_cas", "welcome"];
 
@@ -168,25 +140,6 @@ interface IScreen {
     screen: string;
     params?: QueryDict;
 }
-
-/* eslint-disable camelcase */
-interface IRoomInfo {
-    room_id?: string;
-    room_alias?: string;
-    event_id?: string;
-
-    auto_join?: boolean;
-    highlighted?: boolean;
-    oob_data?: object;
-    via_servers?: string[];
-    threepid_invite?: IThreepidInvite;
-
-    justCreatedOpts?: IOpts;
-
-    // Whether or not to override default behaviour to end up at a timeline
-    forceTimeline?: boolean;
-}
-/* eslint-enable camelcase */
 
 interface IProps { // TODO type things better
     config: {
@@ -455,7 +408,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             const durationMs = this.stopPageChangeTimer();
             Analytics.trackPageChange(durationMs);
             CountlyAnalytics.instance.trackPageChange(durationMs);
-            this.trackScreenChange(durationMs);
+            PosthogTrackers.instance.trackPageChange(this.state.view, this.state.page_type, durationMs);
         }
         if (this.focusComposer) {
             dis.fire(Action.FocusSendMessageComposer);
@@ -473,36 +426,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         window.removeEventListener("resize", this.onWindowResized);
 
         if (this.accountPasswordTimer !== null) clearTimeout(this.accountPasswordTimer);
-    }
-
-    public trackScreenChange(durationMs: number): void {
-        const notLoggedInMap: Partial<Record<Views, ScreenEvent["screenName"]>> = {};
-        notLoggedInMap[Views.LOADING] = "WebLoading";
-        notLoggedInMap[Views.WELCOME] = "Welcome";
-        notLoggedInMap[Views.LOGIN] = "Login";
-        notLoggedInMap[Views.REGISTER] = "Register";
-        notLoggedInMap[Views.FORGOT_PASSWORD] = "ForgotPassword";
-        notLoggedInMap[Views.COMPLETE_SECURITY] = "WebCompleteSecurity";
-        notLoggedInMap[Views.E2E_SETUP] = "WebE2ESetup";
-        notLoggedInMap[Views.SOFT_LOGOUT] = "WebSoftLogout";
-
-        const loggedInPageTypeMap: Partial<Record<PageType, ScreenEvent["screenName"]>> = {};
-        loggedInPageTypeMap[PageType.HomePage] = "Home";
-        loggedInPageTypeMap[PageType.RoomView] = "Room";
-        loggedInPageTypeMap[PageType.RoomDirectory] = "RoomDirectory";
-        loggedInPageTypeMap[PageType.UserView] = "User";
-        loggedInPageTypeMap[PageType.GroupView] = "Group";
-        loggedInPageTypeMap[PageType.MyGroups] = "MyGroups";
-
-        const screenName = this.state.view === Views.LOGGED_IN ?
-            loggedInPageTypeMap[this.state.page_type] :
-            notLoggedInMap[this.state.view];
-
-        return PosthogAnalytics.instance.trackEvent<ScreenEvent>({
-            eventName: "$screen",
-            screenName,
-            durationMs,
-        });
     }
 
     private onWindowResized = (): void => {
@@ -734,7 +657,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // known to be in (eg. user clicks on a room in the recents panel), supply the ID
                 // If the user is clicking on a room in the context of the alias being presented
                 // to them, supply the room alias. If both are supplied, the room ID will be ignored.
-                const promise = this.viewRoom(payload as any);
+                const promise = this.viewRoom(payload as ViewRoomPayload);
                 if (payload.deferred_action) {
                     promise.then(() => {
                         dis.dispatch(payload.deferred_action);
@@ -953,21 +876,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     // switch view to the given room
-    //
-    // @param {Object} roomInfo Object containing data about the room to be joined
-    // @param {string=} roomInfo.room_id ID of the room to join. One of room_id or room_alias must be given.
-    // @param {string=} roomInfo.room_alias Alias of the room to join. One of room_id or room_alias must be given.
-    // @param {boolean=} roomInfo.auto_join If true, automatically attempt to join the room if not already a member.
-    // @param {string=} roomInfo.event_id ID of the event in this room to show: this will cause a switch to the
-    //                                    context of that particular event.
-    // @param {boolean=} roomInfo.highlighted If true, add event_id to the hash of the URL
-    //                                        and alter the EventTile to appear highlighted.
-    // @param {Object=} roomInfo.threepid_invite Object containing data about the third party
-    //                                           we received to join the room, if any.
-    // @param {Object=} roomInfo.oob_data Object of additional data about the room
-    //                               that has been passed out-of-band (eg.
-    //                               room name and avatar from an invite email)
-    private async viewRoom(roomInfo: IRoomInfo) {
+    private async viewRoom(roomInfo: ViewRoomPayload) {
         this.focusComposer = true;
 
         if (roomInfo.room_alias) {
@@ -1179,9 +1088,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const dmRooms = dmRoomMap.getDMRoomsForUserId(userId);
 
         if (dmRooms.length > 0) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: dmRooms[0],
+                _trigger: "MessageUser",
             });
         } else {
             dis.dispatch({
@@ -1454,9 +1364,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private viewLastRoom() {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: localStorage.getItem('mx_last_room_id'),
+            _trigger: undefined, // other
         });
     }
 
@@ -1882,7 +1793,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 else via = params.via;
             }
 
-            const payload = {
+            const payload: ViewRoomPayload = {
                 action: Action.ViewRoom,
                 event_id: eventId,
                 via_servers: via,
@@ -1901,6 +1812,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 },
                 room_alias: undefined,
                 room_id: undefined,
+                _trigger: undefined, // unknown or external trigger
             };
             if (roomString[0] === '#') {
                 payload.room_alias = roomString;

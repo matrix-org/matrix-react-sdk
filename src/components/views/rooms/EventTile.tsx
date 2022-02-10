@@ -77,6 +77,7 @@ import { CardContext } from '../right_panel/BaseCard';
 import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -714,11 +715,12 @@ export default class EventTile extends React.Component<IProps, IState> {
     private viewInRoom = (evt: ButtonEvent): void => {
         evt.preventDefault();
         evt.stopPropagation();
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
+            _trigger: undefined, // room doesn't change
         });
     };
 
@@ -1016,11 +1018,12 @@ export default class EventTile extends React.Component<IProps, IState> {
         // This allows the permalink to be opened in a new tab/window or copied as
         // matrix.to, but also for it to enable routing within Element when clicked.
         e.preventDefault();
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
+            _trigger: this.props.timelineRenderingType === TimelineRenderingType.Search ? "MessageSearch" : undefined,
         });
     };
 
@@ -1635,17 +1638,18 @@ export default class EventTile extends React.Component<IProps, IState> {
 }
 
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
-const messageTypes = ['m.room.message', 'm.sticker'];
+const messageTypes = [EventType.RoomMessage, EventType.Sticker];
 function isMessageEvent(ev: MatrixEvent): boolean {
-    return (messageTypes.includes(ev.getType()));
+    return (messageTypes.includes(ev.getType() as EventType));
 }
 
 export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean): boolean {
-    // Only show "Message deleted" tile for message or encrypted events
-    if (e.isRedacted() && !e.isEncrypted() && !isMessageEvent(e)) return false;
+    // Only show "Message deleted" tile for plain message events, encrypted events,
+    // and state events as they'll likely still contain enough keys to be relevant.
+    if (e.isRedacted() && !e.isEncrypted() && !isMessageEvent(e) && !e.isState()) return false;
 
     // No tile for replacement events since they update the original tile
-    if (e.isRelation("m.replace")) return false;
+    if (e.isRelation(RelationType.Replace)) return false;
 
     const handler = getHandlerTile(e);
     if (handler === undefined) return false;
