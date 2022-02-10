@@ -222,7 +222,7 @@ export async function changeRoomSettings(session: ElementSession, settings: Sett
         session.log.step(`adding published alias ${settings.alias}`);
         const aliasField = await session.query("#roomAltAliases input[type=text]");
         await session.replaceInputText(aliasField, settings.alias.substring(1));
-        const addButton = await session.query("#roomAltAliases details .mx_AccessibleButton");
+        const addButton = await session.query("#roomAltAliases .mx_AccessibleButton");
         await addButton.click();
         await session.delay(10); // delay to give time for the validator to run and check the alias
         assert.equal(await getValidationError(session), undefined);
