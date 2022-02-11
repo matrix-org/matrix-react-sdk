@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644576484964,
+  "lastUpdate": 1644579990227,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65144,6 +65144,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 657.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ac6a35602743f08acf3cfffb4a1662450d6b4b11",
+          "message": "End-to-end test alias publishing flow (#7779)",
+          "timestamp": "2022-02-11T11:37:31Z",
+          "tree_id": "94c51acef5cf6c619b8158eeb22b1da6b4e03e76",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ac6a35602743f08acf3cfffb4a1662450d6b4b11"
+        },
+        "date": 1644579983056,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5428.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1235.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
