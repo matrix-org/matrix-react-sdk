@@ -21,6 +21,7 @@ import '../../../skinned-sdk';
 import { act } from "react-dom/test-utils";
 import { Room } from 'matrix-js-sdk';
 
+import '../skinned-sdk'; // Must be first for skinning to work
 import ExportDialog from '../../../../src/components/views/dialogs/ExportDialog';
 import { ExportType, ExportFormat } from '../../../../src/utils/exportUtils/exportUtils';
 import { createTestClient, mkStubRoom } from '../../../test-utils';
