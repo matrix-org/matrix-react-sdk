@@ -677,6 +677,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
             case 'view_create_room':
                 this.createRoom(payload.public, payload.defaultName);
+
+                // View the welcome or home page if we need something to look at
+                this.viewSomethingBehindModal();
                 break;
             case 'view_create_group': {
                 const prototype = SettingsStore.getValue("feature_communities_v2_prototypes");
@@ -714,6 +717,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case 'view_create_chat':
                 showStartChatInviteDialog(payload.initialText || "");
+
+                // View the welcome or home page if we need something to look at
+                this.viewSomethingBehindModal();
                 break;
             case 'view_invite': {
                 const room = MatrixClientPeg.get().getRoom(payload.roomId);
