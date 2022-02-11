@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644580217952,
+  "lastUpdate": 1644581652163,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65228,6 +65228,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4778.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d06ec845ee221822c84a4741fee1c0cca6632810",
+          "message": "Fix cutout misalignment on some decorated room avatars (#7784)",
+          "timestamp": "2022-02-11T12:05:54Z",
+          "tree_id": "96adfe93f7419d64f4b5d5b1b2c20734239552fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d06ec845ee221822c84a4741fee1c0cca6632810"
+        },
+        "date": 1644581645844,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4717.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 966.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1646.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4356.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
