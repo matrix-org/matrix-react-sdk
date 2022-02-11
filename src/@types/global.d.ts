@@ -109,10 +109,13 @@ declare global {
         mxActiveWidgetStore?: ActiveWidgetStore;
         mxSkinner?: Skinner;
         mxOnRecaptchaLoaded?: () => void;
+        electron?: Electron;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
         mxAutoRageshakeStore?: AutoRageshakeStore;
     }
+
+    interface Electron { }
 
     interface DesktopCapturerSource {
         id: string;
