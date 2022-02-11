@@ -134,7 +134,7 @@ export async function checkRoomSettings(session: ElementSession, expectedSetting
         let expectedRadio = null;
         if (expectedSettings.visibility === "invite_only") {
             expectedRadio = inviteOnlyRoom;
-        } else if (expectedSettings.visibility == "space_members") {
+        } else if (expectedSettings.visibility === "space_members") {
             expectedRadio = spaceMembers;
         } else if (expectedSettings.visibility === "public") {
             expectedRadio = publicRoom;
@@ -216,7 +216,7 @@ export async function changeRoomSettings(session: ElementSession, settings: Sett
         await session.replaceInputText(aliasField, settings.alias.substring(1, settings.alias.lastIndexOf(":")));
         const addButton = await session.query("#roomAliases .mx_AccessibleButton");
         await addButton.click();
-        await session.delay(10); // delay to give time for the validator to run and check the alias
+        await session.query("#roomAliases .mx_Field_valid, #roomAliases .mx_Field_invalid"); // await validator
         assert.equal(await getValidationError(session), undefined);
         session.log.done();
     }
@@ -227,7 +227,7 @@ export async function changeRoomSettings(session: ElementSession, settings: Sett
         await session.replaceInputText(aliasField, settings.alias.substring(1));
         const addButton = await session.query("#roomAltAliases .mx_AccessibleButton");
         await addButton.click();
-        await session.delay(10); // delay to give time for the validator to run and check the alias
+        await session.query("#roomAltAliases .mx_Field_valid, #roomAltAliases .mx_Field_invalid"); // await validator
         assert.equal(await getValidationError(session), undefined);
         session.log.done();
     }
