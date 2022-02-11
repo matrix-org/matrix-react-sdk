@@ -180,6 +180,8 @@ describe("MPollBody", () => {
         expect(votesCount(body, "italian")).toBe("");
         expect(votesCount(body, "wings")).toBe("");
         expect(body.find(".mx_MPollBody_totalVotes").text()).toBe("No votes cast");
+        expect(body.find('h2').html())
+            .toEqual("<h2>What should we order for the party?</h2>");
     });
 
     it("finds votes from multiple people", () => {
@@ -897,7 +899,12 @@ describe("MPollBody", () => {
         });
         pollEvent.makeReplaced(replacingEvent);
         const body = newMPollBodyFromEvent(pollEvent, []);
-        expect(body.find('h2').text()).toEqual("new question");
+        expect(body.find('h2').html())
+            .toEqual(
+                "<h2>new question"
+                + "<span class=\"mx_MPollBody_edited\"> (edited)</span>"
+                + "</h2>",
+            );
         const inputs = body.find('input[type="radio"]');
         expect(inputs).toHaveLength(3);
         expect(inputs.at(0).prop("value")).toEqual("n1");
@@ -909,8 +916,6 @@ describe("MPollBody", () => {
         expect(options.at(1).text()).toEqual("new answer 2");
         expect(options.at(2).text()).toEqual("new answer 3");
     });
-
-    // TODO: test for (edited) in name after a poll has been edited
 
     it("renders a poll with no votes", () => {
         const votes = [];
