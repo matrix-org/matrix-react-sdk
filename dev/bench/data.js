@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644571956802,
+  "lastUpdate": 1644576484964,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65108,6 +65108,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 727.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "73899bb2e30ebb8bb79021ecf2bf145ae7b3be62",
+          "message": "Switch to IPC channel for `getDesktopCapturerSources` (#7782)",
+          "timestamp": "2022-02-11T10:41:15Z",
+          "tree_id": "fa66ac4a3b0644231dc51d3f23cfe7f6221f1d1c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/73899bb2e30ebb8bb79021ecf2bf145ae7b3be62"
+        },
+        "date": 1644576478900,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4991.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 657.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
