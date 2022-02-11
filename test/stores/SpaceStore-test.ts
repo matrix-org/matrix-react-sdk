@@ -515,6 +515,16 @@ describe("SpaceStore", () => {
                     expect(store.isRoomInSpace(space2, dm3)).toBeFalsy();
                     expect(store.isRoomInSpace(space3, dm3)).toBeFalsy();
                 });
+
+                it('uses cached aggregated rooms', () => {
+                    const rooms = store.getSpaceFilteredRoomIds(space4, true);
+                    expect(store.isRoomInSpace(space4, fav1)).toBeTruthy();
+                    expect(store.isRoomInSpace(space4, fav3)).toBeTruthy();
+                    expect(store.isRoomInSpace(space4, room1)).toBeTruthy();
+
+                    // isRoomInSpace calls didn't rebuild room set
+                    expect(rooms).toStrictEqual(store.getSpaceFilteredRoomIds(space4, true));
+                });
             });
 
             it("dms are only added to Notification States for only the People Space", async () => {

@@ -53,7 +53,7 @@ import {
 } from ".";
 import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
-import { flattenSpaceHierarchy, SpaceEntityMap, SpaceDescendantMap } from "./flattenSpaceHierarchy";
+import { flattenSpaceHierarchyWithCache, SpaceEntityMap, SpaceDescendantMap } from "./flattenSpaceHierarchy";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 
 interface IState { }
@@ -107,6 +107,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private childSpacesBySpace: SpaceDescendantMap = new Map<SpaceKey, Set<SpaceKey>>();
     // Map from SpaceKey to Set of user IDs that are direct descendants of that space
     private userIdsBySpace: SpaceEntityMap = new Map<Room["roomId"], Set<string>>();
+    // cache that stores the aggregated lists of roomIdsBySpace and userIdsBySpace
+    // cleared on changes
+    private _aggregatedSpaceCache: Record<string, SpaceEntityMap> = {
+        roomIdsBySpace: new Map<SpaceKey, Set<string>>(),
+        userIdsBySpace: new Map<Room["roomId"], Set<string>>(),
+    };
     // The space currently selected in the Space Panel
     private _activeSpace?: SpaceKey = MetaSpace.Home; // set properly by onReady
     private _suggestedRooms: ISuggestedRoom[] = [];
@@ -386,7 +392,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     // get all rooms in a space
     // including descendant spaces
-    public getSpaceFilteredRoomIds = (space: SpaceKey, includeDescendantSpaces = true): Set<string> => {
+    public getSpaceFilteredRoomIds = (
+        space: SpaceKey, includeDescendantSpaces = true, useCache = true,
+    ): Set<string> => {
         if (space === MetaSpace.Home && this.allRoomsInHome) {
             return new Set(this.matrixClient.getVisibleRooms().map(r => r.roomId));
         }
@@ -394,10 +402,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!includeDescendantSpaces) {
             return this.roomIdsBySpace.get(space) || new Set();
         }
-        return flattenSpaceHierarchy(this.roomIdsBySpace, this.childSpacesBySpace, space);
+
+        return this.getAggregatedRoomIdsBySpace(this.roomIdsBySpace, this.childSpacesBySpace, space, useCache);
     };
 
-    public getSpaceFilteredUserIds = (space: SpaceKey, includeDescendantSpaces = true): Set<string> => {
+    public getSpaceFilteredUserIds = (
+        space: SpaceKey, includeDescendantSpaces = true, useCache = true,
+    ): Set<string> => {
         if (space === MetaSpace.Home && this.allRoomsInHome) {
             return undefined;
         }
@@ -408,8 +419,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return this.userIdsBySpace.get(space) || new Set();
         }
 
-        return flattenSpaceHierarchy(this.userIdsBySpace, this.childSpacesBySpace, space);
+        return this.getAggregatedUserIdsBySpace(this.userIdsBySpace, this.childSpacesBySpace, space, useCache);
     };
+
+    private getAggregatedRoomIdsBySpace = flattenSpaceHierarchyWithCache(this._aggregatedSpaceCache.roomIdsBySpace);
+    private getAggregatedUserIdsBySpace = flattenSpaceHierarchyWithCache(this._aggregatedSpaceCache.userIdsBySpace);
 
     private markTreeChildren = (rootSpace: Room, unseen: Set<Room>): void => {
         const stack = [rootSpace];
@@ -553,6 +567,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.roomIdsBySpace.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
         }
 
+        // bust cache for meta spaces
+        enabledMetaSpaces.forEach(metaSpaceKey => this._aggregatedSpaceCache.roomIdsBySpace.delete(metaSpaceKey));
+
         if (isMetaSpace(this.activeSpace)) {
             this.switchSpaceIfNeeded();
         }
@@ -627,6 +644,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         } else {
             this.userIdsBySpace.get(space.roomId)?.delete(userId);
         }
+
+        // bust cache
+        this._aggregatedSpaceCache.userIdsBySpace.clear();
 
         this.switchSpaceIfNeeded();
     };
@@ -722,6 +742,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             ...usersChanged,
             ...spacesChanged,
         ]);
+
+        // bust aggregate cache
+        this._aggregatedSpaceCache.roomIdsBySpace.clear();
+        this._aggregatedSpaceCache.userIdsBySpace.clear();
 
         changeSet.forEach(k => {
             this.emit(k);
@@ -977,6 +1001,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.notificationStateMap = new Map();
         this.roomIdsBySpace = new Map();
         this.userIdsBySpace = new Map();
+        this._aggregatedSpaceCache.roomIdsBySpace.clear();
+        this._aggregatedSpaceCache.userIdsBySpace.clear();
         this._activeSpace = MetaSpace.Home; // set properly by onReady
         this._suggestedRooms = [];
         this._invitedSpaces = new Set();

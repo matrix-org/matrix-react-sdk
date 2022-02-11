@@ -58,3 +58,19 @@ export const flattenSpaceHierarchy = (
 
     return flattenedRooms;
 };
+
+export const flattenSpaceHierarchyWithCache = (cache: SpaceEntityMap) => (
+    spaceEntityMap: SpaceEntityMap,
+    spaceDescendantMap: SpaceDescendantMap,
+    spaceId: SpaceKey,
+    useCache = true,
+): Set<string> => {
+    if (useCache && cache.has(spaceId)) {
+        return cache.get(spaceId);
+    }
+    const result = flattenSpaceHierarchy(spaceEntityMap, spaceDescendantMap, spaceId);
+    cache.set(spaceId, result);
+
+    return result;
+};
+
