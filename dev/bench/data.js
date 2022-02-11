@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644506847055,
+  "lastUpdate": 1644571956802,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65072,6 +65072,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4905.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "57274151+c-cal@users.noreply.github.com",
+            "name": "Charlie Calendre",
+            "username": "c-cal"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c3bb8cf3ef75b15175e4e9d6b26794b3127a4bcc",
+          "message": "Fix desktop notifications for invites showing user IDs instead of displaynames (#7780)",
+          "timestamp": "2022-02-11T09:25:14Z",
+          "tree_id": "c973582987d01653e550de4e10ad06fe7fe35721",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c3bb8cf3ef75b15175e4e9d6b26794b3127a4bcc"
+        },
+        "date": 1644571949830,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4982.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 727.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
