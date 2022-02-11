@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644581652163,
+  "lastUpdate": 1644584933370,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65276,6 +65276,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4356.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5e7d12f76ce3f03fd137eae78bf1dfefa252462",
+          "message": "Add config option to autorageshake when key backup is not enabled (#7741)\n\n* report on not enabled\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add setting\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* check key backup status after crypto init\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove log\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test encryption setup in DeviceListener\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* sendLogs for key backup auto-report event\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove reloadOnChagneController\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-11T14:00:37+01:00",
+          "tree_id": "62844bfdd2f25664ec895fe5cb62550208fd85d4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5e7d12f76ce3f03fd137eae78bf1dfefa252462"
+        },
+        "date": 1644584926924,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4703.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1008,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1629.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4470.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
