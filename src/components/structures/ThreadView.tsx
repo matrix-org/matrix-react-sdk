@@ -46,6 +46,7 @@ import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import SettingsStore from "../../settings/SettingsStore";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     room: Room;
@@ -195,12 +196,13 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private onScroll = (): void => {
         if (this.props.initialEvent && this.props.isInitialEventHighlighted) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
                 event_id: this.props.initialEvent?.getId(),
                 highlighted: false,
                 replyingToEvent: this.state.replyToEvent,
+                _trigger: undefined, // room doesn't change
             });
         }
     };
@@ -262,6 +264,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             <RoomContext.Provider value={{
                 ...this.context,
                 timelineRenderingType: TimelineRenderingType.Thread,
+                threadId: this.state.thread?.id,
                 liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),
             }}>
 
