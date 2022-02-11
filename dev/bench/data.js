@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644584933370,
+  "lastUpdate": 1644585165563,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65324,6 +65324,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4470.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0e3b55967144666a32b589a31bd05962e40ca2ac",
+          "message": "Fix electron typing again again (#7788)",
+          "timestamp": "2022-02-11T13:03:51Z",
+          "tree_id": "6e27b09c3c0ff87922608abc2b19d8613a8d3f39",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0e3b55967144666a32b589a31bd05962e40ca2ac"
+        },
+        "date": 1644585158373,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5002.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1224,
             "unit": "ms",
             "extra": "type: measure"
           }
