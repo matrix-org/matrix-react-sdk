@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { ConfigOptions } from "../SdkConfig";
+import { getEmbeddedPagesWellKnown } from '../utils/WellKnownUtils';
 
 export function getHomePageUrl(appConfig: ConfigOptions): string | null {
     const pagesConfig = appConfig.embeddedPages;
@@ -26,6 +27,9 @@ export function getHomePageUrl(appConfig: ConfigOptions): string | null {
         // page, which is not the same).
         pageUrl = appConfig.welcomePageUrl;
     }
+
+    const wkHomeUrl = getEmbeddedPagesWellKnown()?.home_url;
+    if (wkHomeUrl) pageUrl = wkHomeUrl;
 
     return pageUrl;
 }
