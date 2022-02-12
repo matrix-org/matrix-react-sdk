@@ -20,8 +20,9 @@ limitations under the License.
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: left;
+    justify-content: space-between;
     flex-shrink: 0;
+    width: 100%;
 
     &.mx_CallViewHeader_pip {
         cursor: pointer;

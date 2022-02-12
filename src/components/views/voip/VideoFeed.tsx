@@ -41,7 +41,8 @@ interface IProps {
     // due to a change in video metadata
     onResize?: (e: Event) => void;
 
-    primary: boolean;
+    primary?: boolean;
+    secondary?: boolean;
 }
 
 interface IState {
@@ -178,9 +179,11 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
     };
 
     render() {
-        const { pipMode, primary, feed } = this.props;
+        const { pipMode, primary, secondary, feed } = this.props;
 
         const wrapperClasses = classnames("mx_VideoFeed", {
+            mx_VideoFeed_primary: primary,
+            mx_VideoFeed_secondary: secondary,
             mx_VideoFeed_voice: this.state.videoMuted,
         });
         const micIconClasses = classnames("mx_VideoFeed_mic", {
