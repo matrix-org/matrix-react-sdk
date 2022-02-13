@@ -181,7 +181,7 @@ export default class Hearts implements ICanvasEffect {
             this.context.restore();
 
             // Remove any dead hearts after a 100px wide margin.
-            if (particle.y < -100 ) {
+            if (particle.y < -100) {
                 const idx = this.particles.indexOf(particle);
                 this.particles.splice(idx, 1);
             }
