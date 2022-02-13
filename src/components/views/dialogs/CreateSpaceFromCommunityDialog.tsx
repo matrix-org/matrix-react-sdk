@@ -18,6 +18,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import BaseDialog from "./BaseDialog";
@@ -32,7 +33,7 @@ import { calculateRoomVia, makeRoomPermalink } from "../../../utils/permalinks/P
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import Spinner from "../elements/Spinner";
 import { mediaFromMxc } from "../../../customisations/Media";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import Modal from "../../../Modal";
 import InfoDialog from "./InfoDialog";
 import dis from "../../../dispatcher/dispatcher";
@@ -41,6 +42,7 @@ import { UserTab } from "./UserSettingsDialog";
 import TagOrderActions from "../../../actions/TagOrderActions";
 import { inviteUsersToRoom } from "../../../RoomInvite";
 import ProgressBar from "../elements/ProgressBar";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     matrixClient: MatrixClient;
@@ -174,7 +176,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                         const { servers } = await cli.getRoomIdForAlias(canonicalAlias);
                         viaMap.set(roomId, servers);
                     } catch (e) {
-                        console.warn("Failed to resolve alias during community migration", e);
+                        logger.warn("Failed to resolve alias during community migration", e);
                     }
                 }
 
@@ -207,7 +209,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
             setProgress(Progress.InvitingUsers);
 
             const userIds = [...members, ...invitedMembers].map(m => m.userId).filter(m => m !== cli.getUserId());
-            await inviteUsersToRoom(roomId, userIds, () => setProgress(p => p + 1));
+            await inviteUsersToRoom(roomId, userIds, false, () => setProgress(p => p + 1));
 
             // eagerly remove it from the community panel
             dis.dispatch(TagOrderActions.removeTag(cli, groupId));
@@ -219,15 +221,16 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                     _t("This community has been upgraded into a Space") + `</h1></a><br />`
                     + groupSummary.profile.long_description,
             } as IGroupSummary["profile"]).catch(e => {
-                console.warn("Failed to update community profile during migration", e);
+                logger.warn("Failed to update community profile during migration", e);
             });
 
             onFinished(roomId);
 
             const onSpaceClick = () => {
-                dis.dispatch({
-                    action: "view_room",
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     room_id: roomId,
+                    _trigger: undefined, // other
                 });
             };
 
@@ -271,7 +274,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
                 },
             }, "mx_CreateSpaceFromCommunityDialog_SuccessInfoDialog");
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             setError(e);
         }
 

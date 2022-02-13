@@ -62,7 +62,9 @@ limitations under the License.
         color: $authpage-primary-color;
         grid-column: 1;
         grid-row: 2;
-        margin-bottom: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 8px;
     }
 
     .mx_ServerPicker_change {
@@ -73,7 +75,7 @@ limitations under the License.
     }
 
     .mx_ServerPicker_desc {
-        margin-top: -12px;
+        margin-top: 4px;
         color: $tertiary-content;
         grid-column: 1 / 2;
         grid-row: 3;

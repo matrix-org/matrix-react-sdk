@@ -32,8 +32,11 @@ import {
     IWidgetApiErrorResponseData,
     WidgetKind,
 } from "matrix-widget-api";
-import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { EventEmitter } from "events";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
 import RoomViewStore from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -45,27 +48,25 @@ import { WidgetType } from "../../widgets/WidgetType";
 import ActiveWidgetStore from "../ActiveWidgetStore";
 import { objectShallowClone } from "../../utils/objects";
 import defaultDispatcher from "../../dispatcher/dispatcher";
+import { Action } from "../../dispatcher/actions";
 import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
 import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 // TODO: Destroy all of this code
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-
     app: IWidget;
-    room: Room;
+    room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
     waitForIframeLoad: boolean;
@@ -108,8 +109,8 @@ export class ElementWidget extends Widget {
         }
         let domain = super.rawData['domain'];
         if (domain === undefined) {
-            // v1 widgets default to jitsi.riot.im regardless of user settings
-            domain = "jitsi.riot.im";
+            // v1 widgets default to meet.element.io regardless of user settings
+            domain = "meet.element.io";
         }
 
         let theme = new ThemeWatcher().getEffectiveTheme();
@@ -135,7 +136,7 @@ export class ElementWidget extends Widget {
         };
     }
 
-    public getCompleteUrl(params: ITemplateParams, asPopout=false): string {
+    public getCompleteUrl(params: ITemplateParams, asPopout = false): string {
         return runTemplate(asPopout ? this.popoutTemplateUrl : this.templateUrl, {
             ...this.rawDefinition,
             data: this.rawData,
@@ -149,7 +150,7 @@ export class StopGapWidget extends EventEmitter {
     private scalarToken: string;
     private roomId?: string;
     private kind: WidgetKind;
-    private readUpToMap: {[roomId: string]: string} = {}; // room ID to event ID
+    private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
 
     constructor(private appTileProps: IAppTileProps) {
         super();
@@ -254,14 +255,18 @@ export class StopGapWidget extends EventEmitter {
             });
         }
     };
-
-    public start(iframe: HTMLIFrameElement) {
+    /**
+     * This starts the messaging for the widget if it is not in the state `started` yet.
+     * @param iframe the iframe the widget should use
+     */
+    public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
         const allowedCapabilities = this.appTileProps.whitelistCapabilities || [];
         const driver = new StopGapWidgetDriver(allowedCapabilities, this.mockWidget, this.kind, this.roomId);
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
         this.messaging.on("ready", () => this.emit("ready"));
+        this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
         WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.messaging);
 
@@ -289,9 +294,10 @@ export class StopGapWidget extends EventEmitter {
             }
 
             // at this point we can change rooms, so do that
-            defaultDispatcher.dispatch({
-                action: 'view_room',
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: targetRoomId,
+                _trigger: "Widget",
             });
 
             // acknowledge so the widget doesn't freak out
@@ -401,11 +407,16 @@ export class StopGapWidget extends EventEmitter {
             }
         } catch (e) {
             // All errors are non-fatal
-            console.error("Error preparing widget communications: ", e);
+            logger.error("Error preparing widget communications: ", e);
         }
     }
 
-    public stop(opts = { forceDestroy: false }) {
+    /**
+     * Stops the widget messaging for if it is started. Skips stopping if it is an active
+     * widget.
+     * @param opts
+     */
+    public stopMessaging(opts = { forceDestroy: false }) {
         if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {
             logger.log("Skipping destroy - persistent widget");
             return;
@@ -413,6 +424,7 @@ export class StopGapWidget extends EventEmitter {
         if (!this.started) return;
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget);
         ActiveWidgetStore.instance.delRoomId(this.mockWidget.id);
+        this.messaging = null;
 
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().off('event', this.onEvent);
@@ -473,7 +485,7 @@ export class StopGapWidget extends EventEmitter {
 
         const raw = ev.getEffectiveEvent();
         this.messaging.feedEvent(raw, this.eventListenerRoomId).catch(e => {
-            console.error("Error sending event to widget: ", e);
+            logger.error("Error sending event to widget: ", e);
         });
     }
 }

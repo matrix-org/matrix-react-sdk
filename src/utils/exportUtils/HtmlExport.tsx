@@ -16,27 +16,30 @@ limitations under the License.
 
 import React from "react";
 import ReactDOM from "react-dom";
-import Exporter from "./Exporter";
-import { mediaFromMxc } from "../../customisations/Media";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Layout } from "../../settings/Layout";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import Exporter from "./Exporter";
+import { mediaFromMxc } from "../../customisations/Media";
+import { Layout } from "../../settings/enums/Layout";
 import { shouldFormContinuation } from "../../components/structures/MessagePanel";
 import { formatFullDateNoDayNoTime, wantsDateSeparator } from "../../DateUtils";
 import { RoomPermalinkCreator } from "../permalinks/Permalinks";
 import { _t } from "../../languageHandler";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import * as Avatar from "../../Avatar";
 import EventTile, { haveTileForEvent } from "../../components/views/rooms/EventTile";
 import DateSeparator from "../../components/views/messages/DateSeparator";
 import BaseAvatar from "../../components/views/avatars/BaseAvatar";
-import exportJS from "!!raw-loader!./exportJS";
 import { ExportType } from "./exportUtils";
 import { IExportOptions } from "./exportUtils";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import getExportCSS from "./exportCSS";
 import { textForEvent } from "../../TextForEvent";
+
+import exportJS from "!!raw-loader!./exportJS";
 
 export default class HTMLExporter extends Exporter {
     protected avatars: Map<string, boolean>;
@@ -70,7 +73,7 @@ export default class HTMLExporter extends Exporter {
                 this.totalSize += blob.size;
                 this.addFile(avatarPath, blob);
             } catch (err) {
-                console.log("Failed to fetch room's avatar" + err);
+                logger.log("Failed to fetch room's avatar" + err);
             }
         }
         const avatar = (
@@ -238,14 +241,18 @@ export default class HTMLExporter extends Exporter {
                 const blob = await image.blob();
                 this.addFile(`users/${member.userId.replace(/:/g, '-')}.png`, blob);
             } catch (err) {
-                console.log("Failed to fetch user's avatar" + err);
+                logger.log("Failed to fetch user's avatar" + err);
             }
         }
     }
 
     protected getDateSeparator(event: MatrixEvent) {
         const ts = event.getTs();
-        const dateSeparator = <li key={ts}><DateSeparator forExport={true} key={ts} ts={ts} /></li>;
+        const dateSeparator = (
+            <li key={ts}>
+                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()} ts={ts} />
+            </li>
+        );
         return renderToStaticMarkup(dateSeparator);
     }
 
@@ -362,7 +369,7 @@ export default class HTMLExporter extends Exporter {
                             this.addFile(filePath, blob);
                         }
                     } catch (e) {
-                        console.log("Error while fetching file" + e);
+                        logger.log("Error while fetching file" + e);
                         eventTile = await this.getEventTileMarkup(
                             this.createModifiedEvent(_t("Error fetching file"), mxEv),
                             joined,
@@ -377,7 +384,7 @@ export default class HTMLExporter extends Exporter {
             } else eventTile = await this.getEventTileMarkup(mxEv, joined);
         } catch (e) {
             // TODO: Handle callEvent errors
-            console.error(e);
+            logger.error(e);
             eventTile = await this.getEventTileMarkup(
                 this.createModifiedEvent(textForEvent(mxEv), mxEv, false),
                 joined,
@@ -392,7 +399,10 @@ export default class HTMLExporter extends Exporter {
         let prevEvent = null;
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
             const event = events[i];
-            this.updateProgress(`Processing event ${i + 1} out of ${events.length}`, false, true);
+            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
+                number: i + 1,
+                total: events.length,
+            }), false, true);
             if (this.cancelled) return this.cleanUp();
             if (!haveTileForEvent(event)) continue;
 
@@ -408,20 +418,30 @@ export default class HTMLExporter extends Exporter {
     }
 
     public async export() {
-        this.updateProgress("Starting export...");
+        this.updateProgress(_t("Starting export..."));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        this.updateProgress(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`, true, false);
+        this.updateProgress(_t("Fetched %(count)s events in %(seconds)ss", {
+            count: res.length,
+            seconds: (fetchEnd - fetchStart) / 1000,
+        }), true, false);
 
-        this.updateProgress("Creating HTML...");
+        this.updateProgress(_t("Creating HTML..."));
+
+        const usedClasses = new Set<string>();
         for (let page = 0; page < res.length / 1000; page++) {
             const html = await this.createHTML(res, page * 1000);
+            const document = new DOMParser().parseFromString(html, "text/html");
+            document.querySelectorAll("*").forEach(element => {
+                element.classList.forEach(c => usedClasses.add(c));
+            });
             this.addFile(`messages${page ? page + 1 : ""}.html`, new Blob([html]));
         }
-        const exportCSS = await getExportCSS();
+
+        const exportCSS = await getExportCSS(usedClasses);
         this.addFile("css/style.css", new Blob([exportCSS]));
         this.addFile("js/script.js", new Blob([exportJS]));
 
@@ -430,10 +450,13 @@ export default class HTMLExporter extends Exporter {
         const exportEnd = performance.now();
 
         if (this.cancelled) {
-            console.info("Export cancelled successfully");
+            logger.info("Export cancelled successfully");
         } else {
-            this.updateProgress("Export successful!");
-            this.updateProgress(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            this.updateProgress(_t("Export successful!"));
+            this.updateProgress(_t("Exported %(count)s events in %(seconds)s seconds", {
+                count: res.length,
+                seconds: (exportEnd - fetchStart) / 1000,
+            }));
         }
 
         this.cleanUp();

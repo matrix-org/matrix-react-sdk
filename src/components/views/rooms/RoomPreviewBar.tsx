@@ -20,11 +20,10 @@ import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { IJoinRuleEventContent, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import classNames from 'classnames';
 
-import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
-import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import SdkConfig from "../../../SdkConfig";
 import IdentityAuthClient from '../../../IdentityAuthClient';
@@ -35,8 +34,9 @@ import InviteReason from "../elements/InviteReason";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
-import { UIFeature } from "../../../settings/UIFeature";
+import RoomAvatar from "../avatars/RoomAvatar";
 import SettingsStore from "../../../settings/SettingsStore";
+import { UIFeature } from "../../../settings/UIFeature";
 
 const MemberEventHtmlReasonField = "io.element.html_reason";
 
@@ -359,7 +359,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             }
             case MessageCase.Kicked: {
                 const { memberName, reason } = this.getKickOrBanInfo();
-                title = _t("You were kicked from %(roomName)s by %(memberName)s",
+                title = _t("You were removed from %(roomName)s by %(memberName)s",
                     { memberName, roomName: this.roomName() });
                 subTitle = reason ? _t("Reason: %(reason)s", { reason }) : null;
 
@@ -465,7 +465,6 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 break;
             }
             case MessageCase.Invite: {
-                const RoomAvatar = sdk.getComponent("views.avatars.RoomAvatar");
                 const oobData = Object.assign({}, this.props.oobData, {
                     avatarUrl: this.communityProfile().avatarMxc,
                 });
@@ -594,10 +593,25 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             );
         }
 
+        const isPanel = this.props.canPreview;
+
         const classes = classNames("mx_RoomPreviewBar", "dark-panel", `mx_RoomPreviewBar_${messageCase}`, {
-            "mx_RoomPreviewBar_panel": this.props.canPreview,
-            "mx_RoomPreviewBar_dialog": !this.props.canPreview,
+            "mx_RoomPreviewBar_panel": isPanel,
+            "mx_RoomPreviewBar_dialog": !isPanel,
         });
+
+        // ensure correct tab order for both views
+        const actions = isPanel
+            ? <>
+                { secondaryButton }
+                { extraComponents }
+                { primaryButton }
+            </>
+            : <>
+                { primaryButton }
+                { extraComponents }
+                { secondaryButton }
+            </>;
 
         return (
             <div className={classes}>
@@ -607,9 +621,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 </div>
                 { reasonElement }
                 <div className="mx_RoomPreviewBar_actions">
-                    { secondaryButton }
-                    { extraComponents }
-                    { primaryButton }
+                    { actions }
                 </div>
                 <div className="mx_RoomPreviewBar_footer">
                     { footer }

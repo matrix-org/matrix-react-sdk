@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { ErrorInfo } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -52,8 +53,8 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
     componentDidCatch(error: Error, { componentStack }: ErrorInfo): void {
         // Browser consoles are better at formatting output when native errors are passed
         // in their own `console.error` invocation.
-        console.error(error);
-        console.error(
+        logger.error(error);
+        logger.error(
             "The above error occured while React was rendering the following components:",
             componentStack,
         );
@@ -104,13 +105,19 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                 </React.Fragment>;
             }
 
+            let clearCacheButton: JSX.Element;
+            // we only show this button if there is an initialised MatrixClient otherwise we can't clear the cache
+            if (MatrixClientPeg.get()) {
+                clearCacheButton = <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
+                    { _t("Clear cache and reload") }
+                </AccessibleButton>;
+            }
+
             return <div className="mx_ErrorBoundary">
                 <div className="mx_ErrorBoundary_body">
                     <h1>{ _t("Something went wrong!") }</h1>
                     { bugReportSection }
-                    <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
-                        { _t("Clear cache and reload") }
-                    </AccessibleButton>
+                    { clearCacheButton }
                 </div>
             </div>;
         }

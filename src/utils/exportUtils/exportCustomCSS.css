@@ -119,12 +119,14 @@ a.mx_reply_anchor:hover {
     }
 }
 
-.mx_ReplyThread_Export {
+.mx_ReplyChain_Export {
     margin-top: 0px;
     margin-bottom: 5px;
 }
 
-.mx_RedactedBody {
+.mx_RedactedBody,
+.mx_HiddenBody {
+
     padding-left: unset;
 }
 

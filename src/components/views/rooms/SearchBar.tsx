@@ -16,12 +16,14 @@ limitations under the License.
 */
 
 import React, { createRef, RefObject } from 'react';
-import AccessibleButton from "../elements/AccessibleButton";
 import classNames from "classnames";
+
+import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from '../../../languageHandler';
 import { Key } from "../../../Keyboard";
 import DesktopBuildsNotice, { WarningKind } from "../elements/DesktopBuildsNotice";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { PosthogScreenTracker } from '../../../PosthogTrackers';
 
 interface IProps {
     onCancelClick: () => void;
@@ -92,6 +94,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
 
         return (
             <>
+                <PosthogScreenTracker screenName="RoomSearch" />
                 <div className="mx_SearchBar">
                     <div className="mx_SearchBar_buttons" role="radiogroup">
                         <AccessibleButton

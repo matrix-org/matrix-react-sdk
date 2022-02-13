@@ -17,14 +17,20 @@ limitations under the License.
 
 import React, { createRef, RefObject } from 'react';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { formatDate } from '../../../DateUtils';
 import NodeAnimator from "../../../NodeAnimator";
 import { toPx } from "../../../utils/units";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
 import MemberAvatar from '../avatars/MemberAvatar';
+
+export interface IReadReceiptInfo {
+    top?: number;
+    left?: number;
+    parent?: Element;
+}
 
 interface IProps {
     // the RoomMember to show the RR for
@@ -43,10 +49,8 @@ interface IProps {
     // don't animate this RR into position
     suppressAnimation?: boolean;
 
-    // an opaque object for storing information about this user's RR in
-    // this room
-    // TODO: proper typing for RR info
-    readReceiptInfo: any;
+    // an opaque object for storing information about this user's RR in this room
+    readReceiptInfo: IReadReceiptInfo;
 
     // A function which is used to check if the parent panel is being
     // unmounted, to avoid unnecessary work. Should return true if we
@@ -145,7 +149,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
             // this seems to happen sometimes for reasons I don't understand
             // the docs for `offsetParent` say it may be null if `display` is
             // `none`, but I can't see why that would happen.
-            console.warn(
+            logger.warn(
                 `ReadReceiptMarker for ${this.props.fallbackUserId} in has no offsetParent`,
             );
             startTopOffset = 0;
@@ -204,6 +208,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
                     member={this.props.member}
                     fallbackUserId={this.props.fallbackUserId}
                     aria-hidden="true"
+                    aria-live="off"
                     width={14}
                     height={14}
                     resizeMethod="crop"

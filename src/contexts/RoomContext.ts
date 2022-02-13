@@ -17,11 +17,15 @@ limitations under the License.
 import { createContext } from "react";
 
 import { IRoomState } from "../components/structures/RoomView";
-import { Layout } from "../settings/Layout";
+import { Layout } from "../settings/enums/Layout";
 
 export enum TimelineRenderingType {
-    Room,
-    Thread
+    Room = "Room",
+    Thread = "Thread",
+    ThreadsList = "ThreadsList",
+    File = "File",
+    Notification = "Notification",
+    Search = "Search"
 }
 
 const RoomContext = createContext<IRoomState>({
@@ -59,6 +63,7 @@ const RoomContext = createContext<IRoomState>({
     matrixClientIsReady: false,
     dragCounter: 0,
     timelineRenderingType: TimelineRenderingType.Room,
+    threadId: undefined,
     liveTimeline: undefined,
 });
 RoomContext.displayName = "RoomContext";

@@ -17,13 +17,13 @@ limitations under the License.
 import React, { ComponentProps, RefObject, SyntheticEvent, KeyboardEvent, useContext, useRef, useState } from "react";
 import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
-import FocusLock from "react-focus-lock";
-import { HistoryVisibility, Preset } from "matrix-js-sdk/src/@types/partials";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
+import { HistoryVisibility, Preset } from "matrix-js-sdk/src/@types/partials";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { ChevronFace, ContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import createRoom, { IOpts as ICreateOpts } from "../../../createRoom";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SpaceBasicSettings, { SpaceAvatar } from "./SpaceBasicSettings";
@@ -118,6 +118,7 @@ export const SpaceFeedbackPrompt = ({ onClick }: { onClick?: () => void }) => {
                     rageshakeLabel: "spaces-feedback",
                     rageshakeData: Object.fromEntries([
                         "Spaces.allRoomsInHome",
+                        "Spaces.enabledMetaSpaces",
                     ].map(k => [k, SettingsStore.getValue(k)])),
                 });
             }}
@@ -215,7 +216,6 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
 };
 
 const SpaceCreateMenu = ({ onFinished }) => {
-    const cli = useContext(MatrixClientContext);
     const [visibility, setVisibility] = useState<Visibility>(null);
     const [busy, setBusy] = useState<boolean>(false);
 
@@ -239,13 +239,9 @@ const SpaceCreateMenu = ({ onFinished }) => {
             return;
         }
 
-        // validate the space alias field but do not require it
-        const aliasLocalpart = alias.substring(1, alias.length - cli.getDomain().length - 1);
-        if (visibility === Visibility.Public && aliasLocalpart &&
-            (await spaceAliasField.current.validate({ allowEmpty: true })) === false
-        ) {
+        if (visibility === Visibility.Public && !(await spaceAliasField.current.validate({ allowEmpty: false }))) {
             spaceAliasField.current.focus();
-            spaceAliasField.current.validate({ allowEmpty: true, focused: true });
+            spaceAliasField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
@@ -254,14 +250,14 @@ const SpaceCreateMenu = ({ onFinished }) => {
             await createSpace(
                 name,
                 visibility === Visibility.Public,
-                aliasLocalpart ? alias : undefined,
+                alias,
                 topic,
                 avatar,
             );
 
             onFinished();
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
     };
 
@@ -360,10 +356,9 @@ const SpaceCreateMenu = ({ onFinished }) => {
         onFinished={onFinished}
         wrapperClassName="mx_SpaceCreateMenu_wrapper"
         managed={false}
+        focusLock={true}
     >
-        <FocusLock returnFocus={true}>
-            { body }
-        </FocusLock>
+        { body }
     </ContextMenu>;
 };
 

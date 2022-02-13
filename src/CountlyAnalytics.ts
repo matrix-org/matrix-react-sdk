@@ -17,6 +17,7 @@ limitations under the License.
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { getCurrentLanguage } from './languageHandler';
 import PlatformPeg from './PlatformPeg';
@@ -261,7 +262,7 @@ interface ICreateRoomEvent extends IEvent {
     };
 }
 
-interface IJoinRoomEvent extends IEvent {
+export interface IJoinRoomEvent extends IEvent {
     key: Action.JoinRoom;
     dur: number; // how long it took to join (until remote echo)
     segmentation: {
@@ -269,7 +270,7 @@ interface IJoinRoomEvent extends IEvent {
         num_users: number;
         is_encrypted: boolean;
         is_public: boolean;
-        type: "room_directory" | "slash_command" | "link" | "invite";
+        type: "room_directory" | "slash_command" | "link" | "invite" | "tombstone";
     };
 }
 /* eslint-enable camelcase */
@@ -427,7 +428,7 @@ export default class CountlyAnalytics {
         try {
             this.appVersion = await platform.getAppVersion();
         } catch (e) {
-            console.warn("Failed to get app version, using 'unknown'");
+            logger.warn("Failed to get app version, using 'unknown'");
         }
 
         // start heartbeat
@@ -438,7 +439,7 @@ export default class CountlyAnalytics {
 
     public async disable() {
         if (this.disabled) return;
-        await this.track("Opt-Out" );
+        await this.track("Opt-Out");
         this.endSession();
         window.clearInterval(this.heartbeatIntervalId);
         window.clearTimeout(this.activityIntervalId);
@@ -651,7 +652,7 @@ export default class CountlyAnalytics {
                 body: params,
             });
         } catch (e) {
-            console.error("Analytics error: ", e);
+            logger.error("Analytics error: ", e);
         }
     }
 

@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import { LocalStorageCryptoStore } from 'matrix-js-sdk/src/crypto/store/localStorage-crypto-store';
-import Analytics from '../Analytics';
 import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
 import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
-
 import { logger } from "matrix-js-sdk/src/logger";
+
+import Analytics from '../Analytics';
 
 const localStorage = window.localStorage;
 
@@ -39,7 +39,7 @@ function log(msg: string) {
 }
 
 function error(msg: string, ...args: string[]) {
-    console.error(`StorageManager: ${msg}`, ...args);
+    logger.error(`StorageManager: ${msg}`, ...args);
 }
 
 function track(action: string) {

@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { dialogTermsInteractionCallback, TermsNotSignedError } from "../../../Terms";
 import classNames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
+import { dialogTermsInteractionCallback, TermsNotSignedError } from "../../../Terms";
 import * as ScalarMessaging from "../../../ScalarMessaging";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IntegrationManagerInstance } from "../../../integrations/IntegrationManagerInstance";
@@ -116,7 +118,7 @@ export default class TabbedIntegrationManagerDialog extends React.Component<IPro
                 return;
             }
 
-            console.error(e);
+            logger.error(e);
             this.setState({
                 busy: false,
                 currentLoading: false,

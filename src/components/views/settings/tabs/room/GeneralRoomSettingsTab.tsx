@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ContextType } from 'react';
+
 import { _t } from "../../../../../languageHandler";
 import RoomProfileSettings from "../../../room_settings/RoomProfileSettings";
-import AccessibleButton from "../../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import dis from "../../../../../dispatcher/dispatcher";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import SettingsStore from "../../../../../settings/SettingsStore";
@@ -26,6 +27,7 @@ import { replaceableComponent } from "../../../../../utils/replaceableComponent"
 import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
 import RelatedGroupSettings from "../../../room_settings/RelatedGroupSettings";
 import AliasSettings from "../../../room_settings/AliasSettings";
+import PosthogTrackers from "../../../../../PosthogTrackers";
 
 interface IProps {
     roomId: string;
@@ -38,20 +40,23 @@ interface IState {
 @replaceableComponent("views.settings.tabs.room.GeneralRoomSettingsTab")
 export default class GeneralRoomSettingsTab extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
+    context: ContextType<typeof MatrixClientContext>;
 
-    constructor(props: IProps) {
-        super(props);
+    constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
+        super(props, context);
 
         this.state = {
             isRoomPublished: false, // loaded async
         };
     }
 
-    private onLeaveClick = (): void => {
+    private onLeaveClick = (ev: ButtonEvent): void => {
         dis.dispatch({
             action: 'leave_room',
             room_id: this.props.roomId,
         });
+
+        PosthogTrackers.trackInteraction("WebRoomSettingsLeaveButton", ev);
     };
 
     public render(): JSX.Element {
@@ -65,15 +70,9 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
         const canChangeGroups = room.currentState.mayClientSendStateEvent("m.room.related_groups", client);
         const groupsEvent = room.currentState.getStateEvents("m.room.related_groups", "");
 
-        let urlPreviewSettings = <>
-            <span className='mx_SettingsTab_subheading'>{ _t("URL Previews") }</span>
-            <div className='mx_SettingsTab_section'>
-                <UrlPreviewSettings room={room} />
-            </div>
-        </>;
-        if (!SettingsStore.getValue(UIFeature.URLPreviews)) {
-            urlPreviewSettings = null;
-        }
+        const urlPreviewSettings = SettingsStore.getValue(UIFeature.URLPreviews) ?
+            <UrlPreviewSettings room={room} /> :
+            null;
 
         let flairSection;
         if (SettingsStore.getValue(UIFeature.Flair)) {
@@ -89,6 +88,18 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
             </>;
         }
 
+        let leaveSection;
+        if (room.getMyMembership() === "join") {
+            leaveSection = <>
+                <span className='mx_SettingsTab_subheading'>{ _t("Leave room") }</span>
+                <div className='mx_SettingsTab_section'>
+                    <AccessibleButton kind='danger' onClick={this.onLeaveClick}>
+                        { _t('Leave room') }
+                    </AccessibleButton>
+                </div>
+            </>;
+        }
+
         return (
             <div className="mx_SettingsTab mx_GeneralRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("General") }</div>
@@ -97,24 +108,16 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                 </div>
 
                 <div className="mx_SettingsTab_heading">{ _t("Room Addresses") }</div>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <AliasSettings
-                        roomId={this.props.roomId}
-                        canSetCanonicalAlias={canSetCanonical}
-                        canSetAliases={canSetAliases}
-                        canonicalAliasEvent={canonicalAliasEv}
-                    />
-                </div>
+                <AliasSettings
+                    roomId={this.props.roomId}
+                    canSetCanonicalAlias={canSetCanonical}
+                    canSetAliases={canSetAliases}
+                    canonicalAliasEvent={canonicalAliasEv}
+                />
                 <div className="mx_SettingsTab_heading">{ _t("Other") }</div>
                 { flairSection }
                 { urlPreviewSettings }
-
-                <span className='mx_SettingsTab_subheading'>{ _t("Leave room") }</span>
-                <div className='mx_SettingsTab_section'>
-                    <AccessibleButton kind='danger' onClick={this.onLeaveClick}>
-                        { _t('Leave room') }
-                    </AccessibleButton>
-                </div>
+                { leaveSection }
             </div>
         );
     }

@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
@@ -27,7 +29,7 @@ import RoomName from "../elements/RoomName";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ErrorDialog from '../dialogs/ErrorDialog';
 import AccessibleButton from '../elements/AccessibleButton';
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 
 interface IProps {
     event: MatrixEvent;
@@ -100,7 +102,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
     onKickClick = () => {
         MatrixClientPeg.get().sendStateEvent(this.state.roomId, "m.room.third_party_invite", {}, this.state.stateKey)
             .catch((err) => {
-                console.error(err);
+                logger.error(err);
 
                 // Revert echo because of error
                 this.setState({ invited: true });

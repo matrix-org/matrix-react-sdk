@@ -17,12 +17,13 @@ limitations under the License.
 import classnames from 'classnames';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React from 'react';
-import SettingsStore from "../../../settings/SettingsStore";
 import { CallFeed, CallFeedEvent } from 'matrix-js-sdk/src/webrtc/callFeed';
 import { logger } from 'matrix-js-sdk/src/logger';
+import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+
+import SettingsStore from "../../../settings/SettingsStore";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
 
 interface IProps {
     call: MatrixCall;
@@ -45,7 +46,6 @@ interface IProps {
 interface IState {
     audioMuted: boolean;
     videoMuted: boolean;
-    speaking: boolean;
 }
 
 @replaceableComponent("views.voip.VideoFeed")
@@ -58,7 +58,6 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         this.state = {
             audioMuted: this.props.feed.isAudioMuted(),
             videoMuted: this.props.feed.isVideoMuted(),
-            speaking: false,
         };
     }
 
@@ -106,7 +105,6 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             this.props.feed.removeListener(CallFeedEvent.NewStream, this.onNewStream);
             this.props.feed.removeListener(CallFeedEvent.MuteStateChanged, this.onMuteStateChanged);
             if (this.props.feed.purpose === SDPStreamMetadataPurpose.Usermedia) {
-                this.props.feed.removeListener(CallFeedEvent.Speaking, this.onSpeaking);
                 this.props.feed.measureVolumeActivity(false);
             }
             this.stopMedia();
@@ -115,7 +113,6 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             this.props.feed.addListener(CallFeedEvent.NewStream, this.onNewStream);
             this.props.feed.addListener(CallFeedEvent.MuteStateChanged, this.onMuteStateChanged);
             if (this.props.feed.purpose === SDPStreamMetadataPurpose.Usermedia) {
-                this.props.feed.addListener(CallFeedEvent.Speaking, this.onSpeaking);
                 this.props.feed.measureVolumeActivity(true);
             }
             this.playMedia();
@@ -140,6 +137,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             // them with another load() which will cancel the pending one, but since we don't call
             // load() explicitly, it shouldn't be a problem. - Dave
             await element.play();
+            logger.debug((this.props.feed.isLocal ? "Local" : "Remote") + " video feed play() completed");
         } catch (e) {
             logger.info("Failed to play media element with feed", this.props.feed, e);
         }
@@ -172,10 +170,6 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         });
     };
 
-    private onSpeaking = (speaking: boolean): void => {
-        this.setState({ speaking });
-    };
-
     private onResize = (e) => {
         if (this.props.onResize && !this.props.feed.isLocal()) {
             this.props.onResize(e);
@@ -187,7 +181,6 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
 
         const wrapperClasses = classnames("mx_VideoFeed", {
             mx_VideoFeed_voice: this.state.videoMuted,
-            mx_VideoFeed_speaking: this.state.speaking,
         });
         const micIconClasses = classnames("mx_VideoFeed_mic", {
             mx_VideoFeed_mic_muted: this.state.audioMuted,
@@ -195,7 +188,11 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         });
 
         let micIcon;
-        if (feed.purpose !== SDPStreamMetadataPurpose.Screenshare && !pipMode) {
+        if (
+            feed.purpose !== SDPStreamMetadataPurpose.Screenshare &&
+            !primary &&
+            !pipMode
+        ) {
             micIcon = (
                 <div className={micIconClasses} />
             );

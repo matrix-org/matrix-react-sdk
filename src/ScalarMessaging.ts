@@ -53,7 +53,7 @@ All actions can return an error response instead of the response outlined below.
 
 invite
 ------
-Invites a user into a room.
+Invites a user into a room. The request will no-op if the user is already joined OR invited to the room.
 
 Request:
  - room_id is the room to invite the user into.
@@ -183,7 +183,7 @@ Response:
             name: "dashboard",
             data: {key: "val"}
         }
-        room_id: “!foo:bar”,
+        room_id: "!foo:bar",
         sender: "@alice:localhost"
     }
 ]
@@ -202,7 +202,7 @@ Example:
                 name: "dashboard",
                 data: {key: "val"}
             }
-            room_id: “!foo:bar”,
+            room_id: "!foo:bar",
             sender: "@alice:localhost"
         }
     ]
@@ -235,8 +235,10 @@ Example:
 }
 */
 
-import { MatrixClientPeg } from './MatrixClientPeg';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
 import RoomViewStore from './stores/RoomViewStore';
@@ -245,12 +247,9 @@ import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { WidgetType } from "./widgets/WidgetType";
 import { objectClone } from "./utils/objects";
 
-import { logger } from "matrix-js-sdk/src/logger";
-
 enum Action {
     CloseScalar = "close_scalar",
     GetWidgets = "get_widgets",
-    SetWidgets = "set_widgets",
     SetWidget = "set_widget",
     JoinRulesState = "join_rules_state",
     SetPlumbingState = "set_plumbing_state",
@@ -272,7 +271,7 @@ function sendResponse(event: MessageEvent<any>, res: any): void {
 }
 
 function sendError(event: MessageEvent<any>, msg: string, nestedError?: Error): void {
-    console.error("Action:" + event.data.action + " failed with message: " + msg);
+    logger.error("Action:" + event.data.action + " failed with message: " + msg);
     const data = objectClone(event.data);
     data.response = {
         error: {
@@ -295,9 +294,9 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     }
     const room = client.getRoom(roomId);
     if (room) {
-        // if they are already invited we can resolve immediately.
+        // if they are already invited or joined we can resolve immediately.
         const member = room.getMember(userId);
-        if (member && member.membership === "invite") {
+        if (member && ["join", "invite"].includes(member.membership)) {
             sendResponse(event, {
                 success: true,
             });
@@ -452,7 +451,9 @@ function setBotOptions(event: MessageEvent<any>, roomId: string, userId: string)
     });
 }
 
-function setBotPower(event: MessageEvent<any>, roomId: string, userId: string, level: number): void {
+async function setBotPower(
+    event: MessageEvent<any>, roomId: string, userId: string, level: number, ignoreIfGreater?: boolean,
+): Promise<void> {
     if (!(Number.isInteger(level) && level >= 0)) {
         sendError(event, _t('Power level must be positive integer.'));
         return;
@@ -465,22 +466,31 @@ function setBotPower(event: MessageEvent<any>, roomId: string, userId: string, l
         return;
     }
 
-    client.getStateEvent(roomId, "m.room.power_levels", "").then((powerLevels) => {
-        const powerEvent = new MatrixEvent(
+    try {
+        const powerLevels = await client.getStateEvent(roomId, "m.room.power_levels", "");
+
+        // If the PL is equal to or greater than the requested PL, ignore.
+        if (ignoreIfGreater === true) {
+            // As per https://matrix.org/docs/spec/client_server/r0.6.0#m-room-power-levels
+            const currentPl = powerLevels.users?.[userId] ?? powerLevels.users_default ?? 0;
+            if (currentPl >= level) {
+                return sendResponse(event, {
+                    success: true,
+                });
+            }
+        }
+        await client.setPowerLevel(roomId, userId, level, new MatrixEvent(
             {
                 type: "m.room.power_levels",
                 content: powerLevels,
             },
-        );
-
-        client.setPowerLevel(roomId, userId, level, powerEvent).then(() => {
-            sendResponse(event, {
-                success: true,
-            });
-        }, (err) => {
-            sendError(event, err.message ? err.message : _t('Failed to send request.'), err);
+        ));
+        return sendResponse(event, {
+            success: true,
         });
-    });
+    } catch (err) {
+        sendError(event, err.message ? err.message : _t('Failed to send request.'), err);
+    }
 }
 
 function getMembershipState(event: MessageEvent<any>, roomId: string, userId: string): void {
@@ -619,7 +629,7 @@ const onMessage = function(event: MessageEvent<any>): void {
         if (event.data.action === Action.GetWidgets) {
             getWidgets(event, null);
             return;
-        } else if (event.data.action === Action.SetWidgets) {
+        } else if (event.data.action === Action.SetWidget) {
             setWidget(event, null);
             return;
         } else {
@@ -678,10 +688,10 @@ const onMessage = function(event: MessageEvent<any>): void {
             setBotOptions(event, roomId, userId);
             break;
         case Action.SetBotPower:
-            setBotPower(event, roomId, userId, event.data.level);
+            setBotPower(event, roomId, userId, event.data.level, event.data.ignoreIfGreater);
             break;
         default:
-            console.warn("Unhandled postMessage event with action '" + event.data.action +"'");
+            logger.warn("Unhandled postMessage event with action '" + event.data.action +"'");
             break;
     }
 };
@@ -707,7 +717,7 @@ export function stopListening(): void {
             "ScalarMessaging: mismatched startListening / stopListening detected." +
             " Negative count",
         );
-        console.error(e);
+        logger.error(e);
     }
 }
 

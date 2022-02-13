@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { IDestroyable } from "./IDestroyable";
 import { arrayFastClone } from "./arrays";
 
@@ -73,7 +75,7 @@ export abstract class Whenable<T> implements IDestroyable {
                 try {
                     listener.fn(this);
                 } catch (e) {
-                    console.error(`Error calling whenable listener for ${condition}:`, e);
+                    logger.error(`Error calling whenable listener for ${condition}:`, e);
                 }
             }
         }

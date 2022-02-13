@@ -17,21 +17,23 @@ limitations under the License.
 import { ICryptoCallbacks } from 'matrix-js-sdk/src/matrix';
 import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { deriveKey } from 'matrix-js-sdk/src/crypto/key_passphrase';
+import { decodeRecoveryKey } from 'matrix-js-sdk/src/crypto/recoverykey';
+import { encodeBase64 } from "matrix-js-sdk/src/crypto/olmlib";
+import { DeviceTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import { logger } from "matrix-js-sdk/src/logger";
+import { ComponentType } from "react";
+
 import Modal from './Modal';
 import * as sdk from './index';
 import { MatrixClientPeg } from './MatrixClientPeg';
-import { deriveKey } from 'matrix-js-sdk/src/crypto/key_passphrase';
-import { decodeRecoveryKey } from 'matrix-js-sdk/src/crypto/recoverykey';
 import { _t } from './languageHandler';
-import { encodeBase64 } from "matrix-js-sdk/src/crypto/olmlib";
 import { isSecureBackupRequired } from './utils/WellKnownUtils';
 import AccessSecretStorageDialog from './components/views/dialogs/security/AccessSecretStorageDialog';
 import RestoreKeyBackupDialog from './components/views/dialogs/security/RestoreKeyBackupDialog';
 import SettingsStore from "./settings/SettingsStore";
 import SecurityCustomisations from "./customisations/Security";
-import { DeviceTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
-
-import { logger } from "matrix-js-sdk/src/logger";
+import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 
 // This stores the secret storage private keys in memory for the JS SDK. This is
 // only meant to act as a cache to avoid prompting the user multiple times
@@ -71,7 +73,6 @@ export class AccessCancelledError extends Error {
 }
 
 async function confirmToDismiss(): Promise<boolean> {
-    const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
     const [sure] = await Modal.createDialog(QuestionDialog, {
         title: _t("Cancel entering passphrase?"),
         description: _t("Are you sure you want to cancel entering passphrase?"),
@@ -283,7 +284,7 @@ async function onSecretRequested(
         }
         return key && encodeBase64(key);
     }
-    console.warn("onSecretRequested didn't recognise the secret named ", name);
+    logger.warn("onSecretRequested didn't recognise the secret named ", name);
 }
 
 export const crossSigningCallbacks: ICryptoCallbacks = {
@@ -335,7 +336,9 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
             // This dialog calls bootstrap itself after guiding the user through
             // passphrase creation.
             const { finished } = Modal.createTrackedDialogAsync('Create Secret Storage dialog', '',
-                import("./async-components/views/dialogs/security/CreateSecretStorageDialog"),
+                import(
+                    "./async-components/views/dialogs/security/CreateSecretStorageDialog"
+                ) as unknown as Promise<ComponentType<{}>>,
                 {
                     forceReset,
                 },
@@ -388,7 +391,7 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
                 logger.log("Setting dehydration key");
                 await cli.setDehydrationKey(secretStorageKeys[keyId], dehydrationKeyInfo, "Backup device");
             } else if (!keyId) {
-                console.warn("Not setting dehydration key: no SSSS key found");
+                logger.warn("Not setting dehydration key: no SSSS key found");
             } else {
                 logger.log("Not setting dehydration key: feature disabled");
             }
@@ -399,7 +402,7 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
         return await func();
     } catch (e) {
         SecurityCustomisations.catchAccessSecretStorageError?.(e);
-        console.error(e);
+        logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
     } finally {

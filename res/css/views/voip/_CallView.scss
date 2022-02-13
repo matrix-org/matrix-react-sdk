@@ -20,13 +20,16 @@ limitations under the License.
     background-color: $dark-panel-bg-color;
     padding-left: 8px;
     padding-right: 8px;
-    // XXX: CallContainer sets pointer-events: none - should probably be set back in a better place
+    // XXX: PiPContainer sets pointer-events: none - should probably be set back in a better place
     pointer-events: initial;
 }
 
 .mx_CallView_large {
     padding-bottom: 10px;
-    margin: 5px 5px 5px 18px;
+    margin: $container-gap-width;
+    // The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser.
+    margin-right: calc($container-gap-width / 2);
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -34,13 +37,17 @@ limitations under the License.
     .mx_CallView_voice {
         flex: 1;
     }
+
+    &.mx_CallView_belowWidget {
+        margin-top: 0;
+    }
 }
 
 .mx_CallView_pip {
     width: 320px;
     padding-bottom: 8px;
     background-color: $system;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.20);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
 
     .mx_CallView_video_hold,
@@ -49,13 +56,16 @@ limitations under the License.
     }
 
     .mx_CallViewButtons {
-        bottom: 0px;
+        bottom: 13px;
     }
 
     .mx_CallViewButtons_button {
+        width: 34px;
+        height: 34px;
+
         &::before {
-            width: 36px;
-            height: 36px;
+            width: 22px;
+            height: 22px;
         }
     }
 
@@ -74,7 +84,6 @@ limitations under the License.
     > .mx_VideoFeed {
         width: 100%;
         height: 100%;
-        border-width: 0 !important; // Override mx_VideoFeed_speaking
 
         &.mx_VideoFeed_voice {
             display: flex;
@@ -126,6 +135,8 @@ limitations under the License.
     padding-top: 20px;
     padding-bottom: 15px;
     color: $accent-fg-color;
+    user-select: none;
+
     .mx_AccessibleButton_hasKind {
         padding: 0px;
         font-weight: bold;
@@ -160,7 +171,7 @@ limitations under the License.
     background-position: center;
     filter: blur(20px);
     &::after {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         width: 100%;
@@ -184,10 +195,10 @@ limitations under the License.
         display: block;
         margin-left: auto;
         margin-right: auto;
-        content: '';
+        content: "";
         width: 40px;
         height: 40px;
-        background-image: url('$(res)/img/voip/paused.svg');
+        background-image: url("$(res)/img/voip/paused.svg");
         background-position: center;
         background-size: cover;
     }
@@ -200,11 +211,7 @@ limitations under the License.
     }
 }
 
-
 .mx_CallView_presenting {
-    opacity: 1;
-    transition: opacity 0.5s;
-
     position: absolute;
     margin-top: 18px;
     padding: 4px 8px;
@@ -213,9 +220,4 @@ limitations under the License.
     // Same on both themes
     color: white;
     background-color: #17191c;
-}
-
-.mx_CallView_presenting_hidden {
-    opacity: 0.001; // opacity 0 can cause a re-layout
-    pointer-events: none;
 }

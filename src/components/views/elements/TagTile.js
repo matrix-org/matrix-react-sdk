@@ -19,11 +19,12 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { isOnlyCtrlOrCmdIgnoreShiftKeyEvent } from '../../../Keyboard';
 import * as FormattingUtils from '../../../utils/FormattingUtils';
-
 import FlairStore from '../../../stores/FlairStore';
 import GroupStore from '../../../stores/GroupStore';
 import GroupFilterOrderStore from '../../../stores/GroupFilterOrderStore';
@@ -85,7 +86,7 @@ export default class TagTile extends React.Component {
             if (this.unmounted) return;
             this.setState({ profile });
         }).catch((err) => {
-            console.warn('Could not fetch group profile for ' + this.props.tag, err);
+            logger.warn('Could not fetch group profile for ' + this.props.tag, err);
         });
     };
 

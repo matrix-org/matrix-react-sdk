@@ -18,6 +18,7 @@ import React from 'react';
 import { GuestAccess, HistoryVisibility, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -35,6 +36,9 @@ import createRoom, { IOpts } from '../../../../../createRoom';
 import CreateRoomDialog from '../../../dialogs/CreateRoomDialog';
 import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
+import SettingsFieldset from '../../SettingsFieldset';
+import ExternalLink from '../../../elements/ExternalLink';
+import PosthogTrackers from "../../../../../PosthogTrackers";
 
 interface IProps {
     roomId: string;
@@ -137,12 +141,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         "To avoid these issues, create a <a>new encrypted room</a> for " +
                         "the conversation you plan to have.",
                         null,
-                        { "a": (sub) => <a
-                            className="mx_linkButton"
-                            onClick={() => {
-                                dialog.close();
-                                this.createNewRoom(false, true);
-                            }}> { sub } </a> },
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline'
+                                onClick={() => {
+                                    dialog.close();
+                                    this.createNewRoom(false, true);
+                                }}> { sub } </AccessibleButton>,
+                        },
                     ) } </p>
                 </div>,
 
@@ -161,11 +166,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 "may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>",
                 {},
                 {
-                    a: sub => <a
+                    a: sub => <ExternalLink
                         href="https://element.io/help#encryption"
-                        rel="noreferrer noopener"
-                        target="_blank"
-                    >{ sub }</a>,
+                    >{ sub }</ExternalLink>,
                 },
             ),
             onFinished: (confirm) => {
@@ -180,7 +183,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     this.props.roomId, EventType.RoomEncryption,
                     { algorithm: "m.megolm.v1.aes-sha2" },
                 ).catch((e) => {
-                    console.error(e);
+                    logger.error(e);
                     this.setState({ encrypted: beforeEncrypted });
                 });
             },
@@ -198,7 +201,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         client.sendStateEvent(this.props.roomId, EventType.RoomGuestAccess, {
             guest_access: guestAccess,
         }, "").catch((e) => {
-            console.error(e);
+            logger.error(e);
             this.setState({ guestAccess: beforeGuestAccess });
         });
     };
@@ -210,6 +213,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             CreateRoomDialog,
             { defaultPublic, defaultEncrypted },
         );
+
+        PosthogTrackers.trackInteraction("WebRoomSettingsSecurityTabCreateNewRoomButton");
+
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
             await createRoom(opts);
@@ -225,7 +231,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         MatrixClientPeg.get().sendStateEvent(this.props.roomId, EventType.RoomHistoryVisibility, {
             history_visibility: history,
         }, "").catch((e) => {
-            console.error(e);
+            logger.error(e);
             this.setState({ history: beforeHistory });
         });
     };
@@ -263,24 +269,20 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 </div>
             );
         }
+        const description = _t("Decide who can join %(roomName)s.", {
+            roomName: room?.name,
+        });
 
-        return <div className="mx_SecurityRoomSettingsTab_joinRule">
-            <div className="mx_SettingsTab_subsectionText">
-                <span>{ _t("Decide who can join %(roomName)s.", {
-                    roomName: room?.name,
-                }) }</span>
-            </div>
-
-            { aliasWarning }
-
+        return <SettingsFieldset legend={_t("Access")} description={description}>
             <JoinRuleSettings
                 room={room}
                 beforeChange={this.onBeforeJoinRuleChange}
                 onError={this.onJoinRuleChangeError}
                 closeSettingsFn={this.props.closeSettingsFn}
                 promptUpgrade={true}
+                aliasWarning={aliasWarning}
             />
-        </div>;
+        </SettingsFieldset>;
     }
 
     private onJoinRuleChangeError = (error: Error) => {
@@ -308,12 +310,12 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         "you plan to have.",
                         null,
                         {
-                            "a": (sub) => <a
-                                className="mx_linkButton"
+                            "a": (sub) => <AccessibleButton
+                                kind='link_inline'
                                 onClick={() => {
                                     dialog.close();
                                     this.createNewRoom(true, false);
-                                }}> { sub } </a>,
+                                }}> { sub } </AccessibleButton>,
                         },
                     ) } </p>
                 </div>,
@@ -328,6 +330,10 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     };
 
     private renderHistory() {
+        if (!SettingsStore.getValue(UIFeature.RoomHistorySettings)) {
+            return null;
+        }
+
         const client = MatrixClientPeg.get();
         const history = this.state.history;
         const state = client.getRoom(this.props.roomId).currentState;
@@ -356,21 +362,18 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             });
         }
 
-        return (
-            <div>
-                <div>
-                    { _t('Changes to who can read history will only apply to future messages in this room. ' +
-                        'The visibility of existing history will be unchanged.') }
-                </div>
-                <StyledRadioGroup
-                    name="historyVis"
-                    value={history}
-                    onChange={this.onHistoryRadioToggle}
-                    disabled={!canChangeHistory}
-                    definitions={options}
-                />
-            </div>
-        );
+        const description = _t('Changes to who can read history will only apply to future messages in this room. ' +
+        'The visibility of existing history will be unchanged.');
+
+        return (<SettingsFieldset legend={_t("Who can read history?")} description={description}>
+            <StyledRadioGroup
+                name="historyVis"
+                value={history}
+                onChange={this.onHistoryRadioToggle}
+                disabled={!canChangeHistory}
+                definitions={options}
+            />
+        </SettingsFieldset>);
     }
 
     private toggleAdvancedSection = () => {
@@ -414,15 +417,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             />;
         }
 
-        let historySection = (<>
-            <span className='mx_SettingsTab_subheading'>{ _t("Who can read history?") }</span>
-            <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                { this.renderHistory() }
-            </div>
-        </>);
-        if (!SettingsStore.getValue(UIFeature.RoomHistorySettings)) {
-            historySection = null;
-        }
+        const historySection = this.renderHistory();
 
         let advanced;
         if (room.getJoinRule() === JoinRule.Public) {
@@ -444,26 +439,17 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             <div className="mx_SettingsTab mx_SecurityRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Security & Privacy") }</div>
 
-                <span className='mx_SettingsTab_subheading'>{ _t("Encryption") }</span>
-                <div className='mx_SettingsTab_section mx_SecurityRoomSettingsTab_encryptionSection'>
-                    <div>
-                        <div className='mx_SettingsTab_subsectionText'>
-                            <span>{ _t("Once enabled, encryption cannot be disabled.") }</span>
-                        </div>
-                        <LabelledToggleSwitch
-                            value={isEncrypted}
-                            onChange={this.onEncryptionChange}
-                            label={_t("Encrypted")}
-                            disabled={!canEnableEncryption}
-                        />
-                    </div>
+                <SettingsFieldset legend={_t("Encryption")} description={_t("Once enabled, encryption cannot be disabled.")}>
+                    <LabelledToggleSwitch
+                        value={isEncrypted}
+                        onChange={this.onEncryptionChange}
+                        label={_t("Encrypted")}
+                        disabled={!canEnableEncryption}
+                    />
                     { encryptionSettings }
-                </div>
+                </SettingsFieldset>
 
-                <span className='mx_SettingsTab_subheading'>{ _t("Access") }</span>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    { this.renderJoinRule() }
-                </div>
+                { this.renderJoinRule() }
 
                 { advanced }
                 { historySection }

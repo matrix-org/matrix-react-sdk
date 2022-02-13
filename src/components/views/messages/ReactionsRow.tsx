@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 
@@ -24,10 +23,11 @@ import { _t } from '../../../languageHandler';
 import { isContentActionable } from '../../../utils/EventUtils';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
-import { aboveLeftOf, ContextMenu, useContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { aboveLeftOf, useContextMenu } from "../../structures/ContextMenu";
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import ReactionsRowButton from "./ReactionsRowButton";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import RoomContext from "../../../contexts/RoomContext";
+import AccessibleButton from "../elements/AccessibleButton";
 
 // The maximum number of reactions to initially show on a message.
 const MAX_ITEMS_WHEN_LIMITED = 8;
@@ -76,10 +76,12 @@ interface IState {
 
 @replaceableComponent("views.messages.ReactionsRow")
 export default class ReactionsRow extends React.PureComponent<IProps, IState> {
-    static contextType = MatrixClientContext;
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props, context) {
+    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
+        this.context = context;
 
         this.state = {
             myReactions: this.getMyReactions(),
@@ -143,7 +145,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         if (!reactions) {
             return null;
         }
-        const userId = this.context.getUserId();
+        const userId = this.context.room.client.getUserId();
         const myReactions = reactions.getAnnotationsBySender()[userId];
         if (!myReactions) {
             return null;
@@ -165,6 +167,11 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
             return null;
         }
 
+        const cli = this.context.room.client;
+        const room = cli.getRoom(mxEvent.getRoomId());
+        const isPeeking = room.getMyMembership() !== "join";
+        const canReact = !isPeeking && this.context.canReact;
+
         let items = reactions.getSortedAnnotationsByKey().map(([content, events]) => {
             const count = events.size;
             if (!count) {
@@ -183,6 +190,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
                 mxEvent={mxEvent}
                 reactionEvents={events}
                 myReactionEvent={myReactionEvent}
+                disabled={!canReact}
             />;
         }).filter(item => !!item);
 
@@ -194,20 +202,17 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         let showAllButton;
         if ((items.length > MAX_ITEMS_WHEN_LIMITED + 1) && !showAll) {
             items = items.slice(0, MAX_ITEMS_WHEN_LIMITED);
-            showAllButton = <a
+            showAllButton = <AccessibleButton
+                kind="link_inline"
                 className="mx_ReactionsRow_showAll"
-                href="#"
                 onClick={this.onShowAllClick}
             >
                 { _t("Show all") }
-            </a>;
+            </AccessibleButton>;
         }
 
-        const cli = this.context;
-
         let addReactionButton;
-        const room = cli.getRoom(mxEvent.getRoomId());
-        if (room.getMyMembership() === "join" && room.currentState.maySendEvent(EventType.Reaction, cli.getUserId())) {
+        if (room.getMyMembership() === "join" && this.context.canReact) {
             addReactionButton = <ReactButton mxEvent={mxEvent} reactions={reactions} />;
         }
 

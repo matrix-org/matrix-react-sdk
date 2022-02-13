@@ -1,7 +1,6 @@
 import RoomViewStore from '../../src/stores/RoomViewStore';
-
+import { Action } from '../../src/dispatcher/actions';
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
-
 import * as testUtils from '../test-utils';
 
 const dispatch = testUtils.getDispatchForStore(RoomViewStore);
@@ -21,7 +20,7 @@ describe('RoomViewStore', function() {
             done();
         };
 
-        dispatch({ action: 'view_room', room_id: '!randomcharacters:aser.ver' });
+        dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
         dispatch({ action: 'join_room' });
         expect(RoomViewStore.isJoining()).toBe(true);
     });
@@ -43,6 +42,6 @@ describe('RoomViewStore', function() {
             done();
         };
 
-        dispatch({ action: 'view_room', room_alias: '#somealias2:aser.ver' });
+        dispatch({ action: Action.ViewRoom, room_alias: '#somealias2:aser.ver' });
     });
 });

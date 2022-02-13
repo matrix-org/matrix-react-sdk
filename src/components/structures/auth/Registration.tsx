@@ -17,11 +17,12 @@ limitations under the License.
 import { createClient } from 'matrix-js-sdk/src/matrix';
 import React, { ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from "classnames";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
@@ -36,8 +37,6 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -195,7 +194,7 @@ export default class Registration extends React.Component<IProps, IState> {
             const loginFlows = await this.loginLogic.getFlows();
             ssoFlow = loginFlows.find(f => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
         } catch (e) {
-            console.error("Failed to get login flows to check for SSO support", e);
+            logger.error("Failed to get login flows to check for SSO support", e);
         }
 
         this.setState({
@@ -272,7 +271,7 @@ export default class Registration extends React.Component<IProps, IState> {
 
     private onUIAuthFinished = async (success: boolean, response: any) => {
         if (!success) {
-            let msg = response.message || response.toString();
+            let errorText = response.message || response.toString();
             // can we give a better error message?
             if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
@@ -291,7 +290,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         '': _td("Please <a>contact your service administrator</a> to continue using this service."),
                     },
                 );
-                msg = <div>
+                errorText = <div>
                     <p>{ errorTop }</p>
                     <p>{ errorDetail }</p>
                 </div>;
@@ -301,15 +300,18 @@ export default class Registration extends React.Component<IProps, IState> {
                     msisdnAvailable = msisdnAvailable || flow.stages.includes('m.login.msisdn');
                 }
                 if (!msisdnAvailable) {
-                    msg = _t('This server does not support authentication with a phone number.');
+                    errorText = _t('This server does not support authentication with a phone number.');
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
-                msg = _t("That username already exists, please try another.");
+                errorText = _t("Someone already has that username, please try another.");
+            } else if (response.errcode === "M_THREEPID_IN_USE") {
+                errorText = _t("That e-mail address is already in use.");
             }
+
             this.setState({
                 busy: false,
                 doingUIAuth: false,
-                errorText: msg,
+                errorText,
             });
             return;
         }
@@ -361,7 +363,7 @@ export default class Registration extends React.Component<IProps, IState> {
             return Promise.resolve();
         }
         const matrixClient = MatrixClientPeg.get();
-        return matrixClient.getPushers().then((resp)=>{
+        return matrixClient.getPushers().then((resp) => {
             const pushers = resp.pushers;
             for (let i = 0; i < pushers.length; ++i) {
                 if (pushers[i].kind === 'email') {
@@ -370,12 +372,12 @@ export default class Registration extends React.Component<IProps, IState> {
                     matrixClient.setPusher(emailPusher).then(() => {
                         logger.log("Set email branding to " + this.props.brand);
                     }, (error) => {
-                        console.error("Couldn't set email branding: " + error);
+                        logger.error("Couldn't set email branding: " + error);
                     });
                 }
             }
         }, (error) => {
-            console.error("Couldn't get pushers: " + error);
+            logger.error("Couldn't get pushers: " + error);
         });
     }
 
@@ -507,6 +509,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     flows={this.state.flows}
                     serverConfig={this.props.serverConfig}
                     canSubmit={!this.state.serverErrorIsFatal}
+                    matrixClient={this.state.matrixClient}
                 />
             </React.Fragment>;
         }
@@ -535,16 +538,20 @@ export default class Registration extends React.Component<IProps, IState> {
 
         const signIn = <span className="mx_AuthBody_changeFlow">
             { _t("Already have an account? <a>Sign in here</a>", {}, {
-                a: sub => <a onClick={this.onLoginClick} href="#">{ sub }</a>,
+                a: sub => <AccessibleButton kind='link_inline' onClick={this.onLoginClick}>{ sub }</AccessibleButton>,
             }) }
         </span>;
 
         // Only show the 'go back' button if you're not looking at the form
         let goBack;
         if (this.state.doingUIAuth) {
-            goBack = <a className="mx_AuthBody_changeFlow" onClick={this.onGoToFormClicked} href="#">
+            goBack = <AccessibleButton
+                kind='link_inline'
+                className="mx_AuthBody_changeFlow"
+                onClick={this.onGoToFormClicked}
+            >
                 { _t('Go back') }
-            </a>;
+            </AccessibleButton>;
         }
 
         let body;

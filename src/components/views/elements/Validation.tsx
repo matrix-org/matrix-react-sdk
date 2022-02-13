@@ -21,6 +21,12 @@ import classNames from "classnames";
 
 type Data = Pick<IFieldState, "value" | "allowEmpty">;
 
+interface IResult {
+    key: string;
+    valid: boolean;
+    text: string;
+}
+
 interface IRule<T, D = void> {
     key: string;
     final?: boolean;
@@ -32,7 +38,7 @@ interface IRule<T, D = void> {
 
 interface IArgs<T, D = void> {
     rules: IRule<T, D>[];
-    description?(this: T, derivedData: D): React.ReactChild;
+    description?(this: T, derivedData: D, results: IResult[]): React.ReactChild;
     hideDescriptionIfValid?: boolean;
     deriveData?(data: Data): Promise<D>;
 }
@@ -86,9 +92,9 @@ export default function withValidation<T = undefined, D = void>({
         }
 
         const data = { value, allowEmpty };
-        const derivedData = deriveData ? await deriveData(data) : undefined;
+        const derivedData: D | undefined = deriveData ? await deriveData.call(this, data) : undefined;
 
-        const results = [];
+        const results: IResult[] = [];
         let valid = true;
         if (rules && rules.length) {
             for (const rule of rules) {
@@ -100,13 +106,13 @@ export default function withValidation<T = undefined, D = void>({
                     continue;
                 }
 
-                if (rule.skip && rule.skip.call(this, data, derivedData)) {
+                if (rule.skip?.call(this, data, derivedData)) {
                     continue;
                 }
 
                 // We're setting `this` to whichever component holds the validation
                 // function. That allows rules to access the state of the component.
-                const ruleValid = await rule.test.call(this, data, derivedData);
+                const ruleValid: boolean = await rule.test.call(this, data, derivedData);
                 valid = valid && ruleValid;
                 if (ruleValid && rule.valid) {
                     // If the rule's result is valid and has text to show for
@@ -164,8 +170,8 @@ export default function withValidation<T = undefined, D = void>({
         if (description && (details || !hideDescriptionIfValid)) {
             // We're setting `this` to whichever component holds the validation
             // function. That allows rules to access the state of the component.
-            const content = description.call(this, derivedData);
-            summary = <div className="mx_Validation_description">{ content }</div>;
+            const content = description.call(this, derivedData, results);
+            summary = content ? <div className="mx_Validation_description">{ content }</div> : undefined;
         }
 
         let feedback;

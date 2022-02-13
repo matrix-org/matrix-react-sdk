@@ -17,6 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { arrayDiff, arrayHasDiff } from "../../../utils/arrays";
@@ -34,7 +35,7 @@ import { EffectiveMembership, getEffectiveMembership, splitRoomsByMembership } f
 import { OrderingAlgorithm } from "./list-ordering/OrderingAlgorithm";
 import { getListAlgorithmInstance } from "./list-ordering";
 import { VisibilityProvider } from "../filters/VisibilityProvider";
-import SpaceStore from "../../SpaceStore";
+import SpaceStore from "../../spaces/SpaceStore";
 
 /**
  * Fired when the Algorithm has determined a list has been updated.
@@ -126,7 +127,7 @@ export class Algorithm extends EventEmitter {
         try {
             this.updateStickyRoom(val);
         } catch (e) {
-            console.warn("Failed to update sticky room", e);
+            logger.warn("Failed to update sticky room", e);
         }
     }
 
@@ -241,7 +242,7 @@ export class Algorithm extends EventEmitter {
         // to force the position to zero (top) to ensure we can properly handle it.
         const wasSticky = this._lastStickyRoom.room ? this._lastStickyRoom.room.roomId === val.roomId : false;
         if (this._lastStickyRoom.tag && tag !== this._lastStickyRoom.tag && wasSticky && position < 0) {
-            console.warn(`Sticky room ${val.roomId} changed tags during sticky room handling`);
+            logger.warn(`Sticky room ${val.roomId} changed tags during sticky room handling`);
             position = 0;
         }
 
@@ -278,13 +279,13 @@ export class Algorithm extends EventEmitter {
             if (this._stickyRoom.room !== val) {
                 // Check the room IDs just in case
                 if (this._stickyRoom.room.roomId === val.roomId) {
-                    console.warn("Sticky room changed references");
+                    logger.warn("Sticky room changed references");
                 } else {
                     throw new Error("Sticky room changed while the sticky room was changing");
                 }
             }
 
-            console.warn(`Sticky room changed tag & position from ${tag} / ${position} `
+            logger.warn(`Sticky room changed tag & position from ${tag} / ${position} `
                 + `to ${this._stickyRoom.tag} / ${this._stickyRoom.position}`);
 
             tag = this._stickyRoom.tag;
@@ -322,7 +323,7 @@ export class Algorithm extends EventEmitter {
             return;
         }
 
-        console.warn("Recalculating filtered room list");
+        logger.warn("Recalculating filtered room list");
         const filters = Array.from(this.allowedByFilter.keys());
         const newMap: ITagMap = {};
         for (const tagId of Object.keys(this.cachedRooms)) {
@@ -491,7 +492,7 @@ export class Algorithm extends EventEmitter {
             // We only log this if we're expecting to be publishing updates, which means that
             // this could be an unexpected invocation. If we're inhibited, then this is probably
             // an intentional invocation.
-            console.warn("Resetting known rooms, initiating regeneration");
+            logger.warn("Resetting known rooms, initiating regeneration");
         }
 
         // Before we go any further we need to clear (but remember) the sticky room to
@@ -657,18 +658,18 @@ export class Algorithm extends EventEmitter {
             // pass the cause through as NewRoom, we'll fail to lie to the algorithm and thus
             // lose the room.
             if (hasTags && !isForLastSticky) {
-                console.warn(`${room.roomId} is reportedly new but is already known - assuming TagChange instead`);
+                logger.warn(`${room.roomId} is reportedly new but is already known - assuming TagChange instead`);
                 cause = RoomUpdateCause.PossibleTagChange;
             }
 
             // Check to see if the room is known first
             let knownRoomRef = this.rooms.includes(room);
             if (hasTags && !knownRoomRef) {
-                console.warn(`${room.roomId} might be a reference change - attempting to update reference`);
+                logger.warn(`${room.roomId} might be a reference change - attempting to update reference`);
                 this.rooms = this.rooms.map(r => r.roomId === room.roomId ? room : r);
                 knownRoomRef = this.rooms.includes(room);
                 if (!knownRoomRef) {
-                    console.warn(`${room.roomId} is still not referenced. It may be sticky.`);
+                    logger.warn(`${room.roomId} is still not referenced. It may be sticky.`);
                 }
             }
 
@@ -720,7 +721,8 @@ export class Algorithm extends EventEmitter {
                 cause = RoomUpdateCause.Timeline;
                 didTagChange = true;
             } else {
-                cause = RoomUpdateCause.Timeline;
+                // This is a tag change update and no tags were changed, nothing to do!
+                return false;
             }
 
             if (didTagChange && isSticky) {
@@ -766,7 +768,7 @@ export class Algorithm extends EventEmitter {
 
         const tags = this.roomIdsToTags[room.roomId];
         if (!tags) {
-            console.warn(`No tags known for "${room.name}" (${room.roomId})`);
+            logger.warn(`No tags known for "${room.name}" (${room.roomId})`);
             return false;
         }
 

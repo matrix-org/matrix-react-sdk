@@ -17,6 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { IWidget } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -27,8 +28,6 @@ import WidgetUtils from "../utils/WidgetUtils";
 import { WidgetType } from "../widgets/WidgetType";
 import { UPDATE_EVENT } from "./AsyncStore";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IState {}
 
@@ -126,7 +125,7 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
             // Sanity check for https://github.com/vector-im/element-web/issues/15705
             const existingApp = this.widgetMap.get(widgetUid(app));
             if (existingApp) {
-                console.warn(
+                logger.warn(
                     `Possible widget ID conflict for ${app.id} - wants to store in room ${app.roomId} ` +
                     `but is currently stored as ${existingApp.roomId} - letting the want win`,
                 );

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { IJoinRuleEventContent, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -23,17 +23,18 @@ import StyledRadioGroup, { IDefinition } from "../elements/StyledRadioGroup";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import RoomAvatar from "../avatars/RoomAvatar";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import ManageRestrictedJoinRuleDialog from "../dialogs/ManageRestrictedJoinRuleDialog";
-import RoomUpgradeWarningDialog from "../dialogs/RoomUpgradeWarningDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
+import RoomUpgradeWarningDialog, { IFinishedOpts } from "../dialogs/RoomUpgradeWarningDialog";
 import { upgradeRoom } from "../../../utils/RoomUpgrade";
 import { arrayHasDiff } from "../../../utils/arrays";
 import { useLocalEcho } from "../../../hooks/useLocalEcho";
 import dis from "../../../dispatcher/dispatcher";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { Action } from "../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     room: Room;
@@ -41,9 +42,10 @@ interface IProps {
     closeSettingsFn(): void;
     onError(error: Error): void;
     beforeChange?(joinRule: JoinRule): Promise<boolean>; // if returns false then aborts the change
+    aliasWarning?: ReactNode;
 }
 
-const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSettingsFn }: IProps) => {
+const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeChange, closeSettingsFn }: IProps) => {
     const cli = room.client;
 
     const restrictedRoomCapabilities = SpaceStore.instance.restrictedJoinRuleSupport;
@@ -61,15 +63,15 @@ const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSet
         onError,
     );
 
-    const { join_rule: joinRule } = content;
+    const { join_rule: joinRule = JoinRule.Invite } = content || {};
     const restrictedAllowRoomIds = joinRule === JoinRule.Restricted
-        ? content.allow.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
+        ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
-        if (!selected?.length && SpaceStore.instance.activeSpace) {
-            selected = [SpaceStore.instance.activeSpace.roomId];
+        if (!selected?.length && SpaceStore.instance.activeSpaceRoom) {
+            selected = [SpaceStore.instance.activeSpaceRoom.roomId];
         }
 
         const matrixClient = MatrixClientPeg.get();
@@ -91,7 +93,10 @@ const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSet
     }, {
         value: JoinRule.Public,
         label: _t("Public"),
-        description: _t("Anyone can find and join."),
+        description: <>
+            { _t("Anyone can find and join.") }
+            { aliasWarning }
+        </>,
     }];
 
     if (roomSupportsRestricted || preferredRestrictionVersion || joinRule === JoinRule.Restricted) {
@@ -177,9 +182,9 @@ const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSet
                     { moreText && <span>{ moreText }</span> }
                 </div>
             </div>;
-        } else if (SpaceStore.instance.activeSpace) {
+        } else if (SpaceStore.instance.activeSpaceRoom) {
             description = _t("Anyone in <spaceName/> can find and join. You can select other spaces too.", {}, {
-                spaceName: () => <b>{ SpaceStore.instance.activeSpace.name }</b>,
+                spaceName: () => <b>{ SpaceStore.instance.activeSpaceRoom.name }</b>,
             });
         } else {
             description = _t("Anyone in a space can find and join. You can select multiple spaces.");
@@ -210,47 +215,71 @@ const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSet
                 // Block this action on a room upgrade otherwise it'd make their room unjoinable
                 const targetVersion = preferredRestrictionVersion;
 
-                const modal = Modal.createTrackedDialog('Restricted join rule upgrade', '', RoomUpgradeWarningDialog, {
-                    roomId: room.roomId,
-                    targetVersion,
-                    description: _t("This upgrade will allow members of selected spaces " +
-                        "access to this room without an invite."),
-                });
-
-                const [resp] = await modal.finished;
-                if (!resp?.continue) return;
-
+                let warning: JSX.Element;
                 const userId = cli.getUserId();
                 const unableToUpdateSomeParents = Array.from(SpaceStore.instance.getKnownParents(room.roomId))
                     .some(roomId => !cli.getRoom(roomId)?.currentState.maySendStateEvent(EventType.SpaceChild, userId));
                 if (unableToUpdateSomeParents) {
-                    const modal = Modal.createTrackedDialog<[boolean]>('Parent relink warning', '', QuestionDialog, {
-                        title: _t("Before you upgrade"),
-                        description: (
-                            <div>{ _t("This room is in some spaces you’re not an admin of. " +
-                                "In those spaces, the old room will still be shown, " +
-                                "but people will be prompted to join the new one.") }</div>
-                        ),
-                        hasCancelButton: true,
-                        button: _t("Upgrade anyway"),
-                        danger: true,
-                    });
-
-                    const [shouldUpgrade] = await modal.finished;
-                    if (!shouldUpgrade) return;
+                    warning = <b>
+                        { _t("This room is in some spaces you're not an admin of. " +
+                            "In those spaces, the old room will still be shown, " +
+                            "but people will be prompted to join the new one.") }
+                    </b>;
                 }
 
-                const roomId = await upgradeRoom(room, targetVersion, resp.invite, true, true, true);
-                closeSettingsFn();
-                // switch to the new room in the background
-                dis.dispatch({
-                    action: "view_room",
-                    room_id: roomId,
-                });
-                // open new settings on this tab
-                dis.dispatch({
-                    action: "open_room_settings",
-                    initial_tab_id: ROOM_SECURITY_TAB,
+                Modal.createTrackedDialog('Restricted join rule upgrade', '', RoomUpgradeWarningDialog, {
+                    roomId: room.roomId,
+                    targetVersion,
+                    description: <>
+                        { _t("This upgrade will allow members of selected spaces " +
+                            "access to this room without an invite.") }
+                        { warning }
+                    </>,
+                    doUpgrade: async (
+                        opts: IFinishedOpts,
+                        fn: (progressText: string, progress: number, total: number) => void,
+                    ): Promise<void> => {
+                        const roomId = await upgradeRoom(
+                            room,
+                            targetVersion,
+                            opts.invite,
+                            true,
+                            true,
+                            true,
+                            progress => {
+                                const total = 2 + progress.updateSpacesTotal + progress.inviteUsersTotal;
+                                if (!progress.roomUpgraded) {
+                                    fn(_t("Upgrading room"), 0, total);
+                                } else if (!progress.roomSynced) {
+                                    fn(_t("Loading new room"), 1, total);
+                                } else if (progress.inviteUsersProgress < progress.inviteUsersTotal) {
+                                    fn(_t("Sending invites... (%(progress)s out of %(count)s)", {
+                                        progress: progress.inviteUsersProgress,
+                                        count: progress.inviteUsersTotal,
+                                    }), 2 + progress.inviteUsersProgress, total);
+                                } else if (progress.updateSpacesProgress < progress.updateSpacesTotal) {
+                                    fn(_t("Updating spaces... (%(progress)s out of %(count)s)", {
+                                        progress: progress.updateSpacesProgress,
+                                        count: progress.updateSpacesTotal,
+                                    }), 2 + progress.inviteUsersProgress + progress.updateSpacesProgress, total);
+                                }
+                            },
+                        );
+                        closeSettingsFn();
+
+                        // switch to the new room in the background
+                        dis.dispatch<ViewRoomPayload>({
+                            action: Action.ViewRoom,
+                            room_id: roomId,
+                            _trigger: undefined, // other
+                        });
+
+                        // open new settings on this tab
+                        dis.dispatch({
+                            action: "open_room_settings",
+                            initial_tab_id: ROOM_SECURITY_TAB,
+                        });
+                    },
                 });
 
                 return;

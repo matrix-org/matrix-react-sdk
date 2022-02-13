@@ -14,11 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, { ReactNode } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
-import React, { ReactNode } from "react";
 import { IUpload, RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import LiveRecordingWaveform from "../audio_messages/LiveRecordingWaveform";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -26,7 +29,6 @@ import LiveRecordingClock from "../audio_messages/LiveRecordingClock";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
@@ -75,7 +77,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         try {
             upload = await this.state.recorder.upload(this.props.room.roomId);
         } catch (e) {
-            console.error("Error uploading voice message:", e);
+            logger.error("Error uploading voice message:", e);
 
             // Flag error and move on. The recording phase will be reset by the upload function.
             this.setState({ didUploadFail: true });
@@ -116,7 +118,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 "org.matrix.msc3245.voice": {}, // No content, this is a rendering hint
             });
         } catch (e) {
-            console.error("Error sending voice message:", e);
+            logger.error("Error sending voice message:", e);
 
             // Voice message should be in the timeline at this point, so let other things take care
             // of error handling. We also shouldn't need the recording anymore, so fall through to
@@ -171,7 +173,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             }
             // else we probably have a device that is good enough
         } catch (e) {
-            console.error("Error getting devices: ", e);
+            logger.error("Error getting devices: ", e);
             accessError();
             return;
         }
@@ -191,7 +193,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
             this.setState({ recorder, recordingPhase: RecordingState.Started });
         } catch (e) {
-            console.error("Error starting recording: ", e);
+            logger.error("Error starting recording: ", e);
             accessError();
 
             // noinspection ES6MissingAwait - if this goes wrong we don't want it to affect the call stack

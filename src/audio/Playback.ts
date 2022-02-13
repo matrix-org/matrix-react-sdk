@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
+import { SimpleObservable } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { arrayFastResample, arrayRescale, arraySeed, arraySmoothingResample } from "../utils/arrays";
-import { SimpleObservable } from "matrix-widget-api";
 import { IDestroyable } from "../utils/IDestroyable";
 import { PlaybackClock } from "./PlaybackClock";
 import { createAudioContext, decodeOgg } from "./compat";
 import { clamp } from "../utils/numbers";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 export enum PlaybackState {
     Decoding = "decoding",
@@ -156,18 +156,18 @@ export class Playback extends EventEmitter implements IDestroyable {
                     try {
                         // This error handler is largely for Safari as well, which doesn't support Opus/Ogg
                         // very well.
-                        console.error("Error decoding recording: ", e);
-                        console.warn("Trying to re-encode to WAV instead...");
+                        logger.error("Error decoding recording: ", e);
+                        logger.warn("Trying to re-encode to WAV instead...");
 
                         const wav = await decodeOgg(this.buf);
 
                         // noinspection ES6MissingAwait - not needed when using callbacks
                         this.context.decodeAudioData(wav, b => resolve(b), e => {
-                            console.error("Still failed to decode recording: ", e);
+                            logger.error("Still failed to decode recording: ", e);
                             reject(e);
                         });
                     } catch (e) {
-                        console.error("Caught decoding error:", e);
+                        logger.error("Caught decoding error:", e);
                         reject(e);
                     }
                 });

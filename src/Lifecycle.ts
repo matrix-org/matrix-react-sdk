@@ -22,6 +22,7 @@ import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from 'matrix-js-sdk/src/utils';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
 import SecurityCustomisations from "./customisations/Security";
@@ -57,8 +58,7 @@ import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyn
 import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { setSentryUser } from "./sentry";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -111,7 +111,7 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
         const defaultDeviceDisplayName = opts.defaultDeviceDisplayName;
 
         if (enableGuest && !guestHsUrl) {
-            console.warn("Cannot enable guest access: can't determine HS URL to use");
+            logger.warn("Cannot enable guest access: can't determine HS URL to use");
             enableGuest = false;
         }
 
@@ -188,7 +188,7 @@ export function attemptTokenLogin(
     const homeserver = localStorage.getItem(SSO_HOMESERVER_URL_KEY);
     const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY);
     if (!homeserver) {
-        console.warn("Cannot log in with token: can't determine HS URL to use");
+        logger.warn("Cannot log in with token: can't determine HS URL to use");
         Modal.createTrackedDialog("SSO", "Unknown HS", ErrorDialog, {
             title: _t("We couldn't log you in"),
             description: _t("We asked the browser to remember which homeserver you use to let you sign in, " +
@@ -234,8 +234,8 @@ export function attemptTokenLogin(
                 }
             },
         });
-        console.error("Failed to log in with login token:");
-        console.error(err);
+        logger.error("Failed to log in with login token:");
+        logger.error(err);
         return false;
     });
 }
@@ -297,7 +297,7 @@ function registerAsGuest(
             guest: true,
         }, true).then(() => true);
     }, (err) => {
-        console.error("Failed to register as guest", err);
+        logger.error("Failed to register as guest", err);
         return false;
     });
 }
@@ -323,7 +323,9 @@ export async function getStoredSessionVars(): Promise<IStoredSession> {
     let accessToken;
     try {
         accessToken = await StorageManager.idbLoad("account", "mx_access_token");
-    } catch (e) {}
+    } catch (e) {
+        logger.error("StorageManager.idbLoad failed for account:mx_access_token", e);
+    }
     if (!accessToken) {
         accessToken = localStorage.getItem("mx_access_token");
         if (accessToken) {
@@ -331,7 +333,9 @@ export async function getStoredSessionVars(): Promise<IStoredSession> {
                 // try to migrate access token to IndexedDB if we can
                 await StorageManager.idbSave("account", "mx_access_token", accessToken);
                 localStorage.removeItem("mx_access_token");
-            } catch (e) {}
+            } catch (e) {
+                logger.error("migration of access token to IndexedDB failed", e);
+            }
         }
     }
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
@@ -452,10 +456,10 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
 }
 
 async function handleLoadSessionFailure(e: Error): Promise<boolean> {
-    console.error("Unable to load session", e);
+    logger.error("Unable to load session", e);
 
     const modal = Modal.createTrackedDialog('Session Restore Error', '', SessionRestoreErrorDialog, {
-        error: e.message,
+        error: e,
     });
 
     const [success] = await modal.finished;
@@ -523,7 +527,7 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
 
     const overwrite = credentials.userId !== oldUserId || credentials.deviceId !== oldDeviceId;
     if (overwrite) {
-        console.warn("Clearing all data: Old session belongs to a different user/session");
+        logger.warn("Clearing all data: Old session belongs to a different user/session");
     }
 
     return doSetLoggedIn(credentials, overwrite);
@@ -533,8 +537,8 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
  * fires on_logging_in, optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
- * @param {MatrixClientCreds} credentials
- * @param {Boolean} clearStorage
+ * @param {IMatrixClientCreds} credentials
+ * @param {Boolean} clearStorageEnabled
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
@@ -580,10 +584,13 @@ async function doSetLoggedIn(
 
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
+    setSentryUser(credentials.userId);
+
+    if (PosthogAnalytics.instance.isEnabled()) {
+        PosthogAnalytics.instance.startListeningToSettingsChanges();
+    }
 
     const client = MatrixClientPeg.get();
-
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
@@ -602,10 +609,10 @@ async function doSetLoggedIn(
             // make sure we don't think that it's a fresh login any more
             sessionStorage.removeItem("mx_fresh_login");
         } catch (e) {
-            console.warn("Error using local storage: can't persist session!", e);
+            logger.warn("Error using local storage: can't persist session!", e);
         }
     } else {
-        console.warn("No local storage available: can't persist session!");
+        logger.warn("No local storage available: can't persist session!");
     }
 
     dis.dispatch({ action: 'on_logged_in' });
@@ -650,7 +657,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
             encryptedAccessToken = await encryptAES(credentials.accessToken, encrKey, "access_token");
             encrKey.fill(0);
         } catch (e) {
-            console.warn("Could not encrypt access token", e);
+            logger.warn("Could not encrypt access token", e);
         }
         try {
             // save either the encrypted access token, or the plain access
@@ -676,7 +683,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
             localStorage.setItem("mx_access_token", credentials.accessToken);
         }
         if (localStorage.getItem("mx_has_pickle_key")) {
-            console.error("Expected a pickle key, but none provided.  Encryption may not work.");
+            logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
         }
     }
 
@@ -787,7 +794,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     DMRoomMap.makeShared().start();
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
-    CallHandler.sharedInstance().start();
+    CallHandler.instance.start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -801,7 +808,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
         await EventIndexPeg.init();
         await MatrixClientPeg.start();
     } else {
-        console.warn("Caller requested only auxiliary services be started");
+        logger.warn("Caller requested only auxiliary services be started");
         await MatrixClientPeg.assign();
     }
 
@@ -855,7 +862,9 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
 
         try {
             await StorageManager.idbDelete("account", "mx_access_token");
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbDelete failed for account:mx_access_token", e);
+        }
 
         // now restore those invites
         if (!opts?.deleteEverything) {
@@ -888,7 +897,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
  */
 export function stopMatrixClient(unsetClient = true): void {
     Notifier.stop();
-    CallHandler.sharedInstance().stop();
+    CallHandler.instance.stop();
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();
     Presence.stop();
@@ -909,3 +918,17 @@ export function stopMatrixClient(unsetClient = true): void {
         }
     }
 }
+
+// Utility method to perform a login with an existing access_token
+window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Promise<void> => {
+    const tempClient = createClient({
+        baseUrl: hsUrl,
+        accessToken,
+    });
+    const { user_id: userId } = await tempClient.whoami();
+    await doSetLoggedIn({
+        homeserverUrl: hsUrl,
+        accessToken,
+        userId,
+    }, true);
+};

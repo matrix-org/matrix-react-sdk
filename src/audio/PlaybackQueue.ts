@@ -17,6 +17,9 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { Playback, PlaybackState } from "./Playback";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -24,7 +27,6 @@ import { arrayFastClone } from "../utils/arrays";
 import { PlaybackManager } from "./PlaybackManager";
 import { isVoiceMessage } from "../utils/EventUtils";
 import RoomViewStore from "../stores/RoomViewStore";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 /**
  * Audio playback queue management for a given room. This keeps track of where the user
@@ -114,7 +116,7 @@ export class PlaybackQueue {
                     if (next) {
                         const instance = this.playbacks.get(next);
                         if (!instance) {
-                            console.warn(
+                            logger.warn(
                                 "Voice message queue desync: Missing playback for next message: "
                                 + `Current=${this.currentPlaybackId} Last=${last} Next=${next}`,
                             );
@@ -173,7 +175,7 @@ export class PlaybackQueue {
                         }
                     }
                 } else {
-                    console.warn(
+                    logger.warn(
                         "Voice message queue desync: Expected playback stop to be last in order. "
                         + `Current=${this.currentPlaybackId} Last=${last} EventID=${mxEvent.getId()}`,
                     );

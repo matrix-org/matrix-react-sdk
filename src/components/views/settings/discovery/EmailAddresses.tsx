@@ -16,13 +16,14 @@ limitations under the License.
 */
 
 import React from 'react';
+import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from '../../../../Modal';
 import AddThreepid from '../../../../AddThreepid';
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import AccessibleButton from "../../elements/AccessibleButton";
 
@@ -75,7 +76,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     }
 
     private async changeBinding({ bind, label, errorTitle }): Promise<void> {
-        if (!await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind()) {
+        if (!(await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind())) {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
 
@@ -98,7 +99,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             }
             this.setState({ bound: bind });
         } catch (err) {
-            console.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`Unable to ${label} email address ${address} ${err}`);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -133,7 +134,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 bound: bind,
             });
         } catch (err) {
-            console.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`Unable to ${label} email address ${address} ${err}`);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -187,7 +188,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                         "and then click continue again."),
                 });
             } else {
-                console.error("Unable to verify email address: " + err);
+                logger.error("Unable to verify email address: " + err);
                 Modal.createTrackedDialog('Unable to verify email address', '', ErrorDialog, {
                     title: _t("Unable to verify email address."),
                     description: ((err && err.message) ? err.message : _t("Operation failed")),

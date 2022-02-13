@@ -22,11 +22,11 @@ import SdkConfig from '../../../SdkConfig';
 import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import AccessibleButton from "../elements/AccessibleButton";
 import CountlyAnalytics from "../../../CountlyAnalytics";
-import withValidation from "../elements/Validation";
-import * as Email from "../../../email";
+import withValidation, { IValidationResult } from "../elements/Validation";
 import Field from "../elements/Field";
 import CountryDropdown from "./CountryDropdown";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import EmailField from "./EmailField";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -262,26 +262,8 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         return result;
     };
 
-    private validateEmailRules = withValidation({
-        rules: [
-            {
-                key: "required",
-                test({ value, allowEmpty }) {
-                    return allowEmpty || !!value;
-                },
-                invalid: () => _t("Enter email address"),
-            }, {
-                key: "email",
-                test: ({ value }) => !value || Email.looksValid(value),
-                invalid: () => _t("Doesn't look like a valid email address"),
-            },
-        ],
-    });
-
-    private onEmailValidate = async (fieldState) => {
-        const result = await this.validateEmailRules(fieldState);
+    private onEmailValidate = (result: IValidationResult) => {
         this.markFieldValid(LoginField.Email, result.valid);
-        return result;
     };
 
     private validatePhoneNumberRules = withValidation({
@@ -332,27 +314,28 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         switch (loginType) {
             case LoginField.Email:
                 classes.error = this.props.loginIncorrect && !this.props.username;
-                return <Field
+                return <EmailField
                     className={classNames(classes)}
                     name="username" // make it a little easier for browser's remember-password
+                    autoComplete="email"
+                    type="email"
                     key="email_input"
-                    type="text"
-                    label={_t("Email")}
                     placeholder="joe@example.com"
                     value={this.props.username}
                     onChange={this.onUsernameChanged}
                     onFocus={this.onUsernameFocus}
                     onBlur={this.onUsernameBlur}
-                    disabled={this.props.disableSubmit}
+                    disabled={this.props.busy}
                     autoFocus={autoFocus}
                     onValidate={this.onEmailValidate}
-                    ref={field => this[LoginField.Email] = field}
+                    fieldRef={field => this[LoginField.Email] = field}
                 />;
             case LoginField.MatrixId:
                 classes.error = this.props.loginIncorrect && !this.props.username;
                 return <Field
                     className={classNames(classes)}
                     name="username" // make it a little easier for browser's remember-password
+                    autoComplete="username"
                     key="username_input"
                     type="text"
                     label={_t("Username")}
@@ -361,7 +344,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     onChange={this.onUsernameChanged}
                     onFocus={this.onUsernameFocus}
                     onBlur={this.onUsernameBlur}
-                    disabled={this.props.disableSubmit}
+                    disabled={this.props.busy}
                     autoFocus={autoFocus}
                     onValidate={this.onUsernameValidate}
                     ref={field => this[LoginField.MatrixId] = field}
@@ -379,6 +362,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                 return <Field
                     className={classNames(classes)}
                     name="phoneNumber"
+                    autoComplete="tel-national"
                     key="phone_input"
                     type="text"
                     label={_t("Phone")}
@@ -387,7 +371,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     onChange={this.onPhoneNumberChanged}
                     onFocus={this.onPhoneNumberFocus}
                     onBlur={this.onPhoneNumberBlur}
-                    disabled={this.props.disableSubmit}
+                    disabled={this.props.busy}
                     autoFocus={autoFocus}
                     onValidate={this.onPhoneNumberValidate}
                     ref={field => this[LoginField.Password] = field}
@@ -438,7 +422,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         element="select"
                         value={this.state.loginType}
                         onChange={this.onLoginTypeChange}
-                        disabled={this.props.disableSubmit}
+                        disabled={this.props.busy}
                     >
                         <option key={LoginField.MatrixId} value={LoginField.MatrixId}>
                             { _t('Username') }
@@ -464,12 +448,13 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     { loginField }
                     <Field
                         className={pwFieldClass}
+                        autoComplete="password"
                         type="password"
                         name="password"
                         label={_t('Password')}
                         value={this.state.password}
                         onChange={this.onPasswordChanged}
-                        disabled={this.props.disableSubmit}
+                        disabled={this.props.busy}
                         autoFocus={autoFocusPassword}
                         onValidate={this.onPasswordValidate}
                         ref={field => this[LoginField.Password] = field}

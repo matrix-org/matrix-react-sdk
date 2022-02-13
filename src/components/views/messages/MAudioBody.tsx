@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Playback } from "../../../audio/Playback";
 import InlineSpinner from '../elements/InlineSpinner';
@@ -49,12 +51,12 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
                 buffer = await blob.arrayBuffer();
             } catch (e) {
                 this.setState({ error: e });
-                console.warn("Unable to decrypt audio message", e);
+                logger.warn("Unable to decrypt audio message", e);
                 return; // stop processing the audio file
             }
         } catch (e) {
             this.setState({ error: e });
-            console.warn("Unable to decrypt/download audio message", e);
+            logger.warn("Unable to decrypt/download audio message", e);
             return; // stop processing the audio file
         }
 

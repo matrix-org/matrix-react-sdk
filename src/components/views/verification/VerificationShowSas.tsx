@@ -17,10 +17,10 @@ limitations under the License.
 import React from 'react';
 import { IGeneratedSas } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { DeviceInfo } from "matrix-js-sdk/src//crypto/deviceinfo";
+
 import { _t, _td } from '../../../languageHandler';
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
 import AccessibleButton from "../elements/AccessibleButton";
-import DialogButtons from "../elements/DialogButtons";
 import { fixupColorFonts } from '../../../utils/FontManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
@@ -92,7 +92,7 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             </div>;
             sasCaption = this.props.isSelf ?
                 _t(
-                    "Confirm the emoji below are displayed on both sessions, in the same order:",
+                    "Confirm the emoji below are displayed on both devices, in the same order:",
                 ):
                 _t(
                     "Verify this user by confirming the following emoji appear on their screen.",
@@ -106,7 +106,7 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             </div>;
             sasCaption = this.props.isSelf ?
                 _t(
-                    "Verify this session by confirming the following number appears on its screen.",
+                    "Verify this device by confirming the following number appears on its screen.",
                 ):
                 _t(
                     "Verify this user by confirming the following number appears on their screen.",
@@ -114,7 +114,7 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
         } else {
             return <div>
                 { _t("Unable to find a supported verification method.") }
-                <AccessibleButton kind="primary" onClick={this.props.onCancel} className="mx_UserInfo_wideButton">
+                <AccessibleButton kind="primary" onClick={this.props.onCancel}>
                     { _t('Cancel') }
                 </AccessibleButton>
             </div>;
@@ -126,12 +126,12 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             // device shouldn't be null in this situation but it can be, eg. if the device is
             // logged out during verification
             if (this.props.device) {
-                text = _t("Waiting for you to verify on your other session, %(deviceName)s (%(deviceId)s)…", {
+                text = _t("Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…", {
                     deviceName: this.props.device ? this.props.device.getDisplayName() : '',
                     deviceId: this.props.device ? this.props.device.deviceId : '',
                 });
             } else {
-                text = _t("Waiting for you to verify on your other session…");
+                text = _t("Waiting for you to verify on your other device…");
             }
             confirm = <p>{ text }</p>;
         } else if (this.state.pending || this.state.cancelling) {
@@ -143,25 +143,15 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
                 text = _t("Cancelling…");
             }
             confirm = <PendingActionSpinner text={text} />;
-        } else if (this.props.inDialog) {
-            // FIXME: stop using DialogButtons here once this component is only used in the right panel verification
-            confirm = <DialogButtons
-                primaryButton={_t("They match")}
-                onPrimaryButtonClick={this.onMatchClick}
-                primaryButtonClass="mx_UserInfo_wideButton mx_VerificationShowSas_matchButton"
-                cancelButton={_t("They don't match")}
-                onCancel={this.onDontMatchClick}
-                cancelButtonClass="mx_UserInfo_wideButton mx_VerificationShowSas_noMatchButton"
-            />;
         } else {
-            confirm = <React.Fragment>
+            confirm = <div className="mx_VerificationShowSas_buttonRow">
                 <AccessibleButton onClick={this.onDontMatchClick} kind="danger">
                     { _t("They don't match") }
                 </AccessibleButton>
                 <AccessibleButton onClick={this.onMatchClick} kind="primary">
                     { _t("They match") }
                 </AccessibleButton>
-            </React.Fragment>;
+            </div>;
         }
 
         return <div className="mx_VerificationShowSas">

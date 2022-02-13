@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { Key } from "../../../Keyboard";
@@ -100,6 +101,6 @@ export default class IntegrationManager extends React.Component<IProps, IState> 
             );
         }
 
-        return <iframe src={this.props.url} onError={this.onError} />;
+        return <iframe title={_t("Integration manager")} src={this.props.url} onError={this.onError} />;
     }
 }

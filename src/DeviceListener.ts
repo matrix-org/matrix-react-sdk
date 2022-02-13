@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
 import {
@@ -32,10 +35,8 @@ import {
 import { isSecretStorageBeingAccessed, accessSecretStorage } from "./SecurityManager";
 import { isSecureBackupRequired } from './utils/WellKnownUtils';
 import { isLoggedIn } from './components/structures/MatrixChat';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ActionPayload } from "./dispatcher/payloads";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { Action } from "./dispatcher/actions";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -48,6 +49,7 @@ export default class DeviceListener {
     // cache of the key backup info
     private keyBackupInfo: object = null;
     private keyBackupFetchedAt: number = null;
+    private keyBackupStatusChecked = false;
     // We keep a list of our own device IDs so we can batch ones that were already
     // there the last time the app launched into a single toast, but display new
     // ones in their own toasts.
@@ -92,6 +94,7 @@ export default class DeviceListener {
         this.dismissedThisDeviceToast = false;
         this.keyBackupInfo = null;
         this.keyBackupFetchedAt = null;
+        this.keyBackupStatusChecked = false;
         this.ourDeviceIdsAtStart = null;
         this.displayingToastsForDeviceIds = new Set();
     }
@@ -227,6 +230,8 @@ export default class DeviceListener {
 
         if (this.dismissedThisDeviceToast || allSystemsReady) {
             hideSetupEncryptionToast();
+
+            this.checkKeyBackupStatus();
         } else if (this.shouldShowSetupEncryptionToast()) {
             // make sure our keys are finished downloading
             await cli.downloadKeys([cli.getUserId()]);
@@ -238,6 +243,7 @@ export default class DeviceListener {
             ) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
                 showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
+                this.checkKeyBackupStatus();
             } else {
                 const backupInfo = await this.getKeyBackupInfo();
                 if (backupInfo) {
@@ -312,4 +318,17 @@ export default class DeviceListener {
 
         this.displayingToastsForDeviceIds = newUnverifiedDeviceIds;
     }
+
+    private checkKeyBackupStatus = async () => {
+        if (this.keyBackupStatusChecked) {
+            return;
+        }
+        // returns null when key backup status hasn't finished being checked
+        const isKeyBackupEnabled = MatrixClientPeg.get().getKeyBackupEnabled();
+        this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
+
+        if (isKeyBackupEnabled === false) {
+            dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
+        }
+    };
 }

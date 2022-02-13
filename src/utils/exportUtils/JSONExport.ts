@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Exporter from "./Exporter";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import Exporter from "./Exporter";
 import { formatFullDateNoDay, formatFullDateNoDayNoTime } from "../../DateUtils";
 import { haveTileForEvent } from "../../components/views/rooms/EventTile";
-import { ExportType } from "./exportUtils";
-import { IExportOptions } from "./exportUtils";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { ExportType, IExportOptions } from "./exportUtils";
+import { _t } from "../../languageHandler";
 
 export default class JSONExporter extends Exporter {
     protected totalSize = 0;
@@ -67,7 +69,7 @@ export default class JSONExporter extends Exporter {
                     this.addFile(filePath, blob);
                 }
             } catch (err) {
-                console.log("Error fetching file: " + err);
+                logger.log("Error fetching file: " + err);
             }
         }
         const jsonEvent: any = mxEv.toJSON();
@@ -78,7 +80,10 @@ export default class JSONExporter extends Exporter {
     protected async createOutput(events: MatrixEvent[]) {
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            this.updateProgress(`Processing event ${i + 1} out of ${events.length}`, false, true);
+            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
+                number: i + 1,
+                total: events.length,
+            }), false, true);
             if (this.cancelled) return this.cleanUp();
             if (!haveTileForEvent(event)) continue;
             this.messages.push(await this.getJSONString(event));
@@ -87,16 +92,16 @@ export default class JSONExporter extends Exporter {
     }
 
     public async export() {
-        console.info("Starting export process...");
-        console.info("Fetching events...");
+        logger.info("Starting export process...");
+        logger.info("Fetching events...");
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        console.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
+        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
 
-        console.info("Creating output...");
+        logger.info("Creating output...");
         const text = await this.createOutput(res);
 
         if (this.files.length) {
@@ -110,10 +115,10 @@ export default class JSONExporter extends Exporter {
         const exportEnd = performance.now();
 
         if (this.cancelled) {
-            console.info("Export cancelled successfully");
+            logger.info("Export cancelled successfully");
         } else {
-            console.info("Export successful!");
-            console.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            logger.info("Export successful!");
+            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
         }
 
         this.cleanUp();

@@ -15,21 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { verificationMethods } from 'matrix-js-sdk/src/crypto';
-import { SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { SCAN_QR_CODE_METHOD, ReciprocateQRCode } from "matrix-js-sdk/src/crypto/verification/QRCode";
+import { VerificationRequest, Phase } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
-import { ReciprocateQRCode } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { SAS } from "matrix-js-sdk/src/crypto/verification/SAS";
+import { logger } from "matrix-js-sdk/src/logger";
 
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import VerificationQRCode from "../elements/crypto/VerificationQRCode";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import E2EIcon, { E2EState } from "../rooms/E2EIcon";
-import { Phase } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import Spinner from "../elements/Spinner";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -70,7 +68,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         const noCommonMethodError: JSX.Element = !showSAS && !showQR ?
             <p>{ _t(
-                "The session you are trying to verify doesn't support scanning a " +
+                "The device you are trying to verify doesn't support scanning a " +
                 "QR code or emoji verification, which is what %(brand)s supports. Try " +
                 "with a different client.",
                 { brand },
@@ -103,7 +101,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 <div className='mx_VerificationPanel_QRPhase_betweenText'>{ _t("or") }</div> : null;
             return (
                 <div>
-                    { _t("Verify this session by completing one of the following:") }
+                    { _t("Verify this device by completing one of the following:") }
                     <div className='mx_VerificationPanel_QRPhase_startOptions'>
                         { qrBlockDialog }
                         { or }
@@ -180,7 +178,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     private renderQRReciprocatePhase() {
         const { member, request } = this.props;
         const description = request.isSelfVerification ?
-            _t("Almost there! Is your other session showing the same shield?") :
+            _t("Almost there! Is your other device showing the same shield?") :
             _t("Almost there! Is %(displayName)s showing the same shield?", {
                 displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
             });
@@ -224,7 +222,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (this.props.isRoomEncrypted) {
                 text = _t("Verify all users in a room to ensure it's secure.");
             } else {
-                text = _t("In encrypted rooms, verify all users to ensure it’s secure.");
+                text = _t("In encrypted rooms, verify all users to ensure it's secure.");
             }
         }
 
@@ -234,7 +232,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (!device) {
                 // This can happen if the device is logged out while we're still showing verification
                 // UI for it.
-                console.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
+                logger.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
                 description = _t("You've successfully verified your device!");
             } else {
                 description = _t("You've successfully verified %(deviceName)s (%(deviceId)s)!", {
@@ -250,7 +248,6 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         return (
             <div className="mx_UserInfo_container mx_VerificationPanel_verified_section">
-                <h3>{ _t("Verified") }</h3>
                 <p>{ description }</p>
                 <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
                 { text ? <p>{ text }</p> : null }
@@ -276,7 +273,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             text = _t("Verification timed out.") + ` ${startAgainInstruction}`;
         } else if (request.cancellingUserId === request.otherUserId) {
             if (request.isSelfVerification) {
-                text = _t("You cancelled verification on your other session.");
+                text = _t("You cancelled verification on your other device.");
             } else {
                 text = _t("%(displayName)s cancelled verification.", {
                     displayName: (member as User).displayName || (member as RoomMember).name || member.userId,
@@ -323,7 +320,6 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                                 isSelf={request.isSelfVerification}
                             /> : <Spinner />;
                         return <div className="mx_UserInfo_container">
-                            <h3>{ _t("Compare emoji") }</h3>
                             { emojis }
                         </div>;
                     }
@@ -335,7 +331,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             case Phase.Cancelled:
                 return this.renderCancelledPhase();
         }
-        console.error("VerificationPanel unhandled phase:", phase);
+        logger.error("VerificationPanel unhandled phase:", phase);
         return null;
     }
 
@@ -345,7 +341,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         try {
             await verifier.verify();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     };
 
@@ -378,7 +374,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 // but that's ok as verify should return the same promise.
                 await request.verifier.verify();
             } catch (err) {
-                console.error("error verify", err);
+                logger.error("error verify", err);
             }
         }
     };

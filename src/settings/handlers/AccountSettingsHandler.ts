@@ -15,27 +15,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
 import { objectClone, objectKeyChanges } from "../../utils/objects";
 import { SettingLevel } from "../SettingLevel";
 import { WatchManager } from "../WatchManager";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 const BREADCRUMBS_LEGACY_EVENT_TYPE = "im.vector.riot.breadcrumb_rooms";
 const BREADCRUMBS_EVENT_TYPE = "im.vector.setting.breadcrumbs";
 const BREADCRUMBS_EVENT_TYPES = [BREADCRUMBS_LEGACY_EVENT_TYPE, BREADCRUMBS_EVENT_TYPE];
 const RECENT_EMOJI_EVENT_TYPE = "io.element.recent_emoji";
 const INTEG_PROVISIONING_EVENT_TYPE = "im.vector.setting.integration_provisioning";
+const ANALYTICS_EVENT_TYPE = "im.vector.analytics";
 
 /**
  * Gets and sets settings at the "account" level for the current user.
  * This handler does not make use of the roomId parameter.
  */
 export default class AccountSettingsHandler extends MatrixClientBackedSettingsHandler {
-    constructor(private watchers: WatchManager) {
+    constructor(public readonly watchers: WatchManager) {
         super();
+    }
+
+    public get level(): SettingLevel {
+        return SettingLevel.ACCOUNT;
     }
 
     public initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
@@ -56,7 +62,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             }
 
             this.watchers.notifyUpdate("urlPreviewsEnabled", null, SettingLevel.ACCOUNT, val);
-        } else if (event.getType() === "im.vector.web.settings") {
+        } else if (event.getType() === "im.vector.web.settings" || event.getType() === ANALYTICS_EVENT_TYPE) {
             // Figure out what changed and fire those updates
             const prevContent = prevEvent ? prevEvent.getContent() : {};
             const changedSettings = objectKeyChanges<Record<string, any>>(prevContent, event.getContent());
@@ -118,11 +124,20 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             if (value === null || value === undefined) {
                 const oldCombinedValue = settings["autoplayGifsAndVideos"];
                 // Write, so that we can remove this in the future
-                this.setValue("autoplayGifs", roomId, oldCombinedValue);
-                this.setValue("autoplayVideo", roomId, oldCombinedValue);
+                if (oldCombinedValue !== null && oldCombinedValue !== undefined) {
+                    this.setValue("autoplayGifs", roomId, oldCombinedValue);
+                    this.setValue("autoplayVideo", roomId, oldCombinedValue);
+                }
                 return oldCombinedValue;
             }
             return value;
+        }
+
+        if (settingName === "pseudonymousAnalyticsOptIn") {
+            const content = this.getSettings(ANALYTICS_EVENT_TYPE) || {};
+            // Check to make sure that we actually got a boolean
+            if (typeof(content[settingName]) !== "boolean") return null;
+            return content[settingName];
         }
 
         const settings = this.getSettings() || {};
@@ -174,6 +189,14 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             const content = this.getSettings(INTEG_PROVISIONING_EVENT_TYPE) || {};
             content['enabled'] = newValue;
             await MatrixClientPeg.get().setAccountData(INTEG_PROVISIONING_EVENT_TYPE, content);
+            return;
+        }
+
+        // Special case analytics
+        if (settingName === "pseudonymousAnalyticsOptIn") {
+            const content = this.getSettings(ANALYTICS_EVENT_TYPE) || {};
+            content[settingName] = newValue;
+            await MatrixClientPeg.get().setAccountData(ANALYTICS_EVENT_TYPE, content);
             return;
         }
 

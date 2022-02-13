@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import url from 'url';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import type { Room } from "matrix-js-sdk/src/models/room";
-
 import SdkConfig from '../SdkConfig';
 import Modal from '../Modal';
 import { IntegrationManagerInstance, Kind } from "./IntegrationManagerInstance";
@@ -27,10 +29,7 @@ import IntegrationsDisabledDialog from "../components/views/dialogs/Integrations
 import WidgetUtils from "../utils/WidgetUtils";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import SettingsStore from "../settings/SettingsStore";
-import url from 'url';
 import { compare } from "../utils/strings";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const KIND_PREFERENCE = [
     // Ordered: first is most preferred, last is least preferred.
@@ -224,19 +223,19 @@ export class IntegrationManagers {
             const result = await fetch(`https://${domainName}/.well-known/matrix/integrations`);
             wkConfig = await result.json();
         } catch (e) {
-            console.error(e);
-            console.warn("Failed to locate integration manager");
+            logger.error(e);
+            logger.warn("Failed to locate integration manager");
             return null;
         }
 
         if (!wkConfig || !wkConfig["m.integrations_widget"]) {
-            console.warn("Missing integrations widget on .well-known response");
+            logger.warn("Missing integrations widget on .well-known response");
             return null;
         }
 
         const widget = wkConfig["m.integrations_widget"];
         if (!widget["url"] || !widget["data"] || !widget["data"]["api_url"]) {
-            console.warn("Malformed .well-known response for integrations widget");
+            logger.warn("Malformed .well-known response for integrations widget");
             return null;
         }
 

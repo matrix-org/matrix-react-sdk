@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
+
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
@@ -35,7 +36,7 @@ interface IState {
     avatarFile: File;
     originalTopic: string;
     topic: string;
-    enableProfileSave: boolean;
+    profileFieldsTouched: Record<string, boolean>;
     canSetName: boolean;
     canSetTopic: boolean;
     canSetAvatar: boolean;
@@ -71,7 +72,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
             avatarFile: null,
             originalTopic: topic,
             topic: topic,
-            enableProfileSave: false,
+            profileFieldsTouched: {},
             canSetName: room.currentState.maySendStateEvent('m.room.name', client.getUserId()),
             canSetTopic: room.currentState.maySendStateEvent('m.room.topic', client.getUserId()),
             canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
@@ -88,17 +89,24 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         this.setState({
             avatarUrl: null,
             avatarFile: null,
-            enableProfileSave: true,
+            profileFieldsTouched: {
+                ...this.state.profileFieldsTouched,
+                avatar: true,
+            },
         });
+    };
+
+    private isSaveEnabled = () => {
+        return Boolean(Object.values(this.state.profileFieldsTouched).length);
     };
 
     private cancelProfileChanges = async (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
-        if (!this.state.enableProfileSave) return;
+        if (!this.isSaveEnabled()) return;
         this.setState({
-            enableProfileSave: false,
+            profileFieldsTouched: {},
             displayName: this.state.originalDisplayName,
             topic: this.state.originalTopic,
             avatarUrl: this.state.originalAvatarUrl,
@@ -110,64 +118,73 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         e.stopPropagation();
         e.preventDefault();
 
-        if (!this.state.enableProfileSave) return;
-        this.setState({ enableProfileSave: false });
+        if (!this.isSaveEnabled()) return;
+        this.setState({ profileFieldsTouched: {} });
 
         const client = MatrixClientPeg.get();
-
-        let originalDisplayName: string;
-        let avatarUrl: string;
-        let originalAvatarUrl: string;
-        let originalTopic: string;
-        let avatarFile: File;
+        const newState: Partial<IState> = {};
 
         // TODO: What do we do about errors?
         const displayName = this.state.displayName.trim();
         if (this.state.originalDisplayName !== this.state.displayName) {
             await client.setRoomName(this.props.roomId, displayName);
-            originalDisplayName = displayName;
+            newState.originalDisplayName = displayName;
+            newState.displayName = displayName;
         }
 
         if (this.state.avatarFile) {
             const uri = await client.uploadContent(this.state.avatarFile);
             await client.sendStateEvent(this.props.roomId, 'm.room.avatar', { url: uri }, '');
-            avatarUrl = mediaFromMxc(uri).getSquareThumbnailHttp(96);
-            originalAvatarUrl = avatarUrl;
-            avatarFile = null;
+            newState.avatarUrl = mediaFromMxc(uri).getSquareThumbnailHttp(96);
+            newState.originalAvatarUrl = newState.avatarUrl;
+            newState.avatarFile = null;
         } else if (this.state.originalAvatarUrl !== this.state.avatarUrl) {
             await client.sendStateEvent(this.props.roomId, 'm.room.avatar', {}, '');
         }
 
         if (this.state.originalTopic !== this.state.topic) {
             await client.setRoomTopic(this.props.roomId, this.state.topic);
-            originalTopic = this.state.topic;
+            newState.originalTopic = this.state.topic;
         }
 
-        this.setState({
-            originalAvatarUrl,
-            avatarUrl,
-            originalDisplayName,
-            originalTopic,
-            displayName,
-            avatarFile,
-        });
+        this.setState(newState as IState);
     };
 
     private onDisplayNameChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({ displayName: e.target.value });
         if (this.state.originalDisplayName === e.target.value) {
-            this.setState({ enableProfileSave: false });
+            this.setState({
+                profileFieldsTouched: {
+                    ...this.state.profileFieldsTouched,
+                    name: false,
+                },
+            });
         } else {
-            this.setState({ enableProfileSave: true });
+            this.setState({
+                profileFieldsTouched: {
+                    ...this.state.profileFieldsTouched,
+                    name: true,
+                },
+            });
         }
     };
 
     private onTopicChanged = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
         this.setState({ topic: e.target.value });
         if (this.state.originalTopic === e.target.value) {
-            this.setState({ enableProfileSave: false });
+            this.setState({
+                profileFieldsTouched: {
+                    ...this.state.profileFieldsTouched,
+                    topic: false,
+                },
+            });
         } else {
-            this.setState({ enableProfileSave: true });
+            this.setState({
+                profileFieldsTouched: {
+                    ...this.state.profileFieldsTouched,
+                    topic: true,
+                },
+            });
         }
     };
 
@@ -176,7 +193,10 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
             this.setState({
                 avatarUrl: this.state.originalAvatarUrl,
                 avatarFile: null,
-                enableProfileSave: false,
+                profileFieldsTouched: {
+                    ...this.state.profileFieldsTouched,
+                    avatar: false,
+                },
             });
             return;
         }
@@ -187,7 +207,10 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
             this.setState({
                 avatarUrl: String(ev.target.result),
                 avatarFile: file,
-                enableProfileSave: true,
+                profileFieldsTouched: {
+                    ...this.state.profileFieldsTouched,
+                    avatar: true,
+                },
             });
         };
         reader.readAsDataURL(file);
@@ -205,14 +228,14 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                     <AccessibleButton
                         onClick={this.cancelProfileChanges}
                         kind="link"
-                        disabled={!this.state.enableProfileSave}
+                        disabled={!this.isSaveEnabled()}
                     >
                         { _t("Cancel") }
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.saveProfile}
                         kind="primary"
-                        disabled={!this.state.enableProfileSave}
+                        disabled={!this.isSaveEnabled()}
                     >
                         { _t("Save") }
                     </AccessibleButton>

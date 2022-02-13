@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
 import GroupStore from '../../../stores/GroupStore';
-import PropTypes from 'prop-types';
 import { showGroupInviteDialog } from '../../../GroupAddressPicker';
 import AccessibleButton from '../elements/AccessibleButton';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
-import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 
@@ -169,10 +169,9 @@ export default class GroupMemberList extends React.Component {
 
     onInviteToGroupButtonClick = () => {
         showGroupInviteDialog(this.props.groupId).then(() => {
-            dis.dispatch({
-                action: Action.SetRightPanelPhase,
+            RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.GroupMemberList,
-                refireParams: { groupId: this.props.groupId },
+                state: { groupId: this.props.groupId },
             });
         });
     };

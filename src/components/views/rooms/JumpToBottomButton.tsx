@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import React from "react";
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
 import classNames from 'classnames';
 
+import { _t } from '../../../languageHandler';
+import AccessibleButton from '../elements/AccessibleButton';
+
 interface IProps {
-    numUnreadMessages: number;
+    numUnreadMessages?: number;
     highlight: boolean;
     onScrollToBottomClick: (e: React.MouseEvent) => void;
 }

@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
@@ -44,18 +45,31 @@ interface IProps {
     initialTabId?: string;
 }
 
+interface IState {
+    roomName: string;
+}
+
 @replaceableComponent("views.dialogs.RoomSettingsDialog")
-export default class RoomSettingsDialog extends React.Component<IProps> {
+export default class RoomSettingsDialog extends React.Component<IProps, IState> {
     private dispatcherRef: string;
+
+    constructor(props: IProps) {
+        super(props);
+        this.state = { roomName: '' };
+    }
 
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
+        MatrixClientPeg.get().on("Room.name", this.onRoomName);
+        this.onRoomName();
     }
 
     public componentWillUnmount() {
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
         }
+
+        MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
     }
 
     private onAction = (payload): void => {
@@ -64,6 +78,12 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
         if (payload.action === 'view_home_page') {
             this.props.onFinished(true);
         }
+    };
+
+    private onRoomName = (): void => {
+        this.setState({
+            roomName: MatrixClientPeg.get().getRoom(this.props.roomId).name,
+        });
     };
 
     private getTabs(): Tab[] {
@@ -94,7 +114,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
             ROOM_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_RoomSettingsDialog_notificationsIcon",
-            <NotificationSettingsTab roomId={this.props.roomId} />,
+            <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
         ));
 
         if (SettingsStore.getValue("feature_bridge_state")) {
@@ -122,7 +142,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
     }
 
     render() {
-        const roomName = MatrixClientPeg.get().getRoom(this.props.roomId).name;
+        const roomName = this.state.roomName;
         return (
             <BaseDialog
                 className='mx_RoomSettingsDialog'
@@ -134,6 +154,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
                     <TabbedView
                         tabs={this.getTabs()}
                         initialTabId={this.props.initialTabId}
+                        screenName="RoomSettings"
                     />
                 </div>
             </BaseDialog>

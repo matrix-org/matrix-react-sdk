@@ -17,6 +17,10 @@ limitations under the License.
 */
 
 import React from 'react';
+import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
 import * as languageHandler from "../../../../../languageHandler";
@@ -30,7 +34,6 @@ import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
 import { Policies, Service, startTermsFlow } from "../../../../../Terms";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import { abbreviateUrl } from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
@@ -38,7 +41,6 @@ import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import AccountPhoneNumbers from "../../account/PhoneNumbers";
@@ -166,11 +168,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             threepids = await getThreepidsWithBindStatus(cli);
         } catch (e) {
             const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
                 `for 3PIDs bindings in Settings`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
         this.setState({
             emails: threepids.filter((a) => a.medium === 'email'),
@@ -216,11 +218,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 },
             });
         } catch (e) {
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
                 `for terms in Settings`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
     }
 
@@ -253,7 +255,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         } else if (!errMsg) {
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
-        console.error("Failed to change password: " + errMsg);
+        logger.error("Failed to change password: " + errMsg);
         Modal.createTrackedDialog('Failed to change password', '', ErrorDialog, {
             title: _t("Error"),
             description: errMsg,

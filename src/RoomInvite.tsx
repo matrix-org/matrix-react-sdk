@@ -18,6 +18,7 @@ import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { User } from "matrix-js-sdk/src/models/user";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import MultiInviter, { CompletionStates } from './utils/MultiInviter';
@@ -42,16 +43,19 @@ export interface IInviteResult {
  *
  * @param {string} roomId The ID of the room to invite to
  * @param {string[]} addresses Array of strings of addresses to invite. May be matrix IDs or 3pids.
+ * @param {boolean} sendSharedHistoryKeys whether to share e2ee keys with the invitees if applicable.
  * @param {function} progressCallback optional callback, fired after each invite.
  * @returns {Promise} Promise
  */
 export function inviteMultipleToRoom(
     roomId: string,
     addresses: string[],
+    sendSharedHistoryKeys = false,
     progressCallback?: () => void,
 ): Promise<IInviteResult> {
     const inviter = new MultiInviter(roomId, progressCallback);
-    return inviter.invite(addresses).then(states => Promise.resolve({ states, inviter }));
+    return inviter.invite(addresses, undefined, sendSharedHistoryKeys)
+        .then(states => Promise.resolve({ states, inviter }));
 }
 
 export function showStartChatInviteDialog(initialText = ""): void {
@@ -109,12 +113,17 @@ export function isValid3pidInvite(event: MatrixEvent): boolean {
     return true;
 }
 
-export function inviteUsersToRoom(roomId: string, userIds: string[], progressCallback?: () => void): Promise<void> {
-    return inviteMultipleToRoom(roomId, userIds, progressCallback).then((result) => {
+export function inviteUsersToRoom(
+    roomId: string,
+    userIds: string[],
+    sendSharedHistoryKeys = false,
+    progressCallback?: () => void,
+): Promise<void> {
+    return inviteMultipleToRoom(roomId, userIds, sendSharedHistoryKeys, progressCallback).then((result) => {
         const room = MatrixClientPeg.get().getRoom(roomId);
         showAnyInviteErrors(result.states, room, result.inviter);
     }).catch((err) => {
-        console.error(err.stack);
+        logger.error(err.stack);
         Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
             title: _t("Failed to invite"),
             description: ((err && err.message) ? err.message : _t("Operation failed")),

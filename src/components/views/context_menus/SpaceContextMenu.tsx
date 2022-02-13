@@ -18,34 +18,35 @@ import React, { useContext } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import {
-    IProps as IContextMenuProps,
-} from "../../structures/ContextMenu";
+import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { _t } from "../../../languageHandler";
 import {
     leaveSpace,
     shouldShowSpaceSettings,
-    showAddExistingRooms,
     showCreateNewRoom,
     showCreateNewSubspace,
     showSpaceInvite,
+    showSpacePreferences,
     showSpaceSettings,
 } from "../../../utils/space";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import RoomViewStore from "../../../stores/RoomViewStore";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
-import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
 import { BetaPill } from "../beta/BetaCard";
+import SettingsStore from "../../../settings/SettingsStore";
+import { Action } from "../../../dispatcher/actions";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps extends IContextMenuProps {
     space: Room;
+    hideHeader?: boolean;
 }
 
-const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
+const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) => {
     const cli = useContext(MatrixClientContext);
     const userId = cli.getUserId();
 
@@ -61,16 +62,17 @@ const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
 
         inviteOption = (
             <IconizedContextMenuOption
+                data-test-id='invite-option'
                 className="mx_SpacePanel_contextMenu_inviteButton"
                 iconClassName="mx_SpacePanel_iconInvite"
-                label={_t("Invite people")}
+                label={_t("Invite")}
                 onClick={onInviteClick}
             />
         );
     }
 
     let settingsOption;
-    let leaveSection;
+    let leaveOption;
     if (shouldShowSpaceSettings(space)) {
         const onSettingsClick = (ev: ButtonEvent) => {
             ev.preventDefault();
@@ -82,6 +84,7 @@ const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
 
         settingsOption = (
             <IconizedContextMenuOption
+                data-test-id='settings-option'
                 iconClassName="mx_SpacePanel_iconSettings"
                 label={_t("Settings")}
                 onClick={onSettingsClick}
@@ -96,32 +99,53 @@ const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
             onFinished();
         };
 
-        leaveSection = <IconizedContextMenuOptionList red first>
+        leaveOption = (
             <IconizedContextMenuOption
+                data-test-id='leave-option'
                 iconClassName="mx_SpacePanel_iconLeave"
+                className="mx_IconizedContextMenu_option_red"
                 label={_t("Leave space")}
                 onClick={onLeaveClick}
             />
-        </IconizedContextMenuOptionList>;
+        );
     }
 
-    const canAddRooms = space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
+    let devtoolsOption;
+    if (SettingsStore.getValue("developerMode")) {
+        const onViewTimelineClick = (ev: ButtonEvent) => {
+            ev.preventDefault();
+            ev.stopPropagation();
 
-    let newRoomSection;
-    if (space.currentState.maySendStateEvent(EventType.SpaceChild, userId)) {
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: space.roomId,
+                forceTimeline: true,
+                _trigger: undefined, // room doesn't change
+            });
+            onFinished();
+        };
+
+        devtoolsOption = (
+            <IconizedContextMenuOption
+                iconClassName="mx_SpacePanel_iconSettings"
+                label={_t("See room timeline (devtools)")}
+                onClick={onViewTimelineClick}
+            />
+        );
+    }
+
+    const hasPermissionToAddSpaceChild = space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
+    const canAddRooms = hasPermissionToAddSpaceChild && shouldShowComponent(UIComponent.CreateRooms);
+    const canAddSubSpaces = hasPermissionToAddSpaceChild && shouldShowComponent(UIComponent.CreateSpaces);
+
+    let newRoomSection: JSX.Element;
+    if (canAddRooms || canAddSubSpaces) {
         const onNewRoomClick = (ev: ButtonEvent) => {
             ev.preventDefault();
             ev.stopPropagation();
 
+            PosthogTrackers.trackInteraction("WebSpaceContextMenuNewRoomItem", ev);
             showCreateNewRoom(space);
-            onFinished();
-        };
-
-        const onAddExistingRoomClick = (ev: ButtonEvent) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-
-            showAddExistingRooms(space);
             onFinished();
         };
 
@@ -133,43 +157,36 @@ const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
             onFinished();
         };
 
-        newRoomSection = <IconizedContextMenuOptionList first>
-            <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconPlus"
-                label={_t("Create new room")}
-                onClick={onNewRoomClick}
-            />
-            <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconHash"
-                label={_t("Add existing room")}
-                onClick={onAddExistingRoomClick}
-            />
-            <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconPlus"
-                label={_t("Add space")}
-                onClick={onNewSubspaceClick}
-            >
-                <BetaPill />
-            </IconizedContextMenuOption>
-        </IconizedContextMenuOptionList>;
+        newRoomSection = <>
+            <div data-test-id='add-to-space-header' className="mx_SpacePanel_contextMenu_separatorLabel">
+                { _t("Add") }
+            </div>
+            { canAddRooms &&
+                <IconizedContextMenuOption
+                    data-test-id='new-room-option'
+                    iconClassName="mx_SpacePanel_iconPlus"
+                    label={_t("Room")}
+                    onClick={onNewRoomClick}
+                />
+            }
+            { canAddSubSpaces &&
+                <IconizedContextMenuOption
+                    data-test-id='new-subspace-option'
+                    iconClassName="mx_SpacePanel_iconPlus"
+                    label={_t("Space")}
+                    onClick={onNewSubspaceClick}
+                >
+                    <BetaPill />
+                </IconizedContextMenuOption>
+            }
+        </>;
     }
 
-    const onMembersClick = (ev: ButtonEvent) => {
+    const onPreferencesClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
 
-        if (!RoomViewStore.getRoomId()) {
-            defaultDispatcher.dispatch({
-                action: "view_room",
-                room_id: space.roomId,
-            }, true);
-        }
-
-        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.SpaceMemberList,
-            refireParams: { space },
-        });
+        showSpacePreferences(space);
         onFinished();
     };
 
@@ -177,9 +194,10 @@ const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
         ev.preventDefault();
         ev.stopPropagation();
 
-        defaultDispatcher.dispatch({
-            action: "view_room",
+        defaultDispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
             room_id: space.roomId,
+            _trigger: undefined, // other
         });
         onFinished();
     };
@@ -190,25 +208,31 @@ const SpaceContextMenu = ({ space, onFinished, ...props }: IProps) => {
         className="mx_SpacePanel_contextMenu"
         compact
     >
-        <div className="mx_SpacePanel_contextMenu_header">
+        { !hideHeader && <div className="mx_SpacePanel_contextMenu_header">
             { space.name }
-        </div>
+        </div> }
         <IconizedContextMenuOptionList first>
-            { inviteOption }
             <IconizedContextMenuOption
-                iconClassName="mx_SpacePanel_iconMembers"
-                label={_t("Members")}
-                onClick={onMembersClick}
+                iconClassName="mx_SpacePanel_iconHome"
+                label={_t("Space home")}
+                onClick={onExploreRoomsClick}
             />
-            { settingsOption }
+            { inviteOption }
             <IconizedContextMenuOption
                 iconClassName="mx_SpacePanel_iconExplore"
                 label={canAddRooms ? _t("Manage & explore rooms") : _t("Explore rooms")}
                 onClick={onExploreRoomsClick}
             />
+            <IconizedContextMenuOption
+                iconClassName="mx_SpacePanel_iconPreferences"
+                label={_t("Preferences")}
+                onClick={onPreferencesClick}
+            />
+            { settingsOption }
+            { leaveOption }
+            { devtoolsOption }
+            { newRoomSection }
         </IconizedContextMenuOptionList>
-        { newRoomSection }
-        { leaveSection }
     </IconizedContextMenu>;
 };
 

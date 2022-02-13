@@ -15,12 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
 import SetupEncryptionBody from "./SetupEncryptionBody";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from '../../views/elements/AccessibleButton';
+import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
+import AuthPage from "../../views/auth/AuthPage";
 
 interface IProps {
     onFinished: () => void;
@@ -58,8 +60,6 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const AuthPage = sdk.getComponent("auth.AuthPage");
-        const CompleteSecurityBody = sdk.getComponent("auth.CompleteSecurityBody");
         const { phase, lostKeys } = this.state;
         let icon;
         let title;
@@ -69,20 +69,20 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
         } else if (phase === Phase.Intro) {
             if (lostKeys) {
                 icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
-                title = _t("Unable to verify this login");
+                title = _t("Unable to verify this device");
             } else {
                 icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
-                title = _t("Verify this login");
+                title = _t("Verify this device");
             }
         } else if (phase === Phase.Done) {
             icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_verified" />;
-            title = _t("Session verified");
+            title = _t("Device verified");
         } else if (phase === Phase.ConfirmSkip) {
             icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
             title = _t("Are you sure?");
         } else if (phase === Phase.Busy) {
             icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
-            title = _t("Verify this login");
+            title = _t("Verify this device");
         } else if (phase === Phase.ConfirmReset) {
             icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
             title = _t("Really reset verification keys?");

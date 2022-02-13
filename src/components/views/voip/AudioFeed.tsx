@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from 'react';
 import { CallFeed, CallFeedEvent } from 'matrix-js-sdk/src/webrtc/callFeed';
 import { logger } from 'matrix-js-sdk/src/logger';
+
 import MediaDeviceHandler, { MediaDeviceHandlerEvent } from "../../../MediaDeviceHandler";
 
 interface IProps {
@@ -66,7 +67,7 @@ export default class AudioFeed extends React.Component<IProps, IState> {
                 // back to the default after the call is over - Dave
                 element.setSinkId(audioOutput);
             } catch (e) {
-                console.error("Couldn't set requested audio output device: using default", e);
+                logger.error("Couldn't set requested audio output device: using default", e);
                 logger.warn("Couldn't set requested audio output device: using default", e);
             }
         }

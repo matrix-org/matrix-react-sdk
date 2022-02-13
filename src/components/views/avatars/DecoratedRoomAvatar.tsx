@@ -19,6 +19,8 @@ import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { User } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from '../rooms/NotificationBadge';
@@ -31,6 +33,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import TooltipTarget from "../elements/TooltipTarget";
 
 interface IProps {
     room: Room;
@@ -39,6 +42,7 @@ interface IProps {
     forceCount?: boolean;
     oobData?: IOOBData;
     viewAvatarOnClick?: boolean;
+    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
 }
 
 interface IState {
@@ -90,9 +94,9 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     }
 
     private get isPublicRoom(): boolean {
-        const joinRules = this.props.room.currentState.getStateEvents("m.room.join_rules", "");
+        const joinRules = this.props.room.currentState.getStateEvents(EventType.RoomJoinRules, "");
         const joinRule = joinRules && joinRules.getContent().join_rule;
-        return joinRule === 'public';
+        return joinRule === JoinRule.Public;
     }
 
     private get dmUser(): User {
@@ -112,14 +116,11 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         }
     }
 
-    private onRoomTimeline = (ev: MatrixEvent, room: Room) => {
+    private onRoomTimeline = (ev: MatrixEvent, room: Room | null) => {
         if (this.isUnmounted) return;
+        if (this.props.room.roomId !== room?.roomId) return;
 
-        // apparently these can happen?
-        if (!room) return;
-        if (this.props.room.roomId !== room.roomId) return;
-
-        if (ev.getType() === 'm.room.join_rules' || ev.getType() === 'm.room.member') {
+        if (ev.getType() === EventType.RoomJoinRules || ev.getType() === EventType.RoomMember) {
             const newIcon = this.calculateIcon();
             if (newIcon !== this.state.icon) {
                 this.setState({ icon: newIcon });
@@ -189,6 +190,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.state.icon !== Icon.None) {
             icon = <TextWithTooltip
                 tooltip={tooltipText(this.state.icon)}
+                tooltipProps={this.props.tooltipProps}
                 class={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
             />;
         }

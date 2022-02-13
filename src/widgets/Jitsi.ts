@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+import { IClientWellKnown } from "matrix-js-sdk/src/client";
+
 import SdkConfig from "../SdkConfig";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const JITSI_WK_PROPERTY = "im.vector.riot.jitsi";
 
@@ -33,7 +34,7 @@ export class Jitsi {
     private domain: string;
 
     public get preferredDomain(): string {
-        return this.domain || 'jitsi.riot.im';
+        return this.domain || "meet.element.io";
     }
 
     /**
@@ -67,15 +68,13 @@ export class Jitsi {
         this.update(cli.getClientWellKnown());
     }
 
-    private update = async (discoveryResponse): Promise<any> => {
+    private update = async (discoveryResponse: IClientWellKnown): Promise<any> => {
         // Start with a default of the config's domain
-        let domain = (SdkConfig.get()['jitsi'] || {})['preferredDomain'] || 'jitsi.riot.im';
+        let domain = SdkConfig.get().jitsi?.preferredDomain || "meet.element.io";
 
         logger.log("Attempting to get Jitsi conference information from homeserver");
-        if (discoveryResponse && discoveryResponse[JITSI_WK_PROPERTY]) {
-            const wkPreferredDomain = discoveryResponse[JITSI_WK_PROPERTY]['preferredDomain'];
-            if (wkPreferredDomain) domain = wkPreferredDomain;
-        }
+        const wkPreferredDomain = discoveryResponse?.[JITSI_WK_PROPERTY]?.['preferredDomain'];
+        if (wkPreferredDomain) domain = wkPreferredDomain;
 
         // Put the result into memory for us to use later
         this.domain = domain;
@@ -92,7 +91,9 @@ export class Jitsi {
         const parsed = new URL(url);
         if (parsed.hostname !== this.preferredDomain) return null; // invalid
         return {
-            conferenceId: parsed.pathname,
+            // URL pathnames always contain a leading slash.
+            // Remove it to be left with just the conference name.
+            conferenceId: parsed.pathname.substring(1),
             domain: parsed.hostname,
             isAudioOnly: false,
         };

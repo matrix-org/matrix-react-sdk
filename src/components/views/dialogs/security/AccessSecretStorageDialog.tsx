@@ -18,6 +18,7 @@ import { debounce } from "lodash";
 import classNames from 'classnames';
 import React, { ChangeEvent, FormEvent } from 'react';
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import * as sdk from '../../../../index';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
@@ -252,7 +253,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 this.props.onFinished(true);
             }, true);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             this.props.onFinished(false);
         }
     };
@@ -286,10 +287,10 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         const resetButton = (
             <div className="mx_AccessSecretStorageDialog_reset">
                 { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
-                    a: (sub) => <a
-                        href=""
+                    a: (sub) => <AccessibleButton
+                        kind="link_inline"
                         onClick={this.onResetAllClick}
-                        className="mx_AccessSecretStorageDialog_reset_link">{ sub }</a>,
+                        className="mx_AccessSecretStorageDialog_reset_link">{ sub }</AccessibleButton>,
                 }) }
             </div>
         );
@@ -332,7 +333,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
             content = <div>
                 <p>{ _t(
-                    "Enter your Security Phrase or <button>Use your Security Key</button> to continue.", {},
+                    "Enter your Security Phrase or <button>use your Security Key</button> to continue.", {},
                     {
                         button: s => <AccessibleButton className="mx_linkButton"
                             element="span"
@@ -344,15 +345,15 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 ) }</p>
 
                 <form className="mx_AccessSecretStorageDialog_primaryContainer" onSubmit={this.onPassPhraseNext}>
-                    <input
-                        type="password"
+                    <Field
                         id="mx_passPhraseInput"
                         className="mx_AccessSecretStorageDialog_passPhraseInput"
-                        onChange={this.onPassPhraseChange}
+                        type="password"
+                        label={_t("Security Phrase")}
                         value={this.state.passPhrase}
+                        onChange={this.onPassPhraseChange}
                         autoFocus={true}
                         autoComplete="new-password"
-                        placeholder={_t("Security Phrase")}
                     />
                     { keyStatus }
                     <DialogButtons
@@ -392,6 +393,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry_textInput">
                             <Field
                                 type="password"
+                                id="mx_securityKey"
                                 label={_t('Security Key')}
                                 value={this.state.recoveryKey}
                                 onChange={this.onRecoveryKeyChange}
