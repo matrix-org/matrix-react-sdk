@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644867524787,
+  "lastUpdate": 1644867563917,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65492,6 +65492,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4949.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cfa6e266cda9c416e5301dcb2301e37e2dc06959",
+          "message": "Wire up new fields on the ViewRoom posthog event and more interactions (#7787)",
+          "timestamp": "2022-02-14T19:31:13Z",
+          "tree_id": "593fc57fa33e5f39e6af1c6c01f6742c457f335d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cfa6e266cda9c416e5301dcb2301e37e2dc06959"
+        },
+        "date": 1644867558028,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5039.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 967,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1568.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4383,
             "unit": "ms",
             "extra": "type: measure"
           }
