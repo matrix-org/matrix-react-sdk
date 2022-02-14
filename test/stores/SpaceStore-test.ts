@@ -18,6 +18,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import "../skinned-sdk"; // Must be first for skinning to work
+
 import SpaceStore from "../../src/stores/spaces/SpaceStore";
 import {
     MetaSpace,
@@ -678,7 +679,7 @@ describe("SpaceStore", () => {
             expect(store.isRoomInSpace(MetaSpace.Home, invite1)).toBeTruthy();
         });
 
-        fdescribe('onRoomsUpdate()', () => {
+        describe('onRoomsUpdate()', () => {
             beforeEach(() => {
                 [fav1, fav2, fav3, dm1, dm2, dm3, orphan1, orphan2, invite1, invite2, room1, room2, room3, room4]
                     .forEach(mkRoom);
@@ -706,6 +707,25 @@ describe("SpaceStore", () => {
                 client.emit("RoomState.events", childEvent);
             };
 
+            const addMember = (spaceId, user: RoomMember) => {
+                const memberEvent = mkEvent({
+                    event: true,
+                    type: EventType.RoomMember,
+                    room: spaceId,
+                    user: client.getUserId(),
+                    skey: user.userId,
+                    content: { membership: 'join' },
+                    ts: Date.now(),
+                });
+                const spaceRoom = client.getRoom(spaceId);
+                spaceRoom.currentState.getStateEvents.mockImplementation(
+                    testUtils.mockStateEventImplementation([memberEvent]),
+                );
+                spaceRoom.getMember.mockReturnValue(user);
+
+                client.emit("RoomState.members", memberEvent);
+            };
+
             it('emits events for parent spaces when child room is added', async () => {
                 await run();
 
@@ -720,6 +740,51 @@ describe("SpaceStore", () => {
                 // space4 is a subspace of space1
                 expect(emitSpy).toHaveBeenCalledWith(space1);
                 expect(emitSpy).not.toHaveBeenCalledWith(space3);
+            });
+
+            it('updates rooms state when a child room is added', async () => {
+                await run();
+                const room5 = mkRoom('!room5:server');
+
+                expect(store.isRoomInSpace(space2, room5.roomId)).toBeFalsy();
+                expect(store.isRoomInSpace(space4, room5.roomId)).toBeFalsy();
+
+                // add room5 into space2
+                addChildRoom(space2, room5.roomId);
+
+                expect(store.isRoomInSpace(space2, room5.roomId)).toBeTruthy();
+                // space2 is subspace of space4
+                expect(store.isRoomInSpace(space4, room5.roomId)).toBeTruthy();
+                // space4 is subspace of space1
+                expect(store.isRoomInSpace(space1, room5.roomId)).toBeTruthy();
+            });
+
+            it('emits events for parent spaces when a member is added', async () => {
+                await run();
+
+                const emitSpy = jest.spyOn(store, 'emit').mockClear();
+                // add into space2
+                addMember(space2, dm1Partner);
+
+                expect(emitSpy).toHaveBeenCalledWith(space2);
+                // space2 is subspace of space4
+                expect(emitSpy).toHaveBeenCalledWith(space4);
+                // space4 is a subspace of space1
+                expect(emitSpy).toHaveBeenCalledWith(space1);
+                expect(emitSpy).not.toHaveBeenCalledWith(space3);
+            });
+
+            it('updates users state when a member is added', async () => {
+                await run();
+
+                expect(store.getSpaceFilteredUserIds(space2)).toEqual(new Set([]));
+
+                // add into space2
+                addMember(space2, dm1Partner);
+
+                expect(store.getSpaceFilteredUserIds(space2)).toEqual(new Set([dm1Partner.userId]));
+                expect(store.getSpaceFilteredUserIds(space4)).toEqual(new Set([dm1Partner.userId]));
+                expect(store.getSpaceFilteredUserIds(space1)).toEqual(new Set([dm1Partner.userId]));
             });
         });
     });

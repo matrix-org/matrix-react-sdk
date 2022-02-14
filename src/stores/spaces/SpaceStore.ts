@@ -657,6 +657,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.userIdsBySpace.get(space.roomId)?.delete(userId);
         }
 
+        const affectedParentSpaceIds = flattenSpaceHierarchy(this.parentMap, this.parentMap, space.roomId);
+
+        this.emit(space.roomId);
+        affectedParentSpaceIds.forEach(spaceId => this.emit(spaceId));
+
         // bust cache
         this._aggregatedSpaceCache.userIdsBySpace.clear();
 
@@ -929,6 +934,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // listening for m.room.member events in onRoomState above doesn't work as the Member object isn't updated by then
     private onRoomStateMembers = (ev: MatrixEvent) => {
         const room = this.matrixClient.getRoom(ev.getRoomId());
+
         const userId = ev.getStateKey();
         if (room?.isSpaceRoom() && // only consider space rooms
             DMRoomMap.shared().getDMRoomsForUserId(userId).length > 0 && // only consider members we have a DM with
