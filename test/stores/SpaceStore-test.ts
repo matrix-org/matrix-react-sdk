@@ -677,6 +677,51 @@ describe("SpaceStore", () => {
             expect(store.isRoomInSpace(space1, invite1)).toBeTruthy();
             expect(store.isRoomInSpace(MetaSpace.Home, invite1)).toBeTruthy();
         });
+
+        fdescribe('onRoomsUpdate()', () => {
+            beforeEach(() => {
+                [fav1, fav2, fav3, dm1, dm2, dm3, orphan1, orphan2, invite1, invite2, room1, room2, room3, room4]
+                    .forEach(mkRoom);
+                mkSpace(space2, [fav1, fav2, fav3, room1]);
+                mkSpace(space3, [invite2]);
+                mkSpace(space4, [room4, fav2, space2, space3]);
+                mkSpace(space1, [fav1, room1, space4]);
+            });
+
+            const addChildRoom = (spaceId, childId) => {
+                const childEvent = mkEvent({
+                    event: true,
+                    type: EventType.SpaceChild,
+                    room: spaceId,
+                    user: client.getUserId(),
+                    skey: childId,
+                    content: { via: [], canonical: true },
+                    ts: Date.now(),
+                });
+                const spaceRoom = client.getRoom(spaceId);
+                spaceRoom.currentState.getStateEvents.mockImplementation(
+                    testUtils.mockStateEventImplementation([childEvent]),
+                );
+
+                client.emit("RoomState.events", childEvent);
+            };
+
+            it('emits events for parent spaces when child room is added', async () => {
+                await run();
+
+                const room5 = mkRoom('!room5:server');
+                const emitSpy = jest.spyOn(store, 'emit').mockClear();
+                // add room5 into space2
+                addChildRoom(space2, room5.roomId);
+
+                expect(emitSpy).toHaveBeenCalledWith(space2);
+                // space2 is subspace of space4
+                expect(emitSpy).toHaveBeenCalledWith(space4);
+                // space4 is a subspace of space1
+                expect(emitSpy).toHaveBeenCalledWith(space1);
+                expect(emitSpy).not.toHaveBeenCalledWith(space3);
+            });
+        });
     });
 
     describe("active space switching tests", () => {

@@ -53,7 +53,12 @@ import {
 } from ".";
 import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
-import { flattenSpaceHierarchyWithCache, SpaceEntityMap, SpaceDescendantMap } from "./flattenSpaceHierarchy";
+import {
+    flattenSpaceHierarchyWithCache,
+    SpaceEntityMap,
+    SpaceDescendantMap,
+    flattenSpaceHierarchy,
+} from "./flattenSpaceHierarchy";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 
 interface IState { }
@@ -689,6 +694,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this.childSpacesBySpace.set(spaceId, new Set(childSpaces.map(space => space.roomId)));
 
                 const roomIds = new Set(childRooms.map(r => r.roomId));
+
                 const space = this.matrixClient?.getRoom(spaceId);
                 const userIds = new Set(space?.getMembers().filter(m => {
                     return m.membership === "join" || m.membership === "invite";
@@ -743,6 +749,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             ...spacesChanged,
         ]);
 
+        // @TODO be better (set > array > set > array > set)
+        const affectedParents = Array.from(changeSet).flatMap(
+            changedId => [...flattenSpaceHierarchy(this.parentMap, this.parentMap, changedId)],
+        );
+        affectedParents.forEach(parentId => changeSet.add(parentId));
         // bust aggregate cache
         this._aggregatedSpaceCache.roomIdsBySpace.clear();
         this._aggregatedSpaceCache.userIdsBySpace.clear();
@@ -862,7 +873,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     private onRoomState = (ev: MatrixEvent) => {
         const room = this.matrixClient.getRoom(ev.getRoomId());
+
         if (!room) return;
+
+        console.log('HHH', 'ev', ev);
 
         switch (ev.getType()) {
             case EventType.SpaceChild: {
