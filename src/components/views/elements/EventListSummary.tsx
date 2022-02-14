@@ -477,13 +477,13 @@ export default class EventListSummary extends React.Component<IProps> {
         const userEvents: Record<string, IUserEvents[]> = {};
         eventsToRender.forEach((e, index) => {
             const type = e.getType();
-            const userId = type === EventType.RoomServerAcl ? e.getSender() : e.getStateKey();
+            const userId = type === EventType.RoomMember ? e.getStateKey() : e.getSender();
             // Initialise a user's events
             if (!userEvents[userId]) {
                 userEvents[userId] = [];
             }
 
-            if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
+            if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType) && !e.isRedacted()) {
                 latestUserAvatarMember.set(userId, e.target);
             } else if (e.sender) {
                 latestUserAvatarMember.set(userId, e.sender);
@@ -492,7 +492,7 @@ export default class EventListSummary extends React.Component<IProps> {
             let displayName = userId;
             if (type === EventType.RoomThirdPartyInvite) {
                 displayName = e.getContent().display_name;
-            } else if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
+            } else if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType) && !e.isRedacted()) {
                 displayName = e.target.name;
             } else if (e.sender) {
                 displayName = e.sender.name;
