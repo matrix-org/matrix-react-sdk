@@ -366,7 +366,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return sortBy(parents, r => r.roomId)?.[0] || null;
     }
 
-    public getKnownParents(roomId: string): Set<string> {
+    public getKnownParents(roomId: string, includeAncestors?: boolean): Set<string> {
+        if (includeAncestors) {
+            return flattenSpaceHierarchy(this.parentMap, this.parentMap, roomId);
+        }
         return this.parentMap.get(roomId) || new Set();
     }
 
@@ -660,7 +663,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         // bust cache
         this._aggregatedSpaceCache.userIdsBySpace.clear();
 
-        const affectedParentSpaceIds = flattenSpaceHierarchy(this.parentMap, this.parentMap, space.roomId);
+        const affectedParentSpaceIds = this.getKnownParents(space.roomId, true);
         this.emit(space.roomId);
         affectedParentSpaceIds.forEach(spaceId => this.emit(spaceId));
 
@@ -760,9 +763,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             ...spacesChanged,
         ]);
 
-        // @TODO be better (set > array > set > array > set)
         const affectedParents = Array.from(changeSet).flatMap(
-            changedId => [...flattenSpaceHierarchy(this.parentMap, this.parentMap, changedId)],
+            changedId => [...this.getKnownParents(changedId, true)],
         );
         affectedParents.forEach(parentId => changeSet.add(parentId));
         // bust aggregate cache
