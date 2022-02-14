@@ -17,6 +17,7 @@ export default function SimpleVideoGrid({ items }: ISimpleVideoGridProps) {
                         item={item}
                         width={426}
                         height={240}
+                        showName={items.length > 2}
                     />
                 );
             }) }

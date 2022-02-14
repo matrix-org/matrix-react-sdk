@@ -11,6 +11,7 @@ export interface IVideoTileProps {
     screenshare?: boolean;
     avatar?: ReactNode;
     name: string;
+    showName: boolean;
     mediaRef?: RefObject<HTMLVideoElement>;
 }
 
@@ -24,6 +25,7 @@ export default function VideoTile(
         screenshare,
         avatar,
         name,
+        showName,
         mediaRef,
         ...rest
     }: IVideoTileProps) {
@@ -50,7 +52,7 @@ export default function VideoTile(
             ) : (
                 <div className="mx_memberName">
                     <i className={audioMuted ? "mx_muteMicIcon" : "mx_micIcon"} />
-                    <span title={name}>{ name }</span>
+                    { showName && <span title={name}>{ name }</span> }
                 </div>
             ) }
             <video ref={mediaRef} playsInline disablePictureInPicture />

@@ -13,9 +13,10 @@ interface IVideoTileContainerProps {
     getAvatar?: (member: RoomMember, width: number, height: number) => ReactNode;
     width: number;
     height: number;
+    showName: boolean;
 }
 
-export function VideoTileContainer({ item, width, height, getAvatar, ...rest }: IVideoTileContainerProps) {
+export function VideoTileContainer({ item, width, height, getAvatar, showName, ...rest }: IVideoTileContainerProps) {
     const {
         isLocal,
         audioMuted,
@@ -39,6 +40,7 @@ export function VideoTileContainer({ item, width, height, getAvatar, ...rest }: 
             videoMuted={videoMuted}
             screenshare={purpose === SDPStreamMetadataPurpose.Screenshare}
             name={name}
+            showName={showName}
             mediaRef={mediaRef}
             avatar={getAvatar && getAvatar(member, width, height)}
             {...rest}
