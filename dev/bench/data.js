@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644866388967,
+  "lastUpdate": 1644867524787,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65444,6 +65444,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 722.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@element.io",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9141225a79f1dcb351891ea246fb0f6d10f50db8",
+          "message": "Add `jest-mock` to dependencies (#7800)\n\nIt's being used by the chat export test, but is not listed as a dependency.\r\n\r\nIf we rely on it, we should rely on it.",
+          "timestamp": "2022-02-14T19:29:08Z",
+          "tree_id": "cb9947ed765b92a9eee67404b1b9d177f69d0ef9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9141225a79f1dcb351891ea246fb0f6d10f50db8"
+        },
+        "date": 1644867517498,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5349.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1123.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1728.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4949.79999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
