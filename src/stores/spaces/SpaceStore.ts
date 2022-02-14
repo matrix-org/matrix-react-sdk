@@ -883,8 +883,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         if (!room) return;
 
-        console.log('HHH', 'ev', ev);
-
         switch (ev.getType()) {
             case EventType.SpaceChild: {
                 const target = this.matrixClient.getRoom(ev.getStateKey());
