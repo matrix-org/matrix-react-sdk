@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644882416464,
+  "lastUpdate": 1644882424028,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65636,6 +65636,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4451.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8d3c2eddd6307db9203357f0d56cc49bdb2c71d2",
+          "message": "Improve styling of edge case devtools state keys (#7794)",
+          "timestamp": "2022-02-14T23:37:45Z",
+          "tree_id": "2ccb28aa5c470ca7e016aa21dd4f868d6eb45ae1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8d3c2eddd6307db9203357f0d56cc49bdb2c71d2"
+        },
+        "date": 1644882416631,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4902.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 762.5,
             "unit": "ms",
             "extra": "type: measure"
           }
