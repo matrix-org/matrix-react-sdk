@@ -53,14 +53,14 @@ export default class AccessibleTooltipButton extends React.PureComponent<IProps,
         }
     }
 
-    showTooltip = () => {
+    private showTooltip = () => {
         if (this.props.forceHide) return;
         this.setState({
             hover: true,
         });
     };
 
-    hideTooltip = (ev: SyntheticEvent) => {
+    private hideTooltip = (ev: SyntheticEvent) => {
         this.setState({
             hover: false,
         });
