@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644585165563,
+  "lastUpdate": 1644831283874,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65360,6 +65360,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1224,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1c3507bc117a4fef33401b0bc17d2f79f4d4bfde",
+          "message": "Use the shared secret registration API directly (#7774)\n\n* Use the shared secret registration API directly\r\n\r\nrather than invoking the synapse module to do it. It's probably\r\na bit simpler, if anything, and allows for synapse to be run in\r\na separate container (or rather, avoids the javascript having to have\r\na copy of synapse source & server config).\r\n\r\n* Make registration secret required\r\n\r\nUpdate commander (8 major versions!) to get requiredOption\r\n\r\n* Wrong options object :/",
+          "timestamp": "2022-02-11T17:03:22Z",
+          "tree_id": "e82f60ebccfdcad595cffd636c4b1011ad12f3d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1c3507bc117a4fef33401b0bc17d2f79f4d4bfde"
+        },
+        "date": 1644831276724,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5236,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1157.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1643.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4823.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
