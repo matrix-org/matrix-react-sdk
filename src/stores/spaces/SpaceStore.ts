@@ -60,6 +60,7 @@ import {
     flattenSpaceHierarchy,
 } from "./flattenSpaceHierarchy";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IState { }
 
@@ -171,10 +172,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         if (space) {
             const roomId = this.getNotificationState(space).getFirstRoomWithNotifications();
-            defaultDispatcher.dispatch({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: roomId,
                 context_switch: true,
+                _trigger: "WebSpaceContextSwitch",
             });
         } else {
             const lists = RoomListStore.instance.unfilteredLists;
@@ -188,10 +190,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     }
                 });
                 if (unreadRoom) {
-                    defaultDispatcher.dispatch({
+                    defaultDispatcher.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: unreadRoom.roomId,
                         context_switch: true,
+                        _trigger: "WebSpaceContextSwitch",
                     });
                     break;
                 }
@@ -236,16 +239,18 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this.matrixClient.getRoom(roomId)?.getMyMembership() === "join" &&
                 this.isRoomInSpace(space, roomId)
             ) {
-                defaultDispatcher.dispatch({
+                defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: roomId,
                     context_switch: true,
+                    _trigger: "WebSpaceContextSwitch",
                 });
             } else if (cliSpace) {
-                defaultDispatcher.dispatch({
+                defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: space,
                     context_switch: true,
+                    _trigger: "WebSpaceContextSwitch",
                 });
             } else {
                 defaultDispatcher.dispatch({
@@ -1056,6 +1061,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]) as MetaSpace[];
 
         this._allRoomsInHome = SettingsStore.getValue("Spaces.allRoomsInHome");
+        this.sendUserProperties();
 
         this.rebuildSpaceHierarchy(); // trigger an initial update
 
@@ -1070,6 +1076,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         } else {
             this.switchSpaceIfNeeded();
         }
+    }
+
+    private sendUserProperties() {
+        const enabled = new Set(this.enabledMetaSpaces);
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceHomeEnabled", enabled.has(MetaSpace.Home));
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceHomeAllRooms", this.allRoomsInHome);
+        PosthogAnalytics.instance.setProperty("WebMetaSpacePeopleEnabled", enabled.has(MetaSpace.People));
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceFavouritesEnabled", enabled.has(MetaSpace.Favourites));
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceOrphansEnabled", enabled.has(MetaSpace.Orphans));
     }
 
     private goToFirstSpace(contextSwitch = false) {
@@ -1145,6 +1160,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                             if (this.enabledMetaSpaces.includes(MetaSpace.Home)) {
                                 this.rebuildHomeSpace();
                             }
+                            this.sendUserProperties();
                         }
                         break;
                     }
@@ -1175,6 +1191,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                             }
 
                             this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
+                            this.sendUserProperties();
                         }
                         break;
                     }

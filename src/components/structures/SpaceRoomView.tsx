@@ -84,6 +84,8 @@ import { useRoomState } from "../../hooks/useRoomState";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import PosthogTrackers from "../../PosthogTrackers";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     space: Room;
@@ -363,6 +365,8 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
 
 const SpaceLandingAddButton = ({ space }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
+    const canCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
+    const canCreateSpace = shouldShowComponent(UIComponent.CreateSpaces);
 
     let contextMenu;
     if (menuDisplayed) {
@@ -376,7 +380,7 @@ const SpaceLandingAddButton = ({ space }) => {
             compact
         >
             <IconizedContextMenuOptionList first>
-                <IconizedContextMenuOption
+                { canCreateRoom && <IconizedContextMenuOption
                     label={_t("Create new room")}
                     iconClassName="mx_RoomList_iconPlus"
                     onClick={async (e) => {
@@ -384,11 +388,12 @@ const SpaceLandingAddButton = ({ space }) => {
                         e.stopPropagation();
                         closeMenu();
 
+                        PosthogTrackers.trackInteraction("WebSpaceHomeCreateRoomButton", e);
                         if (await showCreateNewRoom(space)) {
                             defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
                         }
                     }}
-                />
+                /> }
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
                     iconClassName="mx_RoomList_iconAddExistingRoom"
@@ -399,18 +404,20 @@ const SpaceLandingAddButton = ({ space }) => {
                         showAddExistingRooms(space);
                     }}
                 />
-                <IconizedContextMenuOption
-                    label={_t("Add space")}
-                    iconClassName="mx_RoomList_iconPlus"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        showCreateNewSubspace(space);
-                    }}
-                >
-                    <BetaPill />
-                </IconizedContextMenuOption>
+                { canCreateSpace &&
+                    <IconizedContextMenuOption
+                        label={_t("Add space")}
+                        iconClassName="mx_RoomList_iconPlus"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            showCreateNewSubspace(space);
+                        }}
+                    >
+                        <BetaPill />
+                    </IconizedContextMenuOption>
+                }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     }
@@ -449,10 +456,11 @@ const SpaceLanding = ({ space }: { space: Room }) => {
         );
     }
 
-    const canAddRooms = myMembership === "join" && space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
+    const hasAddRoomPermissions = myMembership === "join" &&
+        space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
 
     let addRoomButton;
-    if (canAddRooms) {
+    if (hasAddRoomPermissions) {
         addRoomButton = <SpaceLandingAddButton space={space} />;
     }
 
@@ -858,9 +866,10 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
     private goToFirstRoom = async () => {
         if (this.state.firstRoomId) {
-            defaultDispatcher.dispatch({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.firstRoomId,
+                _trigger: undefined, // other
             });
             return;
         }

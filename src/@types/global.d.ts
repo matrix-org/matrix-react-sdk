@@ -115,6 +115,10 @@ declare global {
         mxAutoRageshakeStore?: AutoRageshakeStore;
     }
 
+    interface Electron {
+        // will be extended by element-web downstream
+    }
+
     interface DesktopCapturerSource {
         id: string;
         name: string;
@@ -128,10 +132,6 @@ declare global {
             width: number;
         };
         fetchWindowIcons?: boolean;
-    }
-
-    interface Electron {
-        getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>>;
     }
 
     interface Document {
