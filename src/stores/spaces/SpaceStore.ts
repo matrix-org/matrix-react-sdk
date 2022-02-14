@@ -114,7 +114,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private userIdsBySpace: SpaceEntityMap = new Map<Room["roomId"], Set<string>>();
     // cache that stores the aggregated lists of roomIdsBySpace and userIdsBySpace
     // cleared on changes
-    private _aggregatedSpaceCache: Record<string, SpaceEntityMap> = {
+    private _aggregatedSpaceCache = {
         roomIdsBySpace: new Map<SpaceKey, Set<string>>(),
         userIdsBySpace: new Map<Room["roomId"], Set<string>>(),
     };
@@ -404,7 +404,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return new Set(this.matrixClient.getVisibleRooms().map(r => r.roomId));
         }
 
-        if (!includeDescendantSpaces) {
+        // meta spaces never have descendants
+        // and the aggregate cache is not managed for meta spaces
+        if (!includeDescendantSpaces || isMetaSpace(space)) {
             return this.roomIdsBySpace.get(space) || new Set();
         }
 
@@ -420,7 +422,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (isMetaSpace(space)) {
             return undefined;
         }
-        if (!includeDescendantSpaces) {
+
+        // meta spaces never have descendants
+        // and the aggregate cache is not managed for meta spaces
+        if (!includeDescendantSpaces || isMetaSpace(space)) {
             return this.userIdsBySpace.get(space) || new Set();
         }
 
@@ -571,9 +576,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             });
             this.roomIdsBySpace.set(MetaSpace.Orphans, new Set(orphans.map(r => r.roomId)));
         }
-
-        // bust cache for meta spaces
-        enabledMetaSpaces.forEach(metaSpaceKey => this._aggregatedSpaceCache.roomIdsBySpace.delete(metaSpaceKey));
 
         if (isMetaSpace(this.activeSpace)) {
             this.switchSpaceIfNeeded();
