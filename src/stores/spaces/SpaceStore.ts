@@ -657,13 +657,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.userIdsBySpace.get(space.roomId)?.delete(userId);
         }
 
-        const affectedParentSpaceIds = flattenSpaceHierarchy(this.parentMap, this.parentMap, space.roomId);
-
-        this.emit(space.roomId);
-        affectedParentSpaceIds.forEach(spaceId => this.emit(spaceId));
-
         // bust cache
         this._aggregatedSpaceCache.userIdsBySpace.clear();
+
+        const affectedParentSpaceIds = flattenSpaceHierarchy(this.parentMap, this.parentMap, space.roomId);
+        this.emit(space.roomId);
+        affectedParentSpaceIds.forEach(spaceId => this.emit(spaceId));
 
         this.switchSpaceIfNeeded();
     };
