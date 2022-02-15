@@ -70,6 +70,8 @@ import BetaFeedbackDialog from "./BetaFeedbackDialog";
 import SdkConfig from "../../../SdkConfig";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { getMetaSpaceName } from "../../../stores/spaces";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -540,10 +542,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     }
 
     const onDialogKeyDown = (ev: KeyboardEvent) => {
-        if (ev.key === Key.ESCAPE) {
-            ev.stopPropagation();
-            ev.preventDefault();
-            onFinished();
+        const navAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navAction) {
+            case "KeyBinding.closeDialogOrContextMenu" as KeyBindingAction:
+            case KeyBindingAction.FilterRooms:
+                ev.stopPropagation();
+                ev.preventDefault();
+                onFinished();
+                break;
         }
     };
 
