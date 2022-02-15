@@ -20,6 +20,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 import { MsgType } from 'matrix-js-sdk/src/@types/event';
+import { M_POLL_START } from 'matrix-events-sdk';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
@@ -42,6 +43,8 @@ import ReplyChain from '../elements/ReplyChain';
 import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
+import Modal from '../../../Modal';
+import PollCreateDialog from '../elements/PollCreateDialog';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -228,12 +231,28 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         });
     };
 
-    private onEditClick = (ev: React.MouseEvent): void => {
-        dis.dispatch({
-            action: Action.EditEvent,
-            event: this.props.mxEvent,
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
+    private onEditClick = (): void => {
+        if (M_POLL_START.matches(this.props.mxEvent.getType())) {
+            Modal.createTrackedDialog(
+                'Polls',
+                'create',
+                PollCreateDialog,
+                {
+                    room: this.context.room,
+                    threadId: this.context.threadId ?? null,
+                    editingMxEvent: this.props.mxEvent,
+                },
+                'mx_CompoundDialog',
+                false, // isPriorityModal
+                true,  // isStaticModal
+            );
+        } else {
+            dis.dispatch({
+                action: Action.EditEvent,
+                event: this.props.mxEvent,
+                timelineRenderingType: this.context.timelineRenderingType,
+            });
+        }
     };
 
     private readonly forbiddenThreadHeadMsgType = [

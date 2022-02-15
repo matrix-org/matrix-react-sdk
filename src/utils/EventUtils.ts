@@ -59,7 +59,10 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
     if (mxEvent.status === EventStatus.CANCELLED ||
-        mxEvent.getType() !== EventType.RoomMessage ||
+        (
+            mxEvent.getType() !== EventType.RoomMessage &&
+            !M_POLL_START.matches(mxEvent.getType())
+        ) ||
         mxEvent.isRedacted() ||
         mxEvent.isRelation(RelationType.Replace) ||
         mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
@@ -68,7 +71,14 @@ export function canEditContent(mxEvent: MatrixEvent): boolean {
     }
 
     const { msgtype, body } = mxEvent.getOriginalContent();
-    return (msgtype === MsgType.Text || msgtype === MsgType.Emote) && body && typeof body === 'string';
+    return (
+        M_POLL_START.matches(mxEvent.getType()) ||
+        (
+            (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
+            body &&
+            typeof body === 'string'
+        )
+    );
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
