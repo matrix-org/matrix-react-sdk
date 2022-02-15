@@ -42,7 +42,8 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
     const { useSystemTheme } = themeState;
 
     const themeOptions = [{
-        id: MATCH_SYSTEM_THEME_ID, name: 'Match system',
+        id: MATCH_SYSTEM_THEME_ID,
+        name: 'Match system',
     }, ...orderedThemes];
 
     const selectedTheme = useSystemTheme ? MATCH_SYSTEM_THEME_ID : theme;
