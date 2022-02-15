@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644933711218,
+  "lastUpdate": 1644944806439,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65996,6 +65996,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 680.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8d4e83084c068d5867fa8cb025122b57b18938d7",
+          "message": "Remove Countly analytics integration (#7808)",
+          "timestamp": "2022-02-15T16:58:30Z",
+          "tree_id": "1d55b3bb8fab26347980685e18a28e27d5d6ef46",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8d4e83084c068d5867fa8cb025122b57b18938d7"
+        },
+        "date": 1644944800075,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4796.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 882.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
