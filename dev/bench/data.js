@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644883397303,
+  "lastUpdate": 1644883639689,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65708,6 +65708,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 709.3999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6793ef33ba71eba3c5cdee1dc0378d35ab53a8f7",
+          "message": "Use the resize observer polyfill consistently (#7796)",
+          "timestamp": "2022-02-14T23:59:03Z",
+          "tree_id": "1859f8dd431966c0763dd57fdf255562c2ee4b3e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6793ef33ba71eba3c5cdee1dc0378d35ab53a8f7"
+        },
+        "date": 1644883632425,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4785.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 905.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1551.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4137,
             "unit": "ms",
             "extra": "type: measure"
           }
