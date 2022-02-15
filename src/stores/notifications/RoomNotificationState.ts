@@ -52,7 +52,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.removeListener("Room.myMembership", this.handleMembershipUpdate);
         this.room.removeListener("Room.localEchoUpdated", this.handleLocalEchoUpdated);
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("Event.decrypted", this.onDecrypt);
+            MatrixClientPeg.get().removeListener("Event.decrypted", this.onEventDecrypted);
             MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);
         }
     }
