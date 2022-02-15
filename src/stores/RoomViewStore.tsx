@@ -21,7 +21,9 @@ import { Store } from 'flux/utils';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "matrix-analytics-events/types/typescript/ViewRoom";
+import { JoinedRoom as JoinedRoomEvent } from "matrix-analytics-events/types/typescript/JoinedRoom";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import dis from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -39,6 +41,8 @@ import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import DMRoomMap from "../utils/DMRoomMap";
 import SpaceStore from "./spaces/SpaceStore";
 import { isMetaSpace, MetaSpace } from "./spaces";
+import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
+import { JoinRoomReadyPayload } from "../dispatcher/payloads/JoinRoomReadyPayload";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -150,11 +154,42 @@ class RoomViewStore extends Store<ActionPayload> {
             case Action.JoinRoomError:
                 this.joinRoomError(payload);
                 break;
-            case Action.JoinRoomReady:
+            case Action.JoinRoomReady: {
                 if (this.state.roomId === payload.roomId) {
                     this.setState({ shouldPeek: false });
                 }
+
+                const cli = MatrixClientPeg.get();
+
+                const updateMetrics = () => {
+                    const room = cli.getRoom(payload.roomId);
+                    const numMembers = room.getJoinedMemberCount();
+                    const roomSize = numMembers > 1000 ? "MoreThanAThousand"
+                        : numMembers > 100 ? "OneHundredAndOneToAThousand"
+                            : numMembers > 10 ? "ElevenToOneHundred"
+                                : numMembers > 2 ? "ThreeToTen"
+                                    : numMembers > 1 ? "Two"
+                                        : "One";
+
+                    PosthogAnalytics.instance.trackEvent<JoinedRoomEvent>({
+                        eventName: "JoinedRoom",
+                        trigger: payload._trigger,
+                        roomSize,
+                        isDM: !!DMRoomMap.shared().getUserIdForRoomId(room.roomId),
+                        isSpace: room.isSpaceRoom(),
+                    });
+
+                    cli.off("Room", updateMetrics);
+                };
+
+                if (cli.getRoom(payload.roomId)) {
+                    updateMetrics();
+                } else {
+                    cli.on("Room", updateMetrics);
+                }
+
                 break;
+            }
             case 'on_client_not_viable':
             case 'on_logged_out':
                 this.reset();
@@ -241,10 +276,11 @@ class RoomViewStore extends Store<ActionPayload> {
             this.setState(newState);
 
             if (payload.auto_join) {
-                dis.dispatch({
+                dis.dispatch<JoinRoomPayload>({
                     ...payload,
                     action: Action.JoinRoom,
                     roomId: payload.room_id,
+                    _trigger: payload._trigger as JoinRoomPayload["_trigger"],
                 });
             }
         } else if (payload.room_alias) {
@@ -298,7 +334,7 @@ class RoomViewStore extends Store<ActionPayload> {
         });
     }
 
-    private async joinRoom(payload: ActionPayload) {
+    private async joinRoom(payload: JoinRoomPayload) {
         const startTime = CountlyAnalytics.getTimestamp();
         this.setState({
             joining: true,
@@ -310,21 +346,18 @@ class RoomViewStore extends Store<ActionPayload> {
         const address = roomAlias || roomId;
         const viaServers = this.state.viaServers || [];
         try {
-            await retry<any, MatrixError>(() => cli.joinRoom(address, {
+            await retry<Room, MatrixError>(() => cli.joinRoom(address, {
                 viaServers,
-                ...payload.opts,
+                ...(payload.opts || {}),
             }), NUM_JOIN_RETRY, (err) => {
                 // if we received a Gateway timeout then retry
                 return err.httpStatus === 504;
             });
 
             let type: IJoinRoomEvent["segmentation"]["type"] = undefined;
-            switch ((payload as ViewRoomPayload)._trigger) {
+            switch (payload._trigger) {
                 case "SlashCommand":
                     type = "slash_command";
-                    break;
-                case "Tombstone":
-                    type = "tombstone";
                     break;
                 case "RoomDirectory":
                     type = "room_directory";
@@ -335,9 +368,10 @@ class RoomViewStore extends Store<ActionPayload> {
             // We do *not* clear the 'joining' flag because the Room object and/or our 'joined' member event may not
             // have come down the sync stream yet, and that's the point at which we'd consider the user joined to the
             // room.
-            dis.dispatch({
+            dis.dispatch<JoinRoomReadyPayload>({
                 action: Action.JoinRoomReady,
                 roomId,
+                _trigger: payload._trigger,
             });
         } catch (err) {
             dis.dispatch({

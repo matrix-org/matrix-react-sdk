@@ -102,6 +102,7 @@ import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases
 import { ActionPayload } from "../../dispatcher/payloads";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { JoinRoomPayload } from "../../dispatcher/payloads/JoinRoomPayload";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -1282,11 +1283,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         } else {
             Promise.resolve().then(() => {
                 const signUrl = this.props.threepidInvite?.signUrl;
-                dis.dispatch({
+                dis.dispatch<JoinRoomPayload>({
                     action: Action.JoinRoom,
                     roomId: this.getRoomId(),
                     opts: { inviteSignUrl: signUrl },
-                    _type: "unknown", // TODO: instrumentation
+                    _trigger: this.state.room?.getMyMembership() === "invite" ? "Invite" : "RoomPreview",
                 });
                 return Promise.resolve();
             });

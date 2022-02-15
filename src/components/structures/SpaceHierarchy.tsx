@@ -63,6 +63,7 @@ import { IOOBData } from "../../stores/ThreepidInviteStore";
 import { awaitRoomDownSync } from "../../utils/RoomUpgrade";
 import RoomViewStore from "../../stores/RoomViewStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 
 interface IProps {
     space: Room;
@@ -355,7 +356,13 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
         viaServers: Array.from(hierarchy.viaMap.get(roomId) || []),
     });
 
-    prom.catch(err => {
+    prom.then(() => {
+        dis.dispatch<JoinRoomReadyPayload>({
+            action: Action.JoinRoomReady,
+            roomId,
+            _trigger: "SpaceHierarchy",
+        });
+    }, err => {
         RoomViewStore.showJoinRoomError(err, roomId);
     });
 
