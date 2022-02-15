@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644956811327,
+  "lastUpdate": 1644958940039,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66116,6 +66116,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5191.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5e3ba28d91b20d832ef4443462ff82fead07c47",
+          "message": "Bump ajv from 6.10.0 to 6.12.6 in /test/end-to-end-tests (#7792)\n\nBumps [ajv](https://github.com/ajv-validator/ajv) from 6.10.0 to 6.12.6.\r\n- [Release notes](https://github.com/ajv-validator/ajv/releases)\r\n- [Commits](https://github.com/ajv-validator/ajv/compare/v6.10.0...v6.12.6)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: ajv\r\n  dependency-type: indirect\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\n\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\r\nCo-authored-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-15T13:52:35-07:00",
+          "tree_id": "b722906a1b0a252d5cec622979fb51253eb26fd8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5e3ba28d91b20d832ef4443462ff82fead07c47"
+        },
+        "date": 1644958932635,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5088.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1131.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1651.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4691.100000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
