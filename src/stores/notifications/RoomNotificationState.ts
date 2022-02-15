@@ -26,7 +26,6 @@ import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
 import { NotificationState } from "./NotificationState";
 import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
-import { logger } from "matrix-js-sdk/src/logger";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
     constructor(public readonly room: Room) {
