@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644915706746,
+  "lastUpdate": 1644926387442,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65840,6 +65840,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4505.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5fe8442f44e274b29efa8e9c2c5fdfc10bc6b28d",
+          "message": "Add an end-to-end test for stickers (#7733)\n\n* Add an end-to-end test for stickers\r\n\r\n* More logs on login\r\n\r\n* Wait for spinners to go away\r\n\r\n* Factor out spinner waiting as it seems useful\r\n\r\n* Move stickers to the end\r\n\r\n* More waiting\r\n\r\n* When all else fails... add sleeps\r\n\r\n* Waiting for the server picker to appear seems to work..?\r\n\r\n* Typos\r\n\r\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>\r\n\r\n* remove commented code from registration usecase\r\n\r\nCo-authored-by: J. Ryan Stinnett <jryans@gmail.com>",
+          "timestamp": "2022-02-15T11:49:53Z",
+          "tree_id": "ed6b9bd9d52d395593e09368322e305f35fbaa32",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5fe8442f44e274b29efa8e9c2c5fdfc10bc6b28d"
+        },
+        "date": 1644926379896,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4980.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1365.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
