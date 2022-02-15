@@ -32,7 +32,7 @@ export async function login(
     session.log.done();
 
     // for reasons I still don't fully understand, this seems to be flakey
-    // such that wen it's trying to click on 'mx_ServerPicker_change',
+    // such that when it's trying to click on 'mx_ServerPicker_change',
     // it ends up clicking instead on the dropdown for username / email / phone.
     // Waiting for the serverpicker to appear before proceeding seems to make
     // it reliable...
@@ -59,7 +59,7 @@ export async function login(
         await nextButton.click();
         session.log.done();
     }
-    // Delay required because of local race condition on macOs
+    // Delay required because of local race condition on macOS
     // Where the form is not query-able despite being present in the DOM
     await session.delay(100);
 
