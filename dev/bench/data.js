@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644958940039,
+  "lastUpdate": 1644959683297,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66164,6 +66164,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4691.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c2cf3a2d9e3911d08ba79d185925a278100b6027",
+          "message": "Fix room create tile not showing up with hidden events shown (#7810)\n\n* Replace m.room.create with enum\n\n* Fix room create tile not showing up with hidden events shown",
+          "timestamp": "2022-02-15T21:05:41Z",
+          "tree_id": "4d62ab1b5f8609fe915a945f9a11df57e04d1685",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c2cf3a2d9e3911d08ba79d185925a278100b6027"
+        },
+        "date": 1644959677035,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4627.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 725.7000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
