@@ -21,12 +21,13 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
         userMediaFeeds,
         microphoneMuted,
         localVideoMuted,
+        screenshareFeeds,
         enter,
         leave,
         toggleLocalVideoMuted,
         toggleMicrophoneMuted,
     } = useGroupCall(groupCall);
-    const [layout] = useVideoGridLayout();
+    const [layout] = useVideoGridLayout(screenshareFeeds.length > 0);
 
     const items = useMemo<IVideoGridItem<{ callFeed: CallFeed }>[]>(() => userMediaFeeds.map((callFeed) => ({
         id: callFeed.userId,
@@ -48,7 +49,13 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
             (state === GroupCallState.Entered || state === GroupCallState.Entering)
                 ? <React.Fragment>
                     <VideoGrid items={items} layout={layout}>
-                        { (props) => <VideoTileContainer key={props.item.id} {...props} /> }
+                        { (props) => (
+                            <VideoTileContainer
+                                showName={items.length > 2 || props.item.focused}
+                                key={props.item.id}
+                                {...props}
+                            />
+                        ) }
                     </VideoGrid>
                     <CallViewButtons
                         ref={callViewButtonsRef}
