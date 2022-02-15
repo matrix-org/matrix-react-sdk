@@ -251,8 +251,8 @@ export default class RightPanelStore extends ReadyWatchingStore {
             this.byRoom[this.viewedRoomId] = this.byRoom[this.viewedRoomId] ??
                 convertToStatePanel(SettingsStore.getValue("RightPanel.phases", this.viewedRoomId), room);
         } else {
-            console.warn("Could not restore the right panel after load because there was no associated room object." +
-                "The right panel can only be restored for rooms and spaces but not for groups");
+            console.warn("Could not restore the right panel after load because there was no associated room object. " +
+                "The right panel can only be restored for rooms and spaces but not for groups.");
         }
     }
 

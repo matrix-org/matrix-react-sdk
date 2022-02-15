@@ -303,8 +303,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 }
 
-if (!window.mxMatrixClientPeg) {
-    window.mxMatrixClientPeg = new MatrixClientPegClass();
-}
+export const MatrixClientPeg: IMatrixClientPeg = new MatrixClientPegClass();
 
-export const MatrixClientPeg = window.mxMatrixClientPeg;
+if (!window.mxMatrixClientPeg) {
+    window.mxMatrixClientPeg = MatrixClientPeg;
+}
