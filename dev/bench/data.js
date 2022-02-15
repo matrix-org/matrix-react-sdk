@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644956121848,
+  "lastUpdate": 1644956811327,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66068,6 +66068,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 707.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "839593412c8b6b056a3199a81cce4100565b0c36",
+          "message": "Support refresh tokens (#7802)\n\nMSC: https://github.com/matrix-org/matrix-doc/pull/2918\r\nFixes https://github.com/vector-im/element-web/issues/18698\r\nFixes https://github.com/vector-im/element-web/issues/20648\r\n**Requires https://github.com/matrix-org/matrix-js-sdk/pull/2178**\r\n\r\n**Note**: There's a lot of logging in this PR. That is intentional to ensure that if/when something goes wrong we can chase the exact code path. It does not log any tokens - just where the code is going. Overall, it should be fairly low volume spam (and can be relaxed at a later date).\r\n\r\n----\r\n\r\nThis approach uses indexeddb (through a mutex library) to manage which tab actually triggers the refresh, preventing issues where multiple tabs try to update the token. If multiple tabs update the token then the server might consider the account hacked and hard logout all the tokens.\r\n\r\nIf for some reason the timer code gets it wrong, or the user has been offline for too long and the token can't be refreshed, they should be sent to a soft logout screen by the server. This will retain the user's encryption state - they simply need to reauthenticate to get an active access token again.\r\n\r\nThis additionally contains a change to fix soft logout not working, per the issue links above.\r\n\r\nOf interest may be the IPC approach which was ultimately declined in favour of this change instead: https://github.com/matrix-org/matrix-react-sdk/pull/7803",
+          "timestamp": "2022-02-15T20:16:49Z",
+          "tree_id": "075e23846225b9a0a076a88671d49c0af22b9f13",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/839593412c8b6b056a3199a81cce4100565b0c36"
+        },
+        "date": 1644956803903,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4989.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1133.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1747.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5191.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
