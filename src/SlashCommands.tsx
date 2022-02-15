@@ -64,6 +64,7 @@ import { TimelineRenderingType } from './contexts/RoomContext';
 import RoomViewStore from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
 import { PosthogAnalytics } from "./PosthogAnalytics";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -344,11 +345,13 @@ export const Commands = [
                     logger.log(
                         `/timestamp_to_event: found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp}`,
                     );
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         event_id: eventId,
                         highlighted: true,
                         room_id: roomId,
+                        _trigger: "SlashCommand",
+                        _viaKeyboard: true,
                     });
                 })());
             }
@@ -500,7 +503,7 @@ export const Commands = [
         command: 'invite',
         args: '<user-id> [<reason>]',
         description: _td('Invites user with given id to current room'),
-        analyticsName: "invite",
+        analyticsName: "Invite",
         isEnabled: () => shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
             if (args) {
@@ -608,26 +611,24 @@ export const Commands = [
                         roomAlias += ':' + MatrixClientPeg.get().getDomain();
                     }
 
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_alias: roomAlias,
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        _trigger: "SlashCommand",
+                        _viaKeyboard: true,
                     });
                     return success();
                 } else if (params[0][0] === '!') {
                     const [roomId, ...viaServers] = params;
 
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: roomId,
-                        opts: {
-                            // These are passed down to the js-sdk's /join call
-                            viaServers: viaServers,
-                        },
                         via_servers: viaServers, // for the rejoin button
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        _trigger: "SlashCommand",
+                        _viaKeyboard: true,
                     });
                     return success();
                 } else if (isPermalink) {
@@ -649,10 +650,11 @@ export const Commands = [
                     const viaServers = permalinkParts.viaServers;
                     const eventId = permalinkParts.eventId;
 
-                    const dispatch = {
+                    const dispatch: ViewRoomPayload = {
                         action: Action.ViewRoom,
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        _trigger: "SlashCommand",
+                        _viaKeyboard: true,
                     };
 
                     if (entity[0] === '!') dispatch["room_id"] = entity;
@@ -687,7 +689,7 @@ export const Commands = [
         command: 'part',
         args: '[<room-address>]',
         description: _td('Leave room'),
-        analyticsName: "part",
+        analyticsName: "Part",
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
@@ -1150,9 +1152,11 @@ export const Commands = [
 
                 const roomId = await ensureDMExists(MatrixClientPeg.get(), userId);
 
-                dis.dispatch({
+                dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: roomId,
+                    _trigger: "SlashCommand",
+                    _viaKeyboard: true,
                 });
             })());
         },
@@ -1172,9 +1176,11 @@ export const Commands = [
                         return success((async () => {
                             const cli = MatrixClientPeg.get();
                             const roomId = await ensureDMExists(cli, userId);
-                            dis.dispatch({
+                            dis.dispatch<ViewRoomPayload>({
                                 action: Action.ViewRoom,
                                 room_id: roomId,
+                                _trigger: "SlashCommand",
+                                _viaKeyboard: true,
                             });
                             if (msg) {
                                 cli.sendTextMessage(roomId, msg);

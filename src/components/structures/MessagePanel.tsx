@@ -467,6 +467,16 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // TODO: Implement granular (per-room) hide options
     public shouldShowEvent(mxEv: MatrixEvent, forceHideEvents = false): boolean {
+        if (this.props.hideThreadedMessages && SettingsStore.getValue("feature_thread")) {
+            if (mxEv.isThreadRelation) {
+                return false;
+            }
+
+            if (this.shouldLiveInThreadOnly(mxEv)) {
+                return false;
+            }
+        }
+
         if (MatrixClientPeg.get().isUserIgnored(mxEv.getSender())) {
             return false; // ignored = no show (only happens if the ignore happens after an event was received)
         }
@@ -482,17 +492,25 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Always show highlighted event
         if (this.props.highlightedEventId === mxEv.getId()) return true;
 
-        // Checking if the message has a "parentEventId" as we do not
-        // want to hide the root event of the thread
-        if (mxEv.isThreadRelation &&
-            !mxEv.isThreadRoot &&
-            this.props.hideThreadedMessages &&
-            SettingsStore.getValue("feature_thread")
-        ) {
+        return !shouldHideEvent(mxEv, this.context);
+    }
+
+    private shouldLiveInThreadOnly(event: MatrixEvent): boolean {
+        const associatedId = event.getAssociatedId();
+
+        const targetsThreadRoot = event.threadRootId === associatedId;
+        if (event.isThreadRoot || targetsThreadRoot || !event.isThreadRelation) {
             return false;
         }
 
-        return !shouldHideEvent(mxEv, this.context);
+        // If this is a reply, then we use the associated event to decide whether
+        // this should be thread only or not
+        const parentEvent = this.props.room.findEventById(associatedId);
+        if (parentEvent) {
+            return this.shouldLiveInThreadOnly(parentEvent);
+        } else {
+            return true;
+        }
     }
 
     public readMarkerForEvent(eventId: string, isLastEvent: boolean): ReactNode {
@@ -663,15 +681,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
             for (const Grouper of groupers) {
                 if (Grouper.canStartGroup(this, mxEv) && !this.props.disableGrouping) {
-                    grouper = new Grouper(
-                        this,
-                        mxEv,
-                        prevEvent,
-                        lastShownEvent,
-                        this.props.layout,
-                        nextEvent,
-                        nextTile,
-                    );
+                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, nextEvent, nextTile);
                 }
             }
             if (!grouper) {
@@ -1038,7 +1048,6 @@ abstract class BaseGrouper {
         public readonly event: MatrixEvent,
         public readonly prevEvent: MatrixEvent,
         public readonly lastShownEvent: MatrixEvent,
-        protected readonly layout: Layout,
         public readonly nextEvent?: MatrixEvent,
         public readonly nextEventTile?: MatrixEvent,
     ) {
@@ -1165,7 +1174,7 @@ class CreationGrouper extends BaseGrouper {
                 onToggle={panel.onHeightChanged} // Update scroll state
                 summaryMembers={[ev.sender]}
                 summaryText={summaryText}
-                layout={this.layout}
+                layout={this.panel.props.layout}
             >
                 { eventTiles }
             </GenericEventListSummary>,
@@ -1208,11 +1217,10 @@ class MainGrouper extends BaseGrouper {
         public readonly event: MatrixEvent,
         public readonly prevEvent: MatrixEvent,
         public readonly lastShownEvent: MatrixEvent,
-        protected readonly layout: Layout,
         nextEvent: MatrixEvent,
         nextEventTile: MatrixEvent,
     ) {
-        super(panel, event, prevEvent, lastShownEvent, layout, nextEvent, nextEventTile);
+        super(panel, event, prevEvent, lastShownEvent, nextEvent, nextEventTile);
         this.events = [event];
     }
 
@@ -1278,15 +1286,18 @@ class MainGrouper extends BaseGrouper {
         const key = "eventlistsummary-" + (this.prevEvent ? this.events[0].getId() : "initial");
 
         let highlightInSummary = false;
-        let eventTiles = this.events.map((e) => {
+        let eventTiles = this.events.map((e, i) => {
             if (e.getId() === panel.props.highlightedEventId) {
                 highlightInSummary = true;
             }
-            // In order to prevent DateSeparators from appearing in the expanded form
-            // of EventListSummary, render each member event as if the previous
-            // one was itself. This way, the timestamp of the previous event === the
-            // timestamp of the current event, and no DateSeparator is inserted.
-            return panel.getTilesForEvent(e, e, e === lastShownEvent, isGrouped, this.nextEvent, this.nextEventTile);
+            return panel.getTilesForEvent(
+                i === 0 ? this.prevEvent : this.events[i - 1],
+                e,
+                e === lastShownEvent,
+                isGrouped,
+                this.nextEvent,
+                this.nextEventTile,
+            );
         }).reduce((a, b) => a.concat(b), []);
 
         if (eventTiles.length === 0) {
@@ -1305,7 +1316,7 @@ class MainGrouper extends BaseGrouper {
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInSummary}
-                layout={this.layout}
+                layout={this.panel.props.layout}
             >
                 { eventTiles }
             </EventListSummary>,
@@ -1319,7 +1330,7 @@ class MainGrouper extends BaseGrouper {
     }
 
     public getNewPrevEvent(): MatrixEvent {
-        return this.events[0];
+        return this.events[this.events.length - 1];
     }
 }
 

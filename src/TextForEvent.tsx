@@ -45,9 +45,17 @@ import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog
 import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 import UserIdentifierCustomisations from './customisations/UserIdentifier';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
+}
+
+function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()): string {
+    const client = MatrixClientPeg.get();
+    const roomId = event.getRoomId();
+    const member = client.getRoom(roomId)?.getMember(userId);
+    return member?.rawDisplayName || userId || _t("Someone");
 }
 
 // These functions are frequently used just to check whether an event has
@@ -76,8 +84,8 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
 
 function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): () => string | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
-    const senderName = getSenderName(ev);
-    const targetName = ev.target ? ev.target.name : ev.getStateKey();
+    const senderName = ev.sender?.name || getRoomMemberDisplayname(ev);
+    const targetName = ev.target?.name || getRoomMemberDisplayname(ev, ev.getStateKey());
     const prevContent = ev.getPrevContent();
     const content = ev.getContent();
     const reason = content.reason;
@@ -522,11 +530,12 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
 }
 
 const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void => {
-    defaultDispatcher.dispatch({
+    defaultDispatcher.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,
         event_id: messageId,
         highlighted: true,
         room_id: roomId,
+        _trigger: undefined, // room doesn't change
     });
 };
 

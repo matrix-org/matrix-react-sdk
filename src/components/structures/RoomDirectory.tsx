@@ -34,7 +34,6 @@ import SettingsStore from "../../settings/SettingsStore";
 import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
 import GroupStore from "../../stores/GroupStore";
 import FlairStore from "../../stores/FlairStore";
-import CountlyAnalytics from "../../CountlyAnalytics";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../customisations/Media";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
@@ -46,10 +45,10 @@ import BaseDialog from "../views/dialogs/BaseDialog";
 import DirectorySearchBox from "../views/elements/DirectorySearchBox";
 import ScrollPanel from "./ScrollPanel";
 import Spinner from "../views/elements/Spinner";
-import { ActionPayload } from "../../dispatcher/payloads";
 import { getDisplayAliasForAliasSet } from "../../Rooms";
 import { Action } from "../../dispatcher/actions";
 import PosthogTrackers from "../../PosthogTrackers";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 const MAX_NAME_LENGTH = 80;
 const MAX_TOPIC_LENGTH = 800;
@@ -87,9 +86,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
     constructor(props) {
         super(props);
-
-        CountlyAnalytics.instance.trackRoomDirectoryBegin();
-        this.startTime = CountlyAnalytics.getTimestamp();
 
         const selectedCommunityId = SettingsStore.getValue("feature_communities_v2_prototypes")
             ? GroupFilterOrderStore.getSelectedTags()[0]
@@ -260,11 +256,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             if (this.unmounted) {
                 // if we've been unmounted, we don't care either.
                 return false;
-            }
-
-            if (this.state.filterString) {
-                const count = data.total_room_count_estimate || data.chunk.length;
-                CountlyAnalytics.instance.trackRoomDirectorySearch(count, this.state.filterString);
             }
 
             this.nextBatch = data.next_batch;
@@ -494,11 +485,11 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
     private showRoom(room: IPublicRoomsChunkRoom, roomAlias?: string, autoJoin = false, shouldPeek = false) {
         this.onFinished();
-        const payload: ActionPayload = {
+        const payload: ViewRoomPayload = {
             action: Action.ViewRoom,
             auto_join: autoJoin,
             should_peek: shouldPeek,
-            _type: "room_directory", // instrumentation
+            _trigger: "RoomDirectory",
         };
         if (room) {
             // Don't let the user view a room they won't be able to either
@@ -524,9 +515,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
             if (this.state.roomServer) {
                 payload.via_servers = [this.state.roomServer];
-                payload.opts = {
-                    viaServers: [this.state.roomServer],
-                };
             }
         }
         // It's not really possible to join Matrix rooms by ID because the HS has no way to know
@@ -671,7 +659,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
     }
 
     private onFinished = () => {
-        CountlyAnalytics.instance.trackRoomDirectory(this.startTime);
         this.props.onFinished(false);
     };
 
