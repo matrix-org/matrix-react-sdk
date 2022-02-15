@@ -18,6 +18,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import Mutex from "idb-mutex";
+import { Optional } from "matrix-events-sdk";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import { getRenewedStoredSessionVars, hydrateSessionInPlace } from "./Lifecycle";
@@ -91,13 +92,13 @@ export class TokenLifecycle {
      * be returned or an error if something went wrong.
      * @param {IMatrixClientCreds} credentials The input credentials.
      * @param {MatrixClient} client A client set up with those credentials.
-     * @returns {Promise<IRenewedMatrixClientCreds>} Resolves to the new credentials, or
-     * falsy if renewal not possible/needed. Throws on error.
+     * @returns {Promise<Optional<IRenewedMatrixClientCreds>>} Resolves to the new credentials,
+     * or falsy if renewal not possible/needed. Throws on error.
      */
     public async tryTokenExchangeIfNeeded(
         credentials: IMatrixClientCreds,
         client: MatrixClient,
-    ): Promise<IRenewedMatrixClientCreds> {
+    ): Promise<Optional<IRenewedMatrixClientCreds>> {
         if (!credentials.accessTokenExpiryTs && credentials.accessTokenRefreshToken) {
             logger.warn(
                 "TokenLifecycle#tryExchange: Got a refresh token, but no expiration time. The server is " +
@@ -122,7 +123,7 @@ export class TokenLifecycle {
     private async doTokenRefresh(
         credentials: IMatrixClientCreds,
         client: MatrixClient,
-    ): Promise<IRenewedMatrixClientCreds> {
+    ): Promise<Optional<IRenewedMatrixClientCreds>> {
         try {
             logger.info("TokenLifecycle#doRefresh: Acquiring lock");
             await this.mutex.lock();
