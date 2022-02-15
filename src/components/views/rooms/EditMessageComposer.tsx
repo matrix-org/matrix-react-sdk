@@ -351,7 +351,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const event = this.props.editState.getEvent();
                 const threadId = event.threadRootId || null;
 
-                const prom = this.props.mxClient.sendMessage(roomId, threadId, editContent);
+                this.props.mxClient.sendMessage(roomId, threadId, editContent);
                 this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
             }
