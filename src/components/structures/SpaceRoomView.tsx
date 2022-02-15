@@ -810,7 +810,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         this.state = {
             phase,
-            showRightPanel: RightPanelStore.instance.isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.props.space.roomId),
             myMembership: this.props.space.getMyMembership(),
         };
 
@@ -833,7 +833,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.instance.isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.props.space.roomId),
         });
     };
 
