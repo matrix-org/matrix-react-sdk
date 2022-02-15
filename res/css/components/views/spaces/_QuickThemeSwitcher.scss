@@ -1,0 +1,25 @@
+
+.mx_QuickThemeSwitcher {
+    display: flex;
+    align-items: center;
+
+    .mx_Dropdown {
+        min-width: 100px;
+        margin-left: auto;
+        height: min-content;
+    }
+
+    .mx_Dropdown_menu {
+        max-height: 70px;
+    }
+}
+
+.mx_QuickThemeSwitcher_heading {
+    font-weight: $font-semi-bold;
+    font-size: $font-12px;
+    line-height: $font-15px;
+    color: $secondary-content;
+    text-transform: uppercase;
+    display: inline-block;
+    margin: 0;
+}

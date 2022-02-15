@@ -84,4 +84,6 @@ export const mkSpace = (
 
 export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise(r => e.once(k, r));
 
-export const findByTestId = (component: ReactWrapper, id: string) => component.find(`[data-test-id="${id}"]`);
+export const findByAttr = (attr: string) => (component: ReactWrapper, value: string) =>
+    component.find(`[${attr}="${value}"]`);
+export const findByTestId = findByAttr('data-test-id');
