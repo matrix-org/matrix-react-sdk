@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644882424028,
+  "lastUpdate": 1644883397303,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65672,6 +65672,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 762.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "76fb2abae1a0ebd5348bc11e3fcafd41a12c2436",
+          "message": "Consolidate, simplify and improve copied tooltips (#7799)",
+          "timestamp": "2022-02-14T23:54:46Z",
+          "tree_id": "d9ec17d58bde5c78cf853ab5b011d904a60d4b77",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/76fb2abae1a0ebd5348bc11e3fcafd41a12c2436"
+        },
+        "date": 1644883390926,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5282.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 709.3999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
