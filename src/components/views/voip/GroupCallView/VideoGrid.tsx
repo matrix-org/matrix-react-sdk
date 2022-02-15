@@ -951,8 +951,6 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                 draggingTileRef.current = null;
             }
 
-            console.log({ active, event, buttons });
-
             api.start(animate(newTiles));
         },
         { filterTaps: true, pointer: { buttons: [1] } },
