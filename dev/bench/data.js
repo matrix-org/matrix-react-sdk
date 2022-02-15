@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644883639689,
+  "lastUpdate": 1644883702659,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65756,6 +65756,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4137,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0cf15d27dc9dd427615a9ec7c6733a512fd6ce12",
+          "message": "Fix edge cases around event list summaries with hidden events and redactions (#7797)",
+          "timestamp": "2022-02-14T23:58:29Z",
+          "tree_id": "25008cb30779cbb0ac7c9cc592e8522be6cac91b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0cf15d27dc9dd427615a9ec7c6733a512fd6ce12"
+        },
+        "date": 1644883696478,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4678.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 705.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
