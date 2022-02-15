@@ -59,7 +59,7 @@ import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDis
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
 import { setSentryUser } from "./sentry";
-import { TokenLifecycle } from "./TokenLifecycle";
+import { IRenewedMatrixClientCreds, TokenLifecycle } from "./TokenLifecycle";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -205,7 +205,7 @@ export function attemptTokenLogin(
         "m.login.token", {
             token: queryParams.loginToken as string,
             initial_device_display_name: defaultDeviceDisplayName,
-            refresh_token: true,
+            refresh_token: TokenLifecycle.instance.isFeasible,
         },
     ).then(function(creds) {
         logger.log("Logged in with token");
@@ -313,7 +313,7 @@ export interface IStoredSession {
     deviceId: string;
     isGuest: boolean;
     accessTokenExpiryTs?: number; // set if the token expires
-    accessTokenRefreshToken?: string; // set if the token can be renewed
+    accessTokenRefreshToken?: string | IEncryptedPayload; // set if the token can be renewed
 }
 
 /**
@@ -444,6 +444,41 @@ async function abortLogin() {
     }
 }
 
+export async function getRenewedStoredSessionVars(): Promise<IRenewedMatrixClientCreds> {
+    const {
+        userId,
+        deviceId,
+        accessToken,
+        accessTokenExpiryTs,
+        accessTokenRefreshToken,
+    } = await getStoredSessionVars();
+
+    let decryptedAccessToken = accessToken;
+    let decryptedRefreshToken = accessTokenRefreshToken;
+    const pickleKey = await PlatformPeg.get().getPickleKey(userId, deviceId);
+    if (pickleKey) {
+        logger.log("Got pickle key");
+        if (typeof accessToken !== "string") {
+            const encrKey = await pickleKeyToAesKey(pickleKey);
+            decryptedAccessToken = await decryptAES(accessToken, encrKey, "access_token");
+            encrKey.fill(0);
+        }
+        if (accessTokenRefreshToken && typeof accessTokenRefreshToken !== "string") {
+            const encrKey = await pickleKeyToAesKey(pickleKey);
+            decryptedRefreshToken = await decryptAES(accessTokenRefreshToken, encrKey, "refresh_token");
+            encrKey.fill(0);
+        }
+    } else {
+        logger.log("No pickle key available");
+    }
+
+    return {
+        accessToken: decryptedAccessToken as string,
+        accessTokenExpiryTs: accessTokenExpiryTs,
+        accessTokenRefreshToken: decryptedRefreshToken as string,
+    };
+}
+
 // returns a promise which resolves to true if a session is found in
 // localstorage
 //
@@ -470,7 +505,6 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         deviceId,
         isGuest,
         accessTokenExpiryTs,
-        accessTokenRefreshToken,
     } = await getStoredSessionVars();
 
     if (hasAccessToken && !accessToken) {
@@ -483,24 +517,12 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             return false;
         }
 
-        let decryptedAccessToken = accessToken;
-        let decryptedRefreshToken = accessTokenRefreshToken;
+
         const pickleKey = await PlatformPeg.get().getPickleKey(userId, deviceId);
-        if (pickleKey) {
-            logger.log("Got pickle key");
-            if (typeof accessToken !== "string") {
-                const encrKey = await pickleKeyToAesKey(pickleKey);
-                decryptedAccessToken = await decryptAES(accessToken, encrKey, "access_token");
-                encrKey.fill(0);
-            }
-            if (accessTokenRefreshToken && typeof accessTokenRefreshToken !== "string") {
-                const encrKey = await pickleKeyToAesKey(pickleKey);
-                decryptedRefreshToken = await decryptAES(accessTokenRefreshToken, encrKey, "refresh_token");
-                encrKey.fill(0);
-            }
-        } else {
-            logger.log("No pickle key available");
-        }
+        const {
+            accessToken: decryptedAccessToken,
+            accessTokenRefreshToken: decryptedRefreshToken,
+        } = await getRenewedStoredSessionVars();
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
@@ -516,7 +538,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             pickleKey: pickleKey,
             freshLogin: freshLogin,
             accessTokenExpiryTs: accessTokenExpiryTs,
-            accessTokenRefreshToken: decryptedRefreshToken,
+            accessTokenRefreshToken: decryptedRefreshToken as string,
         }, false);
         return true;
     } else {

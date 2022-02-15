@@ -22,6 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
+import { TokenLifecycle } from "./TokenLifecycle";
 
 interface ILoginOptions {
     defaultDeviceDisplayName?: string;
@@ -167,7 +168,7 @@ export default class Login {
             password,
             identifier,
             initial_device_display_name: this.defaultDeviceDisplayName,
-            refresh_token: true,
+            refresh_token: TokenLifecycle.instance.isFeasible,
         };
 
         const tryFallbackHs = (originalError) => {

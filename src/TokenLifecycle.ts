@@ -16,21 +16,48 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src";
+import Mutex from "idb-mutex";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
-import { hydrateSessionInPlace } from "./Lifecycle";
+import { getRenewedStoredSessionVars, hydrateSessionInPlace } from "./Lifecycle";
+import { IDB_SUPPORTED } from "./utils/StorageManager";
 
 export interface IRenewedMatrixClientCreds extends Pick<IMatrixClientCreds,
     "accessToken" | "accessTokenExpiryTs" | "accessTokenRefreshToken"> {}
+
+const LOCALSTORAGE_UPDATE_TS_KEY = "mx_token_last_refreshed_ts";
 
 export class TokenLifecycle {
     public static readonly instance = new TokenLifecycle();
 
     private refreshAtTimerId: number;
+    private mutex: Mutex;
 
     protected constructor() {
         // we only really want one of these floating around, so private-ish
         // constructor. Protected allows for unit tests.
+
+        // Don't try to create a mutex if it'll explode
+        if (IDB_SUPPORTED) {
+            this.mutex = new Mutex("token_refresh");
+        }
+
+        // Watch for other tabs causing token refreshes, so we can react to them too.
+        window.addEventListener("storage", (ev: StorageEvent) => {
+            if (ev.storageArea === localStorage && ev.key === LOCALSTORAGE_UPDATE_TS_KEY) {
+                logger.info("TokenLifecycle#storageWatch: Token update received - rehydrating");
+
+                // noinspection JSIgnoredPromiseFromCall
+                this.forceHydration();
+            }
+        });
+    }
+
+    /**
+     * Can the client reasonably support token refreshes?
+     */
+    public get isFeasible(): boolean {
+        return IDB_SUPPORTED;
     }
 
     // noinspection JSMethodCanBeStatic
@@ -63,6 +90,11 @@ export class TokenLifecycle {
             );
         }
 
+        if (!this.isFeasible) {
+            logger.warn("TokenLifecycle#tryExchange: Client cannot do token refreshes reliably");
+            return;
+        }
+
         if (credentials.accessTokenExpiryTs && credentials.accessTokenRefreshToken) {
             if (this.fiveMinutesAgo >= credentials.accessTokenExpiryTs) {
                 logger.info("TokenLifecycle#tryExchange: Token has or will expire soon, refreshing");
@@ -76,9 +108,25 @@ export class TokenLifecycle {
         credentials: IMatrixClientCreds,
         client: MatrixClient,
     ): Promise<IRenewedMatrixClientCreds> {
-        // TODO: @@ TR - Lock so this+dependents only happens once per client
         try {
+            await this.mutex.lock();
+
+            const lastUpdated = Number(localStorage.getItem(LOCALSTORAGE_UPDATE_TS_KEY) ?? 0);
+            if ((Date.now() - lastUpdated) >= this.fiveMinutesAgo) {
+                logger.warn("TokenLifecycle#doTokenRefresh: Token was refreshed recently - skipping update");
+
+                // The token was refreshed recently - skip update and try to fetch new credentials
+                // from the underlying storage.
+                const {
+                    accessToken,
+                    accessTokenRefreshToken,
+                    accessTokenExpiryTs,
+                } = await getRenewedStoredSessionVars();
+                return { accessToken, accessTokenRefreshToken, accessTokenExpiryTs };
+            }
+
             const newCreds = await client.refreshToken(credentials.accessTokenRefreshToken);
+            localStorage.setItem(LOCALSTORAGE_UPDATE_TS_KEY,`${Date.now()}`);
             return {
                 // We use the browser's local time to do two things:
                 // 1. Avoid having to write code that counts down and stores a "time left" variable
@@ -97,6 +145,8 @@ export class TokenLifecycle {
             } else {
                 throw e; // we can't do anything with it, so re-throw
             }
+        } finally {
+            await this.mutex.unlock();
         }
     }
 
@@ -108,6 +158,10 @@ export class TokenLifecycle {
                 "TokenLifecycle#start: Got a refresh token, but no expiration time. The server is " +
                 "not compliant with the specification and might result in unexpected logouts.",
             );
+        }
+
+        if (!this.isFeasible) {
+            logger.warn("TokenLifecycle#start: Not starting refresh timers - browser unsupported");
         }
 
         if (credentials.accessTokenExpiryTs && credentials.accessTokenRefreshToken) {
@@ -137,16 +191,29 @@ export class TokenLifecycle {
 
     private async forceTokenExchange() {
         const credentials = MatrixClientPeg.getCredentials();
+        return this.rehydrate(await this.doTokenRefresh(credentials, MatrixClientPeg.get()));
+    }
+
+    private async forceHydration() {
+        const {
+            accessToken,
+            accessTokenRefreshToken,
+            accessTokenExpiryTs,
+        } = await getRenewedStoredSessionVars();
+        return this.rehydrate({ accessToken, accessTokenRefreshToken, accessTokenExpiryTs });
+    }
+
+    private async rehydrate(newCreds: IRenewedMatrixClientCreds) {
+        const credentials = MatrixClientPeg.getCredentials();
         try {
-            const result = await this.doTokenRefresh(credentials, MatrixClientPeg.get());
-            if (!result) {
+            if (!newCreds) {
                 logger.error("TokenLifecycle#expireExchange: Expecting new credentials, got nothing. Rescheduling.");
                 this.startTimers(credentials);
             } else {
                 logger.info("TokenLifecycle#expireExchange: Updating client credentials using rehydration");
                 await hydrateSessionInPlace({
                     ...credentials,
-                    ...result, // override from credentials
+                    ...newCreds, // override from credentials
                 });
                 // hydrateSessionInPlace will ultimately call back to startTimers() for us, so no need to do it here.
             }
