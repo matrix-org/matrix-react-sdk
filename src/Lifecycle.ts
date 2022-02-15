@@ -711,6 +711,7 @@ async function doSetLoggedIn(
 
     // Check the token's renewal early so we don't have to undo some of the work down below.
     logger.info("Lifecycle#doSetLoggedIn: Trying token refresh in case it is needed");
+    let didTokenRefresh = false;
     try {
         const result = await TokenLifecycle.instance.tryTokenExchangeIfNeeded(credentials, MatrixClientPeg.get());
         if (result) {
@@ -721,6 +722,8 @@ async function doSetLoggedIn(
 
             // don't forget to replace the client with the new credentials
             MatrixClientPeg.replaceUsingCreds(credentials);
+
+            didTokenRefresh = true;
         } else {
             logger.info("Lifecycle#doSetLoggedIn: Token refresh indicated as not needed");
         }
@@ -753,6 +756,10 @@ async function doSetLoggedIn(
             await persistCredentials(credentials);
             // make sure we don't think that it's a fresh login anymore
             sessionStorage.removeItem("mx_fresh_login");
+
+            if (didTokenRefresh) {
+                TokenLifecycle.instance.flagNewCredentialsPersisted();
+            }
         } catch (e) {
             logger.warn("Error using local storage: can't persist session!", e);
         }

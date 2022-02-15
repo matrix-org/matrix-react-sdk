@@ -21,11 +21,14 @@ import Mutex from "idb-mutex";
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import { getRenewedStoredSessionVars, hydrateSessionInPlace } from "./Lifecycle";
 import { IDB_SUPPORTED } from "./utils/StorageManager";
+import { randomString } from "matrix-js-sdk/src/randomstring";
 
 export interface IRenewedMatrixClientCreds extends Pick<IMatrixClientCreds,
     "accessToken" | "accessTokenExpiryTs" | "accessTokenRefreshToken"> {}
 
-const LOCALSTORAGE_UPDATE_TS_KEY = "mx_token_last_refreshed_ts";
+const LOCALSTORAGE_UPDATED_BY_KEY = "mx_token_updated_by";
+
+const CLIENT_ID = randomString(64);
 
 export class TokenLifecycle {
     public static readonly instance = new TokenLifecycle();
@@ -39,13 +42,18 @@ export class TokenLifecycle {
 
         // Don't try to create a mutex if it'll explode
         if (IDB_SUPPORTED) {
-            this.mutex = new Mutex("token_refresh");
+            this.mutex = new Mutex("token_refresh", null, {
+                expiry: 120000, // 2 minutes - enough time for the refresh request to time out
+            });
         }
 
         // Watch for other tabs causing token refreshes, so we can react to them too.
         window.addEventListener("storage", (ev: StorageEvent) => {
-            if (ev.storageArea === localStorage && ev.key === LOCALSTORAGE_UPDATE_TS_KEY) {
-                logger.info("TokenLifecycle#storageWatch: Token update received - rehydrating");
+            if (ev.key === LOCALSTORAGE_UPDATED_BY_KEY) {
+                const updateBy = localStorage.getItem(LOCALSTORAGE_UPDATED_BY_KEY);
+                if (!updateBy || updateBy === CLIENT_ID) return; // ignore deletions & echos
+
+                logger.info("TokenLifecycle#storageWatch: Token update received");
 
                 // noinspection JSIgnoredPromiseFromCall
                 this.forceHydration();
@@ -62,12 +70,19 @@ export class TokenLifecycle {
 
     // noinspection JSMethodCanBeStatic
     private get fiveMinutesAgo(): number {
-        return Date.now() - 30000;
+        return Date.now() - 300000;
     }
 
     // noinspection JSMethodCanBeStatic
     private get fiveMinutesFromNow(): number {
-        return Date.now() + 30000;
+        return Date.now() + 300000;
+    }
+
+    public flagNewCredentialsPersisted() {
+        logger.info("TokenLifecycle#flagPersisted: Credentials marked as persisted - flagging for other tabs");
+        if (localStorage.getItem(LOCALSTORAGE_UPDATED_BY_KEY) !== CLIENT_ID) {
+            localStorage.setItem(LOCALSTORAGE_UPDATED_BY_KEY, CLIENT_ID);
+        }
     }
 
     /**
@@ -98,7 +113,7 @@ export class TokenLifecycle {
         if (credentials.accessTokenExpiryTs && credentials.accessTokenRefreshToken) {
             if (this.fiveMinutesAgo >= credentials.accessTokenExpiryTs) {
                 logger.info("TokenLifecycle#tryExchange: Token has or will expire soon, refreshing");
-                return this.doTokenRefresh(credentials, client);
+                return await this.doTokenRefresh(credentials, client);
             }
         }
     }
@@ -109,24 +124,13 @@ export class TokenLifecycle {
         client: MatrixClient,
     ): Promise<IRenewedMatrixClientCreds> {
         try {
+            logger.info("TokenLifecycle#doRefresh: Acquiring lock");
             await this.mutex.lock();
+            logger.info("TokenLifecycle#doRefresh: Lock acquired");
 
-            const lastUpdated = Number(localStorage.getItem(LOCALSTORAGE_UPDATE_TS_KEY) ?? 0);
-            if ((Date.now() - lastUpdated) >= this.fiveMinutesAgo) {
-                logger.warn("TokenLifecycle#doTokenRefresh: Token was refreshed recently - skipping update");
-
-                // The token was refreshed recently - skip update and try to fetch new credentials
-                // from the underlying storage.
-                const {
-                    accessToken,
-                    accessTokenRefreshToken,
-                    accessTokenExpiryTs,
-                } = await getRenewedStoredSessionVars();
-                return { accessToken, accessTokenRefreshToken, accessTokenExpiryTs };
-            }
-
+            logger.info("TokenLifecycle#doRefresh: Performing refresh");
+            localStorage.removeItem(LOCALSTORAGE_UPDATED_BY_KEY);
             const newCreds = await client.refreshToken(credentials.accessTokenRefreshToken);
-            localStorage.setItem(LOCALSTORAGE_UPDATE_TS_KEY,`${Date.now()}`);
             return {
                 // We use the browser's local time to do two things:
                 // 1. Avoid having to write code that counts down and stores a "time left" variable
@@ -139,6 +143,7 @@ export class TokenLifecycle {
                 accessTokenRefreshToken: newCreds.refresh_token,
             };
         } catch (e) {
+            logger.error("TokenLifecycle#doRefresh: Error refreshing token: ", e);
             if (e.errcode === "M_UNKNOWN_TOKEN") {
                 // Emit the logout manually because the function inhibits it.
                 client.emit("Session.logged_out", e);
@@ -146,6 +151,7 @@ export class TokenLifecycle {
                 throw e; // we can't do anything with it, so re-throw
             }
         } finally {
+            logger.info("TokenLifecycle#doRefresh: Releasing lock");
             await this.mutex.unlock();
         }
     }
@@ -172,7 +178,7 @@ export class TokenLifecycle {
             let relativeTime = credentials.accessTokenExpiryTs - this.fiveMinutesFromNow;
             if (relativeTime <= 0) {
                 logger.warn(`TokenLifecycle#start: Refresh was set for ${relativeTime}ms - readjusting`);
-                relativeTime = Math.floor(Math.random() * 1000) + 30000; // 30 seconds + 1s jitter
+                relativeTime = Math.floor(Math.random() * 5000) + 30000; // 30 seconds + 5s jitter
             }
             this.refreshAtTimerId = setTimeout(() => {
                 // noinspection JSIgnoredPromiseFromCall
@@ -191,7 +197,8 @@ export class TokenLifecycle {
 
     private async forceTokenExchange() {
         const credentials = MatrixClientPeg.getCredentials();
-        return this.rehydrate(await this.doTokenRefresh(credentials, MatrixClientPeg.get()));
+        await this.rehydrate(await this.doTokenRefresh(credentials, MatrixClientPeg.get()));
+        this.flagNewCredentialsPersisted();
     }
 
     private async forceHydration() {
