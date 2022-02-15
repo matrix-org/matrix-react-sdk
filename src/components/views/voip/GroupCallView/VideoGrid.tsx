@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { useDrag, useGesture } from "react-use-gesture";
+import { useDrag, useGesture } from "@use-gesture/react";
 import { useSprings } from "@react-spring/web";
 import useMeasure from "react-use-measure";
 import { ResizeObserver } from "@juggle/resize-observer";
@@ -855,7 +855,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
     );
 
     const bindTile = useDrag(
-        ({ args: [key], active, xy, movement, tap, event }) => {
+        ({ args: [key], active, xy, movement, tap, event, buttons }) => {
             event.preventDefault();
 
             if (tap) {
@@ -932,9 +932,11 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                 draggingTileRef.current = null;
             }
 
+            console.log({ active, event, buttons });
+
             api.start(animate(newTiles));
         },
-        { filterTaps: true },
+        { filterTaps: true, pointer: { buttons: [1] } },
     );
 
     const onGridGesture = useCallback((e, mobileDefinesDelta) => {
@@ -963,7 +965,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
     const bindGrid = useGesture({
         onWheel: (e) => onGridGesture(e, false),
         onDrag: (e) => onGridGesture(e, true),
-    });
+    }, {});
 
     return (
         <div className="mx_VideoGrid" ref={gridRef} {...bindGrid()}>
