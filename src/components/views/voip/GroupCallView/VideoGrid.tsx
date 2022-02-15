@@ -21,8 +21,27 @@ import useMeasure from "react-use-measure";
 import { ResizeObserver } from "@juggle/resize-observer";
 import moveArrItem from "lodash-move";
 
-export function useVideoGridLayout(): [string, (layout: string) => void] {
-    return useState("freedom");
+export function useVideoGridLayout(hasScreenshareFeeds: boolean): [string, (layout: string) => void] {
+    const [layout, setLayout] = useState("freedom");
+    const revertLayoutRef = useRef<string>("freedom");
+
+    const onSetLayout = useCallback((layout: string) => {
+        // Store the user's set layout to revert to after a screenshare is finished
+        revertLayoutRef.current = layout;
+        setLayout(layout);
+    }, []);
+
+    useEffect(() => {
+        if (hasScreenshareFeeds) {
+            // Automatically switch to spotlight layout when there's a screenshare
+            setLayout("spotlight");
+        } else {
+            // When the screenshares have ended, revert to the previous layout
+            setLayout(revertLayoutRef.current);
+        }
+    }, [hasScreenshareFeeds]);
+
+    return [layout, onSetLayout];
 }
 
 function useIsMounted() {
