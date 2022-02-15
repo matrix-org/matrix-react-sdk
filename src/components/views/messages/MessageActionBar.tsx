@@ -45,6 +45,8 @@ import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
 import Modal from '../../../Modal';
 import PollCreateDialog from '../elements/PollCreateDialog';
+import ErrorDialog from '../dialogs/ErrorDialog';
+import { createVoteRelations } from './MPollBody';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -231,8 +233,33 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         });
     };
 
-    private onEditClick = (): void => {
-        if (M_POLL_START.matches(this.props.mxEvent.getType())) {
+    private pollAlreadyHasVotes = (): boolean => {
+        if (!this.props.getRelationsForEvent) {
+            return false;
+        }
+
+        const voteRelations = createVoteRelations(
+            this.props.getRelationsForEvent,
+            this.props.mxEvent.getId(),
+        );
+
+        return voteRelations.getRelations().length > 0;
+    };
+
+    private launchPollEditor = (): void => {
+        if (this.pollAlreadyHasVotes()) {
+            Modal.createTrackedDialog(
+                'Not allowed to edit poll',
+                '',
+                ErrorDialog,
+                {
+                    title: _t("Can't edit poll"),
+                    description: _t(
+                        "Sorry, you can't edit a poll after votes have been cast.",
+                    ),
+                },
+            );
+        } else {
             Modal.createTrackedDialog(
                 'Polls',
                 'create',
@@ -246,6 +273,12 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 false, // isPriorityModal
                 true,  // isStaticModal
             );
+        }
+    };
+
+    private onEditClick = (): void => {
+        if (M_POLL_START.matches(this.props.mxEvent.getType())) {
+            this.launchPollEditor();
         } else {
             dis.dispatch({
                 action: Action.EditEvent,

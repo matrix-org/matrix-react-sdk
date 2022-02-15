@@ -2092,6 +2092,8 @@
     "Go": "Go",
     "Error processing audio message": "Error processing audio message",
     "React": "React",
+    "Can't edit poll": "Can't edit poll",
+    "Sorry, you can't edit a poll after votes have been cast.": "Sorry, you can't edit a poll after votes have been cast.",
     "Edit": "Edit",
     "Reply in thread": "Reply in thread",
     "Reply": "Reply",
