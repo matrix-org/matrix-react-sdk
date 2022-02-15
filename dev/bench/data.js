@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644926387442,
+  "lastUpdate": 1644931646922,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -65876,6 +65876,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1365.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ekaterinag@element.io",
+            "name": "Kat Gerasimova",
+            "username": "kittykat"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "201e552b0cfc6226860635e420a61f4c3b448b53",
+          "message": "Triage PRs that need design or product (#7805)\n\nAdd automation to check if PR is assigned to a team/any member of that team and if it is, add it to the correct board to get it reviewed quicker",
+          "timestamp": "2022-02-15T13:17:43Z",
+          "tree_id": "90267a92a1df43b21a3676464a9e6a5e2958bca3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/201e552b0cfc6226860635e420a61f4c3b448b53"
+        },
+        "date": 1644931639738,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4937.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 774.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
