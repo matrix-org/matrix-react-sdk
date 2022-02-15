@@ -70,12 +70,7 @@ export async function login(
     await session.replaceInputText(usernameField, username);
     await session.replaceInputText(passwordField, password);
     session.log.done();
-    //wait 300ms because Registration/ServerConfig have a 250ms
-    //delay to internally set the homeserver url
-    //see Registration::render and ServerConfig::props::delayTimeMs
-    //await session.delay(300);
-    /// focus on the button to make sure error validation
-    /// has happened before checking the form is good to go
+
     session.log.step("Clicks login");
     const loginButton = await session.query('.mx_Login_submit');
     await loginButton.focus();
