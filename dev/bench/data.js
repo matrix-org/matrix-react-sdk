@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644944806439,
+  "lastUpdate": 1644956121848,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66032,6 +66032,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 882.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a958cd20f13c3df6913ae36b1372a5bfb966967e",
+          "message": "Fix delayed badge update for mentions in encrypted rooms (#7813)\n\n* Fix delayed badge update for mentions in encrypted rooms\r\n\r\nFixes https://github.com/vector-im/element-web/issues/20859\r\n\r\nMore detail on the issue\r\n\r\n* Remove unused import\r\n\r\n* Fix listener removal",
+          "timestamp": "2022-02-15T20:06:29Z",
+          "tree_id": "5918d5e8a45c8346c0e91e8d09d72bb552f1c3ca",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a958cd20f13c3df6913ae36b1372a5bfb966967e"
+        },
+        "date": 1644956114831,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4958.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 707.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
