@@ -34,7 +34,6 @@ import EditorStateTransfer from '../../../utils/EditorStateTransfer';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandCategories } from '../../../SlashCommands';
 import { Action } from "../../../dispatcher/actions";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SendHistoryManager from '../../../SendHistoryManager';
@@ -306,8 +305,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             isReply: !!editedEvent.replyEventId,
         });
 
-        const startTime = CountlyAnalytics.getTimestamp();
-
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
             const caret = this.editorRef.current?.getCaret();
@@ -357,7 +354,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const prom = this.props.mxClient.sendMessage(roomId, threadId, editContent);
                 this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
-                CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, true, false, editContent);
             }
         }
 
