@@ -379,7 +379,6 @@ export async function getStoredSessionVars(): Promise<IStoredSession> {
         }
     }
 
-
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
     // token, then we should say we have an access token
     const hasAccessToken =
@@ -516,7 +515,6 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             logger.log("Ignoring stored guest account: " + userId);
             return false;
         }
-
 
         const pickleKey = await PlatformPeg.get().getPickleKey(userId, deviceId);
         const {

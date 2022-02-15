@@ -16,12 +16,12 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src";
+import { randomString } from "matrix-js-sdk/src/randomstring";
 import Mutex from "idb-mutex";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import { getRenewedStoredSessionVars, hydrateSessionInPlace } from "./Lifecycle";
 import { IDB_SUPPORTED } from "./utils/StorageManager";
-import { randomString } from "matrix-js-sdk/src/randomstring";
 
 export interface IRenewedMatrixClientCreds extends Pick<IMatrixClientCreds,
     "accessToken" | "accessTokenExpiryTs" | "accessTokenRefreshToken"> {}
