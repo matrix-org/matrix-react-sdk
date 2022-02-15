@@ -202,6 +202,8 @@ interface IResult extends IBaseResult {
 
 type Result = IRoomResult | IResult;
 
+const isRoomResult = (result: any): result is IRoomResult => !!result?.room;
+
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
@@ -250,16 +252,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         const results: [Result[], Result[], Result[]] = [[], [], []];
 
         possibleResults.forEach(entry => {
-            if ((entry as IRoomResult).room) {
-                const roomResult = entry as IRoomResult;
-                if (!roomResult.room.normalizedName.includes(normalizedQuery) &&
-                    !roomResult.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
-                    !roomResult.query?.some(q => q.includes(lcQuery))
+            if (isRoomResult(entry)) {
+                if (!entry.room.normalizedName.includes(normalizedQuery) &&
+                    !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
+                    !entry.query?.some(q => q.includes(lcQuery))
                 ) return; // bail, does not match query
             } else {
-                const otherResult = entry as IResult;
-                if (!otherResult.name.toLowerCase().includes(lcQuery) &&
-                    !otherResult.query?.some(q => q.includes(lcQuery))
+                if (!entry.name.toLowerCase().includes(lcQuery) &&
+                    !entry.query?.some(q => q.includes(lcQuery))
                 ) return; // bail, does not match query
             }
 
@@ -318,20 +318,19 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     let content: JSX.Element;
     if (trimmedQuery) {
         const resultMapper = (result: Result): JSX.Element => {
-            const room = (result as IRoomResult).room;
-            if (room) {
+            if (isRoomResult(result)) {
                 return (
                     <Option
-                        id={`mx_SpotlightDialog_button_result_${room.roomId}`}
-                        key={room.roomId}
+                        id={`mx_SpotlightDialog_button_result_${result.room.roomId}`}
+                        key={result.room.roomId}
                         onClick={(ev) => {
-                            viewRoom(room.roomId, true, ev.type !== "click");
+                            viewRoom(result.room.roomId, true, ev.type !== "click");
                         }}
                     >
-                        <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
-                        { room.name }
-                        <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
-                        <ResultDetails room={room} />
+                        <DecoratedRoomAvatar room={result.room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
+                        { result.room.name }
+                        <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(result.room)} />
+                        <ResultDetails room={result.room} />
                         <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                     </Option>
                 );
