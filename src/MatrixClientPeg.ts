@@ -175,8 +175,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public updateUsingCreds(creds: IMatrixClientCreds): void {
-        this.currentClientCreds = creds;
-        this.matrixClient.setAccessToken(creds.accessToken);
+        if (creds?.accessToken) {
+            this.currentClientCreds = creds;
+            this.matrixClient.setAccessToken(creds.accessToken);
+        } else {
+            // ignore, per signature
+        }
     }
 
     public async assign(): Promise<any> {
